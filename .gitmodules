@@ -1,0 +1,21 @@
+[submodule "conxian-gateway"]
+	path = conxian-gateway
+	url = https://github.com/Conxian/conxian-gateway
+[submodule "conxius-wallet"]
+	path = conxius-wallet
+	url = https://github.com/Conxian/conxius-wallet
+[submodule "conxian-nexus"]
+	path = conxian-nexus
+	url = https://github.com/Conxian/conxian-nexus
+[submodule "lib-conxian-core"]
+	path = lib-conxian-core
+	url = https://github.com/Conxian/lib-conxian-core
+[submodule "conxian-ui"]
+	path = conxian-ui
+	url = https://github.com/Conxian/Conxian_UI
+[submodule "Conxian"]
+	path = Conxian
+	url = https://github.com/Conxian/Conxian
+[submodule "conxius-platform"]
+	path = conxius-platform
+	url = https://github.com/Conxian/conxius-platform
