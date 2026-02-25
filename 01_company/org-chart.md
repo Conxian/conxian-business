@@ -1,11 +1,15 @@
-# Organization Chart
+# Conxian Labs Organization Chart
 
-## Leadership
-- **Founder**: [Name] - Vision, Strategy, and Core Development.
+## Executive Team
+- **Founder**: Ecosystem Architect & Strategy Lead.
 
-## Strategic Advisors & Partners
-- **Sizwe**: Infrastructure Advisor / CTO (KCZ).
+## Strategic Partners & Advisors
+- **Sizwe (KCZ)**: Infrastructure Advisor / CTO.
+  - Responsibility: Cloud roadmap, security (Sentinel), and platform orchestration.
 - **Ms. Khosa**: Legal Advisor / Board Member.
+  - Responsibility: Compliance, incorporation, and advisory agreements.
 
-## Ecosystem Partners
-- **Phemik**: Investor / Strategic Contact.
+## Development Teams
+- **Core Protocol**: lib-conxian-core & Conxian (Clarity).
+- **Client Services**: conxius-wallet & conxian-ui.
+- **Infrastructure**: conxius-platform & conxian-nexus.
