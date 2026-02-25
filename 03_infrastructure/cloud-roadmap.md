@@ -1,23 +1,17 @@
-# Cloud Infrastructure Roadmap
+# Infrastructure & Cloud Roadmap
 
-## Phase 0: Foundations (Months 0-12)
-- Deployment on AWS/GCP (Cloud-only).
-- Microservices: conxius-platform (orchestrator), lib-conxian-core (Rust/Actix-web Gateway).
-- Telemetry: Prometheus (port 9090), Grafana (port 3001).
+Conxian Labs follows a "Cloud-First, Sovereignty-Anchored" approach.
 
-## Phase 1: Expansion (Months 12-24)
-- Introduction of conxian-ui and admin-dashboard.
-- Global CDN integration for frontend.
-- Hardened database instances on managed cloud services.
+## Phase 1: Rapid Iteration (Current - Year 3.5)
+- **Primary Provider**: Google Cloud Platform (GCP) for Core/Gateway.
+- **Secondary Provider**: Render for UI/Static sites.
+- **Monitoring**: "Glass Node Architecture" using Prometheus and Grafana.
+- **Security**: "Sentinel" automated secret filtering.
 
-## Phase 2: Optimization (Months 24-36)
-- Auto-scaling based on revenue and load milestones.
-- Enhanced security with Fusion Auth and Sentinel secret filtering.
-- Regional expansion of cloud nodes.
+## Phase 2: Progressive Sovereignty (Year 3.5 - Year 5)
+- **Transition**: Begin moving critical Bitcoin/Stacks RPC nodes to self-hosted or dedicated bare metal.
+- **Goal**: Reduce reliance on third-party cloud for state validation while keeping application layers in the cloud for performance.
 
-## Phase 3: Transition Preparedness (Months 36-42)
-- Re-evaluation of infrastructure for long-term sovereignty.
-- Preparation for hybrid cloud models if required by SAB logic.
-
-## Monitoring & Telemetry
-- **Glass Node Architecture**: Unified telemetry via Prometheus and Grafana.
+## Resource Allocation
+- **compute**: n2-standard instances (GCP).
+- **storage**: Cloud SQL (Postgres) + Bitcoin Core/Stacks node storage.
