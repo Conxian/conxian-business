@@ -53,12 +53,12 @@ Conxian Labs has successfully established a high-integrity, Bitcoin-anchored eco
 
 ---
 
-## 3. Legal Risk & Compliance Review
-The ecosystem operates on a "Strictly Non-Custodial" mandate, yet faces several strategic legal risks:
-*   **CASP Classification**: Despite the TEE isolation, regulators in aggressive jurisdictions (e.g., South Africa's FSCA or the US SEC) may attempt to classify the interface as an intermediary or broker-dealer.
-*   **AML/CFT Drift**: While fiat-on-ramps are KYC-compliant via partners, the integration of privacy protocols (CoinJoin, Silent Payments) on-device may lead to heightened regulatory scrutiny.
-*   **Sovereignty Paradox**: The "Regulatory Adapter" in the smart contracts and the use of centralized technical relays (proxies) for uptime create potential points of failure or censorship that contrast with the "Code is Law" ethos.
-*   **Liability of SAB Logic**: If autonomous fiscal policy leads to systematic loss (e.g., AYE PID failure), the legal standing of a "Sovereign Autonomous Business" as a non-person entity is untested in current case law.
+## 3. Legal Risk & Sovereign Privacy Review
+The ecosystem operates on a "Strictly Non-Custodial" mandate, with a deep focus on risk mitigation and codified protection:
+*   **Partner-Delegated Compliance**: Regulated handling (KYC, Banking) is delegated to partners. Conxian Labs never handles user or fund data.
+*   **Zero-Data Architecture**: Technical telemetry avoids individual identity or transaction details, focusing on system performance and health.
+*   **Privacy Rights & PETs**: Implementations of CoinJoin and Tor mask metadata and protect the inherent right to privacy for individuals and organizations. (See [SOVEREIGN_PRIVACY_REPORT.md](./SOVEREIGN_PRIVACY_REPORT.md) for a deep dive).
+*   **Regulatory Alignment**: Proactive engagement with standards like FINOS and jurisdictions like the FSCA ensures that our "software-only" interface is correctly classified and protected by actual law.
 
 ---
 
