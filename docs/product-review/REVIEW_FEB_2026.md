@@ -16,6 +16,7 @@ Conxian Labs has successfully established a high-integrity, Bitcoin-anchored eco
 *   **Role**: Sovereign Android Vault (B2C Interface).
 *   **State**: **PRODUCTION-READY**. 162+ passing tests.
 *   **Strengths**: TEE/StrongBox hardware security, native Tor integration, and multi-protocol support (BTC, L2s, Sidechains).
+*   **Legal Risk**: Primarily around classification as a Financial Intermediary (CASP/FSP). Mitigated by strictly non-custodial TEE architecture and outsourcing fiat/swap rails to regulated partners (Transak, VALR).
 *   **Opportunities**: Integration of Sovereign AI-Driven Asset Allocation (Phase 6).
 
 ### 2.3 lib-conxian-core (The Stem)
@@ -52,7 +53,16 @@ Conxian Labs has successfully established a high-integrity, Bitcoin-anchored eco
 
 ---
 
-## 3. The "Root-to-Leaf" Synergy
+## 3. Legal Risk & Compliance Review
+The ecosystem operates on a "Strictly Non-Custodial" mandate, yet faces several strategic legal risks:
+*   **CASP Classification**: Despite the TEE isolation, regulators in aggressive jurisdictions (e.g., South Africa's FSCA or the US SEC) may attempt to classify the interface as an intermediary or broker-dealer.
+*   **AML/CFT Drift**: While fiat-on-ramps are KYC-compliant via partners, the integration of privacy protocols (CoinJoin, Silent Payments) on-device may lead to heightened regulatory scrutiny.
+*   **Sovereignty Paradox**: The "Regulatory Adapter" in the smart contracts and the use of centralized technical relays (proxies) for uptime create potential points of failure or censorship that contrast with the "Code is Law" ethos.
+*   **Liability of SAB Logic**: If autonomous fiscal policy leads to systematic loss (e.g., AYE PID failure), the legal standing of a "Sovereign Autonomous Business" as a non-person entity is untested in current case law.
+
+---
+
+## 4. The "Root-to-Leaf" Synergy
 The flow from **Vision (Root)** to **Settlement (Leaf)** is technically sound:
 1.  **Business Root**: Sets the "Sovereignty-Adjusted Fee" (SAF) and strategic roadmap.
 2.  **Orchestration Stem**: `conxius-platform` and `lib-conxian-core` provide the infrastructure.
@@ -61,14 +71,14 @@ The flow from **Vision (Root)** to **Settlement (Leaf)** is technically sound:
 
 ---
 
-## 4. Key Gaps & Strategic Risks
+## 5. Key Gaps & Strategic Risks
 1.  **Simulation Blindness**: The move to Clarity 4 is a leap of faith given current toolchain (Clarinet) limitations for C4 keywords.
-2.  **Regulatory Backdoor Paradox**: The protocol's "Regulatory Adapter" introduces potential censorship points that contrast with its sovereign branding.
+2.  **Regulatory Backdoor Paradox**: The protocol's "Regulatory Authority" hooks introduce potential censorship points.
 3.  **Keeper Incentives**: The system's stability is highly dependent on a healthy keeper ecosystem which is currently in early-stage deployment.
 
 ---
 
-## 5. Recommendations for Phase 6
+## 6. Recommendations for Phase 6
 *   **Prioritize Musig2/RGB-WASM**: Complete these critical technical milestones to unlock institutional treasury and client-side validation.
 *   **Harden Simulation**: Work on custom simulation hooks or scripts to bypass Clarinet C4 limitations.
 *   **Rationalize Token Model**: Simplify the retail user experience to reduce friction for Global South adoption.
