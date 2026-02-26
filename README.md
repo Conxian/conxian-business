@@ -1,36 +1,35 @@
-# Conxian Labs – Internal Business Repository
+# Conxian Labs: Internal Business Repository
 
-This private repository contains all non‑public strategic, legal, and operational documents for Conxian Labs. It serves as the **Central Nervous System** for the entire ecosystem.
+This private repository is the **Central Nervous System** for Conxian Labs. It contains all non-public strategic, legal, and operational documents for the entire ecosystem.
 
-## Navigation
-- **[01_company](./01_company)** – Vision, mission, org chart
-- **[02_strategy](./02_strategy)** – 5‑year plan, funding tiers, competitor analysis
-- **[03_infrastructure](./03_infrastructure)** – Cloud roadmap, cost estimates, vendor contacts
-- **[04_legal](./04_legal)** – Incorporation details, advisory agreements, compliance memos
-- **[05_investors](./05_investors)** – Investor notes and target lists
-- **[06_meetings](./06_meetings)** – Meeting notes with partners and advisors
-- **[07_assets](./07_assets)** – Logos and diagrams
+## 🚀 Strategic Foundation
+- **[Strategic Alignment (ALIGNMENT.md)](./ALIGNMENT.md)** - Vision, architecture, and design standards.
+- **[System Whitepaper (WHITEPAPER.md)](./WHITEPAPER.md)** - Theoretical and technical foundation.
+- **[5-Year Strategic Plan](./02_strategy/5-year-plan.md)** - Roadmap and scaling triggers.
+- **[Sovereign Privacy Report](./docs/product-review/SOVEREIGN_PRIVACY_REPORT.md)** - Regulatory and privacy strategy.
 
-## Unified Ecosystem (Submodules)
-- **[conxius-platform](./conxius-platform)** – System Orchestrator
-- **[lib-conxian-core](./lib-conxian-core)** – Shared Protocol Logic
-- **[conxian-gateway](./conxian-gateway)** – Unified Rust Gateway
-- **[Conxian](./Conxian)** – Clarity Smart Contracts
-- **[conxian-ui](./conxian-ui)** – Unified Web Interface
-- **[conxius-wallet](./conxius-wallet)** – Sovereign Android Vault
-- **[conxian-nexus](./conxian-nexus)** – API Bridge
-- **[stacksorbit](./stacksorbit)** – Professional Tooling (TUI)
-- **[conxian-labs-site](./conxian-labs-site)** – Institutional Website
+## 📂 Navigation
+- **[01_company](./01_company)** - Vision, mission, org chart.
+- **[02_strategy](./02_strategy)** - 5-year plan, funding tiers, market timing.
+- **[03_infrastructure](./03_infrastructure)** - Cloud roadmap, cost estimates.
+- **[04_legal](./04_legal)** - Compliance, incorporation, and partner agreements.
+- **[05_investors](./05_investors)** - Pitch decks and investor relation notes.
+- **[06_meetings](./06_meetings)** - Records of strategic advisor sessions.
+- **[07_assets](./07_assets)** - Brand assets and architectural diagrams.
 
-## Access & Confidentiality
-- **Founder** – Full access
-- **Sizwe (KCZ)** – Read access to `03_infrastructure` and `06_meetings`
-- **Ms. Khosa** – Read access to `04_legal` and `06_meetings`
+## 🔗 Unified Ecosystem (Submodules)
+- **[conxius-platform](./conxius-platform)** - Master Orchestrator.
+- **[lib-conxian-core](./lib-conxian-core)** - Shared Protocol Logic & Gateway.
+- **[Conxian](./Conxian)** - Stacks-native DeFi Protocol.
+- **[conxius-wallet](./conxius-wallet)** - Sovereign Android Vault.
+- **[conxian-gateway](./conxian-gateway)** - Institutional Bridge.
+- **[conxian-nexus](./conxian-nexus)** - API Bridge & State Sync.
+- **[stacksorbit](./stacksorbit)** - Professional TUI/GUI Tooling.
+- **[conxian-ui](./conxian-ui)** - Unified Web Interface.
+- **[conxian-labs-site](./conxian-labs-site)** - Institutional Website.
 
-All documents are confidential and proprietary. Do not share outside the company without explicit permission.
+## 🛡️ Access & Confidentiality
+All documents are confidential and proprietary. Access is restricted based on partner/advisor roles.
 
-## Key Documents (Quick Links)
-- [Strategic Alignment (ALIGNMENT.md)](./ALIGNMENT.md)
-- [5‑Year Plan](./02_strategy/5-year-plan.md)
-- [Funding Tiers](./02_strategy/funding-tiers.md)
-- [Infrastructure Roadmap](./03_infrastructure/cloud-roadmap.md)
+---
+© 2026 Conxian Labs. Sovereign Autonomous Business.
