@@ -12,3 +12,7 @@
 
 ## Repository Standards
 - GitHub best practices (`CONTRIBUTING.md`, templates, etc.) should be in the `.github/` directory to keep the root clean.
+
+## CI Maintenance
+- Replaced generic Autotools-based Makefile CI with a purpose-built Documentation CI for the business repo.
+- The new CI validates the `SUMMARY.md` structure and checks for broken internal markdown links.
