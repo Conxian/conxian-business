@@ -48,3 +48,6 @@ All proposed documentation and architectural frameworks are now live within the 
 
 ---
 © 2026 Conxian Labs. Sovereign Autonomous Business.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

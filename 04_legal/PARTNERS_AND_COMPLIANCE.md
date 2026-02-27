@@ -42,3 +42,6 @@ permalink: /partners
 2.  **No Shadow Ledgers:** Never record a user's balance in our own database. Always fetch live data from the blockchain or the Partner API.
 3.  **UI Labeling:** When a user enters a partner flow (e.g., Buying BTC), display a toast/banner: *"Powered by [Partner Name]. You are leaving Conxius to complete this transaction."*
 4.  **Non-Custodial Proxying:** Any proxy operated by Conxian Labs must be verified to be a "Zero-Touch" relay that cannot modify transaction destinations.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

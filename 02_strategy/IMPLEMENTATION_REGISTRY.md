@@ -101,3 +101,6 @@ This document tracks the ground-truth implementation status of every major featu
 2. **Priority 2**: Full client-side validation for RGB assets via `rgb-lib-wasm`.
 3. **Priority 3**: Sovereign AI integration for on-device asset allocation and fraud detection.
 4. **Priority 4**: Integration with Universal Bitcoin Identity (UBI) for credit scoring.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

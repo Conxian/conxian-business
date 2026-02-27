@@ -104,3 +104,6 @@ The Gateway acts as a portal for institutional users to interact with their mobi
 ---
 
 *Maintained by: Conxian Labs Legal & Compliance Team*
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

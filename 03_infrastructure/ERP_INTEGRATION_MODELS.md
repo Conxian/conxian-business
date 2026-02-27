@@ -24,3 +24,6 @@ The Engine targets the most labor-intensive enterprise accounting workflows:
 
 ## 5. Strategic Lock-In
 By embedding Bitcoin-native yield and settlement logic directly into the enterprise's primary record system, Conxian creates insurmountable switching costs. Removing Conxian would require re-engineering the enterprise's entire automated accounting and reconciliation pipeline.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

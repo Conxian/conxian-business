@@ -13,23 +13,26 @@ Design language conveying trust, stability, and professional financial orchestra
 
 ## 2. Technical Architecture
 ### 2.1 Conxian Gateway (The Orchestrator)
-Now functions as a primary orchestrator for cross-chain atomic swaps and tiered institutional access.
+High-performance Fusion gateway (Rust/Actix-web) orchestrating cross-chain atomic swaps (Stacks, Liquid, Rootstock) and providing tiered institutional access.
 ### 2.2 Conxian Nexus (The Glass Node)
-Provides verifiable state proofs and now acts as a **Decentralized Risk Oracle** for the Bitcoin ecosystem.
-### 2.3 Global Liquidity Mesh
-Active orchestration of atomic swaps across Stacks, Liquid, and Rootstock, ensuring seamless sovereign asset mobility.
+Functions as a **Decentralized Risk Oracle** and API bridge. Provides verifiable state proofs and cryptographically signed risk scoring.
+### 2.3 Conxius Wallet (The Vault)
+Mobile secure enclave integration for local intent signing, providing hardware-level security (TEE/StrongBox).
 
-## 3. Advanced Features
-### 3.1 Decentralized Risk Oracle
-Verifiable, cryptographically signed risk scoring that can be consumed by on-chain smart contracts.
-### 3.2 Conxius Wallet Depth
-Mobile secure enclave integration for local intent signing, providing hardware-level security for retail and institutional users.
+## 3. Core Features
+### 3.1 Global Liquidity Mesh
+Active orchestration of HTLC-based atomic swaps ensuring seamless sovereign asset mobility.
+### 3.2 Governed Automation
+Switching cost strategy via deterministic synchronization between on-chain yields and legacy enterprise ERP systems (SAP, Oracle, NetSuite).
 
 ## 4. Roadmap Alignment
-- **Phase 1-3 (Completed)**: Core Foundation, Monitoring, and Institutional Tiers.
-- **Phase 4 (Completed)**: Liquidity Aggregation and Deep Protocol Handlers.
-- **Phase 5 (Active)**: Global Liquidity Mesh, Risk Oracle, and Wallet Depth.
+Aligned with the **[Strategic Alignment (ALIGNMENT.md)](./ALIGNMENT.md)**.
+
+- **Phase 1-3 (Completed)**: Foundation, L1/L2 core, and sBTC integration.
+- **Phase 4 (Completed)**: Interoperability via Wormhole NTT and sovereign bridging.
+- **Phase 5 (Active)**: Global Liquidity Mesh, Risk Oracle, and Gateway Institutional Beta.
 - **Phase 6 (Next)**: Sovereign AI-Driven Asset Allocation and Universal Bitcoin Identity.
 
 ---
 © 2026 Conxian Labs. Sovereign Autonomous Business.
+[Return to Root README](./README.md) | [Strategic Alignment](./ALIGNMENT.md)

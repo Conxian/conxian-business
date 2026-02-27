@@ -24,3 +24,6 @@
 
 ---
 © 2026 Conxian Labs.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

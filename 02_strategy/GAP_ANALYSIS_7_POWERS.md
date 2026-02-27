@@ -24,3 +24,6 @@
 *   **Current State:** Positioning is "Non-Custodial." Compliance docs are high-level.
 *   **Gap:** No specific alignment with 2026 MiCA or IRS Form 1099-DA rules within the Enclave's verification logic. Lacks "Mathematically Verifiable Compliance Reports" (MVCR).
 *   **7 Powers Alignment:** Branding as "Legal Registry" is weak without hardware-level audit trails that are inherently regulatory-compliant.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

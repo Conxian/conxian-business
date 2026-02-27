@@ -26,3 +26,6 @@ By making hardware-level controls a structural mandate, Conxian forces competito
 
 ## 5. Compliance Alignment
 These standards align with the **2026 MiCA "Secure Custody"** requirements and provide the "Mathematically Verifiable Compliance" necessary for institutional fiduciaries.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

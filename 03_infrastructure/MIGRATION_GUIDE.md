@@ -11,3 +11,6 @@ Conxian Gateway succeeds `Anya-core` and `OPSource`, consolidating their core fu
 1. Archive `Anya-core` and `OPSource` repositories.
 2. Update all B2B integrations to use the new Gateway API (`/api/v1`).
 3. Deploy Conxian Gateway as the primary state monitor and compliance pipe.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

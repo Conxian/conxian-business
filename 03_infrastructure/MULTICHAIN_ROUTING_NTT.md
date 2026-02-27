@@ -23,3 +23,6 @@ Competitors cannot easily copy this process because it requires:
 
 ## 5. Strategic Advantage
 This multichain routing creates **Process Power** by making Conxian's internal treasury operations highly efficient and inherently secure, while presenting a simplified, "Gas-less" interface to the end user.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

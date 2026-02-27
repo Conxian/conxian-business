@@ -55,3 +55,6 @@ Retail success feeds the **Conclave SDK** and **Conxian Gateway** institutional 
 *   **B2B Conversion Rate:** Adoption of the Conclave SDK by 3rd-party devs.
 
 ---
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

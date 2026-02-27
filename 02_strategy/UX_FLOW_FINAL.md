@@ -69,3 +69,6 @@ This document outlines the definitive user experience for Native Token Transfers
 *   **Stuck Transaction:** If the source transaction is not confirmed after a reasonable time (e.g., 1 hour), the UI will show a "Stalled" status with an option to "Try to accelerate" (if the network supports it) or "Contact Support."
 *   **VAA Not Generated:** If the VAA is not generated after a long period, the UI will indicate this and provide guidance.
 *   **App Closed:** If the user closes the app, the tracking process will continue in the background. When the app is re-opened, the status tracker will reflect the latest state.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

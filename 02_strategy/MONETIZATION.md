@@ -66,3 +66,6 @@ For Fintechs, Banks, and Neobanks.
 *   **NO** Front-running/MEV capture on user trades.
 
 ---
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

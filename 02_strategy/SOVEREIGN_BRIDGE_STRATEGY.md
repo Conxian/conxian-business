@@ -134,3 +134,6 @@ To ensure the best UX for the "Digital Citadelist," the Conxius NTT Bridge imple
     3. A **Conxian Relayer** (or authorized Solver) receives the NTT message and the Gas Payment.
     4. The Relayer submits the VAA to the destination chain, paying the gas in ETH/Native token.
 * **Ethos Alignment:** Eliminates the "Gas Token Requirement" bottleneck, making Bitcoin layers feel like a single, unified network.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)
