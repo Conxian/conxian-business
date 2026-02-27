@@ -28,3 +28,6 @@ Technical decisions are aligned with these funding milestones.
 ## Tier 4: Series B/C ($100M+)
 - **Focus**: Dominance in the Bitcoin-DeFi market.
 - **Milestones**: $1B+ TVL.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

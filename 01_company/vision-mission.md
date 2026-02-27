@@ -8,3 +8,6 @@ Conxian Labs builds the infrastructure for Sovereign Autonomous Businesses (SAB)
 
 ## Core Principle
 **Code is Law.**
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

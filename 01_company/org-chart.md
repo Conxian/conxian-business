@@ -13,3 +13,6 @@
 - **Core Protocol**: lib-conxian-core & Conxian (Clarity).
 - **Client Services**: conxius-wallet & conxian-ui.
 - **Infrastructure**: conxius-platform & conxian-nexus.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

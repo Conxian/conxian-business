@@ -19,3 +19,6 @@ All service requests are routed through `/api/v1/...` endpoints managed by the G
 ### Monitoring & Metrics
 - **Health Probes:** Liveness and readiness probes are configured at `/api/v1/health`.
 - **Metrics:** Prometheus-compatible metrics are exposed at `/api/v1/metrics`.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

@@ -21,3 +21,6 @@ For US-based institutional users, Conxian automates the generation of IRS Form 1
 
 ## 5. Strategic Branding: The "Clean-Hands" Protocol
 By embedding compliance directly into the hardware, Conxian brands itself as the **"Clean-Hands" Protocol.** This attracts institutional capital that is legally prohibited from interacting with non-compliant, retail-centric systems, creating a powerful regulatory moat.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

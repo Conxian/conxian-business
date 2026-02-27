@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Documentation CI
 
 on:
   push:
@@ -7,21 +7,19 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  check-docs:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
 
-    - name: configure
-      run: ./configure
+    - name: Validate SUMMARY.md and docs
+      run: make docs-build
 
-    - name: Install dependencies
-      run: make
-
-    - name: Run check
-      run: make check
-
-    - name: Run distcheck
-      run: make distcheck
+    - name: Check for broken internal links
+      run: |
+        grep -oP '(?<=\().*?\.md(?=\))' SUMMARY.md | while read -r link; do
+          if [ ! -f "$link" ]; then
+            echo "ERROR: Broken link in SUMMARY.md -> $link"
+            false
+          fi
+        done

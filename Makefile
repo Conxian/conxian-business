@@ -42,6 +42,16 @@ bench:
 	@echo "Delegating benchmarks to conxius-platform..."
 	$(MAKE) -C conxius-platform bench
 
+docs-build:
+	@echo "Building documentation..."
+	@# For GitHub Pages, the "build" is just ensuring the structure is correct.
+	@ls SUMMARY.md .gitbook.yaml > /dev/null
+
+docs-serve:
+	@echo "To view documentation locally, use a markdown viewer or a local web server."
+	@echo "Running simple python server on port 8000..."
+	python3 -m http.server 8000
+
 deploy:
 	@echo "Delegating deployment to conxius-platform..."
 	$(MAKE) -C conxius-platform deploy

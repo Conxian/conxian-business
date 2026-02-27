@@ -40,3 +40,6 @@ Providing SLA-grade APIs and SDKs for fintechs and neobanks to access the Bitcoi
 
 ---
 © 2026 Conxian Labs.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

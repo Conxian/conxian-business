@@ -51,3 +51,6 @@ We partner with the full spectrum of Bitcoin layers (Stacks, Liquid, BOB, B2, RG
 To become the **Universal Signing Layer** for the internet. Conxius will power the "Citadel" of every Bitcoin-native institution, from startups to sovereign states.
 
 ---
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

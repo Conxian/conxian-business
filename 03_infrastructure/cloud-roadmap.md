@@ -15,3 +15,6 @@ Conxian Labs follows a "Cloud-First, Sovereignty-Anchored" approach.
 ## Resource Allocation
 - **compute**: n2-standard instances (GCP).
 - **storage**: Cloud SQL (Postgres) + Bitcoin Core/Stacks node storage.
+
+---
+[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)
