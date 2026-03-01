@@ -15,7 +15,7 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN != '' && secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Update Submodules to Latest Main
         run: |
@@ -35,7 +35,7 @@ jobs:
           fi
 
       - name: Commit and Push Updates
-        if: env.changes_exist == 'true'
+        if: ${{ env.changes_exist == 'true' }}
         run: |
           git add .
           git commit -m "chore: auto-sync submodules to latest main branches"
