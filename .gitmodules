@@ -34,3 +34,6 @@
 	path = conxian-labs-site
 	url = https://github.com/Conxian/conxian-labs-site
 	branch = main
+[submodule "lib-conclave-sdk"]
+	path = lib-conclave-sdk
+	url = https://github.com/Conxian/lib-conclave-sdk.git
