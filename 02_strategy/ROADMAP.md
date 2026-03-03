@@ -4,7 +4,7 @@ layout: page
 permalink: /roadmap
 ---
 
-# Conxian Ecosystem: Operational Roadmap & Strategic Milestones
+# Conxian Ecosystem: Operational Roadmap & Strategic Milestones (2026)
 
 ## North Star
 
@@ -17,26 +17,19 @@ permalink: /roadmap
 
 ## 🏗️ Operational Levels
 
-### Level 0: Product Validation (ROOT) - [COMPLETED]
-*   **Focus:** Core Enclave & L1/Lightning stability.
-
-### Level 1: Foundation (COMPLETED)
-*   **Focus:** Bitcoin Layer Expansion & Audit Readiness (sBTC, Liquid, RSK).
-
-### Level 2: Interoperability (COMPLETED)
-*   **Focus:** Sovereign Bridging & Mainnet Liquidity (Wormhole NTT).
+### Level 0-2: Foundation & Interoperability - [COMPLETED]
+* **Focus:** Core Enclave, L1/Lightning, sBTC, and Wormhole NTT.
 
 ### Level 3: Sovereign Scaling (ACTIVE)
-*   **Focus:** Infrastructure Deployment & Institutional Hardening (Conxian Gateway, Risk Oracle).
+* **Focus:** Infrastructure Deployment & Institutional Hardening (Conxian Gateway, Risk Oracle).
 
 ### Level 4: Global Sovereignty (STRATEGIC)
-*   **Focus:** Agent System Operations (AgentOps) & SSI Trust Triangle.
-*   **Implementation:** Automated Compliance, Market-Making, and Sovereign AI Agents (Conxient).
-*   **Focus:** B2B SDK & Privacy-Preserving Treasury (Sovereign AI Asset Allocation).
+* **Focus:** B2B SDK, Agent System Operations (AgentOps), and Privacy-Preserving Corporate Treasury.
+* **Implementation:** Automated Compliance, Market-Making, SSI Trust Triangle, and Sovereign AI Asset Allocation (Conxient).
 
 ---
 
-## 📅 Strategic Milestones (M1 - M15+)
+## 📅 Strategic Milestones (M1 - M17+)
 
 | Milestone | Target | Status | Tech Scope | Focus |
 | :--- | :--- | :--- | :--- | :--- |
@@ -48,7 +41,7 @@ permalink: /roadmap
 | **M14: RGB Pro** | Q3 2026 | ⏳ | Full RGB-WASM Validation | **Native Assets** |
 | **M15: Conxient AgentOps 1.0**| Q4 2026 | ⏳ | Automated Risk/Compliance | **Agentic Finance** |
 | **M16: SSI Trust** | Q4 2026 | ⏳ | Holder/Issuer/Verifier DID | **Sovereignty** |
-| **M15: Privacy Hub** | Q4 2026 | ⏳ | WabiSabi Coordinator | **Privacy** |
+| **M17: Privacy Hub** | Q4 2026 | ⏳ | WabiSabi Coordinator | **Privacy** |
 
 ---
 
@@ -56,13 +49,13 @@ permalink: /roadmap
 
 - **B2B Campaign**: "The Corporate Citadel" — targeting Bitcoin-native companies for treasury management using refined ATS specifications.
 - **Developer Alpha**: Opening the Enclave SDK for 3rd-party L2 developers via the Conclave SDK.
-- **Agentic Finance**: Positioning Conxian as the settlement layer for AI financial agents (Conxient).
-- **B2B Campaign**: "The Corporate Citadel" — targeting Bitcoin-native companies for treasury management.
-- **Developer Alpha**: Opening the Enclave SDK for 3rd-party L2 developers.
-- **Sovereign Summit**: Launching Phase 4 at major Bitcoin conferences.
+- **Agentic Finance**: Positioning Conxian Gateway and BLE as the verifiable settlement layer for AI financial agents (Conxient).
+- **Sovereign Summit**: Launching Phase 4 capabilities at major institutional Bitcoin conferences.
 
 ---
+
 [Return to Alignment](../ALIGNMENT.md) | [View Strategy Index](./PRODUCT_STRATEGY.md)
 
----a
+---
+
 [Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

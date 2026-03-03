@@ -30,7 +30,7 @@ Conxian follows a 6-Phase execution strategy, mapped to Operational Levels and M
 | **Phase 1-3** | **L0-L1** | ✅ | **Foundation** | Bitcoin L1, Lightning, sBTC, Core Enclave (M1-M4) |
 | **Phase 4** | **L2** | ✅ | **Interoperability** | Wormhole NTT, Sovereign Bridging, Gas Abstraction (M5-M8) |
 | **Phase 5** | **L3** | 🚀 | **Orchestration** | Global Liquidity Mesh, Gateway Beta, Risk Oracle (M9-M11) |
-| **Phase 6** | **L4** | ⏳ | **Sovereign AI (Conxient)** | AI-Driven Asset Allocation, Universal Bitcoin Identity (M12-M15) |
+| **Phase 6** | **L4** | ⏳ | **Sovereign AI (Conxient)** | AI-Driven Asset Allocation, Universal Bitcoin Identity (M12-M17) |
 
 For detailed milestones, see **[Full Roadmap](./02_strategy/ROADMAP.md)**.
 
