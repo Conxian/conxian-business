@@ -53,6 +53,7 @@
 * [CSO Review - Feb 2026](ALIGNMENT.md#6-chief-strategy-officer-cso--lead-architect-review-feb-2026)
 * [Standardized Product Briefs](internal/strategy/briefs/)
 * [Market Sizing](internal/strategy/MARKET_SIZING.md)
+* [Red Team Assessment](internal/strategy/RED_TEAM_ASSESSMENT.md)
 
 ## 🛡️ Privacy
 * [Sovereign Privacy Report](docs/product-review/SOVEREIGN_PRIVACY_REPORT.md)
