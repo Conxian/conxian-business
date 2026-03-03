@@ -49,5 +49,10 @@
 * [Meeting with Sizwe](06_meetings/2026-02-26-sizwe.md)
 * [Meeting with Khosa](06_meetings/2026-02-27-khosa.md)
 
+## 📈 Strategy Review
+* [CSO Review - Feb 2026](ALIGNMENT.md#6-chief-strategy-officer-cso--lead-architect-review-feb-2026)
+* [Standardized Product Briefs](internal/strategy/briefs/)
+* [Market Sizing](internal/strategy/MARKET_SIZING.md)
+
 ## 🛡️ Privacy
 * [Sovereign Privacy Report](docs/product-review/SOVEREIGN_PRIVACY_REPORT.md)
