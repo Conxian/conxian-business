@@ -11,7 +11,7 @@ permalink: /roadmap
 - **The Ultimate Sovereign Interface**: A single, unified app for the entire Bitcoin ecosystem (L1, L2s, Assets, Sidechains).
 - **Enclave-Grade Security**: Universal TEE/StrongBox protection for all supported protocols.
 - **Vertical Sovereignty**: Deep integration with Bitcoin security (sBTC, Nakamoto) and Agentic Automation (Conxient AgentOps).
-- **B2B Leadership**: Positioning Conxius + Gateway as the institutional standard for Bitcoin-native finance.
+- **Institutional Trust**: Delivering Mathematically Verifiable Compliance Reports (MVCR).
 
 ---
 
@@ -29,19 +29,18 @@ permalink: /roadmap
 
 ---
 
-## 📅 Strategic Milestones (M1 - M17+)
+## 📅 Strategic Milestones (M1 - M18+)
 
 | Milestone | Target | Status | Tech Scope | Focus |
 | :--- | :--- | :--- | :--- | :--- |
-| **M1-M4** | Q4'24-Q2'25 | ✅ | L1/L2/Vault | **Foundation** |
-| **M5-M8** | Q3'25-Q4'25 | ✅ | Bridge/Privacy/UX | **Interoperability** |
-| **M9-M11** | Q1'26-Q2'26 | ✅ | Assets/ZK/BitVM | **Verification** |
+| **M1-M11** | 2024-2025 | ✅ | Foundation/Bridge/ZK/BitVM | **Historical** |
 | **M12: Real Rails** | Q2 2026 | 🚀 | **Infrastructure Deployment** | **Deployment** |
-| **M13: Musig2** | Q3 2026 | ⏳ | Taproot Musig2 Quorums | **Security** |
-| **M14: RGB Pro** | Q3 2026 | ⏳ | Full RGB-WASM Validation | **Native Assets** |
-| **M15: Conxient AgentOps 1.0**| Q4 2026 | ⏳ | Automated Risk/Compliance | **Agentic Finance** |
-| **M16: SSI Trust** | Q4 2026 | ⏳ | Holder/Issuer/Verifier DID | **Sovereignty** |
-| **M17: Privacy Hub** | Q4 2026 | ⏳ | WabiSabi Coordinator | **Privacy** |
+| **M13: Musig2** | Q3 2026 | ⏳ | Taproot Musig2 Institutional Quorums | **Security** |
+| **M14: RGB Pro** | Q3 2026 | ⏳ | Full RGB-WASM Client-Side Validation | **Native Assets** |
+| **M15: Conxient Ops**| Q4 2026 | ⏳ | AI-Driven AgentOps 1.0 | **Agentic Finance** |
+| **M16: SSI Trust** | Q4 2026 | ⏳ | Universal Bitcoin Identity (UBI) | **Sovereignty** |
+| **M17: Privacy Hub** | Q4 2026 | ⏳ | WabiSabi Coordinator Integration | **Privacy** |
+| **M18: The Engine** | Q4 2026 | ⏳ | EDI/EAI & GAAP/XBRL ERP Sync | **Enterprise** |
 
 ---
 
@@ -50,7 +49,7 @@ permalink: /roadmap
 - **B2B Campaign**: "The Corporate Citadel" — targeting Bitcoin-native companies for treasury management using refined ATS specifications.
 - **Developer Alpha**: Opening the Enclave SDK for 3rd-party L2 developers via the Conclave SDK.
 - **Agentic Finance**: Positioning Conxian Gateway and BLE as the verifiable settlement layer for AI financial agents (Conxient).
-- **Sovereign Summit**: Launching Phase 4 capabilities at major institutional Bitcoin conferences.
+- **Institutional Moat**: Branding as the "Clean-Hands" protocol with automated MiCA/IRS compliance.
 
 ---
 
