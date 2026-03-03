@@ -10,7 +10,7 @@ permalink: /roadmap
 
 - **The Ultimate Sovereign Interface**: A single, unified app for the entire Bitcoin ecosystem (L1, L2s, Assets, Sidechains).
 - **Enclave-Grade Security**: Universal TEE/StrongBox protection for all supported protocols.
-- **Vertical Sovereignty**: Deep integration with Bitcoin security (sBTC, Nakamoto) and Agentic Automation (AgentOps).
+- **Vertical Sovereignty**: Deep integration with Bitcoin security (sBTC, Nakamoto) and Agentic Automation (Conxient AgentOps).
 
 ---
 
@@ -25,7 +25,7 @@ permalink: /roadmap
 
 ### Level 4: Global Sovereignty (STRATEGIC)
 *   **Focus:** Agent System Operations (AgentOps) & SSI Trust Triangle.
-*   **Implementation:** Automated Compliance, Market-Making, and Sovereign AI Agents.
+*   **Implementation:** Automated Compliance, Market-Making, and Sovereign AI Agents (Conxient).
 
 ---
 
@@ -37,7 +37,7 @@ permalink: /roadmap
 | **M12: Real Rails** | Q2 2026 | 🚀 | **Infrastructure Deployment** | **Deployment** |
 | **M13: Musig2** | Q3 2026 | ⏳ | Taproot Musig2 Quorums | **Security** |
 | **M14: RGB Pro** | Q3 2026 | ⏳ | Full RGB-WASM Validation | **Native Assets** |
-| **M15: AgentOps 1.0**| Q4 2026 | ⏳ | Automated Risk/Compliance | **Agentic Finance** |
+| **M15: Conxient AgentOps 1.0**| Q4 2026 | ⏳ | Automated Risk/Compliance | **Agentic Finance** |
 | **M16: SSI Trust** | Q4 2026 | ⏳ | Holder/Issuer/Verifier DID | **Sovereignty** |
 
 ---
@@ -46,7 +46,7 @@ permalink: /roadmap
 
 - **B2B Campaign**: "The Corporate Citadel" — targeting Bitcoin-native companies for treasury management using refined ATS specifications.
 - **Developer Alpha**: Opening the Enclave SDK for 3rd-party L2 developers via the Conclave SDK.
-- **Agentic Finance**: Positioning Conxian as the settlement layer for AI financial agents.
+- **Agentic Finance**: Positioning Conxian as the settlement layer for AI financial agents (Conxient).
 
 ---
 [Return to Alignment](../ALIGNMENT.md) | [View Strategy Index](./PRODUCT_STRATEGY.md)
