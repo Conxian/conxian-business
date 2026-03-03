@@ -40,7 +40,7 @@ permalink: /roadmap
 | **M15: Conxient Ops**| Q4 2026 | ⏳ | AI-Driven AgentOps 1.0 | **Agentic Finance** |
 | **M16: SSI Trust** | Q4 2026 | ⏳ | Universal Bitcoin Identity (UBI) | **Sovereignty** |
 | **M17: Privacy Hub** | Q4 2026 | ⏳ | WabiSabi Coordinator Integration | **Privacy** |
-| **M18: The Engine** | Q4 2026 | ⏳ | EDI/EAI & GAAP/XBRL ERP Sync | **Enterprise** |
+| **M18: Universal Integration** | Q4 2026 | ⏳ | OData, EDI, ISO 20022 EDI/EAI & GAAP/XBRL ERP Sync Enterprise SSO | **Enterprise** |
 
 ---
 
