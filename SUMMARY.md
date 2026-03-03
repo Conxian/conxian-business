@@ -21,6 +21,10 @@
 * [ATS Standard 2026](02_strategy/ATS_TEMPLATE.md)
 * [AgentOps Specification](02_strategy/AGENT_OPS_SPEC.md)
 
+## 📜 Proposals (CXIPs)
+* [CXIP-013: Revenue Distribution](Conxian/CXIP-013.md)
+* [CXIP-015: Bitcoin Stablecoins](Conxian/CXIP-015.md)
+
 ## 🏗️ Infrastructure
 * [Cloud Roadmap](03_infrastructure/cloud-roadmap.md)
 * [GCP Infrastructure](03_infrastructure/GCP_INFRASTRUCTURE.md)
