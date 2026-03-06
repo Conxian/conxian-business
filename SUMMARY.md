@@ -33,7 +33,7 @@
 * [ERP Integration](03_infrastructure/ERP_INTEGRATION_MODELS.md)
 
 ## ⚙️ Operations
-* [Dev-to-Live Workflow](conxius-platform/WORKFLOW.md)
+* [Dev-to-Live Workflow](conxius-platform/DEPLOYMENT.md)
 * [System Deployment Guide](conxius-platform/DEPLOYMENT.md)
 
 ## ⚖️ Legal & Compliance
