@@ -62,5 +62,8 @@
 * [Root-Leaf Alignment Report](internal/strategy/root_leaf_alignment_report.md)
 * [System & Asset Review 2026](internal/strategy/system_asset_review_2026.md)
 
+## 🔬 Research
+* [Superiority Evaluation 2026](docs/research/SUPERIORITY_REPORT_2026.md)
+
 ## 🛡️ Privacy
 * [Sovereign Privacy Report](docs/product-review/SOVEREIGN_PRIVACY_REPORT.md)
