@@ -1,52 +1,36 @@
-# Conxian Labs: Strategic Alignment & Universal Interoperability
+# Conxian Labs: Strategic Alignment & Structural Integrity
 
-This document is the **Central Nervous System** for Conxian Labs. It provides high-level alignment across all repositories, submodules, and business functions, reflecting our 2026 pivot to the **Universal Interoperability Layer**.
+This document is the **Central Nervous System** for Conxian Labs. It provides high-level alignment across all repositories, submodules, and business functions, accurately mapping verified technical pull requests into the institutional documentation.
 
-## 1. Vision: The Sovereign Interface for AI, TradFi, and DeFi
+## 1. Vision: Non-Custodial Sovereign Truth
 **Code is Law. Sovereignty is Absolute.**
-Conxian Labs is no longer just an alternative to legacy systems; it is the universal plumbing that connects the AI Agent Economy, Enterprise TradFi, and Decentralized Finance. We provide the mathematically verifiable truth required for high-velocity commerce.
+Conxian Labs engineers systems that mathematically prevent centralized TradFi failures (fractional reserves, commingled funds). The ecosystem's resilience is anchored in self-custody and deterministic, Nakamoto-ready state proofs, entirely rejecting centralized intermediary reliance.
 
-- **AI Agent Economy**: The primary interface for autonomous commerce via **Model Context Protocol (MCP)** and **AP2 Mandates**.
-- **Enterprise TradFi**: Bridging SAP/Oracle ERPs to on-chain settlement via the **Fusion Gateway** and **Deterministic State Proofs**.
-- **Cross-Chain Liquidity**: A "Liquidity Vacuum" routing value from EVM (Ethereum) and Solana into the Bitcoin-anchored Stacks (Nakamoto) ecosystem.
+## 2. Ecosystem Architecture (Phase 4 Unbundled)
+The system is structurally unbundled into three isolated suites to ensure cryptographic truth and operational focus:
 
-## 2. Ecosystem Architecture (The Unbundled Triad)
-To maximize M&A flexibility and regulatory focus, the system is unbundled into three isolated suites:
+### 2.1 B2B Suite (Infrastructure & SDK)
+- **[lib-conclave-sdk](./lib-conclave-sdk)**: Platform-agnostic Enclave SDK (Android TEE / iOS Secure Enclave).
+- **[conxian-nexus](./conxian-nexus)**: Decentralized "Glass Node" Risk Oracle & State Sync. Implements **Compliance Circuit Breakers**.
 
-### 1. B2B Suite (Infrastructure & SDK)
-- **[lib-conclave-sdk](./lib-conclave-sdk)**: Platform-agnostic Enclave SDK (Android TEE / iOS Secure Enclave). The "Intel Inside" for sovereign apps.
-- **[conxian-nexus](./conxian-nexus)**: Decentralized "Glass Node" Risk Oracle. Implements **Compliance Circuit Breakers** and **x402 Micropayments**.
+### 2.2 B2C Suite (Autonomous Agentic Interface)
+- **[conxius-wallet](./conxius-wallet)**: Flagship interface features a native **Kotlin Model Context Protocol (MCP) server** and hardware-enclosed **StrongBox** signing (Zero Secret Egress).
 
-### 2. B2C Suite (Consumer & AI Interface)
-- **[conxius-wallet](./conxius-wallet)**: Autonomous Agentic Interface. Features a native **Kotlin MCP Server** and hardware-enclosed **StrongBox** signing to prevent AI logic drift.
-
-### 3. Core Infrastructure & Routing
-- **[conxian-gateway](./conxian-gateway)**: High-performance Fusion gateway. Pipes legacy SOAP/REST/WSDL feeds into on-chain proofs.
+### 2.3 Core Infrastructure & Orchestration
+- **[conxian-gateway](./conxian-gateway)**: High-performance Fusion gateway. **Nexus-First polling active.**
 - **[lib-conxian-core](./lib-conxian-core)**: Single Source of Truth for protocol primitives.
 
-## 3. Strategic Roadmap (Level 5 Initiation)
+## 3. Verified Technical Implementation (Ground Truth)
+- **Agent Payments Protocol (AP2)**: Integrated Verifiable Mandates (VCs) to govern autonomous agent behavior.
+- **StrongBox Hardware Isolation**: Enforced hardware-enclosed signing to mathematically mitigate LLM/agent prompt injection.
+- **A402 Atomic Service Channels**: Executed trust-minimized M2M commerce utilizing TEE-assisted adaptor signatures.
+- **On-Chain Guardrails**: Deployed strictly enforced agent spend limits utilizing Clarity on the Stacks blockchain.
 
-| Phase | Level | Status | Focus | Key Milestones |
-| :--- | :--- | :--- | :--- | :--- |
-| **Phase 1-4** | **L0-L2** | ✅ | **Foundation** | Bitcoin L1, sBTC, Unbundling, Real Rails (M1-M11) |
-| **Phase 5** | **L3** | 🚀 | **Interoperability** | **Agentic Wallet**, **ERP Fusion**, **EVM/Solana Routing** |
-| **Phase 6** | **L4** | ⏳ | **Global Sovereignty** | Conxient AI Alpha, UBI, Institutional Mesh (M12-M17) |
-
-## 4. Design & Operational Standards
-- **Theme**: Earthy Corporate Finance (#2E403B / #D4A017). Professional trust and deterministic stability.
-- **Security**: "Zero Secret Egress" mandate. Hardware-level isolation for all intent-signing.
-- **Compliance**: **Mathematically Verifiable Compliance Reports (MVCR)** for MiCA and IRS, executed at the "Edge" on user devices.
+## 4. Operational Standards
+- **Zero Secret Egress**: Private keys never enter application memory or leave the hardware enclave.
+- **Unbundled Integrity**: Successful completion of Phase 1-4 structural unbundling.
+- **Theme**: Earthy Corporate Finance (#2E403B / #D4A017).
 
 ---
+© 2026 Conxian Labs. Sovereign Autonomous Business.
 [Return to Root README](./README.md) | [View Whitepaper](./WHITEPAPER.md)
-
-## 5. CSO & Lead Architect Strategic Pivot (March 2026)
-
-### 5.1. The AI Agent Economy (MCP Integration)
-Conxius-wallet is now the default financial engine for AI agents. By embedding an MCP server locally, we solve the integration bottleneck. Our **AP2 Mandates** and **StrongBox isolation** mathematically prevent the "Prompt Injection Treasury Drain" risk common in legacy bot architectures.
-
-### 5.2. Enterprise ERP Bridge
-The Fusion Gateway enables enterprises to achieve verifiable settlement without re-engineering their Oracle/SAP backends. We provide a compliance upgrade, piping legacy data into "State Proofs" for instant reconciliation and MVCR reporting.
-
-### 5.3. Interlayer Liquidity Vacuum
-Through Wormhole NTT and the Conclave SDK, we allow EVM/Solana developers to embed our headless enclave. This routes fragmented liquidity into the Nakamoto-ready monetary platform, establishing Conxian as the high-integrity settlement hub for the multichain world.

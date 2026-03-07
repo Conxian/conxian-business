@@ -1,6 +1,6 @@
 # Conxian Protocol: Ruthless Risk Registry & Due Diligence (2026 Revision)
 
-This document categorizes risks associated with the **Universal Interoperability Layer** pivot and outlines "No-Egress" mitigation strategies.
+This document categorizes structural risks and outlines "No-Egress" mitigation strategies based on verified technical implementation.
 
 ---
 
@@ -28,7 +28,7 @@ This document categorizes risks associated with the **Universal Interoperability
 
 ### 3.1 Vendor Dependency (Android TEE)
 *   **Risk**: Reliance on specific hardware vendors.
-*   **Mitigation**: **iOS Secure Enclave Parity Plan (M13).** Platform-agnostic Conclave Core (Rust) supports Android, iOS, and enterprise HSMs.
+*   **Mitigation**: **iOS Secure Enclave Parity Plan (M16).** Platform-agnostic Conclave Core (Rust) supports Android, iOS, and enterprise HSMs.
 
 ---
 
@@ -36,7 +36,7 @@ This document categorizes risks associated with the **Universal Interoperability
 
 ### 4.1 M2M "Human-in-the-Loop" Problem
 *   **Risk**: Regulatory failure for fully autonomous systems.
-*   **Mitigation**: **MVCR (Mathematically Verifiable Compliance Reports).** Linking machine actions to "Human Intents" via signed mandates, ensuring legal accountability while maintaining technical automation.
+*   **Mitigation**: **Signed Mandates.** Linking machine actions to "Human Intents" via cryptographically signed AP2 mandates, ensuring legal accountability while maintaining technical automation.
 
 ---
 
@@ -47,4 +47,5 @@ This document categorizes risks associated with the **Universal Interoperability
 *   **Mitigation**: **Rust Core Mandate.** All mission-critical signing and state logic must reside in Conclave Core (Rust). TypeScript is strictly for UI/UX rendering. Mandatory release SBOM generation.
 
 ---
+© 2026 Conxian Labs. Sovereign Autonomous Business.
 [Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

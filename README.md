@@ -1,31 +1,30 @@
 # Conxian Labs: Internal Business Repository
 
-This private repository is the **Central Nervous System** for Conxian Labs. It reflects our 2026 strategic pivot to the **Universal Interoperability Layer** for AI, TradFi, and DeFi.
+This private repository is the **Central Nervous System** (CNS) for Conxian Labs. It provides technical mapping and strategic alignment for building a **Sovereign Autonomous Business**.
 
-## 🚀 Strategic Foundation
-- **[Strategic Alignment (ALIGNMENT.md)](./ALIGNMENT.md)** - Universal interoperability strategy and unbundled architecture.
-- **[System Whitepaper (WHITEPAPER.md)](./WHITEPAPER.md)** - High-integrity settlement layer specs (v1.6.0).
-- **[Full Roadmap](./02_strategy/ROADMAP.md)** - Milestones for AI Agent Mastery and ERP Fusion.
+## 🚀 The Mission
+We engineer systems that mathematically prevent the black-box, fractional-reserve failures of centralized platforms through **Zero Secret Egress**, non-custodial sovereignty, and hardware-enclosed execution.
 
-## 📈 Strategic Growth Vectors
-The ecosystem is optimized for three primary market drivers:
-1. **The AI Agent Economy**: Default financial engine for autonomous commerce via **MCP** and **AP2**.
-2. **Enterprise ERP Fusion**: Verifiable settlement for **SAP/Oracle** via the **Fusion API**.
-3. **Liquidity Vacuum**: Routing value from **EVM/Solana** into the Bitcoin-native stack.
+## 🛠️ Ground Truth: Agentic Wallet Interface
+The ecosystem has successfully implemented the following technical milestones:
+- **AP2 Protocol**: Verifiable Mandates governing autonomous AI spending.
+- **StrongBox TEE**: Hardware-enclosed signing to mitigate LLM prompt injection.
+- **A402 ASCs**: Atomic service channels using TEE-assisted adaptor signatures.
+- **Native MCP Server**: Local Model Context Protocol server for sovereign AI context.
+- **On-Chain Limits**: Smart contract-enforced spend caps on Stacks (Clarity).
 
-## 📦 Isolated Product Suites
-- **[B2B Suite](./lib-conclave-sdk)**: Enclave SDK, Nexus Risk Oracle, and Compliance Circuit Breakers.
-- **[B2C Suite](./conxius-wallet)**: Autonomous Agentic Interface with hardware-grade security.
-- **[Core Infrastructure](./conxian-gateway)**: Fusion Gateway and MVCR compliance routing.
+## 📦 Unbundled Architecture (Phase 4 Complete)
+- **[B2B Suite](./lib-conclave-sdk)**: Enclave SDK and Nexus Risk Oracle.
+- **[B2C Suite](./conxius-wallet)**: Autonomous Agentic Interface.
+- **[Core Infrastructure](./conxian-gateway)**: Fusion Gateway and state routing.
 
 ## 📂 Navigation
-- **[01_company](./01_company)** - Org structure and unit compartmentalization.
-- **[02_strategy](./02_strategy)** - Monetization, product strategy, and market timing.
-- **[03_infrastructure](./03_infrastructure)** - ERP integration models and NTT routing.
-- **[04_legal](./04_legal)** - Edge Compliance, MiCA/IRS posture, and Risk Registry.
+- **[Strategic Alignment (ALIGNMENT.md)](./ALIGNMENT.md)** - Structural integrity and technical roadmap.
+- **[System Whitepaper (WHITEPAPER.md)](./WHITEPAPER.md)** - High-integrity settlement layer specs (v1.5.0).
+- **[Full Roadmap](./02_strategy/ROADMAP.md)** - Phase 5 milestones: Guardrail stress-testing.
 
 ## 🛠️ Management
-Use the root **Makefile** to manage isolated suites and verify unbundling:
+Use the root **Makefile** to manage isolated suites:
 - \`make build-b2b\`: Build SDK and Nexus.
 - \`make unbundle\`: Verify architectural compartmentalization.
 

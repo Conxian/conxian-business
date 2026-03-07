@@ -4,24 +4,20 @@ layout: page
 permalink: /roadmap
 ---
 
-# Conxian Ecosystem: Universal Interoperability Roadmap (2026)
+# Conxian Ecosystem: Operational Roadmap (2026 Ground Truth)
 
 ## North Star
-The definitive high-integrity settlement layer for the AI-driven world.
+The definitive high-integrity interface for the autonomous Bitcoin economy.
 
 ---
 
 ## 🏗️ Operational Levels
 
-### Level 1-2: Foundations - [COMPLETED]
-* Focus: Core Enclave, sBTC, and Architectural Unbundling.
+### Level 1-4: Foundation & Unbundling - [COMPLETED]
+* Focus: Core Enclave, sBTC, Phase 4 Unbundling, and Agentic Interface.
 
-### Level 3: Interoperability Initiation (ACTIVE)
-* Focus: **AI Agent Mastery** (MCP/AP2) and **Enterprise ERP Fusion**.
-* Goal: Position as the "universal plumbing" for TradFi and Agentic Finance.
-
-### Level 4: Global Sovereignty (STRATEGIC)
-* Focus: Universal Bitcoin Identity (UBI) and AI-Driven Asset Allocation (Conxient).
+### Level 5: Agentic Mastery (ACTIVE)
+* Focus: Stress-testing Clarity guardrails and human-in-the-loop intents.
 
 ---
 
@@ -30,18 +26,13 @@ The definitive high-integrity settlement layer for the AI-driven world.
 | Milestone | Target | Status | Tech Scope | Focus |
 | :--- | :--- | :--- | :--- | :--- |
 | **M1-M12** | 2024-2025 | ✅ | Foundation/Unbundling | **Historical** |
-| **M13: Agentic Mastery** | Q2 2026 | 🚀 | **Kotlin MCP Server & AP2** | **AI Economy** |
-| **M14: ERP Fusion** | Q3 2026 | ⏳ | **SAP/Oracle Gateway Bridge** | **TradFi Settlement** |
-| **M15: Liquidity Vacuum**| Q4 2026 | ⏳ | **EVM/Solana Routing (NTT)** | **TVL Capture** |
-| **M16: SSI Trust** | Q4 2026 | ⏳ | Universal Bitcoin Identity (UBI) | **Sovereignty** |
-| **M17: Conxient AI** | Q1 2027 | ⏳ | AI-Driven Sovereign Allocation | **Intelligence** |
+| **M13: Agentic interface** | Q2 2026 | ✅ | **AP2, A402, and Kotlin MCP Server** | **Autonomous Finance** |
+| **M14: Guardrail Stress-Test**| Q3 2026 | 🚀 | Clarity On-Chain Limit Validation | **Security** |
+| **M15: Biometric Intents** | Q3 2026 | ⏳ | Human-in-the-Loop MCP Unlocking | **Sovereignty** |
+| **M16: iOS Parity** | Q3 2026 | ⏳ | Apple Secure Enclave Integration | **Market Expansion** |
+| **M17: SSI Trust** | Q4 2026 | ⏳ | Universal Bitcoin Identity (UBI) | **Identity** |
+| **M18: Privacy Hub** | Q4 2026 | ⏳ | WabiSabi Coordinator Integration | **Privacy** |
 
 ---
-
-## 🚀 Go-to-Market: The Interoperability Push
-- **AI Startups**: Offering the "Plug-and-Play" financial stack for autonomous agents.
-- **Institutional CFOs**: Positioning the Gateway as a risk-mitigation tool for ERP-to-chain reconciliation.
-- **dApp Developers**: Providing the platform-agnostic Conclave SDK for secure liquidity routing.
-
----
+© 2026 Conxian Labs. Sovereign Autonomous Business.
 [Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)

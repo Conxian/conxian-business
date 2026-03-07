@@ -1,42 +1,31 @@
-# Conxian: The Universal Interoperability Layer for AI & TradFi
-**Whitepaper v1.6.0 (2026 Revision - The Interoperability Upgrade)**
+# Conxian: The Bitcoin Sovereign Finance Layer
+**Whitepaper v1.5.0 (2026 Revision - Agentic Interface Ground Truth)**
 
 ## Abstract
-Conxian is the definitive high-integrity settlement layer designed to make Bitcoin the productive anchor for the AI Agent Economy and Enterprise TradFi. By integrating Stacks L2 (Nakamoto) smart contracts with a hardware-anchored middleware triad (Gateway, Nexus, Wallet), Conxian provides the mathematically verifiable truth required for the 2026 digital economy.
+Conxian is a high-integrity DeFi orchestration platform designed to make Bitcoin a productive asset. By integrating Stacks L2 (Nakamoto) smart contracts with a hardware-anchored middleware triad, Conxian provides the technical truth required for a Sovereign Autonomous Business.
 
-## 1. The Strategic Pivot
-Conxian has evolved from a DeFi protocol into a **Universal Interoperability Layer**. We solve the "Trust Bottleneck" between high-velocity machine agents, legacy enterprise accounting, and decentralized monetary protocols.
+## 1. Vision & Ethos
+### 1.1 Non-Custodial Truth
+All system states are anchored to the Bitcoin burn-block height. We mathematically prevent centralized, fractional-reserve failures by enforcing hardware-enclosed execution and trustless cryptographic proof.
 
-## 2. Growth Vectors
-### 2.1 The AI Agent Economy (Agentic Mastery)
-The Conxius-wallet serves as the **Autonomous Interface** for AI.
-- **AP2 Mandates**: Human-set rules for machine execution.
-- **Hardware Isolation**: StrongBox-enforced signing to prevent prompt-injection drainage.
-- **A402 Channels**: Atomic payments cryptographically bound to service delivery.
+## 2. Technical Architecture: Agentic Interface
+The Conxius-wallet is elevated into an **Autonomous Agentic Interface**.
+- **Kotlin MCP Server**: Embedded Model Context Protocol server providing localized, sovereign AI context for LLM tool-calling.
+- **Hardware-Enclosed Signing**: All agent-initiated transactions require signing within the **Android StrongBox** (Zero Secret Egress).
+- **A402 ASCs**: Atomic Service Channels utilizing TEE-assisted adaptor signatures to ensure payment atomicity for digital services.
 
-### 2.2 Enterprise ERP Fusion (Technical Truth)
-The Conxian Gateway serves as a **Compliance & Settlement Upgrade** for the Office of the CFO.
-- **Legacy Ingestion**: Bridges SAP/Oracle feeds directly into on-chain "State Proofs."
-- **Deterministic Sync**: Automates month-end reconciliation with 0% variance.
+## 3. Protocol Guardrails
+Conxian enforces absolute cryptographic boundaries between human intent and machine speed.
 
-### 2.3 Cross-Layer Liquidity Vacuum
-The Conclave SDK serves as the **Liquidity Hub** for EVM and Solana ecosystems.
-- **Headless Routing**: Securely routing fragmented TVL into the Bitcoin-native stack via Wormhole NTT.
+### 3.1 AP2 Verifiable Mandates
+Autonomous execution is governed by the **Agent Payments Protocol (AP2)**. Mandates are tamper-proof digital contracts (VCs) that the hardware enclave verifies against unsigned payloads before generating a signature. This mitigates prompt injection at the silicon level.
 
-## 3. Compliance & Sovereignty
-### 3.1 Edge Compliance (MVCR)
-Conxian generates **Hardware-Attested Compliance Reports** directly on-device. This satisfy MiCA (EU) and IRS 1099-DA (US) requirements while maintaining 100% user sovereignty. We execute compliance at the "Edge," removing the liability of centralized data silos.
+### 3.2 On-Chain Spend Limits (Clarity)
+As a final line of defense, the wallet deploys smart contract-enforced spend limits on the Stacks blockchain. Daily and per-transaction caps are baked into the **Clarity settlement layer**, ensuring protocol-level rejection of unauthorized drainage.
 
-### 3.2 Zero Secret Egress
-Our architecture mandates that private keys never leave the secure hardware enclave. This technical moat makes Conxian structurally superior to any software-only or centralized custodian.
-
-## 4. Technical Architecture
-### 4.1 Fusion Gateway (B2M)
-The orchestration layer for enterprise ingestion and liquidity routing.
-### 4.2 Nexus Oracle (B2E)
-The decentralized "Glass Node" providing verifiable proofs and risk scoring.
-### 4.3 Sovereign Wallet (B2C)
-The autonomous interface for retail users and AI agents.
+## 4. Operational Standards
+- **Zero Secret Egress**: Private keys never leave the secure hardware enclave.
+- **Phase 4 Unbundling**: Structural isolation of B2B, B2C, and Infrastructure suites.
 
 ---
 © 2026 Conxian Labs. Sovereign Autonomous Business.
