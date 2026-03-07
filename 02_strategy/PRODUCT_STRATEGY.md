@@ -4,44 +4,35 @@ layout: page
 permalink: /docs/product-strategy
 ---
 
-# Conxian Product Strategy: Vertical Sovereignty
+# Conxian Product Strategy: The Universal Interoperability Layer (2026)
 
-**Vision:** To build the definitive institutional and retail interface for Bitcoin-native finance, powered by autonomous intelligence (Conxient).
+**Vision:** To build the definitive settlement hub for AI, TradFi, and DeFi, anchored by the technical truth of Bitcoin.
 
-## 1. Value Proposition: The Bitcoin-Native Moat
+## 1. Growth Vector 1: The AI Agent Economy (MCP)
+The conxius-wallet is positioned as the **"Plug-and-Play" Financial Engine** for AI agents.
+- **MCP Integration**: Native Model Context Protocol server allows any LLM (Gemini, GPT, Claude) to securely interface with wallet tools.
+- **AP2 Mandates**: Cryptographically bound "Mandates" ensure agentic actions never exceed human-set boundaries.
+- **StrongBox Isolation**: Prevents prompt injection from draining treasuries by verifying mandates at the hardware level.
 
-Conxian focuses on **Vertical Sovereignty**:
-- **Hardware-Enforced Logic**: All signing and intent verification occurs in the TEE/StrongBox.
-- **Protocol-First Interoperability**: Direct L1-to-L2 integrations (sBTC, L-BTC) rather than high-risk cross-chain bridges.
-- **Agentic Automation**: Transitioning users from active traders to strategic architects via the Conxient AI Engine.
+## 2. Growth Vector 2: Enterprise ERP Fusion
+The conxian-gateway serves as a **Compliance and Settlement Upgrade** for legacy finance.
+- **TradFi Bridge**: Pipes SOAP/REST/WSDL feeds from SAP/Oracle into on-chain "State Proofs."
+- **Deterministic Reconciliation**: Automates the "Month-End Close" by matching legacy entries with Nakamoto-ready settlement.
+- **Switching Costs**: Integration into the Office of the CFO creates high organizational lock-in (Hamilton Helmer's 7 Powers).
 
-## 2. Competitive Advantage: 7 Powers Alignment
+## 3. Growth Vector 3: Interlayer Liquidity Vacuum
+The lib-conclave-sdk routes value from fragmented ecosystems into the Bitcoin-native stack.
+- **EVM/Solana Routing**: Headless enclave integration for dApp developers to route liquidity via Wormhole/NTT.
+- **Liquidity Vacuum**: Capturing TVL from high-velocity chains and securing it on the Stacks-native automated monetary platform.
 
-| Power | Conxian Implementation |
+## 4. Competitive Advantage: 7 Powers Alignment (2026)
+
+| Power | Implementation |
 | :--- | :--- |
-| **Network Economies** | SAB framework as the default settlement layer for AI agents (KYA). |
-| **Switching Costs** | Deep ERP integration (SAP/Oracle) for automated corporate treasury. |
-| **Counter-Positioning** | Mandating TEE security, making retail hot-wallets look "obsolete." |
-| **Process Power** | Opaque and complex multi-chain routing via Wormhole NTT. |
-
-## 3. The Conxient Flywheel (Phase 6)
-
-1. **Reputation**: Users build Universal Bitcoin Identity (UBI) through cross-layer activity.
-2. **Intelligence**: Conxient analyzes UBI and provides sovereign allocation insights.
-3. **Execution**: One-click rebalancing across the Global Liquidity Mesh.
-4. **Retention**: Hardware-attested reputation creates high exit barriers.
-
-## 4. Operational Roadmap (2026 Focus)
-
-| Milestone | Deliverable | Focus |
-| :--- | :--- | :--- |
-| **M12: Real Rails** | Changelly/Bisq Proxy Deployment | Deployment |
-| **M13: Musig2** | Taproot Musig2 Institutional Quorums | Security |
-| **M14: RGB Pro** | Full RGB-WASM Client-Side Validation | Native Assets |
-| **M15: Conxient Ops**| AI-Driven AgentOps 1.0 | Agentic Finance |
-| **M16: SSI Trust** | Universal Bitcoin Identity (UBI) | Sovereignty |
-| **M17: Privacy Hub** | WabiSabi Coordinator Integration | Privacy |
+| **Network Economies** | Standardizing AI financial communication via MCP/AP2. |
+| **Switching Costs** | Deep SAP/Oracle ERP integration for corporate settlement. |
+| **Counter-Positioning** | "Hardware-grade" security making retail browser wallets obsolete. |
+| **Process Power** | Opaque multi-chain settlement routing via Conclave Core. |
 
 ---
-
 [Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)
