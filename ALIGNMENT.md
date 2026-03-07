@@ -7,33 +7,33 @@ This document is the **Central Nervous System** for Conxian. It provides high-le
 Conxian engineers systems that mathematically prevent centralized TradFi failures. The ecosystem's resilience is anchored in self-custody and deterministic, Nakamoto-ready state proofs, entirely rejecting centralized intermediary reliance.
 
 ## 2. Multi-Business Architecture (Phase 4 Unbundled)
-The ecosystem is organized into standalone businesses under the **Conxian** umbrella:
+The ecosystem is organized into standalone businesses under the **Conxian** umbrella, each targeting a specific TAM:
 
 ### 2.1 Conxius (Access Business)
-- **Product**: Sovereign Android Vault.
-- **Moat**: Android TEE/StrongBox signing (Zero Secret Egress).
-- **Core Technology**: Kotlin MCP server for Agentic Finance.
+- **Brand**: Sovereign Android Vault.
+- **TAM**: $250B (Mobile Self-Custody).
+- **Core Technology**: Android TEE/StrongBox signing; Kotlin MCP server.
 
 ### 2.2 Conxian Sovereign Finance (CSF) (Finance Business)
-- **Product**: Bitcoin-Native Liquidity & Yield Protocol.
-- **Moat**: 5-way revenue distribution (CXIP-013) and Fiscal Dam remediated settlement logic.
-- **Core Technology**: Clarity 4 Smart Contracts (Stacks Epoch 3.1).
+- **Brand**: Bitcoin-Native Settlement Protocol.
+- **TAM**: $1.4T (Total Bitcoin Capital).
+- **Core Technology**: Clarity 4 Smart Contracts; CXIP-013 Revenue Distribution.
 
 ### 2.3 Conxian Fusion (Connectivity Business)
-- **Product**: High-performance Fusion Gateway.
-- **Moat**: "The Engine" - Deterministic ERP synchronization (SAP/Oracle).
-- **Core Technology**: Rust Actix-web Gateway with ISO 20022 compliance egress.
+- **Brand**: Institutional Gateway & ERP Bridge.
+- **TAM**: $20B (Blockchain-in-ERP).
+- **Core Technology**: Rust Actix-web Gateway; "The Engine" Deterministic Sync.
 
 ### 2.4 Conxian Nexus (State Business)
-- **Product**: Trustless State & Risk Oracle.
-- **Moat**: Cryptographically verifiable "Glass Node" architecture.
-- **Core Technology**: Merkle State Proofs and OpenTelemetry institutional ingestion.
+- **Brand**: Trustless State & Risk Oracle.
+- **TAM**: $5B (Blockchain Risk Management).
+- **Core Technology**: Merkle State Proofs; Glass Node Telemetry.
 
 ## 3. Verified Technical Implementation (Ground Truth)
-- **Nexus-First State Model**: Consolidated chain polling into Nexus to reduce COGS and ensure state consistency across Fusion and CSF.
-- **BIP-322 Ownership**: Verified hardware-enclosed BIP-322 signing for secure, attested logins.
-- **Taproot Musig2**: Implemented BIP-327 hardened quorums for institutional treasury management.
-- **MVCR Compliance**: Automated Mathematically Verifiable Compliance Reports attested by TEE.
+- **Nexus-First State Model**: Successfully consolidated blockchain polling into Nexus (v0.1.6) to reduce infrastructure COGS.
+- **BIP-322 Ownership**: Verified hardware-enclosed BIP-322 signing in the Conxius Wallet for secure, attested logins.
+- **Taproot Musig2**: Implemented BIP-327 hardened quorums in CSF for institutional treasury management.
+- **Institutional Fusion Hub**: Deployed a specialized Admin suite for real-time "Revenue Loop" telemetry.
 
 ## 4. Operational Standards
 - **Zero Secret Egress**: Private keys never enter application memory or leave the hardware enclave.
