@@ -1,109 +1,68 @@
----
-title: Risk Registry
-layout: page
-permalink: /risk
----
+# Conxian Protocol: Ruthless Risk Registry & Due Diligence (March 2026)
 
-# Conxius Wallet Risk & Compliance Registry
-
-**Last Updated:** 2026-02-18
-**Entity:** Conxian Labs
-**Jurisdiction:** South Africa (Primary), Global (Secondary)
-
-## 1. Executive Summary
-Conxius Wallet is a strictly non-custodial software interface ("The Tool"). It leverages a Trusted Execution Environment (TEE) known as "The Conclave" to ensure Conxian Labs never possesses, manages, or controls user funds. All financial services (Fiat On-Ramps, Swaps) are offloaded to regulated third-party providers or executed via decentralized protocols.
+This document addresses the structural vulnerabilities identified in the 2026 Institutional Due Diligence Teardown. It categorizes risks and outlines "No-Egress" mitigation strategies to ensure the Conxian ecosystem is investment-ready for high-value acquisition.
 
 ---
 
-## 2. Regulatory Risks (South Africa & Global)
+## 1. Centralization & Security Bottlenecks
 
-### 2.1 Risk: Classification as a Financial Intermediary (FAIS/CASP)
-* **Description:** Risk that the FSCA (SA) classifies Conxius as a Crypto Asset Service Provider (CASP) requiring an FSP license.
-* **Mitigation (Technical):**
-    * **The Conclave (TEE):** Private keys are generated and stored inside the user's device hardware. Conxian Labs has zero technical ability to access keys.
-    * **No Pooling:** User funds are never pooled. Transactions are P2P or Direct-to-Contract.
-* **Mitigation (Operational):**
-    * **Outsourced Rails:** All fiat-to-crypto transactions are executed by **Transak** and **VALR**. Conxius strictly acts as a UI referral.
-
-### 2.2 Risk: Money Laundering (AML/CFT)
-* **Description:** Risk of the platform being used for illicit flows.
+### 1.1 The "Gatekeeper" Single Point of Failure
+* **Risk:** The admin directory houses the "ultimate defense mechanism" for secret management. Compromise of these localized keys collapses the entire sovereign moat.
 * **Mitigation:**
-    * **Partner Reliance:** We do not process payments. Partners (Transak/Changelly) perform all KYC/CDD checks on users before allowing value transfer.
-    * **Non-Custodial Privacy:** Protocols like **WabiSabi (CoinJoin)** and **Silent Payments** are implemented as decentralized software logic on-device. Conxian Labs does not act as a centralized "mixer" or "custodian" of funds during these operations.
+    * **Quorum-Based Admin:** Migrating from single-admin secrets to **n-of-m Musig2 Institutional Quorums**. Administrative actions (e.g., protocol updates, gateway configuration) require multisig approval from geographically dispersed hardware enclaves.
+    * **Sentinel Secret Filtering:** Implementation of the "Sentinel" module across all CI/CD pipelines to prevent secret leaks and unauthorized configuration changes.
 
-### 2.3 Risk: US Securities Laws (SEC)
-* **Description:** Risk of being deemed an unregistered Broker-Dealer for enabling access to swap protocols.
+### 1.2 Core-Logic Cascading Failure (lib-conxian-core)
+* **Risk:** A bug in the foundational primitives cascades through Nexus, Wallet, and SDKs.
 * **Mitigation:**
-    * **Direct Routing:** Swap features utilize the **Changelly API** or Decentralized Atomic Swaps. Conxius does not match orders or hold inventory.
-    * **UI-Only Role:** The Terms of Service explicitly define the app as a "Self-Hosted Wallet Interface."
+    * **Deterministic Unit Testing:** 100% branch coverage mandate for core cryptographic and state primitives.
+    * **Formal Verification (Clarity 4):** Utilizing SMT solvers to verify the logical correctness of all settlement contracts before deployment.
 
 ---
 
-## 3. Infrastructure Sovereignty (The "Real Rails")
+## 2. Product Scope & Execution Dilution
 
-### 3.1 Technical Relays (Proxies)
-As part of the **Infrastructure Pivot (M12)**, Conxian Labs operates dedicated proxies for **Changelly** and **Bisq**.
-* **Risk:** Potential classification as an intermediary.
-* **Mitigation:** These proxies are strictly **Technical Relays**. They do not possess the ability to modify transaction destination addresses or intercept funds, as all payloads are cryptographically signed within the user's Enclave before transmission. They serve to ensure uptime, privacy (by masking user IPs), and protocol optimization.
-
-### 3.2 Conxian Gateway (B2B)
-The Gateway acts as a portal for institutional users to interact with their mobile enclaves.
-* **Risk:** Institutional data privacy.
-* **Mitigation:** The Gateway never sees private keys. It only facilitates the transmission of unsigned transaction data to the user's device for signing.
+### 2.1 The "Matrix Over-Extension" Risk
+* **Risk:** Simultaneously targeting B2C, B2B, B2E, B2M, and M2M stretches resources to the breaking point.
+* **Mitigation (Compartmentalization):**
+    * **Business Unit Isolation:** Restructuring the codebase and legal entities into distinct, isolatable units: **Conxius Consumer (Wallet)**, **Conclave B2B (SDK)**, and **Nexus Infrastructure (Oracle)**.
+    * **Focus Priority:** Prioritizing "The Engine" (ERP Sync) for high-value institutional lock-in before aggressive retail expansion.
 
 ---
 
-## 4. Technical Risks
+## 3. Hardware Lock-in & Platform Exclusion
 
-### 4.1 Risk: Enclave Breach / Side-Channel Attack
-* **Description:** An attacker bypasses the Android Keystore/TEE protections.
+### 3.1 Android TEE Dependency
+* **Risk:** Reliance on Android StrongBox/TEE alienates the high-value iOS market and creates vendor supply-chain risk.
 * **Mitigation:**
-    * **Memory-Only Handling:** Seed phrases are never written to disk.
-    * **Biometric Hardening:** Critical actions require biometric re-authentication at the OS level.
-    * **Play Integrity Attestation:** Mandatory for high-value operations to ensure the device environment is uncompromised.
+    * **iOS Parity Plan (M13):** Development of the **Conclave iOS Adapter** leveraging Apple's Secure Enclave.
+    * **Hardware Agnostic Enclave SDK:** Transitioning the core signing logic to be platform-agnostic, supporting Android, iOS, and dedicated HSMs (Hardware Security Modules) for enterprise use.
 
-### 4.2 Risk: Third-Party API Failure (Dependency Risk)
-* **Description:** Transak, VALR, or Breez services go offline.
+---
+
+## 4. Regulatory Engineering & Oracle Integrity
+
+### 4.1 Automated Compliance Oracle Attack
+* **Risk:** Manipulation of external IRS/MiCA feeds could erroneously halt institutional capital flows, creating massive liability.
+* **Mitigation (Circuit Breakers):**
+    * **Human-in-the-Loop Fallback:** Implementation of **Manual Override Circuit Breakers** for all automated compliance halts. Automated triggers only pause high-risk transactions for a 24-hour window, requiring a cryptographically signed "OK" from a designated compliance officer enclave.
+    * **Multi-Oracle Aggregation:** Nexus now aggregates feeds from multiple reputable compliance providers (e.g., Chainalysis, Elliptic, TRM Labs) to eliminate single-oracle vulnerability.
+
+### 4.2 M2M Compliance "Black Box" Problem
+* **Risk:** Fully autonomous state verification may fail MiCA requirements for a designated legally responsible human party.
 * **Mitigation:**
-    * **Sovereign Rails:** Deployment of dedicated proxies and nodes (M12) reduces reliance on shared public infrastructure.
-    * **Failsafe Mode:** If APIs fail, the wallet defaults to "Basic Mode" (Send/Receive on-chain) which requires no third parties.
+    * **Attested Audit Trails:** Every M2M transaction generates a **Hardware-Attested Compliance Report (MVCR)** that links back to a legally responsible entity's DID, ensuring accountability while maintaining technical automation.
 
 ---
 
-## 5. Bitcoin Layer Risk Assessment
+## 5. Technical Stack & Supply Chain
 
-### 5.1 Stacks (sBTC)
-* **Risk Level:** Low (L2) - [BitcoinLayers.org: L2]
-* **Risk Warning:** Decentralized, but Novel.
-* **Custody Model:** Trust-minimized and decentralized.
-
-### 5.2 Rootstock (RSK) & Liquid (L-BTC)
-* **Risk Level:** Medium (Sidechain)
-* **Risk Warning:** Federated.
-* **Custody Model:** Users trust a federation of functionaries/signers.
-
-### 5.3 RGB Protocol
-* **Risk Level:** Low (Client-Side Validated)
-* **Risk Warning:** Data Availability Risk.
-* **Custody Model:** Truly non-custodial. Assets live in Taproot commitments.
-
-### 5.4 WabiSabi (CoinJoin)
-* **Risk Level:** Low (Privacy Protocol)
-* **Risk Warning:** Coordinator Reliability.
-* **Custody Model:** Non-custodial. Users retain control throughout the mixing process.
-
-### 5.5 Musig2 (Taproot Multi-Sig)
-* **Risk Level:** Low (Cryptographic Standard)
-* **Risk Warning:** Key Management.
-* **Custody Model:** Enhances sovereignty by allowing institutional quorums without a single point of failure.
-
-### 5.6 BitVM, Ark, State Chains, Maven
-* **Risk Level:** Experimental / Medium.
-* **Note:** See IMPLEMENTATION_REGISTRY.md for current status.
+### 5.1 TypeScript/NPM Supply Chain Risk
+* **Risk:** Heavy reliance on TypeScript for the "Unified Web Lens" introduces vulnerabilities at the package-manager level (e.g., malicious npm packages).
+* **Mitigation:**
+    * **Rust Core Hardening:** Moving all mission-critical orchestration logic from TypeScript to the **Conclave Core (Rust)**. TypeScript is restricted to UI rendering and data presentation.
+    * **SBOM (Software Bill of Materials):** Mandatory SBOM generation for every release, with automated scanning for vulnerable dependencies in the "Fusion" security layer.
 
 ---
 
-*Maintained by: Conxian Labs Legal & Compliance Team*
-
----
-[Return to Root README](../README.md) | [Strategic Alignment](../ALIGNMENT.md)
+*Maintained by: Conxian Labs CSO & Lead Architect*
