@@ -45,3 +45,10 @@ The ecosystem is organized into four standalone businesses, each targeting a spe
 ---
 © 2026 Conxian. Sovereign Autonomous Business.
 [Return to Root README](./README.md) | [View Business Strategy](./02_strategy/BUSINESS_STRATEGY.md)
+
+## 5. Business Development Unit Mapping
+Each business unit operates a dedicated BD arm to target unique market segments without cross-contamination:
+- **Access BD (Conxius)**: Targeting mobile retail and SME treasury via viral "Shared Conclaves".
+- **Finance BD (CSF)**: Targeting LPs and DeFi protocols for Bitcoin-native settlement and liquidity.
+- **Connectivity BD (Fusion)**: Targeting the Office of the CFO for SAP/Oracle ERP synchronization.
+- **State BD (Nexus)**: Targeting blockchain data platforms and risk management firms for trustless truth.

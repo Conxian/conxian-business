@@ -32,3 +32,9 @@
 * [Conxian Protocol](Conxian/docs/ARCHITECTURE.md)
 * [Nexus State Node](conxian-nexus/docs/PRD.md)
 * [Fusion Gateway](conxian-gateway/PRD.md)
+
+## 💼 Business Development Units
+* [Access BD (Retail/SME)](conxius-wallet/docs/business/BD_UNIT_ACCESS.md)
+* [Finance BD (LPs/Yield)](Conxian/docs/BD_UNIT_FINANCE.md)
+* [Connectivity BD (ERP/Treasury)](conxian-gateway/docs/BD_UNIT_CONNECTIVITY.md)
+* [State BD (Data/Risk)](conxian-nexus/docs/BD_UNIT_STATE.md)
