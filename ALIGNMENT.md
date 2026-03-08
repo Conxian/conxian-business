@@ -1,33 +1,33 @@
 # Conxian: Strategic Alignment & Structural Integrity (March 2026)
 
-This document is the **Central Nervous System** for Conxian. It provides high-level alignment across all business units, mapping verified technical implementations to standalone market positioning.
+This document is the **Central Nervous System** for Conxian. It provides high-level alignment across all business units, mapping verified technical implementations to standalone market positioning within the **Sovereign Autonomous Business (SAB)** framework.
 
 ## 1. Vision: Non-Custodial Sovereign Truth
 **Code is Law. Sovereignty is Absolute.**
 Conxian engineers systems that mathematically prevent centralized TradFi failures. The ecosystem's resilience is anchored in self-custody and deterministic, Nakamoto-ready state proofs, entirely rejecting centralized intermediary reliance.
 
 ## 2. Multi-Business Architecture (Phase 4 Unbundled)
-The ecosystem is organized into standalone businesses under the **Conxian** umbrella, each targeting a specific TAM:
+The ecosystem is organized into four standalone businesses, each targeting a specific TAM and strategic niche:
 
 ### 2.1 Conxius (Access Business)
-- **Brand**: Sovereign Android Vault.
-- **TAM**: $50B (Mobile Self-Custody).
-- **Core Technology**: Android TEE/StrongBox signing; Kotlin MCP server.
+- **Brand**: Conxius Wallet.
+- **TAM**: $250B (Mobile Self-Custody).
+- **Core Technology**: Android TEE/StrongBox signing; AP2 Mandates; Kotlin MCP server.
 
 ### 2.2 Conxian Sovereign Finance (CSF) (Finance Business)
-- **Brand**: Bitcoin-Native Settlement Protocol.
+- **Brand**: Conxian CSF.
 - **TAM**: $1.4T (Total Bitcoin Capital).
 - **Core Technology**: Clarity 4 Smart Contracts; CXIP-013 Revenue Distribution; 0.1% Founder's Cut.
 
 ### 2.3 Conxian Fusion (Connectivity Business)
-- **Brand**: Institutional Gateway & ERP Bridge.
+- **Brand**: Fusion Gateway.
 - **TAM**: $100B (Blockchain-in-ERP).
 - **Core Technology**: Rust Actix-web Gateway; "The Engine" Deterministic Sync; ALEX/Portal Integration.
 
 ### 2.4 Conxian Nexus (State Business)
-- **Brand**: Trustless State & Risk Oracle.
-- **TAM**: $10B (Blockchain Risk Management).
-- **Core Technology**: Merkle State Proofs; Glass Node Telemetry.
+- **Brand**: Conxian Nexus.
+- **TAM**: $20B (Blockchain Risk Management).
+- **Core Technology**: Merkle State Proofs; Glass Node Telemetry; Nexus-First State Model.
 
 ## 3. Verified Technical Implementation (Ground Truth)
 - **Autonomous Launch Ready**: CSF backend extension complete with hardcoded 0.1% Founder's Cut and 5-5-5 referral engines.
