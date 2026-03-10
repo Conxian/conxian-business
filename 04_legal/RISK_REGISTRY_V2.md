@@ -1,4 +1,4 @@
-# Risk Registry V2: Institutional & Autonomous Risk Management
+# Risk Registry V2: Institutional & Autonomous Risk Management (March 2026)
 
 This document tracks identified risks and mitigation strategies for the Conxian ecosystem as it transitions to Phase 6.
 
@@ -18,6 +18,7 @@ This document tracks identified risks and mitigation strategies for the Conxian 
 | **Regulatory Halt** | HIGH | Implementation of Manual Compliance Circuit Breakers for administrative control. | IMPLEMENTED |
 | **Data Privacy Leak** | MEDIUM | Zero Secret Egress; all sensitive signing performed in-enclave. | ACTIVE |
 | **Liquidity Crunch** | HIGH | Integration with ALEX/Portal for institutional-grade liquidity depth. | ACTIVE |
+| **Counterparty Insolvency** | HIGH | Mandatory CSF Guardrails requiring external protocols to read Conxian state. | IMPLEMENTED |
 
 ---
 © 2026 Conxian. Sovereign Autonomous Business.
