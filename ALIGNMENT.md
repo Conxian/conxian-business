@@ -57,3 +57,10 @@ The ecosystem is organized into four standalone businesses, each targeting a spe
 - **SWIFT Bypass**: Fusion Gateway now supports ISO 20022 ERP synchronization logic for instant USDCx settlement.
 - **MVCR Generation**: Hardware-attested compliance reports enabled via `/api/v1/compliance/mvcr`.
 - **CSF Registry**: Nexus Protocol Registry (`/v1/csf-registry`) operational for autonomous third-party protocol discovery.
+
+## 6. CXIP-016: Multi-Ecosystem Enhancement (March 2026)
+- **CSF Extension Traits**: Standalone traits for external protocols in `Conxian/contracts/traits/trait-conxian-liquidity-v1.clar`.
+- **NTT Peripheral Adapters**: Gateway now supports external chain state verification (`/api/v1/verify/ntt`).
+- **External Telemetry**: Nexus ingests multi-chain metrics via `/v1/ingest-metrics`.
+- **Circuit Breaker Extension**: Enhanced monitoring for external NTT guardians in `compliance-manager.clar`.
+- **Sovereign Routing**: Conxius Wallet supports custom node routing for EVM and Solana (`multi-chain-routing.ts`).

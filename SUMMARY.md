@@ -44,3 +44,4 @@
 * [Revenue Structure Audit](docs/REVENUE_STRUCTURE_AUDIT_2026.md)
 * [Strategic Alignment (March 2026)](docs/STRATEGIC_ALIGNMENT_MAR_2026.md)
 * [CSF Standard Proposal](docs/CSF_STANDARD_PROPOSAL.md)
+* [CXIP-016: Multi-Ecosystem Enhancement](openspec/changes/csf-autonomous-launch/specs.md)
