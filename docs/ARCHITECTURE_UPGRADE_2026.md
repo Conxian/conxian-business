@@ -62,3 +62,19 @@ To maximize business impact, the ecosystem provides deep integration for the ind
 
 ---
 © 2026 Conxian. Sovereign Autonomous Business.
+
+# F-ERP Bond System Upgrade (2026)
+
+## Overview
+The F-ERP Bond Upgrade implements a Bitcoin-native credit model for SMEs and enterprises, anchored by the Dynamic Collateral Engine (DCE).
+
+## Components
+- **Intelligent Structuring**: Programmatic assessment of attested ERP data to determine principal limits and risk-adjusted coupons.
+- **Dynamic Collateral Engine**: A non-liquidating stabilization layer that uses revenue interception (DCR < 130%) to maintain protocol solvency.
+- **Revenue Automation**: Orchestrates the 0.1% Founder's Cut and automated top-ups.
+
+## DCR Formula
+$$DCR = \frac{OnChain\_Liq + Attested\_ERP\_Revenue}{Active\_Bonds \times Risk\_Multiplier}$$
+
+## Synergy
+The system resolves circular dependencies through a central `enterprise-data.clar` state store, ensuring clean architectural boundaries between the Access, Finance, and Connectivity units.
