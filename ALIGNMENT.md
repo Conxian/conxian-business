@@ -6,6 +6,11 @@ This document is the **Central Nervous System** for Conxian. It provides high-le
 **Code is Law. Composability is Authority.**
 Conxian has transitioned from an isolated protocol to a foundational liquidity and reward engine. The ecosystem's resilience is anchored in self-custody and the **Conxian Standard Format (CSF)**, enabling aggressive ecosystem-wide integration.
 
+### 2.0 Conxius Desktop (Institutional Suite)
+- **Brand**: Conxius Citadel Desktop.
+- **Technology**: Tauri / Rust / TPM 2.0.
+- **Value**: High-throughput institutional treasury management with local hardware isolation.
+
 ## 2. Multi-Business Architecture (Phase 4 Unbundled)
 The ecosystem is organized into four standalone businesses, each targeting a specific TAM and strategic niche:
 
@@ -64,3 +69,8 @@ The ecosystem is organized into four standalone businesses, each targeting a spe
 - **External Telemetry**: Nexus ingests multi-chain metrics via `/v1/ingest-metrics`.
 - **Circuit Breaker Extension**: Enhanced monitoring for external NTT guardians in `compliance-manager.clar`.
 - **Sovereign Routing**: Conxius Wallet supports custom node routing for EVM and Solana (`multi-chain-routing.ts`).
+
+## 7. Desktop Enclave & Institutional Deployment (2026)
+- **Tauri Integration**: Native Rust-backed desktop client for high-integrity treasury operations.
+- **TPM 2.0 Security**: Desktop keys are hardware-anchored to the system's TPM module, mirroring mobile StrongBox.
+- **Citadel Readiness**: Desktop suite is pre-configured for connection to onsite "Citadel" servers (SGX/SEV).
