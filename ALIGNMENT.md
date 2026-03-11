@@ -51,3 +51,9 @@ The ecosystem is organized into four standalone businesses, each targeting a spe
 ---
 © 2026 Conxian. Sovereign Autonomous Business.
 [Return to Root README](./README.md) | [CSF Standard Proposal](./docs/CSF_STANDARD_PROPOSAL.md)
+
+## 5. Technical Ground Truth (March 2026 Enhancements)
+- **Supply Chain Finance (PoR)**: Implemented non-custodial escrow in `Conxian/contracts/enterprise/supply-chain-finance.clar`.
+- **SWIFT Bypass**: Fusion Gateway now supports ISO 20022 ERP synchronization logic for instant USDCx settlement.
+- **MVCR Generation**: Hardware-attested compliance reports enabled via `/api/v1/compliance/mvcr`.
+- **CSF Registry**: Nexus Protocol Registry (`/v1/csf-registry`) operational for autonomous third-party protocol discovery.
