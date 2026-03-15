@@ -3,7 +3,7 @@
 * [Introduction](README.md)
 * [Strategic Alignment](ALIGNMENT.md)
 * [Onsite Server Specs](03_infrastructure/ONSITE_SERVER_SPEC_SHEET.md)
-* [Whitepaper](WHITEPAPER.md)
+* [Whitepaper](Conxian/docs/WHITEPAPER.md)
 
 ## 🏢 Company
 
@@ -45,7 +45,6 @@
 ## 📊 Reports & Audits
 
 * [CSF Standard Proposal](docs/CSF_STANDARD_PROPOSAL.md)
-* [CXIP-016: Multi-Ecosystem Enhancement](openspec/changes/csf-autonomous-launch/specs.md)
 * [Architecture Upgrade 2026](docs/ARCHITECTURE_UPGRADE_2026.md)
 
 ## 🏁 Audit Results (March 2026)
