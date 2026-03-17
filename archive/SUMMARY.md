@@ -1,22 +1,22 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [Strategic Alignment](ALIGNMENT.md)
-* [Onsite Server Specs](03_infrastructure/ONSITE_SERVER_SPEC_SHEET.md)
+* [Strategic Alignment](archive/ALIGNMENT.md)
+* [Onsite Server Specs](archive/03_infrastructure/ONSITE_SERVER_SPEC_SHEET.md)
 * [Whitepaper](Conxian/docs/WHITEPAPER.md)
 
 ## 🏢 Company
 
-* [Vision & Mission](01_company/vision-mission.md)
-* [Values](01_company/values.md)
-* [Org Chart](01_company/org-chart.md)
+* [Vision & Mission](archive/01_company/vision-mission.md)
+* [Values](archive/01_company/values.md)
+* [Org Chart](archive/01_company/org-chart.md)
 
 ## 📈 Strategy
 
-* [Roadmap](ROADMAP.md)
-* [Autonomous Launch Roadmap](02_strategy/CSF_AUTONOMOUS_ROADMAP.md)
-* [Sovereign Bridge Strategy](02_strategy/SOVEREIGN_BRIDGE_STRATEGY.md)
-* [ATS Standard 2026](02_strategy/ATS_TEMPLATE.md)
+* [Roadmap](archive/ROADMAP.md)
+* [Autonomous Launch Roadmap](archive/02_strategy/CSF_AUTONOMOUS_ROADMAP.md)
+* [Sovereign Bridge Strategy](archive/02_strategy/SOVEREIGN_BRIDGE_STRATEGY.md)
+* [ATS Standard 2026](archive/02_strategy/ATS_TEMPLATE.md)
 
 ## 🛠️ OpenSpec (Ground Truth)
 
@@ -25,9 +25,9 @@
 
 ## ⚖️ Legal & Compliance
 
-* [Risk Registry](04_legal/RISK_REGISTRY.md)
-* [Partners & Compliance](04_legal/PARTNERS_AND_COMPLIANCE.md)
-* [MiCA/IRS Compliance Enclave](04_legal/MICA_IRS_COMPLIANCE_ENCLAVE.md)
+* [Risk Registry](archive/04_legal/RISK_REGISTRY.md)
+* [Partners & Compliance](archive/04_legal/PARTNERS_AND_COMPLIANCE.md)
+* [MiCA/IRS Compliance Enclave](archive/04_legal/MICA_IRS_COMPLIANCE_ENCLAVE.md)
 
 ## 📦 Architecture
 
@@ -37,10 +37,10 @@
 
 ## 💼 Business Development Units
 
-* [Access BD (Retail/SME)](BD_UNIT_ACCESS.md)
-* [Finance BD (LPs/Yield)](BD_UNIT_FINANCE.md)
-* [Connectivity BD (ERP/Treasury)](BD_UNIT_CONNECTIVITY.md)
-* [State BD (Data/Risk)](BD_UNIT_STATE.md)
+* [Access BD (Retail/SME)](archive/BD_UNIT_ACCESS.md)
+* [Finance BD (LPs/Yield)](archive/BD_UNIT_FINANCE.md)
+* [Connectivity BD (ERP/Treasury)](archive/BD_UNIT_CONNECTIVITY.md)
+* [State BD (Data/Risk)](archive/BD_UNIT_STATE.md)
 
 ## 📊 Reports & Audits
 
@@ -49,6 +49,6 @@
 
 ## 🏁 Audit Results (March 2026)
 
-* [Gap & Vulnerability Report](GAP_VULNERABILITY_REPORT.md)
-* [Master System Audit & Readiness Report](FINAL_AUDIT_REPORT.md)
-* [Compliance & Enhancement Alignment Report](COMPLIANCE_ALIGNED_REPORT.md)
+* [Gap & Vulnerability Report](archive/GAP_VULNERABILITY_REPORT.md)
+* [Master System Audit & Readiness Report](archive/FINAL_AUDIT_REPORT.md)
+* [Compliance & Enhancement Alignment Report](archive/COMPLIANCE_ALIGNED_REPORT.md)

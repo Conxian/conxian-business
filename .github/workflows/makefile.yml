@@ -12,14 +12,14 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
-    - name: Validate SUMMARY.md and docs
+    - name: Validate archive/SUMMARY.md and docs
       run: make docs-build
 
     - name: Check for broken internal links
       run: |
-        grep -oP '(?<=\]\().*?\.md(?=\))' SUMMARY.md | while read -r link; do
+        grep -oP '(?<=\]\().*?\.md(?=\))' archive/SUMMARY.md | while read -r link; do
           if [ ! -f "$link" ]; then
-            echo "ERROR: Broken link in SUMMARY.md -> $link"
+            echo "ERROR: Broken link in archive/SUMMARY.md -> $link"
             false
           fi
         done

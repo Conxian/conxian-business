@@ -60,4 +60,4 @@ stop:
 	$(MAKE) -C conxius-platform stop
 
 docs-build:
-	@ls SUMMARY.md .gitbook.yaml > /dev/null
+	@ls archive/SUMMARY.md .gitbook.yaml > /dev/null
