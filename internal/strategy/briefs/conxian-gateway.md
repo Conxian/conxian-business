@@ -29,7 +29,7 @@
 
 ### 3.3 Revenue Model
 - **Tiered B2B Licensing**: $2,500 - $15,000/mo per enterprise client.
-- **Custom ERP Integration Fees**: $50,000 - $250,000 one-time implementation fee.
+- **Custom ERP Integration Fees**: $50,000 - $250,000 one-time implementation SAF.
 - **MVCR Reporting SaaS**: $500/mo add-on for automated regulatory compliance.
 
 ## 4. Competitive Moat

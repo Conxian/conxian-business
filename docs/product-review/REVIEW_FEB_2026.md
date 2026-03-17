@@ -64,7 +64,7 @@ The ecosystem operates on a "Strictly Non-Custodial" mandate, with a deep focus 
 
 ## 4. The "Root-to-Leaf" Synergy
 The flow from **Vision (Root)** to **Settlement (Leaf)** is technically sound:
-1.  **Business Root**: Sets the "Sovereignty-Adjusted Fee" (SAF) and strategic roadmap.
+1.  **Business Root**: Sets the "Sovereignty-Adjusted SAF" (SAF) and strategic roadmap.
 2.  **Orchestration Stem**: `conxius-platform` and `lib-conxian-core` provide the infrastructure.
 3.  **Protocol Branch**: `Conxian` contracts execute the "Code is Law" logic.
 4.  **Interface Leaf**: `conxius-wallet` and `conxian-ui` deliver the value to users.

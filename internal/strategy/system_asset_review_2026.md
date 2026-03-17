@@ -10,14 +10,14 @@
 
 ### 1.2 "Glass Node" Telemetry
 - **Prometheus (9090)**: Configured in \`conxius-platform/prometheus.yml\`.
-- **Grafana (3001)**: Admin dashboard port aligned with Grafana standards in \`conxius-platform/docker-compose.yml\`.
-- **Nexus Status**: Real-time status and Merkle root monitoring integrated into the \`admin-dashboard\`.
+- **Grafana (3001)**: Executor dashboard port aligned with Grafana standards in \`conxius-platform/docker-compose.yml\`.
+- **Nexus Status**: Real-time status and Merkle root monitoring integrated into the \`executor-dashboard\`.
 
 ## 2. Infrastructure & System Readiness
 
 ### 2.1 Multi-Protocol Gateway (Fusion)
 - **Status**: **Institutional-Grade**.
-- **Protocols**: Stacks (L2), Bisq (P2P), RGB (Client-side), BitVM (Optimistic), and Lightning Network statuses are operational in the Admin Pulse.
+- **Protocols**: Stacks (L2), Bisq (P2P), RGB (Client-side), BitVM (Optimistic), and Lightning Network statuses are operational in the Executor Pulse.
 
 ### 2.2 Sovereign Android Vault (The Conclave)
 - **Status**: **Production-Ready**.

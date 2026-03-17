@@ -29,7 +29,7 @@
 - **Sovereign Marketing (Organic/Viral)**: $40,000 / year.
 
 ### 3.3 Revenue Model
-- **Sovereignty-Adjusted Fee (SAF)**: 0.1% - 0.25% convenience fee on in-app swaps and bridge transfers.
+- **Sovereignty-Adjusted SAF (SAF)**: 0.1% - 0.25% convenience SAF on in-app swaps and bridge transfers.
 - **Conclave Pro Subscriptions**: $9.99/mo (Gated features: Multi-sig quorums, Tor-only routing).
 - **Affiliate Rebates**: Passive 10-15% commission on hardware wallet and sovereign node hardware sales.
 

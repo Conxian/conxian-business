@@ -1,43 +1,26 @@
-# Conxian: Internal Business Repository
+# Conxian-Labs: Business Operations System (BOS)
 
-This private repository is the **Central Nervous System** (CNS) for Conxian. It provides technical mapping and strategic alignment for building a **Sovereign Autonomous Business (SAB)**.
+This repository is the **Internal State Machine** for Conxian-Labs. It provides the programmatic infrastructure to prove real-time enterprise value and execute the R2B+ terminal exit vector.
 
-## 🚀 The Mission
+## 🚀 The Mission: Sovereign Autonomous Business (SAB)
+We engineer systems that mathematically prevent centralized failures through **Zero Secret Egress**, non-custodial sovereignty, and hardware-enclosed execution. The BOS mirrors our external protocols by transitioning from passive documentation to a verifiable, real-time operational ledger.
 
-We engineer systems that mathematically prevent the black-box, fractional-reserve failures of centralized platforms through **Zero Secret Egress**, non-custodial sovereignty, and hardware-enclosed execution.
+## 🛠️ Programmatic Exco (The cnx- Suite)
+The C-Suite is augmented by automated tracking and enforcement modules:
+- **[00_bos_core](./00_bos_core)**: System Identity & Governance Logic.
+- **[01_strategy_nexus](./01_strategy_nexus)**: CEO Module (M&A Readiness & Velocity).
+- **[02_treasury_oracle](./02_treasury_oracle)**: CFO Module (Sovereign Runway & Yield).
+- **[03_arch_guardian](./03_arch_guardian)**: CTO Module (ATS Enforcement & IP Sovereignty).
+- **[04_ops_engine](./04_ops_engine)**: COO Module (Deployment Efficiency).
+- **[05_consensus_engine](./05_consensus_engine)**: Exco Governance & Time-Lock Protocol.
 
-## 🛠️ Ground Truth: Sovereign Autonomous Business
+## 📦 State Layer & Infrastructure
+- **State Layer**: Neon PostgreSQL (`cnx_bos` schema) for immutable operational metrics.
+- **Execution Engine**: Linear / Stitch integration for agent-led cycle tracking.
+- **Context & Memory**: Context7 for persistent operational memory.
 
-The ecosystem has successfully implemented the following technical milestones:
-
-- **AP2 Protocol**: Verifiable Mandates governing autonomous AI spending.
-- **StrongBox TEE**: Hardware-enclosed signing (BIP-322, sBTC Peg-in/out).
-- **Nexus-First State**: Authoritative blockchain state via Conxian Nexus.
-- **CXIP-013**: Real-time 6-way revenue distribution logic in Clarity 4.
-- **ISO 20022 Sync**: Deterministic ERP synchronization via "The Engine".
-- **CSF Standard**: Public Clarity trait standard for foundational liquidity and reward engine integration.
-
-## 📦 Unbundled Architecture (Phase 4 Complete)
-
-The ecosystem is organized into four standalone businesses. Please see [Strategic Alignment (ALIGNMENT.md)](./ALIGNMENT.md#2-multi-business-architecture-phase-4-unbundled) for the detailed breakdown of each business unit:
-
-- **[Conxius](./conxius-wallet)**: B2C mobile access and agentic wallet interface.
-- **[CSF (Sovereign Finance)](./Conxian)**: B2B/B2C Bitcoin-native settlement protocol.
-- **[Fusion Gateway](./conxian-gateway)**: B2B institutional connectivity and ERP bridge.
-- **[Nexus State](./conxian-nexus)**: B2B trustless state and risk oracle.
-
-## 📂 Business Unit Strategy (Exco-Level)
-
-- **[Access BD (Conxius)](./BD_UNIT_ACCESS.md)**: Mobile retail and SME treasury growth.
-- **[Finance BD (CSF)](./BD_UNIT_FINANCE.md)**: Institutional liquidity and settlement.
-- **[Connectivity BD (Fusion)](./BD_UNIT_CONNECTIVITY.md)**: ERP synchronization.
-- **[State BD (Nexus)](./BD_UNIT_STATE.md)**: Verifiable state proofs and risk telemetry.
-
-## 📜 Key Reports
-
-- **[Strategic Superiority Report](./docs/research/SUPERIORITY_REPORT_2026.md)**: Competitive benchmarking.
-- **[Enterprise Upgrade Blueprint](./02_strategy/reports/ENTERPRISE_UPGRADE_BLUEPRINT_2026.md)**: 2026 institutional roadmap.
-- **[CSF Standard Proposal](./docs/CSF_STANDARD_PROPOSAL.md)**: Standardized Clarity integration.
+## 📜 Strategic Archive
+Legacy documentation and historical reports have been moved to the **[Archive](./archive/legacy_documentation)**.
 
 ---
-🛡️ **Access & Confidentiality**: All documents are confidential and proprietary. © 2026 Conxian. Leading Business Exco Team.
+🛡️ **Access & Confidentiality**: All documents are confidential and proprietary. © 2026 Conxian-Labs. Leading Business Exco Team.

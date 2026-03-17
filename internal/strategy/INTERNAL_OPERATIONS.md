@@ -1,4 +1,4 @@
-# Internal Operations & Platforming: The Conxian Admin Case
+# Internal Operations & Platforming: The Conxian Executor Case
 
 ## 1. CRM & Business Management Requirements
 - **Need**: Track institutional clients, manage SDK licenses, and monitor protocol revenue distribution.
@@ -6,10 +6,10 @@
 
 ## 2. The Platforming Case
 - **Microservices vs. Unified Platform**:
-  - **Verdict**: Unified Internal Platform (The Conxian Admin).
+  - **Verdict**: Unified Internal Platform (The Conxian Executor).
   - **Reasoning**: A unified dashboard allows the CSO to monitor the "Revenue Loop" in real-time, matching off-chain CRM leads with on-chain "The Engine" settlement data.
 - **Cost-to-Build vs. Operational Efficiency**:
-  - Estimated 2-month build cycle for a custom Next.js/PostgreSQL admin panel.
+  - Estimated 2-month build cycle for a custom Next.js/PostgreSQL executor panel.
   - Efficiency Gain: 40% reduction in "Month-End Close" manual verification.
 
 ## 3. SaaS vs. Custom Build

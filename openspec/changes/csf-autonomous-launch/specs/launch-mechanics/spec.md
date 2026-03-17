@@ -2,9 +2,9 @@
 
 ## ADDED Requirements
 
-### Requirement: Founder's Cut Fee Logic
-The protocol MUST implement a hardcoded 0.1% fee on all transactional events.
-#### Scenario: Fee Redirection
+### Requirement: Founder's Cut SAF Logic
+The protocol MUST implement a hardcoded 0.1% SAF on all transactional events.
+#### Scenario: SAF Redirection
 - **Given** a successful swap or lending event
 - **When** processing the transaction
 - **Then** the protocol MUST deduct 0.1% and route it to the designated founder address.
@@ -35,4 +35,4 @@ The protocol MUST have a verifiable path to "Burning the Keys."
 #### Scenario: DAO Handover
 - **Given** 24 months post-launch
 - **When** the ExecutorDAO is stable
-- **Then** the admin principal MUST be set to 0x0 (burn-address).
+- **Then** the executor principal MUST be set to 0x0 (burn-address).

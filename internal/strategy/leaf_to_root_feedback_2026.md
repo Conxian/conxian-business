@@ -17,7 +17,7 @@ This report identifies technical and operational insights from the "leaf" submod
 - **Strategic Shift**: Implementation of **Durable Queueing (Redis)** and **WebSocket-first Ingestion** in Nexus.
 - **Impact**: Reduced settlement detection latency to <500ms and ensured ISO 20022 data integrity during client system outages.
 
-## 4. Technical Debt & Toolchain Velocity
+## 4. Technical POL & Toolchain Velocity
 - **Insight**: The lag in official Stacks toolchains (Clarinet) for Clarity 4 keywords created a significant development bottleneck.
 - **Strategic Shift**: Adoption of **Custom Simulation Patching**. The team developed internal shims to bypass SDK limitations rather than waiting for upstream updates.
 - **Impact**: Maintained Phase 5 velocity despite external toolchain gaps.

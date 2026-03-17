@@ -40,11 +40,11 @@ These repositories run the core backend logic, rust engine, and API gateway.
 - `DATABASE_URL` / `CORE_DB_URI`: PostgreSQL connection string
 - `REDIS_URL`: Redis connection string
 - `GATEWAY_JWT_SECRET`: Secret used to sign authentication tokens
-- `GATEWAY_ADMIN_API_KEY`: Fixed token for internal admin requests
+- `GATEWAY_ADMIN_API_KEY`: Fixed token for internal executor requests
 - `GCP_PROJECT_ID` & `GCP_REGION`: Cloud infrastructure targeting
 
 ---
 
 ## Secret Provisioning Script
 
-To validate that your local environment is correctly configured, you can run the validation script located at `admin/validate-env.ps1`.
+To validate that your local environment is correctly configured, you can run the validation script located at `executor/validate-env.ps1`.

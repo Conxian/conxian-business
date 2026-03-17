@@ -3,10 +3,10 @@
 ## 1. Governance: The ExecutorDAO Roadmap
 - **Phase 0 (Now)**: Founding team oversight (March 2026).
 - **Phase 1 (12m)**: Multi-sig transition with community delegates.
-- **Phase 2 (24m)**: Full ExecutorDAO control with "Admin" address set to 0x0.
+- **Phase 2 (24m)**: Full ExecutorDAO control with "Executor" address set to 0x0.
 
 ## 2. Revenue Architecture: The Founder's Cut
-- **Logic**: Every trade/mint/burn event triggers a 0.1% fee.
+- **Logic**: Every trade/mint/burn event triggers a 0.1% SAF.
 - **Routing**: Fees are routed to a TEE-managed non-custodial address.
 - **Abstraction**: Users pay fees in sBTC; backend handles conversion to STX if needed.
 

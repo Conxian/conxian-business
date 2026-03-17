@@ -17,7 +17,7 @@ This assessment evaluates the "Conxian Triad" (Access, Routing, State) against f
 - **Repair Protocol**: Introduced "Handoff Limbo" tracking in Conxius Wallet. Transactions now require a "State Proof" from Nexus before being marked as complete in the UI.
 - **Status**: [HARDENED]
 
-### 2.3 Scenario 3: Internal Operations Revenue Leak (Conxian Admin)
+### 2.3 Scenario 3: Internal Operations Revenue Leak (Conxian Executor)
 - **Risk**: Expired B2B licenses or tier limits causing immediate service denial.
 - **Finding**: Enforcement was binary (on/off), which could disrupt institutional flows.
 - **Repair Protocol**: Implemented a 24-hour **Sovereign Grace Period** in the Gateway auth-middleware, maintaining 40% operational efficiency during payment resolution.

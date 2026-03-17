@@ -30,7 +30,7 @@ The Conxian Nexus MUST be the authoritative source for blockchain state for the 
 The 6-way revenue split MUST be calculated in Clarity based on the Global Collateral Ratio (GCR).
 
 #### Scenario: Revenue Distribution
-- **Given** a protocol fee event
+- **Given** a protocol SAF event
 - **When** distributing tokens
 - **Then** the Treasury module MUST apply CXIP-013 logic.
 

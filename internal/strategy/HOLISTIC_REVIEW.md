@@ -4,7 +4,7 @@
 - **Health**: GREEN (Architecture is modular, M1-M11 complete).
 - **Market Readiness**: HIGH (Phase 5 "Real Rails" alignment is ahead of incumbents).
 
-## 2. Technical Debt & Risk
+## 2. Technical POL & Risk
 - **Risk**: Capacitor-to-Native migration (conxius-wallet) is a critical path bottleneck.
 - **Overlapping Features**: Some redundancy between Conxian Gateway and Nexus (sync logic). Recommendation: Consolidate state polling into Nexus.
 

@@ -3,11 +3,11 @@
 (Note: Formal requirements are in `specs/launch-mechanics/spec.md`)
 
 ## 1. Governance & Autonomy
-- **SPEC-GOV-001**: **ExecutorDAO Handover**. Admin rights MUST be transferred to the DAO within 24 months.
-- **SPEC-GOV-002**: **Key Relinquishment**. Final admin principal MUST be the burn address (0x0).
+- **SPEC-GOV-001**: **ExecutorDAO Handover**. Executor rights MUST be transferred to the DAO within 24 months.
+- **SPEC-GOV-002**: **Key Relinquishment**. Final executor principal MUST be the burn address (0x0).
 
 ## 2. Revenue & Fees
-- **SPEC-REV-001**: **Founder's Cut**. A 0.1% hardcoded fee MUST be routed to the founder address.
+- **SPEC-REV-001**: **Founder's Cut**. A 0.1% hardcoded SAF MUST be routed to the founder address.
 - **SPEC-REV-002**: **5-5-5 Growth**. Referrers and referees MUST receive 5% of fees as specified.
 
 ## 3. Financial Integration

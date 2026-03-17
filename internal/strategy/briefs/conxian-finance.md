@@ -28,7 +28,7 @@
 
 ### 3.3 Revenue Model
 - **Protocol Convenience Fees**: 0.2% on swap transactions.
-- **Liquidity Management Fees**: 10% performance fee on automated vault yields.
+- **Liquidity Management Fees**: 10% performance SAF on automated vault yields.
 - **B2B Liquidity Provision**: Licensing protocol primitives for white-label DeFi products.
 
 ## 4. Competitive Moat
