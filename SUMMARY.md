@@ -5,7 +5,7 @@
 
 ## 🤖 Business Operations System (BOS)
 
-* [Strategy Nexus (CEO)](cxn-strategy-nexus/REALTIME_M\&A_VELOCITY.md)
+* [Strategy Nexus (CEO)](cxn-strategy-nexus/REALTIME_M&A_VELOCITY.md)
 * [Treasury Oracle (CFO)](cxn-treasury-oracle/SOVEREIGN_RUNWAY.md)
 * [Arch Guardian (CTO)](cxn-arch-guardian/ANTI_FRAGILITY_LOOP.md)
 * [Ops Engine (COO)](cxn-ops-engine/DEPLOYMENT_EFFICIENCY.md)
