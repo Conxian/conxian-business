@@ -7,7 +7,7 @@ This audit reflects the current state of the Conxian GitHub ecosystem against th
 
 | Strategos Role | Lead Component | Status | Identified Gap |
 | :--- | :--- | :--- | :--- |
-| **Guardian: Attestation** | `conxian-gateway/zkc.rs` | ACTIVE | Missing ZKML verification for AI models. |
+| **Guardian: Attestation** | `conxian-gateway/zkc.rs` | ACTIVE | **ZKML verification placeholder implemented in zkc.rs.** |
 | **Guardian: Sovereignty** | `cxn-strategy-nexus/SARB_MANDATE.md` | ACTIVE | Sharding logic not yet in Clarity. |
 | **Guardian: Resilience** | `Conxian/security/circuit-breaker.clar` | ACTIVE | Veto-Quorum logic needed. |
 | **Guardian: Veracity** | `conxian-nexus/src/oracle` | ACTIVE | Missing active LSEG MCP feed. |
