@@ -1,6 +1,6 @@
 {
   "org": "Conxian",
-  "timestamp": "2026-03-20T11:02:52.692605Z",
+  "timestamp": "2026-03-20T10:49:10.764125Z",
   "version": "v2.0-Audit",
   "files": [
     {
@@ -13,15 +13,11 @@
     },
     {
       "path": "conxian-business/BOS_STATE_MACHINE.json",
-      "sha256": "c62f05809b4e5141aeb58e5761d878a3dac160ec927bfe467150d55a1fce9ffe"
+      "sha256": "c3f4940fa6efa42be2f1f8d7d7761329fb623c28f692c80fdd56545b465358ef"
     },
     {
       "path": "conxian-business/SERVICE_LOOP.md",
       "sha256": "b3010b38ca022c32feed9c1c8eb0972eb15d2bbeb9b0ad1087469b50d48bd591"
-    },
-    {
-      "path": "conxian-business/AUDIT_MANIFEST.json",
-      "sha256": "5938a98ee08b43c7b7d167fe58c808fc83bf7f587e1a17302c3fb1f4a493f236"
     },
     {
       "path": "cxn-arch-guardian/ANTI_FRAGILITY_LOOP.md",
@@ -38,10 +34,6 @@
     {
       "path": "cxn-strategy-nexus/REALTIME_M&A_VELOCITY.md",
       "sha256": "c6d559a048cf6ffe524f569755f61ed192dc1a39f92ed7c5f3d855782340dc29"
-    },
-    {
-      "path": "cxn-strategy-nexus/docs/SARB_MARCH_2026_MANDATE.md",
-      "sha256": "05427f5f29d056c1b44c667e5417235391a21ee85beaa0d9185940896c7d1f90"
     },
     {
       "path": "cxn-strategy-nexus/docs/SOVEREIGN_PITCH_DECK_NARRATIVE.md",
@@ -62,11 +54,7 @@
     {
       "path": "cxn-treasury-oracle/SOVEREIGN_RUNWAY.md",
       "sha256": "a89a9965b990a961912a2ef7d9b447f976f069304532c5b8c196c8f24aaec220"
-    },
-    {
-      "path": "cxn-treasury-oracle/BITCOIN_BOND_DLC.json",
-      "sha256": "14c95765d542a37849b8f1b1488b6ecabedc815dda77de63dc802a57c1750ee1"
     }
   ],
-  "stacks_anchor_payload": "6818485abb392da475dc487d6b97a5a9d92aeb4af65f23bf1936a21156be6b2f"
+  "stacks_anchor_payload": "9c5ab590e67bdc43300940e536cde9886512bd303fd14222699694b422531d5e"
 }
