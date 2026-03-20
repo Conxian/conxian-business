@@ -1,7 +1,7 @@
 # Strategos Alignment Audit (Updated March 2026)
 
 ## 1. Executive Summary
-This audit reflects the current state of the Conxian GitHub ecosystem against the **Strategos Mandate (docs/STRATEGOS_MANDATE.md)**. While core infrastructure (TEE/StrongBox/Clarity 4) is stable, critical gaps remain in the **Executor Forge (x402)** and **Oracle Chamber (Identity)** that block full autonomous settlement.
+This audit reflects the current state of the Conxian GitHub ecosystem against the **Strategos Mandate (docs/STRATEGOS_MANDATE.md)**. While core infrastructure (TEE/StrongBox/Clarity 4) is stable, critical gaps remain in the **Oracle Chamber (Identity)** that block full autonomous settlement. The **Executor Forge (x402)** is now implemented and active.
 
 ## 2. Strategos Roles Alignment Matrix
 
@@ -13,8 +13,8 @@ This audit reflects the current state of the Conxian GitHub ecosystem against th
 | **Guardian: Veracity** | `conxian-nexus/src/oracle` | ACTIVE | Missing active LSEG MCP feed. |
 | **Executor: Liquidity Forge** | `Conxian/yield/yield-optimizer.clar` | ACTIVE | Needs "Intent-to-Yield" mapping. |
 | **Executor: Compute Forge** | `cxn-ops-engine/DEPLOYMENT_EFFICIENCY.md`| INITIAL | No DePIN compute arbitrage implementation. |
-| **Executor: Route Forge** | `conxian-gateway/api/routes.rs` | ACTIVE | **Absence of OpenClaw/TEE sandbox routing**. |
-| **Executor: Payment Forge** | - | **MISSING** | **Lack of x402 payment handler** in Gateway. |
+| **Executor: Route Forge** | `conxian-gateway/api/routes.rs` | ACTIVE | Absence of OpenClaw/TEE sandbox routing. |
+| **Executor: Payment Forge** | `conxian-gateway/api/x402.rs` | ACTIVE | Nakamoto-style AP2 settlement engine. |
 | **Executor: Capital Forge** | `cxn-treasury-oracle/BITCOIN_BOND_DLC.json` | INITIAL | Bond lifecycle contracts missing. |
 | **Executor: Bridge Forge** | `Conxian/cross-chain/bridge-nft.clar` | ACTIVE | CCTP/NTT hardening needed. |
 
@@ -28,7 +28,7 @@ This audit reflects the current state of the Conxian GitHub ecosystem against th
 
 ## 4. Remediation Priority (Q2 2026)
 
-1.  **EXEC-0402**: Implement the x402 Machine-to-Machine settlement handler in the Gateway.
+1.  **EXEC-0402**: [COMPLETED] Implement the x402 Machine-to-Machine settlement handler in the Gateway.
 2.  **SANDBOX-001**: Implement the OpenClaw TEE routing layer in the Treasury Oracle.
 3.  **IDENTITY-001**: Integrate ERC-8004 for agent reputation tracking in `conxius-wallet`.
 
