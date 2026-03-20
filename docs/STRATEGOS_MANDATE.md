@@ -1,4 +1,4 @@
-# STRATEGOS MANDATE: CONSTRAINTS & ETHOS CHECKPOINTS
+# STRATEGOS MANDATE: CONSTRAINTS & ETHOS CHECKPOINTS (v1.1.0)
 
 ## 1. Core Ethos Checkpoints (Mandatory)
 Every architectural change and PR must be audited against these 5 non-negotiable checkpoints:
@@ -9,12 +9,18 @@ Every architectural change and PR must be audited against these 5 non-negotiable
 4.  **Bitcoin Finality**: All payments settle on **Stacks (L2)** with **sBTC**. Machine-to-machine (M2M) settlement **MUST** use the **x402 protocol** anchored to Stacks.
 5.  **Audit-Ready Architecture**: Code must be clean, modular, and suitable for continuous security auditing. Minimal dependencies, strict naming conventions (**cxn-** prefix), and full internal documentation are required.
 
-## 2. Strategos Roles (21-Agent Matrix)
+## 2. Global Reserve & Compliance Ethos
+As of ATS v4.8.0, all Conxian operations must be **Global Reserve Bank compliant**:
+- **ISO 20022 Native**: All institutional payment egress must support ISO 20022 XML standards (`pacs.008`).
+- **Jurisdictional Sharding**: State logic must be sharded to respect SARB, MiCA, and BIS/IMF global frameworks.
+- **LEI/DID Mapping**: Every treasury entity must map their Legal Entity Identifier (LEI) to a Sovereign DID (ERC-8004).
+
+## 3. Strategos Roles (21-Agent Matrix)
 
 ### Guardian Cohort (Security & Sovereignty)
 *   **Attestation**: ZKML/TEE oversight. Enforcement of Zero Secret Egress (ZSE).
     *   *Lead Component*: `conxian-gateway/zkc.rs`, `lib-conclave-sdk`.
-*   **Sovereignty**: Global regulatory compliance and jurisdictional sharding (SARB/SARS).
+*   **Sovereignty**: Global regulatory compliance and jurisdictional sharding (SARB/SARS/BIS).
     *   *Lead Component*: `cxn-strategy-nexus/docs/SARB_MARCH_2026_MANDATE.md`.
 *   **Resilience**: Emergency response and decentralized kill switches (Circuit Breaker).
     *   *Lead Component*: `Conxian/contracts/security/circuit-breaker.clar`.
@@ -38,8 +44,8 @@ Every architectural change and PR must be audited against these 5 non-negotiable
     *   *Lead Component*: `cxn-ops-engine/DEPLOYMENT_EFFICIENCY.md`.
 *   **Route Forge**: Secure API abstraction and TEE-sandboxed routing.
     *   *Lead Component*: `conxian-gateway/internal/api/routes.rs`.
-*   **Payment Forge**: x402/x402x M2M settlement protocol.
-    *   *Lead Component*: **MISSING** (Gap ID: EXEC-0402).
+*   **Payment Forge**: x402/x402x M2M settlement and **ISO 20022 XML egress**.
+    *   *Lead Component*: **MISSING** (Gap ID: EXEC-ISO-0402).
 *   **Capital Forge**: Bitcoin DLC Bonds and non-dilutive debt lifecycle.
     *   *Lead Component*: `cxn-treasury-oracle/BITCOIN_BOND_DLC.json`.
 *   **Bridge Forge**: Cross-chain hardening (EVM/Solana/Cosmos).
@@ -54,7 +60,7 @@ Every architectural change and PR must be audited against these 5 non-negotiable
     *   *Lead Component*: `cxn-treasury-oracle/OPENCLAW_TEE_SPEC.md`.
 *   **Signal**: On-chain metrics and adoption curves.
     *   *Lead Component*: `conxian-nexus/src/state`.
-*   **Identity**: Agent reputation and ERC-8004 (Identity DID).
+*   **Identity**: Agent reputation, **LEI Verification**, and ERC-8004.
     *   *Lead Component*: `cxn-treasury-oracle/WEB5_IDENTITY_AUDIT.md`.
 
 ### Cross-Cutting (Operations)
