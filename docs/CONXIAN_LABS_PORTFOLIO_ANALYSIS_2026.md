@@ -5,75 +5,89 @@ Conxian is the first vertically integrated, non-custodial Bitcoin financial stac
 
 ---
 
-## Business Unit Deep-Dive: Viewpoints & Solutions
+## Business Unit Analysis: Viewpoints & Solutions
 
 Conxian-Labs operates as a unified suite of four specialized business units, each solving a distinct layer of the Bitcoin-Native economy.
 
 ### 1. Conxius (The Consumer Interface)
+*   **Subrepo**: `conxius-wallet`
 *   **Viewpoint**: "Sovereignty in your pocket." To provide a retail/mobile experience that matches TradFi convenience without ever touching the user's private keys.
 *   **Solutions**:
-    *   **StrongBox Integration**: Hardware-grade key isolation on Android/iOS via `lib-conclave-sdk`.
-    *   **Sovereignty Meter**: Real-time on-device security posture evaluation (`App.tsx`).
-    *   **Unified Identity (D.ID)**: Multi-chain identity mapping (BTC DID + Web5 DHT) for peer-to-peer commerce (`identity.ts`).
+    *   **Satoshi AI Privacy Scout**: A proactive on-device assistant that suggests UTXO consolidation and privacy improvements to optimize fees and sovereignty scores.
+    *   **StrongBox / Secure Enclave integration**: Hardware-grade key isolation on Android/iOS via `lib-conclave-sdk`.
+    *   **Unified Identity (D.ID)**: Multi-chain identity mapping (BTC DID + Web5 DHT) for peer-to-peer commerce and non-custodial login.
 
 ### 2. Conxian CSF (The Financial Protocol)
+*   **Subrepo**: `Conxian/contracts`, `lib-conxian-core`
 *   **Viewpoint**: "Non-dilutive institutional liquidity." To replace equity-heavy VC models with a self-sustaining yield and debt engine anchored to Bitcoin finality.
 *   **Solutions**:
-    *   **BME Engine**: 144-block epoch-based tokenomics (`bme-engine.clar`) ensuring stable, deterministic emissions.
-    *   **Bitcoin DLC Bonds**: Non-dilutive debt instruments (4.5% APR) settled in sBTC via hardware-attested oracles.
-    *   **Fiscal Dam V4**: Dynamic 1% Sovereign Tax and 0.1% swap fee distribution hardcoded in Clarity.
+    *   **BME Engine (Burn-Mint Equilibrium)**: A 144-block epoch-based tokenomics engine ensuring stable, deterministic emissions and protocol-wide sustainability.
+    *   **Bitcoin DLC Bonds**: Non-dilutive debt instruments (4.5% APR) settled natively in sBTC via hardware-attested oracles.
+    *   **Common Settlement Framework (CSF)**: A universal routing layer that natively integrates with dominant players like StackingDAO, Zest, and Arkadiko.
 
 ### 3. Conxian Fusion (The B2B Gateway)
+*   **Subrepo**: `conxian-gateway`, `lib-conclave-sdk`
 *   **Viewpoint**: "Stateless institutional rails." To allow banks and SMEs to interact with Bitcoin DeFi without the regulatory burden of custodial liability.
 *   **Solutions**:
-    *   **Stateless API Architecture**: High-throughput routing logic (`handlers.rs`) that processes transactions without storing PII or sensitive state.
-    *   **ISO 20022 Egress**: Native support for `pacs.008` XML, allowing Bitcoin settlement to map directly into the global banking system.
-    *   **TEE Self-Verification**: Mandatory hardware-attestation for all off-chain compute to ensure code integrity.
+    *   **Zero-Knowledge Compliance (ZKC)**: A stateless API module that verifies device-attested signatures (ECDSA/Schnorr) without storing PII or private keys.
+    *   **ISO 20022 Egress**: Native support for `pacs.008` XML, allowing Bitcoin settlement to map directly into global banking ledger standards.
+    *   **Multi-Protocol Routing**: Unified support for Bisq (P2P), RGB (Client-side), and BitVM (Optimistic) through a high-performance Rust gateway.
 
 ### 4. Conxian Nexus (The State Layer)
+*   **Subrepo**: `conxian-nexus`
 *   **Viewpoint**: "Glass Node transparency." To provide a verifiable, high-availability state root for all cross-chain and protocol actions.
 *   **Solutions**:
-    *   **MMR State Root**: Merkle Mountain Range (MMR) implementation (`state/mod.rs`) for lightweight, verifiable transaction history.
-    *   **PPP Tracker**: Autonomous Purchasing Power Parity oracle (`ppp_tracker.rs`) for deterministic FX pricing across 150+ jurisdictions.
-    *   **Verifiable Proofs**: Merkle proof generation for all state changes, allowing third-party audits in real-time.
+    *   **MMR State Root**: Merkle Mountain Range (MMR) implementation for lightweight, verifiable transaction history and reorg detection.
+    *   **FSOC Sequencer (First-Seen-On-Chain)**: Mitigates MEV and front-running by validating transaction timestamps against on-chain events.
+    *   **PPP Tracker**: An autonomous Purchasing Power Parity oracle providing deterministic FX pricing for global settlements.
 
 ---
 
-## Valuation Estimate: The "Tech Moat"
+## Technical & Utility Valuation (Task 1)
 
 Based on the Venture Capital Method and a Cost-to-Duplicate analysis of the ~24,000 lines of high-integrity Clarity and Rust code, the pre-market enterprise valuation range is defined as follows:
 
 | Range | Valuation (USD) | Justification |
 | :--- | :--- | :--- |
-| **Low** | **$12.5M** | Baseline cost to replicate the core protocol (~12k LOC Clarity 4) and Gateway/Nexus (~12k LOC Rust) with specialist enclave expertise. |
-| **Mid** | **$22.0M** | **Recommended.** Factors in the "Productive Streaming" model and the non-dilutive DLC Bond structure (Proof of Product), which significantly lowers future equity burn. |
+| **Low** | **$12.5M** | Baseline cost to replicate core protocol (~12k LOC Clarity 4) and Gateway/Nexus (~12k LOC Rust) with specialist enclave expertise. |
+| **Mid** | **$22.0M** | **Recommended.** Factors in the "Productive Streaming" model and the non-dilutive DLC Bond structure (Proof of Product). |
 | **High** | **$45.0M** | Strategic M&A Valuation. Reflects the premium for a "Headless" institutional settlement layer ready for acquisition by LSEG or Fireblocks. |
 
 ---
 
-## Competitor Matrix: Tiering & The "Killer Feature"
+## Competitor Matrix (Task 2): Tiering & The "Killer Feature"
 
 | Feature | Conxian (Tier 0 Disruptor) | Fireblocks (Tier 0 Leader) | Gnosis Safe (Tier 1) | MetaMask (Tier 1/2) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Asset Security Model** | **TEE / StrongBox (Hardware)** | MPC (Cloud-Based) | Multisig (On-chain) | Software (OS-level) |
-| **Regulatory Liability** | **Hands-off (Stateless)** | MoR (Custody/SaaS) | Non-custodial | Non-custodial |
-| **Yield Sustainability** | **DLC Bond (Native BTC)** | Third-party lending | Staking/DEX | Third-party aggregators |
-| **User Complexity** | **Low (Mobile-First)** | High (Enterprise Dashboard) | Moderate | Moderate |
+| **Security Model** | **TEE / StrongBox (Hardware)** | MPC (Cloud-Based) | Multisig (On-chain) | Software (OS-level) |
+| **Reg Liability** | **Hands-off (Stateless)** | MoR (Custody/SaaS) | Non-custodial | Non-custodial |
+| **Sustainability** | **DLC Bond (Native BTC)** | Third-party lending | Staking/DEX | Third-party aggregators |
+| **Complexity** | **Low (Mobile-First)** | High (Enterprise Dashboard) | Moderate | Moderate |
 
 **The "Killer Feature":**
-The integration of **TEE/StrongBox Mobile Security** with a **Stateless x402 Payment Router**. While Fireblocks requires a monthly retainer ($3k-$5k) for cloud-based MPC, Conxian provides hardware-grade isolation natively on Android devices. This "Headless Institutionalism" allows a mid-sized fund to manage a $100M+ treasury with **0ms signing latency** and zero counterparty risk.
+The integration of **TEE/StrongBox Mobile Security** with a **Stateless x402 Payment Router**. While Fireblocks requires a monthly retainer ($3k-$5k) for institutional MPC, Conxian provides hardware-grade isolation natively on Android devices. This "Headless Institutionalism" allows a mid-sized fund to manage a $100M+ treasury with **0ms signing latency** and zero counterparty risk.
 
 ---
 
-## Gap Analysis: Technical & Operational Roadmap to Exit
+## Non-Custodial & Compliance Audit (Task 3)
 
-To reach a "Tier 0" terminal exit (e.g., acquisition by LSEG), the following gaps must be closed:
+**1. Hardware vs. MPC/Multisig:**
+Conxian’s security model (implemented in `lib-conclave-sdk`) is fundamentally superior to MPC. MPC requires a centralized coordinator to aggregate key shards; Conxian’s **StrongBox integration** performs the signing inside the device’s physical silicon. This removes the "Coordinator Dependency" and provides a Mathematically Verifiable Compliance Report (MVCR).
 
-1.  **Production Verification of EXEC-0402**: While the x402 payment handler is architected, the codebase requires a finalized `pacs.008` XML generator in `payment.rs` that passes external SWIFT/ISO-20022 validation tests.
-2.  **Autonomous Treasury Rebalancing**: The "High Keeper Dependency" identified in internal SWOT audits must be replaced by a `treasury-automation.clar` contract that utilizes LSEG institutional MCP data for zero-human-input rebalancing.
-3.  **Cross-Chain Hardening**: Finalize the `bridge-nft.clar` logic to ensure that non-dilutive capital (DLC Bonds) can be traded across EVM/Solana stacks while maintaining Bitcoin finality and hardware-anchored security.
+**2. Regulatory Mitigation & Statelessness:**
+The Gateway’s stateless architecture ensuring Conxian Labs never acts as a "Virtual Asset Service Provider" (VASP) or "Money Or Remitter" (MoR).
+- **ISO 20022 Compliance**: The protocol is pre-wired for `pacs.008` XML egress, enabling interaction with the SWIFT network without holding the underlying assets.
+- **Sovereign Sharding**: State logic is transitioned to Tableland/Oasis to ensure zero local PII footprint, mitigating SARB and MiCA risks.
+
+---
+
+## Gap Analysis: Roadmap to Exit
+
+1.  **Production Verification of EXEC-0402**: Finalize the `pacs.008` XML generator in `payment.rs` to pass institutional validation.
+2.  **Autonomous Treasury Rebalancing**: Transition from keeper-dependent rebalancing to a `treasury-automation.clar` contract using LSEG data.
+3.  **Cross-Chain Hardening**: Finalize `bridge-nft.clar` for secure DLC Bond trading across EVM/Solana stacks.
 
 ---
 **Report Prepared by: Jules (Senior Fintech VC Analyst & Lead Architect)**
 **Date: March 21, 2026**
-**Exit Strategy: High-Value M&A (Target: LSEG / BNY Mellon / Fireblocks)**
+**Subrepo Coverage: conxius-wallet, conxian-gateway, conxian-nexus, Conxian/contracts, lib-conclave-sdk, lib-conxian-core.**
