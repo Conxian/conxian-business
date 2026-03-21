@@ -5,12 +5,13 @@ Conxian is the first vertically integrated, non-custodial Bitcoin financial stac
 
 ---
 
-## Business Unit Analysis: Viewpoints & Solutions
+## Business Unit Deep-Dive: Multi-Dimensional Viewpoints & Solutions
 
 Conxian-Labs operates as a unified suite of four specialized business units, each solving a distinct layer of the Bitcoin-Native economy.
 
 ### 1. Conxius (The Consumer Interface)
 *   **Subrepo**: `conxius-wallet`
+*   **Strategos Role**: `cxn-strategy-nexus` (CEO)
 *   **Viewpoint**: "Sovereignty in your pocket." To provide a retail/mobile experience that matches TradFi convenience without ever touching the user's private keys.
 *   **Solutions**:
     *   **Satoshi AI Privacy Scout**: A proactive on-device assistant that suggests UTXO consolidation and privacy improvements to optimize fees and sovereignty scores.
@@ -19,27 +20,30 @@ Conxian-Labs operates as a unified suite of four specialized business units, eac
 
 ### 2. Conxian CSF (The Financial Protocol)
 *   **Subrepo**: `Conxian/contracts`, `lib-conxian-core`
+*   **Strategos Role**: `cxn-treasury-oracle` (CFO)
 *   **Viewpoint**: "Non-dilutive institutional liquidity." To replace equity-heavy VC models with a self-sustaining yield and debt engine anchored to Bitcoin finality.
 *   **Solutions**:
     *   **BME Engine (Burn-Mint Equilibrium)**: A 144-block epoch-based tokenomics engine ensuring stable, deterministic emissions and protocol-wide sustainability.
     *   **Bitcoin DLC Bonds**: Non-dilutive debt instruments (4.5% APR) settled natively in sBTC via hardware-attested oracles.
-    *   **Common Settlement Framework (CSF)**: A universal routing layer that natively integrates with dominant players like StackingDAO, Zest, and Arkadiko.
+    *   **LSEG MCP Integration**: All yield rebalancing is cross-referenced against LSEG institutional data to ensure FASB compliance and prevent oracle manipulation.
 
 ### 3. Conxian Fusion (The B2B Gateway)
 *   **Subrepo**: `conxian-gateway`, `lib-conclave-sdk`
+*   **Strategos Role**: `cxn-arch-guardian` (CTO)
 *   **Viewpoint**: "Stateless institutional rails." To allow banks and SMEs to interact with Bitcoin DeFi without the regulatory burden of custodial liability.
 *   **Solutions**:
     *   **Zero-Knowledge Compliance (ZKC)**: A stateless API module that verifies device-attested signatures (ECDSA/Schnorr) without storing PII or private keys.
     *   **ISO 20022 Egress**: Native support for `pacs.008` XML, allowing Bitcoin settlement to map directly into global banking ledger standards.
-    *   **Multi-Protocol Routing**: Unified support for Bisq (P2P), RGB (Client-side), and BitVM (Optimistic) through a high-performance Rust gateway.
+    *   **TEE Self-Verification**: Mandatory hardware-attestation for all off-chain compute to ensure code integrity and prevent unauthorized state changes.
 
 ### 4. Conxian Nexus (The State Layer)
 *   **Subrepo**: `conxian-nexus`
+*   **Strategos Role**: `cxn-ops-engine` (COO)
 *   **Viewpoint**: "Glass Node transparency." To provide a verifiable, high-availability state root for all cross-chain and protocol actions.
 *   **Solutions**:
     *   **MMR State Root**: Merkle Mountain Range (MMR) implementation for lightweight, verifiable transaction history and reorg detection.
     *   **FSOC Sequencer (First-Seen-On-Chain)**: Mitigates MEV and front-running by validating transaction timestamps against on-chain events.
-    *   **PPP Tracker**: An autonomous Purchasing Power Parity oracle providing deterministic FX pricing for global settlements.
+    *   **PPP Tracker**: An autonomous Purchasing Power Parity oracle providing deterministic FX pricing for global settlements across 150+ jurisdictions.
 
 ---
 
