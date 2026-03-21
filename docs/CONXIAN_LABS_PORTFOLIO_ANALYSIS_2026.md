@@ -7,7 +7,7 @@ Conxian is the first vertically integrated, non-custodial Bitcoin financial stac
 
 ## Business Unit Deep-Dive: Multi-Dimensional Viewpoints & Solutions
 
-Conxian-Labs operates as a unified suite of four specialized business units, each solving a distinct layer of the Bitcoin-Native economy.
+Conxian operates as a unified suite of four specialized business units, each solving a distinct layer of the Bitcoin-Native economy.
 
 ### 1. Conxius (The Consumer Interface)
 *   **Subrepo**: `conxius-wallet`
@@ -79,7 +79,7 @@ The integration of **TEE/StrongBox Mobile Security** with a **Stateless x402 Pay
 Conxian’s security model (implemented in `lib-conclave-sdk`) is fundamentally superior to MPC. MPC requires a centralized coordinator to aggregate key shards; Conxian’s **StrongBox integration** performs the signing inside the device’s physical silicon. This removes the "Coordinator Dependency" and provides a Mathematically Verifiable Compliance Report (MVCR).
 
 **2. Regulatory Mitigation & Statelessness:**
-The Gateway’s stateless architecture ensuring Conxian Labs never acts as a "Virtual Asset Service Provider" (VASP) or "Money Or Remitter" (MoR).
+The Gateway’s stateless architecture ensuring Conxian never acts as a "Virtual Asset Service Provider" (VASP) or "Money Or Remitter" (MoR).
 - **ISO 20022 Compliance**: The protocol is pre-wired for `pacs.008` XML egress, enabling interaction with the SWIFT network without holding the underlying assets.
 - **Sovereign Sharding**: State logic is transitioned to Tableland/Oasis to ensure zero local PII footprint, mitigating SARB and MiCA risks.
 
