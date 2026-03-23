@@ -1,17 +1,20 @@
-# Conxian BOS Service Loop
+# Conxian Service Loop: Strategos Mandate
 
-```mermaid
-graph TD
-    subgraph BOS_CLIENT [BOS as Client]
-        A[Gateway Intelligence] --> B[Finance Yield Optimizer]
-        B --> C[Treasury Rebalance]
-    end
+## 1. Discovery & Intent (Gateway)
+- External systems connect via **x402**.
+- TEE Attestation verified at `POST /api/v1/verify-tee`.
 
-    subgraph BOS_SUPPLIER [BOS as Supplier]
-        D[Nexus Governance] --> E[Stacks-Native Settlement]
-        E --> F[External Stacks: EVM/Solana]
-    end
+## 2. Validation & Compliance (Guardian)
+- Every agent checked against `agent-registry.clar`.
+- LEI/DID mapping enforced.
 
-    C -.-> D
-    F -.-> A
-```
+## 3. Execution & Settlement (Executor)
+- 1% Sovereign Tax stripped via `revenue-automation.clar`.
+- Yield optimization via `yield-optimizer.clar`.
+
+## 4. Monitoring & Transparency (Oracle/Scribe)
+- Audit manifest anchored to Bitcoin via `transparency_custodian.py`.
+- Telemetry visible in `sovereign-dashboard.clar`.
+
+---
+🛡️ **Sovereign Autonomous Business (SAB)**. © 2026 Conxian-Labs.

@@ -1,9 +1,8 @@
-# Render Service Payload: Conxian Institutional UI
+# Render Service Payload: Conxian-Labs Institutional UI
 
 To output the visual proof of architecture for the institutional UI, the following payload structure is required for the Render-hosted services.
 
 ## Service 1: Conxian Gateway (Middleware)
-
 - **Runtime**: Rust
 - **Build Command**: `cargo build --release -p cmd-gateway`
 - **Start Command**: `./target/release/gateway`
@@ -14,7 +13,6 @@ To output the visual proof of architecture for the institutional UI, the followi
   - `NEXUS_URL`: URL for Conxian Nexus state source.
 
 ## Service 2: Institutional Dashboard (UI)
-
 - **Runtime**: Node.js (Next.js)
 - **Build Command**: `npm install && pnpm run lint && next build`
 - **Start Command**: `next start`
@@ -24,7 +22,6 @@ To output the visual proof of architecture for the institutional UI, the followi
   - Accent: `#d4a017` (Conxian Gold)
 
 ## Visual Proof Requirements (ATS v4.0)
-
 - **Root to Leaf Proof**: Render real-time grid orchestration state from `grid_oracle_logs`.
 - **Leaf to Root Proof**: Render validated settlement receipts from Stacks block data via Nexus.
 - **DeAI Proof**: Display Phala/Ritual attestation strings directly in the inference log.

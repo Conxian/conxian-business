@@ -1,6 +1,6 @@
 {
   "report_id": "CXN-GLOBAL-2026-001",
-  "identity": "Sovereign-Strategy-Nexus",
+  "identity": "cxn-strategy-nexus",
   "timestamp": "2026-03-20T12:00:00Z",
   "compliance_model": "Global Sovereign Sharding (ATS v4.8.0)",
   "regulations": [

@@ -44,7 +44,7 @@ This document defines the standalone positioning and Total Addressable Markets (
 
 ---
 
-## 6. Strategic Capital & Partner Filtering (Nakamoto-Guardian)
+## 6. Strategic Capital & Partner Filtering (cxn-arch-guardian)
 **Identity**: Strategic Capital Oracle.
 **Ethos**: BTC-native. No TradFi/Dilution. Yield-only. Sovereign-first.
 
