@@ -20,8 +20,8 @@
       "sha256": "3845799cb9507a7b9c8446d66165b70f871a7d9a308a3f7d62039d7babeee8b9"
     },
     {
-      "path": "docs/MARCH_2026_BASELINE_STATS.md",
-      "sha256": "661fb799c70e973715dd6b608d34159d389d9dcb574174b5190f54d32dd5399b"
+      "path": "docs/GAPS_V2_AUDIT.md",
+      "sha256": "55a9e1cb296b2508b1a46d3a0abfd020c3b72d5dfddd4b98b71079a12726ced5"
     },
     {
       "path": "docs/STRATEGIC_MOAT_MAP.md",
@@ -40,6 +40,10 @@
       "sha256": "32a829c895f1be63083eb59d796f2b3c69559697556620f4dcd41d85a11365d1"
     },
     {
+      "path": "docs/MASTER_BASELINE_SPEC.md",
+      "sha256": "7d7a2c44966aab580058721fd906ca8437ea1a6838f41575117810a74c6e9f5a"
+    },
+    {
       "path": "docs/CONXIAN_LABS_PORTFOLIO_ANALYSIS_2026.md",
       "sha256": "dcec44bb64bb28295f950d51014b0f7b87e820d9485ff355edc40534ed8a734d"
     },
@@ -48,8 +52,16 @@
       "sha256": "491122a66b255acd9d4ec3c4532c0149fffb61bd1f3b092f499c4480770a6a7d"
     },
     {
-      "path": "docs/research/BITCOIN_NATIVE_UPGRADE.md",
-      "sha256": "93d3c2aabb50399b7db53c6223a6717fe490d7f035e873a32793a6ede14a351a"
+      "path": "docs/specifications/ERP_ADAPTER_SPEC.md",
+      "sha256": "b298510b9aa7993eaba57304d73193fec46ee44b11656b4503356cd830fc40b7"
+    },
+    {
+      "path": "docs/specifications/DID_RESOLVER_SPEC.md",
+      "sha256": "2490bd7f09255bc477cda16f38b41ea26e902f0878f70f30990cfb2f4a4308f5"
+    },
+    {
+      "path": "docs/specifications/70_LOOP_SPEC.md",
+      "sha256": "e11803f0ff24a77014050d38872e0bee57c17516b1396593e06f18060a9fbd72"
     },
     {
       "path": "docs/legal/SECTION_42_SWAP_AGREEMENT.md",
@@ -1389,7 +1401,7 @@
     },
     {
       "path": "conxian-business/AUDIT_MANIFEST.json",
-      "sha256": "5158b4cd98e7a26e462230f6855c355ad2fd1ce85185799ed32863a8638b3efd"
+      "sha256": "016ccd31183a0e456c31f1aec6c59e82564d6c121371a2d35d90f7a73ebc314f"
     },
     {
       "path": "Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md",
@@ -1452,5 +1464,5 @@
       "sha256": "6d0d07e5a39acb61fb51fb0bf177ee639f087f46f21bbb162e9b2a8ca70fcf71"
     }
   ],
-  "stacks_anchor_payload": "b050c235fa4ef32e2a21cab5d35bf3f9f792c4408cc2570e1f257fa384076174"
+  "stacks_anchor_payload": "ea86c1a367f8cb117b62215b2a274ccf52907969027f03d4ded5913662ab6cbd"
 }
