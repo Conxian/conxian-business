@@ -1,6 +1,6 @@
 {
   "org": "Conxian",
-  "timestamp": "2026-03-26T07:09:31.595880Z",
+  "timestamp": "2026-03-26T08:53:55.446702Z",
   "version": "v2.0-Audit",
   "files": [
     {
@@ -20,12 +20,20 @@
       "sha256": "3845799cb9507a7b9c8446d66165b70f871a7d9a308a3f7d62039d7babeee8b9"
     },
     {
+      "path": "docs/MARCH_2026_BASELINE_STATS.md",
+      "sha256": "661fb799c70e973715dd6b608d34159d389d9dcb574174b5190f54d32dd5399b"
+    },
+    {
       "path": "docs/STRATEGIC_MOAT_MAP.md",
-      "sha256": "6c3264103a9612921dd8d7a2e7fba8ec85ebc73a0914d3846eb12fd8dea40e0a"
+      "sha256": "558e7be7e3ee9811e9a78774eb57d77bf604fe68468395a00ddf6de7e2769560"
     },
     {
       "path": "docs/STRATEGOS_MANDATE.md",
       "sha256": "dfbac1cef301c59d0ef95e994d422fb55aba366b4c70233d4fcf1059ab16f892"
+    },
+    {
+      "path": "docs/ATS_v11.0_MASTER_BASELINE.md",
+      "sha256": "511e59f2cd0498eab72e9d2341116582be9b815b32114833cdb19381cc623fe9"
     },
     {
       "path": "docs/MISSING_CHIPS_BRIEF.md",
@@ -38,6 +46,10 @@
     {
       "path": "docs/README.md",
       "sha256": "491122a66b255acd9d4ec3c4532c0149fffb61bd1f3b092f499c4480770a6a7d"
+    },
+    {
+      "path": "docs/research/BITCOIN_NATIVE_UPGRADE.md",
+      "sha256": "93d3c2aabb50399b7db53c6223a6717fe490d7f035e873a32793a6ede14a351a"
     },
     {
       "path": "docs/legal/SECTION_42_SWAP_AGREEMENT.md",
@@ -382,6 +394,14 @@
     {
       "path": "Conxian/contracts/utils/encoding.clar",
       "sha256": "d6a1ae29e454b08d48157437e21d21244c20868fcbdfa10d6ae96f4024df48ec"
+    },
+    {
+      "path": "Conxian/contracts/finance/dlc-bond-trait.clar",
+      "sha256": "ea93857a5ec60c29753ce10466e19be7fec993a06de2756aecb0137f87207c5a"
+    },
+    {
+      "path": "Conxian/contracts/finance/dlc-bond.clar",
+      "sha256": "d2f98c611d041313e42f611c8e73fdb9b5504d8a0334049322c379075985b917"
     },
     {
       "path": "Conxian/contracts/migration/legacy-adapter.clar",
@@ -1072,10 +1092,6 @@
       "sha256": "d958e4e2927812c826b4f56d02ae856ae5d44aa9973743a3464636be6106eb77"
     },
     {
-      "path": "Conxian/contracts/treasury/revenue-automation.clar",
-      "sha256": "a618841a236fb356d28316fa9899272f2fa492dbbdaa9cfcc34bb5bac36a397a"
-    },
-    {
       "path": "Conxian/contracts/treasury/cxd-treasury.clar",
       "sha256": "51c23c20f7f68394b1a96dceb87cbdb124bfd9fe2781f4efc21d85e4089cecd0"
     },
@@ -1373,7 +1389,7 @@
     },
     {
       "path": "conxian-business/AUDIT_MANIFEST.json",
-      "sha256": "df82e2503a8ca2b5626ac7f5a7e9ae7f9f22024a8581b38b3b04f9cf6877834f"
+      "sha256": "5158b4cd98e7a26e462230f6855c355ad2fd1ce85185799ed32863a8638b3efd"
     },
     {
       "path": "Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md",
@@ -1436,5 +1452,5 @@
       "sha256": "6d0d07e5a39acb61fb51fb0bf177ee639f087f46f21bbb162e9b2a8ca70fcf71"
     }
   ],
-  "stacks_anchor_payload": "0e1c6f4dd6b752e0b33343e1ba2642b2789a6b1608133fd16a9e4ad1867081b2"
+  "stacks_anchor_payload": "b050c235fa4ef32e2a21cab5d35bf3f9f792c4408cc2570e1f257fa384076174"
 }
