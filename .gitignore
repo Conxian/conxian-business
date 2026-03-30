@@ -17,7 +17,7 @@ test-results/
 playwright-report/
 coverage/
 .nyc_output/
-*.log
+/*.log
 /*.txt
 /*.patch
 /*.bak

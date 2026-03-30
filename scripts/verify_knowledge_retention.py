@@ -120,16 +120,33 @@ def verify() -> None:
         )
 
     tracked = _git_paths([])
-    untracked = _git_paths(["--others", "--exclude-standard"])
+    tracked_sensitive = [p for p in tracked if _is_sensitive_path(p)]
+    if tracked_sensitive:
+        lines = [
+            "Zero Secret Egress violation: tracked sensitive paths found:",
+            *[f"  - {p}" for p in tracked_sensitive],
+        ]
+        raise RuntimeError("\n".join(lines))
+
+    untracked_not_ignored = _git_paths(["--others", "--exclude-standard"])
+    untracked_sensitive = [p for p in untracked_not_ignored if _is_sensitive_path(p)]
+    if untracked_sensitive:
+        lines = [
+            "Sensitive paths found that are not ignored by git:",
+            *[f"  - {p}" for p in untracked_sensitive],
+            "",
+            "Add these paths to .gitignore (or remove them) before proceeding.",
+        ]
+        raise RuntimeError("\n".join(lines))
+
     ignored_untracked = _git_paths(["--others", "-i", "--exclude-standard"])
-    candidates = sorted(set([*tracked, *untracked, *ignored_untracked]))
-    sensitive_candidates = [p for p in candidates if _is_sensitive_path(p)]
+    ignored_sensitive = [p for p in ignored_untracked if _is_sensitive_path(p)]
 
     all_patterns: list[str] = []
     for entry in manifest.values():
         all_patterns.extend(entry["paths"])
 
-    missing_from_manifest = [p for p in sensitive_candidates if not _matches_any(p, all_patterns)]
+    missing_from_manifest = [p for p in ignored_sensitive if not _matches_any(p, all_patterns)]
     if missing_from_manifest:
         lines = [
             "Error: The following sensitive paths exist in the repo but are not covered by audit/migration_manifest.json patterns:",
