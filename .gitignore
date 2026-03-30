@@ -18,6 +18,9 @@ playwright-report/
 coverage/
 .nyc_output/
 *.log
+*.txt
+*.patch
+*.bak
 
 # Environment and secrets
 .env
@@ -28,6 +31,10 @@ coverage/
 *.pem
 *.key
 secrets.json
+
+# Internal Strategy and Private Operations
+internal/strategy/
+archive/
 
 # Python
 __pycache__/

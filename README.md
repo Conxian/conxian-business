@@ -32,7 +32,9 @@ We adhere to strict sovereignty and security standards.
 
 - [**CONTRIBUTING.md**](./CONTRIBUTING.md): Guidelines for contributing to the BOS.
 - [**SECURITY.md**](./SECURITY.md): How to report vulnerabilities and our security posture.
-- [**LICENSE**](./LICENSE) (if present): Software licensing terms.
+- [**LICENSE**](./LICENSE) : Software licensing terms.
+- [**CHANGELOG.md**](./CHANGELOG.md): History of BOS changes.
+- [**CODEOWNERS**](./CODEOWNERS): Repository ownership and review guidance.
 
 ## 🗺️ Implementation Roadmap (v1.7.0)
 
