@@ -32,6 +32,8 @@ The BOS is powered by an active suite of autonomous agents:
 
 We adhere to strict sovereignty and security standards.
 
+This repository is licensed under the GNU GPL v3.0 (see `LICENSE`).
+
 - [**CONTRIBUTING.md**](./CONTRIBUTING.md): Guidelines for contributing to the BOS.
 - [**SECURITY.md**](./SECURITY.md): How to report vulnerabilities and our security posture.
 - [**LICENSE**](./LICENSE): Licensed under GPL-3.0.
