@@ -17,7 +17,8 @@ This is a maintainer-only checklist for enabling bounty payouts after ConxianCSF
 
 ### 1) Verify ConxianCSF full deployment on Stacks mainnet
 
-1. Confirm the `alex-adapter` mainnet deployment batch ran as planned (see [`Conxian/deployments/mainnet-release-plan.yaml`](../../Conxian/deployments/mainnet-release-plan.yaml) at the exact commit used for deployment).
+1. Confirm the `alex-adapter` mainnet deployment batch ran as planned (see the mainnet release plan in this repo: [`Conxian/deployments/mainnet-release-plan.yaml`](../../Conxian/deployments/mainnet-release-plan.yaml)).
+   - In the go/no-go record, include a GitHub permalink to the release plan pinned to the exact deployment commit (in GitHub UI: press `y` to generate a commit-pinned URL).
    - `contract-publish` succeeded for `alex-adapter`.
    - The follow-up `contract-call` succeeded:
      - contract: `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.dex-factory`
@@ -70,17 +71,21 @@ console.log(JSON.stringify(cvToJSON(hexToCV(hex)), null, 2));' \
 3. Verify the payout wallet received no inbound bounty funding transfers from any other principal since mainnet launch.
 
 For this checklist, treat any inbound STX transfer to the payout wallet as bounty funding unless explicitly reconciled as unrelated and documented in the decision record.
+tmpfile="$(mktemp)"
 
 #### Funding-source verification procedure (reproducible)
 
-Use the Hiro API account assets endpoint to enumerate inbound transfers and verify the sender set.
+1. Define the mainnet launch boundary as the `block_height` of the `alex-adapter` publish txid from section (1) (record this in the decision record).
+2. Export inbound transfers for the payout wallet and verify the sender set.
+   - Important: paginate (`offset=`) until there are no more results.
 
 ```bash
 API_BASE='https://api.mainnet.hiro.so'
 ALEX_VAULT='SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.alex-vault'
-: "${PAYOUT_WALLET:?Set PAYOUT_WALLET to the payout wallet principal}"
+: "${PAYOUT_WALLET:?Set PAYOUT_WALLET to the payout wallet principal/address}"
+LAUNCH_BLOCK_HEIGHT=123456 # block height of alex-adapter publish txid
 
-# Iterate pages (payout wallet should be new; this should be small).
+# Export inbound STX transfers to the payout wallet.
 limit=200
 offset=0
 while :; do
@@ -104,6 +109,35 @@ awk -v alex="$ALEX_VAULT" '$2 == alex' /tmp/payout-wallet.inbound-stx.tsv | head
 
 # Must be zero non-ALEX inbound STX funding transfers.
 awk -v alex="$ALEX_VAULT" '$2 != alex {print}' /tmp/payout-wallet.inbound-stx.tsv
+
+# Strict boundary check (since launch): lists any non-ALEX senders for inbound STX transfers at/after LAUNCH_BLOCK_HEIGHT.
+limit=50
+offset=0
+tmpfile="$(mktemp)"
+trap 'rm -f "$tmpfile"' EXIT
+: > "$tmpfile"
+
+while true; do
+  page="$(curl -sS "$API_BASE/extended/v1/address/$PAYOUT_WALLET/transactions?limit=${limit}&offset=${offset}")"
+
+  echo "$page" | jq -r --argjson launch "${LAUNCH_BLOCK_HEIGHT}" --arg alex "${ALEX_VAULT}" --arg payout "${PAYOUT_WALLET}" '
+    .results
+    | map(select(.block_height >= $launch))
+    | map(select(.tx_type == "token_transfer" and (.token_transfer.recipient_address == $payout)))
+    | map(select(.token_transfer.sender_address != $alex))
+    | .[].token_transfer.sender_address
+  ' >> "$tmpfile"
+
+  count="$(echo "$page" | jq '.results | length')"
+  min_height="$(echo "$page" | jq '.results | map(.block_height) | min // 0')"
+  if [ "$count" -lt "$limit" ] || [ "$min_height" -lt "$LAUNCH_BLOCK_HEIGHT" ]; then
+    break
+  fi
+
+  offset=$((offset + limit))
+done
+
+sort -u "$tmpfile"
 ```
 
 Treat any non-ALEX inbound transfer as **NO-GO** unless explicitly reconciled as unrelated and documented in the decision record.
