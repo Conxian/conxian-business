@@ -1,64 +1,119 @@
-import os
-import sys
+from __future__ import annotations
+
 import json
 import subprocess
+import sys
+from pathlib import Path, PurePosixPath
+from typing import Any
 
-# Sensitive paths being ignored in .gitignore
-SENSITIVE_PATHS = ['internal/strategy/', 'archive/']
-MANIFEST_PATH = 'audit/migration_manifest.json'
+SENSITIVE_ROOTS = ("internal/strategy", "archive")
+MANIFEST_PATH = Path("audit/migration_manifest.json")
 
-def get_git_ignored_paths():
-    """Get all paths that are currently being ignored by git."""
+
+def _run_git(args: list[str]) -> str:
+    proc = subprocess.run(
+        ["git", *args],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    if proc.returncode != 0:
+        details = (proc.stderr or proc.stdout).strip() or f"exit code {proc.returncode}"
+        raise RuntimeError(f"git {' '.join(args)} failed: {details}")
+
+    return proc.stdout
+
+
+def _git_root() -> Path:
+    return Path(_run_git(["rev-parse", "--show-toplevel"]).strip())
+
+
+def _git_paths(args: list[str]) -> list[str]:
+    output = _run_git(["ls-files", "-z", *args])
+    return [p for p in output.split("\0") if p]
+
+
+def _is_sensitive_path(path: str) -> bool:
+    return any(path == root or path.startswith(f"{root}/") for root in SENSITIVE_ROOTS)
+
+
+def _load_manifest(path: Path) -> dict[str, dict[str, Any]]:
     try:
-        output = subprocess.check_output(['git', 'ls-files', '--others', '-i', '--exclude-standard'], text=True)
-        return output.splitlines()
-    except Exception as e:
-        print(f"Error getting ignored paths: {e}")
-        return []
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as e:
+        raise RuntimeError(f"Migration manifest not found at {path.as_posix()}") from e
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"Migration manifest is not valid JSON: {path.as_posix()}") from e
 
-def verify():
-    if not os.path.exists(MANIFEST_PATH):
-        print(f"Error: Knowledge migration manifest not found at {MANIFEST_PATH}")
-        sys.exit(1)
+    if not isinstance(data, dict):
+        raise RuntimeError("Migration manifest must be a JSON object")
 
-    with open(MANIFEST_PATH, 'r') as f:
-        manifest = json.load(f)
+    parsed: dict[str, dict[str, Any]] = {}
+    for key, val in data.items():
+        if not isinstance(key, str):
+            raise RuntimeError("Migration manifest keys must be strings")
+        if not isinstance(val, dict):
+            raise RuntimeError(
+                f"Migration manifest entry {key} must be an object (expected {{paths: string[]}})"
+            )
 
-    # Ensure the parent migration issue CON-306 exists in manifest
-    if "CON-306" not in manifest:
-        print("Error: Master Strategy Migration issue (CON-306) not found in manifest.")
-        sys.exit(1)
+        paths = val.get("paths")
+        if not isinstance(paths, list) or not all(isinstance(p, str) for p in paths):
+            raise RuntimeError(f"Migration manifest entry {key}.paths must be a string array")
 
-    ignored_files = get_git_ignored_paths()
+        parsed[key] = {"description": val.get("description"), "paths": paths}
 
-    # We want to check if any of the sensitive files are NOT in the manifest
-    missing_from_manifest = []
-    for file_path in ignored_files:
-        is_sensitive = any(file_path.startswith(prefix) for prefix in SENSITIVE_PATHS)
-        if is_sensitive:
-            # We check if this file or its directory is covered in the manifest
-            # For simplicity, we check if the manifest has a key that covers this file
-            covered = False
-            for entry_key, entry_val in manifest.items():
-                if entry_val in file_path or entry_key in file_path:
-                    covered = True
-                    break
-                if any(file_path.startswith(prefix) for prefix in entry_val.split(', ')):
-                     covered = True
-                     break
+    return parsed
 
-            # Since CON-306 covers all internal/strategy and archive, if it exists we consider it covered for this simple script
-            if not covered and "CON-306" not in manifest:
-                missing_from_manifest.append(file_path)
 
+def _matches_any(path: str, patterns: list[str]) -> bool:
+    posix = PurePosixPath(path)
+    return any(posix.match(pattern) for pattern in patterns)
+
+
+def verify() -> None:
+    repo_root = _git_root()
+    manifest_path = repo_root / MANIFEST_PATH
+
+    manifest = _load_manifest(manifest_path)
+    con306 = manifest.get("CON-306")
+    if con306 is None:
+        raise RuntimeError("Master Strategy Migration issue (CON-306) not found in manifest")
+
+    required_con306_patterns = ["internal/strategy/**", "archive/**"]
+    missing_con306 = [p for p in required_con306_patterns if p not in con306["paths"]]
+    if missing_con306:
+        raise RuntimeError(
+            "CON-306 must include coverage patterns for sensitive roots: " + ", ".join(missing_con306)
+        )
+
+    tracked = _git_paths([])
+    untracked = _git_paths(["--others", "--exclude-standard"])
+    ignored_untracked = _git_paths(["--others", "-i", "--exclude-standard"])
+    candidates = sorted(set([*tracked, *untracked, *ignored_untracked]))
+    sensitive_candidates = [p for p in candidates if _is_sensitive_path(p)]
+
+    all_patterns: list[str] = []
+    for entry in manifest.values():
+        all_patterns.extend(entry["paths"])
+
+    missing_from_manifest = [p for p in sensitive_candidates if not _matches_any(p, all_patterns)]
     if missing_from_manifest:
-        print("Error: The following sensitive files are being ignored but are not in the migration manifest:")
-        for file in missing_from_manifest:
-            print(f"  - {file}")
-        print("\nPlease ensure all knowledge is retained in Linear before ignoring in git.")
-        sys.exit(1)
+        lines = [
+            "Error: The following sensitive paths exist in the repo but are not covered by audit/migration_manifest.json patterns:",
+            *[f"  - {p}" for p in missing_from_manifest],
+            "",
+            "Please migrate the knowledge to Linear and add the corresponding coverage patterns before ignoring these paths.",
+        ]
+        raise RuntimeError("\n".join(lines))
 
-    print("Success: All ignored sensitive knowledge paths have been verified against the Linear migration manifest.")
+    print("Success: Knowledge retention manifest coverage verified.")
+
 
 if __name__ == "__main__":
-    verify()
+    try:
+        verify()
+    except Exception as e:
+        print(str(e))
+        sys.exit(1)

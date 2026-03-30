@@ -16,3 +16,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Public/private boundary violation by moving sensitive `internal/strategy/` content out of the active Git index.
+
+> Note: Removing files from the current tree does not purge them from git history. A follow-up history rewrite is required for a full removal.
