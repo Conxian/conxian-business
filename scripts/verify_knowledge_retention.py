@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import fnmatch
 import json
 import subprocess
 import sys
-from pathlib import Path, PurePosixPath
+from functools import lru_cache
+from pathlib import Path
 from typing import Any
 
 SENSITIVE_ROOTS = ("internal/strategy", "archive")
@@ -67,9 +69,38 @@ def _load_manifest(path: Path) -> dict[str, dict[str, Any]]:
     return parsed
 
 
+def _split_posix(path: str) -> list[str]:
+    return [p for p in path.split("/") if p]
+
+
+def _matches(path: str, pattern: str) -> bool:
+    if not pattern:
+        return not path
+
+    p_parts = tuple(_split_posix(path))
+    pat_parts = tuple(_split_posix(pattern.lstrip("/")))
+
+    @lru_cache(maxsize=None)
+    def match_at(i: int, j: int) -> bool:
+        if j == len(pat_parts):
+            return i == len(p_parts)
+
+        part = pat_parts[j]
+        if part == "**":
+            if match_at(i, j + 1):
+                return True
+            return i < len(p_parts) and match_at(i + 1, j)
+
+        if i >= len(p_parts):
+            return False
+
+        return fnmatch.fnmatchcase(p_parts[i], part) and match_at(i + 1, j + 1)
+
+    return match_at(0, 0)
+
+
 def _matches_any(path: str, patterns: list[str]) -> bool:
-    posix = PurePosixPath(path)
-    return any(posix.match(pattern) for pattern in patterns)
+    return any(_matches(path, pattern) for pattern in patterns)
 
 
 def verify() -> None:

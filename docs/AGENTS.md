@@ -23,7 +23,7 @@
 - **Specs**: docs/
 
 ---
-🛡️ **SOVEREIGN. INDUSTRIAL. BTC-NATIVE.**
+**SOVEREIGN. INDUSTRIAL. BTC-NATIVE.**
 
 ## 6. KNOWLEDGE RETENTION & HYGIENE (March 2026 Mandate)
 - **Zero Secret Egress (ZSE)**: No sensitive operational, strategy, or financial material may be tracked in the active Git index.
