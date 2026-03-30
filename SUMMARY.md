@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [System IP Audit](system_ip_audit.md)
+* [System IP Audit](archive/logs_and_reports/system_ip_audit.md)
 * [Strategos Mandate (Constraints & Ethos)](docs/STRATEGOS_MANDATE.md)
 
 ## 🤖 Business Operations System (BOS)

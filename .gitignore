@@ -50,3 +50,16 @@ release/
 Thumbs.db
 
 # Submodules and workspace-specific ignores (already handled by their own .gitignores)
+
+# Archive and artifacts
+archive/logs_and_reports/
+archive/patches/
+archive/remediation_scripts/
+archive/temp_artifacts/
+
+# Temporary and log files
+*.log
+*.txt
+*.patch
+*.rs.bak
+*.bak
