@@ -74,78 +74,56 @@ console.log(JSON.stringify(cvToJSON(hexToCV(hex)), null, 2));' \
 2. Verify the payout wallet received at least one inbound funding transfer from the ALEX vault principal.
 3. Verify the payout wallet received no inbound bounty funding transfers from any other principal since mainnet launch.
 
-For this checklist, treat any inbound STX transfer to the payout wallet as bounty funding unless explicitly reconciled as unrelated and documented in the decision record.
+For this checklist, treat any inbound STX transfer or SIP-010 fungible-token transfer to the payout wallet as bounty funding unless explicitly reconciled as unrelated and documented in the decision record.
+
+**Definition: inbound bounty funding transfer**: any inbound STX transfer or SIP-010 fungible-token transfer whose `recipient` is the payout wallet.
 
 #### Funding-source verification procedure (reproducible)
 
-1. Define the mainnet launch boundary as the `block_height` of the `alex-adapter` publish txid from section (1) (record this in the decision record).
-2. Export inbound transfers for the payout wallet and verify the sender set.
-   - Important: paginate (`offset=`) until there are no more results.
+1. Set `PAYOUT_ADDRESS` to the payout wallet STX address.
+2. Set `LAUNCH_BURN_BLOCK_HEIGHT` to the burn block height of ConxianCSF mainnet launch boundary (use the internal launch record).
+3. Page through the payout wallet transfer history (via Hiro API) and ensure there are **zero** inbound transfers to `PAYOUT_ADDRESS` whose `sender` is not `ALEX_VAULT`.
 
 ```bash
 set -euo pipefail
 
 API_BASE='https://api.mainnet.hiro.so'
 ALEX_VAULT='SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.alex-vault'
-: "${PAYOUT_WALLET:?Set PAYOUT_WALLET to the payout wallet principal/address}"
-: "${LAUNCH_BLOCK_HEIGHT:?Set LAUNCH_BLOCK_HEIGHT to the block_height of the alex-adapter publish txid}"
 
-# Export inbound STX transfers to the payout wallet.
-limit=200
+: "${PAYOUT_ADDRESS:?Set PAYOUT_ADDRESS to the payout wallet STX address}"
+
+# burn block height of ConxianCSF mainnet launch boundary
+: "${LAUNCH_BURN_BLOCK_HEIGHT:?Set LAUNCH_BURN_BLOCK_HEIGHT to an integer burn block height}"
+
+limit=50
 offset=0
+
 while :; do
-  page="$(curl -sS "$API_BASE/extended/v1/address/$PAYOUT_WALLET/assets?limit=$limit&offset=$offset")"
+  page="$(curl -sS "$API_BASE/extended/v1/address/$PAYOUT_ADDRESS/transactions_with_transfers?limit=$limit&offset=$offset")"
   n="$(echo "$page" | jq '.results | length')"
   [ "$n" -eq 0 ] && break
 
-  echo "$page" | jq -r --arg wallet "$PAYOUT_WALLET" '
-    .results[]
-    | select(.event_type=="stx_asset")
-    | select(.asset.asset_event_type=="transfer")
-    | select(.asset.recipient==$wallet)
-    | [.tx_id, .asset.sender, .asset.amount] | @tsv
+  # Any output here is unexpected inbound funding => NO-GO.
+  echo "$page" | jq -r --arg addr "$PAYOUT_ADDRESS" --arg alex "$ALEX_VAULT" --argjson launch "$LAUNCH_BURN_BLOCK_HEIGHT" '
+    .results[] as $r
+    | select($r.tx.burn_block_height >= $launch)
+    | (
+        ($r.stx_transfers[]? | select(.recipient == $addr and .sender != $alex) | [$r.tx.tx_id, "stx", .sender, .amount])
+        ,($r.ft_transfers[]? | select(.recipient == $addr and .sender != $alex) | [$r.tx.tx_id, "ft", .sender, .asset_identifier, .amount])
+      )
+    | @tsv
   '
 
-  offset=$((offset+limit))
-done | tee /tmp/payout-wallet.inbound-stx.tsv
-
-# Must be at least one ALEX inbound funding transfer.
-awk -v alex="$ALEX_VAULT" '$2 == alex' /tmp/payout-wallet.inbound-stx.tsv | head
-
-# Must be zero non-ALEX inbound STX funding transfers.
-awk -v alex="$ALEX_VAULT" '$2 != alex {print}' /tmp/payout-wallet.inbound-stx.tsv
-
-# Strict boundary check (since launch): lists any non-ALEX senders for inbound STX transfers at/after LAUNCH_BLOCK_HEIGHT.
-limit=50
-offset=0
-tmpfile="$(mktemp)"
-trap 'rm -f "$tmpfile"' EXIT
-: > "$tmpfile"
-
-while true; do
-  page="$(curl -sS "$API_BASE/extended/v1/address/$PAYOUT_WALLET/transactions?limit=${limit}&offset=${offset}")"
-
-  echo "$page" | jq -r --argjson launch "${LAUNCH_BLOCK_HEIGHT}" --arg alex "${ALEX_VAULT}" --arg payout "${PAYOUT_WALLET}" '
-    .results
-    | map(select(.block_height >= $launch))
-    | map(select(.tx_type == "token_transfer" and (.token_transfer.recipient_address == $payout)))
-    | map(select(.token_transfer.sender_address != $alex))
-    | .[].token_transfer.sender_address
-  ' >> "$tmpfile"
-
-  count="$(echo "$page" | jq '.results | length')"
-  min_height="$(echo "$page" | jq '.results | map(.block_height) | min // 0')"
-  if [ "$count" -lt "$limit" ] || [ "$min_height" -lt "$LAUNCH_BLOCK_HEIGHT" ]; then
+  oldest="$(echo "$page" | jq '.results | last.tx.burn_block_height')"
+  if [ "$oldest" -lt "$LAUNCH_BURN_BLOCK_HEIGHT" ]; then
     break
   fi
 
-  offset=$((offset + limit))
+  offset=$((offset+limit))
 done
-
-sort -u "$tmpfile"
 ```
 
-Treat any non-ALEX inbound transfer as **NO-GO** unless explicitly reconciled as unrelated and documented in the decision record.
+Treat any non-ALEX inbound bounty funding transfer as **NO-GO** unless explicitly reconciled as unrelated and documented in the decision record.
 
 **Evidence to attach**: a short list of inbound funding txids to the payout wallet (last N transfers) with senders.
 
