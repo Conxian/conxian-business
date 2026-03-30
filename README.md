@@ -34,7 +34,7 @@ We adhere to strict sovereignty and security standards.
 
 - [**CONTRIBUTING.md**](./CONTRIBUTING.md): Guidelines for contributing to the BOS.
 - [**SECURITY.md**](./SECURITY.md): How to report vulnerabilities and our security posture.
-- [**LICENSE**](./LICENSE) : Software licensing terms.
+- [**LICENSE**](./LICENSE): Licensed under GPL-3.0.
 - [**CHANGELOG.md**](./CHANGELOG.md): History of BOS changes.
 - [**CODEOWNERS**](./CODEOWNERS): Repository ownership and review guidance.
 
