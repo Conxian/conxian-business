@@ -73,6 +73,8 @@ curl -fsS -X POST \
   | jq -e '.okay == true' >/dev/null
 
 result="$(jq -r '.result' "$OUT_JSON")"
+echo "Raw call-read response saved to: $OUT_JSON" >&2
+echo "After decoding, manually confirm the payload reports the expected values (example: 'compliant: true')." >&2
 
 if command -v bun >/dev/null 2>&1; then
   # Optional decode (requires @stacks/transactions available in your environment)
@@ -115,7 +117,7 @@ ALEX_VAULT='SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.alex-vault'
 
 : "${PAYOUT_ADDRESS:?Set PAYOUT_ADDRESS to the payout wallet STX address}"
 
-# Stacks block height of ConxianCSF mainnet launch boundary
+# Stacks block height of the alex-adapter publish txid (ConxianCSF mainnet launch boundary)
 : "${LAUNCH_BLOCK_HEIGHT:?Set LAUNCH_BLOCK_HEIGHT to an integer block height}"
 
 OUT_DIR="${OUT_DIR:-$(mktemp -d)}"
