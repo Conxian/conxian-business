@@ -47,6 +47,8 @@ CLI example (raw output + optional decode):
 Prereqs: `curl` + `jq`. Optional decode step: `bun` + `@stacks/transactions`.
 
 ```bash
+set -euo pipefail
+
 API_BASE='https://api.mainnet.hiro.so'
 SENDER='ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P'
 
@@ -81,6 +83,8 @@ For this checklist, treat any inbound STX transfer to the payout wallet as bount
    - Important: paginate (`offset=`) until there are no more results.
 
 ```bash
+set -euo pipefail
+
 API_BASE='https://api.mainnet.hiro.so'
 ALEX_VAULT='SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.alex-vault'
 : "${PAYOUT_WALLET:?Set PAYOUT_WALLET to the payout wallet principal/address}"
