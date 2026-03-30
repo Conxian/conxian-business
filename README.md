@@ -10,6 +10,8 @@ Conxian is engineering a B+ Bitcoin-native ecosystem. Our Business Operations Sy
 
 The definitive technical specifications for the Conxian ecosystem are maintained in the `openspec/` directory. See the [Enterprise Sovereignty Baseline](./openspec/changes/remediate-enterprise-sovereignty/specs.md) for the latest architectural standards.
 
+Sensitive strategy and operational documents have been migrated to the [Linear Virtual Office](https://linear.app/conxian-labs) for secure, high-integrity management in compliance with our Zero Secret Egress (ZSE) mandate.
+
 ## 🤖 Agentic EXCO Suite
 
 The BOS is powered by an active suite of autonomous agents:
