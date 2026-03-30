@@ -71,7 +71,6 @@ console.log(JSON.stringify(cvToJSON(hexToCV(hex)), null, 2));' \
 3. Verify the payout wallet received no inbound bounty funding transfers from any other principal since mainnet launch.
 
 For this checklist, treat any inbound STX transfer to the payout wallet as bounty funding unless explicitly reconciled as unrelated and documented in the decision record.
-tmpfile="$(mktemp)"
 
 #### Funding-source verification procedure (reproducible)
 
