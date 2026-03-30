@@ -7,29 +7,35 @@ This is a maintainer-only checklist for enabling bounty payouts after ConxianCSF
 - **Payout-ready mode**: Maintainers have approved the program to begin sending bounty payments to contributors.
 - **ALEX launch funding source (sole allowed source)**: `SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.alex-vault`.
 - **Payout wallet**: The internal maintainer-controlled wallet/multisig that sends bounty payments.
+- **ConxianCSF deployer principal**: `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P` (from the mainnet release plan); use this to fully-qualify contract identifiers (example: `ST1BK6T...ops-engine`).
 
 ## Payout enablement checklist (short)
 
 ### 1) Verify ConxianCSF full deployment on Stacks mainnet
 
-1. Confirm the `alex-adapter` mainnet deployment batch ran as planned (see `Conxian/deployments/mainnet-release-plan.yaml`).
+1. Confirm the `alex-adapter` mainnet deployment batch ran as planned (see [`Conxian/deployments/mainnet-release-plan.yaml`](../../Conxian/deployments/mainnet-release-plan.yaml) at the exact commit used for deployment).
    - `contract-publish` succeeded for `alex-adapter`.
    - The follow-up `contract-call` succeeded:
      - contract: `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.dex-factory`
      - method: `register-csf-protocol`
      - parameter: `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.alex-adapter`
 2. Confirm core contracts are present on mainnet and readable (minimum set):
-   - `conxian-protocol`
-   - `cxd-token`
-   - `bme-engine`
-   - `cxd-treasury`
-   - `revenue-distributor`
-   - `ops-engine`
-   - `alex-adapter`
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.conxian-protocol`
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.cxd-token`
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.bme-engine`
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.cxd-treasury`
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.revenue-distributor`
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.ops-engine`
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.alex-adapter`
 3. Confirm mainnet read-only health calls succeed and return sane values:
-   - `bme-engine/get-protocol-status` returns `compliant: true`.
-   - `ops-engine/get-protocol-status` returns `compliant: true`.
-   - `alex-adapter/get-csf-health` returns `is-active: true`.
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.bme-engine/get-protocol-status` returns `compliant: true`.
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.ops-engine/get-protocol-status` returns `compliant: true`.
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.alex-adapter/get-csf-health` returns `is-active: true`.
+
+**How to run the read-only checks (reproducible)**
+
+- Use the Stacks API / explorer of choice, but always attach raw outputs.
+- Minimum explorer sanity check: open `https://explorer.hiro.so/address/ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P?chain=mainnet` and confirm the expected contracts exist under the deployer principal.
 
 **Evidence to attach to the go/no-go record**: txids for the deployment and registration step, plus the read-only call outputs.
 
@@ -39,6 +45,37 @@ This is a maintainer-only checklist for enabling bounty payouts after ConxianCSF
    - `SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.alex-vault`
 2. Verify the payout wallet received at least one inbound funding transfer from the ALEX vault principal.
 3. Verify the payout wallet received no inbound bounty funding transfers from any other principal since mainnet launch.
+
+**How to verify funding-source invariants (reproducible)**
+
+1. Define the mainnet launch boundary as the `block_height` of the `alex-adapter` publish txid from section (1).
+2. Fetch inbound transfers for the payout wallet via the Hiro API and attach the exported list.
+
+Example (STX transfers; repeat similarly for fungible token transfers if applicable):
+
+```bash
+PAYOUT_ADDRESS='<payout wallet STX address>'
+LAUNCH_BLOCK_HEIGHT=123456 # block height of alex-adapter publish txid
+ALEX_VAULT_ADDRESS='SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM'
+
+curl -sSL "https://api.mainnet.hiro.so/extended/v1/address/${PAYOUT_ADDRESS}/transactions?limit=50" | \
+  jq --argjson launch "${LAUNCH_BLOCK_HEIGHT}" --arg alex "${ALEX_VAULT_ADDRESS}" --arg payout "${PAYOUT_ADDRESS}" '
+    .results
+    | map(select(.block_height >= $launch))
+    | map(select(.tx_type == "token_transfer" and (.token_transfer.recipient_address == $payout)))
+    | map({
+        tx_id,
+        block_height,
+        sender: .token_transfer.sender_address,
+        recipient: .token_transfer.recipient_address,
+        amount: .token_transfer.amount,
+        memo: .token_transfer.memo
+      })
+    | {inbound_stx_transfers: ., non_alex_senders: (map(select(.sender != $alex)) | map(.sender) | unique)}
+  '
+```
+
+Interpretation: if `non_alex_senders` is non-empty, treat as a **NO-GO** unless you can prove the transfer(s) are not bounty funding and document the exception in the go/no-go record.
 
 **Evidence to attach**: a short list of inbound funding txids to the payout wallet (last N transfers) with senders.
 
@@ -53,14 +90,16 @@ This is a maintainer-only checklist for enabling bounty payouts after ConxianCSF
 ### 4) Verify post-deploy checks completed successfully
 
 1. Confirm the last on-chain upgrade/deploy window is closed (no pending contract publishes or admin migrations).
-2. Run a mainnet heartbeat smoke call and confirm expected behavior:
-   - `ops-engine/trigger-epoch-update` returns `(ok true)`.
-3. Confirm monitoring is live for:
-   - `ops-engine/get-engine-status` (last action advancing)
+2. Confirm the heartbeat is healthy using read-only checks (avoid state changes during enablement):
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.ops-engine/get-engine-status` returns a sane status (and is consistent with section (1) health checks).
+3. Optional, state-changing (run at most once, by the incident owner, only if strictly necessary):
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.ops-engine/trigger-epoch-update` returns `(ok true)`.
+4. Confirm monitoring is live for:
+   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.ops-engine/get-engine-status` (last action advancing)
    - inbound transfers to the payout wallet
    - outbound transfers from the payout wallet
 
-**Evidence to attach**: txid for the heartbeat smoke call, plus monitoring links or screenshots.
+**Evidence to attach**: optional txid for `trigger-epoch-update` (if run), plus monitoring links or screenshots.
 
 ### 5) Verify contributor-facing messaging is still non-payout unless the gate is enabled
 
@@ -75,11 +114,13 @@ Before enablement, contributor-facing copy must clearly state:
 **NO-GO** if any of the following is true:
 
 - The payout wallet has any non-ALEX inbound bounty funding transfers.
-- `alex-adapter/get-csf-health` is not active.
+- `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.alex-adapter/get-csf-health` is not active.
 - Any of the core read-only health checks fail.
 - No incident owner is assigned.
 
 ## Maintainer action: flip to payout-ready
+
+This enablement is operational-only: there is no on-chain or repo configuration toggle. "Payout-ready mode" is established by maintainer decision record + announcement, and payouts are executed manually from the payout wallet.
 
 1. Create a maintainer-only decision record (internal) that includes:
    - the evidence items above
