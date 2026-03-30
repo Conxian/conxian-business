@@ -84,7 +84,7 @@ For this checklist, treat any inbound STX transfer to the payout wallet as bount
 API_BASE='https://api.mainnet.hiro.so'
 ALEX_VAULT='SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.alex-vault'
 : "${PAYOUT_WALLET:?Set PAYOUT_WALLET to the payout wallet principal/address}"
-LAUNCH_BLOCK_HEIGHT=123456 # block height of alex-adapter publish txid
+: "${LAUNCH_BLOCK_HEIGHT:?Set LAUNCH_BLOCK_HEIGHT to the block_height of the alex-adapter publish txid}"
 
 # Export inbound STX transfers to the payout wallet.
 limit=200
