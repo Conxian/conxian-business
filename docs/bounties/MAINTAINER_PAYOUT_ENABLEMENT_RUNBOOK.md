@@ -8,10 +8,14 @@ This is a maintainer-only checklist for enabling bounty payouts after ConxianCSF
 - **ALEX launch funding source (sole allowed source)**: `SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.alex-vault`.
 - **Payout wallet**: The internal maintainer-controlled wallet/multisig that sends bounty payments.
 
+This runbook assumes **Stacks mainnet**. If you see any principal starting with `ST` (testnet), stop and reconcile your deployment record before proceeding.
+
 ## Mainnet identifiers (March 2026 release)
 
-- **ConxianCSF mainnet deployer principal**: `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P` (from [`Conxian/deployments/mainnet-release-plan.yaml`](../../Conxian/deployments/mainnet-release-plan.yaml)).
-- **ALEX DEX factory contract**: `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.dex-factory`.
+- **ConxianCSF mainnet deployer principal**: `CONXIAN_CSF_DEPLOYER` (must start with `SP`).
+  - Source of truth: the commit-pinned deployment plan you actually executed (example path in this repo: [`Conxian/deployments/mainnet-release-plan.yaml`](../../Conxian/deployments/mainnet-release-plan.yaml)).
+  - Set it as an environment variable (example: `export CONXIAN_CSF_DEPLOYER='SP...'`) and substitute it into contract identifiers below.
+- **ALEX DEX factory contract**: `${CONXIAN_CSF_DEPLOYER}.dex-factory`.
 
 ## Payout enablement checklist (short)
 
@@ -21,26 +25,26 @@ This is a maintainer-only checklist for enabling bounty payouts after ConxianCSF
    - In the go/no-go record, include a GitHub permalink to the release plan pinned to the exact deployment commit (in GitHub UI: press `y` to generate a commit-pinned URL).
    - `contract-publish` succeeded for `alex-adapter`.
    - The follow-up `contract-call` succeeded:
-     - contract: `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.dex-factory`
+     - contract: `${CONXIAN_CSF_DEPLOYER}.dex-factory`
      - method: `register-csf-protocol`
-     - parameter: `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.alex-adapter`
+     - parameter: `${CONXIAN_CSF_DEPLOYER}.alex-adapter`
 2. Confirm core contracts are present on mainnet and readable (minimum set; fully-qualified):
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.conxian-protocol`
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.cxd-token`
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.bme-engine`
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.cxd-treasury`
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.revenue-distributor`
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.ops-engine`
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.alex-adapter`
+   - `${CONXIAN_CSF_DEPLOYER}.conxian-protocol`
+   - `${CONXIAN_CSF_DEPLOYER}.cxd-token`
+   - `${CONXIAN_CSF_DEPLOYER}.bme-engine`
+   - `${CONXIAN_CSF_DEPLOYER}.cxd-treasury`
+   - `${CONXIAN_CSF_DEPLOYER}.revenue-distributor`
+   - `${CONXIAN_CSF_DEPLOYER}.ops-engine`
+   - `${CONXIAN_CSF_DEPLOYER}.alex-adapter`
 3. Confirm mainnet read-only health calls succeed and return sane values:
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.bme-engine/get-protocol-status` decodes to `compliant: true`.
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.ops-engine/get-protocol-status` decodes to `compliant: true`.
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.alex-adapter/get-csf-health` decodes to `is-active: true`.
+   - `${CONXIAN_CSF_DEPLOYER}.bme-engine/get-protocol-status` decodes to `compliant: true`.
+   - `${CONXIAN_CSF_DEPLOYER}.ops-engine/get-protocol-status` decodes to `compliant: true`.
+   - `${CONXIAN_CSF_DEPLOYER}.alex-adapter/get-csf-health` decodes to `is-active: true`.
 
 #### How to run the read-only checks (reproducible)
 
 - Use the Stacks API / explorer of choice, but always attach raw outputs.
-- Minimum explorer sanity check: open `https://explorer.hiro.so/address/ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P?chain=mainnet` and confirm the expected contracts exist under the deployer principal.
+- Minimum explorer sanity check: open `https://explorer.hiro.so/address/$CONXIAN_CSF_DEPLOYER?chain=mainnet` and confirm the expected contracts exist under the deployer principal.
 
 CLI example (raw output + optional decode):
 
@@ -50,19 +54,36 @@ Prereqs: `curl` + `jq`. Optional decode step: `bun` + `@stacks/transactions`.
 set -euo pipefail
 
 API_BASE='https://api.mainnet.hiro.so'
-SENDER='ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P'
+: "${CONXIAN_CSF_DEPLOYER:?Set CONXIAN_CSF_DEPLOYER to the ConxianCSF deployer principal (SP...)}"
 
-curl -sS -X POST \
-  "$API_BASE/v2/contracts/call-read/ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P/bme-engine/get-protocol-status" \
+if [[ "$CONXIAN_CSF_DEPLOYER" != SP* ]]; then
+  echo "NO-GO: CONXIAN_CSF_DEPLOYER must start with SP on mainnet" >&2
+  exit 1
+fi
+
+SENDER="$CONXIAN_CSF_DEPLOYER"
+OUT_DIR="$(mktemp -d)"
+OUT_JSON="$OUT_DIR/bme-engine.get-protocol-status.json"
+
+curl -fsS -X POST \
+  "$API_BASE/v2/contracts/call-read/$CONXIAN_CSF_DEPLOYER/bme-engine/get-protocol-status" \
   -H 'Content-Type: application/json' \
   -d "{\"sender\":\"$SENDER\",\"arguments\":[]}" \
-  | tee /tmp/bme-engine.get-protocol-status.json
+  | tee "$OUT_JSON" \
+  | jq -e '.okay == true' >/dev/null
 
-# Optional decode (requires @stacks/transactions available in your environment)
-bun -e 'import { hexToCV, cvToJSON } from "@stacks/transactions";
-const hex = process.argv[2];
-console.log(JSON.stringify(cvToJSON(hexToCV(hex)), null, 2));' \
-  "$(jq -r '.result' /tmp/bme-engine.get-protocol-status.json)"
+result="$(jq -r '.result' "$OUT_JSON")"
+
+if command -v bun >/dev/null 2>&1; then
+  # Optional decode (requires @stacks/transactions available in your environment)
+  bun -e 'import { hexToCV, cvToJSON } from "@stacks/transactions";
+  const hex = process.argv[2];
+  console.log(JSON.stringify(cvToJSON(hexToCV(hex)), null, 2));' \
+    "$result" \
+    || echo "Decode failed (missing @stacks/transactions?). Attach raw JSON output instead: $OUT_JSON" >&2
+else
+  echo "Skipping decode (bun not installed). Attach raw JSON output: $OUT_JSON" >&2
+fi
 ```
 
 **Evidence to attach to the go/no-go record**: txids for the deployment and registration step, plus the read-only call outputs.
@@ -81,7 +102,7 @@ For this checklist, treat any inbound STX transfer or SIP-010 fungible-token tra
 #### Funding-source verification procedure (reproducible)
 
 1. Set `PAYOUT_ADDRESS` to the payout wallet STX address.
-2. Set `LAUNCH_BLOCK_HEIGHT` to the Stacks block height of ConxianCSF mainnet launch boundary (use the internal launch record).
+2. Set `LAUNCH_BLOCK_HEIGHT` to the Stacks block height of the `alex-adapter` publish txid from Step 1.
 3. Page through the payout wallet transfer history (via Hiro API) and ensure:
    - there is **at least one** inbound transfer to `PAYOUT_ADDRESS` whose `sender` is `ALEX_VAULT`
    - there are **zero** inbound transfers to `PAYOUT_ADDRESS` whose `sender` is not `ALEX_VAULT`
@@ -97,8 +118,9 @@ ALEX_VAULT='SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.alex-vault'
 # Stacks block height of ConxianCSF mainnet launch boundary
 : "${LAUNCH_BLOCK_HEIGHT:?Set LAUNCH_BLOCK_HEIGHT to an integer block height}"
 
-ALEX_OUT='/tmp/payout-wallet.inbound-alex.tsv'
-NON_ALEX_OUT='/tmp/payout-wallet.inbound-non-alex.tsv'
+OUT_DIR="${OUT_DIR:-$(mktemp -d)}"
+ALEX_OUT="$OUT_DIR/payout-wallet.inbound-alex.tsv"
+NON_ALEX_OUT="$OUT_DIR/payout-wallet.inbound-non-alex.tsv"
 : > "$ALEX_OUT"
 : > "$NON_ALEX_OUT"
 prev_oldest=""
@@ -107,7 +129,7 @@ limit=50
 offset=0
 
 while :; do
-  page="$(curl -sS "$API_BASE/extended/v1/address/$PAYOUT_ADDRESS/transactions_with_transfers?limit=$limit&offset=$offset")"
+  page="$(curl -fsS "$API_BASE/extended/v1/address/$PAYOUT_ADDRESS/transactions_with_transfers?limit=$limit&offset=$offset&order=desc")"
   n="$(echo "$page" | jq '.results | length')"
   [ "$n" -eq 0 ] && break
 
@@ -159,6 +181,8 @@ if [ -s "$NON_ALEX_OUT" ]; then
   echo 'NO-GO: non-ALEX inbound transfers present (must reconcile before proceeding)' >&2
   exit 1
 fi
+
+echo "Artifacts written under: $OUT_DIR" >&2
 ```
 
 Treat any non-ALEX inbound bounty funding transfer as **NO-GO** unless explicitly reconciled as unrelated and documented in the decision record.
@@ -177,19 +201,19 @@ Treat any non-ALEX inbound bounty funding transfer as **NO-GO** unless explicitl
 
 1. Confirm the last on-chain upgrade/deploy window is closed (no pending contract publishes or admin migrations).
 2. Do not run state-changing "smoke calls" as part of payout enablement.
-   - Prefer read-only checks (Step 1 health calls, plus `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.ops-engine/get-engine-status`).
+   - Prefer read-only checks (Step 1 health calls, plus `${CONXIAN_CSF_DEPLOYER}.ops-engine/get-engine-status`).
 3. Confirm monitoring is live for:
-   - `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.ops-engine/get-engine-status` (last action advancing)
+   - `${CONXIAN_CSF_DEPLOYER}.ops-engine/get-engine-status` (last action advancing)
    - inbound transfers to the payout wallet
    - outbound transfers from the payout wallet
 
-**Evidence to attach**: read-only outputs for `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.ops-engine/get-engine-status`, plus monitoring links or screenshots.
+**Evidence to attach**: read-only outputs for `${CONXIAN_CSF_DEPLOYER}.ops-engine/get-engine-status`, plus monitoring links or screenshots.
 
-### 5) Verify contributor-facing messaging is still non-payout unless the gate is enabled
+### 5) Verify contributor-facing messaging is still non-payout before payout-ready is declared
 
 Before enablement, contributor-facing copy must clearly state:
 
-> Your submission/claim has been recorded, but payouts are not enabled yet. Do not treat any issue thread as payout-ready unless maintainers explicitly enable payout-ready mode.
+> Your submission/claim has been recorded, but payouts are not active yet. Do not treat any issue thread as payout-ready unless maintainers explicitly declare payout-ready mode.
 
 ## Maintainer-only go/no-go decision
 
@@ -198,7 +222,7 @@ Before enablement, contributor-facing copy must clearly state:
 **NO-GO** if any of the following is true:
 
 - The payout wallet has any non-ALEX inbound bounty funding transfers.
-- `ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P.alex-adapter/get-csf-health` is not active.
+- `${CONXIAN_CSF_DEPLOYER}.alex-adapter/get-csf-health` is not active.
 - Any of the core read-only health checks fail.
 - No incident owner is assigned.
 
