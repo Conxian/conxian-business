@@ -81,8 +81,10 @@ For this checklist, treat any inbound STX transfer or SIP-010 fungible-token tra
 #### Funding-source verification procedure (reproducible)
 
 1. Set `PAYOUT_ADDRESS` to the payout wallet STX address.
-2. Set `LAUNCH_BURN_BLOCK_HEIGHT` to the burn block height of ConxianCSF mainnet launch boundary (use the internal launch record).
-3. Page through the payout wallet transfer history (via Hiro API) and ensure there are **zero** inbound transfers to `PAYOUT_ADDRESS` whose `sender` is not `ALEX_VAULT`.
+2. Set `LAUNCH_BLOCK_HEIGHT` to the Stacks block height of ConxianCSF mainnet launch boundary (use the internal launch record).
+3. Page through the payout wallet transfer history (via Hiro API) and ensure:
+   - there is **at least one** inbound transfer to `PAYOUT_ADDRESS` whose `sender` is `ALEX_VAULT`
+   - there are **zero** inbound transfers to `PAYOUT_ADDRESS` whose `sender` is not `ALEX_VAULT`
 
 ```bash
 set -euo pipefail
@@ -92,8 +94,14 @@ ALEX_VAULT='SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.alex-vault'
 
 : "${PAYOUT_ADDRESS:?Set PAYOUT_ADDRESS to the payout wallet STX address}"
 
-# burn block height of ConxianCSF mainnet launch boundary
-: "${LAUNCH_BURN_BLOCK_HEIGHT:?Set LAUNCH_BURN_BLOCK_HEIGHT to an integer burn block height}"
+# Stacks block height of ConxianCSF mainnet launch boundary
+: "${LAUNCH_BLOCK_HEIGHT:?Set LAUNCH_BLOCK_HEIGHT to an integer block height}"
+
+ALEX_OUT='/tmp/payout-wallet.inbound-alex.tsv'
+NON_ALEX_OUT='/tmp/payout-wallet.inbound-non-alex.tsv'
+: > "$ALEX_OUT"
+: > "$NON_ALEX_OUT"
+prev_oldest=""
 
 limit=50
 offset=0
@@ -103,24 +111,54 @@ while :; do
   n="$(echo "$page" | jq '.results | length')"
   [ "$n" -eq 0 ] && break
 
-  # Any output here is unexpected inbound funding => NO-GO.
-  echo "$page" | jq -r --arg addr "$PAYOUT_ADDRESS" --arg alex "$ALEX_VAULT" --argjson launch "$LAUNCH_BURN_BLOCK_HEIGHT" '
+  echo "$page" | jq -r --arg addr "$PAYOUT_ADDRESS" --arg alex "$ALEX_VAULT" --argjson launch "$LAUNCH_BLOCK_HEIGHT" '
     .results[] as $r
-    | select($r.tx.burn_block_height >= $launch)
+    | select($r.tx.block_height >= $launch)
+    | (
+        ($r.stx_transfers[]? | select(.recipient == $addr and .sender == $alex) | [$r.tx.tx_id, "stx", .sender, .amount])
+        ,($r.ft_transfers[]? | select(.recipient == $addr and .sender == $alex) | [$r.tx.tx_id, "ft", .sender, .asset_identifier, .amount])
+      )
+    | @tsv
+  ' >> "$ALEX_OUT"
+
+  # Any output here is candidate non-ALEX inbound bounty funding.
+  # Treat as NO-GO unless you can fully reconcile it as unrelated and document that reconciliation in the decision record.
+  echo "$page" | jq -r --arg addr "$PAYOUT_ADDRESS" --arg alex "$ALEX_VAULT" --argjson launch "$LAUNCH_BLOCK_HEIGHT" '
+    .results[] as $r
+    | select($r.tx.block_height >= $launch)
     | (
         ($r.stx_transfers[]? | select(.recipient == $addr and .sender != $alex) | [$r.tx.tx_id, "stx", .sender, .amount])
         ,($r.ft_transfers[]? | select(.recipient == $addr and .sender != $alex) | [$r.tx.tx_id, "ft", .sender, .asset_identifier, .amount])
       )
     | @tsv
-  '
+  ' >> "$NON_ALEX_OUT"
 
-  oldest="$(echo "$page" | jq '.results | last.tx.burn_block_height')"
-  if [ "$oldest" -lt "$LAUNCH_BURN_BLOCK_HEIGHT" ]; then
+  oldest="$(echo "$page" | jq '.results | last.tx.block_height')"
+  if [ -n "$prev_oldest" ] && [ "$oldest" -gt "$prev_oldest" ]; then
+    echo "Unexpected API ordering: block_height increased between pages" >&2
+    exit 1
+  fi
+  prev_oldest="$oldest"
+  if [ "$oldest" -lt "$LAUNCH_BLOCK_HEIGHT" ]; then
     break
   fi
 
   offset=$((offset+limit))
 done
+
+echo 'ALEX inbound funding transfers (since launch):'
+cat "$ALEX_OUT"
+if [ ! -s "$ALEX_OUT" ]; then
+  echo 'NO-GO: no inbound funding transfer from ALEX vault since launch' >&2
+  exit 1
+fi
+
+if [ -s "$NON_ALEX_OUT" ]; then
+  echo 'Non-ALEX inbound transfers (since launch):'
+  cat "$NON_ALEX_OUT"
+  echo 'NO-GO: non-ALEX inbound transfers present (must reconcile before proceeding)' >&2
+  exit 1
+fi
 ```
 
 Treat any non-ALEX inbound bounty funding transfer as **NO-GO** unless explicitly reconciled as unrelated and documented in the decision record.
