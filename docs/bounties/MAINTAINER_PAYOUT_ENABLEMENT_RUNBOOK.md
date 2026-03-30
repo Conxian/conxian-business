@@ -44,6 +44,8 @@ This is a maintainer-only checklist for enabling bounty payouts after ConxianCSF
 
 CLI example (raw output + optional decode):
 
+Prereqs: `curl` + `jq`. Optional decode step: `bun` + `@stacks/transactions`.
+
 ```bash
 API_BASE='https://api.mainnet.hiro.so'
 SENDER='ST1BK6TFDEJ4TBVWH5SHNB6SPNWGY06YZFG9WMM4P'
