@@ -49,11 +49,11 @@ All non-enclave datastores (including PostgreSQL, Supabase, Tableland, Redis, an
 
 #### 3.1.2. Constraints for Non-authoritative Query Layers
 
-For any non-authoritative derived or query layer (including PostgreSQL read models, Supabase or equivalent analytics layers, and optional mirrors such as Tableland), implementers must ensure:
+For any non-authoritative derived or query layer (including PostgreSQL read models, Supabase or equivalent analytics layers, and optional mirrors such as Tableland), implementers **MUST** ensure:
 
 1. **Deterministic rebuild**: the dataset can be rebuilt solely from Stacks L1 events/state and the published on-chain checkpoint history.
 2. **Checkpoint validation**: before a replica is treated as trusted for serving requests, its current dataset version is validated against the latest on-chain checkpoint.
-3. **Correctness isolation**: derived/query layers must not be required for protocol correctness; on mismatch or unavailability, clients/services must fall back to Stacks L1 and/or rebuild the dataset.
+3. **Correctness isolation**: derived/query layers **MUST NOT** be required for protocol correctness; on mismatch or unavailability, clients/services **MUST** fall back to Stacks L1 and/or rebuild the dataset.
 
 ### 3.2. Central vs. Edge Responsibilities
 
