@@ -34,7 +34,7 @@ The long-horizon direction is to make all non-secret SAB-critical business state
 ### 3.2. Central vs. Edge Responsibilities
 
 #### Central Datastores (PostgreSQL, Supabase)
-- **Aggregation**: Consolidating data from multiple Nexus instances.
+- **Aggregation**: Consolidating materialized views derived from on-chain state across multiple Nexus instances.
 - **Historical Persistence**: Maintaining long-term records for reporting and institutional compliance as query-optimized replicas; all compliance evidence must remain provably derivable from on-chain state and published checkpoints.
 - **Query Acceleration**: Serving as derived read models for inter-module communication (e.g., Nexus to Gateway) without becoming the source of truth.
 
@@ -55,7 +55,9 @@ The long-horizon direction is to make all non-secret SAB-critical business state
 | **Tableland Mirror** | Is a decentralized SQL mirror necessary once on-chain audit registries are in place, or can this be replaced by indexer-backed query endpoints with checkpoint verification? | Strategic: Operational complexity vs. public discoverability. |
 
 ## 5. Acceptance Criteria
-- [x] Each major data domain (Transactional, Analytical, Audit) has a documented canonical record and derived query mapping.
-- [x] Rationale for each decision is explicitly captured.
-- [x] Central vs. Edge responsibilities are clearly delineated.
-- [x] Conditional status of non-authoritative datastores (e.g., Tableland mirror) is identified.
+This specification is considered complete when:
+
+- Each major data domain (Transactional, Analytical, Audit) has a documented canonical record and derived query mapping.
+- Rationale for each decision is explicitly captured.
+- Central vs. Edge responsibilities are clearly delineated.
+- Conditional status of non-authoritative datastores (e.g., Tableland mirror) is identified.
