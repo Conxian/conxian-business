@@ -29,14 +29,16 @@ This specification translates the Conxian Sovereign Autonomous Business (SAB) cu
 
 The long-horizon direction is to make all non-secret SAB-critical business state fully on-chain. Off-chain systems may exist for performance and query ergonomics, but they must be treated as derived/indexed replicas rather than the authoritative system of record. Secrets and signing keys remain exclusively in hardware enclaves (ZSE), referenced on-chain by identifiers only.
 
+All non-enclave datastores (including PostgreSQL, Supabase, Tableland, Redis, and local SQLite) **MUST NOT** store seed phrases, signing keys, or enclave-only secrets in any reversible form.
+
 | Data Domain | Canonical System of Record | Derived / Query Layer (Non-authoritative) | Notes |
 | :--- | :--- | :--- | :--- |
 | **Transactional Application State** | **Stacks L1 (Clarity contracts)** | **PostgreSQL** (currently **Neon**, later sovereign/self-hosted) | Write-path is on-chain. Postgres is a materialized read model for Nexus/Gateway sync, MMR node indexing, and service-level query performance. |
 | **Proof-Oriented Analytics** | **Stacks L1 (events + state roots)** | **Supabase** (or equivalent SQL analytics layer) | Analytics datasets are derived from the on-chain event stream. Verification is anchored by on-chain checkpoints/hashes of derived datasets; canonical truth is always the raw L1 events/state. |
 | **Immutable Governance & Audit** | **Stacks L1 (event log + audit registry contract)** | **Tableland** (optional mirror) | Default is on-chain auditability. Tableland is an optional public mirror when decentralized SQL materially improves discoverability without becoming a dependency for correctness. |
 | **Hardware-Anchored Identity** | **StrongBox / Secure Enclave** | N/A | Mandated for Zero Secret Egress (ZSE). Private keys and DID-ZK disclosures are derived and stored in hardware, never leaving the device. |
-| **High-Frequency Caching** | N/A | **Redis** | Volatile cache for millisecond-latency session management, real-time mempool tracking, and telemetry buffering. **MUST NOT** store seed phrases, signing keys, or enclave-only secrets. |
-| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. Must be treated as a local cache; canonical state remains on-chain. **MUST NOT** store seed phrases, signing keys, or enclave-only secrets. If user-sensitive data is cached, it **SHOULD** be encrypted at rest and treated as removable/invalidatable. |
+| **High-Frequency Caching** | N/A | **Redis** | Volatile cache for millisecond-latency session management, real-time mempool tracking, and telemetry buffering. |
+| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. Must be treated as a local cache; canonical state remains on-chain. If user-sensitive data is cached, it **SHOULD** be encrypted at rest and treated as removable/invalidatable. |
 
 #### 3.1.1. Data Flow & Verification
 
@@ -47,10 +49,10 @@ The long-horizon direction is to make all non-secret SAB-critical business state
 
 #### 3.1.2. Constraints for Non-authoritative Query Layers
 
-For any "equivalent" derived/query layer (e.g., a Supabase alternative) and any "optional mirror" (e.g., Tableland), implementers must ensure:
+For any non-authoritative derived or query layer (including PostgreSQL read models, Supabase or equivalent analytics layers, and optional mirrors such as Tableland), implementers must ensure:
 
 1. **Deterministic rebuild**: the dataset can be rebuilt solely from Stacks L1 events/state and the published on-chain checkpoint history.
-2. **Checkpoint validation**: derived datasets are validated against the latest on-chain checkpoint before being used.
+2. **Checkpoint validation**: before a replica is treated as trusted for serving requests, its current dataset version is validated against the latest on-chain checkpoint.
 3. **Correctness isolation**: derived/query layers must not be required for protocol correctness; on mismatch or unavailability, clients/services must fall back to Stacks L1 and/or rebuild the dataset.
 
 ### 3.2. Central vs. Edge Responsibilities
