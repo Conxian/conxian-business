@@ -2,7 +2,7 @@
 
 ## 0. Conventions & Definitions
 
-This specification uses RFC 2119-style requirement keywords (**MUST**, **MUST NOT**, **SHOULD**, **MAY**) to reduce implementation drift.
+This specification uses requirement keywords (**MUST**, **MUST NOT**, **SHOULD**, **MAY**) as described in RFC 2119 and RFC 8174 to reduce implementation drift.
 
 - **Canonical system of record**: The authoritative system for correctness.
 - **Derived / query layer**: A non-authoritative replica optimized for read/query ergonomics.
@@ -43,14 +43,14 @@ All non-enclave datastores (including PostgreSQL, Supabase, Tableland, Redis, an
 | **Immutable Governance & Audit** | **Stacks L1 (event log + audit registry contract)** | **Tableland** (optional mirror) | Default is on-chain auditability. Tableland is an optional public mirror when decentralized SQL materially improves discoverability without becoming a dependency for correctness. |
 | **Hardware-Anchored Identity** | **Stacks L1 (public key registry + enclave key identifiers + attestation commitments)** | N/A | Mandated for Zero Secret Egress (ZSE). Private keys remain enclave-only; only public keys, key IDs, and attestations are anchored on-chain. |
 | **High-Frequency Caching** | N/A | **Redis** | Volatile cache for millisecond-latency session management, real-time mempool tracking, and telemetry buffering. |
-| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. Must be treated as a local cache; canonical state remains on-chain. Wallet caches **MUST NOT** store seed phrases, signing keys, or enclave-only secrets in any form, even encrypted; user-sensitive non-secret data **SHOULD** be encrypted at rest and treated as removable/invalidatable. |
+| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. **MUST** be treated as a local cache; canonical state remains on-chain. Wallet caches **MUST NOT** store seed phrases, signing keys, or enclave-only secrets in any form, even encrypted. If user-sensitive non-secret data is cached, it **MUST** be protected at rest (OS/hardware-backed storage encryption is acceptable; otherwise use application-level encryption). Encryption keys **MUST** be derived from and/or protected by the enclave/secure element and **MUST NOT** be stored in the cache layer. Cached data **SHOULD** be treated as removable/invalidatable. |
 
 #### 3.1.1. Data Flow & Verification
 
 1. **Stacks L1 emits canonical state transitions** via contract state + events.
 2. **Indexers derive replicas** (Postgres/Supabase/Tableland) by consuming L1 events and projecting them into query-optimized schemas.
 3. **Verification** is performed by anchoring periodic dataset checkpoints on-chain (a deterministic root hash over a defined canonicalization and hashing scheme) and requiring indexers/clients to match those checkpoints.
-4. **Mismatch handling**: any replica that fails checkpoint validation is treated as stale/corrupted and must be rebuilt from the on-chain event stream.
+4. **Mismatch handling**: any replica that fails checkpoint validation is treated as stale/corrupted and **MUST** be rebuilt from the on-chain event stream.
 
 ##### 3.1.1.1. MVP checkpoint specification (deterministic)
 
@@ -96,7 +96,7 @@ Each record **MUST** be encoded as a single UTF-8 line with `|` separators and a
 
 #### 3.1.2. Constraints for Non-authoritative Query Layers
 
-For any non-authoritative central derived or query layer that is used as a shared read model (including PostgreSQL read models, Supabase or equivalent analytics layers, and optional mirrors such as Tableland), implementers **MUST** ensure:
+Any non-authoritative central derived or query layer that is used as a shared read model (including PostgreSQL read models, Supabase or equivalent analytics layers, and optional mirrors such as Tableland) **MUST** satisfy the following constraints.
 
 These constraints do not apply to ephemeral caches (e.g., Redis) or device-local wallet caches, which may hold only non-canonical, non-secret convenience state.
 
@@ -109,7 +109,7 @@ These constraints do not apply to ephemeral caches (e.g., Redis) or device-local
 #### Central Datastores (PostgreSQL, Supabase)
 
 - **Aggregation**: Consolidating materialized views derived from on-chain state across multiple Nexus instances.
-- **Historical Persistence**: Maintaining long-term records for reporting and institutional compliance as query-optimized replicas; all compliance evidence must remain provably derivable from on-chain state and published checkpoints.
+- **Historical Persistence**: Maintaining long-term records for reporting and institutional compliance as query-optimized replicas; all compliance evidence **MUST** remain provably derivable from on-chain state and published checkpoints.
 - **Query Acceleration**: Serving as derived read models for inter-module communication (e.g., Nexus to Gateway) without becoming the source of truth.
 
 #### Edge Datastores (Enclave, Redis, Local SQLite)
@@ -120,7 +120,7 @@ These constraints do not apply to ephemeral caches (e.g., Redis) or device-local
 
 ### 3.3. Conditional Datastores
 
-- **Tableland**: Identified as **Conditional**. It is acceptable only as a non-authoritative mirror of on-chain audit state and must not be required for protocol correctness.
+- **Tableland**: Identified as **Conditional**. It is acceptable only as a non-authoritative mirror of on-chain audit state and **MUST NOT** be required for protocol correctness.
 
 ## 4. Open Questions & Unsettled Decisions
 
