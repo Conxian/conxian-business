@@ -11,6 +11,7 @@ This specification uses RFC 2119-style requirement keywords (**MUST**, **MUST NO
 - **Nexus**: Indexing and orchestration layer that consumes Stacks L1 state/events and maintains derived read models.
 - **Gateway**: Service/API layer that exposes query endpoints over derived state and relays L1 interactions.
 - **MMR node**: Merkle Mountain Range node used to create verifiable history for indexed state.
+- **DID**: Decentralized identifier.
 - **DID-ZK disclosures**: DID-associated zero-knowledge attestations; private inputs remain enclave-only.
 - **Conxius Wallet**: End-user wallet product that may cache non-canonical state for offline UX continuity.
 
@@ -105,7 +106,7 @@ For any non-authoritative derived or query layer (including PostgreSQL read mode
 
 #### Central Datastores (PostgreSQL, Supabase)
 
-- **Aggregation**: Consolidating data from multiple Nexus instances.
+- **Aggregation**: Consolidating materialized views derived from on-chain state across multiple Nexus instances.
 - **Historical Persistence**: Maintaining long-term records for reporting and institutional compliance as query-optimized replicas; all compliance evidence must remain provably derivable from on-chain state and published checkpoints.
 - **Query Acceleration**: Serving as derived read models for inter-module communication (e.g., Nexus to Gateway) without becoming the source of truth.
 
