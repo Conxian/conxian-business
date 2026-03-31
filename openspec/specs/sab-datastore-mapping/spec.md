@@ -43,7 +43,7 @@ All non-enclave datastores (including PostgreSQL, Supabase, Tableland, Redis, an
 | **Immutable Governance & Audit** | **Stacks L1 (event log + audit registry contract)** | **Tableland** (optional mirror) | Default is on-chain auditability. Tableland is an optional public mirror when decentralized SQL materially improves discoverability without becoming a dependency for correctness. |
 | **Hardware-Anchored Identity** | **Stacks L1 (public key registry + enclave key identifiers + attestation commitments)** | N/A | Mandated for Zero Secret Egress (ZSE). Private keys remain enclave-only; only public keys, key IDs, and attestations are anchored on-chain. |
 | **High-Frequency Caching** | N/A | **Redis** | Volatile cache for millisecond-latency session management, real-time mempool tracking, and telemetry buffering. |
-| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. Must be treated as a local cache; canonical state remains on-chain. If user-sensitive data is cached, it **SHOULD** be encrypted at rest and treated as removable/invalidatable. Seed phrases, signing keys, and enclave-only secrets **MUST NOT** be cached here, even in encrypted form. |
+| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. Must be treated as a local cache; canonical state remains on-chain. Wallet caches **MUST NOT** store seed phrases, signing keys, or enclave-only secrets in any form, even encrypted; user-sensitive non-secret data **SHOULD** be encrypted at rest and treated as removable/invalidatable. |
 
 #### 3.1.1. Data Flow & Verification
 
@@ -96,7 +96,9 @@ Each record **MUST** be encoded as a single UTF-8 line with `|` separators and a
 
 #### 3.1.2. Constraints for Non-authoritative Query Layers
 
-For any non-authoritative derived or query layer (including PostgreSQL read models, Supabase or equivalent analytics layers, and optional mirrors such as Tableland), implementers **MUST** ensure:
+For any non-authoritative central derived or query layer that is used as a shared read model (including PostgreSQL read models, Supabase or equivalent analytics layers, and optional mirrors such as Tableland), implementers **MUST** ensure:
+
+These constraints do not apply to ephemeral caches (e.g., Redis) or device-local wallet caches, which may hold only non-canonical, non-secret convenience state.
 
 1. **Deterministic rebuild**: the dataset **MUST** be rebuildable solely from Stacks L1 events/state and the published on-chain checkpoint history.
 2. **Checkpoint validation**: before a replica is treated as trusted for serving requests, its current dataset version **MUST** be validated against the latest on-chain checkpoint.
