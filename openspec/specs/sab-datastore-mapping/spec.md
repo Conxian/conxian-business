@@ -20,7 +20,8 @@ The long-horizon direction is to make all non-secret SAB-critical business state
 | **Transactional Application State** | **Stacks L1 (Clarity contracts)** | **PostgreSQL** (currently **Neon**, later sovereign/self-hosted) | Write-path is on-chain. Postgres is a materialized read model for Nexus/Gateway sync, MMR node indexing, and service-level query performance. |
 | **Proof-Oriented Analytics** | **Stacks L1 (events + state roots)** | **Supabase** (or equivalent SQL analytics layer) | Analytics datasets are derived from the on-chain event stream. Verification is anchored by on-chain checkpoints/hashes of derived datasets; canonical truth is always the raw L1 events/state. |
 | **Immutable Governance & Audit** | **Stacks L1 (event log + audit registry contract)** | **Tableland** (optional mirror) | Default is on-chain auditability. Tableland is an optional public mirror when decentralized SQL materially improves discoverability without becoming a dependency for correctness. |
-| **Hardware-Anchored Identity** | **StrongBox / Secure Enclave** | N/A | Mandated for Zero Secret Egress (ZSE). Private keys and DID-ZK disclosures are derived and stored in hardware, never leaving the device. |
+| **Identity Claims & Capabilities** | **Stacks L1 (DID / capability / revocation registry)** | N/A | Public identity state lives on-chain. |
+| **Identity Secrets (ZSE)** | **StrongBox / Secure Enclave** | N/A | Mandated for Zero Secret Egress (ZSE). Private keys and DID-ZK disclosure material are derived and stored in hardware, never leaving the device. |
 | **High-Frequency Caching** | N/A | **Redis** | Volatile cache for millisecond-latency session management, real-time mempool tracking, and telemetry buffering. |
 | **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. Must be treated as a local cache; canonical state remains on-chain. |
 
@@ -30,6 +31,8 @@ The long-horizon direction is to make all non-secret SAB-critical business state
 2. **Indexers derive replicas** (Postgres/Supabase/Tableland) by consuming L1 events and projecting them into query-optimized schemas.
 3. **Verification** is performed by anchoring periodic dataset checkpoints on-chain (e.g., a hash of normalized events / materialized views) and requiring indexers/clients to match those checkpoints.
 4. **Mismatch handling**: any replica that fails checkpoint validation is treated as stale/corrupted and must be rebuilt from the on-chain event stream.
+
+Checkpoint computation must follow a deterministic, versioned normalization/materialization spec, and the checkpoint anchor must reference the spec version. In all cases, raw Stacks L1 events/state remain the ultimate canonical truth; checkpoints exist only to validate replicas.
 
 ### 3.2. Central vs. Edge Responsibilities
 
