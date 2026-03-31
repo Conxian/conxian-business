@@ -31,6 +31,14 @@ The long-horizon direction is to make all non-secret SAB-critical business state
 3. **Verification** is performed by anchoring periodic dataset checkpoints on-chain (e.g., a hash of normalized events / materialized views) and requiring indexers/clients to match those checkpoints.
 4. **Mismatch handling**: any replica that fails checkpoint validation is treated as stale/corrupted and must be rebuilt from the on-chain event stream.
 
+#### 3.1.2. Constraints for Non-authoritative Query Layers
+
+For any "equivalent" derived/query layer (e.g., a Supabase alternative) and any "optional mirror" (e.g., Tableland), implementers must ensure:
+
+1. **Deterministic rebuild**: the dataset can be rebuilt solely from Stacks L1 events/state and the published on-chain checkpoint history.
+2. **Checkpoint validation**: derived datasets are validated against the latest on-chain checkpoint before being used.
+3. **Correctness isolation**: derived/query layers must not be required for protocol correctness; on mismatch or unavailability, clients/services must fall back to Stacks L1 and/or rebuild the dataset.
+
 ### 3.2. Central vs. Edge Responsibilities
 
 #### Central Datastores (PostgreSQL, Supabase)
