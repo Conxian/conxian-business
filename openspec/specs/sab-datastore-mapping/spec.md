@@ -1,5 +1,19 @@
 # SAB Datastore Mapping Specification
 
+## 0. Conventions & Definitions
+
+This specification uses RFC 2119-style requirement keywords (**MUST**, **MUST NOT**, **SHOULD**, **MAY**) to reduce implementation drift.
+
+- **Canonical system of record**: The authoritative system for correctness.
+- **Derived / query layer**: A non-authoritative replica optimized for read/query ergonomics.
+- **SAB**: Sovereign Autonomous Business.
+- **ZSE**: Zero Secret Egress.
+- **Nexus**: Indexing and orchestration layer that consumes Stacks L1 state/events and maintains derived read models.
+- **Gateway**: Service/API layer that exposes query endpoints over derived state and relays L1 interactions.
+- **MMR node**: Merkle Mountain Range node used to create verifiable history for indexed state.
+- **DID-ZK disclosures**: DID-associated zero-knowledge attestations; private inputs remain enclave-only.
+- **Conxius Wallet**: End-user wallet product that may cache non-canonical state for offline UX continuity.
+
 ## 1. Purpose
 This specification translates the Conxian Sovereign Autonomous Business (SAB) current-state inventory into target-state datastore decisions. It defines the mapping of major data domains to canonical on-chain systems of record and derived query layers.
 
