@@ -1,7 +1,7 @@
 # SAB Datastore Mapping Specification
 
 ## 1. Purpose
-This specification translates the Conxian Sovereign Autonomous Business (SAB) current-state inventory into target-state datastore decisions. It defines the mapping of major data domains to canonical on-chain systems of record and derived query layers.
+This specification translates the Conxian Sovereign Autonomous Business (SAB) current-state inventory into target-state datastore decisions. It defines the mapping of major data domains to canonical systems of record (on-chain for public state, and hardware enclaves for secrets) and derived query layers.
 
 ## 2. Scope
 - Mapping transactional application state.
@@ -21,11 +21,9 @@ This table describes the target-state canonical systems of record. Any current p
 | :--- | :--- | :--- | :--- |
 | **Transactional Application State** | **Stacks L1 (Clarity contracts)** | **PostgreSQL** (currently **Neon**, later sovereign/self-hosted) | Write-path is on-chain. Postgres is a materialized read model for Nexus/Gateway sync, MMR node indexing, and service-level query performance. |
 | **Proof-Oriented Analytics** | **Stacks L1 (events + state roots)** | **Supabase** (or equivalent SQL analytics layer) | Analytics datasets are derived from the on-chain event stream. Verification is anchored by on-chain checkpoints/hashes of derived datasets; canonical truth is always the raw L1 events/state. |
-| **Immutable Governance & Audit** | **Stacks L1 (event log + audit registry contract)** | **Tableland** (optional mirror) | Default is on-chain auditability. If used, Tableland MUST be a pure mirror: every row must be derivable from on-chain audit contracts/events (or data cryptographically committed on-chain), and it must not introduce protocol-relevant fields that cannot be reconstructed from L1. |
+| **Immutable Governance & Audit** | **Stacks L1 (event log + audit registry contract)** | **Tableland** (optional mirror) | Default is on-chain auditability. If used, Tableland MUST be a pure mirror: every row must be derivable from on-chain audit contracts/events (or data cryptographically committed on-chain), and it must not introduce protocol-relevant fields that cannot be reconstructed from L1. For this spec, protocol-relevant means any data that can affect protocol behavior, user balances, or governance outcomes; Tableland may add presentational/performance fields recomputable from L1 (denormalized joins, precomputed aggregates). |
 | **Identity Claims & Capabilities** | **Stacks L1 (DID / capability / revocation registry)** | N/A | Public identity state lives on-chain. |
 | **Identity Secrets (ZSE)** | **StrongBox / Secure Enclave** | N/A | Mandated for Zero Secret Egress (ZSE). Private keys and DID-ZK disclosure material are derived and stored in hardware, never leaving the device. |
-| **High-Frequency Caching** | N/A | **Redis** | Volatile cache for millisecond-latency session management, real-time mempool tracking, and telemetry buffering. |
-| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. Must be treated as a local cache; canonical state remains on-chain. |
 
 #### 3.1.1. Data Flow & Verification
 
@@ -37,6 +35,19 @@ This table describes the target-state canonical systems of record. Any current p
 Checkpoint computation must follow a deterministic, versioned normalization/materialization spec, and the checkpoint anchor must reference the spec version. In all cases, raw Stacks L1 events/state remain the ultimate canonical truth; checkpoints exist only to validate replicas.
 
 Checkpoint cadence should be defined over fixed windows (e.g., block ranges) and anchored on protocol-defined epochs to control on-chain costs. Infrastructure services and full indexers MUST validate their replicas against on-chain checkpoints; light clients MAY rely on indexer endpoints that are monitored against those checkpoints.
+
+At minimum, the following derived replicas MUST anchor and validate checkpoints:
+
+- Transactional Postgres read models used by Nexus/Gateway for settlement, risk, or compliance decisions.
+- Analytics projections used to drive keeper/agent actions or governance/audit reporting.
+- Any public audit mirror (e.g., Tableland).
+
+#### 3.1.2. Non-canonical Caches
+
+| Cache / Local Store | Target | Canonical Source | Notes |
+| :--- | :--- | :--- | :--- |
+| **High-Frequency Caching** | **Redis** | Derived from canonical sources above (L1 + indexer read models) | Volatile cache for millisecond-latency session management, mempool tracking, and telemetry buffering. |
+| **Offline Wallet Cache** | **Local SQLite** | Derived from canonical sources above (L1 + enclave-held secrets) | Offline lookups and UX continuity. Must be treated as a local cache. |
 
 ### 3.2. Central vs. Edge Responsibilities
 
