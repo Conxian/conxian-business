@@ -38,7 +38,7 @@ All non-enclave datastores (including PostgreSQL, Supabase, Tableland, Redis, an
 | **Immutable Governance & Audit** | **Stacks L1 (event log + audit registry contract)** | **Tableland** (optional mirror) | Default is on-chain auditability. Tableland is an optional public mirror when decentralized SQL materially improves discoverability without becoming a dependency for correctness. |
 | **Hardware-Anchored Identity** | **StrongBox / Secure Enclave** | N/A | Mandated for Zero Secret Egress (ZSE). Private keys and DID-ZK disclosures are derived and stored in hardware, never leaving the device. |
 | **High-Frequency Caching** | N/A | **Redis** | Volatile cache for millisecond-latency session management, real-time mempool tracking, and telemetry buffering. |
-| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. Must be treated as a local cache; canonical state remains on-chain. If user-sensitive data is cached, it **SHOULD** be encrypted at rest and treated as removable/invalidatable. |
+| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. Must be treated as a local cache; canonical state remains on-chain. If user-sensitive data is cached, it **SHOULD** be encrypted at rest and treated as removable/invalidatable. Seed phrases, signing keys, and enclave-only secrets **MUST NOT** be cached here, even in encrypted form. |
 
 #### 3.1.1. Data Flow & Verification
 
@@ -51,8 +51,8 @@ All non-enclave datastores (including PostgreSQL, Supabase, Tableland, Redis, an
 
 For any non-authoritative derived or query layer (including PostgreSQL read models, Supabase or equivalent analytics layers, and optional mirrors such as Tableland), implementers **MUST** ensure:
 
-1. **Deterministic rebuild**: the dataset can be rebuilt solely from Stacks L1 events/state and the published on-chain checkpoint history.
-2. **Checkpoint validation**: before a replica is treated as trusted for serving requests, its current dataset version is validated against the latest on-chain checkpoint.
+1. **Deterministic rebuild**: the dataset **MUST** be rebuildable solely from Stacks L1 events/state and the published on-chain checkpoint history.
+2. **Checkpoint validation**: before a replica is treated as trusted for serving requests, its current dataset version **MUST** be validated against the latest on-chain checkpoint.
 3. **Correctness isolation**: derived/query layers **MUST NOT** be required for protocol correctness; on mismatch or unavailability, clients/services **MUST** fall back to Stacks L1 and/or rebuild the dataset.
 
 ### 3.2. Central vs. Edge Responsibilities
