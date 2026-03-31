@@ -15,11 +15,13 @@ This specification translates the Conxian Sovereign Autonomous Business (SAB) cu
 
 The long-horizon direction is to make all non-secret SAB-critical business state fully on-chain. Off-chain systems may exist for performance and query ergonomics, but they must be treated as derived/indexed replicas rather than the authoritative system of record. Secrets and signing keys remain exclusively in hardware enclaves (ZSE), referenced on-chain by identifiers only.
 
+This table describes the target-state canonical systems of record. Any current production deviations should be documented as temporary exceptions with an explicit migration path back to this mapping.
+
 | Data Domain | Canonical System of Record | Derived / Query Layer (Non-authoritative) | Notes |
 | :--- | :--- | :--- | :--- |
 | **Transactional Application State** | **Stacks L1 (Clarity contracts)** | **PostgreSQL** (currently **Neon**, later sovereign/self-hosted) | Write-path is on-chain. Postgres is a materialized read model for Nexus/Gateway sync, MMR node indexing, and service-level query performance. |
 | **Proof-Oriented Analytics** | **Stacks L1 (events + state roots)** | **Supabase** (or equivalent SQL analytics layer) | Analytics datasets are derived from the on-chain event stream. Verification is anchored by on-chain checkpoints/hashes of derived datasets; canonical truth is always the raw L1 events/state. |
-| **Immutable Governance & Audit** | **Stacks L1 (event log + audit registry contract)** | **Tableland** (optional mirror) | Default is on-chain auditability. Tableland is an optional public mirror when decentralized SQL materially improves discoverability without becoming a dependency for correctness. |
+| **Immutable Governance & Audit** | **Stacks L1 (event log + audit registry contract)** | **Tableland** (optional mirror) | Default is on-chain auditability. If used, Tableland MUST be a pure mirror: every row must be derivable from on-chain audit contracts/events (or data cryptographically committed on-chain), and it must not introduce protocol-relevant fields that cannot be reconstructed from L1. |
 | **Identity Claims & Capabilities** | **Stacks L1 (DID / capability / revocation registry)** | N/A | Public identity state lives on-chain. |
 | **Identity Secrets (ZSE)** | **StrongBox / Secure Enclave** | N/A | Mandated for Zero Secret Egress (ZSE). Private keys and DID-ZK disclosure material are derived and stored in hardware, never leaving the device. |
 | **High-Frequency Caching** | N/A | **Redis** | Volatile cache for millisecond-latency session management, real-time mempool tracking, and telemetry buffering. |
@@ -33,6 +35,8 @@ The long-horizon direction is to make all non-secret SAB-critical business state
 4. **Mismatch handling**: any replica that fails checkpoint validation is treated as stale/corrupted and must be rebuilt from the on-chain event stream.
 
 Checkpoint computation must follow a deterministic, versioned normalization/materialization spec, and the checkpoint anchor must reference the spec version. In all cases, raw Stacks L1 events/state remain the ultimate canonical truth; checkpoints exist only to validate replicas.
+
+Checkpoint cadence should be defined over fixed windows (e.g., block ranges) and anchored on protocol-defined epochs to control on-chain costs. Infrastructure services and full indexers MUST validate their replicas against on-chain checkpoints; light clients MAY rely on indexer endpoints that are monitored against those checkpoints.
 
 ### 3.2. Central vs. Edge Responsibilities
 
