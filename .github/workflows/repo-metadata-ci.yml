@@ -36,6 +36,7 @@ jobs:
         run: |
           grep -q '^## Purpose$' README.md
           grep -q '^## Status$' README.md
+          grep -q '^## Ownership$' README.md
 
       - name: Assert changelog discipline
         run: |

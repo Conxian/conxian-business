@@ -1,4 +1,3 @@
-import os
 import re
 from pathlib import Path
 import sys
@@ -30,12 +29,14 @@ def check_links():
             if not clean_link:
                 continue
 
+            href = clean_link.split()[0]
+
             # Only validate repository-local markdown files
-            if not clean_link.endswith('.md'):
+            if not href.endswith('.md'):
                 continue
 
             # Resolve relative path
-            target_path = (md_file.parent / clean_link).resolve()
+            target_path = (md_file.parent / href).resolve()
 
             if not target_path.exists():
                 broken_links.append((md_file, link, target_path))

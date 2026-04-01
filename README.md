@@ -20,6 +20,10 @@ This repository is the public, governance-grade workspace for Conxian:
 - Intended audience: contributors and operators working from OpenSpec
 - Releases: `CHANGELOG.md` + SemVer tags (`vX.Y.Z`) (see `RELEASING.md`)
 
+## Ownership
+
+Ownership and review requirements are defined in [`CODEOWNERS`](./CODEOWNERS).
+
 ## 🚀 The Strategic Vision: Bitcoin-Native Evolution
 
 Conxian is engineering a B+ Bitcoin-native ecosystem. Our Business Operations System (BOS) transforms operational excellence into verifiable, immutable proof on the world's most resilient network. This ensures absolute sovereignty and maximizes valuation for our Terminal Exit Vector.
