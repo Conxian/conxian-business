@@ -30,27 +30,27 @@ The result is simple: capital and critical business processes avoid Bitcoin-nati
 
 Conxian is a sovereign execution stack that treats the business itself as a state machine. Instead of asking users to trust operators, Conxian encodes policies and constraints as deterministic software and publishes proof-friendly state.
 
-**A) Conxian Protocol (Clarity smart contracts)**
+**A) Conxian Protocol (Clarity smart contracts)** ([PRD](../Conxian/PRD.md))
 
 - Deterministic, decidable execution (Clarity) for core policy and settlement
 - Autonomous fiscal policy and revenue routing (e.g., adaptive yield policy and hard constraints on discretionary spending)
 - Risk and liquidation logic designed to run continuously without privileged human control paths
 
-**B) Conxian Nexus (Glass Node)**
+**B) Conxian Nexus (Glass Node)** ([PRD](../conxian-nexus/docs/PRD.md))
 
 - A high-performance “glass node” that mirrors and verifies on-chain state
-- Nakamoto-aware finality handling (microblock vs burn-block)
+- Nakamoto-aware finality handling (burn-block-height vs block-height)
 - Transparency and audit surfaces for transaction ordering, state roots, and proof reconstruction
 
-**C) Conxian Gateway (Institutional Compliance Pipe)**
+**C) Conxian Gateway (Institutional Compliance Pipe)** ([PRD](../conxian-gateway/PRD.md))
 
 - Rust middleware that bridges Bitcoin/Stacks state to enterprise-grade APIs
 - Proof-oriented monitoring (health, metrics, traceability) for audit-ready operations
-- Standards-aligned egress paths (e.g., ISO 20022-style outputs) designed for institutional workflows
+- Standards-aligned egress paths (e.g., ISO 20022 outputs) designed for institutional workflows ([spec](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md))
 
 **D) Industrial engine (job cards + enforcement)**
 
-- A machine-readable job card standard (CJCS v2.0 JSON-LD) that maps to SAP/Oracle fields
+- A machine-readable job card standard (CJCS v2.0, JSON-LD) that maps to SAP/Oracle fields ([CJCS spec](CJCS_v2.0_SPEC.md))
 - SLA enforcement anchored to chain time so “work” has objective deadlines and outcomes
 - Incentive design that treats execution as a measurable, settlement-grade event
 
@@ -63,7 +63,7 @@ Core policy and execution paths are engineered to be deterministic and inspectab
 By aligning with Bitcoin settlement through Stacks Nakamoto finality primitives, Conxian targets a security posture that matches the asset it is meant to serve.
 
 **3) Public specs and reproducible architecture**
-The system is documented in OpenSpec and backed by an auditable, repository-first trail of decisions and interfaces.
+The system is documented in OpenSpec and backed by an auditable, repository-first trail of decisions and interfaces (e.g., [institutional egress spec](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md)).
 
 **4) Enterprise and compliance alignment**
 Instead of hand-waving “institutional readiness,” Conxian expresses integration surfaces in the language enterprises already use (job card mappings, standards-aligned egress, structured telemetry).
