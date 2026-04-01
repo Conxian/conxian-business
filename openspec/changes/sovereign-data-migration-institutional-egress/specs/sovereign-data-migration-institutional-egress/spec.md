@@ -17,10 +17,10 @@ This specification uses requirement keywords (**MUST**, **MUST NOT**, **SHOULD**
 To reduce ambiguity across institutional egress consumers, exported datasets **MUST** define a representation-agnostic canonical field schema and a deterministic mapping to any renderer-specific formats.
 
 - Canonical dataset fields **MUST** use `snake_case`.
-- JSON exports, CSV headers, and the column names of any SQL views or tables used as egress-facing datasets **MUST** match the canonical `snake_case` field names.
-- ISO 20022 (and any other message format) renderers **MUST** publish a deterministic mapping from canonical fields to the renderer-specific field names.
+- JSON exports, CSV headers, the column names of any SQL views or tables used as egress-facing datasets, and any other egress-facing machine-readable representations **MUST** match the canonical `snake_case` field names.
+- ISO 20022 (and any other message format) renderers **MUST** publish a deterministic mapping from canonical fields to the renderer-specific field names in a version-controlled location alongside the dataset schema.
 - If canonical field names change, the dataset producer **MUST** either publish a backward-compatible alias strategy with an explicit deprecation window or publish a replacement dataset with a new `dataset_id` and deprecate the prior dataset.
-- `burn_block_height` is the canonical field name for burn block anchoring; if any implementation previously exposed `burn-block-height`, it **MUST** treat `burn-block-height` as a deprecated alias subject to the published deprecation window.
+- `burn_block_height` is the canonical field name for burn block anchoring; if any implementation previously exposed `burn-block-height`, it **MUST** (a) emit both `burn_block_height` and the deprecated alias `burn-block-height` for the duration of the explicitly documented deprecation window, and (b) treat `burn_block_height` as authoritative when both are present.
 
 ## 1. Purpose
 
