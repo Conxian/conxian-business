@@ -11,11 +11,9 @@
 /openspec/ @botshelomokoka @admin-conxian-labs
 
 # Product suites
-/conxian-gateway/ @botshelomokoka @admin-conxian-labs
-/conxian-nexus/ @botshelomokoka @admin-conxian-labs
-/conxian-ui/ @botshelomokoka @admin-conxian-labs
-/conxius-platform/ @botshelomokoka @admin-conxian-labs
-/conxius-wallet/ @botshelomokoka @admin-conxian-labs
+/conxian-*/ @botshelomokoka @admin-conxian-labs
+/conxius-*/ @botshelomokoka @admin-conxian-labs
+/lib-*/ @botshelomokoka @admin-conxian-labs
 /showcase-dapp/ @botshelomokoka @admin-conxian-labs
 /stacksorbit/ @botshelomokoka @admin-conxian-labs
 
