@@ -14,14 +14,22 @@ def check_links():
         with open(md_file, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        # Find markdown links [text](link.md)
-        links = re.findall(r'\[.*?\]\((.*?\.md)\)', content)
+        # Find markdown links [text](target)
+        links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
 
         for link in links:
-            if link.startswith('http'):
+            link = link.strip()
+            if not link:
                 continue
 
-            # Clean up link (remove fragments)
+            # Skip external URLs, anchors, and any other URI schemes (mailto:, ftp:, etc.)
+            if link.startswith('#') or re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:', link):
+                continue
+
+            # Only validate repository-local markdown files
+            if not link.endswith('.md'):
+                continue
+
             clean_link = link.split('#')[0]
             if not clean_link:
                 continue

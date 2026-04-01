@@ -12,7 +12,9 @@ The `conxian-business` repository is an umbrella repo that vendors key Conxian r
 - **Website**: marketing, docs, and landing pages.
 - **SDK**: libraries intended to be depended on by other repos.
 - **Protocol**: smart contracts and protocol logic.
+- **State node**: long-running nodes that maintain Conxian/BOS state and participate in protocol operations.
 - **Ops/Admin**: governance, OpenSpec, audits, and internal tooling.
+- **Tooling**: CLI tools and supporting utilities used for deployment, monitoring, or developer workflows.
 
 ## Recommended pins (GitHub org profile)
 
