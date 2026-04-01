@@ -8,7 +8,7 @@ This page is a concise, external-facing overview of Conxian for partners, evalua
 
 - **Non-custodial end-user interfaces** (e.g., Conxian’s Conxius Wallet)
 - **Institutional / B2B middleware** (Conxian Gateway)
-- **Open specifications** (OpenSpec) and auditable system components
+- **Open specifications** ([OpenSpec](../openspec/changes/remediate-enterprise-sovereignty/specs.md)) and auditable system components
 
 **What Conxian is not:** Conxian is not a custodian, bank, exchange, or a KYC provider. Any regulated flows (fiat on-ramps, KYC/AML, chargebacks, etc.) are intentionally delegated to regulated partners.
 
@@ -39,7 +39,7 @@ Typical partner integration paths include:
 
 ### What we typically need from partners (for evaluation)
 
-- A short description of the product and where it fits (on-ramp, swap, bridge, L2, infra, compliance).
+- A short description of the product and where it fits (on-/off-ramp, swap, bridge, L2, infra, compliance).
 - API docs (or SDK docs) plus sandbox / test keys.
 - Supported geos and an explicit statement of who performs KYC/AML (if applicable).
 - Operational expectations (SLA targets, incident contacts, rate limits).
