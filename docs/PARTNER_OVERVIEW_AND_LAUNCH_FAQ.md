@@ -61,9 +61,9 @@ We’re packaging the Conxian stack so partners and evaluators can:
 
 Start with:
 
-1. `README.md` (high-level repo overview)
-2. `openspec/` (ground-truth specs)
-3. `docs/` (security, architecture, and system documentation)
+1. [README.md](../README.md) (high-level repo overview)
+2. [OpenSpec](../openspec/README.md) (ground-truth specs)
+3. [docs/](./README.md) (security, architecture, and system documentation)
 
 ### Is Conxian open source?
 
