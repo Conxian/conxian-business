@@ -17,6 +17,18 @@ Welcome to the Conxian ecosystem. We are building a Bitcoin-native Business Oper
 5.  Review the [**CODEOWNERS**](./CODEOWNERS) file to identify the appropriate reviewers for your changes.
 6.  Ensure any changes are reflected in the [**CHANGELOG.md**](./CHANGELOG.md).
 
+## Security Issues
+
+If you believe you've found a security vulnerability, do not open a public issue or pull request.
+
+Follow the reporting guidance in [**SECURITY.md**](./SECURITY.md).
+
+## Releases and Versioning
+
+This repository follows Semantic Versioning and documents notable changes in [**CHANGELOG.md**](./CHANGELOG.md).
+
+If your change affects a user-facing behavior or a security posture, include a changelog entry in the appropriate version section.
+
 ## Coding Standards
 
 - **Rust**: Use standard `rustfmt` and `clippy`.
