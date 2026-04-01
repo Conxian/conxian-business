@@ -21,9 +21,11 @@ Use the same single line in both the GitHub repo description and the README “t
 - Supporting:
   - `Supporting — <1-line purpose>`
 
+> Maintainers: Each flagship README should either copy the `## Ecosystem repos` section below (verbatim) or link back to this file. If you inline it, keep that copy in sync whenever this section changes.
+
 ## Ecosystem repos
 
-Every flagship README should either include this section (verbatim) or link back to it so the trust surface is navigable. This file is the canonical list; if a flagship README inlines it, keep that copy in sync whenever this section changes.
+The Conxian ecosystem consists of the following flagship and supporting repositories.
 
 ### Flagship
 
