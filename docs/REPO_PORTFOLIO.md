@@ -4,17 +4,9 @@ This page defines the Conxian public repo map for external evaluation and intern
 
 Note: the UI repo is still named `Conxian/Conxian_UI` and is planned to be renamed to `Conxian/conxian-ui` for naming consistency (track in [CON-238](https://linear.app/conxian-labs/issue/CON-238/define-flagship-repos-and-external-trust-surface)).
 
-## Flagship (external trust surface)
-
-Flagship repos are the external trust surface. The canonical list lives in [Ecosystem repos](#ecosystem-repos).
-
-## Supporting (linked from flagship READMEs; not pinned)
-
-Supporting repos are linked from flagship repos but are not the primary trust surface. The canonical list lives in [Ecosystem repos](#ecosystem-repos).
-
 ## Standard role line (GitHub description + README top section)
 
-Use the same single line in both the GitHub repo description and the README “top section” (right below the opening paragraph):
+Use the same single line in both the GitHub repo description and the README “top section” (right below the opening paragraph). The 1-line purposes should match the descriptions in the [Ecosystem repos](#ecosystem-repos) section.
 
 - Flagship:
   - `Flagship — <1-line purpose>`
@@ -25,18 +17,20 @@ Use the same single line in both the GitHub repo description and the README “t
 
 ## Ecosystem repos
 
-The Conxian ecosystem consists of the following flagship and supporting repositories.
-
 ### Flagship
+
+These repos are the public trust surface.
 
 - https://github.com/Conxian/conxius-wallet — Sovereign wallet (Android-first, offline-first) for Bitcoin L1 and Bitcoin-adjacent layers.
 - https://github.com/Conxian/conxian-gateway — “Fusion” gateway aggregating cross-layer state + compliance pipelines.
 - https://github.com/Conxian/Conxian — Core protocol + on-chain contracts.
-- https://github.com/Conxian/Conxian_UI — Primary UI for interacting with the Conxian ecosystem.
+- https://github.com/Conxian/Conxian_UI — Primary UI for interacting with the Conxian ecosystem (planned rename to `Conxian/conxian-ui`).
 - https://github.com/Conxian/conxian-labs-site — Public Conxian Labs website.
 - https://github.com/Conxian/conxius-platform — Local dev stack to run the ecosystem end-to-end.
 
 ### Supporting
+
+These repos support the flagship trust surface and are linked from flagship READMEs (not pinned).
 
 - https://github.com/Conxian/lib-conxian-core — Shared core models + conventions used across services.
 - https://github.com/Conxian/lib-conclave-sdk — Headless enclave + cryptographic state machine SDK.
