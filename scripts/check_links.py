@@ -5,7 +5,7 @@ import sys
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 def check_links():
-    md_files = list(Path('.').rglob('*.md'))
+    md_files = list(REPO_ROOT.rglob('*.md'))
     broken_links = []
 
     for md_file in md_files:
@@ -46,7 +46,12 @@ def check_links():
                 broken_links.append((md_file, link, target_path))
 
     for source, link, target in broken_links:
-        print(f"Broken link in {source}: {link} -> {target}")
+        rel_source = source.relative_to(REPO_ROOT)
+        try:
+            rel_target = target.relative_to(REPO_ROOT)
+        except ValueError:
+            rel_target = target
+        print(f"Broken link in {rel_source}: {link} -> {rel_target}")
 
     if broken_links:
         sys.exit(1)
