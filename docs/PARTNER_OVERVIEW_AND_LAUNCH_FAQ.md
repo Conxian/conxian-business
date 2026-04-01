@@ -6,7 +6,7 @@ This page is a concise, external-facing overview of Conxian for partners, evalua
 
 **What Conxian is:** Conxian is a Bitcoin-native operating stack that combines:
 
-- **Non-custodial end-user interfaces** (e.g., Conxius Wallet)
+- **Non-custodial end-user interfaces** (e.g., Conxian’s Conxius Wallet)
 - **Institutional / B2B middleware** (Conxian Gateway)
 - **Open specifications** (OpenSpec) and auditable system components
 
@@ -65,7 +65,7 @@ Start with:
 
 ### Is Conxian open source?
 
-This repository is public and licensed under GNU GPL v3.0 (see `LICENSE`). If you need a different licensing structure for a commercial integration, raise it early in the conversation so we can confirm constraints.
+This repository is public; see `LICENSE` for current licensing terms. If you need a different licensing structure for a commercial integration, raise it early in the conversation so we can confirm constraints.
 
 ### Does Conxian custody user funds or keys?
 
@@ -73,7 +73,7 @@ No. Conxian is designed to keep keys under the user’s control and avoid custod
 
 ### Who handles KYC/AML and other regulated steps?
 
-Regulated flows are handled by regulated partners (where required). Conxian focuses on the non-custodial user experience and cryptographic execution.
+Regulated flows are handled by regulated partners (where required). Partners remain responsible for their own regulatory compliance and licensing obligations in the jurisdictions where they operate. Conxian focuses on the non-custodial user experience and cryptographic execution.
 
 ### How do you label partner flows in the UI?
 
