@@ -10,7 +10,7 @@ Welcome to the Conxian ecosystem. We are building a Bitcoin-native Business Oper
 
 ## Bounty workflow
 
-- Only issues in `Todo` are claimable and must be unassigned.
+- Only **bounty** issues in `Todo` are claimable, and claimable bounty issues must be unassigned.
 - Free-text "I'd like to work on this" comments and payment details in threads do not constitute a claim.
 - Preferred claim path is a `/claim` comment on the synced GitHub issue (when automation is enabled). Otherwise, maintainers accept claims by assigning the issue and moving it to `Claimed`.
 

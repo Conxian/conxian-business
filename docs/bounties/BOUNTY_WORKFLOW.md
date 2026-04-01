@@ -32,6 +32,8 @@ Recommended Linear team workflow states:
 
 1. Moving an issue to `Claimed`, `In Progress`, or `In Review` must set an assignee.
 2. If a bounty is abandoned or times out, move it back to `Todo` and **clear the assignee**.
+3. When moving a bounty issue to `Done`, keep the assignee set for payout and audit attribution.
+4. When moving a bounty issue to `Canceled` or `Duplicate`, clear the assignee.
 
 ### What counts as a claim
 
@@ -49,7 +51,7 @@ Recommended Linear team workflow states:
 
 Maintainer-only payout enablement checklist:
 
-- `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`
+- [`docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`](./MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md)
 
 Payout-enabling controls must remain maintainer-only and must not be used until ConxianCSF is verified deployed on Stacks mainnet and the ALEX launch-path funding is ready.
 
@@ -75,4 +77,4 @@ Linear can't reliably enforce "assignee required" on state transitions, but it c
 Recommended automations:
 
 1. When a **bounty** issue moves to `Todo` → clear assignee (or enforce this manually if Linear can't scope the automation to bounty-labeled issues).
-2. When an issue moves to `Canceled` or `Duplicate` → clear assignee.
+2. When a **bounty** issue moves to `Canceled` or `Duplicate` → clear assignee (or enforce this manually if Linear can't scope the automation to bounty-labeled issues).
