@@ -15,4 +15,6 @@ This OpenSpec package is an architecture synthesis only. Execution remains track
 ## Institutional egress policy (read-only subledger export)
 - [ ] [CON-161](https://linear.app/conxian-labs/issue/CON-161/extend-treasury-oracle-schema-for-external-settlement-logs) — extend treasury oracle schema for external settlement logs
 - [ ] [CON-164](https://linear.app/conxian-labs/issue/CON-164/add-external-settlement-log-schema-in-treasury-oracle-repo) — add external settlement log schema in treasury oracle repo
-- [ ] [CON-160](https://linear.app/conxian-labs/issue/CON-160/add-global-settlement-ingress-to-gateway) — add global settlement ingress to gateway
+
+## Gateway readiness (non-egress)
+- [ ] [CON-160](https://linear.app/conxian-labs/issue/CON-160/add-global-settlement-ingress-to-gateway) — add global settlement ingress to gateway (not an external-subledger write-path)

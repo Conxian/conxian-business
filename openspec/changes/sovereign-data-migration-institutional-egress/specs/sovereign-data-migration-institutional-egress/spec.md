@@ -16,9 +16,9 @@ This specification uses requirement keywords (**MUST**, **MUST NOT**, **SHOULD**
 
 To reduce ambiguity across institutional egress consumers, exported datasets **MUST** define a canonical schema (the JSON/CSV export schema) and a deterministic mapping to any renderer-specific formats.
 
-- JSON and CSV exports **MUST** use `snake_case` field names.
-- SQL read models **SHOULD** use `snake_case` column names that match the canonical JSON/CSV field names.
-- ISO 20022 (and any other message format) renderers **MUST** publish a deterministic mapping from canonical fields to the renderer-specific field names.
+- Canonical dataset fields **MUST** use `snake_case`.
+- JSON exports, CSV headers, and SQL column names **MUST** match the canonical `snake_case` field names.
+- ISO 20022 (and any other message format) renderers **MUST** publish a deterministic mapping from canonical fields to the renderer-specific field names; canonical field names **MUST NOT** be silently renamed at the dataset level.
 
 ## 1. Purpose
 
