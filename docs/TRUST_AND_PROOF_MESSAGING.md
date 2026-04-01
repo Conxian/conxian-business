@@ -78,6 +78,8 @@ Every flagship repository should declare an explicit **Status** (pick one) and k
 - **Stable**: breaking changes are rare and intentional; documented migration paths exist.
 - **Deprecated**: no new features; security-only fixes or archived.
 
+To avoid ambiguity and implied guarantees, do not describe repositories as “production-ready” on public surfaces. Use the Status labels above instead.
+
 **Proof expectations by status (examples):**
 
 - Incubating: clear scope + changelog updates.
@@ -148,6 +150,7 @@ Notes:
 - Keep the `Status` value identical across README, pinned description, and trust page listing.
 - If the repo is not versioned via GitHub releases, say so explicitly and point at `CHANGELOG.md`.
 - In actual READMEs and trust pages, prefer Markdown links for these proof artifacts.
+- Ensure all referenced proof artifacts in the section exist in the repo. If any are intentionally missing, add them or remove/adjust the corresponding line.
 
 ## Pinned repo descriptions (examples)
 
