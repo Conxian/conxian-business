@@ -43,7 +43,7 @@ Flagship
 - https://github.com/Conxian/conxius-wallet
 - https://github.com/Conxian/conxian-gateway
 - https://github.com/Conxian/Conxian
-- https://github.com/Conxian/Conxian_UI
+- https://github.com/Conxian/Conxian_UI (rename to https://github.com/Conxian/conxian-ui)
 - https://github.com/Conxian/conxian-labs-site
 - https://github.com/Conxian/conxius-platform
 
@@ -54,4 +54,5 @@ Supporting
 - https://github.com/Conxian/conxian-nexus
 - https://github.com/Conxian/stacksorbit
 - https://github.com/Conxian/.github
+- https://github.com/Conxian/conxian-business
 ```
