@@ -14,7 +14,7 @@ This specification uses requirement keywords (**MUST**, **MUST NOT**, **SHOULD**
 
 ## Export field naming conventions
 
-To reduce ambiguity across institutional egress consumers, exported datasets **MUST** define a representation-agnostic canonical field schema and a deterministic mapping to any renderer-specific formats.
+To reduce ambiguity across institutional egress consumers, exported datasets **MUST** define a representation-agnostic canonical field schema and a deterministic mapping to any renderer-specific formats. These conventions apply to all institutional egress datasets; existing datasets **MUST** adopt them in their next published schema revision.
 
 - Canonical dataset fields **MUST** use `snake_case`.
 - JSON exports, CSV headers, the column names of any SQL views or tables used as egress-facing datasets, and any other direct machine-readable serializations of the dataset (excluding message-oriented integration formats) **MUST** expose the canonical fields using their canonical `snake_case` field names. Any deprecated alias fields **MAY** deviate from `snake_case` but **MUST** be explicitly documented as non-canonical in the dataset schema definition and follow the published deprecation window.
