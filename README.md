@@ -65,6 +65,7 @@ This repo vendors the following Conxian repositories as submodules:
 | Category | Repository | Submodule path |
 | --- | --- | --- |
 | Platform | `conxius-platform` | `conxius-platform/` |
+| Platform | `conxian-ui` | `conxian-ui/` |
 | Wallet | `conxius-wallet` | `conxius-wallet/` |
 | Gateway | `conxian-gateway` | `conxian-gateway/` |
 | Website | `conxian-labs-site` | `conxian-labs-site/` |
