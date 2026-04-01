@@ -2,6 +2,7 @@
 
 * [Introduction](README.md)
 * [Archive Migration (Linear Virtual Office; ZSE)](ARCHIVE_MIGRATION.md)
+* [Partner Overview and Launch FAQ](docs/PARTNER_OVERVIEW_AND_LAUNCH_FAQ.md)
 
 ## 🤖 Business Operations System (BOS)
 
