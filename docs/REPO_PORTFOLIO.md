@@ -2,7 +2,7 @@
 
 This page defines the Conxian public repo map for external evaluation and internal consistency.
 
-Note: the UI repo is currently named `Conxian/Conxian_UI`; it should be renamed to `Conxian/conxian-ui` so links and submodule URLs stay consistent.
+Note: as of 2026-04-01, the UI repo is still named `Conxian/Conxian_UI`. This page (and `conxian-business`'s `conxian-ui` submodule URL) assumes the repo is renamed to `Conxian/conxian-ui`; merge/apply these changes after the GitHub rename so clones stay consistent.
 
 ## Flagship (external trust surface)
 
@@ -52,4 +52,5 @@ Supporting
 - https://github.com/Conxian/lib-conclave-sdk
 - https://github.com/Conxian/conxian-nexus
 - https://github.com/Conxian/stacksorbit
+- https://github.com/Conxian/.github
 ```
