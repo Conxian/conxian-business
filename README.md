@@ -68,16 +68,16 @@ This repo vendors the following Conxian repositories as submodules:
 
 | Category | Repository | Submodule path |
 | --- | --- | --- |
-| Platform | `conxius-platform` | `conxius-platform/` |
-| Platform | `conxian-ui` | `conxian-ui/` |
-| Wallet | `conxius-wallet` | `conxius-wallet/` |
-| Gateway | `conxian-gateway` | `conxian-gateway/` |
-| Website | `conxian-labs-site` | `conxian-labs-site/` |
-| Protocol | `Conxian` | `Conxian/` |
-| State node | `conxian-nexus` | `conxian-nexus/` |
-| SDK | `lib-conxian-core` | `lib-conxian-core/` |
-| SDK | `lib-conclave-sdk` | `lib-conclave-sdk/` |
-| Tooling | `stacksorbit` | `stacksorbit/` |
+| Platform | [conxius-platform](https://github.com/Conxian/conxius-platform) | `conxius-platform/` |
+| Platform | [Conxian_UI](https://github.com/Conxian/Conxian_UI) | `conxian-ui/` |
+| Wallet | [conxius-wallet](https://github.com/Conxian/conxius-wallet) | `conxius-wallet/` |
+| Gateway | [conxian-gateway](https://github.com/Conxian/conxian-gateway) | `conxian-gateway/` |
+| Website | [conxian-labs-site](https://github.com/Conxian/conxian-labs-site) | `conxian-labs-site/` |
+| Protocol | [Conxian](https://github.com/Conxian/Conxian) | `Conxian/` |
+| State node | [conxian-nexus](https://github.com/Conxian/conxian-nexus) | `conxian-nexus/` |
+| SDK | [lib-conxian-core](https://github.com/Conxian/lib-conxian-core) | `lib-conxian-core/` |
+| SDK | [lib-conclave-sdk](https://github.com/Conxian/lib-conclave-sdk) | `lib-conclave-sdk/` |
+| Tooling | [stacksorbit](https://github.com/Conxian/stacksorbit) | `stacksorbit/` |
 
 For org-level pinning guidance and README expectations per repo, see [`docs/REPOSITORY_CATALOG.md`](./docs/REPOSITORY_CATALOG.md).
 

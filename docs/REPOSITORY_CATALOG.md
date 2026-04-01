@@ -22,7 +22,7 @@ If we can only pin a few repos on the GitHub org profile, these are the clearest
 
 1. `conxius-wallet` (Wallet)
 2. `conxian-gateway` (Gateway)
-3. `conxian-ui` or `conxius-platform` (Platform)
+3. `Conxian_UI` or `conxius-platform` (Platform)
 4. `Conxian` (Protocol)
 5. `lib-conxian-core` (SDK)
 6. `conxian-labs-site` (Website)
@@ -31,16 +31,16 @@ If we can only pin a few repos on the GitHub org profile, these are the clearest
 
 | Category | Repository | Primary audience | Notes |
 | --- | --- | --- | --- |
-| Gateway | `conxian-gateway` | Integrators, institutions | Rust gateway services and API surface. |
-| Wallet | `conxius-wallet` | End users | Non-custodial wallet product. |
-| Platform | `conxius-platform` | Operators, institutions | Platform services (admin dashboards, etc.). |
-| Platform | `conxian-ui` | Operators, institutions | UI app(s) and specs. |
-| Protocol | `Conxian` | Protocol engineers | Contracts + protocol logic. |
-| State node | `conxian-nexus` | Operators | Nexus state node implementation. |
-| SDK | `lib-conxian-core` | App / service developers | Shared core library. |
-| SDK | `lib-conclave-sdk` | Integrators | Conclave/TEE-related SDK components. |
-| Website | `conxian-labs-site` | Public | Marketing + public docs site. |
-| Tooling | `stacksorbit` | Developers | Stacks deployment and monitoring CLI/tooling. |
+| Gateway | [conxian-gateway](https://github.com/Conxian/conxian-gateway) | Integrators, institutions | Rust gateway services and API surface. |
+| Wallet | [conxius-wallet](https://github.com/Conxian/conxius-wallet) | End users | Non-custodial wallet product. |
+| Platform | [conxius-platform](https://github.com/Conxian/conxius-platform) | Operators, institutions | Platform services (admin dashboards, etc.). |
+| Platform | [Conxian_UI](https://github.com/Conxian/Conxian_UI) | Operators, institutions | UI app(s) and specs. |
+| Protocol | [Conxian](https://github.com/Conxian/Conxian) | Protocol engineers | Contracts + protocol logic. |
+| State node | [conxian-nexus](https://github.com/Conxian/conxian-nexus) | Operators | Nexus state node implementation. |
+| SDK | [lib-conxian-core](https://github.com/Conxian/lib-conxian-core) | App / service developers | Shared core library. |
+| SDK | [lib-conclave-sdk](https://github.com/Conxian/lib-conclave-sdk) | Integrators | Conclave/TEE-related SDK components. |
+| Website | [conxian-labs-site](https://github.com/Conxian/conxian-labs-site) | Public | Marketing + public docs site. |
+| Tooling | [stacksorbit](https://github.com/Conxian/stacksorbit) | Developers | Stacks deployment and monitoring CLI/tooling. |
 
 ## Public README expectations (per repository)
 

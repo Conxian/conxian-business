@@ -9,7 +9,7 @@ def check_links():
     broken_links = []
 
     for md_file in md_files:
-        if 'node_modules' in str(md_file):
+        if 'node_modules' in md_file.parts:
             continue
 
         with open(md_file, 'r', encoding='utf-8') as f:
