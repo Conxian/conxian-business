@@ -12,12 +12,12 @@ This specification uses requirement keywords (**MUST**, **MUST NOT**, **SHOULD**
 - **External subledger**: any external accounting system ingesting Conxian datasets (ERP subledger, auditor subledger, reporting pipeline).
 - **Proof/visual-proof flow**: any workflow that presents derived analytics as evidence (dashboards, reports, attestations).
 
-### 0.1 Export field naming conventions
+### Export field naming conventions
 
 To reduce ambiguity across institutional egress consumers, exported datasets **MUST** define a representation-agnostic canonical field schema and a deterministic mapping to any renderer-specific formats.
 
 - Canonical dataset fields **MUST** use `snake_case`.
-- JSON exports, CSV headers, and SQL column names **MUST** match the canonical `snake_case` field names.
+- JSON exports, CSV headers, and the column names of any SQL views or tables used as egress-facing datasets **MUST** match the canonical `snake_case` field names.
 - ISO 20022 (and any other message format) renderers **MUST** publish a deterministic mapping from canonical fields to the renderer-specific field names.
 - If canonical field names change, the dataset producer **MUST** either version the dataset schema (for example via `dataset_id`) or publish a backward-compatible alias strategy with an explicit deprecation window.
 - `burn_block_height` is the canonical field name for burn block anchoring; if any implementation previously exposed `burn-block-height`, it **MUST** treat `burn-block-height` as a deprecated alias subject to the published deprecation window.
