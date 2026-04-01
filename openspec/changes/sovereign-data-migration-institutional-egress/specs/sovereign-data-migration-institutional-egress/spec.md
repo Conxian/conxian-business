@@ -12,7 +12,7 @@ This specification uses requirement keywords (**MUST**, **MUST NOT**, **SHOULD**
 - **External subledger**: any external accounting system ingesting Conxian datasets (ERP subledger, auditor subledger, reporting pipeline).
 - **Proof/visual-proof flow**: any workflow that presents derived analytics as evidence (dashboards, reports, attestations).
 
-### Export field naming conventions
+## 0.1 Export field naming conventions
 
 To reduce ambiguity across institutional egress consumers, exported datasets **MUST** define a representation-agnostic canonical field schema and a deterministic mapping to any renderer-specific formats.
 
