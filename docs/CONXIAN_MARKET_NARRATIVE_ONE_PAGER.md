@@ -46,7 +46,7 @@ Conxian is a sovereign execution stack that treats the business itself as a stat
 
 - Rust middleware that bridges Bitcoin/Stacks state to enterprise-grade APIs
 - Proof-oriented monitoring (health, metrics, traceability) for audit-ready operations
-- Standards-aligned egress paths (e.g., ISO 20022 outputs) designed for institutional workflows ([spec](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md))
+- Standards-aligned egress paths (e.g., ISO 20022-aligned outputs) designed for institutional workflows ([spec](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md))
 
 **D) Industrial engine (job cards + enforcement)**
 
