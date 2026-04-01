@@ -1,0 +1,38 @@
+# Releasing
+
+This repo uses **Semantic Versioning** and **tagged releases**.
+
+- Version tags: `vX.Y.Z`
+- Release notes: `CHANGELOG.md` (Keep a Changelog)
+
+## When to cut a release
+
+Cut a release when a change is user-facing (behavior, security posture, public docs that reframe the system), or when a set of changes should be pinned to an immutable reference for downstream repos.
+
+## Release steps
+
+1. Update `CHANGELOG.md`
+   - Ensure `## [Unreleased]` exists.
+   - Move the changes being released from `## [Unreleased]` into a new `## [X.Y.Z] - YYYY-MM-DD` section.
+2. Create an annotated tag locally:
+
+```bash
+git tag -a vX.Y.Z -m "vX.Y.Z"
+git push origin vX.Y.Z
+```
+
+3. Create a GitHub Release using the tag.
+
+If you have `gh` installed:
+
+```bash
+gh release create vX.Y.Z --title "vX.Y.Z" --notes-file CHANGELOG.md
+```
+
+## Submodule repositories
+
+`conxian-business` vendors major repositories as Git submodules. Each user-facing submodule repository should:
+
+- Tag releases independently.
+- Keep its own `CHANGELOG.md`.
+- Add CI and a status badge in its own README.

@@ -1,6 +1,7 @@
 import os
 import re
 from pathlib import Path
+import sys
 
 def check_links():
     md_files = list(Path('.').rglob('*.md'))
@@ -33,6 +34,9 @@ def check_links():
 
     for source, link, target in broken_links:
         print(f"Broken link in {source}: {link} -> {target}")
+
+    if broken_links:
+        sys.exit(1)
 
 if __name__ == "__main__":
     check_links()

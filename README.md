@@ -1,6 +1,24 @@
-# Conxian: Sovereign Business Operations System (BOS v1.7.0)
+# Conxian: Sovereign Business Operations System (BOS v1.8.2)
+
+[![Repo Metadata CI](https://github.com/Conxian/conxian-business/actions/workflows/repo-metadata-ci.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/repo-metadata-ci.yml)
+[![Conxian Unified CI](https://github.com/Conxian/conxian-business/actions/workflows/conxian-unified-ci.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/conxian-unified-ci.yml)
+[![Deploy Documentation](https://github.com/Conxian/conxian-business/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/deploy-docs.yml)
 
 This repository is the programmatic **State Machine** for Conxian operations. We have evolved from a system that runs on infrastructure to a system that **is** infrastructure—living directly on Bitcoin.
+
+## Purpose
+
+This repository is the public, governance-grade workspace for Conxian:
+
+- Defines ground-truth specifications under `openspec/`.
+- Vendors key product repositories as Git submodules (see `.gitmodules`).
+- Hosts repository hygiene and audit automation (`scripts/`, `audit/`).
+
+## Status
+
+- Maturity: active
+- Intended audience: contributors and operators working from OpenSpec
+- Releases: `CHANGELOG.md` + SemVer tags (`vX.Y.Z`) (see `RELEASING.md`)
 
 ## 🚀 The Strategic Vision: Bitcoin-Native Evolution
 
@@ -40,14 +58,32 @@ This repository is licensed under the GNU GPL v3.0 (see `LICENSE`).
 - [**CHANGELOG.md**](./CHANGELOG.md): History of BOS changes.
 - [**CODEOWNERS**](./CODEOWNERS): Repository ownership and review guidance.
 
+## Repository catalog
+
+This repo vendors the following Conxian repositories as submodules:
+
+| Category | Repository | Submodule path |
+| --- | --- | --- |
+| Platform | `conxius-platform` | `conxius-platform/` |
+| Wallet | `conxius-wallet` | `conxius-wallet/` |
+| Gateway | `conxian-gateway` | `conxian-gateway/` |
+| Website | `conxian-labs-site` | `conxian-labs-site/` |
+| Protocol | `Conxian` | `Conxian/` |
+| State node | `conxian-nexus` | `conxian-nexus/` |
+| SDK | `lib-conxian-core` | `lib-conxian-core/` |
+| SDK | `lib-conclave-sdk` | `lib-conclave-sdk/` |
+| Tooling | `stacksorbit` | `stacksorbit/` |
+
+For org-level pinning guidance and README expectations per repo, see [`docs/REPOSITORY_CATALOG.md`](./docs/REPOSITORY_CATALOG.md).
+
 ## 📂 Repository Hygiene
 
 To maintain a clean and sovereign workspace, we adhere to strict hygiene standards:
 - **`scripts/`**: Contains active utility scripts (e.g., `check_links.py`).
-- **`archive/remediation_scripts/`**: Historical artifacts from previous system audits and remediations.
+- **`archive/`**: Intentionally not tracked (ZSE); see `ARCHIVE_MIGRATION.md`.
 - **`openspec/`**: Definitive technical specifications.
 
-## 🗺️ Implementation Roadmap (v1.7.0)
+## 🗺️ Implementation Roadmap (v1.8.x)
 
 1. **Foundation (Q3-Q4 2025)**: Anchor key metrics and IP assets to Bitcoin. Establish multi-sig treasury.
 2. **Integration (Q1-Q2 2026)**: Deploy autonomous BTC yield and on-chain governance logs.

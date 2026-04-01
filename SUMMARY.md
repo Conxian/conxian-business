@@ -2,6 +2,8 @@
 
 * [Introduction](README.md)
 * [Archive Migration (Linear Virtual Office; ZSE)](ARCHIVE_MIGRATION.md)
+* [Repository Catalog](docs/REPOSITORY_CATALOG.md)
+* [Releasing](RELEASING.md)
 
 ## 🤖 Business Operations System (BOS)
 
