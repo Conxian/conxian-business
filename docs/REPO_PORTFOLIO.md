@@ -35,6 +35,8 @@ Use the same single line in both the GitHub repo description and the README “t
 
 Every flagship README should include the same “Ecosystem repos” block so the trust surface is navigable:
 
+> Keep this snippet in sync with the Flagship and Supporting repo lists above whenever the portfolio changes.
+
 ```md
 ## Ecosystem repos
 
