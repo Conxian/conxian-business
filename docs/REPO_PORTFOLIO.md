@@ -2,14 +2,14 @@
 
 This page defines the Conxian public repo map for external evaluation and internal consistency.
 
-Note: as of 2026-04-01, the UI repo is still named `Conxian/Conxian_UI`. This page (and `conxian-business`'s `conxian-ui` submodule URL) assumes the repo is renamed to `Conxian/conxian-ui`; merge/apply these changes after the GitHub rename so clones stay consistent.
+Note: as of 2026-04-01, the UI repo is still named `Conxian/Conxian_UI` and should be renamed to `Conxian/conxian-ui` for naming consistency.
 
 ## Flagship (external trust surface)
 
 - https://github.com/Conxian/conxius-wallet — Flagship: Sovereign wallet (Android-first, offline-first) for Bitcoin L1 and Bitcoin-adjacent layers.
 - https://github.com/Conxian/conxian-gateway — Flagship: “Fusion” gateway aggregating cross-layer state + compliance pipelines.
 - https://github.com/Conxian/Conxian — Flagship: Core protocol + on-chain contracts.
-- https://github.com/Conxian/conxian-ui — Flagship: Primary UI for interacting with the Conxian ecosystem.
+- https://github.com/Conxian/Conxian_UI (planned rename to https://github.com/Conxian/conxian-ui) — Flagship: Primary UI for interacting with the Conxian ecosystem.
 - https://github.com/Conxian/conxian-labs-site — Flagship: Public Conxian Labs website.
 - https://github.com/Conxian/conxius-platform — Flagship: Local dev stack to run the ecosystem end-to-end.
 
@@ -20,6 +20,7 @@ Note: as of 2026-04-01, the UI repo is still named `Conxian/Conxian_UI`. This pa
 - https://github.com/Conxian/conxian-nexus — Supporting: API bridge (“Glass Node”) between layers/services.
 - https://github.com/Conxian/stacksorbit — Supporting: Stacks smart-contract deployment tooling.
 - https://github.com/Conxian/.github — Supporting: Org-wide defaults (community health files, templates).
+- https://github.com/Conxian/conxian-business — Supporting: Governance + OpenSpec + submodule wiring for the Conxian ecosystem.
 
 ## Standard role line (GitHub description + README top section)
 
@@ -42,7 +43,7 @@ Flagship
 - https://github.com/Conxian/conxius-wallet
 - https://github.com/Conxian/conxian-gateway
 - https://github.com/Conxian/Conxian
-- https://github.com/Conxian/conxian-ui
+- https://github.com/Conxian/Conxian_UI
 - https://github.com/Conxian/conxian-labs-site
 - https://github.com/Conxian/conxius-platform
 
