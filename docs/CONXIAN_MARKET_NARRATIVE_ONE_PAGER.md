@@ -39,7 +39,7 @@ Conxian is a sovereign execution stack that treats the business itself as a stat
 **B) Conxian Nexus (Glass Node)** ([PRD](../conxian-nexus/docs/PRD.md))
 
 - A high-performance “glass node” that mirrors and verifies on-chain state
-- Nakamoto-aware finality handling (burn-block-height vs block-height)
+- Nakamoto-aware finality handling (Bitcoin-anchored burn-block height vs Stacks block height)
 - Transparency and audit surfaces for transaction ordering, state roots, and proof reconstruction
 
 **C) Conxian Gateway (Institutional Compliance Pipe)** ([PRD](../conxian-gateway/PRD.md))
@@ -63,7 +63,7 @@ Core policy and execution paths are engineered to be deterministic and inspectab
 By aligning with Bitcoin settlement through Stacks Nakamoto finality primitives, Conxian targets a security posture that matches the asset it is meant to serve.
 
 **3) Public specs and reproducible architecture**
-The system is documented in OpenSpec and backed by an auditable, repository-first trail of decisions and interfaces (e.g., [institutional egress spec](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md)).
+The system is documented in OpenSpec and backed by an auditable, repository-first trail of decisions and interfaces.
 
 **4) Enterprise and compliance alignment**
 Instead of hand-waving “institutional readiness,” Conxian expresses integration surfaces in the language enterprises already use (job card mappings, standards-aligned egress, structured telemetry).
