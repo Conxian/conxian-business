@@ -12,6 +12,14 @@ This specification uses requirement keywords (**MUST**, **MUST NOT**, **SHOULD**
 - **External subledger**: any external accounting system ingesting Conxian datasets (ERP subledger, auditor subledger, reporting pipeline).
 - **Proof/visual-proof flow**: any workflow that presents derived analytics as evidence (dashboards, reports, attestations).
 
+### 0.1 Export field naming conventions
+
+To reduce ambiguity across institutional egress consumers, exported datasets **MUST** define a canonical schema (the JSON/CSV export schema) and a deterministic mapping to any renderer-specific formats.
+
+- JSON and CSV exports **MUST** use `snake_case` field names.
+- SQL read models **SHOULD** use `snake_case` column names that match the canonical JSON/CSV field names.
+- ISO 20022 (and any other message format) renderers **MUST** publish a deterministic mapping from canonical fields to the renderer-specific field names.
+
 ## 1. Purpose
 
 Define Phase 5 "clean break" constraints for Supabase and Neon, and define institutional accounting egress as standardized read-only subledger export. This spec synthesizes and sharpens existing SAB migration and treasury/oracle work without creating a duplicate execution lane.
@@ -62,7 +70,7 @@ Out of scope:
    - serving egress datasets,
    - serving verification materials,
    - rendering standardized message formats (e.g., ISO 20022) over verifiable datasets.
-5. **Burn-block anchoring**: Egress datasets **MUST** identify finality using Bitcoin-anchored height (`burn-block-height`) wherever final settlement interpretation is required.
+5. **Burn-block anchoring**: Egress datasets **MUST** identify finality using Bitcoin-anchored height (`burn_block_height`) wherever final settlement interpretation is required.
 6. **No secret egress**: Egress datasets **MUST NOT** contain:
    - seed phrases, signing keys, enclave-only secrets, or any reversible key material,
    - private identity disclosures.
