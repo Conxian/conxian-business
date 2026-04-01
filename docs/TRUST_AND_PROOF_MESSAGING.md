@@ -83,6 +83,7 @@ Every flagship repository should declare an explicit **Status** (pick one) and k
 - Incubating: clear scope + changelog updates.
 - Beta: minimum CI checks + basic test coverage + versioned releases.
 - Stable: explicit versioning policy + release tags + changelog discipline + clear upgrade notes.
+- Deprecated: clearly marked as deprecated across README, pinned description, and trust pages; document the last supported version and what happens next (maintenance-only, archived, replaced).
 
 ### 4) Release discipline
 
@@ -137,9 +138,9 @@ Add a **Trust & Proof** section to flagship `README`s.
 
 **Governance:** Changes are tracked via pull requests. Ownership is defined in `CODEOWNERS`. Contribution guidance is in `CONTRIBUTING.md`.
 
-**Specs (when applicable):** Open specifications live under `openspec/`.
+**Specs (when applicable):** When present, open specifications live under `openspec/` (or this repo’s documented specs directory).
 
-**Releases:** See `CHANGELOG.md` and GitHub Releases/tags for version history.
+**Releases:** See `CHANGELOG.md` for version history. If this repo uses GitHub Releases/tags, they also reflect the release history.
 ```
 
 Notes:
