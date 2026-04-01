@@ -2,25 +2,15 @@
 
 This page defines the Conxian public repo map for external evaluation and internal consistency.
 
-Note: as of 2026-04-01, the UI repo is still named `Conxian/Conxian_UI` and should be renamed to `Conxian/conxian-ui` for naming consistency.
+Note: the UI repo is still named `Conxian/Conxian_UI` and is planned to be renamed to `Conxian/conxian-ui` for naming consistency (track in [CON-238](https://linear.app/conxian-labs/issue/CON-238/define-flagship-repos-and-external-trust-surface)).
 
 ## Flagship (external trust surface)
 
-- https://github.com/Conxian/conxius-wallet — Flagship: Sovereign wallet (Android-first, offline-first) for Bitcoin L1 and Bitcoin-adjacent layers.
-- https://github.com/Conxian/conxian-gateway — Flagship: “Fusion” gateway aggregating cross-layer state + compliance pipelines.
-- https://github.com/Conxian/Conxian — Flagship: Core protocol + on-chain contracts.
-- https://github.com/Conxian/Conxian_UI (planned rename to https://github.com/Conxian/conxian-ui) — Flagship: Primary UI for interacting with the Conxian ecosystem.
-- https://github.com/Conxian/conxian-labs-site — Flagship: Public Conxian Labs website.
-- https://github.com/Conxian/conxius-platform — Flagship: Local dev stack to run the ecosystem end-to-end.
+Flagship repos are the external trust surface. The canonical list lives in [Ecosystem repos](#ecosystem-repos).
 
 ## Supporting (linked from flagship READMEs; not pinned)
 
-- https://github.com/Conxian/lib-conxian-core — Supporting: Shared core models + conventions used across services.
-- https://github.com/Conxian/lib-conclave-sdk — Supporting: Headless enclave + cryptographic state machine SDK.
-- https://github.com/Conxian/conxian-nexus — Supporting: API bridge (“Glass Node”) between layers/services.
-- https://github.com/Conxian/stacksorbit — Supporting: Stacks smart-contract deployment tooling.
-- https://github.com/Conxian/.github — Supporting: Org-wide defaults (community health files, templates).
-- https://github.com/Conxian/conxian-business — Supporting: Governance + OpenSpec + submodule wiring for the Conxian ecosystem.
+Supporting repos are linked from flagship repos but are not the primary trust surface. The canonical list lives in [Ecosystem repos](#ecosystem-repos).
 
 ## Standard role line (GitHub description + README top section)
 
@@ -31,30 +21,24 @@ Use the same single line in both the GitHub repo description and the README “t
 - Supporting:
   - `Supporting — <1-line purpose>`
 
-## Required links for flagship READMEs
-
-Every flagship README should include the same “Ecosystem repos” block so the trust surface is navigable:
-
-> Keep this snippet in sync with the Flagship and Supporting repo lists above whenever the portfolio changes.
-
-```md
 ## Ecosystem repos
 
-Flagship
+Every flagship README should include this section so the trust surface is navigable. This is the canonical list; update it here only.
 
-- https://github.com/Conxian/conxius-wallet
-- https://github.com/Conxian/conxian-gateway
-- https://github.com/Conxian/Conxian
-- https://github.com/Conxian/Conxian_UI (rename to https://github.com/Conxian/conxian-ui)
-- https://github.com/Conxian/conxian-labs-site
-- https://github.com/Conxian/conxius-platform
+### Flagship
 
-Supporting
+- https://github.com/Conxian/conxius-wallet — Sovereign wallet (Android-first, offline-first) for Bitcoin L1 and Bitcoin-adjacent layers.
+- https://github.com/Conxian/conxian-gateway — “Fusion” gateway aggregating cross-layer state + compliance pipelines.
+- https://github.com/Conxian/Conxian — Core protocol + on-chain contracts.
+- https://github.com/Conxian/Conxian_UI (planned rename to https://github.com/Conxian/conxian-ui) — Primary UI for interacting with the Conxian ecosystem.
+- https://github.com/Conxian/conxian-labs-site — Public Conxian Labs website.
+- https://github.com/Conxian/conxius-platform — Local dev stack to run the ecosystem end-to-end.
 
-- https://github.com/Conxian/lib-conxian-core
-- https://github.com/Conxian/lib-conclave-sdk
-- https://github.com/Conxian/conxian-nexus
-- https://github.com/Conxian/stacksorbit
-- https://github.com/Conxian/.github
-- https://github.com/Conxian/conxian-business
-```
+### Supporting
+
+- https://github.com/Conxian/lib-conxian-core — Shared core models + conventions used across services.
+- https://github.com/Conxian/lib-conclave-sdk — Headless enclave + cryptographic state machine SDK.
+- https://github.com/Conxian/conxian-nexus — API bridge (“Glass Node”) between layers/services.
+- https://github.com/Conxian/stacksorbit — Stacks smart-contract deployment tooling.
+- https://github.com/Conxian/.github — Org-wide defaults (community health files, templates).
+- https://github.com/Conxian/conxian-business — Governance + OpenSpec + submodule wiring for the Conxian ecosystem.
