@@ -2,6 +2,8 @@
 
 This repository is the programmatic **State Machine** for Conxian operations. We have evolved from a system that runs on infrastructure to a system that **is** infrastructure—living directly on Bitcoin.
 
+Role: Supporting — governance + orchestration hub for the Conxian ecosystem (OpenSpec, docs, and submodule wiring). See `docs/REPO_PORTFOLIO.md` for the flagship/supporting repo map.
+
 ## Purpose
 
 Define and version Conxian's Business Operations System (BOS) as an auditable, programmatic state machine (OpenSpec, governance, and operational artifacts).

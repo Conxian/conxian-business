@@ -16,7 +16,7 @@
 	branch = main
 [submodule "conxian-ui"]
 	path = conxian-ui
-	url = https://github.com/Conxian/Conxian_UI
+	url = https://github.com/Conxian/conxian-ui
 	branch = main
 [submodule "Conxian"]
 	path = Conxian
