@@ -2,8 +2,6 @@
 
 This page defines the Conxian public repo map for external evaluation and internal consistency.
 
-Note: the UI repo is still named `Conxian/Conxian_UI` and is planned to be renamed to `Conxian/conxian-ui` for naming consistency (track in [CON-238](https://linear.app/conxian-labs/issue/CON-238/define-flagship-repos-and-external-trust-surface)).
-
 ## Flagship (external trust surface)
 
 Flagship repos are the external trust surface. The canonical list lives in [Ecosystem repos](#ecosystem-repos).
@@ -30,7 +28,7 @@ Every flagship README should either include this section (verbatim) or link back
 - https://github.com/Conxian/conxius-wallet — Sovereign wallet (Android-first, offline-first) for Bitcoin L1 and Bitcoin-adjacent layers.
 - https://github.com/Conxian/conxian-gateway — “Fusion” gateway aggregating cross-layer state + compliance pipelines.
 - https://github.com/Conxian/Conxian — Core protocol + on-chain contracts.
-- https://github.com/Conxian/Conxian_UI — Primary UI for interacting with the Conxian ecosystem (see note above about planned rename).
+- https://github.com/Conxian/Conxian_UI — Primary UI for interacting with the Conxian ecosystem (planned rename to https://github.com/Conxian/conxian-ui; tracked in [CON-238](https://linear.app/conxian-labs/issue/CON-238/define-flagship-repos-and-external-trust-surface)).
 - https://github.com/Conxian/conxian-labs-site — Public Conxian Labs website.
 - https://github.com/Conxian/conxius-platform — Local dev stack to run the ecosystem end-to-end.
 
