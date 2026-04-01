@@ -23,7 +23,7 @@ Use the same single line in both the GitHub repo description and the README “t
 
 ## Ecosystem repos
 
-Every flagship README should include this section so the trust surface is navigable. This is the canonical list; update it here only.
+Every flagship README should either include this section (verbatim) or link back to it so the trust surface is navigable. This file is the canonical list; if a flagship README inlines it, keep that copy in sync whenever this section changes.
 
 ### Flagship
 
