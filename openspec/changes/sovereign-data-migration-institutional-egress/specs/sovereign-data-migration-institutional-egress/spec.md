@@ -19,7 +19,7 @@ To reduce ambiguity across institutional egress consumers, exported datasets **M
 - Canonical dataset fields **MUST** use `snake_case`.
 - JSON exports, CSV headers, and the column names of any SQL views or tables used as egress-facing datasets **MUST** match the canonical `snake_case` field names.
 - ISO 20022 (and any other message format) renderers **MUST** publish a deterministic mapping from canonical fields to the renderer-specific field names.
-- If canonical field names change, the dataset producer **MUST** either version the dataset schema (for example via `dataset_id`) or publish a backward-compatible alias strategy with an explicit deprecation window.
+- If canonical field names change, the dataset producer **MUST** either publish a backward-compatible alias strategy with an explicit deprecation window or publish a replacement dataset with a new `dataset_id` and deprecate the prior dataset.
 - `burn_block_height` is the canonical field name for burn block anchoring; if any implementation previously exposed `burn-block-height`, it **MUST** treat `burn-block-height` as a deprecated alias subject to the published deprecation window.
 
 ## 1. Purpose
