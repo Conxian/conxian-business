@@ -26,7 +26,8 @@ git push origin vX.Y.Z
 If you have `gh` installed:
 
 ```bash
-gh release create vX.Y.Z --title "vX.Y.Z" --notes-file CHANGELOG.md
+# Copy only the vX.Y.Z section from CHANGELOG.md into /tmp/release-notes.md
+gh release create vX.Y.Z --title "vX.Y.Z" --notes-file /tmp/release-notes.md
 ```
 
 ## Submodule repositories

@@ -26,12 +26,12 @@ def check_links():
             if link.startswith('#') or re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:', link):
                 continue
 
-            # Only validate repository-local markdown files
-            if not link.endswith('.md'):
+            clean_link = link.split('#', 1)[0].strip()
+            if not clean_link:
                 continue
 
-            clean_link = link.split('#')[0]
-            if not clean_link:
+            # Only validate repository-local markdown files
+            if not clean_link.endswith('.md'):
                 continue
 
             # Resolve relative path
