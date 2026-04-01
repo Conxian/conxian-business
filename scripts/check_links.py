@@ -27,11 +27,22 @@ def _find_markdown_files() -> list[Path]:
                 md_files.append(Path(root) / name)
     return md_files
 
+
+def _repo_root_for(md_file: Path) -> Path:
+    current = md_file.parent
+    while True:
+        if (current / '.git').exists():
+            return current
+        if current == current.parent:
+            return REPO_ROOT
+        current = current.parent
+
 def check_links():
     md_files = _find_markdown_files()
     broken_links = []
 
     for md_file in md_files:
+        repo_root_for_file = _repo_root_for(md_file)
         with open(md_file, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -59,7 +70,7 @@ def check_links():
                 continue
 
             if href.startswith('/'):
-                target_path = (REPO_ROOT / href.lstrip('/')).resolve()
+                target_path = (repo_root_for_file / href.lstrip('/')).resolve()
             else:
                 target_path = (md_file.parent / href).resolve()
 
