@@ -21,7 +21,7 @@ Use the same single line in both the GitHub repo description and the README “t
 - Supporting:
   - `Supporting — <1-line purpose>`
 
-> Maintainers: Each flagship README should either copy the `## Ecosystem repos` section below (verbatim) or link back to this file. If you inline it, keep that copy in sync whenever this section changes.
+> Maintainers: Prefer linking back to this file from flagship READMEs. Only copy the `## Ecosystem repos` section verbatim when you need a fully self-contained README, and keep that copy in sync whenever this section changes.
 
 ## Ecosystem repos
 
