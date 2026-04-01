@@ -14,6 +14,7 @@ Cut a release when a change is user-facing (behavior, security posture, public d
 1. Update `CHANGELOG.md`
    - Ensure `## [Unreleased]` exists.
    - Move the changes being released from `## [Unreleased]` into a new `## [X.Y.Z] - YYYY-MM-DD` section.
+   - Keep user-facing version strings in sync (for example, the BOS version in `README.md`).
 2. Create an annotated tag locally:
 
 ```bash

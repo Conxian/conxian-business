@@ -1,17 +1,37 @@
 import re
+import os
 from pathlib import Path
 import sys
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+SKIP_DIRS = {
+    'node_modules',
+    '.git',
+    '.next',
+    '.venv',
+    'build',
+    'dist',
+    'out',
+    '__pycache__',
+    'playwright-report',
+    'test-results',
+}
+
+
+def _find_markdown_files() -> list[Path]:
+    md_files: list[Path] = []
+    for root, dirs, files in os.walk(REPO_ROOT):
+        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
+        for name in files:
+            if name.lower().endswith(('.md', '.markdown')):
+                md_files.append(Path(root) / name)
+    return md_files
 
 def check_links():
-    md_files = list(REPO_ROOT.rglob('*.md'))
+    md_files = _find_markdown_files()
     broken_links = []
 
     for md_file in md_files:
-        if 'node_modules' in md_file.parts:
-            continue
-
         with open(md_file, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -32,9 +52,10 @@ def check_links():
                 continue
 
             href = clean_link.split()[0]
+            href_lower = href.lower()
 
             # Only validate repository-local markdown files
-            if not href.endswith('.md'):
+            if not (href_lower.endswith('.md') or href_lower.endswith('.markdown')):
                 continue
 
             if href.startswith('/'):
