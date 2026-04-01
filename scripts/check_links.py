@@ -2,6 +2,8 @@ import re
 from pathlib import Path
 import sys
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 def check_links():
     md_files = list(Path('.').rglob('*.md'))
     broken_links = []
@@ -35,8 +37,10 @@ def check_links():
             if not href.endswith('.md'):
                 continue
 
-            # Resolve relative path
-            target_path = (md_file.parent / href).resolve()
+            if href.startswith('/'):
+                target_path = (REPO_ROOT / href.lstrip('/')).resolve()
+            else:
+                target_path = (md_file.parent / href).resolve()
 
             if not target_path.exists():
                 broken_links.append((md_file, link, target_path))
