@@ -2,6 +2,7 @@
 
 * [Introduction](README.md)
 * [Archive Migration (Linear Virtual Office; ZSE)](ARCHIVE_MIGRATION.md)
+* [One-page market narrative](docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md)
 
 ## 🤖 Business Operations System (BOS)
 
