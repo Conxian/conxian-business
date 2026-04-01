@@ -45,7 +45,7 @@ All non-enclave datastores (including PostgreSQL, Supabase, Tableland, Redis, an
 | **Immutable Governance & Audit** | **Stacks L1 (event log + audit registry contract)** | **Tableland** (optional mirror) | Default is on-chain auditability. Tableland is an optional public mirror when decentralized SQL materially improves discoverability without becoming a dependency for correctness. |
 | **Hardware-Anchored Identity** | **Stacks L1 (public key registry + enclave key identifiers + attestation commitments)** | N/A | Mandated for Zero Secret Egress (ZSE). Private keys remain enclave-only; only public keys, key IDs, and attestations are anchored on-chain. |
 | **High-Frequency Caching** | N/A | **Redis** | Volatile cache for millisecond-latency session management, real-time mempool tracking, and telemetry buffering. |
-| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. **MUST** be treated as a local cache; canonical state remains on-chain. See [Offline Wallet Cache (SQLite) encryption key material handling](#offline-wallet-cache-sqlite-encryption-key-material-handling). |
+| **Offline Wallet Cache** | N/A | **Local SQLite** | Offline lookups and UX continuity. See [Offline Wallet Cache (SQLite) encryption key material handling](#offline-wallet-cache-sqlite-encryption-key-material-handling). |
 
 <a id="offline-wallet-cache-sqlite-encryption-key-material-handling"></a>
 
