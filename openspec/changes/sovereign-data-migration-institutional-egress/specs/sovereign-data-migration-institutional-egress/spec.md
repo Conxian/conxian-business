@@ -40,7 +40,7 @@ Out of scope:
 1. **No correctness dependency**: Supabase **MUST NOT** be treated as an authoritative source for any proof/visual-proof dataset.
 2. **Verifiable analytics layer**: Proof/visual-proof flows **SHOULD** move to a verifiable analytics layer (e.g., Space and Time) or an equivalent system that can be treated as a derived query layer.
 3. **Deterministic snapshots**: For any proof/visual-proof dataset, a deterministic snapshot export **MUST** be defined (schema + canonical ordering + serialization format).
-4. **On-chain checkpointing**: Proof/visual-proof datasets **MUST** be checkpointed on-chain using a deterministic scheme (for example the SAB-CHECKPOINT-V1 scheme defined in the SAB datastore mapping spec).
+4. **On-chain checkpointing**: Proof/visual-proof datasets **MUST** be checkpointed on-chain using a deterministic scheme (for example the SAB-CHECKPOINT-V1 scheme defined in the [SAB Datastore Mapping Specification](../../../../specs/sab-datastore-mapping/spec.md)).
 
 ### 3.3 Neon phase-out (sovereign transactional SQL for Nexus)
 
