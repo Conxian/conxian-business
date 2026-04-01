@@ -15,7 +15,7 @@ This specification uses requirement keywords (**MUST**, **MUST NOT**, **SHOULD**
 - **DID-ZK disclosures**: DID-associated zero-knowledge attestations; private inputs remain enclave-only.
 - **Conxius Wallet**: End-user wallet product that may cache non-canonical state for offline UX continuity.
 - **Wallet cache directory**: The on-device directory containing the wallet cache SQLite database file(s) and any associated files created/managed alongside them.
-- **SQLite sidecar files**: Any SQLite-generated files associated with a given database file, including (but not limited to) WAL/SHM/rollback/statement-journal and other temporary artifacts (e.g., `-wal`, `-shm`, `-journal`, `-mj*`, `-stmtjrnl`).
+- **SQLite sidecar files**: Any SQLite-generated files associated with a given database file, including (but not limited to) WAL/SHM files, rollback journals, statement journals, and other temporary artifacts (e.g., `-wal`, `-shm`, `-journal`, `-mj*`, `-stmtjrnl`).
 
 ## 1. Purpose
 
@@ -49,7 +49,7 @@ All non-enclave datastores (including PostgreSQL, Supabase, Tableland, Redis, an
 
 <a id="offline-wallet-cache-sqlite-encryption-key-material-handling"></a>
 
-#### 3.1.1. Offline Wallet Cache (SQLite) Encryption Key Material Handling
+#### 3.1.1. Offline Wallet Cache (SQLite) Semantics & Encryption Key Material Handling
 
 This subsection defines conformance requirements for any SQLite-backed offline wallet cache.
 
@@ -61,7 +61,7 @@ In this subsection, “key” refers to cryptographic key material (e.g., KEKs/D
 4. **Application-level encryption keys**: If application-level encryption is used to protect cached data, the encryption keys **MUST** be generated and retained by the enclave/secure element (or an OS keychain/keystore backed by it) such that key material is non-exportable.
 5. **Prohibited key material locations**: Any secret cryptographic key material (including key-encryption keys (KEKs) and data-encryption keys (DEKs), in raw or wrapped form) **MUST NOT** be stored anywhere under the wallet cache directory, including:
    - the SQLite database file, or
-   - any SQLite sidecar files (e.g., `-wal`, `-shm`, `-journal`, `-mj*`, `-stmtjrnl`).
+   - any SQLite sidecar files (as defined in the terminology list above).
 6. **Permitted key references**: Non-secret key identifiers/aliases (e.g., OS keychain/keystore key IDs) that reference an OS keychain/keystore entry and contain neither raw keys nor wrapped key blobs **MAY** be stored in SQLite as part of the cache metadata.
 7. **Removability**: Cached data **SHOULD** be treated as removable/invalidatable.
 
