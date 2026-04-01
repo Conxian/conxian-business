@@ -44,12 +44,14 @@ Recommended Linear team workflow states:
 
 - Assume **no dedicated bounty budget** unless explicitly funded through the ALEX launch path.
 - Until ConxianCSF is fully deployed via ALEX on Stacks mainnet, the bounty workflow must not imply treasury-backed payout certainty.
-- Once ConxianCSF is deployed, align bounty approval and payout readiness through ConxianCSF.
+- Once ConxianCSF is deployed, align bounty management, approval, and payout readiness through ConxianCSF.
 - Once payouts are enabled, all bounty funds must come from the ALEX launch path.
 
 Maintainer-only payout enablement checklist:
 
 - `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`
+
+Payout-enabling controls must remain maintainer-only and must not be used until ConxianCSF is verified deployed on Stacks mainnet and the ALEX launch-path funding is ready.
 
 ## Linear configuration (maintainer)
 
