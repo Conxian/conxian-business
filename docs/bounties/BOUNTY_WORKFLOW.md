@@ -74,5 +74,5 @@ Linear can't reliably enforce "assignee required" on state transitions, but it c
 
 Recommended automations:
 
-1. When an issue moves to `Todo` → clear assignee.
+1. When a **bounty** issue moves to `Todo` → clear assignee (or enforce this manually if Linear can't scope the automation to bounty-labeled issues).
 2. When an issue moves to `Canceled` or `Duplicate` → clear assignee.
