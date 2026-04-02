@@ -1,6 +1,33 @@
-# Conxian: Sovereign Business Operations System (BOS v1.7.0)
+# Conxian: Sovereign Business Operations System (BOS v1.8.2)
 
 This repository is the programmatic **State Machine** for Conxian operations. We have evolved from a system that runs on infrastructure to a system that **is** infrastructure—living directly on Bitcoin.
+
+## Purpose
+
+Define and version Conxian's Business Operations System (BOS) as an auditable, programmatic state machine (OpenSpec, governance, and operational artifacts).
+
+## Status
+
+Active. This is the public source of truth for BOS-level specifications and how the broader Conxian stack fits together.
+
+## Audience
+
+- Contributors implementing Conxian's protocol, infrastructure, and tools.
+- Partners and auditors who need a canonical, versioned view of OpenSpec.
+
+## Relationship to the Conxian stack
+
+This repository pins and coordinates the flagship Conxian repositories, including:
+
+- [`Conxian/`](./Conxian): Conxian Finance Protocol (Clarity smart contracts)
+- [`conxian-gateway/`](./conxian-gateway): Conxian Gateway (Rust)
+- [`conxian-nexus/`](./conxian-nexus): Conxian Nexus (Rust)
+- [`lib-conxian-core/`](./lib-conxian-core): Shared core libraries centered around the Gateway
+- [`conxian-ui/`](./conxian-ui): Conxian UI (web)
+- [`conxius-wallet/`](./conxius-wallet): Conxius Wallet (mobile)
+- [`conxius-platform/`](./conxius-platform): Stack orchestration and local development
+- [`stacksorbit/`](./stacksorbit): Deployment and operations tooling
+- [`conxian-labs-site/`](./conxian-labs-site): Conxian Labs public site
 
 ## 🚀 The Strategic Vision: Bitcoin-Native Evolution
 
@@ -32,10 +59,13 @@ The BOS is powered by an active suite of autonomous agents:
 
 We adhere to strict sovereignty and security standards.
 
+For general support and non-security bug reports, open a GitHub issue. For security vulnerabilities, follow the private reporting process in `SECURITY.md`.
+
 This repository is licensed under the GNU GPL v3.0 (see `LICENSE`).
 
 - [**CONTRIBUTING.md**](./CONTRIBUTING.md): Guidelines for contributing to the BOS.
 - [**SECURITY.md**](./SECURITY.md): How to report vulnerabilities and our security posture.
+- [**Trust & Proof Messaging**](./docs/TRUST_AND_PROOF_MESSAGING.md): Public-facing trust surface guidance.
 - [**LICENSE**](./LICENSE): GNU GPL v3.0.
 - [**CHANGELOG.md**](./CHANGELOG.md): History of BOS changes.
 - [**CODEOWNERS**](./CODEOWNERS): Repository ownership and review guidance.
@@ -47,7 +77,7 @@ To maintain a clean and sovereign workspace, we adhere to strict hygiene standar
 - **`archive/remediation_scripts/`**: Historical artifacts from previous system audits and remediations.
 - **`openspec/`**: Definitive technical specifications.
 
-## 🗺️ Implementation Roadmap (v1.7.0)
+## 🗺️ Implementation Roadmap (v1.8.2)
 
 1. **Foundation (Q3-Q4 2025)**: Anchor key metrics and IP assets to Bitcoin. Establish multi-sig treasury.
 2. **Integration (Q1-Q2 2026)**: Deploy autonomous BTC yield and on-chain governance logs.

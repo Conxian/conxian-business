@@ -2,6 +2,8 @@
 
 * [Introduction](README.md)
 * [Archive Migration (Linear Virtual Office; ZSE)](ARCHIVE_MIGRATION.md)
+* [Conxian: one-page market narrative](docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md)
+* [Documentation Alignment Index](docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
 * [Partner Overview and Launch FAQ](docs/PARTNER_OVERVIEW_AND_LAUNCH_FAQ.md)
 * [OpenSpec](openspec/README.md)
 
@@ -22,6 +24,7 @@
 
 * [OpenSpec Baseline](openspec/changes/remediate-enterprise-sovereignty/specs.md)
 * [Sovereign Data Migration & Institutional Egress](openspec/changes/sovereign-data-migration-institutional-egress/specs.md)
+* [Trust & Proof Messaging (Public Surfaces)](docs/TRUST_AND_PROOF_MESSAGING.md)
 * [Autonomous Launch Specs](openspec/changes/csf-autonomous-launch/specs.md)
 * [Strategos Alignment Audit](audit/strategos-alignment.md)
 * [Missing Chips Brief](docs/MISSING_CHIPS_BRIEF.md)
