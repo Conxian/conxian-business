@@ -14,9 +14,19 @@ jobs:
   gateway-suite:
     name: Gateway Suite
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'infra') || github.event_name == 'push'
+    if: >-
+      github.event_name == 'push' ||
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        contains(github.event.pull_request.labels.*.name, 'infra')
+      )
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@stable
     - name: Rust Cache
@@ -32,9 +42,19 @@ jobs:
   b2b-suite:
     name: B2B Suite (Nexus & SDK)
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'b2b') || github.event_name == 'push'
+    if: >-
+      github.event_name == 'push' ||
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        contains(github.event.pull_request.labels.*.name, 'b2b')
+      )
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@stable
     - name: Rust Cache
@@ -51,9 +71,19 @@ jobs:
   b2c-wallet-suite:
     name: B2C Wallet Suite
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'b2c') || github.event_name == 'push'
+    if: >-
+      github.event_name == 'push' ||
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        contains(github.event.pull_request.labels.*.name, 'b2c')
+      )
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
@@ -66,12 +96,40 @@ jobs:
         npm ci
         npm test
 
+    - name: Upload test artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: conxius-wallet-test-artifacts
+        path: |
+          conxius-wallet/test-results
+          conxius-wallet/playwright-report
+          conxius-wallet/blob-report
+        if-no-files-found: ignore
+        retention-days: 7
+
+    - name: Upload coverage
+      if: github.event_name == 'push' && hashFiles('conxius-wallet/coverage/**') != ''
+      uses: actions/upload-artifact@v4
+      with:
+        name: conxius-wallet-coverage
+        path: conxius-wallet/coverage
+        if-no-files-found: ignore
+        retention-days: 7
+
   audit-and-docs:
     name: Transparency Audit & Docs
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'audit')
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      contains(github.event.pull_request.labels.*.name, 'audit')
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
@@ -91,9 +149,16 @@ jobs:
   testnet-simulation:
     name: Testnet Simulation
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'simulation')
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      contains(github.event.pull_request.labels.*.name, 'simulation')
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
