@@ -68,5 +68,5 @@ For trust, release notes **SHOULD** include at least:
 
 Copy these into a repository and adapt as needed:
 
-- `docs/templates/CHANGELOG_TEMPLATE.md`
-- `docs/templates/RELEASE_NOTES_TEMPLATE.md`
+- [docs/templates/CHANGELOG_TEMPLATE.md](templates/CHANGELOG_TEMPLATE.md)
+- [docs/templates/RELEASE_NOTES_TEMPLATE.md](templates/RELEASE_NOTES_TEMPLATE.md)
