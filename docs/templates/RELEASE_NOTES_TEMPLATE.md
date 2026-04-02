@@ -27,7 +27,7 @@
 
 - Source tag: `vX.Y.Z`
 - CI: _link to CI run_
-- Notable checks: tests, typecheck, lint
+- Notable checks: _tests_, _typecheck_, _lint_
 
 ## Links
 
