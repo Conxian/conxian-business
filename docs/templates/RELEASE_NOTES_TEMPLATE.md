@@ -13,15 +13,15 @@
 
 ## Breaking changes
 
-- None.
+<!-- Remove this section if there are no breaking changes. -->
 
 ## Security
 
-- None.
+<!-- Remove this section if there are no security changes. -->
 
 ## Upgrade notes
 
-- None.
+<!-- Remove this section if no user action is needed. -->
 
 ## Verification
 
