@@ -26,10 +26,10 @@
 ## Verification
 
 - Source tag: `vX.Y.Z`
-- CI: <link to CI run>
+- CI: _link to CI run_
 - Notable checks: tests, typecheck, lint
 
 ## Links
 
 - Changelog: [CHANGELOG.md](../../CHANGELOG.md) (update relative path if you move this file)
-- Issues/PRs: <links>
+- Issues/PRs: _links_
