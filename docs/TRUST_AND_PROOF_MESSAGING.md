@@ -156,7 +156,7 @@ Notes:
 
 Pinned repo descriptions should be short, conservative, and evidence-forward.
 
-Pinned repo descriptions cannot embed clickable links, so they should reference proof artifacts by name (for example, `SECURITY.md`, `CHANGELOG.md`, `openspec/`). Put the clickable links in surfaces that support them (READMEs and trust pages).
+Pinned repo descriptions don’t support Markdown-formatted links. Prefer referencing proof artifacts by name/path (for example, `SECURITY.md`, `CHANGELOG.md`, `openspec/`); put clickable Markdown links in surfaces that support them (READMEs and trust pages).
 
 1. `Sovereign operations system (BOS). Specs in openspec/. Status: Beta.`
 2. `Conxian Gateway + state proofs. Security policy in SECURITY.md. Status: Incubating.`
