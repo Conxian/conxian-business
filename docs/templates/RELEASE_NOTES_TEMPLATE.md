@@ -31,5 +31,5 @@
 
 ## Links
 
-- Changelog: [CHANGELOG.md](../../CHANGELOG.md)
+- Changelog: [CHANGELOG.md](../../CHANGELOG.md) (update relative path if you move this file)
 - Issues/PRs: [links]
