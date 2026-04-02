@@ -17,6 +17,9 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'infra') || github.event_name == 'push'
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@stable
     - name: Rust Cache
@@ -35,6 +38,9 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'b2b') || github.event_name == 'push'
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@stable
     - name: Rust Cache
@@ -54,6 +60,9 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'b2c') || github.event_name == 'push'
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
@@ -66,12 +75,27 @@ jobs:
         npm ci
         npm test
 
+    - name: Upload test artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: conxius-wallet-test-artifacts
+        path: |
+          conxius-wallet/test-results
+          conxius-wallet/playwright-report
+          conxius-wallet/blob-report
+        if-no-files-found: ignore
+        retention-days: 7
+
   audit-and-docs:
     name: Transparency Audit & Docs
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'audit')
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
@@ -94,6 +118,9 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'simulation')
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
