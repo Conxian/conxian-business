@@ -1,4 +1,6 @@
-# Nakamoto Guardian (v1.8.2)
+# Nakamoto Guardian
+
+> Current workspace release: **v1.8.2** (see [`CHANGELOG.md`](../CHANGELOG.md))
 
 The **Nakamoto Guardian** is the architectural enforcement layer of the Conxian Business Operations System (BOS). It acts as the **Arch Guardian**, ensuring system integrity, regulatory compliance, and anti-fragility.
 

@@ -1,4 +1,6 @@
-# Conxian Business (v1.8.2)
+# Conxian Business
+
+> Current workspace release: **v1.8.2** (see [`CHANGELOG.md`](../CHANGELOG.md))
 
 **Conxian Business** defines the core service loop and state machine transitions of the Sovereign Autonomous Business (SAB).
 

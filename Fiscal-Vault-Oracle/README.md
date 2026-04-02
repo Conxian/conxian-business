@@ -1,4 +1,6 @@
-# Fiscal Vault Oracle (v1.8.2)
+# Fiscal Vault Oracle
+
+> Current workspace release: **v1.8.2** (see [`CHANGELOG.md`](../CHANGELOG.md))
 
 The **Fiscal Vault Oracle** is the autonomous financial engine of the Conxian Business Operations System (BOS). It powers the **OpenClaw** engine, which manages the Bitcoin treasury and debt issuance with hardware-attested security.
 

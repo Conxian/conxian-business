@@ -1,4 +1,6 @@
-# Sovereign Ops Orchestrator (v1.8.2)
+# Sovereign Ops Orchestrator
+
+> Current workspace release: **v1.8.2** (see [`CHANGELOG.md`](../CHANGELOG.md))
 
 The **Sovereign Ops Orchestrator** is the operational engine of the Conxian Business Operations System (BOS). It optimizes deployment cycles and orchestrates the connection between the BOS state machine and execution platforms like Linear.
 

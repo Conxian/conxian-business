@@ -1,4 +1,6 @@
-# Sovereign Strategy Nexus (v1.8.2)
+# Sovereign Strategy Nexus
+
+> Current workspace release: **v1.8.2** (see [`CHANGELOG.md`](../CHANGELOG.md))
 
 The **Sovereign Strategy Nexus** is the strategic intelligence layer of the Conxian Business Operations System (BOS). It focuses on M&A velocity, IP sovereignty, and structural integrity.
 
