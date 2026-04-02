@@ -19,9 +19,7 @@ The **Sovereign Ops Orchestrator** is the operational engine of the Conxian Busi
 
 This module is part of the Conxian Sovereign Autonomous Business (SAB).
 
-- [**CONTRIBUTING.md**](../CONTRIBUTING.md)
-- [**SECURITY.md**](../SECURITY.md)
-- [**LICENSE**](../LICENSE) (GNU GPL v3.0)
+See [`GOVERNANCE.md`](../GOVERNANCE.md) for CONTRIBUTING, SECURITY, and LICENSE.
 
 ---
 🛡️ **Sovereign Autonomous Business (SAB)**. © 2026 Conxian-Labs. Powered by Bitcoin.
