@@ -1,6 +1,6 @@
 # Project vX.Y.Z (YYYY-MM-DD)
 
-> Remove any sections that are not applicable for this release.
+<!-- Remove any sections that are not applicable for this release. -->
 
 ## Summary
 
