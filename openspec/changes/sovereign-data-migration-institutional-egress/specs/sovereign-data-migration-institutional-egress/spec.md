@@ -72,7 +72,7 @@ Out of scope:
    - serving egress datasets,
    - serving verification materials,
    - rendering standardized message formats (e.g., ISO 20022) over verifiable datasets.
-5. **Burn-block anchoring**: Egress datasets **MUST** identify finality using Bitcoin-anchored height (`burn_block_height`) wherever final settlement interpretation is required (see [Export field naming conventions](#export-field-naming-conventions) for legacy `burn-block-height` aliasing and deprecation).
+5. **Burn-block anchoring**: Egress datasets **MUST** identify finality using Stacks burnchain block height (`burn_block_height`, i.e., the burn block height anchored to Bitcoin) wherever final settlement interpretation is required (see [Export field naming conventions](#export-field-naming-conventions) for legacy `burn-block-height` aliasing and deprecation).
 6. **No secret egress**: Egress datasets **MUST NOT** contain:
    - seed phrases, signing keys, enclave-only secrets, or any reversible key material,
    - private identity disclosures.
