@@ -4,14 +4,16 @@ This page defines the Conxian public repo map for external evaluation and intern
 
 ## Standard role line (GitHub description + README top section)
 
-Use the same single line in both the GitHub repo description and the README “top section” (right below the opening paragraph). The 1-line purposes should match the descriptions in the [Ecosystem repos](#ecosystem-repos) section.
+Use the same single line in both the GitHub repo description (keep it ~160 chars; plain text) and the README “top section” (right below the opening paragraph). The 1-line purposes should match the descriptions in the [Ecosystem repos](#ecosystem-repos) section.
 
 - Flagship:
   - `Flagship — <1-line purpose>`
 - Supporting:
   - `Supporting — <1-line purpose>`
 
-> Maintainers: Prefer linking back to this file from flagship READMEs. Only copy the `## Ecosystem repos` section verbatim when you need a fully self-contained README, and keep that copy in sync whenever this section changes.
+> Maintainers: Prefer linking back to this file from flagship READMEs:
+> https://github.com/Conxian/conxian-business/blob/main/docs/REPO_PORTFOLIO.md#ecosystem-repos
+> Only copy the `## Ecosystem repos` section verbatim when you need a fully self-contained README, and keep that copy in sync whenever this section changes.
 
 ## Ecosystem repos
 
