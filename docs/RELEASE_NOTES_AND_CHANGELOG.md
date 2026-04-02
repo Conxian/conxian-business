@@ -36,7 +36,7 @@ If a release has breaking changes, add:
 ### Writing rules
 
 - Prefer short, past-tense, user-impact bullets (example: "Fixed wallet cache key rotation on Android" instead of "Work on cache key rotation").
-- Use scopes when a repo contains multiple products/packages: `- conxius-wallet: Fixed …`.
+- Use scopes when a repo contains multiple products/packages: `- wallet: Fixed …`.
 - Include references when possible:
   - Linear issue identifier (example: `CON-242`)
   - PR number and/or commit hash

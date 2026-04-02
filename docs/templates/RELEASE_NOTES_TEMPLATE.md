@@ -1,5 +1,7 @@
 # Project vX.Y.Z (YYYY-MM-DD)
 
+> Remove any sections that are not applicable for this release.
+
 ## Summary
 
 - [What changed, in user-facing terms]
@@ -29,5 +31,5 @@
 
 ## Links
 
-- Changelog: `CHANGELOG.md`
+- Changelog: [CHANGELOG.md](../../CHANGELOG.md)
 - Issues/PRs: [links]
