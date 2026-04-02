@@ -12,7 +12,7 @@ Use the same single **role line** in both the GitHub repo description (plain tex
   - `Supporting — <1-line purpose>`
 
 > Maintainers: Prefer linking back to this file from flagship READMEs:
-> https://github.com/Conxian/conxian-business/blob/main/docs/REPO_PORTFOLIO.md#ecosystem-repos
+> <https://github.com/Conxian/conxian-business/blob/main/docs/REPO_PORTFOLIO.md#ecosystem-repos>
 > Only copy the `## Ecosystem repos` section verbatim when you need a fully self-contained README, and keep that copy in sync whenever this section changes.
 
 ## Ecosystem repos
