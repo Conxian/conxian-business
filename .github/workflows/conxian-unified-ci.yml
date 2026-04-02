@@ -20,6 +20,7 @@ jobs:
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@stable
     - name: Rust Cache
@@ -41,6 +42,7 @@ jobs:
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@stable
     - name: Rust Cache
@@ -63,6 +65,7 @@ jobs:
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
@@ -87,6 +90,15 @@ jobs:
         if-no-files-found: ignore
         retention-days: 7
 
+    - name: Upload coverage
+      if: github.event_name == 'push'
+      uses: actions/upload-artifact@v4
+      with:
+        name: conxius-wallet-coverage
+        path: conxius-wallet/coverage
+        if-no-files-found: ignore
+        retention-days: 7
+
   audit-and-docs:
     name: Transparency Audit & Docs
     runs-on: ubuntu-latest
@@ -96,6 +108,7 @@ jobs:
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
@@ -121,6 +134,7 @@ jobs:
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
