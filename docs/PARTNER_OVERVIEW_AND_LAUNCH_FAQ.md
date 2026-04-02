@@ -67,7 +67,7 @@ Start with:
 
 ### Is Conxian open source?
 
-This repository is public; see `LICENSE` for current licensing terms. If you need a different licensing structure for a commercial integration, raise it early in the conversation so we can confirm constraints.
+This repository is public; see [LICENSE](../LICENSE) for current licensing terms. If you need a different licensing structure for a commercial integration, raise it early in the conversation so we can confirm constraints.
 
 ### Does Conxian custody user funds or keys?
 
