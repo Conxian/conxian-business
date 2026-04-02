@@ -14,7 +14,7 @@ jobs:
   gateway-suite:
     name: Gateway Suite
     runs-on: ubuntu-latest
-    if: |
+    if: >-
       github.event_name == 'push' ||
       (
         github.event_name == 'pull_request' &&
@@ -42,7 +42,7 @@ jobs:
   b2b-suite:
     name: B2B Suite (Nexus & SDK)
     runs-on: ubuntu-latest
-    if: |
+    if: >-
       github.event_name == 'push' ||
       (
         github.event_name == 'pull_request' &&
@@ -71,7 +71,7 @@ jobs:
   b2c-wallet-suite:
     name: B2C Wallet Suite
     runs-on: ubuntu-latest
-    if: |
+    if: >-
       github.event_name == 'push' ||
       (
         github.event_name == 'pull_request' &&
@@ -120,7 +120,7 @@ jobs:
   audit-and-docs:
     name: Transparency Audit & Docs
     runs-on: ubuntu-latest
-    if: |
+    if: >-
       github.event_name == 'pull_request' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       contains(github.event.pull_request.labels.*.name, 'audit')
@@ -149,7 +149,7 @@ jobs:
   testnet-simulation:
     name: Testnet Simulation
     runs-on: ubuntu-latest
-    if: |
+    if: >-
       github.event_name == 'pull_request' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       contains(github.event.pull_request.labels.*.name, 'simulation')
