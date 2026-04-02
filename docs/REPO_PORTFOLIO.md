@@ -4,7 +4,7 @@ This page defines the Conxian public repo map for external evaluation and intern
 
 ## Standard role line (GitHub description + README top section)
 
-Use the same single line in both the GitHub repo description (keep it ~160 chars; plain text) and the README “top section” (right below the opening paragraph). The 1-line purposes should match the descriptions in the [Ecosystem repos](#ecosystem-repos) section.
+Use the same single line in both the GitHub repo description (plain text; keep it concise—aim for ~160 chars) and the README “top section” (right below the opening paragraph). The 1-line purposes should match the descriptions in the [Ecosystem repos](#ecosystem-repos) section.
 
 - Flagship:
   - `Flagship — <1-line purpose>`
