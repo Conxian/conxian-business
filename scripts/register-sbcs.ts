@@ -11,7 +11,11 @@ import {
 import { StacksTestnet } from '@stacks/network';
 
 const network = new StacksTestnet();
-const privateKey = 'YOUR_PRIVATE_KEY'; // To be sourced from BOS Secrets
+const privateKey = process.env.STX_PRIVATE_KEY;
+
+if (!privateKey) {
+  throw new Error('STX_PRIVATE_KEY environment variable is required');
+}
 
 const sbcs = ["Conxian-Core", "Nexus-Labs", "Fiscal-Auth", "Sovereign-Ops"];
 
