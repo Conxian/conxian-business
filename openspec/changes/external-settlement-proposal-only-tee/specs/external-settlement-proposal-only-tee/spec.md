@@ -66,6 +66,7 @@ Minimum required identifier set (by rail):
 `tx_index` requirements (all rails):
 
 - `tx_index` MUST be computed over the rail-defined settlement-transaction entries (e.g., ISO20022 `pacs.008` `CdtTrfTxInf` elements) in the exact sequence they appear in the received message payload, before any internal normalization or reordering. Implementations MUST NOT reorder transactions for indexing.
+- `tx_index` MUST be a 0-based integer assigned in ascending order starting at 0, increasing by 1 for each settlement-transaction entry in payload order.
 - The index MUST be computed over all transaction entries present in the received message payload, including any that are later rejected or skipped.
 
 Example: if a message contains three settlement-transaction entries `[A, B, C]` and `B` is later rejected or skipped, any triggers emitted for `A` and `C` still use `tx_index = 0` and `tx_index = 2`.
