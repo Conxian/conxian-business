@@ -29,10 +29,10 @@ The cxn-grid-oracle module handles agnostic demand-response routing and energy o
 
 This module is part of the Conxian Sovereign Autonomous Business (SAB).
 
-- [**LICENSE**](./LICENSE) (GNU GPL v3.0)
+- [**LICENSE**](./LICENSE) (GPL-3.0-only)
 - [**NOTICE**](./NOTICE)
 - [**CONTRIBUTING.md**](../CONTRIBUTING.md)
 - [**SECURITY.md**](../SECURITY.md)
 
 ---
-**Sovereign Autonomous Business (SAB)**. © Conxian-Labs. Licensed under GNU GPL v3.0. Powered by Bitcoin.
+**Sovereign Autonomous Business (SAB)**. © Conxian-Labs. Licensed under GPL-3.0-only. Powered by Bitcoin.
