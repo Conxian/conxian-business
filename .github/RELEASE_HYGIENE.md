@@ -1,6 +1,6 @@
 # Release and merge hygiene
 
-This repository uses GitHub Actions workflows in `.github/workflows/` as the source of truth for what must pass before merging to `main`.
+This repository uses GitHub Actions workflows in `.github/workflows/` as the source of truth for what CI *can* run. The repository’s branch protection rules define which checks are *required* to merge to `main`.
 
 The goals:
 
