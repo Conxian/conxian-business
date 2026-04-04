@@ -16,7 +16,8 @@ python3 ./conxian-business/transparency_custodian.py
 
 Until portfolio hygiene automation exists to regenerate and diff BOS state artifacts under `./conxian-business/` in CI (see the P0 backlog), contributor policy is:
 
-- If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks, `.gitmodules`, the asset lists in this document, or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit any files under `./conxian-business/` by hand) and **commit** any updated derived artifacts (for example: `./conxian-business/AUDIT_MANIFEST.json`, `./conxian-business/BOS_STATE_MACHINE.json`) in the same PR.
+- If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks, `.gitmodules`, the mapping tables in this document (ecosystem submodule rows / BOS-native asset paths), or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit generated BOS state artifacts under `./conxian-business/` by hand) and **commit** all updated derived artifacts in the same PR.
+- Purely editorial changes to this document do not require regeneration.
 - Reviewers should treat changes that affect BOS state but do not update derived artifacts as incomplete and request that the regeneration step be run.
 
 If you are unsure whether a change affects BOS state inputs, err on the side of re-running the generator; it is intended to be cheap and idempotent.
@@ -67,11 +68,12 @@ Portfolio hygiene automation should validate:
 - Every row in the ecosystem submodule mapping table corresponds to a pinned gitlink and `.gitmodules` entry (no extra rows).
 - Every pinned gitlink with a row in the ecosystem submodule mapping table appears in `docs/REPO_PORTFOLIO.md` with a flagship/supporting classification.
 - Every BOS-native asset path enumerated in the BOS-native assets table exists in this repo (one-way check; new BOS-native assets must be added to the table during review).
-- If a submodule sets `branch` in `.gitmodules`, that branch exists upstream.
+- If a submodule sets `branch` in `.gitmodules`, that branch should exist upstream; validation is best-effort and may be skipped in offline CI.
 
 Until portfolio hygiene automation is live, reviewers should treat these invariants as manual review criteria and reject PRs that violate them.
 
 Note: `.gitmodules` `branch` affects `git submodule update --remote` only; it does not change what commit is pinned.
+Policy: this repo sets `.gitmodules` `branch` for every submodule so `git submodule update --remote` behavior stays deterministic.
 
 | Asset | Type | Primary BU / function | Primary concern(s) | Notes |
 | --- | --- | --- | --- | --- |
