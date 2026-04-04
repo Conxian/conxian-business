@@ -18,14 +18,13 @@ Related execution issues (parallelized):
 - https://linear.app/conxian-labs/issue/CON-336/sequence-sab-migration-waves-by-value-reversibility-and-risk
 - https://linear.app/conxian-labs/issue/CON-337/inventory-current-supabase-and-neon-dependencies-by-service
 
-## Current status (snapshot)
+## Status and review cadence
 
-**As of:** 2026-04-04
+**Last reviewed:** 2026-04-04
 
-- **Inventory:** in progress (first-pass baseline captured; service-level detail in CON-337)
-- **Datastore decisions:** partially specified (baseline direction in OpenSpec; per-domain fit log in progress)
-- **Readiness gates:** first-pass defined (pilot + cutover)
-- **Migration waves:** first-pass defined (ordered by reversibility and risk)
+**Canonical live status:** https://linear.app/conxian-labs/issue/CON-329/create-sab-migration-control-plane-and-dependency-inventory
+
+Update convention: update this section (including `Last reviewed`) whenever any program-level milestone changes, ideally in the same PR/commit that updates the underlying evidence.
 
 ## Canonical artifacts
 
