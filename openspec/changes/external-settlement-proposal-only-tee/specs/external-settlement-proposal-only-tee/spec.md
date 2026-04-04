@@ -35,7 +35,11 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
    - Trigger source MUST NOT change the 5/5/90 productive streaming behavior.
 
 7. **Idempotency / replay protection**
-   - `trigger_id` MUST be computed deterministically using a canonical encoding (e.g., `sha256("external-settlement-trigger:v1" || JCS({ rail, normalized_settlement_hash }))`).
+   - `trigger_id` MUST be computed deterministically as follows:
+     - Canonicalization MUST use RFC 8785 JSON Canonicalization Scheme (JCS).
+     - The canonicalized value MUST be the JCS output for the JSON object `{"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}` (exact key names as shown).
+     - The hash MUST be SHA-256 over `utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))`.
+     - `trigger_id` MUST be the lowercase hex encoding of the SHA-256 digest.
    - Idempotency is enforced at the trigger granularity (one trigger per settlement transaction).
    - Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
