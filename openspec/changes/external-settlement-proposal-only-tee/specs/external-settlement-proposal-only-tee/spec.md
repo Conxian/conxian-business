@@ -13,7 +13,9 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
      - `raw_payload_hash` MUST equal the lowercase hex encoding (no `0x` prefix) of the 32-byte SHA-256 digest of `raw_payload_bytes` (computed from `raw_payload_bytes` inside the TEE),
      - `normalized_settlement_hash` MUST equal the lowercase hex encoding (no `0x` prefix) of the 32-byte SHA-256 digest of `canonical_settlement_tx_bytes`, where `canonical_settlement_tx_bytes` is the rail-specific canonical serialization of the normalized settlement transaction (computed inside the TEE as follows):
        - JSON: RFC 8785 JSON Canonicalization Scheme (JCS)
+         - `canonical_settlement_tx_bytes` MUST be the UTF-8 encoding (no BOM) of the JCS output string.
        - XML: W3C XML Canonicalization 1.1
+         - `canonical_settlement_tx_bytes` MUST be the XML C14N 1.1 octet stream output (not re-encoded as text).
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
        - The canonical settlement transaction bytes (`canonical_settlement_tx_bytes`) hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
