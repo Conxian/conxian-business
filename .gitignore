@@ -2,6 +2,9 @@
 node_modules/
 jspm_packages/
 
+# Firebase CLI
+.firebase/
+
 # Build artifacts
 dist/
 build/
@@ -17,10 +20,14 @@ test-results/
 playwright-report/
 coverage/
 .nyc_output/
+tests/report.md
 /*.log
 /*.txt
 /*.patch
 /*.bak
+
+# Firebase local state
+.firebase/
 
 # Environment and secrets
 .env
@@ -37,6 +44,15 @@ secrets.json
 # Internal Strategy and Private Operations
 /internal/strategy/
 /archive/
+
+# Generated audit artifacts
+/conxian-business/.generated/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
 
 # Python
 __pycache__/
