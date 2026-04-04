@@ -159,9 +159,9 @@
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
     (assert-oracle)
-    (asserts! (or (not (var-get defaulted)) is-defaulted) (err ERR_UNAUTHORIZED))
-    (var-set defaulted is-defaulted)
-    (print { event: "dlc-bond-defaulted", defaulted: is-defaulted, oracle: tx-sender })
+    (asserts! is-defaulted (err ERR_UNAUTHORIZED))
+    (var-set defaulted true)
+    (print { event: "dlc-bond-defaulted", defaulted: true, oracle: tx-sender })
     (ok true)
   )
 )
