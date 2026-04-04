@@ -16,7 +16,7 @@ python3 conxian-business/transparency_custodian.py
 
 Until portfolio hygiene automation exists to regenerate and diff BOS state artifacts under `./conxian-business/` in CI (see the P0 backlog), contributor policy is:
 
-- If your change affects portfolio wiring or BOS state inputs (for example: `.gitmodules`, the asset lists in this document, or the generator source under `./conxian-business/`), regenerate the BOS state artifacts under `./conxian-business/` using the command above and **commit** any updated derived artifacts (for example: `./conxian-business/AUDIT_MANIFEST.json`, `./conxian-business/BOS_STATE_MACHINE.json`) in the same PR.
+- If your change affects portfolio wiring or BOS state inputs (for example: `.gitmodules`, the asset lists in this document, or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit any files under `./conxian-business/` by hand) and **commit** any updated derived artifacts (for example: `./conxian-business/AUDIT_MANIFEST.json`, `./conxian-business/BOS_STATE_MACHINE.json`) in the same PR.
 - Reviewers should treat changes that affect BOS state but do not update derived artifacts as incomplete and request that the regeneration step be run.
 
 Once a machine-readable portfolio manifest exists (see the P0 backlog), that manifest becomes the single source of truth that generates both this document and BOS runtime artifacts.
@@ -53,7 +53,7 @@ Maintainer note: until the P0 portfolio manifest exists, changes to the asset li
 
 Source-of-truth rule:
 
-- The repo’s git tree/index is authoritative for which submodules are pinned (and to what commits).
+- The repo’s committed git tree (submodule gitlinks) is authoritative for which submodules are pinned (and to what commits).
 - `.gitmodules` is authoritative for expected submodule configuration metadata (`path`, `url`, and optional `branch`).
 - This document is authoritative for business-unit/operating-function classification.
 - `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view and must not introduce repos that are not pinned and mapped here.
