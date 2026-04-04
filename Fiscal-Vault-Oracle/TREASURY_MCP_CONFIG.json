@@ -1,6 +1,6 @@
 {
-  "mcp_version": "REDACTED",
-  "client_id": "REDACTED",
+  "mcp_version": "0.0.0",
+  "client_id": "redacted",
   "bridges": {},
   "resource_mappings": {},
   "audit_trail": {},
