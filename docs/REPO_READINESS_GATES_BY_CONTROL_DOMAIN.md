@@ -45,7 +45,7 @@ Legend:
 - `2` = elevated controls (security/compliance review required)
 - `3` = critical controls (formal sign-off + multi-party operating controls)
 
-> Use level `0` only after the domain has been explicitly assessed as having no meaningful exposure for that repo, with a linkable rationale in repo docs. When in doubt, default to at least level `1` and escalate to the relevant control-domain owner for a decision; never use `0` as a placeholder when you're unsure.
+> Use level `0` only after the domain has been explicitly assessed as having no meaningful exposure for that repo, with a linkable rationale in repo docs (for example, `docs/control-domains.md` or a "Repo readiness gates" section in `README.md`). When in doubt, default to at least level `1` and escalate to the relevant control-domain owner for a decision; never use `0` as a placeholder when you're unsure.
 
 Unless otherwise specified, gate levels are cumulative: level `N` assumes the controls of all lower non-zero levels (`1..N-1`) are also in place.
 
