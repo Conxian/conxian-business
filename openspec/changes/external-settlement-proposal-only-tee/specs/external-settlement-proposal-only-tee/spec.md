@@ -110,12 +110,12 @@ Canonical formatting requirements:
      - The NFC-normalized value contains the Unicode replacement character `U+FFFD`.
      - The NFC-normalized value begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
 
-- These canonical string rules apply only to `settlement_identifiers.transaction_identifiers`.
+- The normalization and validation rules in items 1–4 above apply only to values in `settlement_identifiers.transaction_identifiers`.
 - `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
 - `envelope_identifiers.tx_index` MUST be a non-negative integer.
   - If `envelope_identifiers.tx_index` is absent or invalid, the settlement transaction MUST be treated as invalid for external-settlement trigger purposes.
 
-Note: This section intentionally tightens earlier guidance. These canonicalization rules are normative for the current `external-settlement-trigger:v1` definition. Values that violate these canonical string rules MUST be treated as invalid.
+Note: This section intentionally tightens earlier guidance. These canonicalization rules are normative for the current `external-settlement-trigger:v1` definition. Values that violate these canonical string rules MUST be treated as invalid (including cases where the type/structure requirements for `settlement_identifiers.transaction_identifiers` described above are not met).
 
 If any value in `settlement_identifiers.transaction_identifiers` (including any field-specific rules for optional reconciliation keys) fails canonicalization or validation, the corresponding settlement transaction MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
