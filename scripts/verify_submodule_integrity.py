@@ -84,5 +84,5 @@ if __name__ == "__main__":
     try:
         verify()
     except Exception as e:
-        print(str(e))
+        print(str(e), file=sys.stderr)
         sys.exit(1)
