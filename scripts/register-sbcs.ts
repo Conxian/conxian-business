@@ -1,5 +1,8 @@
 // scripts/register-sbcs.ts
 // Codifies core Sovereign Business Cells (SBC) in fiscal-intelligence.clar
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   makeContractCall,
   broadcastTransaction,
@@ -11,15 +14,59 @@ import {
 import { StacksTestnet } from '@stacks/network';
 
 const network = new StacksTestnet();
-const privateKey = process.env.STX_PRIVATE_KEY;
-
-if (!privateKey) {
-  throw new Error('STX_PRIVATE_KEY environment variable is required');
-}
 
 const sbcs = ["Conxian-Core", "Nexus-Labs", "Fiscal-Auth", "Sovereign-Ops"];
 
-async function registerSBCs() {
+function loadDotEnvIfPresent() {
+  const envPath = resolve(
+    dirname(fileURLToPath(import.meta.url)),
+    '..',
+    '.env'
+  );
+
+  if (!existsSync(envPath)) return;
+
+  const fileText = readFileSync(envPath, 'utf8');
+  for (const rawLine of fileText.split(/\r?\n/u)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+
+    const eqIndex = line.indexOf('=');
+    if (eqIndex === -1) continue;
+
+    const key = line.slice(0, eqIndex).trim();
+    if (!key) continue;
+
+    let value = line.slice(eqIndex + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+
+    if (!process.env[key]) {
+      process.env[key] = value;
+    }
+  }
+}
+
+function requirePrivateKey(): string {
+  const privateKey = process.env.STX_PRIVATE_KEY?.trim();
+
+  if (
+    !privateKey ||
+    privateKey === 'CHANGEME' ||
+    privateKey === 'your_private_key_here' ||
+    privateKey === 'YOUR_PRIVATE_KEY'
+  ) {
+    throw new Error('STX_PRIVATE_KEY environment variable is required');
+  }
+
+  return privateKey;
+}
+
+async function registerSBCs(privateKey: string) {
   for (const sbc of sbcs) {
     const txOptions = {
       contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
@@ -39,4 +86,16 @@ async function registerSBCs() {
   }
 }
 
-registerSBCs().catch(console.error);
+async function main() {
+  loadDotEnvIfPresent();
+  const privateKey = requirePrivateKey();
+  await registerSBCs(privateKey);
+}
+
+const isMain = Boolean(
+  process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+);
+
+if (isMain) {
+  main().catch(console.error);
+}
