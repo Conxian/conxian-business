@@ -22,9 +22,9 @@ Related execution issues (parallelized):
 
 **Last reviewed:** 2026-04-04
 
-**Canonical live status:** see *Canonical tracker* above.
+**Live status:** see *Canonical tracker* above.
 
-**Review cadence:** review this section at least monthly, and additionally within the same PR/commit whenever any program-level milestone changes.
+**Review cadence:** at least monthly, and additionally within the same PR/commit whenever any program-level milestone changes (M0-M2) or readiness-gate evidence is updated.
 
 Update convention: on every review (cadence- or milestone-driven), bump `Last reviewed` in the same PR/commit that updates the underlying evidence (or a dedicated PR if no other content changes are needed).
 
