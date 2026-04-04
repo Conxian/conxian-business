@@ -20,10 +20,10 @@ Payout alignment
 Summary
 
 - Total issues in scope: **90**
-- Community-claimable: **13**
+- Community-claimable: **14**
 - Internal-only: **54**
 - Blocked: **1**
-- Not suitable for bounty execution: **22**
+- Not suitable for bounty execution: **21**
 - Claim-open now (subset): **8**
 
 Claim-open now
@@ -132,5 +132,5 @@ Full classification
 | CON-305 | Todo | internal-only | Security | Fix redaction scanner statefulness in conxius-wallet |
 | CON-369 | Triage | internal-only | Release | Mainnet readiness checklist — conxian-business |
 | CON-370 | Triage | not suitable for bounty execution | Governance | BOS business buildout — lib-conclave-sdk |
-| CON-78 | Todo | not suitable for bounty execution | Bounty, Bounty Open | CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync |
+| CON-78 | Todo | community-claimable | Bounty, Bounty Open | CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync |
 
