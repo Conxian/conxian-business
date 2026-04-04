@@ -17,7 +17,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
        - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
-     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies `settlement_identifiers` as hints, those hints MUST be provided to the TEE as input; the TEE MUST refuse to produce a successful attestation if any overlapping field mismatches (per §2.1.1)
+     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies `settlement_identifiers` as hints, those hints MUST be provided to the TEE as input and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch)
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
