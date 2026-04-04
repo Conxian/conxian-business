@@ -14,6 +14,8 @@ Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Tria
 - **Blocked**: intended work, but can't proceed until a prerequisite is resolved.
 - **Not suitable for bounty execution**: decision-heavy, underspecified, or otherwise not a good fit for external bounty execution as-is.
 
+> Note: `community-claimable` is a safety classification only. An issue is actually open to community claiming only when it also meets the `Claim-open now` conditions (state `Todo`, unassigned, and labeled `Bounty Open`). Other `community-claimable` issues remain maintainer-gated until they are promoted to `Claim-open now`.
+
 ## Payout alignment
 
 - Claim intake and maintainer review can proceed before payout readiness exists.
