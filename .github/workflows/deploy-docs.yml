@@ -59,6 +59,7 @@ jobs:
           )
 
           openspec_specs_dir=openspec/specs
+          rsync_sources=()
 
           for f in "${required[@]}"; do
             if ! assert_no_symlink_segments "$f"; then
@@ -69,6 +70,8 @@ jobs:
               echo "Missing required Pages artifact file: $f" >&2
               exit 1
             fi
+
+            rsync_sources+=("./$f")
           done
 
           if ! assert_no_symlink_segments "$openspec_specs_dir"; then
@@ -84,7 +87,7 @@ jobs:
           mkdir -p _pages
           : > _pages/.nojekyll
 
-          rsync -a --relative "${required[@]/#/./}" _pages/
+          rsync -a --relative "${rsync_sources[@]}" _pages/
 
           openspec_specs_allowed_exts=(md json)
 
@@ -93,14 +96,20 @@ jobs:
             find_disallow_ext_args+=( ! -name "*.${ext}" )
           done
 
-          unexpected_openspec_files="$(find "$openspec_specs_dir" "${find_disallow_ext_args[@]}" -print)"
+          if ! unexpected_openspec_files="$(find "$openspec_specs_dir" "${find_disallow_ext_args[@]}" -print)"; then
+            echo "Failed to scan $openspec_specs_dir" >&2
+            exit 1
+          fi
           if [ -n "$unexpected_openspec_files" ]; then
             echo "Unexpected file type(s) under $openspec_specs_dir (allowed: ${openspec_specs_allowed_exts[*]}):" >&2
             echo "$unexpected_openspec_files" >&2
             exit 1
           fi
 
-          unexpected_openspec_symlink="$(find "$openspec_specs_dir" -type l -print)"
+          if ! unexpected_openspec_symlink="$(find "$openspec_specs_dir" -type l -print)"; then
+            echo "Failed to scan $openspec_specs_dir for symlinks" >&2
+            exit 1
+          fi
           if [ -n "$unexpected_openspec_symlink" ]; then
             echo "Symlinks are not allowed under $openspec_specs_dir:" >&2
             echo "$unexpected_openspec_symlink" >&2
