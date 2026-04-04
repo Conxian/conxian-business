@@ -20,6 +20,7 @@ Payout alignment
   - ALEX launch funding path is live and confirmed as the bounty source
   - signer, wallet, and approval controls are verified internally
   - post-deploy verification and rollback expectations are documented
+- All bounty funds must be sourced exclusively from the ALEX launch pathway once deployment is live; do not use ad hoc or implied treasury commitments before that point.
 - **A claim is not a payout commitment** until all of the above are satisfied and the ALEX-funded payout path is verified end-to-end with internal signer/wallet/approval controls.
 - Until those checks are complete, issues may be claim-screened and worked only under explicit maintainer approval and without any implied payout commitment.
 
@@ -34,16 +35,16 @@ Summary
 
 Claim-open now
 
-| Issue | Title | Labels |
-| --- | --- | --- |
-| CON-178 | Release hygiene — .github | Bounty, Bounty Open, Release |
-| CON-182 | Release hygiene — Conxian | Bounty, Bounty Open, Release |
-| CON-186 | Release hygiene — Conxian_UI | Bounty, Bounty Open, Release |
-| CON-198 | Release hygiene — conxian-labs-site | Bounty, Bounty Open, Release |
-| CON-214 | Release hygiene — lib-conclave-sdk | Bounty, Bounty Open, Release |
-| CON-218 | Release hygiene — lib-conxian-core | Bounty, Bounty Open, Release |
-| CON-222 | Release hygiene — stacksorbit | Bounty, Bounty Open, Release |
-| CON-78 | CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync | Bounty, Bounty Open |
+| Issue | Title | Assignee | Labels |
+| --- | --- | --- | --- |
+| CON-178 | Release hygiene — .github | (unassigned) | Bounty, Bounty Open, Release |
+| CON-182 | Release hygiene — Conxian | (unassigned) | Bounty, Bounty Open, Release |
+| CON-186 | Release hygiene — Conxian_UI | (unassigned) | Bounty, Bounty Open, Release |
+| CON-198 | Release hygiene — conxian-labs-site | (unassigned) | Bounty, Bounty Open, Release |
+| CON-214 | Release hygiene — lib-conclave-sdk | (unassigned) | Bounty, Bounty Open, Release |
+| CON-218 | Release hygiene — lib-conxian-core | (unassigned) | Bounty, Bounty Open, Release |
+| CON-222 | Release hygiene — stacksorbit | (unassigned) | Bounty, Bounty Open, Release |
+| CON-78 | CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync | (unassigned) | Bounty, Bounty Open |
 
 Full classification
 
