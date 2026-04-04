@@ -120,7 +120,7 @@ Implementations MAY accept non-NFC-normalized input from upstream rails, but MUS
 
 Rails MAY include additional canonical identifiers (e.g., for reconciliation) in `settlement_identifiers.transaction_identifiers`. These optional identifier values are subject to the canonical string rules above. If a rail includes any of the following identifier keys, their values MUST be emitted in the canonical form specified:
 
-- `settlement_currency`: uppercase ISO 4217 code (`[A-Z]{3}`); implementations MUST convert to uppercase as part of canonicalization and MUST reject any non-ASCII-letter codes.
+- `settlement_currency`: ISO 4217 code; the value MUST match `^[A-Za-z]{3}$`. The emitted canonical form MUST be the ASCII uppercase (`A`–`Z`) of those three letters.
 - `settlement_amount`: normalized non-negative decimal string (no sign, no exponent; canonical regex: `^(0|[1-9][0-9]*)(\.[0-9]*[1-9])?$`). The emitted value MUST match this regex. Fractional parts MUST NOT end in `0`, and integer values MUST NOT include a decimal point (e.g., `0`, `1`, `0.5`, `123.45` are valid; `01`, `1.0`, `0.50` are invalid).
 - `settlement_date`: ISO 8601 full-date `YYYY-MM-DD`. The emitted value MUST match `^[0-9]{4}-[0-9]{2}-[0-9]{2}$`, MUST represent a valid proleptic Gregorian calendar date with a year in the range `0001`–`9999`, and MUST NOT include any time-of-day or timezone offset component.
 
