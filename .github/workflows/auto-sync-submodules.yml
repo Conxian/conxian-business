@@ -33,6 +33,9 @@ jobs:
           # Update only top-level submodule gitlinks (this repo's pins). Nested submodules
           # are synced to whatever each top-level submodule commit pins.
 
+          # Map of submodule names to their canonical upstream branch when it is not `main`.
+          # If you add a submodule whose canonical branch is not `main` or `master`,
+          # add an entry here so the auto-sync workflow can resolve its branch.
           declare -A PREFERRED_BRANCHES=(
             [lib-conclave-sdk]=master
           )
@@ -56,9 +59,8 @@ jobs:
             return 1
           }
 
-          while IFS= read -r line; do
-            key=${line%% *}
-            path=${line#"$key "}
+          while IFS= read -r key; do
+            path=$(git config -f .gitmodules --get "$key")
 
             name=${key#submodule.}
             name=${name%.path}
@@ -74,7 +76,7 @@ jobs:
 
             git config "submodule.${name}.branch" "$branch"
             git submodule update --init --remote -- "$path"
-          done < <(git config -f .gitmodules --get-regexp '^submodule\..*\.path$')
+          done < <(git config -f .gitmodules --name-only --get-regexp '^submodule\..*\.path$')
 
           git submodule update --init --recursive
 
