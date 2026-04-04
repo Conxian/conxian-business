@@ -68,6 +68,8 @@ The TEE attestation MUST bind (directly or by digest) the canonical values of at
 
 If `oracle_verification` embeds the raw oracle proof bytes, they MUST be encoded as base64url (no padding) in `oracle_proof_bytes_b64`.
 
+If `oracle_verification` includes `oracle_proof_bytes_b64`, decoding it MUST yield exactly the `raw_oracle_proof_bytes` used both to verify the oracle authenticity proof and to compute `oracle_proof_digest`.
+
 Proposal emission MUST validate that `oracle_verification` is a JSON object containing `oracle_proof_digest` in the format defined above and, if present, `oracle_proof_bytes_b64` as valid base64url (no padding); any violation MUST cause the proposal to be rejected.
 
 `raw_oracle_proof_bytes` MUST be the exact byte sequence of the oracle authenticity proof input, before any internal parsing, canonicalization, or transformation.
@@ -113,7 +115,7 @@ Implementations MUST NOT treat any host-supplied `settlement_identifiers` as aut
 - Any host-supplied extra fields MUST be ignored for canonicalization purposes.
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
 
-Any TEE attestation failure caused by invalid, out-of-bounds, or mismatched host-supplied `settlement_identifiers` hints for a given `raw_payload_bytes` instance MUST be treated as a fatal error for that payload and MUST NOT be circumvented by retrying TEE invocation without hints or with a modified hint object.
+Any TEE attestation failure caused by invalid, out-of-bounds, or mismatched host-supplied `settlement_identifiers` hints for a given `{ rail, raw_payload_hash }` attestation attempt MUST be treated as a fatal error for that attempt and MUST NOT be automatically circumvented by retrying TEE invocation for the same `{ rail, raw_payload_hash }` with hints removed or modified.
 
 Minimum required identifier set (by rail):
 
