@@ -3,6 +3,7 @@ import os
 import json
 from datetime import datetime, timezone
 
+# NOTE: `.gitignore` and `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md` assume the same directory name.
 GENERATED_DIR_NAME = ".generated"
 
 def calculate_hash(file_path):
