@@ -40,6 +40,8 @@ Hex encoding conventions: the lowercase hex encoding of any 32-byte SHA-256 dige
    - Downstream yield routing MUST be identical for native vs external-triggered lock events.
    - Trigger source MUST NOT change the 5/5/90 productive streaming behavior.
 
+<a id="idempotency-replay-protection"></a>
+
 7. **Idempotency / replay protection**
    - `trigger_id` MUST be computed deterministically as follows:
      - Canonicalization MUST use RFC 8785 JSON Canonicalization Scheme (JCS).
