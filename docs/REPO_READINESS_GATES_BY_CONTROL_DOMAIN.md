@@ -40,12 +40,12 @@ Gate levels are intentionally coarse. Use them to prevent “we can ship” ambi
 
 Legend:
 
-- `0` = not applicable for this repo (domain explicitly assessed as having no meaningful exposure; rationale documented and linkable from repo docs; do **not** use as a default when unsure)
+- `0` = not applicable for this repo (use only after the domain has been explicitly assessed as having no meaningful exposure, and the rationale is documented and linkable from repo docs)
 - `1` = baseline controls
 - `2` = elevated controls (security/compliance review required)
 - `3` = critical controls (formal sign-off + multi-party operating controls)
 
-> When in doubt, default to at least level `1` and escalate to the relevant control-domain owner for a decision.
+> When in doubt, default to at least level `1` and escalate to the relevant control-domain owner for a decision; never use `0` as a placeholder when you're unsure.
 
 Unless otherwise specified, gate levels are cumulative: level `N` assumes the controls of all lower non-zero levels (`1..N-1`) are also in place.
 
@@ -152,7 +152,7 @@ Regardless of repo visibility, the following content **must not be tracked in Gi
 
 Any repo with `FT = 3` and/or `OC = 3` is “break-glass” territory and needs formal operating controls before mainnet rollout.
 
-Service surfaces (i.e., repos whose Ship posture is `Conditional (service gates)`, such as `conxian-gateway` and `conxian-nexus`) with `RC >= 2` and `DR >= 3` require an operating owner + incident posture before production use.
+Service surfaces (for example, repos that expose a production-facing network service, such as `conxian-gateway` and `conxian-nexus`) with `RC >= 2` and `DR >= 3` require an operating owner + incident posture before production use.
 
 ## Follow-ups (recommended)
 
