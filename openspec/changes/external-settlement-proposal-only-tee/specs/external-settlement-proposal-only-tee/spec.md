@@ -17,7 +17,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
        - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
-     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies a `settlement_identifiers` object as an optimization hint, that object MUST be provided to the TEE as input and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch and oversized hints)
+     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies a `settlement_identifiers` optimization hint, it MUST be provided to the TEE as `raw_settlement_identifiers_hint_bytes` and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch and oversized hints)
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
@@ -110,10 +110,12 @@ The canonical `settlement_identifiers` derived from `raw_payload_bytes` MUST hav
 
 Implementations MUST NOT treat any host-supplied `settlement_identifiers` as authoritative. If a host supplies any identifiers as an optimization hint:
 
-- The host-supplied hint object MUST be provided to the TEE as input and MUST be treated as untrusted.
-- If the hint fails JSON parsing or fails to meet the structural and leaf-type constraints in this section, the TEE MUST refuse to produce a successful attestation.
-- The TEE MUST enforce bounds on the hint object before deep traversal. The byte length of the exact UTF-8 JSON input provided to the TEE for hint parsing MUST be ≤ 16384 bytes. After parsing, the hint object MUST have max nesting depth ≤ 8 and contain ≤ 128 leaf fields. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
-- The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping field differs, the TEE MUST refuse to produce a successful attestation.
+- The host MUST provide the hint to the TEE as `raw_settlement_identifiers_hint_bytes`, defined as the exact UTF-8 JSON byte sequence encoding a JSON object.
+- The TEE MUST treat `raw_settlement_identifiers_hint_bytes` as untrusted input.
+- The byte length of the exact `raw_settlement_identifiers_hint_bytes` provided to the TEE MUST be ≤ 16384 bytes, and this bound MUST be enforced before JSON parsing. If the bound is exceeded, the TEE MUST refuse to produce a successful attestation.
+- The TEE MUST parse `raw_settlement_identifiers_hint_bytes` as UTF-8 JSON. If parsing fails or the parsed value is not a JSON object, the TEE MUST refuse to produce a successful attestation.
+- After parsing, the hint object MUST satisfy the structural and leaf-type constraints in this section, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. The TEE MUST enforce these bounds before deep traversal. If any constraint or bound is violated, the TEE MUST refuse to produce a successful attestation.
+- The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping leaf fields. An overlapping leaf field is any canonical leaf-field JSON key path present in both objects. For each overlapping leaf field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping leaf field differs, the TEE MUST refuse to produce a successful attestation.
 - Any host-supplied extra fields MUST be ignored for canonicalization purposes.
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
 
