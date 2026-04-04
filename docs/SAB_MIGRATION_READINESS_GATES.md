@@ -49,7 +49,7 @@ This gate is satisfied when Supabase and Neon can be removed from correctness-cr
 ### Evidence requirements
 
 - [ ] **Full dependency inventory complete**: all Supabase/Neon usage is mapped by service and dataset.
-- [ ] **Target-state decisions complete (or explicitly open)**: for each major dependency, the target-state is either decided or an open question is explicitly recorded in `docs/SAB_DATASTORE_DECISION_LOG.md`.
+- [ ] **Target-state decisions complete (or explicitly open)**: for each major dependency, the target-state is either decided or an open question is explicitly recorded in [docs/SAB_DATASTORE_DECISION_LOG.md](SAB_DATASTORE_DECISION_LOG.md).
 - [ ] **Data migration strategy per dataset**: each dataset has a plan (rebuild from L1, snapshot import, dual-write, or deprecate).
 - [ ] **Cutover criteria**: explicit "go/no-go" criteria with evidence pointers.
 - [ ] **Rollback criteria**: explicit "rollback now" criteria with evidence pointers.

@@ -29,15 +29,15 @@ Related execution issues (parallelized):
 
 ## Canonical artifacts
 
-- Dependency inventory: `docs/SAB_MIGRATION_DEPENDENCY_INVENTORY.md`
-- Domain-to-datastore decision log: `docs/SAB_DATASTORE_DECISION_LOG.md`
-- Readiness gates & cutover criteria: `docs/SAB_MIGRATION_READINESS_GATES.md`
-- Migration waves: `docs/SAB_MIGRATION_WAVES.md`
+- Dependency inventory: [docs/SAB_MIGRATION_DEPENDENCY_INVENTORY.md](SAB_MIGRATION_DEPENDENCY_INVENTORY.md)
+- Domain-to-datastore decision log: [docs/SAB_DATASTORE_DECISION_LOG.md](SAB_DATASTORE_DECISION_LOG.md)
+- Readiness gates & cutover criteria: [docs/SAB_MIGRATION_READINESS_GATES.md](SAB_MIGRATION_READINESS_GATES.md)
+- Migration waves: [docs/SAB_MIGRATION_WAVES.md](SAB_MIGRATION_WAVES.md)
 
 Baseline specs that constrain decisions:
 
-- SAB datastore mapping: `openspec/specs/sab-datastore-mapping/spec.md`
-- Sovereign data migration & institutional egress synthesis: `openspec/changes/sovereign-data-migration-institutional-egress/specs.md`
+- SAB datastore mapping: [openspec/specs/sab-datastore-mapping/spec.md](../openspec/specs/sab-datastore-mapping/spec.md)
+- Sovereign data migration & institutional egress synthesis: [openspec/changes/sovereign-data-migration-institutional-egress/specs.md](../openspec/changes/sovereign-data-migration-institutional-egress/specs.md)
 
 ## Working rules (program-level)
 
@@ -50,6 +50,6 @@ Baseline specs that constrain decisions:
 
 | Milestone | What it means | Evidence pointer |
 | :--- | :--- | :--- |
-| **M0: Architecture baseline** | Inventory exists, target-state candidates are mapped, and open questions are explicit. | `docs/SAB_MIGRATION_DEPENDENCY_INVENTORY.md`, `docs/SAB_DATASTORE_DECISION_LOG.md` |
-| **M1: Pilot-ready** | A sovereign baseline exists for at least one correctness-relevant dependency with a controlled cutover plan and rollback. | `docs/SAB_MIGRATION_READINESS_GATES.md` (Pilot gate) |
-| **M2: Cutover-ready** | Phase 5 "clean break" criteria are evidenced; Supabase/Neon can be removed from correctness-critical paths. | `docs/SAB_MIGRATION_READINESS_GATES.md` (Cutover gate) |
+| **M0: Architecture baseline** | Inventory exists, target-state candidates are mapped, and open questions are explicit. | [docs/SAB_MIGRATION_DEPENDENCY_INVENTORY.md](SAB_MIGRATION_DEPENDENCY_INVENTORY.md), [docs/SAB_DATASTORE_DECISION_LOG.md](SAB_DATASTORE_DECISION_LOG.md) |
+| **M1: Pilot-ready** | A sovereign baseline exists for at least one correctness-relevant dependency with a controlled cutover plan and rollback. | [docs/SAB_MIGRATION_READINESS_GATES.md](SAB_MIGRATION_READINESS_GATES.md) (Pilot gate) |
+| **M2: Cutover-ready** | Phase 5 "clean break" criteria are evidenced; Supabase/Neon can be removed from correctness-critical paths. | [docs/SAB_MIGRATION_READINESS_GATES.md](SAB_MIGRATION_READINESS_GATES.md) (Cutover gate) |
