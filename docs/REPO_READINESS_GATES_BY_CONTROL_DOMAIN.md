@@ -45,6 +45,8 @@ Legend:
 
 Unless otherwise specified, gate levels are cumulative: level `N` assumes the controls of levels `0..N-1` are also in place.
 
+> Use level `0` only when the domain has been explicitly assessed and determined to have no meaningful exposure for that repo (not as a default when unsure).
+
 ### L — Legal / public-safe status
 
 - **L1**: License clarity (SPDX-compatible where possible), contributor guidance, and a public-safe README (no claims that contradict repo visibility).
@@ -122,7 +124,7 @@ Name mapping note: in this superproject, the `Conxian_UI` repo is checked out at
 
 ### What can ship without additional controls
 
-These repos are generally safe to ship with standard engineering hygiene (assuming no secrets and basic CI):
+Repos with Ship posture and no `FT3`/`OC3` exposure can generally ship with standard engineering hygiene (no secrets, basic CI). As of this snapshot, that includes:
 
 - `conxian-labs-site`
 - `lib-conxian-core`
@@ -139,7 +141,7 @@ Regardless of repo visibility, the following content **must not be tracked in Gi
 
 ### What needs additional controls before rollout
 
-Anything with `FT3` and/or `OC3` is “break-glass” territory and needs formal operating controls before mainnet rollout:
+Any repo with `FT3` and/or `OC3` is “break-glass” territory and needs formal operating controls before mainnet rollout. As of this snapshot, that includes:
 
 - `Conxian`
 - `conxius-wallet`
