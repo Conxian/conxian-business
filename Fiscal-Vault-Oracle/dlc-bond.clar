@@ -25,6 +25,7 @@
 (define-constant ERR_NO_LIQUIDITY u20011)
 (define-constant ERR_INVALID_SBTC_TOKEN u20012)
 (define-constant ERR_ALREADY_ISSUED u20013)
+(define-constant ERR_COUPONS_DISABLED_IN_RECOVERY u20014)
 
 ;; Fixed point constants
 (define-constant PPM_DENOM u1000000)          ;; 1.0 = 1,000,000 ppm
@@ -51,6 +52,7 @@
 (define-data-var defaulted bool false)
 (define-data-var defaulted-at (optional uint) none)
 (define-data-var principal-drawdown-enabled bool false)
+(define-data-var principal-drawdown-used uint u0)
 
 ;; Global coupon index (scaled by INDEX_PRECISION)
 (define-data-var coupon-index uint u0)
@@ -144,7 +146,8 @@
     next-coupon-height: (var-get next-coupon-height),
     defaulted: (var-get defaulted),
     defaulted-at: (var-get defaulted-at),
-    principal-drawdown-enabled: (var-get principal-drawdown-enabled)
+    principal-drawdown-enabled: (var-get principal-drawdown-enabled),
+    principal-drawdown-used: (var-get principal-drawdown-used)
   })
 )
 
@@ -219,13 +222,20 @@
     (asserts! (is-eq (var-get coupon-index) u0) (err ERR_SUBSCRIPTION_CLOSED))
     (asserts! (< burn-block-height (var-get next-coupon-height)) (err ERR_SUBSCRIPTION_CLOSED))
     (asserts! (> amount u0) (err ERR_ZERO_AMOUNT))
-    (asserts! (<= amount (ft-get-supply dlc-bond)) (err ERR_UNAUTHORIZED))
-    (let ((available (unwrap! (get-sbtc-balance) (err ERR_INVALID_SBTC_TOKEN))))
-      (asserts! (> available u0) (err ERR_NO_LIQUIDITY))
-      (asserts! (<= amount available) (err ERR_NO_LIQUIDITY))
+    (let (
+      (supply (ft-get-supply dlc-bond))
+      (used (var-get principal-drawdown-used))
     )
-    (try!
-      (as-contract (contract-call? (var-get sbtc-token) transfer amount tx-sender recipient none))
+      (asserts! (<= used supply) (err ERR_UNAUTHORIZED))
+      (asserts! (<= amount (- supply used)) (err ERR_UNAUTHORIZED))
+      (let ((available (unwrap! (get-sbtc-balance) (err ERR_INVALID_SBTC_TOKEN))))
+        (asserts! (> available u0) (err ERR_NO_LIQUIDITY))
+        (asserts! (<= amount available) (err ERR_NO_LIQUIDITY))
+      )
+      (try!
+        (as-contract (contract-call? (var-get sbtc-token) transfer amount tx-sender recipient none))
+      )
+      (var-set principal-drawdown-used (+ used amount))
     )
     (print { event: "dlc-bond-principal-drawdown", issuer: (var-get issuer), recipient: recipient, amount: amount })
     (ok true)
@@ -322,7 +332,7 @@
 (define-public (claim-coupon)
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
-    (asserts! (not (and (var-get defaulted) (var-get principal-drawdown-enabled))) (err ERR_INACTIVE))
+    (asserts! (not (and (var-get defaulted) (var-get principal-drawdown-enabled))) (err ERR_COUPONS_DISABLED_IN_RECOVERY))
     (sync-holder tx-sender)
     (let (
       (state (get-holder-state tx-sender))
