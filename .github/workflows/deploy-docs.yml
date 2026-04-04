@@ -22,6 +22,20 @@ jobs:
         run: |
           set -euo pipefail
 
+          assert_no_symlink_segments() {
+            local path="$1"
+            local check="$path"
+
+            while [ "$check" != '.' ] && [ "$check" != '/' ] && [ -n "$check" ]; do
+              if [ -L "$check" ]; then
+                echo "Symlinks are not allowed in required Pages artifact paths: $path" >&2
+                exit 1
+              fi
+
+              check="$(dirname "$check")"
+            done
+          }
+
           required=(
             SUMMARY.md
             README.md
@@ -41,10 +55,7 @@ jobs:
           openspec_specs_dir=openspec/specs
 
           for f in "${required[@]}"; do
-            if [ -L "$f" ]; then
-              echo "Symlinks are not allowed in required Pages artifact paths: $f" >&2
-              exit 1
-            fi
+            assert_no_symlink_segments "$f"
 
             if [ ! -f "$f" ]; then
               echo "Missing required Pages artifact file: $f" >&2
@@ -52,10 +63,7 @@ jobs:
             fi
           done
 
-          if [ -L "$openspec_specs_dir" ]; then
-            echo "Symlinks are not allowed in required Pages artifact paths: $openspec_specs_dir" >&2
-            exit 1
-          fi
+          assert_no_symlink_segments "$openspec_specs_dir"
 
           if [ ! -d "$openspec_specs_dir" ]; then
             echo "Missing required Pages artifact path: $openspec_specs_dir" >&2
