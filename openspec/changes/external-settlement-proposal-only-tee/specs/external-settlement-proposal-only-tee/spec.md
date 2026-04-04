@@ -115,11 +115,11 @@ Canonical formatting requirements:
 - `envelope_identifiers.tx_index` MUST be a non-negative integer.
   - If `envelope_identifiers.tx_index` is absent or invalid, the settlement transaction MUST be treated as invalid for external-settlement trigger purposes.
 
-Note: This section intentionally tightens earlier guidance. These canonicalization rules are normative for the current `external-settlement-trigger:v1` definition. Values that violate these canonical string rules MUST be treated as invalid.
+Note: This section intentionally tightens earlier guidance. These canonicalization rules are normative for the current `external-settlement-trigger:v1` definition. Values that violate these canonical string rules MUST be treated as invalid. In particular, any non-string JSON value in `settlement_identifiers.transaction_identifiers` MUST be treated as a canonicalization failure for the corresponding settlement transaction.
 
 If any value in `settlement_identifiers.transaction_identifiers` (including any field-specific rules for optional reconciliation keys) fails canonicalization or validation, the corresponding settlement transaction MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
-`envelope_identifiers.tx_index` MUST satisfy the field requirements above. Any other `settlement_identifiers.envelope_identifiers` keys are optional; invalid or non-canonical values for those optional envelope identifiers MUST be treated as if the corresponding fields were absent and MUST NOT cause the settlement transaction to be treated as invalid for external-settlement trigger purposes.
+Any other `settlement_identifiers.envelope_identifiers` keys are optional; invalid or non-canonical values for those optional envelope identifiers MUST be treated as if the corresponding fields were absent and MUST NOT cause the settlement transaction to be treated as invalid for external-settlement trigger purposes.
 
 For `external-settlement-trigger:v1`, implementations MUST use Unicode 15.1.0 (Unicode Character Database + normalization data) for evaluating `General_Category`, `White_Space`, and NFC normalization.
 
