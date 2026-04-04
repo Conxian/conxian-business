@@ -19,6 +19,7 @@
 (define-constant ERR_NOT_MATURED u20005)
 (define-constant ERR_COUPON_NOT_DUE u20006)
 (define-constant ERR_INVALID_COUPON_AMOUNT u20007)
+(define-constant ERR_INVALID_DEFAULT_FLAG u20008)
 
 ;; Fixed point constants
 (define-constant PPM_DENOM u1000000)          ;; 1.0 = 1,000,000 ppm
@@ -170,7 +171,7 @@
 
 (define-public (set-defaulted (is-defaulted bool))
   (begin
-    (asserts! is-defaulted (err ERR_UNAUTHORIZED))
+    (asserts! is-defaulted (err ERR_INVALID_DEFAULT_FLAG))
     (do-declare-default)
   )
 )
