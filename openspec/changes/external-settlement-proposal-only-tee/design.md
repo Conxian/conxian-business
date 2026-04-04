@@ -165,10 +165,10 @@ Example (illustrative only):
 
 ## 5. Time-lock initiation
 
-After oracle verification and attestation succeeds inside the TEE, proposal emission initiates the standard time-lock using the attested delay and the native chain-height source:
+After oracle verification and attestation succeed inside the TEE, proposal emission initiates the standard time-lock using the attested delay and the native chain-height source:
 
 - `delay_blocks = 144`
-- `start_height` is sourced by proposal emission from the same canonical chain height source used by the native path
+- `start_height` is obtained at proposal emission time from the same canonical chain height source used by the native path
 - `release_height = start_height + delay_blocks`
 
 The TEE MUST attest `timelock_delay_blocks` but does not need to attest `start_height` or `release_height`.
