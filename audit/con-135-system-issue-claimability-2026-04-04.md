@@ -11,13 +11,13 @@ Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Tria
 ## Operating definitions
 
 - **Claim-open now (mechanical)**: `state == Todo` AND unassigned AND labels include `Bounty` and `Bounty Open`.
-- **Eligible for claim-open promotion (safety)**: classified as `community-claimable` in this audit (i.e., safe for maintainers to apply the `Claim-open now (mechanical)` labels).
+- **Eligible for claim-open promotion (safety)**: classified as `community-claimable` in this audit (i.e., safe for maintainers to apply the `Bounty` and `Bounty Open` labels when the other `Claim-open now (mechanical)` conditions are met).
 - **Community-claimable**: safe to execute externally (docs/repo hygiene), with no privileged deploy/wallet/treasury access required. For governance/content work, this only applies when the issue has concrete acceptance criteria and maintainers retain final approval.
 - **Internal-only**: security-sensitive, deployment-sensitive, wallet/treasury/signer, or release-gating work.
 - **Blocked**: intended work, but can't proceed until a prerequisite is resolved.
 - **Not suitable for bounty execution**: decision-heavy, underspecified, or otherwise not a good fit for external bounty execution as-is.
 
-> Note: `community-claimable` is an audit-only safety classification (not a native Linear field). It does not by itself make an issue claim-open; claim-open status is controlled mechanically via state and labels as defined in `Claim-open now (mechanical)`. Other `community-claimable` issues remain maintainer-gated until maintainers apply the mechanical claim-open labels.
+> Note: `community-claimable` is an audit-only safety classification (not a native Linear field). It does not by itself make an issue claim-open; claim-open status is controlled mechanically via state and labels as defined in `Claim-open now (mechanical)`. Other `community-claimable` issues remain maintainer-gated until maintainers apply `Bounty` and `Bounty Open`.
 
 ## Payout alignment
 
