@@ -20,6 +20,7 @@
 (define-constant ERR_COUPON_NOT_DUE u20006)
 (define-constant ERR_INVALID_COUPON_AMOUNT u20007)
 (define-constant ERR_INVALID_DEFAULT_FLAG u20008)
+(define-constant ERR_SUBSCRIPTION_CLOSED u20009)
 
 ;; Fixed point constants
 (define-constant PPM_DENOM u1000000)          ;; 1.0 = 1,000,000 ppm
@@ -210,8 +211,8 @@
 
     ;; Bond-style issuance window: subscriptions are only allowed before the first
     ;; coupon distribution, and never once the next coupon is due.
-    (asserts! (is-eq (var-get coupon-index) u0) (err ERR_UNAUTHORIZED))
-    (asserts! (< burn-block-height (var-get next-coupon-height)) (err ERR_UNAUTHORIZED))
+    (asserts! (is-eq (var-get coupon-index) u0) (err ERR_SUBSCRIPTION_CLOSED))
+    (asserts! (< burn-block-height (var-get next-coupon-height)) (err ERR_SUBSCRIPTION_CLOSED))
 
     ;; Move principal (sBTC) into the bond contract
     (try! (contract-call? (var-get sbtc-token) transfer amount tx-sender (bond-contract) none))
