@@ -4,7 +4,7 @@ This log records target-state datastore decisions (or explicit open questions) b
 
 Baseline direction is defined in:
 
-- `openspec/specs/sab-datastore-mapping/spec.md`
+- [SAB datastore mapping spec](../openspec/specs/sab-datastore-mapping/spec.md)
 
 This log exists to prevent "implicit decisions" from being made ad hoc inside migrations.
 
