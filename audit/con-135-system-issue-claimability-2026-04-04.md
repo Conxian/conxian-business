@@ -4,12 +4,12 @@ Snapshot date: 2026-04-04 (UTC)
 
 Scope: open CON system issues, operationally defined as issues in states Triage/Todo/In Progress/In Review/Backlog that have at least one of these labels: `Release`, `Governance`, `Security`, `Hygiene`, `Bounty`.
 
-Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Triage -s Todo -s "In Progress" -s "In Review" -s Backlog --limit 200 --json` for each label in [`Release`, `Governance`, `Security`, `Hygiene`, `Bounty`], de-duplicated by `identifier`.
+Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Triage -s Todo -s "In Progress" -s "In Review" -s Backlog --json` for each label in [`Release`, `Governance`, `Security`, `Hygiene`, `Bounty`], de-duplicated by `identifier` (use pagination / a sufficiently high limit so results are not truncated).
 
 ## Operating definitions
 
 - **Claim-open now**: `state == Todo` AND category `community-claimable` AND label `Bounty Open` AND unassigned.
-- **Community-claimable**: safe to execute externally (docs/repo hygiene), with no privileged deploy/wallet/treasury access required.
+- **Community-claimable**: safe to execute externally (docs/repo hygiene), with no privileged deploy/wallet/treasury access required. For governance/content work, this only applies when the issue has concrete acceptance criteria and maintainers retain final approval.
 - **Internal-only**: security-sensitive, deployment-sensitive, wallet/treasury/signer, or release-gating work.
 - **Blocked**: intended work, but can't proceed until a prerequisite is resolved.
 - **Not suitable for bounty execution**: decision-heavy, underspecified, or otherwise not a good fit for external bounty execution as-is.
