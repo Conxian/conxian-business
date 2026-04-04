@@ -19,7 +19,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
        - The canonical settlement transaction bytes (`canonical_settlement_tx_bytes`) hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
-     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies a `settlement_identifiers` object as an optimization hint, that object MUST be provided to the TEE as input and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch and oversized hints)
+     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies a `settlement_identifiers` optimization hint, it MUST be provided to the TEE as `raw_settlement_identifiers_hint_bytes` and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch and oversized hints)
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
@@ -76,6 +76,8 @@ The TEE attestation MUST bind (directly or by digest) the canonical values of at
 
 `oracle_verification` MUST NOT be a bare boolean. It MUST be a JSON object and MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the 64-character lowercase hex encoding (characters `0-9a-f`, no `0x` prefix) of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
 
+The TEE MUST compute `oracle_proof_digest` from the exact `raw_oracle_proof_bytes` it verifies and MUST NOT accept any host-provided digest value as authoritative; any host-provided digest MUST be recomputed and any mismatch MUST cause attestation to fail.
+
 If `oracle_verification` embeds the raw oracle proof bytes, they MUST be encoded as base64url (no padding) in `oracle_proof_bytes_b64`.
 
 If `oracle_verification` includes `oracle_proof_bytes_b64`, decoding it MUST yield exactly the `raw_oracle_proof_bytes` used both to verify the oracle authenticity proof and to compute `oracle_proof_digest`.
@@ -120,14 +122,19 @@ The canonical `settlement_identifiers` derived from `raw_payload_bytes` MUST hav
 
 Implementations MUST NOT treat any host-supplied `settlement_identifiers` as authoritative. If a host supplies any identifiers as an optimization hint:
 
-- The host-supplied hint object MUST be provided to the TEE as input and MUST be treated as untrusted.
-- If the hint fails JSON parsing or fails to meet the structural and leaf-type constraints in this section, the TEE MUST refuse to produce a successful attestation.
-- The TEE MUST enforce bounds on the hint object before deep traversal. The byte length of the exact UTF-8 JSON input provided to the TEE for hint parsing MUST be ≤ 16384 bytes. After parsing, the hint object MUST have max nesting depth ≤ 8 and contain ≤ 128 leaf fields. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
-- The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping field differs, the TEE MUST refuse to produce a successful attestation.
+- The host MUST provide the hint to the TEE as `raw_settlement_identifiers_hint_bytes`, defined as the exact UTF-8 JSON byte sequence encoding a JSON object.
+- The TEE MUST treat `raw_settlement_identifiers_hint_bytes` as untrusted input.
+- The byte length of the exact `raw_settlement_identifiers_hint_bytes` provided to the TEE MUST be ≤ 16384 bytes, and this bound MUST be enforced before JSON parsing. If the bound is exceeded, the TEE MUST refuse to produce a successful attestation.
+- The TEE MUST parse `raw_settlement_identifiers_hint_bytes` as UTF-8 JSON. If parsing fails or the parsed value is not a JSON object, the TEE MUST refuse to produce a successful attestation.
+- After parsing, the hint object MUST satisfy the structural and leaf-type constraints in this section, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. The TEE MUST enforce these bounds before deep traversal. If any constraint or bound is violated, the TEE MUST refuse to produce a successful attestation.
+- The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping leaf fields. An overlapping leaf field is any canonical leaf-field JSON key path present in both objects. For each overlapping leaf field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping leaf field differs, the TEE MUST refuse to produce a successful attestation.
+- If any JSON key path present in the hint object has a JSON object value in the canonical `settlement_identifiers` but a non-object value in the hint, the TEE MUST refuse to produce a successful attestation.
 - Any host-supplied extra fields MUST be ignored for canonicalization purposes.
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
 
 Any TEE attestation failure caused by invalid, out-of-bounds, or mismatched host-supplied `settlement_identifiers` hints for a given `{ rail, raw_payload_hash }` instance MUST be treated as a permanent validation failure in the normal automated processing pipeline. Implementations MUST NOT automatically retry the same `{ rail, raw_payload_hash }` with modified or omitted hints in order to probe for a passing combination. Any operator-initiated override that reprocesses such a payload (for example, after a production bug fix) MUST be explicitly configured, strongly audited, and MUST NOT weaken the TEE’s comparison rules.
+
+Implementations MUST distinguish hint-validation failures from transient TEE/infrastructure errors (for example, via stable error codes). Hint-validation failures MUST be treated as permanent validation failures, while transient errors MAY be retried.
 
 Minimum required identifier set (by rail):
 
