@@ -21,10 +21,11 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
 
-      - name: Update Submodules to Latest Main
+      - name: Update submodules to latest tracked branches
         shell: bash
         run: |
           set -euo pipefail
+
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
@@ -66,7 +67,7 @@ jobs:
             preferred=${PREFERRED_BRANCHES[$name]:-main}
 
             if ! branch=$(pick_branch "$url" "$preferred"); then
-              echo "Unable to find an upstream branch for submodule '${name}' (url: ${url})" >&2
+              echo "::error::auto-sync-submodules: unable to find an upstream branch for '${name}' (url: ${url})"
               exit 1
             fi
 
