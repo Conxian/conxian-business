@@ -45,7 +45,7 @@ function loadDotEnvIfPresent() {
       value = value.slice(1, -1);
     }
 
-    if (!process.env[key]) {
+    if (process.env[key] === undefined) {
       process.env[key] = value;
     }
   }
@@ -58,9 +58,12 @@ function requirePrivateKey(): string {
     !privateKey ||
     privateKey === 'CHANGEME' ||
     privateKey === 'your_private_key_here' ||
-    privateKey === 'YOUR_PRIVATE_KEY'
+    privateKey === 'YOUR_PRIVATE_KEY' ||
+    privateKey === '<your_stacks_private_key_here>'
   ) {
-    throw new Error('STX_PRIVATE_KEY environment variable is required');
+    throw new Error(
+      'STX_PRIVATE_KEY is missing or still set to a placeholder value; please provide a real private key'
+    );
   }
 
   return privateKey;
