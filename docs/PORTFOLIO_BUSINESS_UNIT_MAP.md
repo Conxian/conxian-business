@@ -63,7 +63,7 @@ Portfolio hygiene automation should validate:
 - Every pinned gitlink has a `.gitmodules` entry and a mapping entry.
 - Every `.gitmodules` entry has a corresponding pinned gitlink and mapping entry.
 - Every mapping entry corresponds to a pinned gitlink and `.gitmodules` entry (no extra rows).
-- Every repo listed in `docs/REPO_PORTFOLIO.md` appears either as a pinned submodule with a mapping entry or as an explicitly enumerated BOS-native asset.
+- Every governed repo listed in `docs/REPO_PORTFOLIO.md` appears either as a pinned submodule with a mapping entry or as an explicitly enumerated BOS-native asset.
 - If a submodule sets `branch` in `.gitmodules`, that branch exists upstream.
 
 Note: `.gitmodules` `branch` affects `git submodule update --remote` only; it does not change what commit is pinned.
