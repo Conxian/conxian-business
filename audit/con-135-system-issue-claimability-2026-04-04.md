@@ -4,6 +4,8 @@ Snapshot date: 2026-04-04 (UTC)
 
 Scope: open CON issues (states: Triage/Todo/In Progress/In Review/Backlog) that have at least one of these labels: `Release`, `Governance`, `Security`, `Hygiene`, `Bounty`.
 
+Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Triage -s Todo -s "In Progress" -s "In Review" -s Backlog --limit 200 --json` for each label in [`Release`, `Governance`, `Security`, `Hygiene`, `Bounty`], de-duplicated by `identifier`.
+
 Operating definitions
 
 - **Claim-open now**: `state == Todo` AND category `community-claimable` AND label `Bounty Open` AND unassigned.
