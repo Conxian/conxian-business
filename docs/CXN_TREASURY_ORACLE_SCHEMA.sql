@@ -2,6 +2,9 @@
 -- Single Source of Truth for Yield, Runway, and Locked Principal
 -- Last Update: March 25, 2026
 
+-- Required for gen_random_uuid() defaults.
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- 1. BASE-LAYER ASSETS (LOCKED PRINCIPAL)
 -- Track base BTC locked in DLC Bonds and non-custodial multisigs.
 CREATE TABLE IF NOT EXISTS public.cxn_locked_principal (
