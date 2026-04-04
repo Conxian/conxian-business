@@ -14,6 +14,11 @@ To regenerate the BOS audit manifest (`./conxian-business/AUDIT_MANIFEST.json`),
 python3 conxian-business/transparency_custodian.py
 ```
 
+Until portfolio hygiene automation exists to regenerate and diff these files in CI (see the P0 backlog), contributor policy is:
+
+- If your change affects portfolio wiring or BOS state inputs (for example: `.gitmodules`, the asset lists in this document, or the generator source under `./conxian-business/`), regenerate and **commit** any updated derived artifacts (including `./conxian-business/AUDIT_MANIFEST.json`) in the same PR.
+- Reviewers should treat changes that affect BOS state but do not update derived artifacts as incomplete.
+
 Once a machine-readable portfolio manifest exists (see the P0 backlog), that manifest becomes the single source of truth that generates both this document and BOS runtime artifacts.
 
 Naming note: this repo is `conxian-business`, but it also contains a nested directory `./conxian-business/` for BOS state artifacts. In this document, `./` refers to the repo root, and `./conxian-business/` refers to the nested state directory.
