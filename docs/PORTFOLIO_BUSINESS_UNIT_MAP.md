@@ -19,6 +19,8 @@ Until portfolio hygiene automation exists to regenerate and diff BOS state artif
 - If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks, `.gitmodules`, the asset lists in this document, or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit any files under `./conxian-business/` by hand) and **commit** any updated derived artifacts (for example: `./conxian-business/AUDIT_MANIFEST.json`, `./conxian-business/BOS_STATE_MACHINE.json`) in the same PR.
 - Reviewers should treat changes that affect BOS state but do not update derived artifacts as incomplete and request that the regeneration step be run.
 
+If you are unsure whether a change affects BOS state inputs, err on the side of re-running the generator; it is intended to be cheap and idempotent.
+
 Once a machine-readable portfolio manifest exists (see the P0 backlog), that manifest becomes the single source of truth that generates both this document and BOS runtime artifacts.
 
 Naming note: this repo is `conxian-business`, but it also contains a nested directory `./conxian-business/` for BOS state artifacts. In this document, `./` refers to the repo root, and `./conxian-business/` refers to the nested state directory.
