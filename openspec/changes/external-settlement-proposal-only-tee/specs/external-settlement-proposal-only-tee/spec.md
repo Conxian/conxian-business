@@ -98,11 +98,11 @@ Example: if a message contains three settlement-transaction entries `[A, B, C]` 
 
 Canonical formatting requirements:
 
-- All string values in `settlement_identifiers` MUST:
-  - be a sequence of Unicode scalar values (implementations MUST reject any string containing code points in `U+D800..U+DFFF` and MUST NOT replace invalid encodings / surrogates with `U+FFFD`),
-  - be non-empty,
-  - be normalized to Unicode NFC,
-  - and be rejected if, after NFC normalization, they contain any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database) or begin or end with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
+- All string values in `settlement_identifiers` MUST be canonicalized and validated as follows:
+  - MUST be a sequence of Unicode scalar values (implementations MUST reject any string containing code points in `U+D800..U+DFFF` and MUST NOT replace invalid encodings / surrogates with `U+FFFD`).
+  - If an upstream source provides bytes, implementations MUST decode them as UTF-8 and MUST reject any decoding errors.
+  - MUST be normalized to Unicode NFC; all subsequent validation, equality, and hashing operates on the NFC-normalized value.
+  - MUST be rejected if the NFC-normalized value is empty, contains any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database), or begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
 - `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
 - `envelope_identifiers.tx_index` MUST be a non-negative integer.
 
