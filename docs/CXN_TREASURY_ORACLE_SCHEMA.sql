@@ -1,6 +1,6 @@
 -- CONXIAN-LABS HOLDCO: cxn-treasury-oracle SCHEMA (Supabase)
 -- Single Source of Truth for Yield, Runway, and Locked Principal
--- Last Update: March 25, 2026
+-- Last Update: April 4, 2026
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
 
