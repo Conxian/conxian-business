@@ -11,7 +11,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
 2. **TEE verification is required before proposal emission**
    - A proposal MUST NOT be emitted unless a TEE/StrongBox/CloudTEE attestation verifies:
      - the payload digest (computed from `raw_payload_bytes` inside the TEE),
-     - any `normalized_settlement_hash` using a rail-specific canonical serialization:
+     - `normalized_settlement_hash` using a rail-specific canonical serialization:
        - JSON: RFC 8785 JSON Canonicalization Scheme (JCS)
        - XML: W3C XML Canonicalization 1.1
      - the oracle authenticity proof,
@@ -34,7 +34,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
    - Trigger source MUST NOT change the 5/5/90 productive streaming behavior.
 
 7. **Idempotency / replay protection**
-   - `trigger_id` MUST be computed deterministically from `rail`, `raw_payload_hash`, and a rail-specific canonical `settlement_identifiers` set.
+   - `trigger_id` MUST be computed deterministically using a canonical encoding (e.g., `sha256("external-settlement-trigger:v1" || JCS({ rail, raw_payload_hash, settlement_identifiers }))`).
    - Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
 ## 2. Required artifacts
@@ -46,11 +46,17 @@ Minimum fields:
 - `rail`
 - `raw_payload_hash`
 - `settlement_identifiers`
+- `normalized_settlement_hash`
 - `trigger_id`
 - `asset_path`
 - `timelock_delay_blocks` (must equal `144`)
 - `tee_attestation`
 - `oracle_verification`
+
+Prohibited fields:
+
+- `raw_payload_bytes`
+- Any full parsed external-settlement payload structure (XML/JSON) beyond the canonical `settlement_identifiers`.
 
 ### 2.2 `SovereignProposal` (trigger-kind)
 

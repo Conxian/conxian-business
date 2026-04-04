@@ -48,7 +48,7 @@ This design makes the boundaries between parsing, attestation, and execution exp
 - Produce an attested artifact that binds:
   - `rail`,
   - `raw_payload_hash`,
-  - `normalized_settlement` (or a hash thereof),
+  - `normalized_settlement_hash`,
   - `asset_path`,
   - `proposal_kind = EXTERNAL_SETTLEMENT_TRIGGER`,
   - `timelock_delay_blocks = 144`.
@@ -91,6 +91,7 @@ Execution must never accept or interpret raw TradFi payloads.
 
 - `rail`
 - `raw_payload_hash`
+- `normalized_settlement_hash` (hash of the normalized settlement under canonical serialization)
 - `trigger_id` (stable hash over `rail + raw_payload_hash + settlement_identifiers`)
 - `settlement_identifiers` (rail-specific canonical identifiers; see below)
 - `asset_path` (see mapping)
@@ -121,6 +122,8 @@ Minimum required identifier set (by rail):
   - `settlement_date`
 
 Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
+
+To ensure cross-implementation stability, `trigger_id` MUST be computed from a canonical encoding of `{ rail, raw_payload_hash, settlement_identifiers }` (e.g., `sha256("external-settlement-trigger:v1" || JCS({ rail, raw_payload_hash, settlement_identifiers }))`).
 
 ### 3.3 `SovereignProposal` (proposal lane)
 
