@@ -92,6 +92,97 @@ BEGIN
     END IF;
 END $$;
 
+-- 8. EXTERNAL SETTLEMENT LOGS (REFERENCE-ONLY)
+-- Record off-chain / cross-network settlement references without mutating native settlement state trackers.
+--
+-- NOTE:
+-- - `fiat_value_pegged` is informational only and MUST NOT be treated as authoritative for execution.
+-- - Visual proof fields exist to preserve auditability for render + business operations reporting.
+CREATE TABLE IF NOT EXISTS public.cxn_external_settlement_logs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    created_at TIMESTAMPTZ DEFAULT now(),
+
+    native_tx_hash TEXT NOT NULL,
+    settlement_network_origin TEXT NOT NULL,
+    external_tx_reference TEXT NOT NULL,
+    fiat_value_pegged NUMERIC,
+
+    visual_proof_uri TEXT,
+    visual_proof_hash TEXT,
+    proof_metadata JSONB,
+
+    CONSTRAINT cxn_external_settlement_logs_native_tx_hash_not_empty CHECK (char_length(native_tx_hash) > 0),
+    CONSTRAINT cxn_external_settlement_logs_origin_not_empty CHECK (char_length(settlement_network_origin) > 0),
+    CONSTRAINT cxn_external_settlement_logs_external_ref_not_empty CHECK (char_length(external_tx_reference) > 0)
+);
+
+-- Enforce idempotent, traceable origin/reference pairing.
+CREATE UNIQUE INDEX IF NOT EXISTS ux_external_settlement_logs_origin_reference
+    ON public.cxn_external_settlement_logs (settlement_network_origin, external_tx_reference);
+
+-- Query indices (origin network + native hash is the primary lookup path).
+CREATE INDEX IF NOT EXISTS idx_external_settlement_logs_origin_native_hash
+    ON public.cxn_external_settlement_logs (settlement_network_origin, native_tx_hash);
+CREATE INDEX IF NOT EXISTS idx_external_settlement_logs_native_hash
+    ON public.cxn_external_settlement_logs (native_tx_hash);
+
+-- If the native settlement tracker table exists, bind with a foreign key so missing linkage fails safely.
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM information_schema.tables
+        WHERE table_schema = 'public'
+          AND table_name = 'treasury_actions'
+    ) THEN
+        IF NOT EXISTS (
+            SELECT 1
+            FROM information_schema.table_constraints
+            WHERE table_schema = 'public'
+              AND table_name = 'cxn_external_settlement_logs'
+              AND constraint_name = 'fk_external_settlement_logs_native_tx_hash'
+        ) THEN
+            IF EXISTS (
+                SELECT 1
+                FROM information_schema.columns
+                WHERE table_schema = 'public'
+                  AND table_name = 'treasury_actions'
+                  AND column_name = 'native_tx_hash'
+            ) THEN
+                ALTER TABLE public.cxn_external_settlement_logs
+                    ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
+                    FOREIGN KEY (native_tx_hash)
+                    REFERENCES public.treasury_actions (native_tx_hash)
+                    ON DELETE RESTRICT;
+            ELSIF EXISTS (
+                SELECT 1
+                FROM information_schema.columns
+                WHERE table_schema = 'public'
+                  AND table_name = 'treasury_actions'
+                  AND column_name = 'native_transaction_hash'
+            ) THEN
+                ALTER TABLE public.cxn_external_settlement_logs
+                    ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
+                    FOREIGN KEY (native_tx_hash)
+                    REFERENCES public.treasury_actions (native_transaction_hash)
+                    ON DELETE RESTRICT;
+            ELSIF EXISTS (
+                SELECT 1
+                FROM information_schema.columns
+                WHERE table_schema = 'public'
+                  AND table_name = 'treasury_actions'
+                  AND column_name = 'tx_hash'
+            ) THEN
+                ALTER TABLE public.cxn_external_settlement_logs
+                    ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
+                    FOREIGN KEY (native_tx_hash)
+                    REFERENCES public.treasury_actions (tx_hash)
+                    ON DELETE RESTRICT;
+            END IF;
+        END IF;
+    END IF;
+END $$;
+
 -- RLS (ROW LEVEL SECURITY) POLICIES
 -- Only TEE-authenticated agents (WIF) and authorized admins can write.
 ALTER TABLE public.cxn_locked_principal ENABLE ROW LEVEL SECURITY;
@@ -100,9 +191,13 @@ ALTER TABLE public.cxn_yield_generation ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cxn_referrals ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cxn_csf_state ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cxn_timelock_status ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.cxn_external_settlement_logs ENABLE ROW LEVEL SECURITY;
 
 -- Default Read-Only access for authenticated clients (Conxius/Gateway)
 CREATE POLICY "Read-only for authenticated clients" ON public.cxn_csf_state
+    FOR SELECT TO authenticated USING (true);
+
+CREATE POLICY "Read-only for authenticated clients" ON public.cxn_external_settlement_logs
     FOR SELECT TO authenticated USING (true);
 
 -- Indices for performance on large historical datasets
