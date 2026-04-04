@@ -8,12 +8,12 @@ Canonical tracker:
 
 This gate is intentionally framed around evidence and invariants, not "progress updates".
 
-## Current gate status (snapshot)
+## Gate status
 
-**As of:** 2026-04-04
+- **Canonical live status:** Linear (CON-329)
+- **Last reviewed:** 2026-04-04
 
-- **Pilot readiness:** `Not ready`
-- **Cutover readiness (Phase 5 clean break):** `Not ready`
+If any gate outcome changes from unmet -> met, update this section as part of the same PR/commit that changes the underlying evidence.
 
 ## Program-level success metrics
 
