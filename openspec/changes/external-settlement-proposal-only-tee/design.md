@@ -67,7 +67,8 @@ Proposal emission:
 - Validates the TEE attestation.
 - Validates that the proposal payload is “trigger-only” (no executable call data).
 - Creates a **standard** proposal object (same type system / lifecycle as native proposals).
-- Initiates the **standard** 144-block time-lock for the mapped `asset_path`.
+- Schedules the **standard** 144-block time-lock for the mapped `asset_path`.
+- MUST be idempotent on `trigger_id` (a duplicate trigger must not create additional proposals/timelocks).
 
 ### Boundary C — Proposal (queued) → Execution (permissioned)
 
