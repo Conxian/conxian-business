@@ -22,9 +22,11 @@ Related execution issues (parallelized):
 
 **Last reviewed:** 2026-04-04
 
-**Canonical live status:** https://linear.app/conxian-labs/issue/CON-329/create-sab-migration-control-plane-and-dependency-inventory
+**Canonical live status:** see *Canonical tracker* above.
 
-Update convention: update this section (including `Last reviewed`) whenever any program-level milestone changes, ideally in the same PR/commit that updates the underlying evidence.
+**Review cadence:** at least monthly, and additionally within the same PR/commit whenever any program-level milestone changes.
+
+Update convention: when this section changes, update `Last reviewed` in the same PR/commit that updates the underlying evidence.
 
 ## Canonical artifacts
 
