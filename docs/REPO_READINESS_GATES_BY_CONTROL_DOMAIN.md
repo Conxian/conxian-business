@@ -13,7 +13,7 @@ Canonical tracker:
 
 ## Current status
 
-**Status:** Living document. Update when any repo is added/renamed or when gate requirements change.
+**Status:** Living document. Repo `CODEOWNERS` and control-domain owners should update this mapping when repos are added/renamed or when gate requirements change.
 
 This document defines the _required gates_ by repo and does **not** claim that those gates are already satisfied.
 
@@ -38,10 +38,12 @@ Gate levels are intentionally coarse. Use them to prevent “we can ship” ambi
 
 Legend:
 
-- `0` = explicitly assessed as “N/A for this repo” (no `L0` / `RC0` / etc.; treat as “no meaningful exposure”; do not use `0` as a default when unsure)
+- `0` = explicitly assessed as “N/A for this repo” (no `L0` / `RC0` / etc.; treat as “no meaningful exposure”)
 - `1` = baseline controls
 - `2` = elevated controls (security/compliance review required)
 - `3` = critical controls (formal sign-off + multi-party operating controls)
+
+> Do not use level `0` as a default when unsure.
 
 Unless otherwise specified, gate levels are cumulative: level `N` assumes the controls of levels `0..N-1` are also in place.
 
