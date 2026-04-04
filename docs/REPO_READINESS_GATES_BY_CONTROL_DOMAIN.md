@@ -111,7 +111,7 @@ _Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury
 
 ### Supporting repos
 
-Name mapping note: in this superproject, the `Conxian_UI` repo is checked out at path `conxian-ui/` (planned rename tracked in CON-238).
+Superproject note: `Conxian_UI` is checked out at path `conxian-ui/` (planned rename tracked in CON-238).
 
 | Repo | Public posture | Ship posture | L | RC | FT | OC | DC | DR | OWN |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
