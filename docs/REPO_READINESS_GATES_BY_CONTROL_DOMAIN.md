@@ -43,6 +43,8 @@ Legend:
 - `2` = elevated controls (security/compliance review required)
 - `3` = critical controls (formal sign-off + multi-party operating controls)
 
+For any domain, level `0` means “N/A for this repo”; there is no `L0` / `RC0` / etc. Treat `0` as “no meaningful exposure”.
+
 Unless otherwise specified, gate levels are cumulative: level `N` assumes the controls of levels `0..N-1` are also in place.
 
 > Use level `0` only when the domain has been explicitly assessed and determined to have no meaningful exposure for that repo (not as a default when unsure).
