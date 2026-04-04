@@ -74,6 +74,8 @@ Proposal emission MUST validate that `oracle_verification` is a JSON object cont
 
 The component that invokes the TEE MUST persist the exact `raw_oracle_proof_bytes` alongside the resulting `AttestedExternalSettlementTrigger` so proposal emission can recompute `oracle_proof_digest` deterministically.
 
+If `oracle_verification` includes `oracle_proof_bytes_b64`, proposal emission MUST decode it and verify that (a) the decoded bytes are byte-identical to the persisted `raw_oracle_proof_bytes` and (b) SHA-256 over `utf8("oracle-proof:v1") || decoded_bytes` equals the attested `oracle_proof_digest`. Proposal emission MUST reject on any mismatch.
+
 Proposal emission MUST recompute `oracle_proof_digest` from the persisted `raw_oracle_proof_bytes` and MUST reject if the result differs from the `oracle_proof_digest` value bound by the TEE attestation.
 
 Prohibited fields:
@@ -167,3 +169,4 @@ Prohibited fields:
 12. `oracle_verification` is not a JSON object or is missing `oracle_proof_digest` → proposal emission fails.
 13. `oracle_verification.oracle_proof_digest` is not a lowercase hex-encoded SHA-256 digest → proposal emission fails.
 14. Canonical `settlement_identifiers` exceed the bounds in §2.1.1 → proposal emission fails.
+15. `oracle_verification.oracle_proof_bytes_b64` (if present) does not match the persisted `raw_oracle_proof_bytes` or does not hash to `oracle_proof_digest` → proposal emission fails.
