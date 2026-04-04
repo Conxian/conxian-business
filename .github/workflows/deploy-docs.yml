@@ -87,9 +87,13 @@ jobs:
           rsync -a --relative "${required[@]/#/./}" _pages/
 
           openspec_specs_allowed_exts=(md json)
-          openspec_specs_allowed_ext_re="$(IFS='|'; echo "${openspec_specs_allowed_exts[*]}")"
 
-          unexpected_openspec_files="$(find "$openspec_specs_dir" -regextype posix-extended -type f ! -regex ".*\\.(${openspec_specs_allowed_ext_re})$" -print)"
+          find_disallow_ext_args=(-type f)
+          for ext in "${openspec_specs_allowed_exts[@]}"; do
+            find_disallow_ext_args+=( ! -name "*.${ext}" )
+          done
+
+          unexpected_openspec_files="$(find "$openspec_specs_dir" "${find_disallow_ext_args[@]}" -print)"
           if [ -n "$unexpected_openspec_files" ]; then
             echo "Unexpected file type(s) under $openspec_specs_dir (allowed: ${openspec_specs_allowed_exts[*]}):" >&2
             echo "$unexpected_openspec_files" >&2
