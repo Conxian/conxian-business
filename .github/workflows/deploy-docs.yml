@@ -21,6 +21,10 @@ jobs:
       - name: Build Pages artifact (public-safe allowlist)
         run: |
           set -euo pipefail
+          if ! command -v rsync >/dev/null 2>&1; then
+            echo 'rsync is required to build the Pages artifact' >&2
+            exit 1
+          fi
 
           assert_no_symlink_segments() {
             local path="$1"
@@ -81,7 +85,7 @@ jobs:
 
           unexpected_openspec_files="$(find "$openspec_specs_dir" -regextype posix-extended -type f ! -regex ".*\\.(${openspec_specs_allowed_ext_re})$" -print -quit)"
           if [ -n "$unexpected_openspec_files" ]; then
-            echo "Unexpected file type under $openspec_specs_dir: $unexpected_openspec_files" >&2
+            echo "Unexpected file type under $openspec_specs_dir (allowed: ${openspec_specs_allowed_exts[*]}): $unexpected_openspec_files" >&2
             exit 1
           fi
 
