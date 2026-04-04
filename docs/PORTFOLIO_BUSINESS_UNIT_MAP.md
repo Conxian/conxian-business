@@ -58,7 +58,7 @@ Source-of-truth rule:
 - The repo’s committed git tree (submodule gitlinks) is authoritative for which submodules are pinned (and to what commits).
 - `.gitmodules` is authoritative for expected submodule configuration metadata (`path`, `url`, and optional `branch`).
 - This document is authoritative for business-unit/operating-function classification.
-- `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view and must not introduce repos that are not pinned and mapped here.
+- `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view; it may list additional supporting repos for context, but repos described as governed via this BOS repo must be pinned and mapped here.
 
 Portfolio hygiene automation should validate:
 
@@ -66,7 +66,7 @@ Portfolio hygiene automation should validate:
 - Every `.gitmodules` entry has a corresponding pinned gitlink and row in the ecosystem submodule mapping table.
 - Every row in the ecosystem submodule mapping table corresponds to a pinned gitlink and `.gitmodules` entry (no extra rows).
 - Every pinned gitlink with a row in the ecosystem submodule mapping table appears in `docs/REPO_PORTFOLIO.md` with a flagship/supporting classification.
-- Every BOS-native asset path enumerated in the BOS-native assets table exists in this repo.
+- Every BOS-native asset path enumerated in the BOS-native assets table exists in this repo (one-way check; new BOS-native assets must be added to the table during review).
 - If a submodule sets `branch` in `.gitmodules`, that branch exists upstream.
 
 Until portfolio hygiene automation is live, reviewers should treat these invariants as manual review criteria and reject PRs that violate them.
