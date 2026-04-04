@@ -20,7 +20,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
-Hex encoding conventions: the lowercase hex encoding of any 32-byte SHA-256 digest in this spec (including `raw_payload_hash`, `normalized_settlement_hash`, and `trigger_id`) MUST be exactly 64 characters long (`0-9`, `a-f`) and MUST include leading zeros for leading zero bytes. Concretely, `raw_payload_hash`, `normalized_settlement_hash`, and `trigger_id` MUST match `^[0-9a-f]{64}$` exactly; implementations MUST reject any value not matching this pattern (including `0x` prefixes, uppercase hex, incorrect length, or non-hex characters).
+Hex encoding conventions: the lowercase hex encoding of any 32-byte SHA-256 digest in this spec (including `raw_payload_hash`, `normalized_settlement_hash`, and `trigger_id`) MUST be exactly 64 characters long (`0-9`, `a-f`), MUST include leading zeros for leading zero bytes, and implementations MUST reject any value that does not match `^[0-9a-f]{64}$` (including `0x` prefixes, uppercase hex, incorrect length, or non-hex characters).
 
 3. **Timelock is mandatory**
    - Verified external triggers MUST initiate the standard 144-block timelock.
