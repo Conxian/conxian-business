@@ -1,6 +1,6 @@
 # Repo readiness gates by control domain (CON-227)
 
-This page defines the **minimum control gates** required for each active Conxian repository listed in the [repo portfolio](./REPO_PORTFOLIO.md), so we can consistently decide:
+This page defines the **minimum control gates** required for each active flagship and supporting Conxian repository (see [repo portfolio](./REPO_PORTFOLIO.md)), so we can consistently decide:
 
 - what is safe to keep **public**,
 - what can **ship** (be deployed / released) without additional controls,
@@ -107,6 +107,8 @@ Notes:
 | `conxian-labs-site` | Public | Ship (standard web) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
 | `conxius-platform` | Public | Conditional (ops/dev-stack gates) | 1 | 1 | 2 | 2 | 1 | 2 | 2 |
 
+_Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury impact, OC = On-chain execution risk, DC = Decentralization/custody posture, DR = Deployment readiness, OWN = Business-operating ownership._
+
 ### Supporting repos
 
 Name mapping note: in this superproject, the `Conxian_UI` repo is checked out at path `conxian-ui/` (planned rename tracked in CON-238).
@@ -119,6 +121,8 @@ Name mapping note: in this superproject, the `Conxian_UI` repo is checked out at
 | `stacksorbit` | Public | Conditional (deployment tool gates) | 1 | 1 | 3 | 3 | 0 | 3 | 3 |
 | `.github` | Public | Ship (org defaults) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
 | `conxian-business` | Public | Ship (docs/specs) | 1 | 1 | 0 | 0 | 0 | 2 | 1 |
+
+_Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury impact, OC = On-chain execution risk, DC = Decentralization/custody posture, DR = Deployment readiness, OWN = Business-operating ownership._
 
 ## Interpretation / decisions
 
