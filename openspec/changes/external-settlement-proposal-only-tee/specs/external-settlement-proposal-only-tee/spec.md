@@ -66,6 +66,8 @@ The TEE attestation MUST bind (directly or by digest) the canonical values of at
 
 `oracle_verification` MUST NOT be a bare boolean. It MUST be a JSON object and MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the 64-character lowercase hex encoding (characters `0-9a-f`, no `0x` prefix) of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
 
+The TEE MUST compute `oracle_proof_digest` from the exact `raw_oracle_proof_bytes` it verifies and MUST NOT accept any host-provided digest value as authoritative; any host-provided digest MUST be recomputed and any mismatch MUST cause attestation to fail.
+
 If `oracle_verification` embeds the raw oracle proof bytes, they MUST be encoded as base64url (no padding) in `oracle_proof_bytes_b64`.
 
 If `oracle_verification` includes `oracle_proof_bytes_b64`, decoding it MUST yield exactly the `raw_oracle_proof_bytes` used both to verify the oracle authenticity proof and to compute `oracle_proof_digest`.
@@ -120,6 +122,8 @@ Implementations MUST NOT treat any host-supplied `settlement_identifiers` as aut
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
 
 Any TEE attestation failure caused by invalid, out-of-bounds, or mismatched host-supplied `settlement_identifiers` hints for a given `{ rail, raw_payload_hash }` instance MUST be treated as a permanent validation failure in the normal automated processing pipeline. Implementations MUST NOT automatically retry the same `{ rail, raw_payload_hash }` with modified or omitted hints in order to probe for a passing combination. Any operator-initiated override that reprocesses such a payload (for example, after a production bug fix) MUST be explicitly configured, strongly audited, and MUST NOT weaken the TEE’s comparison rules.
+
+Implementations MUST distinguish hint-validation failures from transient TEE/infrastructure errors (for example, via stable error codes). Hint-validation failures MUST be treated as permanent validation failures, while transient errors MAY be retried.
 
 Minimum required identifier set (by rail):
 
