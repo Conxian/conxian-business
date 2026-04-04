@@ -142,7 +142,7 @@
     (var-set coupon-interval-blocks DEFAULT_COUPON_INTERVAL_BLOCKS)
     (var-set coupon-ppm DEFAULT_COUPON_PPM)
     (var-set next-coupon-height (+ burn-block-height DEFAULT_COUPON_INTERVAL_BLOCKS))
-    (print { event: "dlc-bond-initialized", issuer: tx-sender, sbtc: token, maturity: maturity, oracle: oracle })
+    (print { event: "dlc-bond-initialized", issuer: (var-get issuer), sbtc: token, maturity: maturity, oracle: oracle })
     (ok true)
   )
 )
