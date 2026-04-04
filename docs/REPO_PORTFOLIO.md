@@ -2,7 +2,11 @@
 
 This page defines the Conxian public repo map for external evaluation and internal consistency.
 
-For the portfolio-level business-unit/operating-function mapping (and separation-of-concerns rules), see [Portfolio business-unit map and separation of concerns](./PORTFOLIO_BUSINESS_UNIT_MAP.md). Repos governed/wired via this BOS repo (pinned as submodules in `.gitmodules`) must also be mapped in `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`; this file is an explanatory trust-surface view, not an independent source of truth, and must not list governed repos that are not both pinned and mapped there.
+For the portfolio-level business-unit/operating-function mapping (and separation-of-concerns rules), see [Portfolio business-unit map and separation of concerns](./PORTFOLIO_BUSINESS_UNIT_MAP.md).
+
+- Repos governed via this BOS repo are pinned as submodule gitlinks (configured in `.gitmodules`).
+- Every pinned submodule must be mapped in `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`.
+- This file is an explanatory trust-surface view and must not introduce governed repos that aren’t both pinned and mapped.
 
 ## Standard role line (GitHub description + README top section)
 

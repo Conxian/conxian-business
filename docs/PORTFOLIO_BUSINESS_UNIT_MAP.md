@@ -4,7 +4,7 @@
 
 This document is the portfolio-level map that assigns every repo/subrepo (submodule) and BOS asset to a **business unit** or **operating function**, and defines the separation-of-concerns boundaries needed for business development and business unit management.
 
-Today, this page is the canonical human-readable portfolio map; machine-readable BOS artifacts in `./conxian-business/` should be treated as derived outputs and kept consistent when this mapping changes. Until a machine-readable portfolio manifest exists, artifacts in `./conxian-business/` are non-authoritative derived outputs and may be regenerated/replaced.
+Today, this page is the canonical human-readable portfolio map; machine-readable BOS artifacts in `./conxian-business/` should be treated as derived outputs. When this mapping changes, ensure any intentional BOS runtime/audit updates remain consistent with it. Until a machine-readable portfolio manifest exists, artifacts in `./conxian-business/` are non-authoritative derived outputs and may be regenerated/replaced.
 
 Contributors should not edit generated BOS state artifacts under `./conxian-business/` by hand (for example: `BOS_STATE_MACHINE.json`, `AUDIT_MANIFEST.json`); treat them as outputs that may be replaced at any time. Source code in that directory (for example: `transparency_custodian.py`) is maintained normally.
 
