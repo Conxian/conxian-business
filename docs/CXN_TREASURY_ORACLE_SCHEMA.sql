@@ -331,12 +331,6 @@ CREATE POLICY "Read-only for authenticated clients" ON public.cxn_external_settl
 CREATE POLICY "Insert for service role" ON public.cxn_external_settlement_logs
     FOR INSERT TO service_role WITH CHECK (true);
 
-CREATE POLICY "Update for service role" ON public.cxn_external_settlement_logs
-    FOR UPDATE TO service_role USING (true) WITH CHECK (true);
-
-CREATE POLICY "Delete for service role" ON public.cxn_external_settlement_logs
-    FOR DELETE TO service_role USING (true);
-
 -- Indices for performance on large historical datasets
 CREATE INDEX IF NOT EXISTS idx_locked_principal_timestamp ON public.cxn_locked_principal (timestamp DESC);
 CREATE INDEX IF NOT EXISTS idx_yield_generation_timestamp ON public.cxn_yield_generation (timestamp DESC);
