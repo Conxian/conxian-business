@@ -8,6 +8,8 @@ Today, this page is the canonical human-readable portfolio map; machine-readable
 
 Contributors should not edit generated BOS state artifacts under `./conxian-business/` by hand (for example: `BOS_STATE_MACHINE.json`, `AUDIT_MANIFEST.json`); treat them as outputs that may be replaced at any time. Source code in that directory (for example: `transparency_custodian.py`) is maintained normally.
 
+Note: `./conxian-business/AUDIT_MANIFEST.json` is a public-safe stub for link stability; the generator writes the generated manifest output to `./conxian-business/.generated/AUDIT_MANIFEST.generated.json`.
+
 To regenerate the transparency audit manifest (written to `./conxian-business/.generated/AUDIT_MANIFEST.generated.json`, which is ignored by git), run:
 
 ```bash
