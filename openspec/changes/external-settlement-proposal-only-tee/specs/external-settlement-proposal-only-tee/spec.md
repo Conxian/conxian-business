@@ -99,8 +99,8 @@ Example: if a message contains three settlement-transaction entries `[A, B, C]` 
 Canonical formatting requirements:
 
 - All string values in `settlement_identifiers` MUST be canonicalized and validated as follows:
-  - MUST be a sequence of Unicode scalar values (implementations MUST reject any string containing code points in `U+D800..U+DFFF` and MUST NOT replace invalid encodings / surrogates with `U+FFFD`).
-  - If an upstream source provides bytes, implementations MUST decode them as UTF-8 and MUST reject any decoding errors.
+  - If an upstream source provides bytes, implementations MUST decode them as UTF-8 and MUST reject any decoding errors (i.e., MUST NOT substitute `U+FFFD`).
+  - MUST be a sequence of Unicode scalar values (reject surrogate code points `U+D800..U+DFFF`).
   - MUST be normalized to Unicode NFC; all subsequent validation, equality, and hashing operates on the NFC-normalized value.
   - MUST be rejected if the NFC-normalized value is empty, contains any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database), or begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
 - `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
@@ -122,7 +122,7 @@ Rails MAY include additional canonical identifiers (e.g., for reconciliation) in
 
 - `settlement_currency`: uppercase ISO 4217 code (`[A-Z]{3}`); implementations MUST convert to uppercase as part of canonicalization and MUST reject any non-ASCII-letter codes.
 - `settlement_amount`: normalized non-negative decimal string (no sign, no exponent; canonical regex: `^(0|[1-9][0-9]*)(\.[0-9]*[1-9])?$`). The emitted value MUST match this regex. Fractional parts MUST NOT end in `0`, and integer values MUST NOT include a decimal point (e.g., `0`, `1`, `0.5`, `123.45` are valid; `01`, `1.0`, `0.50` are invalid).
-- `settlement_date`: ISO 8601 full-date `YYYY-MM-DD`. The emitted value MUST match `^[0-9]{4}-[0-9]{2}-[0-9]{2}$` and MUST be a valid Gregorian calendar date.
+- `settlement_date`: ISO 8601 full-date `YYYY-MM-DD`. The emitted value MUST match `^[0-9]{4}-[0-9]{2}-[0-9]{2}$`, MUST be a valid Gregorian calendar date, and MUST NOT include any time-of-day or timezone offset component.
 
 Implementations MUST NOT attempt to “fix up” non-canonical decimal strings for `settlement_amount`; any value that does not match the canonical form (after NFC normalization) MUST cause the corresponding settlement transaction to be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
