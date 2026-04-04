@@ -58,7 +58,7 @@ Source-of-truth rule:
 - The repo’s committed git tree (submodule gitlinks) is authoritative for which submodules are pinned (and to what commits).
 - `.gitmodules` is authoritative for expected submodule configuration metadata (`path`, `url`, and optional `branch`).
 - This document is authoritative for business-unit/operating-function classification.
-- `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view; it may list additional supporting repos for context, but repos described as governed via this BOS repo must be pinned and mapped here.
+- `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view; it may list additional supporting repos for context, but every pinned submodule in the ecosystem mapping table should appear there with a flagship/supporting classification.
 
 Portfolio hygiene automation should validate:
 
