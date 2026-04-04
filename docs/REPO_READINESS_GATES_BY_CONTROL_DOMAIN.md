@@ -40,7 +40,7 @@ Gate levels are intentionally coarse. Use them to prevent “we can ship” ambi
 
 Legend:
 
-- `0` = not applicable for this repo (domain explicitly assessed as having no meaningful exposure; do **not** use as a default when unsure)
+- `0` = not applicable for this repo (domain explicitly assessed as having no meaningful exposure; rationale documented; do **not** use as a default when unsure)
 - `1` = baseline controls
 - `2` = elevated controls (security/compliance review required)
 - `3` = critical controls (formal sign-off + multi-party operating controls)
