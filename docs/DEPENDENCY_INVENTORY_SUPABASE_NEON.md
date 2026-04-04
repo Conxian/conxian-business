@@ -6,7 +6,7 @@ This document inventories **current, evidenced** touchpoints to **Supabase** and
 
 Because this repo follows **Zero Secret Egress (ZSE)**, production connection strings, project refs, keys, internal hostnames, and internal endpoints/URLs are intentionally not present here. Wherever possible, each item is labeled with an **evidence level**.
 
-**Redaction convention:** any internal endpoint/URL/hostname and any other secret material (for example: connection strings, project refs, API keys, tokens), in any environment, **must** be replaced with `<redacted>` (for MCP endpoints: `mcp://<redacted>`). Referenced evidence artifacts pinned in this repo should follow the same convention (older artifacts may not yet comply).
+**Redaction convention:** any internal endpoint, URL, hostname, or other secret material (for example: connection strings, project refs, API keys, tokens), in any environment, **must** be replaced with `<redacted>` (for MCP endpoints: `mcp://<redacted>`). Referenced evidence artifacts pinned in this repo **must** follow the same convention; older artifacts may not yet comply.
 
 ## Evidence levels
 
