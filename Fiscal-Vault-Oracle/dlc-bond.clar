@@ -73,6 +73,16 @@
   (asserts! (var-get active) (err ERR_INACTIVE))
 )
 
+(define-private (do-declare-default)
+  (begin
+    (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
+    (assert-oracle)
+    (var-set defaulted true)
+    (print { event: "dlc-bond-defaulted", defaulted: true, oracle: tx-sender })
+    (ok true)
+  )
+)
+
 (define-private (get-holder-state (holder principal))
   (default-to { index: (var-get coupon-index), accrued: u0 }
     (map-get? holder-coupons { holder: holder }))
@@ -158,13 +168,13 @@
 
 (define-public (set-defaulted (is-defaulted bool))
   (begin
-    (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
-    (assert-oracle)
     (asserts! is-defaulted (err ERR_UNAUTHORIZED))
-    (var-set defaulted true)
-    (print { event: "dlc-bond-defaulted", defaulted: true, oracle: tx-sender })
-    (ok true)
+    (do-declare-default)
   )
+)
+
+(define-public (declare-default)
+  (do-declare-default)
 )
 
 ;; Bond token (SIP-010 style)
