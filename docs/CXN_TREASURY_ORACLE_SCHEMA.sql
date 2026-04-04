@@ -5,6 +5,9 @@
 CREATE SCHEMA IF NOT EXISTS extensions;
 CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
 
+-- Ensure gen_random_uuid() resolves whether pgcrypto is installed in public or extensions.
+SET search_path = public, extensions;
+
 -- 1. BASE-LAYER ASSETS (LOCKED PRINCIPAL)
 -- Track base BTC locked in DLC Bonds and non-custodial multisigs.
 CREATE TABLE IF NOT EXISTS public.cxn_locked_principal (
@@ -364,3 +367,5 @@ CREATE INDEX IF NOT EXISTS idx_yield_generation_timestamp ON public.cxn_yield_ge
 CREATE INDEX IF NOT EXISTS idx_snackable_lockins_user ON public.cxn_snackable_lockins (user_id);
 CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON public.cxn_referrals (referrer_id);
 CREATE INDEX IF NOT EXISTS idx_timelock_release_block ON public.cxn_timelock_status (release_block);
+
+RESET search_path;
