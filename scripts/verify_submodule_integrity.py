@@ -21,8 +21,12 @@ def _run_git(args: list[str]) -> str:
     return proc.stdout
 
 
-def _parse_gitlinks() -> set[str]:
-    output = _run_git(["ls-files", "--stage"])
+def _git_root() -> Path:
+    return Path(_run_git(["rev-parse", "--show-toplevel"]).strip())
+
+
+def _parse_gitlinks(repo_root: Path) -> set[str]:
+    output = _run_git(["-C", repo_root.as_posix(), "ls-files", "--stage"])
     gitlinks: set[str] = set()
 
     for raw_line in output.splitlines():
@@ -59,8 +63,9 @@ def _parse_gitmodules_paths(gitmodules_path: Path) -> set[str]:
 
 
 def verify() -> None:
-    gitlinks = _parse_gitlinks()
-    gitmodules_paths = _parse_gitmodules_paths(Path(".gitmodules"))
+    repo_root = _git_root()
+    gitlinks = _parse_gitlinks(repo_root)
+    gitmodules_paths = _parse_gitmodules_paths(repo_root / ".gitmodules")
 
     missing_mappings = sorted(gitlinks - gitmodules_paths)
     extra_mappings = sorted(gitmodules_paths - gitlinks)
