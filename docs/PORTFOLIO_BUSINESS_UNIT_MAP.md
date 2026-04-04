@@ -57,7 +57,7 @@ Maintainer note: until the P0 portfolio manifest exists, changes to the asset li
 Source-of-truth rule:
 
 - The repo’s committed git tree (submodule gitlinks) is authoritative for which submodules are pinned (and to what commits).
-- `.gitmodules` is authoritative for expected submodule configuration metadata (`path`, `url`, and optional `branch`).
+- `.gitmodules` is authoritative for expected submodule configuration metadata (`path`, `url`).
 - This document is authoritative for business-unit/operating-function classification.
 - `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view; it may list additional supporting repos for context, but every pinned submodule in the ecosystem mapping table should appear there with a flagship/supporting classification.
 
@@ -68,12 +68,8 @@ Portfolio hygiene automation should validate:
 - Every row in the ecosystem submodule mapping table corresponds to a pinned gitlink and `.gitmodules` entry (no extra rows).
 - Every pinned gitlink with a row in the ecosystem submodule mapping table appears in `docs/REPO_PORTFOLIO.md` with a flagship/supporting classification.
 - Every BOS-native asset path enumerated in the BOS-native assets table exists in this repo (one-way check; new BOS-native assets must be added to the table during review).
-- If a submodule sets `branch` in `.gitmodules`, that branch should exist upstream; validation is best-effort and may be skipped in offline CI.
 
 Until portfolio hygiene automation is live, reviewers should treat these invariants as manual review criteria and reject PRs that violate them.
-
-Note: `.gitmodules` `branch` affects `git submodule update --remote` only; it does not change what commit is pinned.
-Policy: this repo sets `.gitmodules` `branch` for every submodule so `git submodule update --remote` behavior stays deterministic.
 
 | Asset | Type | Primary BU / function | Primary concern(s) | Notes |
 | --- | --- | --- | --- | --- |
