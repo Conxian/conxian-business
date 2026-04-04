@@ -100,7 +100,7 @@ END $$;
 -- - Visual proof fields exist to preserve auditability for render + business operations reporting.
 CREATE TABLE IF NOT EXISTS public.cxn_external_settlement_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    created_at TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
     native_tx_hash TEXT NOT NULL,
     settlement_network_origin TEXT NOT NULL,
@@ -111,9 +111,9 @@ CREATE TABLE IF NOT EXISTS public.cxn_external_settlement_logs (
     visual_proof_hash TEXT,
     proof_metadata JSONB,
 
-    CONSTRAINT cxn_external_settlement_logs_native_tx_hash_not_empty CHECK (char_length(native_tx_hash) > 0),
-    CONSTRAINT cxn_external_settlement_logs_origin_not_empty CHECK (char_length(settlement_network_origin) > 0),
-    CONSTRAINT cxn_external_settlement_logs_external_ref_not_empty CHECK (char_length(external_tx_reference) > 0)
+    CONSTRAINT cxn_external_settlement_logs_native_tx_hash_not_empty CHECK (btrim(native_tx_hash) <> ''),
+    CONSTRAINT cxn_external_settlement_logs_origin_not_empty CHECK (btrim(settlement_network_origin) <> ''),
+    CONSTRAINT cxn_external_settlement_logs_external_ref_not_empty CHECK (btrim(external_tx_reference) <> '')
 );
 
 -- Enforce idempotent, traceable origin/reference pairing.
@@ -128,6 +128,8 @@ CREATE INDEX IF NOT EXISTS idx_external_settlement_logs_native_hash
 
 -- If the native settlement tracker table exists, bind with a foreign key so missing linkage fails safely.
 DO $$
+DECLARE
+    fk_applied BOOLEAN := false;
 BEGIN
     IF EXISTS (
         SELECT 1
@@ -157,13 +159,16 @@ BEGIN
                 WHERE tc.table_schema = 'public'
                   AND tc.table_name = 'treasury_actions'
                   AND tc.constraint_type IN ('PRIMARY KEY', 'UNIQUE')
-                  AND kcu.column_name = 'native_tx_hash'
+                GROUP BY tc.constraint_name
+                HAVING COUNT(*) = 1
+                   AND MAX(kcu.column_name) = 'native_tx_hash'
             ) THEN
                 ALTER TABLE public.cxn_external_settlement_logs
                     ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
                     FOREIGN KEY (native_tx_hash)
                     REFERENCES public.treasury_actions (native_tx_hash)
                     ON DELETE RESTRICT;
+                fk_applied := true;
             ELSIF EXISTS (
                 SELECT 1
                 FROM information_schema.columns
@@ -179,13 +184,16 @@ BEGIN
                 WHERE tc.table_schema = 'public'
                   AND tc.table_name = 'treasury_actions'
                   AND tc.constraint_type IN ('PRIMARY KEY', 'UNIQUE')
-                  AND kcu.column_name = 'native_transaction_hash'
+                GROUP BY tc.constraint_name
+                HAVING COUNT(*) = 1
+                   AND MAX(kcu.column_name) = 'native_transaction_hash'
             ) THEN
                 ALTER TABLE public.cxn_external_settlement_logs
                     ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
                     FOREIGN KEY (native_tx_hash)
                     REFERENCES public.treasury_actions (native_transaction_hash)
                     ON DELETE RESTRICT;
+                fk_applied := true;
             ELSIF EXISTS (
                 SELECT 1
                 FROM information_schema.columns
@@ -201,13 +209,20 @@ BEGIN
                 WHERE tc.table_schema = 'public'
                   AND tc.table_name = 'treasury_actions'
                   AND tc.constraint_type IN ('PRIMARY KEY', 'UNIQUE')
-                  AND kcu.column_name = 'tx_hash'
+                GROUP BY tc.constraint_name
+                HAVING COUNT(*) = 1
+                   AND MAX(kcu.column_name) = 'tx_hash'
             ) THEN
                 ALTER TABLE public.cxn_external_settlement_logs
                     ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
                     FOREIGN KEY (native_tx_hash)
                     REFERENCES public.treasury_actions (tx_hash)
                     ON DELETE RESTRICT;
+                fk_applied := true;
+            END IF;
+
+            IF NOT fk_applied THEN
+                RAISE EXCEPTION 'cxn_external_settlement_logs: expected a single-column PK/UNIQUE native hash on public.treasury_actions but none was found; cannot safely enforce native linkage';
             END IF;
         END IF;
     END IF;
