@@ -28,7 +28,7 @@ The DLC bond lifecycle contract (`dlc-bond.clar`) defaults to a **fully-collater
 
 This design keeps redemptions solvent on-chain, but it also means there is no implicit "capital formation" drawdown.
 
-For cases where principal must leave the contract (e.g., executor-controlled deployment), `dlc-bond.clar` supports an **opt-in** principal drawdown mode that must be enabled *before issuance* via `enable-principal-drawdown`. In that mode, the issuer can draw down principal while the bond is paused (`active = false`) via `drawdown-principal`. Drawdowns are capped in aggregate at the initial `dlc-bond` supply; returning sBTC to the contract does not increase remaining drawdown capacity.
+For cases where principal must leave the contract (e.g., executor-controlled deployment), `dlc-bond.clar` supports an **opt-in** principal drawdown mode that must be enabled *before issuance* via `enable-principal-drawdown`. In that mode, the issuer can draw down principal while the bond is paused (`active = false`) via `drawdown-principal`. Drawdowns are capped in aggregate at the current `dlc-bond` total supply; remaining drawdown capacity is `get-bond-total-supply - get-principal-drawdown-used`.
 
 If `principal-drawdown-enabled` is set and the oracle declares default, `redeem` switches to a recovery path that pays out the remaining in-contract sBTC **pro-rata** and disables coupon claiming in that state. Any previously accrued/unclaimed coupon amounts are not paid separately; all remaining in-contract sBTC (including any coupon funding) is distributed pro-rata based on `dlc-bond` burned.
 

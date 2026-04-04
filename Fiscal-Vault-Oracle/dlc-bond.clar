@@ -54,7 +54,7 @@
 (define-data-var defaulted bool false)
 (define-data-var defaulted-at (optional uint) none)
 (define-data-var principal-drawdown-enabled bool false)
-;; Cumulative drawdown total (capped at the initial issuance supply).
+;; Cumulative drawdown total (capped at dlc-bond total supply).
 (define-data-var principal-drawdown-used uint u0)
 
 ;; Global coupon index (scaled by INDEX_PRECISION)
