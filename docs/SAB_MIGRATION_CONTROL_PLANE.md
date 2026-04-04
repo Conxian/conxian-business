@@ -24,9 +24,9 @@ Related execution issues (parallelized):
 
 **Canonical live status:** see *Canonical tracker* above.
 
-**Review cadence:** at least monthly, and additionally within the same PR/commit whenever any program-level milestone changes.
+**Review cadence:** review this section at least monthly, and additionally within the same PR/commit whenever any program-level milestone changes.
 
-Update convention: when this section changes, update `Last reviewed` in the same PR/commit that updates the underlying evidence.
+Update convention: on every review (cadence- or milestone-driven), bump `Last reviewed` in the same PR/commit that updates the underlying evidence (or a dedicated PR if no other content changes are needed).
 
 ## Canonical artifacts
 
