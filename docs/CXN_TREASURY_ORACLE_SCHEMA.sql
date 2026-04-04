@@ -2,6 +2,7 @@
 -- Single Source of Truth for Yield, Runway, and Locked Principal
 -- Last Update: April 4, 2026
 
+CREATE SCHEMA IF NOT EXISTS extensions;
 CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
 
 -- 1. BASE-LAYER ASSETS (LOCKED PRINCIPAL)
