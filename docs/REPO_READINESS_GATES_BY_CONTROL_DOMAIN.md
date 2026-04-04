@@ -28,7 +28,7 @@ This document defines the _required gates_ by repo and does **not** claim that t
 All repos (public or private) must satisfy:
 
 - No secrets / keys / seed phrases / private endpoints committed (`.env.example` only).
-- No ZSE-restricted content tracked (see `scripts/verify_knowledge_retention.py`).
+- No ZSE-restricted content tracked (validated via ZSE knowledge-retention tooling, e.g. `scripts/verify_knowledge_retention.py`).
 - `SECURITY.md` present and accurate reporting flow.
 - `CODEOWNERS` covers the repo and its high-risk paths.
 
@@ -99,11 +99,13 @@ Notes:
 | `conxius-wallet` | Public (required) | Conditional (wallet-grade gates) | 2 | 2 | 3 | 2 | 2 | 3 | 3 |
 | `conxian-gateway` | Public (required) | Conditional (service gates) | 2 | 2 | 2 | 2 | 1 | 3 | 2 |
 | `Conxian` | Public (required) | Conditional (protocol gates) | 2 | 2 | 3 | 3 | 1 | 3 | 3 |
-| `Conxian_UI` (`conxian-ui`) | Public | Conditional (UI gates) | 2 | 1 | 2 | 1 | 1 | 2 | 2 |
+| `Conxian_UI` | Public | Conditional (UI gates) | 2 | 1 | 2 | 1 | 1 | 2 | 2 |
 | `conxian-labs-site` | Public | Ship (standard web) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
 | `conxius-platform` | Public | Conditional (ops/dev-stack gates) | 1 | 1 | 2 | 2 | 1 | 2 | 2 |
 
 ### Supporting repos
+
+Name mapping note: in this superproject, the `Conxian_UI` repo is checked out at path `conxian-ui/` (planned rename tracked in CON-238).
 
 | Repo | Public posture | Ship posture | L | RC | FT | OC | DC | DR | OWN |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |

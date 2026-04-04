@@ -4,7 +4,7 @@ This page defines the Conxian public repo map for external evaluation and intern
 
 For release governance (what can ship, what must stay private, and what requires additional controls), see:
 
-- `docs/REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md`
+- [Repo Readiness Gates (Control Domains)](./REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md)
 
 ## Standard role line (GitHub description + README top section)
 
