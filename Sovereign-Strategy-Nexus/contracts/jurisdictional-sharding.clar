@@ -131,10 +131,6 @@
   (asserts! (and (>= block-time YEAR_2024_START) (< block-time YEAR_2043_START)) ERR_UNSUPPORTED_YEAR)
 )
 
-(define-private (get-block-time)
-  (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE)
-)
-
 (define-private (is-tier1-rail (sender principal) (receiver principal))
   (or
     (default-to false (map-get? tier1-counterparties sender))
@@ -288,7 +284,7 @@
           ERR_TX_REPLAY_MISMATCH
         )
       (let (
-          (block-time (get-block-time))
+          (block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE))
           (sender-country (get country (contract-call? .kyc-registry get-identity-status sender)))
           (receiver-country (get country (contract-call? .kyc-registry get-identity-status receiver)))
           (tier1-rail (is-tier1-rail sender receiver))
@@ -336,7 +332,7 @@
 )
 
 (define-read-only (get-current-year)
-  (let ((block-time (get-block-time)))
+  (let ((block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE)))
     (begin
       (assert-supported-block-time block-time)
       (ok (year-from-unix-time block-time))
@@ -345,7 +341,7 @@
 )
 
 (define-read-only (get-network-time)
-  (let ((block-time (get-block-time)))
+  (let ((block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE)))
     (begin
       (assert-supported-block-time block-time)
       (ok {
@@ -384,7 +380,7 @@
   (begin
     (asserts! (is-owner) ERR_UNAUTHORIZED)
     (let (
-        (block-time (get-block-time))
+        (block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE))
         (prev-czar (var-get compliance-czar))
       )
       (begin
@@ -412,7 +408,7 @@
     (asserts! (is-owner) ERR_UNAUTHORIZED)
     (asserts! (not (is-eq region REGION_UNKNOWN)) ERR_INVALID_REGION)
     (let (
-        (block-time (get-block-time))
+        (block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE))
         (prev-country (var-get jurisdiction-country))
         (prev-region (var-get jurisdiction-region))
       )
@@ -443,7 +439,7 @@
   (begin
     (asserts! (is-owner) ERR_UNAUTHORIZED)
     (let (
-        (block-time (get-block-time))
+        (block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE))
         (prev (map-get? country-regions { country: country }))
       )
       (begin
@@ -468,7 +464,7 @@
   (begin
     (asserts! (is-owner) ERR_UNAUTHORIZED)
     (let (
-        (block-time (get-block-time))
+        (block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE))
         (prev (map-get? country-regions { country: country }))
       )
       (begin
@@ -492,7 +488,7 @@
   (begin
     (asserts! (is-owner) ERR_UNAUTHORIZED)
     (let (
-        (block-time (get-block-time))
+        (block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE))
         (prev-trigger-zar (var-get onshore-trigger-zar))
       )
       (begin
@@ -516,12 +512,15 @@
   (begin
     (asserts! (or (is-owner) (is-czar)) ERR_UNAUTHORIZED)
     (let (
-        (block-time (get-block-time))
+        (block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE))
         (prev (default-to false (map-get? tier1-counterparties counterparty)))
       )
       (begin
         (assert-supported-block-time block-time)
-        (map-set tier1-counterparties counterparty enabled)
+        (if enabled
+          (map-set tier1-counterparties counterparty true)
+          (map-delete tier1-counterparties counterparty)
+        )
         (print {
           event: "tier1-counterparty-updated",
           counterparty: counterparty,
@@ -545,7 +544,7 @@
   (begin
     (asserts! (is-owner) ERR_UNAUTHORIZED)
     (let (
-        (block-time (get-block-time))
+        (block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE))
         (prev-enabled (var-get enable-sadc-fallback))
       )
       (begin
@@ -569,7 +568,7 @@
   (begin
     (asserts! (is-owner) ERR_UNAUTHORIZED)
     (let (
-        (block-time (get-block-time))
+        (block-time (unwrap! (get-block-info? time block-height) ERR_BLOCK_TIME_UNAVAILABLE))
         (prev-owner (var-get contract-owner))
       )
       (begin
