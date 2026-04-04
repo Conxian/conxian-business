@@ -10,7 +10,7 @@
   },
   "dilution_impact": "REDACTED",
   "dlc_logic": {
-    "outcome_set": [],
+    "outcome_set": ["REDACTED"],
     "attestation_requirement": "REDACTED",
     "signature_type": "REDACTED"
   },
