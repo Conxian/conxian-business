@@ -33,8 +33,6 @@ jobs:
           # Update only top-level submodule gitlinks (this repo's pins). Nested submodules
           # are synced to whatever each top-level submodule commit pins.
 
-          git submodule update --init --recursive
-
           declare -A PREFERRED_BRANCHES=(
             [lib-conclave-sdk]=master
           )
@@ -58,7 +56,10 @@ jobs:
             return 1
           }
 
-          while read -r key path; do
+          while IFS= read -r line; do
+            key=${line%% *}
+            path=${line#"$key "}
+
             name=${key#submodule.}
             name=${name%.path}
 
@@ -72,7 +73,7 @@ jobs:
             fi
 
             git config "submodule.${name}.branch" "$branch"
-            git submodule update --remote -- "$path"
+            git submodule update --init --remote -- "$path"
           done < <(git config -f .gitmodules --get-regexp '^submodule\..*\.path$')
 
           git submodule update --init --recursive
