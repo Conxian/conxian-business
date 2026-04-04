@@ -13,7 +13,7 @@ Canonical tracker:
 
 ## Current status
 
-**Status:** Living document. Repo `CODEOWNERS` and control-domain owners should update this mapping when any repo is added, renamed, retired/archived, or when gate requirements change. Recommended: enforce updates via `CODEOWNERS` review for this file.
+**Status:** Living document. `CODEOWNERS`-designated maintainers and control-domain owners should update this mapping whenever a repo is added, renamed, retired/archived, or when gate requirements change. Recommended: require review from the owners listed for this file in `CODEOWNERS`.
 
 **Recency:** Use Git history for this file to see when the mapping was last updated.
 
@@ -47,7 +47,7 @@ Legend:
 
 > When in doubt, default to at least level `1` and escalate to the relevant control-domain owner for a decision.
 
-Unless otherwise specified, gate levels are cumulative: level `N` assumes the controls of levels `0..N-1` are also in place.
+Unless otherwise specified, gate levels are cumulative: level `N` assumes the controls of all lower non-zero levels (`1..N-1`) are also in place.
 
 ### L — Legal / public-safe status
 
@@ -130,7 +130,7 @@ _Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury
 
 ### What can ship without additional controls
 
-Repos that can generally ship without additional controls are those whose Ship posture is a `Ship (...)` value (not `Conditional (...)`) and with `FT < 3` and `OC < 3`.
+Repos that can generally ship without additional controls are those whose Ship posture is a `Ship (...)` value (not `Conditional (...)`), with `FT < 3`, `OC < 3`, and no other control domain at level `3`.
 
 > Note: For the `.github` repo, treat changes as high-blast-radius infrastructure and require elevated review even if it meets these numeric criteria.
 
