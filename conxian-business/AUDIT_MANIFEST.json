@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "files": [],
   "stacks_anchor_payload": "0000000000000000000000000000000000000000000000000000000000000000",
-  "note": "Public-safe stub. The canonical audit manifest and anchor payload are maintained in the Conxian Linear workspace.",
+  "note": "Public-safe stub. Generated audit output is written to ./conxian-business/.generated/AUDIT_MANIFEST.generated.json (ignored). Canonical audit details are maintained in the Conxian Linear workspace.",
   "linear": {
     "workspace": "https://linear.app/conxian-labs",
     "tracking_issue": "https://linear.app/conxian-labs/issue/CON-256"
