@@ -8,6 +8,15 @@ Scope: open CON system issues, operationally defined as issues in states Triage/
 
 Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Triage -s Todo -s "In Progress" -s "In Review" -s Backlog --json` for each label in [`Release`, `Governance`, `Security`, `Hygiene`, `Bounty`], de-duplicated by `identifier` (use pagination / a sufficiently high limit so results are not truncated).
 
+## Reproducibility
+
+- For each label in scope, export issues as JSON with a high enough limit to avoid truncation (rerun with a higher `--limit` if the result count equals the limit):
+  - `ch-linear issue list -T CON -l <LABEL> -s Triage -s Todo -s "In Progress" -s "In Review" -s Backlog --limit 200 --json`
+- Merge the per-label arrays and de-duplicate by `identifier`.
+- Verify:
+  - `Total issues in scope` equals the number of unique identifiers captured (this snapshot: **90**).
+  - The `Full classification` table has one row per identifier (this snapshot: **90** rows).
+
 ## Operating definitions
 
 - **Claim-open now (mechanical)**: `state == Todo` AND unassigned AND labels include `Bounty` and `Bounty Open`.
@@ -44,14 +53,14 @@ Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Tria
 
 | Issue | Title | Assignee | Labels |
 | --- | --- | --- | --- |
-| CON-178 | Release hygiene — .github | (unassigned) | Bounty, Bounty Open, Release |
-| CON-182 | Release hygiene — Conxian | (unassigned) | Bounty, Bounty Open, Release |
-| CON-186 | Release hygiene — Conxian_UI | (unassigned) | Bounty, Bounty Open, Release |
-| CON-198 | Release hygiene — conxian-labs-site | (unassigned) | Bounty, Bounty Open, Release |
-| CON-214 | Release hygiene — lib-conclave-sdk | (unassigned) | Bounty, Bounty Open, Release |
-| CON-218 | Release hygiene — lib-conxian-core | (unassigned) | Bounty, Bounty Open, Release |
-| CON-222 | Release hygiene — stacksorbit | (unassigned) | Bounty, Bounty Open, Release |
-| CON-78 | CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync | (unassigned) | Bounty, Bounty Open |
+| [CON-178](https://linear.app/conxian-labs/issue/CON-178/release-hygiene-github) | Release hygiene — .github | (unassigned) | Bounty, Bounty Open, Release |
+| [CON-182](https://linear.app/conxian-labs/issue/CON-182/release-hygiene-conxian) | Release hygiene — Conxian | (unassigned) | Bounty, Bounty Open, Release |
+| [CON-186](https://linear.app/conxian-labs/issue/CON-186/release-hygiene-conxian-ui) | Release hygiene — Conxian_UI | (unassigned) | Bounty, Bounty Open, Release |
+| [CON-198](https://linear.app/conxian-labs/issue/CON-198/release-hygiene-conxian-labs-site) | Release hygiene — conxian-labs-site | (unassigned) | Bounty, Bounty Open, Release |
+| [CON-214](https://linear.app/conxian-labs/issue/CON-214/release-hygiene-lib-conclave-sdk) | Release hygiene — lib-conclave-sdk | (unassigned) | Bounty, Bounty Open, Release |
+| [CON-218](https://linear.app/conxian-labs/issue/CON-218/release-hygiene-lib-conxian-core) | Release hygiene — lib-conxian-core | (unassigned) | Bounty, Bounty Open, Release |
+| [CON-222](https://linear.app/conxian-labs/issue/CON-222/release-hygiene-stacksorbit) | Release hygiene — stacksorbit | (unassigned) | Bounty, Bounty Open, Release |
+| [CON-78](https://linear.app/conxian-labs/issue/CON-78/con-75-bounty-gateway-edge-offline-first-pos-sync) | CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync | (unassigned) | Bounty, Bounty Open |
 
 ## Full classification
 
