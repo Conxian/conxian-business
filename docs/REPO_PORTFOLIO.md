@@ -6,6 +6,7 @@ For the portfolio-level business-unit/operating-function mapping (and separation
 
 - Repos governed via this BOS repo are pinned as submodule gitlinks (the specific submodule commit IDs recorded in this repo’s git tree, with paths/URLs configured in `.gitmodules`).
 - Every pinned submodule must be mapped in `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`.
+- Supporting repos that are not pinned as submodule gitlinks may be listed here for context, but they are not governed by this BOS repo’s hygiene invariants unless and until they are added as submodules and mapped in `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`.
 - This file is an explanatory trust-surface view; see the “Source-of-truth rule” section in `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md` for the canonical invariants and validation rules.
 
 ## Standard role line (GitHub description + README top section)
