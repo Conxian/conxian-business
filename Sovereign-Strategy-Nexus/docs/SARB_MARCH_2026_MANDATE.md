@@ -23,3 +23,6 @@ Codify the specific exchange control rules from the South Africa 2026 Budget Spe
 - **Compliance Czar (cxn-compliance-czar)**: Enforces real-time SARB and Global Reserve rule-checking on `conxian-gateway` middleware.
 - **ZK-Attestation**: All compliance-exempted transactions must include a hardware-anchored TEE proof.
 - **ISO 20022 Module**: (Gap: EXEC-ISO) Implementation of the XML transformation engine in the Gateway for banking egress.
+
+## 6. On-chain Implementation (Clarity)
+- **Jurisdictional Sharding + Allowance Monitoring**: `Sovereign-Strategy-Nexus/contracts/jurisdictional-sharding.clar`
