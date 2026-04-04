@@ -11,9 +11,9 @@ Canonical tracker:
 
 - Linear: https://linear.app/conxian-labs/issue/CON-227/map-repo-readiness-gates-by-control-domain
 
-## Current status (snapshot)
+## Current status
 
-**As of:** 2026-04-04
+**Status:** Living document. Update when any repo is added/renamed or when gate requirements change.
 
 This document defines the _required gates_ by repo and does **not** claim that those gates are already satisfied.
 
@@ -130,7 +130,7 @@ _Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury
 
 ### What can ship without additional controls
 
-Repos with Ship posture and no `FT3`/`OC3` exposure can generally ship with standard engineering hygiene (no secrets, basic CI). As of this snapshot, that includes:
+Repos with Ship posture and no `FT3`/`OC3` exposure can generally ship with standard engineering hygiene (no secrets, basic CI). Based on the mapping above, that includes:
 
 - `conxian-labs-site`
 - `lib-conxian-core`
@@ -147,7 +147,7 @@ Regardless of repo visibility, the following content **must not be tracked in Gi
 
 ### What needs additional controls before rollout
 
-Any repo with `FT3` and/or `OC3` is “break-glass” territory and needs formal operating controls before mainnet rollout. As of this snapshot, that includes:
+Any repo with `FT3` and/or `OC3` is “break-glass” territory and needs formal operating controls before mainnet rollout. Based on the mapping above, that includes:
 
 - `Conxian`
 - `conxius-wallet`
