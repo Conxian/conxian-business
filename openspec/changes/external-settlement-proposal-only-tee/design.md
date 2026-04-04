@@ -33,9 +33,16 @@ This design makes the boundaries between parsing, attestation, and execution exp
 - Compute a stable digest of the payload (e.g. `sha256(raw_payload_bytes)`).
 - Extract only the fields required for mapping + audit.
 
+Clarification (to avoid “trust the parser”):
+
+- The TEE MUST receive `raw_payload_bytes` (or a rail-defined canonical byte representation).
+- The TEE MUST recompute `raw_payload_hash = sha256(raw_payload_bytes)` internally and compare it to any untrusted-side claimed hash.
+- If the TEE produces or hashes `normalized_settlement`, it MUST use a deterministic canonical serialization (e.g., RFC 8785 JCS for JSON; a rail-defined XML canonicalization for ISO 20022).
+- The attested artifact MUST NOT include raw payload bytes (only hashes + extracted fields required for mapping and audit).
+
 **Trusted responsibilities** (TEE / Conclave):
 
-- Re-validate the digest + normalized payload inside the TEE.
+- Recompute + re-validate the digest and any normalized payload hashing inside the TEE.
 - Verify the oracle authenticity for the external rail (signature/HMAC/cert-chain; rail-specific).
 - Produce an attested artifact that binds:
   - `rail`,
