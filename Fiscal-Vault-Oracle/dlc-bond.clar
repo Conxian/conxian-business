@@ -208,6 +208,11 @@
     (asserts! (> amount u0) (err ERR_ZERO_AMOUNT))
     (asserts! (< burn-block-height (var-get maturity-height)) (err ERR_NOT_MATURED))
 
+    ;; Bond-style issuance window: subscriptions are only allowed before the first
+    ;; coupon distribution, and never once the next coupon is due.
+    (asserts! (is-eq (var-get coupon-index) u0) (err ERR_UNAUTHORIZED))
+    (asserts! (< burn-block-height (var-get next-coupon-height)) (err ERR_UNAUTHORIZED))
+
     ;; Move principal (sBTC) into the bond contract
     (try! (contract-call? (var-get sbtc-token) transfer amount tx-sender (bond-contract) none))
 
