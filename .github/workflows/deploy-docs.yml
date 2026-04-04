@@ -58,20 +58,23 @@ jobs:
 
           rsync -a --relative "${required[@]/#/.\/}" _pages/
 
-          unexpected_openspec_files="$(find "$openspec_specs_dir" -type f ! \( -name '*.md' -o -name '*.json' \) -print -quit)"
+          openspec_specs_allowed_exts=(md json)
+          openspec_specs_allowed_ext_re="$(IFS='|'; echo "${openspec_specs_allowed_exts[*]}")"
+
+          unexpected_openspec_files="$(find "$openspec_specs_dir" -regextype posix-extended -type f ! -regex ".*\\.(${openspec_specs_allowed_ext_re})$" -print -quit)"
           if [ -n "$unexpected_openspec_files" ]; then
             echo "Unexpected file type under $openspec_specs_dir: $unexpected_openspec_files" >&2
             exit 1
           fi
 
           mkdir -p _pages/openspec/specs
-          rsync -a --delete \
-            --include='*/' \
-            --include='*.md' \
-            --include='*.json' \
-            --exclude='*' \
-            "$openspec_specs_dir/" \
-            _pages/openspec/specs/
+          rsync_includes=(--include='*/')
+          for ext in "${openspec_specs_allowed_exts[@]}"; do
+            rsync_includes+=(--include="*.${ext}")
+          done
+          rsync_includes+=(--exclude='*')
+
+          rsync -a --delete "${rsync_includes[@]}" "$openspec_specs_dir/" _pages/openspec/specs/
 
           cat > _pages/index.html <<'EOF'
           <!doctype html>
