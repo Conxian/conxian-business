@@ -153,7 +153,7 @@ The per-rail `tx_index` parentheticals below are summaries; the spec is authorit
 Canonical formatting requirements:
 
 - `transaction_identifiers.transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
-- `envelope_identifiers.tx_index` MUST be a non-negative integer.
+- `envelope_identifiers.tx_index` MUST be a JSON number that is an integer in the range `[0, 9007199254740991]` (inclusive, i.e. `2^53-1`).
 
 Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 

@@ -17,7 +17,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
        - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
-     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies `settlement_identifiers` as hints, those hints MUST be provided to the TEE as input and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch)
+     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies `settlement_identifiers` as hints, those hints MUST be provided to the TEE as input and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch and oversized hints)
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
@@ -66,6 +66,8 @@ The TEE attestation MUST bind (directly or by digest) the canonical values of at
 
 `oracle_verification` MUST NOT be a bare boolean. It MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the lowercase hex encoding of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
 
+Proposal emission MUST verify that the oracle proof bytes it verifies match the attested `oracle_verification.oracle_proof_digest`.
+
 Prohibited fields:
 
 - `raw_payload_bytes`
@@ -78,7 +80,7 @@ Prohibited fields:
 - `transaction_identifiers`: envelope-agnostic identifiers for the settlement transaction.
 - `envelope_identifiers`: envelope/message-local identifiers for audit/debug only.
 
-Within `settlement_identifiers`, implementations MUST use only JSON objects with leaf values restricted to JSON strings and JSON numbers that MUST be integers in the range `[0, 9007199254740991]` (inclusive); arrays MUST NOT be used.
+Within `settlement_identifiers`, implementations MUST use only JSON objects with leaf values restricted to JSON strings and JSON numbers that MUST be integers in the range `[0, 9007199254740991]` (inclusive, i.e. `2^53-1`); arrays MUST NOT be used.
 
 `transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
 
@@ -116,7 +118,7 @@ Example: if a message contains three settlement-transaction entries `[A, B, C]` 
 Canonical formatting requirements:
 
 - `transaction_identifiers.transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
-- `envelope_identifiers.tx_index` MUST be a JSON number that is an integer in the range `[0, 9007199254740991]` (inclusive).
+- `envelope_identifiers.tx_index` MUST be a JSON number that is an integer in the range `[0, 9007199254740991]` (inclusive, i.e. `2^53-1`).
 
 ### 2.2 `SovereignProposal` (trigger-kind)
 
