@@ -46,6 +46,8 @@
 
 ;; Global coupon index (scaled by INDEX_PRECISION)
 (define-data-var coupon-index uint u0)
+;; Remainder carried forward when converting funded coupon amounts into index increments.
+(define-data-var coupon-index-remainder uint u0)
 (define-data-var coupon-index-remainder uint u0)
 
 ;; Bond token (1:1 with principal units deposited)
@@ -242,6 +244,7 @@
       (try! (contract-call? (var-get sbtc-token) transfer coupon-amount tx-sender (bond-contract) none))
 
       ;; Update global coupon index
+      ;; Carry forward remainder to reduce permanently unallocated coupon dust.
       (let (
         (numerator (+ (* coupon-amount INDEX_PRECISION) (var-get coupon-index-remainder)))
         (inc (/ numerator supply))
@@ -325,6 +328,7 @@
       (candidate-next (+ burn-block-height interval-blocks))
       (current-next (var-get next-coupon-height))
     )
+      ;; Prevent postponing an already-scheduled coupon by increasing the interval.
       (var-set next-coupon-height (if (< candidate-next current-next) candidate-next current-next))
     )
     (ok true)
