@@ -17,7 +17,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
        - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
-     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes` and validated against any host-supplied hints as specified in §2.1.1
+     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies `settlement_identifiers` as hints, those hints MUST be provided to the TEE as input; the TEE MUST refuse to produce a successful attestation if any overlapping field mismatches (per §2.1.1)
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
@@ -62,7 +62,7 @@ Minimum fields:
 - `tee_attestation`
 - `oracle_verification`
 
-The TEE attestation MUST bind (directly or by digest) the canonical values of at least `{ rail, raw_payload_hash, normalized_settlement_hash, trigger_id, settlement_identifiers, asset_path, timelock_delay_blocks, oracle_verification }` so they cannot be altered after verification.
+The TEE attestation MUST bind (directly or by digest) the canonical values of at least `{ rail, raw_payload_hash, normalized_settlement_hash, trigger_id, settlement_identifiers, asset_path, timelock_delay_blocks, oracle_verification }` so they cannot be altered after verification. The binding for `oracle_verification` MUST include the exact oracle proof bytes (or a digest thereof) that proposal emission verifies, so the proof cannot be swapped after verification.
 
 Prohibited fields:
 
@@ -84,7 +84,7 @@ Within `settlement_identifiers`, implementations MUST use only JSON objects with
 
 `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`.
 
-Implementations MUST NOT treat any host-supplied `settlement_identifiers` as authoritative. If a host supplies any identifiers as an optimization hint, the TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). Proposal emission MUST be rejected if any overlapping field differs. Any host-supplied extra fields MUST be ignored for canonicalization purposes.
+Implementations MUST NOT treat any host-supplied `settlement_identifiers` as authoritative. If a host supplies any identifiers as an optimization hint, the host-supplied object MUST be provided to the TEE as input. The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping field differs, the TEE MUST refuse to produce a successful attestation and proposal emission MUST be rejected. Any host-supplied extra fields MUST be ignored for canonicalization purposes.
 
 Minimum required identifier set (by rail):
 
