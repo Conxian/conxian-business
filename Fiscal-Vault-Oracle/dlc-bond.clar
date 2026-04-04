@@ -27,6 +27,7 @@
 (define-constant ERR_ALREADY_ISSUED u20013)
 (define-constant ERR_COUPONS_DISABLED_IN_RECOVERY u20014)
 (define-constant ERR_PRINCIPAL_DRAWDOWN_EXCEEDED u20015)
+(define-constant ERR_PRINCIPAL_DRAWDOWN_ALREADY_ENABLED u20016)
 
 ;; Fixed point constants
 (define-constant PPM_DENOM u1000000)          ;; 1.0 = 1,000,000 ppm
@@ -210,6 +211,7 @@
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
     (assert-issuer)
+    (asserts! (not (var-get principal-drawdown-enabled)) (err ERR_PRINCIPAL_DRAWDOWN_ALREADY_ENABLED))
     (asserts! (is-eq (ft-get-supply dlc-bond) u0) (err ERR_ALREADY_ISSUED))
     (var-set principal-drawdown-enabled true)
     (print { event: "dlc-bond-principal-drawdown-enabled", issuer: (var-get issuer) })
