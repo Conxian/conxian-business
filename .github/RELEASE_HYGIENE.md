@@ -35,6 +35,7 @@ Some suites only run when a label is applied. Apply the label early so CI starts
 Notes:
 
 - The label-gated jobs only run for PRs opened from branches in this repository (not forks).
+- For PRs opened from forks, a maintainer is responsible for ensuring the relevant suites run before merge.
 - `showcase-dapp/` PRs can also trigger `Showcase DApp - Vercel Deployment` preview when `infra` is applied.
 
 ## PR and merge expectations
