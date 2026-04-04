@@ -17,7 +17,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
        - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
-     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies `settlement_identifiers` as hints, those hints MUST be provided to the TEE as input and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch and oversized hints)
+     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies a `settlement_identifiers` object as an optimization hint, that object MUST be provided to the TEE as input and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch and oversized hints)
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
@@ -62,7 +62,7 @@ Minimum fields:
 - `tee_attestation`
 - `oracle_verification`
 
-The TEE attestation MUST bind (directly or by digest) the canonical values of at least `{ rail, raw_payload_hash, normalized_settlement_hash, trigger_id, settlement_identifiers, asset_path, timelock_delay_blocks, oracle_verification }` so they cannot be altered after verification. The binding for `oracle_verification` MUST include the exact oracle proof bytes (or a digest thereof) that proposal emission verifies, so the proof cannot be swapped after verification.
+The TEE attestation MUST bind (directly or by digest) the canonical values of at least `{ rail, raw_payload_hash, normalized_settlement_hash, trigger_id, settlement_identifiers, asset_path, timelock_delay_blocks, oracle_verification }` so they cannot be altered after verification. The canonical `oracle_verification` value that the TEE attests MUST embed either the exact oracle proof bytes or a digest of those bytes, and proposal emission MUST verify only that same proof input, so a different proof cannot be substituted before or after attestation.
 
 `oracle_verification` MUST NOT be a bare boolean. It MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the lowercase hex encoding of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
 
