@@ -46,7 +46,7 @@ secrets.json
 /archive/
 
 # Generated audit artifacts
-/conxian-business/AUDIT_MANIFEST.json
+/conxian-business/.generated/
 
 # Terraform
 .terraform/
