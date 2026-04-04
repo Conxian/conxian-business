@@ -128,7 +128,7 @@ Trigger granularity:
 
 Minimum required identifier set (by rail):
 
-For normative `tx_index` requirements (ordering source, no-reorder constraint, and inclusion rules), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical).
+For normative `tx_index` requirements (ordering source, no-reorder constraint, and inclusion rules), see [spec.md: canonical `settlement_identifiers` set](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical).
 
 The per-rail `tx_index` parentheticals below are summaries; the spec is authoritative.
 
@@ -147,20 +147,20 @@ The per-rail `tx_index` parentheticals below are summaries; the spec is authorit
 
 Canonical formatting requirements:
 
-For normative formatting/equality rules (including any optional reconciliation identifier keys), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical).
+For normative formatting/equality rules (including any optional reconciliation identifier keys), see [spec.md: canonical `settlement_identifiers` set](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical).
 
 Informal summary:
 
-- String-valued settlement identifiers in `settlement_identifiers` are canonicalized using Unicode NFC (per Unicode 15.1.0) and compared byte-for-byte over UTF-8; case is preserved unless a field-specific canonicalization rule (e.g., uppercasing `settlement_currency`) explicitly requires a transform (see §2.1.1).
-- These identifier values are non-empty and, after NFC normalization, exclude Unicode control/format characters (`General_Category` Cc or Cf) and leading/trailing Unicode whitespace (`White_Space=Y`). See §2.1.1 for the precise normative rules.
-- If any value in `settlement_identifiers` fails canonicalization or validation under §2.1.1, that settlement transaction is invalid for external-settlement trigger purposes and does not produce a `normalized_settlement_hash` or `SovereignProposal`.
+- String-valued settlement identifiers in `settlement_identifiers` are canonicalized using Unicode NFC (per Unicode 15.1.0) and compared byte-for-byte over UTF-8; case is preserved unless a field-specific canonicalization rule (e.g., uppercasing `settlement_currency`) explicitly requires a transform (see [spec.md: canonical `settlement_identifiers` set](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical)).
+- These identifier values are non-empty and, after NFC normalization, exclude Unicode control/format characters (`General_Category` Cc or Cf) and leading/trailing Unicode whitespace (`White_Space=Y`). See [spec.md: canonical `settlement_identifiers` set](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical) for the precise normative rules.
+- If any value in `settlement_identifiers` fails canonicalization or validation under [spec.md: canonical `settlement_identifiers` set](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical), that settlement transaction is invalid for external-settlement trigger purposes and does not produce a `normalized_settlement_hash` or `SovereignProposal`.
 - `envelope_identifiers.tx_index` is a non-negative integer.
 
 Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
-Note: `trigger_id` MUST be a pure function of `{ rail, normalized_settlement_hash }`, where `rail` is the canonical uppercase rail identifier defined in [spec.md §1.7](specs/external-settlement-proposal-only-tee/spec.md#idempotency-replay-protection) (e.g., `ISO20022`, `PAPSS`, or `BRICS`); differences in `raw_payload_hash` alone (e.g., different envelopes/messages carrying the same normalized settlement transaction) MUST NOT affect `trigger_id`.
+Note: `trigger_id` MUST be a pure function of `{ rail, normalized_settlement_hash }`, where `rail` is the canonical uppercase rail identifier defined in [spec.md: Idempotency / replay protection](specs/external-settlement-proposal-only-tee/spec.md#idempotency-replay-protection) (e.g., `ISO20022`, `PAPSS`, or `BRICS`); differences in `raw_payload_hash` alone (e.g., different envelopes/messages carrying the same normalized settlement transaction) MUST NOT affect `trigger_id`.
 
-To ensure cross-implementation stability, `trigger_id` MUST be derived exactly as specified in [spec.md §1.7 (Idempotency / replay protection)](specs/external-settlement-proposal-only-tee/spec.md#idempotency-replay-protection) (illustrative mental model only: `hexLower(sha256(utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))))`).
+To ensure cross-implementation stability, `trigger_id` MUST be derived exactly as specified in [spec.md: Idempotency / replay protection](specs/external-settlement-proposal-only-tee/spec.md#idempotency-replay-protection) (illustrative mental model only: `hexLower(sha256(utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))))`).
 
 ### 3.3 `SovereignProposal` (proposal lane)
 

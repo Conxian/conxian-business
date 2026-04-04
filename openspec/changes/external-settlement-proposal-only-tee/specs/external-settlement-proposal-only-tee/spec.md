@@ -8,7 +8,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
    - A raw ISO 20022 / PAPSS / BRICS payload MUST NOT be consumed by any execution function.
    - Raw payloads MAY be parsed/normalized for audit and mapping.
 
-2. **TEE verification is required before proposal emission**
+2. **TEE verification is required before proposal emission** <a id="tee-verification"></a>
    - A proposal MUST NOT be emitted unless a TEE/StrongBox/CloudTEE attestation verifies:
      - `raw_payload_hash` MUST equal the lowercase hex encoding (no `0x` prefix) of the 32-byte SHA-256 digest of `raw_payload_bytes` (computed from `raw_payload_bytes` inside the TEE),
      - `normalized_settlement_hash` MUST equal the lowercase hex encoding (no `0x` prefix) of the 32-byte SHA-256 digest of `canonical_settlement_tx_bytes`, where `canonical_settlement_tx_bytes` is the rail-specific canonical serialization of the normalized settlement transaction (computed inside the TEE as follows):
@@ -17,7 +17,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
        - XML: W3C XML Canonicalization 1.1
          - `canonical_settlement_tx_bytes` MUST be the XML C14N 1.1 octet stream output (not re-encoded as text).
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
-       - The canonical settlement transaction bytes (`canonical_settlement_tx_bytes`) hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
+       - The canonical settlement transaction bytes (`canonical_settlement_tx_bytes`) hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in [the canonical `settlement_identifiers` set](#settlement-identifiers-canonical), and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
@@ -46,7 +46,7 @@ Hex encoding conventions: the lowercase hex encoding of any 32-byte SHA-256 dige
      - `rail` MUST be encoded as an uppercase ASCII string with one of: `"ISO20022"`, `"PAPSS"`, `"BRICS"`.
      - Implementations MUST reject any external settlement trigger whose `rail` field is not exactly one of the allowed strings above.
      - Expanding the rail identifier set requires a spec update, and may require versioning the `trigger_id` domain separator.
-     - `normalized_settlement_hash` MUST be exactly the 64-character lowercase hex SHA-256 string over `canonical_settlement_tx_bytes` computed as specified in §1.2.
+     - `normalized_settlement_hash` MUST be exactly the 64-character lowercase hex SHA-256 string over `canonical_settlement_tx_bytes` computed as specified in [TEE verification](#tee-verification).
      - The canonicalized value MUST be the JCS output for the JSON object `{"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}` (exact key names as shown).
      - The hash input MUST be the byte concatenation `utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))`.
      - The hash MUST be SHA-256 over the hash input bytes.
@@ -61,11 +61,11 @@ Hex encoding conventions: the lowercase hex encoding of any 32-byte SHA-256 dige
 
 Minimum fields:
 
-- `rail` (see §1.7 for canonical encoding and allowed values)
+- `rail` (see [Idempotency / replay protection](#idempotency-replay-protection) for canonical encoding and allowed values)
 - `raw_payload_hash` (lowercase hex encoding, no `0x` prefix, of the 32-byte SHA-256 digest of `raw_payload_bytes`)
 - `settlement_identifiers` (per-rail canonical set; see below)
-- `normalized_settlement_hash` (see §1.2 for canonical settlement bytes and encoding)
-- `trigger_id` (lowercase hex encoding, no `0x` prefix, of the 32-byte SHA-256 digest computed as specified in §1.7)
+- `normalized_settlement_hash` (see [TEE verification](#tee-verification) for canonical settlement bytes and encoding)
+- `trigger_id` (lowercase hex encoding, no `0x` prefix, of the 32-byte SHA-256 digest computed as specified in [Idempotency / replay protection](#idempotency-replay-protection))
 - `asset_path`
 - `timelock_delay_blocks` (must equal `144`)
 - `tee_attestation`
