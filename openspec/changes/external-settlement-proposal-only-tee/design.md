@@ -105,6 +105,15 @@ Execution must never accept or interpret raw TradFi payloads.
 
 Each rail MUST define a canonical identifier set used to populate `settlement_identifiers` for audit and reconciliation.
 
+`settlement_identifiers` SHOULD be treated as two namespaces:
+
+- `transaction_identifiers`: envelope-agnostic identifiers for the settlement transaction.
+- `envelope_identifiers`: envelope/message-local identifiers for audit/debug only.
+
+`transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
+
+`envelope_identifiers` (including `tx_index`) MUST NOT affect `normalized_settlement_hash`.
+
 Replay protection and deterministic idempotency are enforced via `trigger_id` derived from `{ rail, normalized_settlement_hash }`.
 
 Trigger granularity:
@@ -116,23 +125,22 @@ Trigger granularity:
 Minimum required identifier set (by rail):
 
 - **ISO20022 (pacs.008)**
-  - `tx_index` (0-based index of the `CdtTrfTxInf` entry in rail-defined document order)
-  - `transaction_reference` (MUST use the first available in this order)
+  - `transaction_identifiers.transaction_reference` (MUST use the first available in this order)
     - `uetr` (e.g., `CdtTrfTxInf.PmtId.UETR`), else
     - `end_to_end_id` (e.g., `CdtTrfTxInf.PmtId.EndToEndId`), else
-    - `tx_index` (canonical base-10 string; no leading zeros)
+    - `instruction_id` (e.g., `CdtTrfTxInf.PmtId.InstrId`)
+  - `envelope_identifiers.tx_index` (0-based index of the `CdtTrfTxInf` entry in rail-defined document order)
 - **PAPSS**
-  - `tx_index` (0-based index in rail-defined order)
-  - `transaction_reference` (rail-provided unique reference; if not present, use `tx_index` as a canonical base-10 string)
+  - `transaction_identifiers.transaction_reference` (rail-provided unique reference)
+  - `envelope_identifiers.tx_index` (0-based index in rail-defined order)
 - **BRICS**
-  - `tx_index` (0-based index in rail-defined order)
-  - `transaction_reference` (rail-provided unique reference; if not present, use `tx_index` as a canonical base-10 string)
+  - `transaction_identifiers.transaction_reference` (rail-provided unique reference)
+  - `envelope_identifiers.tx_index` (0-based index in rail-defined order)
 
 Canonical formatting requirements:
 
-- `transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
-- `tx_index` MUST be a non-negative integer.
-- If `transaction_reference` is derived from `tx_index`, it MUST be the canonical base-10 representation of `tx_index` with no leading zeros.
+- `transaction_identifiers.transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
+- `envelope_identifiers.tx_index` MUST be a non-negative integer.
 
 Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 

@@ -15,7 +15,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
        - JSON: RFC 8785 JSON Canonicalization Scheme (JCS)
        - XML: W3C XML Canonicalization 1.1
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
-       - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `settlement_identifiers` defined in §2.1.1.
+       - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
@@ -65,25 +65,34 @@ Prohibited fields:
 
 - `raw_payload_bytes`
 - Any full parsed external-settlement payload structure (XML/JSON) beyond the canonical `settlement_identifiers`.
+
 #### 2.1.1 `settlement_identifiers` (per-rail canonical set)
+
+`settlement_identifiers` MUST be a JSON object with two namespaces:
+
+- `transaction_identifiers`: envelope-agnostic identifiers for the settlement transaction.
+- `envelope_identifiers`: envelope/message-local identifiers for audit/debug only.
+
+`transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
+
+`envelope_identifiers` MUST NOT affect `normalized_settlement_hash`.
 
 Minimum required identifier set (by rail):
 
 - **ISO20022 (pacs.008)**
-  - `tx_index`
-  - `transaction_reference` (prefer `uetr`, else `end_to_end_id`, else `tx_index` as a canonical base-10 string)
+  - `transaction_identifiers.transaction_reference` (prefer `uetr`, else `end_to_end_id`, else `instruction_id`)
+  - `envelope_identifiers.tx_index`
 - **PAPSS**
-  - `tx_index`
-  - `transaction_reference` (if not present, use `tx_index` as a canonical base-10 string)
+  - `transaction_identifiers.transaction_reference`
+  - `envelope_identifiers.tx_index`
 - **BRICS**
-  - `tx_index`
-  - `transaction_reference` (if not present, use `tx_index` as a canonical base-10 string)
+  - `transaction_identifiers.transaction_reference`
+  - `envelope_identifiers.tx_index`
 
 Canonical formatting requirements:
 
-- `transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
-- `tx_index` MUST be a non-negative integer.
-- If `transaction_reference` is derived from `tx_index`, it MUST be the canonical base-10 representation of `tx_index` with no leading zeros.
+- `transaction_identifiers.transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
+- `envelope_identifiers.tx_index` MUST be a non-negative integer.
 
 ### 2.2 `SovereignProposal` (trigger-kind)
 
