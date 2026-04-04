@@ -6,7 +6,7 @@ Scope: open CON issues (states: Triage/Todo/In Progress/In Review/Backlog) that 
 
 Operating definitions
 
-- **Claim-open now**: `state == Todo` AND label `Bounty Open` AND unassigned.
+- **Claim-open now**: `state == Todo` AND category `community-claimable` AND label `Bounty Open` AND unassigned.
 - **Community-claimable**: safe to execute externally (docs/repo hygiene), with no privileged deploy/wallet/treasury access required.
 - **Internal-only**: security-sensitive, deployment-sensitive, wallet/treasury/signer, or release-gating work.
 - **Blocked**: intended work, but can't proceed until a prerequisite is resolved.
@@ -15,7 +15,13 @@ Operating definitions
 Payout alignment
 
 - Claim intake and maintainer review can proceed before payout readiness exists.
-- **A claim is not a payout commitment** until ConxianCSF is verified deployed on Stacks mainnet AND the ALEX-funded payout path is verified end-to-end with internal signer/wallet/approval controls.
+- **Payout-enabled bounty execution begins only after**:
+  - ConxianCSF full system deployment is verified on Stacks mainnet
+  - ALEX launch funding path is live and confirmed as the bounty source
+  - signer, wallet, and approval controls are verified internally
+  - post-deploy verification and rollback expectations are documented
+- **A claim is not a payout commitment** until all of the above are satisfied and the ALEX-funded payout path is verified end-to-end with internal signer/wallet/approval controls.
+- Until those checks are complete, issues may be claim-screened and worked only under explicit maintainer approval and without any implied payout commitment.
 
 Summary
 
