@@ -62,11 +62,13 @@ Minimum fields:
 - `tee_attestation`
 - `oracle_verification`
 
-The TEE attestation MUST bind (directly or by digest) the canonical values of at least `{ rail, raw_payload_hash, normalized_settlement_hash, trigger_id, settlement_identifiers, asset_path, timelock_delay_blocks, oracle_verification }` so they cannot be altered after verification. The canonical `oracle_verification` value that the TEE attests MUST embed either the exact oracle proof bytes or a digest of those bytes, and proposal emission MUST verify only that same proof input, so a different proof cannot be substituted before or after attestation.
+The TEE attestation MUST bind (directly or by digest) the canonical values of at least `{ rail, raw_payload_hash, normalized_settlement_hash, trigger_id, settlement_identifiers, asset_path, timelock_delay_blocks, oracle_verification }` so they cannot be altered after verification. The canonical `oracle_verification` value that the TEE attests MUST embed `oracle_proof_digest` (and MAY additionally embed the exact oracle proof bytes), and proposal emission MUST verify only that same proof input, so a different proof cannot be substituted before or after attestation.
 
-`oracle_verification` MUST NOT be a bare boolean. It MUST be a JSON object and MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the lowercase hex encoding of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
+`oracle_verification` MUST NOT be a bare boolean. It MUST be a JSON object and MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the 64-character lowercase hex encoding (characters `0-9a-f`, no `0x` prefix) of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
 
 If `oracle_verification` embeds the raw oracle proof bytes, they MUST be encoded as base64url (no padding) in `oracle_proof_bytes_b64`.
+
+Proposal emission MUST validate that `oracle_verification` is a JSON object containing `oracle_proof_digest` in the format defined above and, if present, `oracle_proof_bytes_b64` as valid base64url (no padding); any violation MUST cause the proposal to be rejected.
 
 `raw_oracle_proof_bytes` MUST be the exact byte sequence of the oracle authenticity proof input, before any internal parsing, canonicalization, or transformation.
 
@@ -108,6 +110,8 @@ Implementations MUST NOT treat any host-supplied `settlement_identifiers` as aut
 - The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping field differs, the TEE MUST refuse to produce a successful attestation.
 - Any host-supplied extra fields MUST be ignored for canonicalization purposes.
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
+
+Any TEE attestation failure caused by invalid, out-of-bounds, or mismatched host-supplied `settlement_identifiers` hints for a given `raw_payload_bytes` instance MUST be treated as a fatal error for that payload and MUST NOT be circumvented by retrying TEE invocation without hints or with a modified hint object.
 
 Minimum required identifier set (by rail):
 
