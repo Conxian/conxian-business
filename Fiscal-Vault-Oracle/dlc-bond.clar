@@ -211,8 +211,8 @@
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
     (assert-issuer)
-    (asserts! (not (var-get principal-drawdown-enabled)) (err ERR_PRINCIPAL_DRAWDOWN_ALREADY_ENABLED))
     (asserts! (is-eq (ft-get-supply dlc-bond) u0) (err ERR_ALREADY_ISSUED))
+    (asserts! (not (var-get principal-drawdown-enabled)) (err ERR_PRINCIPAL_DRAWDOWN_ALREADY_ENABLED))
     (var-set principal-drawdown-enabled true)
     (print { event: "dlc-bond-principal-drawdown-enabled", issuer: (var-get issuer) })
     (ok true)
