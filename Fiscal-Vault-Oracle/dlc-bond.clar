@@ -151,7 +151,7 @@
 )
 
 ;; Initialization
-(define-public (initialize (token principal) (maturity uint) (oracle principal))
+(define-public (initialize (token <sip-010-ft-trait>) (maturity uint) (oracle principal))
   (begin
     (assert-issuer)
     (asserts! (not (var-get initialized)) (err ERR_ALREADY_INITIALIZED))
@@ -159,12 +159,12 @@
     (var-set initialized true)
     (var-set active true)
     (var-set dlc-oracle oracle)
-    (var-set sbtc-token token)
+    (var-set sbtc-token (contract-of token))
     (var-set maturity-height maturity)
     (var-set coupon-interval-blocks DEFAULT_COUPON_INTERVAL_BLOCKS)
     (var-set coupon-ppm DEFAULT_COUPON_PPM)
     (var-set next-coupon-height (+ burn-block-height DEFAULT_COUPON_INTERVAL_BLOCKS))
-    (print { event: "dlc-bond-initialized", issuer: (var-get issuer), sbtc: token, maturity: maturity, oracle: oracle })
+    (print { event: "dlc-bond-initialized", issuer: (var-get issuer), sbtc: (contract-of token), maturity: maturity, oracle: oracle })
     (ok true)
   )
 )
