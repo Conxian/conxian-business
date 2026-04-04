@@ -25,7 +25,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
@@ -34,6 +33,10 @@ jobs:
           # are synced to whatever each top-level submodule commit pins.
 
           git submodule update --init --recursive
+
+          declare -A PREFERRED_BRANCHES=(
+            [lib-conclave-sdk]=master
+          )
 
           pick_branch() {
             local url="$1"
@@ -60,10 +63,7 @@ jobs:
 
             url=$(git config -f .gitmodules --get "submodule.${name}.url")
 
-            preferred=main
-            if [[ "$name" == "lib-conclave-sdk" ]]; then
-              preferred=master
-            fi
+            preferred=${PREFERRED_BRANCHES[$name]:-main}
 
             if ! branch=$(pick_branch "$url" "$preferred"); then
               echo "Unable to find an upstream branch for submodule '${name}' (url: ${url})" >&2
