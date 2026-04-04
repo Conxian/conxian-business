@@ -6,9 +6,9 @@ This document is the portfolio-level map that assigns every repo/subrepo (submod
 
 Today, this page is the canonical human-readable portfolio map; machine-readable BOS artifacts in `./conxian-business/` should be treated as derived outputs. When this mapping changes, ensure any intentional BOS runtime/audit updates remain consistent with it. Until a machine-readable portfolio manifest exists, artifacts in `./conxian-business/` are non-authoritative derived outputs and may be regenerated/replaced.
 
-Contributors should not edit generated BOS state artifacts under `./conxian-business/` by hand (for example: `BOS_STATE_MACHINE.json`, `AUDIT_MANIFEST.json`); treat them as outputs that may be replaced at any time. Source code in that directory (for example: `transparency_custodian.py`) is maintained normally.
+Contributors should not edit generated BOS state artifacts under `./conxian-business/` by hand (for example: `BOS_STATE_MACHINE.json`, or the generated audit manifest at `./conxian-business/.generated/AUDIT_MANIFEST.json`). The tracked `./conxian-business/AUDIT_MANIFEST.json` is a public-safe stub; the canonical audit details are maintained in the Conxian Linear workspace.
 
-To regenerate BOS state artifacts (including `./conxian-business/AUDIT_MANIFEST.json` and `./conxian-business/BOS_STATE_MACHINE.json`), run from the repo root:
+To regenerate the transparency custodian audit manifest (`./conxian-business/.generated/AUDIT_MANIFEST.json`), run from the repo root:
 
 ```bash
 python3 ./conxian-business/transparency_custodian.py
@@ -16,7 +16,7 @@ python3 ./conxian-business/transparency_custodian.py
 
 Until portfolio hygiene automation exists to regenerate and diff BOS state artifacts under `./conxian-business/` in CI (see the P0 backlog), contributor policy is:
 
-- If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks (including adding/removing submodules), the mapping tables in this document (ecosystem submodule rows / BOS-native asset paths), or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit generated BOS state artifacts under `./conxian-business/` by hand) and **commit** all updated derived artifacts in the same PR.
+- If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks (including adding/removing submodules), the mapping tables in this document (ecosystem submodule rows / BOS-native asset paths), or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit derived artifacts under `./conxian-business/` by hand) and **commit** any updated derived artifacts that are tracked in git in the same PR.
 - Purely editorial changes to this document (for example: typo fixes, wording clarifications, or moving explanatory sections without changing mapping tables) do not require regeneration.
 - Changes to `.gitmodules` metadata alone (for example: changing URLs, removing `branch = ...`, or other formatting-only edits) do not require regeneration unless they also change the pinned gitlinks or the set of submodule paths.
 - Reviewers should treat changes that affect BOS state but do not update derived artifacts as incomplete and request that the regeneration step be run.
