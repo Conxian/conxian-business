@@ -96,6 +96,8 @@ Within `settlement_identifiers`, implementations MUST use only JSON objects with
 
 For the purposes of this section, nesting depth is the number of JSON object keys in a JSON key path (root object properties have depth 1), and a leaf field is any JSON key path whose value is not a JSON object.
 
+Example: in `transaction_identifiers.transaction_reference`, the key `transaction_identifiers` has depth 1 and `transaction_reference` has depth 2. `transaction_identifiers` is not a leaf (its value is an object), while `transaction_identifiers.transaction_reference` is a leaf.
+
 If the canonical `settlement_identifiers` derived from `raw_payload_bytes` fails to meet the structural and leaf-type constraints in this section, the TEE MUST refuse to produce a successful attestation.
 
 The canonical `settlement_identifiers` derived from `raw_payload_bytes` MUST have max nesting depth ≤ 8, contain ≤ 128 leaf fields, and when serialized using RFC 8785 JCS (UTF-8) MUST be ≤ 16384 bytes. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
@@ -115,7 +117,7 @@ Implementations MUST NOT treat any host-supplied `settlement_identifiers` as aut
 - Any host-supplied extra fields MUST be ignored for canonicalization purposes.
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
 
-Any TEE attestation failure caused by invalid, out-of-bounds, or mismatched host-supplied `settlement_identifiers` hints for a given `{ rail, raw_payload_hash }` attestation attempt MUST be treated as a fatal error for that attempt and MUST NOT be automatically circumvented by retrying TEE invocation for the same `{ rail, raw_payload_hash }` with hints removed or modified.
+Any TEE attestation failure caused by invalid, out-of-bounds, or mismatched host-supplied `settlement_identifiers` hints for a given `{ rail, raw_payload_hash }` instance MUST be treated as a permanent validation failure in the normal automated processing pipeline. Implementations MUST NOT automatically retry the same `{ rail, raw_payload_hash }` with modified or omitted hints in order to probe for a passing combination. Any operator-initiated override that reprocesses such a payload (for example, after a production bug fix) MUST be explicitly configured, strongly audited, and MUST NOT weaken the TEE’s comparison rules.
 
 Minimum required identifier set (by rail):
 
@@ -172,3 +174,4 @@ Prohibited fields:
 13. `oracle_verification.oracle_proof_digest` is not a lowercase hex-encoded SHA-256 digest → proposal emission fails.
 14. Canonical `settlement_identifiers` exceed the bounds in §2.1.1 → proposal emission fails.
 15. `oracle_verification.oracle_proof_bytes_b64` (if present) does not match the persisted `raw_oracle_proof_bytes` or does not hash to `oracle_proof_digest` → proposal emission fails.
+16. `oracle_verification.oracle_proof_bytes_b64` is not valid base64url (e.g., contains padding `=` or characters outside `[A-Za-z0-9_-]`) → proposal emission fails.
