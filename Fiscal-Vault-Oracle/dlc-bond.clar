@@ -131,11 +131,11 @@
 ;; Initialization
 (define-public (initialize (token principal) (maturity uint) (oracle principal))
   (begin
+    (assert-issuer)
     (asserts! (not (var-get initialized)) (err ERR_ALREADY_INITIALIZED))
     (asserts! (> maturity burn-block-height) (err ERR_NOT_MATURED))
     (var-set initialized true)
     (var-set active true)
-    (var-set issuer tx-sender)
     (var-set dlc-oracle oracle)
     (var-set sbtc-token token)
     (var-set maturity-height maturity)
