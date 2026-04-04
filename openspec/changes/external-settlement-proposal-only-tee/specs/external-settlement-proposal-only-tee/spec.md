@@ -64,6 +64,8 @@ Minimum fields:
 
 The TEE attestation MUST bind (directly or by digest) the canonical values of at least `{ rail, raw_payload_hash, normalized_settlement_hash, trigger_id, settlement_identifiers, asset_path, timelock_delay_blocks, oracle_verification }` so they cannot be altered after verification. The binding for `oracle_verification` MUST include the exact oracle proof bytes (or a digest thereof) that proposal emission verifies, so the proof cannot be swapped after verification.
 
+`oracle_verification` MUST NOT be a bare boolean. It MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the lowercase hex encoding of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
+
 Prohibited fields:
 
 - `raw_payload_bytes`
@@ -76,7 +78,7 @@ Prohibited fields:
 - `transaction_identifiers`: envelope-agnostic identifiers for the settlement transaction.
 - `envelope_identifiers`: envelope/message-local identifiers for audit/debug only.
 
-Within `settlement_identifiers`, implementations MUST use only JSON objects with leaf values restricted to JSON strings and non-negative integers; arrays MUST NOT be used.
+Within `settlement_identifiers`, implementations MUST use only JSON objects with leaf values restricted to JSON strings and JSON numbers that MUST be integers in the range `[0, 9007199254740991]` (inclusive); arrays MUST NOT be used.
 
 `transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
 
@@ -84,7 +86,13 @@ Within `settlement_identifiers`, implementations MUST use only JSON objects with
 
 `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`.
 
-Implementations MUST NOT treat any host-supplied `settlement_identifiers` as authoritative. If a host supplies any identifiers as an optimization hint, the host-supplied object MUST be provided to the TEE as input. The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping field differs, the TEE MUST refuse to produce a successful attestation and proposal emission MUST be rejected. Any host-supplied extra fields MUST be ignored for canonicalization purposes.
+Implementations MUST NOT treat any host-supplied `settlement_identifiers` as authoritative. If a host supplies any identifiers as an optimization hint:
+
+- The host-supplied hint object MUST be provided to the TEE as input and MUST be treated as untrusted.
+- The TEE MUST enforce bounds on the hint object before deep traversal. When encoded as UTF-8 JSON, the hint object MUST be ≤ 16384 bytes, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
+- The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping field differs, the TEE MUST refuse to produce a successful attestation.
+- Any host-supplied extra fields MUST be ignored for canonicalization purposes.
+- The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
 
 Minimum required identifier set (by rail):
 
@@ -108,7 +116,7 @@ Example: if a message contains three settlement-transaction entries `[A, B, C]` 
 Canonical formatting requirements:
 
 - `transaction_identifiers.transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
-- `envelope_identifiers.tx_index` MUST be a non-negative integer.
+- `envelope_identifiers.tx_index` MUST be a JSON number that is an integer in the range `[0, 9007199254740991]` (inclusive).
 
 ### 2.2 `SovereignProposal` (trigger-kind)
 
@@ -134,3 +142,4 @@ Prohibited fields:
 6. Any attempt to skip multi-sig approvals → rejected.
 7. Any attempt to change timelock away from 144 blocks (increase or decrease) → rejected.
 8. Host-supplied `settlement_identifiers` mismatch the TEE-derived identifiers (for any overlapping field) for the same `raw_payload_bytes` → proposal emission fails.
+9. Host-supplied `settlement_identifiers` hints exceed the TEE bounds in §2.1.1 → proposal emission fails.
