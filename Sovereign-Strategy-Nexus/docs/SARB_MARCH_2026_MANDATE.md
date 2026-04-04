@@ -27,4 +27,6 @@ Codify the specific exchange control rules from the South Africa 2026 Budget Spe
 ## 6. On-chain Implementation (Clarity)
 - **Jurisdictional Sharding + Allowance Monitoring**: `Sovereign-Strategy-Nexus/contracts/jurisdictional-sharding.clar`
   - Annual allowance bucketing is derived from on-chain block time (see `get-current-year`).
-  - By default, the contract is configured for ZAF/SADC and a 50k ZAR onshore trigger, but these parameters are owner-governed via `set-jurisdiction`, `set-country-region`, and `set-onshore-trigger-zar`.
+  - Annual SDA/FIA totals are tracked for **cross-border egress** (sender is the jurisdiction country; receiver is not) via `get-allowance-status`.
+  - Tier-1 classification is derived from an on-chain allowlist via `set-tier1-counterparty` (not a caller-supplied boolean).
+  - By default, the contract is configured for ZAF/SADC and a 50k ZAR onshore trigger, but these parameters are owner-governed via `set-jurisdiction`, `set-country-region`, `set-onshore-trigger-zar`, and `set-sadc-fallback-enabled`.
