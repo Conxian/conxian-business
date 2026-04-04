@@ -2,7 +2,7 @@ This is an audit artifact for CON-135.
 
 Snapshot date: 2026-04-04 (UTC)
 
-Visibility: this snapshot is stored in a public repository. To reduce accidental disclosure of internal security/release posture, details for `internal-only` issues are intentionally redacted (identifiers are retained).
+Visibility: this snapshot is stored in a public repository. To reduce accidental disclosure of internal security/release posture, labels and titles for `internal-only` issues are intentionally redacted; identifiers, states, and high-level categories are retained.
 
 Scope: open CON system issues, operationally defined as issues in states Triage/Todo/In Progress/In Review/Backlog that have at least one of these labels: `Release`, `Governance`, `Security`, `Hygiene`, `Bounty`.
 
@@ -20,7 +20,7 @@ Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Tria
 ## Operating definitions
 
 - **Claim-open now (mechanical)**: `state == Todo` AND unassigned AND labels include `Bounty` and `Bounty Open`.
-- **Eligible for claim-open promotion (safety)**: classified as `community-claimable` in this audit (i.e., safe for maintainers to apply the `Bounty` and `Bounty Open` labels when the other `Claim-open now (mechanical)` conditions are met).
+- **Eligible for claim-open promotion (safety)**: classified as `community-claimable` in this audit (this corresponds to the `Community-claimable` count in the Summary; i.e., safe for maintainers to apply the `Bounty` and `Bounty Open` labels when the other `Claim-open now (mechanical)` conditions are met).
 - **Community-claimable**: safe to execute externally (docs/repo hygiene), with no privileged deploy/wallet/treasury access required. For governance/content work, this only applies when the issue has concrete acceptance criteria and maintainers retain final approval.
 - **Internal-only**: security-sensitive, deployment-sensitive, wallet/treasury/signer, or release-gating work.
 - **Blocked**: intended work, but can't proceed until a prerequisite is resolved.
