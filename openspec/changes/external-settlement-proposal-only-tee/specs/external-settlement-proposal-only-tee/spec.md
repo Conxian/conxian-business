@@ -14,6 +14,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
      - `normalized_settlement_hash` (computed inside the TEE) using a rail-specific canonical serialization:
        - JSON: RFC 8785 JSON Canonicalization Scheme (JCS)
        - XML: W3C XML Canonicalization 1.1
+     - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
@@ -34,7 +35,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
    - Trigger source MUST NOT change the 5/5/90 productive streaming behavior.
 
 7. **Idempotency / replay protection**
-   - `trigger_id` MUST be computed deterministically using a canonical encoding (e.g., `sha256("external-settlement-trigger:v1" || JCS({ rail, raw_payload_hash, settlement_identifiers }))`).
+   - `trigger_id` MUST be computed deterministically using a canonical encoding (e.g., `sha256("external-settlement-trigger:v1" || JCS({ rail, raw_payload_hash, settlement_identifiers }))`). Idempotency is enforced at the raw-message level.
    - Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
 ## 2. Required artifacts
@@ -57,6 +58,26 @@ Prohibited fields:
 
 - `raw_payload_bytes`
 - Any full parsed external-settlement payload structure (XML/JSON) beyond the canonical `settlement_identifiers`.
+
+#### 2.1.1 `settlement_identifiers` (per-rail canonical set)
+
+Minimum required identifier set (by rail):
+
+- **ISO20022 (pacs.008)**
+  - `message_id`
+  - `end_to_end_id`
+  - `settlement_amount` + `settlement_currency`
+  - `settlement_date`
+- **PAPSS**
+  - `message_id`
+  - `transaction_reference`
+  - `settlement_amount` + `settlement_currency`
+  - `settlement_date`
+- **BRICS**
+  - `message_id`
+  - `settlement_reference`
+  - `settlement_amount` + `settlement_currency`
+  - `settlement_date`
 
 ### 2.2 `SovereignProposal` (trigger-kind)
 
