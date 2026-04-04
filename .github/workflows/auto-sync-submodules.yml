@@ -54,7 +54,7 @@ jobs:
             fi
 
             for fallback in main master; do
-              if git -C "$path" ls-remote --exit-code --heads origin "$fallback" >/dev/null 2>&1; then
+              if [ "$fallback" != "$preferred" ] && git -C "$path" ls-remote --exit-code --heads origin "$fallback" >/dev/null 2>&1; then
                 echo "$fallback"
                 return 0
               fi
@@ -64,7 +64,17 @@ jobs:
           }
 
           submodules_list="$(mktemp)"
-          git config -f .gitmodules --name-only --get-regexp '^submodule\..*\.path$' >"${submodules_list}"
+          trap 'rm -f "${submodules_list}"' EXIT
+
+          if [ ! -f .gitmodules ]; then
+            echo "auto-sync-submodules: no .gitmodules found; nothing to sync" >&2
+            exit 0
+          fi
+
+          if ! git config -f .gitmodules --name-only --get-regexp '^submodule\..*\.path$' >"${submodules_list}"; then
+            echo "auto-sync-submodules: no submodules configured in .gitmodules; nothing to sync" >&2
+            exit 0
+          fi
 
           while IFS= read -r key; do
             path=$(git config -f .gitmodules --get "$key")
@@ -72,14 +82,22 @@ jobs:
             name=${key#submodule.}
             name=${name%.path}
 
-            preferred=${PREFERRED_BRANCHES[$name]:-main}
-
             git submodule update --init -- "$path"
 
-            if ! branch=$(pick_branch "$path" "$preferred"); then
-              echo "auto-sync-submodules: unable to resolve an upstream branch for '${name}'; add an entry to PREFERRED_BRANCHES in .github/workflows/auto-sync-submodules.yml" >&2
-              exit 1
+            if [[ -n "${PREFERRED_BRANCHES[$name]+x}" ]]; then
+              branch="${PREFERRED_BRANCHES[$name]}"
+              if ! git -C "$path" ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+                echo "auto-sync-submodules: configured preferred branch '${branch}' for '${name}' does not exist on origin; fix PREFERRED_BRANCHES in .github/workflows/auto-sync-submodules.yml" >&2
+                exit 1
+              fi
+            else
+              if ! branch=$(pick_branch "$path" main); then
+                echo "auto-sync-submodules: unable to resolve an upstream branch for '${name}'; add an entry to PREFERRED_BRANCHES in .github/workflows/auto-sync-submodules.yml" >&2
+                exit 1
+              fi
             fi
+
+            echo "auto-sync-submodules: updating ${name} (${path}) to origin/${branch}"
 
             git config "submodule.${name}.branch" "$branch"
             git submodule update --remote -- "$path"
@@ -87,8 +105,6 @@ jobs:
               git -C "$path" submodule update --init --recursive
             fi
           done <"${submodules_list}"
-
-          rm -f "${submodules_list}"
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
