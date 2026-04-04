@@ -38,12 +38,10 @@ Gate levels are intentionally coarse. Use them to prevent “we can ship” ambi
 
 Legend:
 
-- `0` = not applicable / no meaningful exposure
+- `0` = not applicable / no meaningful exposure (N/A for this repo; there is no `L0` / `RC0` / etc.)
 - `1` = baseline controls
 - `2` = elevated controls (security/compliance review required)
 - `3` = critical controls (formal sign-off + multi-party operating controls)
-
-For any domain, level `0` means “N/A for this repo”; there is no `L0` / `RC0` / etc. Treat `0` as “no meaningful exposure”.
 
 Unless otherwise specified, gate levels are cumulative: level `N` assumes the controls of levels `0..N-1` are also in place.
 
