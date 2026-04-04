@@ -3,6 +3,7 @@
 ;; Jurisdictional sharding + SARB/SARS monitoring for ZAR-linked settlements.
 
 (define-constant ERR_UNAUTHORIZED (err u7100))
+(define-constant ERR_TX_REPLAY_MISMATCH (err u7101))
 
 (define-constant SHARD_ONSHORE u0)
 (define-constant SHARD_OFFSHORE u1)
@@ -53,6 +54,12 @@
 
 ;; tx-id -> shard
 (define-map settlement-shards (buff 32) uint)
+
+;; tx-id -> settlement fingerprint
+(define-map settlement-fingerprints
+  (buff 32)
+  { sender: principal, receiver: principal, amount-zar: uint, tier1-rail: bool }
+)
 
 ;; (shard, user, year) -> total ZAR egress
 (define-map annual-zar-egress
@@ -203,7 +210,19 @@
     (asserts! (or (is-owner) (is-czar)) ERR_UNAUTHORIZED)
     (match (map-get? settlement-shards tx-id)
       existing-shard
-        (ok { tx-id: tx-id, shard: existing-shard })
+        (match (map-get? settlement-fingerprints tx-id)
+          existing
+            (if (and
+                (is-eq sender (get sender existing))
+                (is-eq receiver (get receiver existing))
+                (is-eq amount-zar (get amount-zar existing))
+                (is-eq tier1-rail (get tier1-rail existing))
+              )
+              (ok { tx-id: tx-id, shard: existing-shard })
+              ERR_TX_REPLAY_MISMATCH
+            )
+          ERR_TX_REPLAY_MISMATCH
+        )
       (let (
           (block-time (unwrap-panic (get-block-info? time block-height)))
           (year (year-from-unix-time block-time))
@@ -211,6 +230,12 @@
         )
         (begin
           (map-set settlement-shards tx-id shard)
+          (map-set settlement-fingerprints tx-id {
+            sender: sender,
+            receiver: receiver,
+            amount-zar: amount-zar,
+            tier1-rail: tier1-rail
+          })
           (let ((prev-total (get-annual-total shard sender year)))
             (map-set annual-zar-egress { shard: shard, user: sender, year: year } { total: (+ prev-total amount-zar) })
           )
