@@ -4,6 +4,8 @@
 
 (define-constant ERR_UNAUTHORIZED (err u7100))
 (define-constant ERR_TX_REPLAY_MISMATCH (err u7101))
+(define-constant ERR_INVALID_REGION (err u7102))
+(define-constant ERR_UNSUPPORTED_YEAR (err u7103))
 
 (define-constant SHARD_ONSHORE u0)
 (define-constant SHARD_OFFSHORE u1)
@@ -31,6 +33,10 @@
 (define-constant YEAR_2040_START u2208988800)
 (define-constant YEAR_2041_START u2240611200)
 (define-constant YEAR_2042_START u2272147200)
+(define-constant YEAR_2043_START u2303683200)
+
+;; Supported settlement years: 2024–2042 inclusive.
+;; Calls that rely on block time will return ERR_UNSUPPORTED_YEAR once block-time >= YEAR_2043_START.
 
 ;; SARB mandate thresholds (ZAR/year)
 (define-constant SDA_LIMIT_ZAR u1500000)
@@ -110,6 +116,17 @@
   )
 )
 
+(define-private (is-valid-region (region uint))
+  (or
+    (is-eq region REGION_UNKNOWN)
+    (is-eq region REGION_SADC)
+  )
+)
+
+(define-private (assert-supported-block-time (block-time uint))
+  (asserts! (and (>= block-time YEAR_2024_START) (< block-time YEAR_2043_START)) ERR_UNSUPPORTED_YEAR)
+)
+
 (define-private (year-from-unix-time (unix-time uint))
   (if (< unix-time YEAR_2025_START)
     u2024
@@ -179,7 +196,10 @@
       (receiver-country (get country (contract-call? .kyc-registry get-identity-status receiver)))
       (jurisdiction (var-get jurisdiction-country))
       (jurisdiction-region (var-get jurisdiction-region))
-      (receiver-region (get-country-region receiver-country))
+      (receiver-region (if (is-eq receiver-country jurisdiction)
+        jurisdiction-region
+        (get-country-region receiver-country)
+      ))
     )
     (if tier1-rail
       SHARD_GLOBAL
@@ -227,32 +247,38 @@
           ERR_TX_REPLAY_MISMATCH
         )
       (let (
-          (block-time (unwrap-panic (get-block-info? time block-height)))
-          (year (year-from-unix-time block-time))
+          (block-time (unwrap! (get-block-info? time block-height) ERR_UNSUPPORTED_YEAR))
           (shard (compute-shard sender receiver amount-zar tier1-rail))
         )
         (begin
-          (map-set settlement-shards tx-id shard)
-          (map-set settlement-fingerprints tx-id {
-            sender: sender,
-            receiver: receiver,
-            amount-zar: amount-zar,
-            tier1-rail: tier1-rail
-          })
-          (let ((prev-total (get-annual-total shard sender year)))
-            (map-set annual-zar-egress { shard: shard, user: sender, year: year } { total: (+ prev-total amount-zar) })
+          (assert-supported-block-time block-time)
+          (let ((year (year-from-unix-time block-time)))
+            (begin
+              (map-set settlement-shards tx-id shard)
+              (map-set settlement-fingerprints tx-id {
+                sender: sender,
+                receiver: receiver,
+                amount-zar: amount-zar,
+                tier1-rail: tier1-rail
+              })
+              (let ((prev-total (get-annual-total shard sender year)))
+                (map-set annual-zar-egress { shard: shard, user: sender, year: year } { total: (+ prev-total amount-zar) })
+              )
+              (print {
+                event: "zar-settlement-recorded",
+                tx-id: tx-id,
+                shard: shard,
+                sender: sender,
+                receiver: receiver,
+                amount-zar: amount-zar,
+                year: year,
+                block-time: block-time,
+                block-height: block-height,
+                burn-block-height: burn-block-height
+              })
+              (ok { tx-id: tx-id, shard: shard })
+            )
           )
-          (print {
-            event: "zar-settlement-recorded",
-            tx-id: tx-id,
-            shard: shard,
-            sender: sender,
-            receiver: receiver,
-            amount-zar: amount-zar,
-            year: year,
-            timestamp: block-time
-          })
-          (ok { tx-id: tx-id, shard: shard })
         )
       )
     )
@@ -260,8 +286,11 @@
 )
 
 (define-read-only (get-current-year)
-  (let ((block-time (unwrap-panic (get-block-info? time block-height))))
-    (ok (year-from-unix-time block-time))
+  (let ((block-time (unwrap! (get-block-info? time block-height) ERR_UNSUPPORTED_YEAR)))
+    (begin
+      (assert-supported-block-time block-time)
+      (ok (year-from-unix-time block-time))
+    )
   )
 )
 
@@ -297,8 +326,10 @@
   )
   (begin
     (asserts! (is-owner) ERR_UNAUTHORIZED)
+    (asserts! (and (is-valid-region region) (not (is-eq region REGION_UNKNOWN))) ERR_INVALID_REGION)
     (var-set jurisdiction-country country)
     (var-set jurisdiction-region region)
+    (print { event: "jurisdiction-updated", country: country, region: region })
     (ok true)
   )
 )
@@ -309,7 +340,9 @@
   )
   (begin
     (asserts! (is-owner) ERR_UNAUTHORIZED)
+    (asserts! (is-valid-region region) ERR_INVALID_REGION)
     (map-set country-regions { country: country } { region: region })
+    (print { event: "country-region-set", country: country, region: region })
     (ok true)
   )
 )
@@ -318,6 +351,7 @@
   (begin
     (asserts! (is-owner) ERR_UNAUTHORIZED)
     (map-delete country-regions { country: country })
+    (print { event: "country-region-deleted", country: country })
     (ok true)
   )
 )
@@ -326,6 +360,7 @@
   (begin
     (asserts! (is-owner) ERR_UNAUTHORIZED)
     (var-set onshore-trigger-zar new-trigger-zar)
+    (print { event: "onshore-trigger-updated", onshore-trigger-zar: new-trigger-zar })
     (ok true)
   )
 )
@@ -355,5 +390,10 @@
 )
 
 (define-read-only (get-region-for-country (country (string-ascii 3)))
-  (ok (get-country-region country))
+  (let ((jurisdiction (var-get jurisdiction-country)))
+    (ok (if (is-eq country jurisdiction)
+      (var-get jurisdiction-region)
+      (get-country-region country)
+    ))
+  )
 )
