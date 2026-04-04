@@ -2,11 +2,11 @@ This is an audit artifact for CON-135.
 
 Snapshot date: 2026-04-04 (UTC)
 
-Scope: open CON issues (states: Triage/Todo/In Progress/In Review/Backlog) that have at least one of these labels: `Release`, `Governance`, `Security`, `Hygiene`, `Bounty`.
+Scope: open CON system issues, operationally defined as issues in states Triage/Todo/In Progress/In Review/Backlog that have at least one of these labels: `Release`, `Governance`, `Security`, `Hygiene`, `Bounty`.
 
 Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Triage -s Todo -s "In Progress" -s "In Review" -s Backlog --limit 200 --json` for each label in [`Release`, `Governance`, `Security`, `Hygiene`, `Bounty`], de-duplicated by `identifier`.
 
-Operating definitions
+## Operating definitions
 
 - **Claim-open now**: `state == Todo` AND category `community-claimable` AND label `Bounty Open` AND unassigned.
 - **Community-claimable**: safe to execute externally (docs/repo hygiene), with no privileged deploy/wallet/treasury access required.
@@ -14,7 +14,7 @@ Operating definitions
 - **Blocked**: intended work, but can't proceed until a prerequisite is resolved.
 - **Not suitable for bounty execution**: decision-heavy, underspecified, or otherwise not a good fit for external bounty execution as-is.
 
-Payout alignment
+## Payout alignment
 
 - Claim intake and maintainer review can proceed before payout readiness exists.
 - **Payout-enabled bounty execution begins only after**:
@@ -26,7 +26,7 @@ Payout alignment
 - **A claim is not a payout commitment** until all of the above are satisfied and the ALEX-funded payout path is verified end-to-end with internal signer/wallet/approval controls.
 - Until those checks are complete, issues may be claim-screened and worked only under explicit maintainer approval and without any implied payout commitment.
 
-Summary
+## Summary
 
 - Total issues in scope: **90**
 - Community-claimable: **14**
@@ -35,7 +35,7 @@ Summary
 - Not suitable for bounty execution: **20**
 - Claim-open now (subset): **8**
 
-Claim-open now
+## Claim-open now
 
 | Issue | Title | Assignee | Labels |
 | --- | --- | --- | --- |
@@ -48,7 +48,7 @@ Claim-open now
 | CON-222 | Release hygiene — stacksorbit | (unassigned) | Bounty, Bounty Open, Release |
 | CON-78 | CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync | (unassigned) | Bounty, Bounty Open |
 
-Full classification
+## Full classification
 
 | Issue | State | Category | Labels | Title |
 | --- | --- | --- | --- | --- |
