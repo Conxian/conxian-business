@@ -23,6 +23,7 @@ jobs:
           set -euo pipefail
 
           required=(
+            SUMMARY.md
             README.md
             SECURITY.md
             CONTRIBUTING.md
@@ -35,8 +36,9 @@ jobs:
             docs/REPO_PORTFOLIO.md
             docs/TRUST_AND_PROOF_MESSAGING.md
             openspec/README.md
-            openspec/specs
           )
+
+          openspec_specs_dir=openspec/specs
 
           for f in "${required[@]}"; do
             if [ ! -e "$f" ]; then
@@ -45,21 +47,31 @@ jobs:
             fi
           done
 
+          if [ ! -d "$openspec_specs_dir" ]; then
+            echo "Missing required Pages artifact path: $openspec_specs_dir" >&2
+            exit 1
+          fi
+
           rm -rf _pages
-          mkdir -p _pages/docs _pages/openspec
+          mkdir -p _pages
           touch _pages/.nojekyll
 
-          cp -f README.md SECURITY.md CONTRIBUTING.md CHANGELOG.md GOVERNANCE.md DEVELOPER_QUICKSTART.md _pages/
-          cp -f \
-            docs/CSF_MAINNET_READINESS_GATE.md \
-            docs/PARTNER_OVERVIEW_AND_LAUNCH_FAQ.md \
-            docs/RELEASE_NOTES_AND_CHANGELOG.md \
-            docs/REPO_PORTFOLIO.md \
-            docs/TRUST_AND_PROOF_MESSAGING.md \
-            _pages/docs/
+          rsync -a --relative "${required[@]/#/.\/}" _pages/
 
-          cp -f openspec/README.md _pages/openspec/
-          cp -R openspec/specs _pages/openspec/specs
+          unexpected_openspec_files="$(find "$openspec_specs_dir" -type f ! \( -name '*.md' -o -name '*.json' \) -print -quit)"
+          if [ -n "$unexpected_openspec_files" ]; then
+            echo "Unexpected file type under $openspec_specs_dir: $unexpected_openspec_files" >&2
+            exit 1
+          fi
+
+          mkdir -p _pages/openspec/specs
+          rsync -a --delete \
+            --include='*/' \
+            --include='*.md' \
+            --include='*.json' \
+            --exclude='*' \
+            "$openspec_specs_dir/" \
+            _pages/openspec/specs/
 
           cat > _pages/index.html <<'EOF'
           <!doctype html>
