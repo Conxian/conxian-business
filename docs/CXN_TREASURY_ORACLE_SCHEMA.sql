@@ -332,6 +332,32 @@ CREATE POLICY "Read-only for authenticated clients" ON public.cxn_external_settl
 CREATE POLICY "Insert for service role" ON public.cxn_external_settlement_logs
     FOR INSERT TO service_role WITH CHECK (true);
 
+CREATE OR REPLACE FUNCTION public.cxn_external_settlement_logs_immutable()
+RETURNS trigger AS $$
+BEGIN
+    RAISE EXCEPTION 'cxn_external_settlement_logs is append-only; % is not allowed', TG_OP;
+END;
+$$ LANGUAGE plpgsql;
+
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_trigger t
+        JOIN pg_class c ON c.oid = t.tgrelid
+        JOIN pg_namespace n ON n.oid = c.relnamespace
+        WHERE t.tgname = 'cxn_external_settlement_logs_no_update_delete'
+          AND n.nspname = 'public'
+          AND c.relname = 'cxn_external_settlement_logs'
+    ) THEN
+        EXECUTE $sql$
+            CREATE TRIGGER cxn_external_settlement_logs_no_update_delete
+            BEFORE UPDATE OR DELETE ON public.cxn_external_settlement_logs
+            FOR EACH ROW EXECUTE FUNCTION public.cxn_external_settlement_logs_immutable();
+        $sql$;
+    END IF;
+END $$;
+
 -- Indices for performance on large historical datasets
 CREATE INDEX IF NOT EXISTS idx_locked_principal_timestamp ON public.cxn_locked_principal (timestamp DESC);
 CREATE INDEX IF NOT EXISTS idx_yield_generation_timestamp ON public.cxn_yield_generation (timestamp DESC);
