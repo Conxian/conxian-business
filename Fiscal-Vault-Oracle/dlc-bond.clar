@@ -8,6 +8,7 @@
 ;; - Redemption (burn bond FT, return sBTC principal; optionally early on default)
 
 (use-trait sip-010-ft-trait .sip-standards.sip-010-ft-trait)
+(impl-trait .sip-standards.sip-010-ft-trait)
 
 ;; Errors
 (define-constant ERR_UNAUTHORIZED u20000)
@@ -27,6 +28,7 @@
 (define-constant DEFAULT_COUPON_INTERVAL_BLOCKS u1440)
 (define-constant DEFAULT_APR_PPM u45000)       ;; 4.5% APR
 (define-constant DEFAULT_COUPON_PPM u3750)     ;; 4.5% / 12 = 0.375% monthly
+(define-constant DEFAULT_BLOCKS_PER_YEAR (* DEFAULT_COUPON_INTERVAL_BLOCKS u12))
 
 ;; State
 (define-data-var initialized bool false)
@@ -147,7 +149,7 @@
 
 (define-public (set-active (is-active bool))
   (begin
-    (try! (assert-issuer))
+    (assert-issuer)
     (var-set active is-active)
     (ok true)
   )
@@ -156,7 +158,7 @@
 (define-public (set-defaulted (is-defaulted bool))
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
-    (try! (assert-oracle))
+    (assert-oracle)
     (var-set defaulted is-defaulted)
     (print { event: "dlc-bond-defaulted", defaulted: is-defaulted, oracle: tx-sender })
     (ok true)
@@ -187,7 +189,8 @@
 (define-public (subscribe (amount uint))
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
-    (try! (assert-active))
+    (assert-active)
+    (asserts! (not (var-get defaulted)) (err ERR_INACTIVE))
     (asserts! (> amount u0) (err ERR_ZERO_AMOUNT))
     (asserts! (< burn-block-height (var-get maturity-height)) (err ERR_NOT_MATURED))
 
@@ -211,8 +214,8 @@
 (define-public (fund-and-distribute-coupon)
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
-    (try! (assert-active))
-    (try! (assert-issuer))
+    (assert-active)
+    (assert-issuer)
     (asserts! (not (var-get defaulted)) (err ERR_INACTIVE))
     (asserts! (>= burn-block-height (var-get next-coupon-height)) (err ERR_COUPON_NOT_DUE))
 
@@ -241,7 +244,7 @@
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
     (sync-holder tx-sender)
     (let (
-      (state (unwrap-panic (map-get? holder-coupons { holder: tx-sender })))
+      (state (get-holder-state tx-sender))
       (amount (get accrued state))
       (recipient tx-sender)
     )
@@ -260,7 +263,6 @@
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
     (asserts! (> amount u0) (err ERR_ZERO_AMOUNT))
-    (try! (assert-active))
 
     (let ((is-matured (>= burn-block-height (var-get maturity-height))))
       (asserts! (or is-matured (var-get defaulted)) (err ERR_NOT_MATURED))
@@ -268,7 +270,7 @@
 
     (sync-holder tx-sender)
     (let (
-      (state (unwrap-panic (map-get? holder-coupons { holder: tx-sender })))
+      (state (get-holder-state tx-sender))
       (coupon-amount (get accrued state))
       (recipient tx-sender)
     )
@@ -290,11 +292,17 @@
 (define-public (set-coupon-params (interval-blocks uint) (new-coupon-ppm uint))
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
-    (try! (assert-issuer))
+    (assert-issuer)
     (asserts! (> interval-blocks u0) (err ERR_ZERO_AMOUNT))
-    (asserts! (<= new-coupon-ppm DEFAULT_APR_PPM) (err ERR_INVALID_COUPON_AMOUNT))
+    (let ((periods-per-year (/ (+ DEFAULT_BLOCKS_PER_YEAR (- interval-blocks u1)) interval-blocks)))
+      (asserts!
+        (<= (* new-coupon-ppm periods-per-year) DEFAULT_APR_PPM)
+        (err ERR_INVALID_COUPON_AMOUNT)
+      )
+    )
     (var-set coupon-interval-blocks interval-blocks)
     (var-set coupon-ppm new-coupon-ppm)
+    (var-set next-coupon-height (+ burn-block-height interval-blocks))
     (ok true)
   )
 )
