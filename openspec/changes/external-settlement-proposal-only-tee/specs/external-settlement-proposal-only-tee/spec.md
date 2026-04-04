@@ -119,7 +119,7 @@ Note: This section intentionally tightens earlier guidance. These canonicalizati
 
 Any settlement transaction that fails any of the requirements above (including the type/structure requirements for `settlement_identifiers.transaction_identifiers` or canonicalization/validation of any of its values, including any optional reconciliation keys) MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
-Any other `settlement_identifiers.envelope_identifiers` keys are optional; invalid values for those optional envelope identifiers MUST be treated as if the corresponding fields were absent and MUST NOT cause the settlement transaction to be treated as invalid for external-settlement trigger purposes.
+Any other `settlement_identifiers.envelope_identifiers` keys are optional; if the value for an optional envelope identifier fails any of its field-specific type or validation requirements, implementations MUST treat that value as if the corresponding field were absent and MUST NOT treat the settlement transaction as invalid solely because of that field.
 
 For `external-settlement-trigger:v1`, implementations MUST use Unicode 15.1.0 (Unicode Character Database + normalization data) for evaluating `General_Category`, `White_Space`, and NFC normalization.
 
