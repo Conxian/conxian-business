@@ -25,6 +25,7 @@
 (define-constant ERR_NO_LIQUIDITY u20011)
 (define-constant ERR_INVALID_SBTC_TOKEN u20012)
 (define-constant ERR_ALREADY_ISSUED u20013)
+(define-constant ERR_PRINCIPAL_DRAWDOWN_EXCEEDS_SUPPLY u20014)
 
 ;; Fixed point constants
 (define-constant PPM_DENOM u1000000)          ;; 1.0 = 1,000,000 ppm
@@ -222,8 +223,9 @@
     (asserts! (< burn-block-height (var-get next-coupon-height)) (err ERR_SUBSCRIPTION_CLOSED))
     (asserts! (> amount u0) (err ERR_ZERO_AMOUNT))
     (let ((supply (ft-get-supply dlc-bond)) (used (var-get principal-drawdown-used)))
-      (asserts! (<= used supply) (err ERR_UNAUTHORIZED))
-      (asserts! (<= amount (- supply used)) (err ERR_UNAUTHORIZED))
+      (asserts! (<= used supply) (err ERR_PRINCIPAL_DRAWDOWN_EXCEEDS_SUPPLY))
+      (asserts! (<= amount (- supply used)) (err ERR_PRINCIPAL_DRAWDOWN_EXCEEDS_SUPPLY))
+      (var-set principal-drawdown-used (+ used amount))
     )
     (let ((available (unwrap! (get-sbtc-balance) (err ERR_INVALID_SBTC_TOKEN))))
       (asserts! (> available u0) (err ERR_NO_LIQUIDITY))
@@ -232,7 +234,6 @@
     (try!
       (as-contract (contract-call? (var-get sbtc-token) transfer amount tx-sender recipient none))
     )
-    (var-set principal-drawdown-used (+ (var-get principal-drawdown-used) amount))
     (print { event: "dlc-bond-principal-drawdown", issuer: (var-get issuer), recipient: recipient, amount: amount })
     (ok true)
   )
