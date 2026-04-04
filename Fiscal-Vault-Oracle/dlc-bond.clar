@@ -148,9 +148,12 @@
     next-coupon-height: (var-get next-coupon-height),
     defaulted: (var-get defaulted),
     defaulted-at: (var-get defaulted-at),
-    principal-drawdown-enabled: (var-get principal-drawdown-enabled),
-    principal-drawdown-used: (var-get principal-drawdown-used)
+    principal-drawdown-enabled: (var-get principal-drawdown-enabled)
   })
+)
+
+(define-read-only (get-principal-drawdown-used)
+  (ok (var-get principal-drawdown-used))
 )
 
 (define-read-only (get-bond-total-supply)
