@@ -10,16 +10,20 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
 
 2. **TEE verification is required before proposal emission**
    - A proposal MUST NOT be emitted unless a TEE/StrongBox/CloudTEE attestation verifies:
-     - the payload digest (computed from `raw_payload_bytes` inside the TEE),
-     - `normalized_settlement_hash` (computed inside the TEE) for each settlement transaction using a rail-specific canonical serialization:
+     - `raw_payload_hash` MUST equal the lowercase hex encoding (no `0x` prefix) of the 32-byte SHA-256 digest of `raw_payload_bytes` (computed from `raw_payload_bytes` inside the TEE),
+     - `normalized_settlement_hash` MUST equal the lowercase hex encoding (no `0x` prefix) of the 32-byte SHA-256 digest of `canonical_settlement_tx_bytes`, where `canonical_settlement_tx_bytes` is the rail-specific canonical serialization of the normalized settlement transaction (computed inside the TEE as follows):
        - JSON: RFC 8785 JSON Canonicalization Scheme (JCS)
+         - `canonical_settlement_tx_bytes` MUST be the UTF-8 encoding (no BOM) of the JCS output string.
        - XML: W3C XML Canonicalization 1.1
+         - `canonical_settlement_tx_bytes` MUST be the XML C14N 1.1 octet stream output (not re-encoded as text).
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
-       - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
+       - The canonical settlement transaction bytes (`canonical_settlement_tx_bytes`) hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
      - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies a `settlement_identifiers` object as an optimization hint, that object MUST be provided to the TEE as input and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch and oversized hints)
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
+
+Hex encoding conventions: the lowercase hex encoding of any 32-byte SHA-256 digest in this spec (including `raw_payload_hash`, `normalized_settlement_hash`, and `trigger_id`) MUST be exactly 64 characters long (`0-9`, `a-f`) and MUST include leading zeros for leading zero bytes. Implementations MUST reject any value that is not exactly 64 characters of lowercase hex in this range (for example, inputs with `0x` prefixes, uppercase hex, incorrect length, or non-hex characters). For illustration, a regular-expression such as `^[0-9a-f]{64}$` MAY be used to validate this constraint.
 
 3. **Timelock is mandatory**
    - Verified external triggers MUST initiate the standard 144-block timelock.
@@ -37,12 +41,18 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
    - Downstream yield routing MUST be identical for native vs external-triggered lock events.
    - Trigger source MUST NOT change the 5/5/90 productive streaming behavior.
 
-7. **Idempotency / replay protection**
+7. **Idempotency / replay protection** <a id="idempotency-replay-protection"></a>
    - `trigger_id` MUST be computed deterministically as follows:
      - Canonicalization MUST use RFC 8785 JSON Canonicalization Scheme (JCS).
+     - `rail` MUST be encoded as an uppercase ASCII string with one of: `"ISO20022"`, `"PAPSS"`, `"BRICS"`.
+     - Implementations MUST reject any external settlement trigger whose `rail` field is not exactly one of the allowed strings above.
+     - Expanding the rail identifier set requires a spec update, and may require versioning the `trigger_id` domain separator.
+     - `normalized_settlement_hash` MUST be exactly the 64-character lowercase hex SHA-256 string over `canonical_settlement_tx_bytes` computed as specified in §1.2.
      - The canonicalized value MUST be the JCS output for the JSON object `{"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}` (exact key names as shown).
-     - The hash MUST be SHA-256 over `utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))`.
-     - `trigger_id` MUST be the lowercase hex encoding of the SHA-256 digest.
+     - The hash input MUST be the byte concatenation `utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))`.
+     - The hash MUST be SHA-256 over the hash input bytes.
+     - `trigger_id` MUST be the lowercase hex encoding (no `0x` prefix) of the SHA-256 digest.
+     - If `trigger_id` test vectors are provided, they MUST specify `{ rail, normalized_settlement_hash, trigger_id }` using the encodings above, and SHOULD also include the canonical JCS string `JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash})` and the intermediate 32-byte SHA-256 digest as a 64-character lowercase hex string.
    - Idempotency is enforced at the trigger granularity (one trigger per settlement transaction).
    - Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
@@ -52,11 +62,11 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
 
 Minimum fields:
 
-- `rail`
-- `raw_payload_hash`
+- `rail` (see §1.7 for canonical encoding and allowed values)
+- `raw_payload_hash` (lowercase hex encoding, no `0x` prefix, of the 32-byte SHA-256 digest of `raw_payload_bytes`)
 - `settlement_identifiers` (per-rail canonical set; see below)
-- `normalized_settlement_hash`
-- `trigger_id`
+- `normalized_settlement_hash` (see §1.2 for canonical settlement bytes and encoding)
+- `trigger_id` (lowercase hex encoding, no `0x` prefix, of the 32-byte SHA-256 digest computed as specified in §1.7)
 - `asset_path`
 - `timelock_delay_blocks` (must equal `144`)
 - `tee_attestation`
@@ -85,7 +95,7 @@ Prohibited fields:
 - `raw_payload_bytes`
 - Any full parsed external-settlement payload structure (XML/JSON) beyond the canonical `settlement_identifiers`.
 
-#### 2.1.1 `settlement_identifiers` (per-rail canonical set)
+#### 2.1.1 `settlement_identifiers` (per-rail canonical set) <a id="settlement-identifiers-canonical"></a>
 
 `settlement_identifiers` MUST be a JSON object with two namespaces:
 
@@ -140,8 +150,33 @@ Example: if a message contains three settlement-transaction entries `[A, B, C]` 
 
 Canonical formatting requirements:
 
-- `transaction_identifiers.transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
+- All string values in `settlement_identifiers` MUST be canonicalized and validated as follows:
+  1. If an upstream source provides bytes, implementations MUST decode them as UTF-8 and MUST treat any decoding error as a canonicalization failure for the corresponding settlement transaction (i.e., MUST NOT substitute `U+FFFD`).
+  2. Implementations MUST reject any value that is not a sequence of Unicode scalar values (reject surrogate code points `U+D800..U+DFFF`).
+  3. The value MUST be normalized to Unicode NFC; all subsequent validation, equality, and hashing operates on the NFC-normalized value.
+  4. Implementations MUST reject the value if the NFC-normalized value is empty, contains any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database), contains the Unicode replacement character `U+FFFD`, or begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
+- `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
 - `envelope_identifiers.tx_index` MUST be a JSON number that is an integer in the range `[0, 9007199254740991]` (inclusive, i.e. `2^53-1`).
+
+Note: This section intentionally tightens earlier guidance. These canonicalization rules are normative for the current `external-settlement-trigger:v1` definition. Values that violate these canonical string rules MUST be treated as invalid.
+
+If any value in `settlement_identifiers` (including any field-specific rules for optional reconciliation keys) fails canonicalization or validation, the corresponding settlement transaction MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
+
+For `external-settlement-trigger:v1`, implementations MUST use Unicode 15.1.0 (Unicode Character Database + normalization data) for evaluating `General_Category`, `White_Space`, and NFC normalization.
+
+Once an `external-settlement-trigger:vN` protocol version is activated, its pinned Unicode version and canonicalization rules MUST remain fixed. Any change to either requires a spec revision and a protocol version bump (e.g., from `external-settlement-trigger:vN` to `external-settlement-trigger:vN+1`).
+
+Implementations MUST apply canonicalization/validation before any hashing, attestation, or equality checks. String equality MUST be defined as byte-equality over the UTF-8 encoding of the Unicode NFC-normalized value (no locale-dependent collation). Implementations MUST NOT apply case folding unless explicitly required by a field-specific canonicalization rule.
+
+Implementations MAY accept non-NFC-normalized input from upstream rails, but MUST convert it to Unicode NFC as part of canonicalization; all validation and equality checks operate on the NFC-normalized value.
+
+Rails MAY include additional canonical identifiers (e.g., for reconciliation) in `settlement_identifiers.transaction_identifiers`. These optional identifier values are subject to the canonical string rules above. If a rail includes any of the following identifier keys, their values MUST be emitted in the canonical form specified:
+
+- `settlement_currency`: ISO 4217 code; the value MUST match `^[A-Za-z]{3}$`. The emitted canonical form MUST be the ASCII uppercase (`A`–`Z`) of those three letters.
+- `settlement_amount`: normalized non-negative decimal string (no sign, no exponent; canonical regex: `^(0|[1-9][0-9]*)(\.[0-9]*[1-9])?$`). The emitted value MUST match this regex. Fractional parts MUST NOT end in `0`, and integer values MUST NOT include a decimal point (e.g., `0`, `1`, `0.5`, `123.45` are valid; `01`, `1.0`, `0.50` are invalid).
+- `settlement_date`: ISO 8601 full-date `YYYY-MM-DD`. The emitted value MUST match `^[0-9]{4}-[0-9]{2}-[0-9]{2}$`, MUST represent a valid proleptic Gregorian calendar date with a year in the range `0001`–`9999`, and MUST NOT include any time-of-day or timezone offset component.
+
+Implementations MUST NOT attempt to “fix up” non-canonical decimal strings for `settlement_amount`; any value that does not match the canonical form (after NFC normalization) MUST cause the corresponding settlement transaction to be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
 ### 2.2 `SovereignProposal` (trigger-kind)
 
