@@ -2,8 +2,7 @@
 -- Single Source of Truth for Yield, Runway, and Locked Principal
 -- Last Update: March 25, 2026
 
--- Required for gen_random_uuid() defaults.
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
 
 -- 1. BASE-LAYER ASSETS (LOCKED PRINCIPAL)
 -- Track base BTC locked in DLC Bonds and non-custodial multisigs.
@@ -123,16 +122,15 @@ CREATE TABLE IF NOT EXISTS public.cxn_external_settlement_logs (
 CREATE UNIQUE INDEX IF NOT EXISTS ux_external_settlement_logs_origin_reference
     ON public.cxn_external_settlement_logs (settlement_network_origin, external_tx_reference);
 
--- Query indices (origin network + native hash is the primary lookup path).
+-- Query index (origin network + native hash is the primary lookup path).
 CREATE INDEX IF NOT EXISTS idx_external_settlement_logs_origin_native_hash
     ON public.cxn_external_settlement_logs (settlement_network_origin, native_tx_hash);
-CREATE INDEX IF NOT EXISTS idx_external_settlement_logs_native_hash
-    ON public.cxn_external_settlement_logs (native_tx_hash);
 
--- If the native settlement tracker table exists, bind with a foreign key so missing linkage fails safely.
+-- If the native settlement tracker table exists, attach a best-effort foreign key for traceability.
 DO $$
 DECLARE
     fk_applied BOOLEAN := false;
+    fk_candidate_found BOOLEAN := false;
 BEGIN
     IF EXISTS (
         SELECT 1
@@ -166,12 +164,39 @@ BEGIN
                 HAVING COUNT(*) = 1
                    AND MAX(kcu.column_name) = 'native_tx_hash'
             ) THEN
-                ALTER TABLE public.cxn_external_settlement_logs
-                    ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
-                    FOREIGN KEY (native_tx_hash)
-                    REFERENCES public.treasury_actions (native_tx_hash)
-                    ON DELETE RESTRICT;
-                fk_applied := true;
+                fk_candidate_found := true;
+                IF EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns l
+                    JOIN information_schema.columns r
+                      ON r.table_schema = 'public'
+                     AND r.table_name = 'treasury_actions'
+                     AND r.column_name = 'native_tx_hash'
+                    WHERE l.table_schema = 'public'
+                      AND l.table_name = 'cxn_external_settlement_logs'
+                      AND l.column_name = 'native_tx_hash'
+                      AND (
+                        l.udt_name = r.udt_name
+                        OR (l.udt_name IN ('text', 'varchar', 'bpchar') AND r.udt_name IN ('text', 'varchar', 'bpchar'))
+                      )
+                ) THEN
+                    BEGIN
+                        ALTER TABLE public.cxn_external_settlement_logs
+                            ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
+                            FOREIGN KEY (native_tx_hash)
+                            REFERENCES public.treasury_actions (native_tx_hash)
+                            ON DELETE RESTRICT
+                            NOT VALID;
+                        fk_applied := true;
+                    EXCEPTION
+                        WHEN duplicate_object THEN
+                            fk_applied := true;
+                        WHEN OTHERS THEN
+                            RAISE WARNING 'cxn_external_settlement_logs: could not attach FK to public.treasury_actions(native_tx_hash): %', SQLERRM;
+                    END;
+                ELSE
+                    RAISE NOTICE 'cxn_external_settlement_logs: type mismatch; skipping FK attachment to public.treasury_actions(native_tx_hash)';
+                END IF;
             ELSIF EXISTS (
                 SELECT 1
                 FROM information_schema.columns
@@ -191,12 +216,39 @@ BEGIN
                 HAVING COUNT(*) = 1
                    AND MAX(kcu.column_name) = 'native_transaction_hash'
             ) THEN
-                ALTER TABLE public.cxn_external_settlement_logs
-                    ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
-                    FOREIGN KEY (native_tx_hash)
-                    REFERENCES public.treasury_actions (native_transaction_hash)
-                    ON DELETE RESTRICT;
-                fk_applied := true;
+                fk_candidate_found := true;
+                IF EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns l
+                    JOIN information_schema.columns r
+                      ON r.table_schema = 'public'
+                     AND r.table_name = 'treasury_actions'
+                     AND r.column_name = 'native_transaction_hash'
+                    WHERE l.table_schema = 'public'
+                      AND l.table_name = 'cxn_external_settlement_logs'
+                      AND l.column_name = 'native_tx_hash'
+                      AND (
+                        l.udt_name = r.udt_name
+                        OR (l.udt_name IN ('text', 'varchar', 'bpchar') AND r.udt_name IN ('text', 'varchar', 'bpchar'))
+                      )
+                ) THEN
+                    BEGIN
+                        ALTER TABLE public.cxn_external_settlement_logs
+                            ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
+                            FOREIGN KEY (native_tx_hash)
+                            REFERENCES public.treasury_actions (native_transaction_hash)
+                            ON DELETE RESTRICT
+                            NOT VALID;
+                        fk_applied := true;
+                    EXCEPTION
+                        WHEN duplicate_object THEN
+                            fk_applied := true;
+                        WHEN OTHERS THEN
+                            RAISE WARNING 'cxn_external_settlement_logs: could not attach FK to public.treasury_actions(native_transaction_hash): %', SQLERRM;
+                    END;
+                ELSE
+                    RAISE NOTICE 'cxn_external_settlement_logs: type mismatch; skipping FK attachment to public.treasury_actions(native_transaction_hash)';
+                END IF;
             ELSIF EXISTS (
                 SELECT 1
                 FROM information_schema.columns
@@ -216,23 +268,50 @@ BEGIN
                 HAVING COUNT(*) = 1
                    AND MAX(kcu.column_name) = 'tx_hash'
             ) THEN
-                ALTER TABLE public.cxn_external_settlement_logs
-                    ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
-                    FOREIGN KEY (native_tx_hash)
-                    REFERENCES public.treasury_actions (tx_hash)
-                    ON DELETE RESTRICT;
-                fk_applied := true;
+                fk_candidate_found := true;
+                IF EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns l
+                    JOIN information_schema.columns r
+                      ON r.table_schema = 'public'
+                     AND r.table_name = 'treasury_actions'
+                     AND r.column_name = 'tx_hash'
+                    WHERE l.table_schema = 'public'
+                      AND l.table_name = 'cxn_external_settlement_logs'
+                      AND l.column_name = 'native_tx_hash'
+                      AND (
+                        l.udt_name = r.udt_name
+                        OR (l.udt_name IN ('text', 'varchar', 'bpchar') AND r.udt_name IN ('text', 'varchar', 'bpchar'))
+                      )
+                ) THEN
+                    BEGIN
+                        ALTER TABLE public.cxn_external_settlement_logs
+                            ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
+                            FOREIGN KEY (native_tx_hash)
+                            REFERENCES public.treasury_actions (tx_hash)
+                            ON DELETE RESTRICT
+                            NOT VALID;
+                        fk_applied := true;
+                    EXCEPTION
+                        WHEN duplicate_object THEN
+                            fk_applied := true;
+                        WHEN OTHERS THEN
+                            RAISE WARNING 'cxn_external_settlement_logs: could not attach FK to public.treasury_actions(tx_hash): %', SQLERRM;
+                    END;
+                ELSE
+                    RAISE NOTICE 'cxn_external_settlement_logs: type mismatch; skipping FK attachment to public.treasury_actions(tx_hash)';
+                END IF;
             END IF;
 
-            IF NOT fk_applied THEN
-                RAISE EXCEPTION 'cxn_external_settlement_logs: expected a single-column PK/UNIQUE native hash on public.treasury_actions but none was found; cannot safely enforce native linkage';
+            IF NOT fk_applied AND NOT fk_candidate_found THEN
+                RAISE NOTICE 'cxn_external_settlement_logs: expected a single-column PK/UNIQUE native hash on public.treasury_actions but none was found; skipping FK attachment';
             END IF;
         END IF;
     END IF;
 END $$;
 
 -- RLS (ROW LEVEL SECURITY) POLICIES
--- Only TEE-authenticated agents (WIF) and authorized admins can write.
+-- Writes are expected via privileged service roles (TEE agents/admin) that bypass RLS.
 ALTER TABLE public.cxn_locked_principal ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cxn_snackable_lockins ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cxn_yield_generation ENABLE ROW LEVEL SECURITY;
@@ -247,6 +326,9 @@ CREATE POLICY "Read-only for authenticated clients" ON public.cxn_csf_state
 
 CREATE POLICY "Read-only for authenticated clients" ON public.cxn_external_settlement_logs
     FOR SELECT TO authenticated USING (true);
+
+CREATE POLICY "Write for service role" ON public.cxn_external_settlement_logs
+    FOR ALL TO service_role USING (true) WITH CHECK (true);
 
 -- Indices for performance on large historical datasets
 CREATE INDEX IF NOT EXISTS idx_locked_principal_timestamp ON public.cxn_locked_principal (timestamp DESC);
