@@ -102,7 +102,7 @@ Canonical formatting requirements:
   - If an upstream source provides bytes, implementations MUST decode them as UTF-8 and MUST reject any decoding errors (i.e., MUST NOT substitute `U+FFFD`).
   - MUST be a sequence of Unicode scalar values (reject surrogate code points `U+D800..U+DFFF`).
   - MUST be normalized to Unicode NFC; all subsequent validation, equality, and hashing operates on the NFC-normalized value.
-  - MUST be rejected if the NFC-normalized value is empty, contains any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database), or begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
+  - MUST be rejected if the NFC-normalized value is empty, contains any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database), contains the Unicode replacement character `U+FFFD`, or begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
 - `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
 - `envelope_identifiers.tx_index` MUST be a non-negative integer.
 
