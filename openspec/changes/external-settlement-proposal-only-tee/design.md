@@ -59,7 +59,7 @@ This design makes the boundaries between parsing, attestation, and execution exp
   - `asset_path`,
   - `proposal_kind = EXTERNAL_SETTLEMENT_TRIGGER`,
   - `timelock_delay_blocks = 144`,
-  - and `oracle_verification` (including a digest of the exact oracle proof bytes verified inside the TEE).
+  - and `oracle_verification` (including a digest of the exact oracle proof bytes verified inside the TEE; see [spec.md §2.1](specs/external-settlement-proposal-only-tee/spec.md#21-attestedexternalsettlementtrigger) for normative semantics).
 
 The attested artifact MUST NOT contain raw payload bytes.
 

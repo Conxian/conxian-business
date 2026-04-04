@@ -64,11 +64,15 @@ Minimum fields:
 
 The TEE attestation MUST bind (directly or by digest) the canonical values of at least `{ rail, raw_payload_hash, normalized_settlement_hash, trigger_id, settlement_identifiers, asset_path, timelock_delay_blocks, oracle_verification }` so they cannot be altered after verification. The canonical `oracle_verification` value that the TEE attests MUST embed either the exact oracle proof bytes or a digest of those bytes, and proposal emission MUST verify only that same proof input, so a different proof cannot be substituted before or after attestation.
 
-`oracle_verification` MUST NOT be a bare boolean. It MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the lowercase hex encoding of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
+`oracle_verification` MUST NOT be a bare boolean. It MUST be a JSON object and MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the lowercase hex encoding of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
 
-`raw_oracle_proof_bytes` MUST be the exact byte sequence provided to the TEE for oracle-proof verification, before any internal parsing, canonicalization, or transformation.
+If `oracle_verification` embeds the raw oracle proof bytes, they MUST be encoded as base64url (no padding) in `oracle_proof_bytes_b64`.
 
-Proposal emission MUST recompute `oracle_proof_digest` from the exact `raw_oracle_proof_bytes` it provides to the TEE and MUST reject if the result differs from the `oracle_proof_digest` value bound by the TEE attestation.
+`raw_oracle_proof_bytes` MUST be the exact byte sequence of the oracle authenticity proof input, before any internal parsing, canonicalization, or transformation.
+
+The component that invokes the TEE MUST persist the exact `raw_oracle_proof_bytes` alongside the resulting `AttestedExternalSettlementTrigger` so proposal emission can recompute `oracle_proof_digest` deterministically.
+
+Proposal emission MUST recompute `oracle_proof_digest` from the persisted `raw_oracle_proof_bytes` and MUST reject if the result differs from the `oracle_proof_digest` value bound by the TEE attestation.
 
 Prohibited fields:
 
@@ -84,7 +88,11 @@ Prohibited fields:
 
 Within `settlement_identifiers`, implementations MUST use only JSON objects with leaf values restricted to JSON strings and JSON numbers that MUST be integers in the range `[0, 9007199254740991]` (inclusive, i.e. `2^53-1`); arrays MUST NOT be used.
 
+For the purposes of this section, nesting depth is the number of JSON object keys in a JSON key path (root object properties have depth 1), and a leaf field is any JSON key path whose value is not a JSON object.
+
 If the canonical `settlement_identifiers` derived from `raw_payload_bytes` fails to meet the structural and leaf-type constraints in this section, the TEE MUST refuse to produce a successful attestation.
+
+The canonical `settlement_identifiers` derived from `raw_payload_bytes` MUST have max nesting depth ≤ 8, contain ≤ 128 leaf fields, and when serialized using RFC 8785 JCS (UTF-8) MUST be ≤ 16384 bytes. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
 
 `transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
 
@@ -96,8 +104,7 @@ Implementations MUST NOT treat any host-supplied `settlement_identifiers` as aut
 
 - The host-supplied hint object MUST be provided to the TEE as input and MUST be treated as untrusted.
 - If the hint fails JSON parsing or fails to meet the structural and leaf-type constraints in this section, the TEE MUST refuse to produce a successful attestation.
-- The TEE MUST enforce bounds on the hint object before deep traversal. When encoded as UTF-8 JSON, the hint object MUST be ≤ 16384 bytes, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
-- For the purposes of these bounds, nesting depth is the number of JSON object keys in a JSON key path (root object properties have depth 1), and a leaf field is any JSON key path whose value is not a JSON object.
+- The TEE MUST enforce bounds on the hint object before deep traversal. The byte length of the exact UTF-8 JSON input provided to the TEE for hint parsing MUST be ≤ 16384 bytes. After parsing, the hint object MUST have max nesting depth ≤ 8 and contain ≤ 128 leaf fields. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping field differs, the TEE MUST refuse to produce a successful attestation.
 - Any host-supplied extra fields MUST be ignored for canonicalization purposes.
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
@@ -153,3 +160,6 @@ Prohibited fields:
 9. Host-supplied `settlement_identifiers` hints exceed the TEE bounds in §2.1.1 → proposal emission fails.
 10. Oracle proof bytes do not hash to the `oracle_proof_digest` bound by the TEE attestation → proposal emission fails.
 11. `settlement_identifiers` (canonical or host hint) violates the structural/leaf-type constraints in §2.1.1 → proposal emission fails.
+12. `oracle_verification` is not a JSON object or is missing `oracle_proof_digest` → proposal emission fails.
+13. `oracle_verification.oracle_proof_digest` is not a lowercase hex-encoded SHA-256 digest → proposal emission fails.
+14. Canonical `settlement_identifiers` exceed the bounds in §2.1.1 → proposal emission fails.
