@@ -303,7 +303,12 @@
     )
     (var-set coupon-interval-blocks interval-blocks)
     (var-set coupon-ppm new-coupon-ppm)
-    (var-set next-coupon-height (+ burn-block-height interval-blocks))
+    (let (
+      (candidate-next (+ burn-block-height interval-blocks))
+      (current-next (var-get next-coupon-height))
+    )
+      (var-set next-coupon-height (if (< candidate-next current-next) candidate-next current-next))
+    )
     (ok true)
   )
 )
