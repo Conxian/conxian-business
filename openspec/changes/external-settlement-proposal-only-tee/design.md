@@ -107,7 +107,7 @@ To support replay protection and deterministic idempotency, each rail MUST defin
 
 Trigger granularity:
 
-- A trigger is emitted **per settlement transaction** (not per envelope/message).
+- A trigger is emitted **per settlement transaction per raw payload** (not per envelope/message).
 - If a single inbound message contains multiple settlement transactions (e.g., ISO 20022 `pacs.008` with multiple `CdtTrfTxInf` entries), it produces **one trigger per transaction**.
 
 Minimum required identifier set (by rail):
