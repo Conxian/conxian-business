@@ -16,7 +16,7 @@ python3 conxian-business/transparency_custodian.py
 
 Until portfolio hygiene automation exists to regenerate and diff BOS state artifacts under `./conxian-business/` in CI (see the P0 backlog), contributor policy is:
 
-- If your change affects portfolio wiring or BOS state inputs (for example: `.gitmodules`, the asset lists in this document, or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit any files under `./conxian-business/` by hand) and **commit** any updated derived artifacts (for example: `./conxian-business/AUDIT_MANIFEST.json`, `./conxian-business/BOS_STATE_MACHINE.json`) in the same PR.
+- If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks, `.gitmodules`, the asset lists in this document, or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit any files under `./conxian-business/` by hand) and **commit** any updated derived artifacts (for example: `./conxian-business/AUDIT_MANIFEST.json`, `./conxian-business/BOS_STATE_MACHINE.json`) in the same PR.
 - Reviewers should treat changes that affect BOS state but do not update derived artifacts as incomplete and request that the regeneration step be run.
 
 Once a machine-readable portfolio manifest exists (see the P0 backlog), that manifest becomes the single source of truth that generates both this document and BOS runtime artifacts.
@@ -58,13 +58,15 @@ Source-of-truth rule:
 - This document is authoritative for business-unit/operating-function classification.
 - `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view and must not introduce repos that are not pinned and mapped here.
 
-Portfolio hygiene automation should validate both directions:
+Portfolio hygiene automation should validate:
 
 - Every pinned gitlink has a `.gitmodules` entry and a mapping entry.
 - Every `.gitmodules` entry has a corresponding pinned gitlink and mapping entry.
 - Every mapping entry corresponds to a pinned gitlink and `.gitmodules` entry (no extra rows).
+- Every repo listed in `docs/REPO_PORTFOLIO.md` appears either as a pinned submodule with a mapping entry or as an explicitly enumerated BOS-native asset.
+- If a submodule sets `branch` in `.gitmodules`, that branch exists upstream.
 
-Note: `.gitmodules` `branch` affects `git submodule update --remote` only; it does not change what commit is pinned. If a submodule sets `branch`, verify that branch exists upstream.
+Note: `.gitmodules` `branch` affects `git submodule update --remote` only; it does not change what commit is pinned.
 
 | Asset | Type | Primary BU / function | Primary concern(s) | Notes |
 | --- | --- | --- | --- | --- |
