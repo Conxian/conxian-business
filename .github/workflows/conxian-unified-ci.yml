@@ -16,6 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: false
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
