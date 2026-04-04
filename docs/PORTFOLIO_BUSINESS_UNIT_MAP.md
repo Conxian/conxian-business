@@ -8,7 +8,7 @@ Today, this page is the canonical human-readable portfolio map; machine-readable
 
 Contributors should not edit generated BOS state artifacts under `./conxian-business/` by hand (for example: `BOS_STATE_MACHINE.json`, `AUDIT_MANIFEST.json`); treat them as outputs that may be replaced at any time. Source code in that directory (for example: `transparency_custodian.py`) is maintained normally.
 
-To regenerate the BOS audit manifest (`./conxian-business/AUDIT_MANIFEST.json`), run:
+To regenerate BOS state artifacts (including `./conxian-business/AUDIT_MANIFEST.json` and `./conxian-business/BOS_STATE_MACHINE.json`), run:
 
 ```bash
 python3 conxian-business/transparency_custodian.py
@@ -65,6 +65,8 @@ Portfolio hygiene automation should validate:
 - Every mapping entry corresponds to a pinned gitlink and `.gitmodules` entry (no extra rows).
 - Every governed repo listed in `docs/REPO_PORTFOLIO.md` appears either as a pinned submodule with a mapping entry or as an explicitly enumerated BOS-native asset.
 - If a submodule sets `branch` in `.gitmodules`, that branch exists upstream.
+
+Until portfolio hygiene automation is live, reviewers should treat these invariants as manual review criteria and reject PRs that violate them.
 
 Note: `.gitmodules` `branch` affects `git submodule update --remote` only; it does not change what commit is pinned.
 
