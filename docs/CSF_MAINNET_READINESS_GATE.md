@@ -94,6 +94,7 @@ Current candidates based on assignment + scope (not payout-ready until the ALEX 
 - [ ] All direct mainnet-supporting repos reviewed (`Conxian/Conxian`, `lib-conxian-core`, `conxius-platform`, `conxian-gateway`, wallet-facing components).
 - [ ] No P0 secret, governance, or tracked-artifact blockers remain.
 - [ ] Dependency alignment confirmed across pinned SHAs (see “Evidence snapshot”).
+- [ ] All dependency issues referenced by the CON-129 gate exist in Linear (or have explicit replacement links recorded), and this document is updated accordingly.
 
 ### 2) Test readiness
 
@@ -103,7 +104,8 @@ Current candidates based on assignment + scope (not payout-ready until the ALEX 
 
 ### 3) Security and config readiness
 
-- [x] No tracked `.env` runtime config files in this repo (only `.env.example`).
+- [ ] No tracked `.env` or other secret-bearing runtime config remains in any mainnet-supporting repo (only template/example files are committed).
+- [x] This repo currently satisfies the above (only `.env.example` is tracked).
 - [ ] Deployment keys, signer paths, and wallet ownership model confirmed internally (no secrets committed).
 - [ ] Admin principal and centralization-risk items remediated or explicitly accepted before go-live.
 
