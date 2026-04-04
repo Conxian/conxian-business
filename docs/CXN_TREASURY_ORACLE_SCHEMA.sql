@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS public.cxn_external_settlement_logs (
 CREATE UNIQUE INDEX IF NOT EXISTS ux_external_settlement_logs_origin_reference
     ON public.cxn_external_settlement_logs (settlement_network_origin, external_tx_reference);
 
--- Query indices (origin network + native hash is the primary lookup path).
+-- Query index (origin network + native hash is the primary lookup path).
 CREATE INDEX IF NOT EXISTS idx_external_settlement_logs_origin_native_hash
     ON public.cxn_external_settlement_logs (settlement_network_origin, native_tx_hash);
 
@@ -301,7 +301,7 @@ BEGIN
 END $$;
 
 -- RLS (ROW LEVEL SECURITY) POLICIES
--- Only TEE-authenticated agents (WIF) and authorized admins can write.
+-- Writes are expected via privileged service roles (TEE agents/admin) that bypass RLS.
 ALTER TABLE public.cxn_locked_principal ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cxn_snackable_lockins ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cxn_yield_generation ENABLE ROW LEVEL SECURITY;
