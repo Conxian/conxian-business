@@ -30,7 +30,7 @@ This design keeps redemptions solvent on-chain, but it also means there is no im
 
 For cases where principal must leave the contract (e.g., executor-controlled deployment), `dlc-bond.clar` supports an **opt-in** principal drawdown mode that must be enabled *before issuance* via `enable-principal-drawdown`. In that mode, the issuer can draw down principal while the bond is paused (`active = false`) via `drawdown-principal`.
 
-If `principal-drawdown-enabled` is set and the oracle declares default, `redeem` switches to a recovery path that pays out the remaining in-contract sBTC **pro-rata** and disables coupon claiming in that state. Any previously accrued/unclaimed coupon amounts are not paid separately in that recovery state.
+If `principal-drawdown-enabled` is set and the oracle declares default, `redeem` switches to a recovery path that pays out the remaining in-contract sBTC **pro-rata** and disables coupon claiming in that state. Any previously accrued/unclaimed coupon amounts are not paid separately; all remaining in-contract sBTC is distributed pro-rata based on `dlc-bond` burned.
 
 Since payouts are integer-based, very small positions may need to consolidate before redeeming.
 
