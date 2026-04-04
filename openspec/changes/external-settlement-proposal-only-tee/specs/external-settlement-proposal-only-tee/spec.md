@@ -11,7 +11,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
 2. **TEE verification is required before proposal emission**
    - A proposal MUST NOT be emitted unless a TEE/StrongBox/CloudTEE attestation verifies:
      - the payload digest (computed from `raw_payload_bytes` inside the TEE),
-     - `normalized_settlement_hash` using a rail-specific canonical serialization:
+     - `normalized_settlement_hash` (computed inside the TEE) using a rail-specific canonical serialization:
        - JSON: RFC 8785 JSON Canonicalization Scheme (JCS)
        - XML: W3C XML Canonicalization 1.1
      - the oracle authenticity proof,

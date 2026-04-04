@@ -41,7 +41,8 @@ This design makes the boundaries between parsing, attestation, and execution exp
 **Trusted responsibilities** (TEE / Conclave):
 
 - Recompute `raw_payload_hash = sha256(raw_payload_bytes)` inside the TEE and compare it to the claimed hash.
-- If hashing `normalized_settlement`, compute the hash inside the TEE using a rail-specific canonical serialization.
+- Compute `normalized_settlement_hash` inside the TEE from a canonical `normalized_settlement` derived from `raw_payload_bytes`.
+  - The canonical serialization MUST be rail-specific.
   - JSON canonicalization: RFC 8785 JSON Canonicalization Scheme (JCS).
   - XML canonicalization: W3C XML Canonicalization 1.1.
 - Verify the oracle authenticity for the external rail (signature/HMAC/cert-chain; rail-specific).
