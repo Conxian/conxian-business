@@ -78,7 +78,7 @@ jobs:
           mkdir -p _pages
           : > _pages/.nojekyll
 
-          rsync -a --relative "${required[@]/#/.\/}" _pages/
+          rsync -a --relative "${required[@]/#/./}" _pages/
 
           openspec_specs_allowed_exts=(md json)
           openspec_specs_allowed_ext_re="$(IFS='|'; echo "${openspec_specs_allowed_exts[*]}")"
