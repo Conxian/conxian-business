@@ -80,6 +80,8 @@ The CON-129 description previously referenced issues that no longer exist in Lin
 
 Track replacements and/or removals under: https://linear.app/conxian-labs/issue/CON-375/reconcile-deleted-issue-refs-in-con-129-con-130646579
 
+Treat CON-375 as a **documentation blocker** for this gate until the replacements/removals are fully reconciled.
+
 ## Bounty-ready subset (externalizable candidates only)
 
 Only mark work bounty-ready when it is:
