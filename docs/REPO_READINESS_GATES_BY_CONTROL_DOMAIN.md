@@ -40,7 +40,7 @@ Gate levels are intentionally coarse. Use them to prevent “we can ship” ambi
 
 Legend:
 
-- `0` = not applicable for this repo (domain explicitly assessed as having no meaningful exposure; rationale documented; do **not** use as a default when unsure)
+- `0` = not applicable for this repo (domain explicitly assessed as having no meaningful exposure; rationale documented and linkable from repo docs; do **not** use as a default when unsure)
 - `1` = baseline controls
 - `2` = elevated controls (security/compliance review required)
 - `3` = critical controls (formal sign-off + multi-party operating controls)
@@ -130,7 +130,13 @@ _Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury
 
 ### What can ship without additional controls
 
-Repos that can generally ship without additional org-level gates beyond the per-domain levels in this table are those whose Ship posture is a `Ship (...)` value (not `Conditional (...)`), have `FT < 3`, `OC < 3`, and no other control domain at level `3`. These still must meet the public-safe baseline and standard engineering hygiene (for example, no secrets in the repo and basic CI checks).
+Repos that can generally ship without additional org-level gates beyond the per-domain levels in this table:
+
+- have a Ship posture of `Ship (...)` (not `Conditional (...)`)
+- have `FT < 3` and `OC < 3`
+- have no other control domain at level `3`
+
+These repos still must meet the public-safe baseline and standard engineering hygiene (for example, no secrets in the repo and basic CI checks).
 
 > Note: For the `.github` repo, treat changes as high-blast-radius infrastructure and require elevated review even if it meets these numeric criteria.
 
