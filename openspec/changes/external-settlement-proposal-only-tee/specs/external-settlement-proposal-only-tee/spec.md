@@ -66,7 +66,9 @@ The TEE attestation MUST bind (directly or by digest) the canonical values of at
 
 `oracle_verification` MUST NOT be a bare boolean. It MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the lowercase hex encoding of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
 
-Proposal emission MUST recompute `oracle_proof_digest` from the exact `raw_oracle_proof_bytes` it verifies and MUST reject if the result differs from the `oracle_proof_digest` value bound by the TEE attestation.
+`raw_oracle_proof_bytes` MUST be the exact byte sequence provided to the TEE for oracle-proof verification, before any internal parsing, canonicalization, or transformation.
+
+Proposal emission MUST recompute `oracle_proof_digest` from the exact `raw_oracle_proof_bytes` it provides to the TEE and MUST reject if the result differs from the `oracle_proof_digest` value bound by the TEE attestation.
 
 Prohibited fields:
 
@@ -95,6 +97,7 @@ Implementations MUST NOT treat any host-supplied `settlement_identifiers` as aut
 - The host-supplied hint object MUST be provided to the TEE as input and MUST be treated as untrusted.
 - If the hint fails JSON parsing or fails to meet the structural and leaf-type constraints in this section, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST enforce bounds on the hint object before deep traversal. When encoded as UTF-8 JSON, the hint object MUST be ≤ 16384 bytes, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
+- The TEE MUST enforce bounds on the hint object before deep traversal. When encoded as UTF-8 JSON, the hint object MUST be ≤ 16384 bytes, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. A leaf field is a JSON key path (including nested objects) whose value is a JSON string or a JSON number. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping field differs, the TEE MUST refuse to produce a successful attestation.
 - Any host-supplied extra fields MUST be ignored for canonicalization purposes.
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
