@@ -38,14 +38,12 @@ Gate levels are intentionally coarse. Use them to prevent “we can ship” ambi
 
 Legend:
 
-- `0` = not applicable / no meaningful exposure (N/A for this repo; there is no `L0` / `RC0` / etc.)
+- `0` = explicitly assessed as “N/A for this repo” (no `L0` / `RC0` / etc.; treat as “no meaningful exposure”; do not use `0` as a default when unsure)
 - `1` = baseline controls
 - `2` = elevated controls (security/compliance review required)
 - `3` = critical controls (formal sign-off + multi-party operating controls)
 
 Unless otherwise specified, gate levels are cumulative: level `N` assumes the controls of levels `0..N-1` are also in place.
-
-> Use level `0` only when the domain has been explicitly assessed and determined to have no meaningful exposure for that repo (not as a default when unsure).
 
 ### L — Legal / public-safe status
 
@@ -128,7 +126,7 @@ _Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury
 
 ### What can ship without additional controls
 
-Repos with Ship posture and no `FT3`/`OC3` exposure can generally ship with standard engineering hygiene (no secrets, basic CI). Based on the mapping above, that includes:
+Repos with Ship posture and no `FT3`/`OC3` exposure can generally ship with standard engineering hygiene (no secrets, basic CI). Based on the mapping above, examples currently include:
 
 - `conxian-labs-site`
 - `lib-conxian-core`
@@ -145,7 +143,7 @@ Regardless of repo visibility, the following content **must not be tracked in Gi
 
 ### What needs additional controls before rollout
 
-Any repo with `FT3` and/or `OC3` is “break-glass” territory and needs formal operating controls before mainnet rollout. Based on the mapping above, that includes:
+Any repo with `FT3` and/or `OC3` is “break-glass” territory and needs formal operating controls before mainnet rollout. Based on the mapping above, examples currently include:
 
 - `Conxian`
 - `conxius-wallet`
