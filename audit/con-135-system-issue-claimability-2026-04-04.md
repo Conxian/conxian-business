@@ -27,9 +27,9 @@ Summary
 
 - Total issues in scope: **90**
 - Community-claimable: **14**
-- Internal-only: **54**
+- Internal-only: **55**
 - Blocked: **1**
-- Not suitable for bounty execution: **21**
+- Not suitable for bounty execution: **20**
 - Claim-open now (subset): **8**
 
 Claim-open now
@@ -121,7 +121,7 @@ Full classification
 | CON-226 | In Progress | internal-only | Governance, Security | Create secret incident and remediation procedure |
 | CON-227 | In Review | internal-only | Governance, Security | Map repo readiness gates by control domain |
 | CON-229 | Todo | internal-only | Governance, Release | Run ConxianCSF mainnet go/no-go readiness review |
-| CON-230 | Todo | not suitable for bounty execution | Bounty, Release | Confirm bounty funding and payout activation for mainnet |
+| CON-230 | Todo | internal-only | Bounty, Release | Confirm bounty funding and payout activation for mainnet |
 | CON-231 | Backlog | blocked | Bounty, Governance | Decide which bounties can open before mainnet go-live |
 | CON-232 | In Progress | internal-only | Release | Run mainnet countdown and launch communications plan |
 | CON-233 | Todo | internal-only | Governance, Security | Verify wallets, signers, and approval controls for launch |
