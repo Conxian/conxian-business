@@ -130,7 +130,7 @@ _Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury
 
 ### What can ship without additional controls
 
-Repos that can generally ship without additional controls are those whose Ship posture is a `Ship (...)` value (not `Conditional (...)`), with `FT < 3`, `OC < 3`, and no other control domain at level `3`.
+Repos that can generally ship without additional org-level gates beyond the per-domain levels in this table are those whose Ship posture is a `Ship (...)` value (not `Conditional (...)`), have `FT < 3`, `OC < 3`, and no other control domain at level `3`. These still must meet the public-safe baseline and standard engineering hygiene (for example, no secrets in the repo and basic CI checks).
 
 > Note: For the `.github` repo, treat changes as high-blast-radius infrastructure and require elevated review even if it meets these numeric criteria.
 
@@ -146,7 +146,7 @@ Regardless of repo visibility, the following content **must not be tracked in Gi
 
 Any repo with `FT = 3` and/or `OC = 3` is “break-glass” territory and needs formal operating controls before mainnet rollout.
 
-Repos with `Ship posture = Conditional (service gates)` (for example, `conxian-gateway` and `conxian-nexus`) and with `RC >= 2` and `DR >= 3` require an operating owner + incident posture before production use.
+Service surfaces (i.e., repos whose Ship posture is `Conditional (service gates)`, such as `conxian-gateway` and `conxian-nexus`) with `RC >= 2` and `DR >= 3` require an operating owner + incident posture before production use.
 
 ## Follow-ups (recommended)
 
