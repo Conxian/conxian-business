@@ -23,7 +23,7 @@ Once a machine-readable portfolio manifest exists (see the P0 backlog), that man
 
 Naming note: this repo is `conxian-business`, but it also contains a nested directory `./conxian-business/` for BOS state artifacts. In this document, `./` refers to the repo root, and `./conxian-business/` refers to the nested state directory.
 
-Control note: this map must be updated whenever the set of pinned submodule gitlinks (and their `.gitmodules` configuration metadata) or BOS-native top-level assets (as enumerated in the tables below) change. Portfolio hygiene automation (under `scripts/`) should treat mismatches as a portfolio integrity failure (both missing mappings and stale mappings).
+Control note: this map must be updated whenever the set of pinned submodule paths or BOS-native top-level assets (as enumerated in the tables below) change. Portfolio hygiene automation (under `scripts/`) should treat mismatches as a portfolio integrity failure (both missing mappings and stale mappings).
 
 This complements (and should remain consistent with):
 
