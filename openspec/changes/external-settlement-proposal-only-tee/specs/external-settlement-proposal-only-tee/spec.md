@@ -98,8 +98,7 @@ Example: if a message contains three settlement-transaction entries `[A, B, C]` 
 
 Canonical formatting requirements:
 
-- `settlement_identifiers.transaction_identifiers` MUST be present and MUST be a flat JSON object. If the JSON value of `settlement_identifiers.transaction_identifiers` is missing or is not an object, this MUST be treated as a canonicalization failure for the corresponding settlement transaction.
-- Each value in `settlement_identifiers.transaction_identifiers` MUST be a string. Any non-string JSON value MUST be treated as a canonicalization failure for the corresponding settlement transaction.
+- `settlement_identifiers.transaction_identifiers` MUST be present and MUST be a JSON object whose values are strings. If the JSON value of `settlement_identifiers.transaction_identifiers` is missing, is not an object, or any value is non-string, this MUST be treated as a canonicalization failure for the corresponding settlement transaction.
 - Implementations MUST canonicalize and validate each string value in `settlement_identifiers.transaction_identifiers` as follows:
   1. If an upstream source provides bytes for a `transaction_identifiers` value, implementations MUST decode them as UTF-8 and MUST treat any decoding error as a canonicalization failure for the corresponding settlement transaction (i.e., MUST NOT substitute `U+FFFD`).
   2. Implementations MUST reject any value that is not a sequence of Unicode scalar values (reject surrogate code points `U+D800..U+DFFF`).

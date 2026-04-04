@@ -155,7 +155,7 @@ Informal summary:
 - `settlement_identifiers.transaction_identifiers` MUST be present and MUST be a flat JSON object whose values are strings; if it is missing, not an object, or any value is non-string, canonicalization MUST fail for the corresponding settlement transaction.
 - These identifier values are non-empty and, after NFC normalization, exclude Unicode control/format characters (`General_Category` Cc or Cf) and leading/trailing Unicode whitespace (`White_Space=Y`). See §2.1.1 for the precise normative rules.
 - If any value in `settlement_identifiers.transaction_identifiers` fails canonicalization or validation under §2.1.1, that settlement transaction is invalid for external-settlement trigger purposes and does not produce a `normalized_settlement_hash` or `SovereignProposal`.
-- `envelope_identifiers.tx_index` is a non-negative integer (required); if it is absent or invalid, the settlement transaction is invalid for external-settlement trigger purposes. Any other optional `settlement_identifiers.envelope_identifiers.*` values are treated as absent if invalid and MUST NOT invalidate the settlement transaction.
+- `envelope_identifiers.tx_index` is a non-negative integer (required); if it is absent or invalid, the settlement transaction is invalid for external-settlement trigger purposes. Any other optional `settlement_identifiers.envelope_identifiers.*` values are treated as absent if invalid and MUST NOT invalidate the settlement transaction for external-settlement trigger purposes.
 
 Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
