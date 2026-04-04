@@ -9,7 +9,7 @@ Canonical wallet docs live in the wallet repo itself (`Conxian/conxius-wallet`).
 - Risk registry: [`conxius-wallet/docs/legal/RISK_REGISTRY.md`](https://github.com/Conxian/conxius-wallet/blob/HEAD/docs/legal/RISK_REGISTRY.md)
 - Protocol integration map: [`conxius-wallet/docs/protocols/IMPLEMENTATION_REGISTRY.md`](https://github.com/Conxian/conxius-wallet/blob/HEAD/docs/protocols/IMPLEMENTATION_REGISTRY.md)
 
-Note: in this repo, those artifacts live under the `conxius-wallet/` submodule when it is checked out (for example, via `git submodule update --init --recursive`).
+Note: in this repo, those artifacts live under the `conxius-wallet/` submodule when it is checked out (for example, via `git submodule update --init conxius-wallet`).
 
 ## 1) Business-unit role (wallet operations + product delivery)
 
