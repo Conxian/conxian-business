@@ -76,7 +76,7 @@ Additional pinned repos (supporting surfaces):
 
 ### Missing dependency references (must be reconciled)
 
-The CON-129 description previously referenced issues that no longer exist in Linear (`CON-130`, `CON-64`, `CON-65`, `CON-79`).
+The CON-129 description previously referenced issues that no longer exist in Linear (confirmed as of 2026-04-04) (`CON-130`, `CON-64`, `CON-65`, `CON-79`).
 
 Track replacements and/or removals under: https://linear.app/conxian-labs/issue/CON-375/reconcile-deleted-issue-refs-in-con-129-con-130646579
 
