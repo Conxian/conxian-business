@@ -4,9 +4,12 @@
 * [Archive Migration (Linear Virtual Office; ZSE)](ARCHIVE_MIGRATION.md)
 * [Conxian: one-page market narrative](docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md)
 * [Documentation Alignment Index](docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
+* [BOS business buildout (this repo)](docs/BOS_BUSINESS_BUILDOUT.md)
 * [Repo Portfolio (Flagship vs Supporting)](docs/REPO_PORTFOLIO.md)
+* [Portfolio business-unit map and separation of concerns](docs/PORTFOLIO_BUSINESS_UNIT_MAP.md)
 * [Partner Overview and Launch FAQ](docs/PARTNER_OVERVIEW_AND_LAUNCH_FAQ.md)
 * [Release notes and changelog format](docs/RELEASE_NOTES_AND_CHANGELOG.md)
+* [Release hygiene — conxian-nexus](docs/RELEASE_HYGIENE_CONXIAN_NEXUS.md)
 * [CSF mainnet readiness gate](docs/CSF_MAINNET_READINESS_GATE.md)
 * [OpenSpec](openspec/README.md)
 
@@ -14,6 +17,11 @@
 
 * [OpenSpec Baseline](openspec/changes/remediate-enterprise-sovereignty/specs.md)
 * [Sovereign Data Migration & Institutional Egress](openspec/changes/sovereign-data-migration-institutional-egress/specs.md)
+* [SAB migration control plane](docs/SAB_MIGRATION_CONTROL_PLANE.md)
+  * [Dependency inventory](docs/SAB_MIGRATION_DEPENDENCY_INVENTORY.md)
+  * [Datastore decision log](docs/SAB_DATASTORE_DECISION_LOG.md)
+  * [Readiness gates](docs/SAB_MIGRATION_READINESS_GATES.md)
+  * [Migration waves](docs/SAB_MIGRATION_WAVES.md)
 * [Trust & Proof Messaging (Public Surfaces)](docs/TRUST_AND_PROOF_MESSAGING.md)
 * [Autonomous Launch Specs](openspec/changes/csf-autonomous-launch/specs.md)
 

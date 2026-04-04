@@ -4,7 +4,7 @@ This repository is the programmatic **State Machine** for Conxian operations. We
 
 Supporting — Governance + OpenSpec + submodule wiring for the Conxian ecosystem.
 
-See the [repo portfolio](docs/REPO_PORTFOLIO.md#ecosystem-repos) for the flagship/supporting repo map.
+See the [repo portfolio](docs/REPO_PORTFOLIO.md#ecosystem-repos) for the flagship/supporting repo map and `docs/BOS_BUSINESS_BUILDOUT.md` for the business-end operating model and public/internal split.
 
 ## Purpose
 
@@ -44,15 +44,17 @@ See:
 - https://linear.app/conxian-labs
 - https://linear.app/conxian-labs/issue/CON-256
 
+Detailed strategy and roadmap content must not be duplicated in this README; see `docs/BOS_BUSINESS_BUILDOUT.md` for the public vs internal documentation rules.
+
 Some files are intentionally kept as stubs so existing links continue to resolve.
 
-## Ground Truth (OpenSpec)
+## Ground truth (OpenSpec)
 
 The definitive technical specifications for the Conxian ecosystem are maintained in the `openspec/` directory. See the [Enterprise Sovereignty Baseline](./openspec/changes/remediate-enterprise-sovereignty/specs.md) for the latest architectural standards.
 
-Sensitive strategy and operational documents have been migrated to the [Linear Virtual Office](https://linear.app/conxian-labs) for secure, high-integrity management in compliance with our Zero Secret Egress (ZSE) mandate.
+This repository is public. Sensitive strategy, legal, operational, and administrative documents should live in the [Linear Virtual Office](https://linear.app/conxian-labs) in compliance with our Zero Secret Egress (ZSE) mandate.
 
-## 🛡️ Governance and Security
+## Governance and security
 
 We adhere to strict sovereignty and security standards.
 
@@ -67,8 +69,12 @@ This repository is licensed under the GNU GPL v3.0 (see `LICENSE`).
 - [**CHANGELOG.md**](./CHANGELOG.md): History of BOS changes.
 - [**CODEOWNERS**](./CODEOWNERS): Repository ownership and review guidance.
 
-## 📂 Repository Hygiene
+## Repository hygiene
 
 To maintain a clean and sovereign workspace, we adhere to strict hygiene standards:
 - **`scripts/`**: Contains active utility scripts (e.g., `check_links.py`).
+- **`ARCHIVE_MIGRATION.md`**: ZSE-safe pointers to legacy material intentionally kept out of the Git index.
 - **`openspec/`**: Definitive technical specifications.
+
+---
+**Sovereign Autonomous Business (SAB)**. © 2026 Conxian-Labs. Powered by Bitcoin.
