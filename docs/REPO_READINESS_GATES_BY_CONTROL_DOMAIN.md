@@ -15,6 +15,8 @@ Canonical tracker:
 
 **Status:** Living document. Repo `CODEOWNERS` and control-domain owners should update this mapping when any repo is added, renamed, retired/archived, or when gate requirements change.
 
+**Recency:** Use Git history for this file to see when the mapping was last updated.
+
 This document defines the _required gates_ by repo and does **not** claim that those gates are already satisfied.
 
 ## How to use this document
@@ -128,7 +130,7 @@ _Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury
 
 ### What can ship without additional controls
 
-Repos with Ship posture and no `FT3`/`OC3` exposure can generally ship with standard engineering hygiene (no secrets, basic CI). Derive the current set from the mapping table above.
+Repos that can generally ship without additional controls are those with `Ship posture = Ship` (not `Conditional`) and `FT < 3` and `OC < 3`.
 
 ### What must stay private (content-level, not necessarily repo-level)
 
@@ -140,9 +142,9 @@ Regardless of repo visibility, the following content **must not be tracked in Gi
 
 ### What needs additional controls before rollout
 
-Any repo with `FT3` and/or `OC3` is “break-glass” territory and needs formal operating controls before mainnet rollout. Derive the current set from the mapping table above.
+Any repo with `FT = 3` and/or `OC = 3` is “break-glass” territory and needs formal operating controls before mainnet rollout.
 
-Service surfaces with `RC2` and `DR3` require an operating owner + incident posture before production use (derive from the mapping table above).
+Service surfaces with `RC >= 2` and `DR >= 3` require an operating owner + incident posture before production use.
 
 ## Follow-ups (recommended)
 
