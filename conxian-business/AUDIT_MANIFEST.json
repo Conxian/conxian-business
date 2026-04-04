@@ -1,6 +1,6 @@
 {
   "org": "Conxian",
-  "timestamp": "2026-04-04T10:26:52.625857Z",
+  "timestamp": "2026-04-04T10:36:21.273140Z",
   "version": "v2.0-Audit",
   "files": [
     {
@@ -13,7 +13,7 @@
     },
     {
       "path": "docs/DOCUMENTATION_ALIGNMENT_INDEX.md",
-      "sha256": "5937a3c185426546cae5cb5ee560693c3ec14102cdee0a23dcb92abdaf47494a"
+      "sha256": "1ef5843040e6f205cad21af3905e2a8efbd5423737fe52db837261b3870df9d0"
     },
     {
       "path": "docs/CJCS_v2.0_SPEC.md",
@@ -57,7 +57,7 @@
     },
     {
       "path": "docs/REPO_PORTFOLIO.md",
-      "sha256": "31c153e3ba4cea6a0e6965923a78364086f8e436c8a62da26b91229848fe4930"
+      "sha256": "ace330603025e1541df44b64a56ded123ca3c0c135db23d025fdc50191789498"
     },
     {
       "path": "docs/MARCH_2026_BASELINE_STATS.md",
@@ -74,6 +74,10 @@
     {
       "path": "docs/BUSINESS_COMPLIANCE_ALIGNMENT_2026.md",
       "sha256": "3a6ef90e4bf79b1afd7727cbd0ca9b2af2182ad410df320c732b24b28efd207b"
+    },
+    {
+      "path": "docs/PORTFOLIO_BUSINESS_UNIT_MAP.md",
+      "sha256": "375101fbb305ccbfc67fb83811913f8e21356856e461f471d6b888049268ea2f"
     },
     {
       "path": "docs/research/BITCOIN_NATIVE_UPGRADE.md",
@@ -1317,7 +1321,7 @@
     },
     {
       "path": "conxian-business/AUDIT_MANIFEST.json",
-      "sha256": "b36e7af734b0b810a705e05799d6d6dba6e9e42e118fd76e17d5e0e4aafdebe7"
+      "sha256": "1bba4e444fe924c751c4f6352eeb3fe9f606ed465c1e0ba5055daab600cddcbe"
     },
     {
       "path": "conxian-business/SARB_COMPLIANCE_REPORT.json",
@@ -1353,7 +1357,7 @@
     },
     {
       "path": "Sovereign-Strategy-Nexus/contracts/jurisdictional-sharding.clar",
-      "sha256": "aa9e012eab211980ab93509dd774a47b94b7134530ec385df4b3a25baa3a7079"
+      "sha256": "ef396a8d0e64c9967bbddd25c1c3fceb810d78be5e0fa1b31042c6135fae2ed0"
     },
     {
       "path": "Sovereign-Strategy-Nexus/docs/SOVEREIGN_PITCH_DECK_NARRATIVE.md",
@@ -1361,7 +1365,7 @@
     },
     {
       "path": "Sovereign-Strategy-Nexus/docs/SARB_MARCH_2026_MANDATE.md",
-      "sha256": "27e5a4176a81df1d53f0795cbbe92e4850d6947cf61ba4d7c28f510338b28839"
+      "sha256": "aa6530ea074f43f2626ac32ffa8b59b0430c5e87e7cf5037b933ab2497aa2ee6"
     },
     {
       "path": "Sovereign-Strategy-Nexus/docs/SOVEREIGN_MOI_ALIGNMENT.md",
@@ -1405,8 +1409,8 @@
     },
     {
       "path": "Fiscal-Vault-Oracle/dlc-bond.clar",
-      "sha256": "84e2ae4ee943f561345e2859a907b0d7def0ae262ee214f949258a7be69b9757"
+      "sha256": "4fc277aa656ff63d0de72e1e9c499864aa64477be710e1e3c541c2c22c86a13f"
     }
   ],
-  "stacks_anchor_payload": "8a64ec3172981ed125e61cb08935a7ed66adbbbe1e46ca22e4841dada445d3e7"
+  "stacks_anchor_payload": "ee2be3578e6e3967724223fb1fbb921d2f32d9a5d4abaf8c93178a84a0e0504d"
 }
