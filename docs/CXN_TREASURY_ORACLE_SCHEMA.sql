@@ -328,6 +328,7 @@ CREATE POLICY "Read-only for authenticated clients" ON public.cxn_csf_state
 CREATE POLICY "Read-only for authenticated clients" ON public.cxn_external_settlement_logs
     FOR SELECT TO authenticated USING (true);
 
+-- cxn_external_settlement_logs is append-only by design: allow INSERT only.
 CREATE POLICY "Insert for service role" ON public.cxn_external_settlement_logs
     FOR INSERT TO service_role WITH CHECK (true);
 
