@@ -22,6 +22,8 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
 
 Hex encoding conventions: the lowercase hex encoding of any 32-byte SHA-256 digest in this spec (including `raw_payload_hash`, `normalized_settlement_hash`, and `trigger_id`) MUST be exactly 64 characters long (`0-9`, `a-f`) and MUST include leading zeros for leading zero bytes.
 
+`raw_payload_hash`, `normalized_settlement_hash`, and `trigger_id` MUST match `^[0-9a-f]{64}$` exactly; implementations MUST reject any value not matching this pattern (including `0x` prefixes, uppercase hex, incorrect length, or non-hex characters).
+
 3. **Timelock is mandatory**
    - Verified external triggers MUST initiate the standard 144-block timelock.
    - The start height MUST use the same canonical chain-height source used by the native path.
