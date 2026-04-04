@@ -7,11 +7,11 @@ This page is a practical index of the documentation already present in this repo
 - **Canonical**: the current “source of truth” for a domain. If two docs disagree, update the non-canonical doc to match the canonical one.
 - **Supporting**: helpful context, audits, reports, briefs, or deep dives that clarify (but don’t define) the system.
 - **Public-safe**: ok to link in public contexts and external conversations.
-- **Internal-only**: strategic / operational / security-adjacent content that should primarily live in Linear documents for durable workspace access.
+- **Internal-only**: strategic / operational / security-adjacent content that must live in the Conxian Linear workspace (the repo may contain a stub placeholder so existing links resolve).
 
 Notes:
 
-- This repo is public. “Internal-only” is a classification for _how we should reference and migrate_ the material (not a claim that it is currently private).
+- This repo is public. “Internal-only” material should not be stored here beyond a stub; see https://linear.app/conxian-labs/issue/CON-256.
 - OpenSpec change sets typically have 4 layers: `proposal.md` (intent), `design.md` (architecture), `specs/*/spec.md` (requirements), `tasks.md` (execution).
 
 ## 1) Repo navigation (start here)
@@ -99,6 +99,7 @@ These are the documents most likely to answer “what are we building?” and �
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
+| `docs/CONXIUS_WALLET_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and internal-only vs public-safe separation guidance for the wallet. |
 | `conxius-wallet/docs/business/PRD.md` | Canonical | Public-safe | Wallet PRD. |
 | `conxius-wallet/docs/operations/ROADMAP.md` | Canonical | Public-safe | Wallet strategic roadmap (v1.6.0). |
 | `conxius-wallet/docs/protocols/IMPLEMENTATION_REGISTRY.md` | Canonical | Public-safe | Protocol implementation registry (what’s integrated). |

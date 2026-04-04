@@ -16,6 +16,7 @@
 
 ## 🤖 Business Operations System (BOS)
 
+* [Conxius Wallet BOS buildout](docs/CONXIUS_WALLET_BOS_BUILDOUT.md)
 * [Strategy Nexus](Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md)
   * [Sovereign MOI Alignment](Sovereign-Strategy-Nexus/docs/SOVEREIGN_MOI_ALIGNMENT.md)
   * [ZK-Data Room Schema](Sovereign-Strategy-Nexus/docs/ZK_DATA_ROOM_SCHEMA.md)
@@ -38,8 +39,6 @@
   * [Migration waves](docs/SAB_MIGRATION_WAVES.md)
 * [Trust & Proof Messaging (Public Surfaces)](docs/TRUST_AND_PROOF_MESSAGING.md)
 * [Autonomous Launch Specs](openspec/changes/csf-autonomous-launch/specs.md)
-* [Strategos Alignment Audit](audit/strategos-alignment.md)
-* [Missing Chips Brief](docs/MISSING_CHIPS_BRIEF.md)
 
 ## 📦 Architecture
 
