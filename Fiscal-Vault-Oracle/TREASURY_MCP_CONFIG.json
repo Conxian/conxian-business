@@ -1,5 +1,10 @@
 {
-  "note": "This repository is public. Internal MCP endpoints, permissions, and vendor integrations are maintained in the Conxian Linear workspace.",
+  "mcp_version": "REDACTED",
+  "client_id": "REDACTED",
+  "bridges": {},
+  "resource_mappings": {},
+  "audit_trail": {},
+  "note": "Public-safe stub. Internal MCP endpoints, permissions, and vendor integrations are maintained in the Conxian Linear workspace.",
   "linear": {
     "workspace": "https://linear.app/conxian-labs",
     "tracking_issue": "https://linear.app/conxian-labs/issue/CON-256"

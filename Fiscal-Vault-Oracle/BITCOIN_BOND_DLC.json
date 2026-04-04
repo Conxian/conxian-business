@@ -1,5 +1,25 @@
 {
-  "note": "This repository is public. Debt instrument details, coupon terms, and integration specifics are maintained in the Conxian Linear workspace.",
+  "contract_type": "REDACTED",
+  "collateral": "REDACTED",
+  "oracle": "REDACTED",
+  "coupon_structure": {
+    "type": "REDACTED",
+    "rate": "REDACTED",
+    "payment_frequency": "REDACTED",
+    "settlement_currency": "REDACTED"
+  },
+  "dilution_impact": "REDACTED",
+  "dlc_logic": {
+    "outcome_set": [],
+    "attestation_requirement": "REDACTED",
+    "signature_type": "REDACTED"
+  },
+  "audit_trail": {
+    "issuer": "REDACTED",
+    "governance_nexus": "REDACTED",
+    "audit_status": "REDACTED"
+  },
+  "note": "Public-safe stub. Debt instrument details, coupon terms, and integration specifics are maintained in the Conxian Linear workspace.",
   "linear": {
     "workspace": "https://linear.app/conxian-labs",
     "tracking_issue": "https://linear.app/conxian-labs/issue/CON-256"
