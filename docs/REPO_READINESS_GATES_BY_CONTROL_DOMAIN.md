@@ -133,8 +133,7 @@ _Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury
 Repos that can generally ship without additional org-level gates beyond the per-domain levels in this table:
 
 - have a Ship posture of `Ship (...)` (not `Conditional (...)`)
-- have `FT < 3` and `OC < 3`
-- have no other control domain at level `3`
+- have no control domain at level `3` (all are `0–2`)
 
 These repos still must meet the public-safe baseline and standard engineering hygiene (for example, no secrets in the repo and basic CI checks).
 
