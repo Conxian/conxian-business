@@ -45,6 +45,7 @@
 (define-data-var next-coupon-height uint u0)
 
 (define-data-var defaulted bool false)
+(define-data-var defaulted-at (optional uint) none)
 
 ;; Global coupon index (scaled by INDEX_PRECISION)
 (define-data-var coupon-index uint u0)
@@ -80,9 +81,15 @@
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
     (assert-oracle)
-    (var-set defaulted true)
-    (print { event: "dlc-bond-defaulted", defaulted: true, oracle: tx-sender })
-    (ok true)
+    (if (var-get defaulted)
+      (ok false)
+      (begin
+        (var-set defaulted true)
+        (var-set defaulted-at (some burn-block-height))
+        (print { event: "dlc-bond-defaulted", defaulted: true, oracle: tx-sender, at: burn-block-height })
+        (ok true)
+      )
+    )
   )
 )
 
@@ -126,7 +133,8 @@
     coupon-interval-blocks: (var-get coupon-interval-blocks),
     coupon-ppm: (var-get coupon-ppm),
     next-coupon-height: (var-get next-coupon-height),
-    defaulted: (var-get defaulted)
+    defaulted: (var-get defaulted),
+    defaulted-at: (var-get defaulted-at)
   })
 )
 
