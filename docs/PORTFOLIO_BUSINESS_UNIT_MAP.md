@@ -14,6 +14,8 @@ To regenerate the transparency custodian audit manifest (`./conxian-business/.ge
 python3 ./conxian-business/transparency_custodian.py
 ```
 
+This command currently regenerates only the transparency custodian audit manifest under `./conxian-business/.generated/`.
+
 Until portfolio hygiene automation exists to regenerate and diff BOS state artifacts under `./conxian-business/` in CI (see the P0 backlog), contributor policy is:
 
 - If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks (including adding/removing submodules), the mapping tables in this document (ecosystem submodule rows / BOS-native asset paths), or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit derived artifacts under `./conxian-business/` by hand) and **commit** any updated derived artifacts that are tracked in git in the same PR.
