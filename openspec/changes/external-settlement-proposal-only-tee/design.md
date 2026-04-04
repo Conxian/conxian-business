@@ -103,7 +103,9 @@ Execution must never accept or interpret raw TradFi payloads.
 
 #### 3.2.1 `settlement_identifiers` (required; canonical)
 
-To support replay protection and deterministic idempotency, each rail MUST define a canonical identifier set used to populate `settlement_identifiers`.
+Each rail MUST define a canonical identifier set used to populate `settlement_identifiers` for audit and reconciliation.
+
+Replay protection and deterministic idempotency are enforced via `trigger_id` derived from `{ rail, normalized_settlement_hash }`.
 
 Trigger granularity:
 
@@ -134,7 +136,7 @@ Canonical formatting requirements:
 
 Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
-Note: `raw_payload_hash` differences MUST NOT change `trigger_id`.
+Note: `trigger_id` MUST be a pure function of `{ rail, normalized_settlement_hash }`; differences in `raw_payload_hash` alone (e.g., different envelopes/messages carrying the same normalized settlement transaction) MUST NOT affect `trigger_id`.
 
 To ensure cross-implementation stability, `trigger_id` MUST be computed from a canonical encoding of `{ rail, normalized_settlement_hash }` (e.g., `sha256("external-settlement-trigger:v1" || JCS({ rail, normalized_settlement_hash }))`).
 
