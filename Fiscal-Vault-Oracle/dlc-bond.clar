@@ -46,6 +46,7 @@
 
 ;; Global coupon index (scaled by INDEX_PRECISION)
 (define-data-var coupon-index uint u0)
+(define-data-var coupon-index-remainder uint u0)
 
 ;; Bond token (1:1 with principal units deposited)
 (define-fungible-token dlc-bond)
@@ -231,7 +232,14 @@
       (try! (contract-call? (var-get sbtc-token) transfer coupon-amount tx-sender (bond-contract) none))
 
       ;; Update global coupon index
-      (var-set coupon-index (+ (var-get coupon-index) (/ (* coupon-amount INDEX_PRECISION) supply)))
+      (let (
+        (numerator (+ (* coupon-amount INDEX_PRECISION) (var-get coupon-index-remainder)))
+        (inc (/ numerator supply))
+        (rem (- numerator (* inc supply)))
+      )
+        (var-set coupon-index (+ (var-get coupon-index) inc))
+        (var-set coupon-index-remainder rem)
+      )
       (var-set next-coupon-height (+ (var-get next-coupon-height) (var-get coupon-interval-blocks)))
 
       (print { event: "dlc-bond-coupon-distributed", amount: coupon-amount, supply: supply, next: (var-get next-coupon-height) })
