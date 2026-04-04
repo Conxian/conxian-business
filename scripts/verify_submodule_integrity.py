@@ -40,7 +40,7 @@ def _parse_gitlinks() -> set[str]:
 
 def _parse_gitmodules_paths(gitmodules_path: Path) -> set[str]:
     if not gitmodules_path.exists():
-        raise RuntimeError(".gitmodules not found")
+        return set()
 
     config = configparser.ConfigParser(interpolation=None)
     config.read(gitmodules_path, encoding="utf-8")
