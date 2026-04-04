@@ -98,9 +98,10 @@ Example: if a message contains three settlement-transaction entries `[A, B, C]` 
 
 Canonical formatting requirements:
 
-- `settlement_identifiers.transaction_identifiers` MUST be a flat JSON object whose values are strings (or upstream byte sequences that are decoded to strings as described below). Any non-string JSON value MUST be treated as a canonicalization failure for the corresponding settlement transaction.
-- All string values in `settlement_identifiers.transaction_identifiers` MUST be canonicalized and validated as follows:
-  1. If an upstream source provides bytes, implementations MUST decode them as UTF-8 and MUST treat any decoding error as a canonicalization failure for the corresponding settlement transaction (i.e., MUST NOT substitute `U+FFFD`).
+- `settlement_identifiers.transaction_identifiers` MUST be present and MUST be a flat JSON object. If the JSON value of `settlement_identifiers.transaction_identifiers` is missing or is not an object, this MUST be treated as a canonicalization failure for the corresponding settlement transaction.
+- Each value in `settlement_identifiers.transaction_identifiers` MUST be a string. Any non-string JSON value MUST be treated as a canonicalization failure for the corresponding settlement transaction.
+- Implementations MUST canonicalize and validate each string value in `settlement_identifiers.transaction_identifiers` as follows:
+  1. If an upstream source provides bytes for a `transaction_identifiers` value, implementations MUST decode them as UTF-8 and MUST treat any decoding error as a canonicalization failure for the corresponding settlement transaction (i.e., MUST NOT substitute `U+FFFD`).
   2. Implementations MUST reject any value that is not a sequence of Unicode scalar values (reject surrogate code points `U+D800..U+DFFF`).
   3. The value MUST be normalized to Unicode NFC; all subsequent validation, equality, and hashing operates on the NFC-normalized value.
   4. Implementations MUST reject the value if any of the following holds:
@@ -109,6 +110,8 @@ Canonical formatting requirements:
      - The NFC-normalized value contains any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database).
      - The NFC-normalized value contains the Unicode replacement character `U+FFFD`.
      - The NFC-normalized value begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
+
+- These canonical string rules apply only to `settlement_identifiers.transaction_identifiers`.
 - `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
 - `envelope_identifiers.tx_index` MUST be a non-negative integer.
   - If `envelope_identifiers.tx_index` is absent or invalid, the settlement transaction MUST be treated as invalid for external-settlement trigger purposes.
