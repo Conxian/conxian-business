@@ -83,15 +83,17 @@ jobs:
           openspec_specs_allowed_exts=(md json)
           openspec_specs_allowed_ext_re="$(IFS='|'; echo "${openspec_specs_allowed_exts[*]}")"
 
-          unexpected_openspec_files="$(find "$openspec_specs_dir" -regextype posix-extended -type f ! -regex ".*\\.(${openspec_specs_allowed_ext_re})$" -print -quit)"
+          unexpected_openspec_files="$(find "$openspec_specs_dir" -regextype posix-extended -type f ! -regex ".*\\.(${openspec_specs_allowed_ext_re})$" -print)"
           if [ -n "$unexpected_openspec_files" ]; then
-            echo "Unexpected file type under $openspec_specs_dir (allowed: ${openspec_specs_allowed_exts[*]}): $unexpected_openspec_files" >&2
+            echo "Unexpected file type(s) under $openspec_specs_dir (allowed: ${openspec_specs_allowed_exts[*]}):" >&2
+            echo "$unexpected_openspec_files" >&2
             exit 1
           fi
 
-          unexpected_openspec_symlink="$(find "$openspec_specs_dir" -type l -print -quit)"
+          unexpected_openspec_symlink="$(find "$openspec_specs_dir" -type l -print)"
           if [ -n "$unexpected_openspec_symlink" ]; then
-            echo "Symlinks are not allowed under $openspec_specs_dir: $unexpected_openspec_symlink" >&2
+            echo "Symlinks are not allowed under $openspec_specs_dir:" >&2
+            echo "$unexpected_openspec_symlink" >&2
             exit 1
           fi
 
