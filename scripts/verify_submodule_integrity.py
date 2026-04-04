@@ -42,30 +42,42 @@ def _parse_gitlinks(repo_root: Path) -> set[str]:
     return gitlinks
 
 
-def _parse_gitmodules_paths(gitmodules_path: Path) -> set[str]:
+def _parse_gitmodules_paths(gitmodules_path: Path) -> tuple[set[str], list[str]]:
     if not gitmodules_path.exists():
-        return set()
+        return set(), []
 
     config = configparser.ConfigParser(interpolation=None)
     config.read(gitmodules_path, encoding="utf-8")
 
     paths: set[str] = set()
+    invalid_sections: list[str] = []
     for section in config.sections():
         if not section.startswith('submodule "'):
             continue
 
         path = config.get(section, "path", fallback="").strip()
-        if not path:
+        url = config.get(section, "url", fallback="").strip()
+
+        if not path or not url:
+            invalid_sections.append(section)
             continue
         paths.add(path)
 
-    return paths
+    return paths, invalid_sections
 
 
 def verify() -> None:
     repo_root = _git_root()
     gitlinks = _parse_gitlinks(repo_root)
-    gitmodules_paths = _parse_gitmodules_paths(repo_root / ".gitmodules")
+    gitmodules_paths, invalid_sections = _parse_gitmodules_paths(repo_root / ".gitmodules")
+
+    if invalid_sections:
+        lines = [
+            "Submodule integrity check failed:",
+            "\nInvalid .gitmodules entries (missing path and/or url):",
+            *[f"  - {s}" for s in sorted(invalid_sections)],
+        ]
+        raise RuntimeError("\n".join(lines))
 
     missing_mappings = sorted(gitlinks - gitmodules_paths)
     extra_mappings = sorted(gitmodules_paths - gitlinks)
