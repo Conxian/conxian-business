@@ -82,15 +82,19 @@ The TEE attestation MUST bind (directly or by digest) the canonical values of at
 
 The TEE MUST compute `oracle_proof_digest` from the exact `raw_oracle_proof_bytes` it verifies and MUST NOT accept any host-provided digest value as authoritative; any host-provided digest MUST be recomputed and any mismatch MUST cause attestation to fail.
 
-If `oracle_verification` embeds the raw oracle proof bytes, they MUST be encoded as base64url (no padding) in `oracle_proof_bytes_b64`.
+If `oracle_verification` embeds the raw oracle proof bytes, they MUST be encoded as base64url as defined in RFC 4648 §5 (URL- and filename-safe alphabet, no padding `=`) in `oracle_proof_bytes_b64`.
 
 If `oracle_verification` includes `oracle_proof_bytes_b64`, decoding it MUST yield exactly the `raw_oracle_proof_bytes` used both to verify the oracle authenticity proof and to compute `oracle_proof_digest`.
 
-Proposal emission MUST validate that `oracle_verification` is a JSON object containing `oracle_proof_digest` in the format defined above and, if present, `oracle_proof_bytes_b64` as valid base64url (no padding); any violation MUST cause the proposal to be rejected.
+Proposal emission MUST validate that `oracle_verification` is a JSON object containing `oracle_proof_digest` in the format defined above and, if present, `oracle_proof_bytes_b64` as valid RFC 4648 §5 base64url (no padding); any violation MUST cause the proposal to be rejected.
 
 `raw_oracle_proof_bytes` MUST be the exact byte sequence of the oracle authenticity proof input, before any internal parsing, canonicalization, or transformation.
 
+`raw_oracle_proof_bytes` MUST be at most 16384 bytes in length. The TEE MUST enforce this bound before attempting to parse or verify the proof and MUST refuse to produce a successful attestation if it is exceeded. Proposal emission MUST reject any trigger whose persisted `raw_oracle_proof_bytes` exceed this bound. If `oracle_verification.oracle_proof_bytes_b64` is present, its decoded length MUST also satisfy this bound.
+
 The component that invokes the TEE MUST persist the exact `raw_oracle_proof_bytes` alongside the resulting `AttestedExternalSettlementTrigger` so proposal emission can recompute `oracle_proof_digest` deterministically.
+
+If, at proposal emission time, the persisted `raw_oracle_proof_bytes` for an `AttestedExternalSettlementTrigger` are missing, truncated, or otherwise unavailable, the trigger MUST be treated as a permanent validation failure. Implementations MUST NOT attempt to reconstruct the oracle proof from any other source (including `oracle_verification.oracle_proof_bytes_b64`) in order to satisfy the digest checks.
 
 If `oracle_verification` includes `oracle_proof_bytes_b64`, proposal emission MUST decode it and verify that (a) the decoded bytes are byte-identical to the persisted `raw_oracle_proof_bytes` and (b) SHA-256 over `utf8("oracle-proof:v1") || decoded_bytes` equals the attested `oracle_proof_digest`. Proposal emission MUST reject on any mismatch.
 
@@ -118,6 +122,8 @@ If the canonical `settlement_identifiers` derived from `raw_payload_bytes` fails
 
 The canonical `settlement_identifiers` derived from `raw_payload_bytes` MUST have max nesting depth ≤ 8, contain ≤ 128 leaf fields, and when serialized using RFC 8785 JCS (UTF-8) MUST be ≤ 16384 bytes. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
 
+Because the size bound above uses RFC 8785 JCS, JSON objects with duplicate member names are invalid; the canonical `settlement_identifiers` MUST NOT contain duplicate member names at any object level, and if duplicates are present the TEE MUST refuse to produce a successful attestation.
+
 `transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
 
 `envelope_identifiers` MUST NOT affect `normalized_settlement_hash`.
@@ -130,10 +136,11 @@ Implementations MUST NOT treat any host-supplied `settlement_identifiers` as aut
 - The TEE MUST treat `raw_settlement_identifiers_hint_bytes` as untrusted input.
 - The byte length of the exact `raw_settlement_identifiers_hint_bytes` provided to the TEE MUST be ≤ 16384 bytes, and this bound MUST be enforced before JSON parsing. If the bound is exceeded, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST parse `raw_settlement_identifiers_hint_bytes` as UTF-8 JSON. If parsing fails or the parsed value is not a JSON object, the TEE MUST refuse to produce a successful attestation.
+- When parsing `raw_settlement_identifiers_hint_bytes`, the TEE MUST treat any JSON object containing duplicate member names at any object level as invalid input (i.e., MUST NOT apply keep-first/keep-last semantics) and MUST refuse to produce a successful attestation.
 - After parsing, the hint object MUST satisfy the structural and leaf-type constraints in this section, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. The TEE MUST enforce these bounds before deep traversal. If any constraint or bound is violated, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping leaf fields. An overlapping leaf field is any canonical leaf-field JSON key path present in both objects. For each overlapping leaf field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping leaf field differs, the TEE MUST refuse to produce a successful attestation.
 - If any JSON key path present in both the canonical `settlement_identifiers` object and the hint object has a JSON object value in one and a non-object value in the other, the TEE MUST refuse to produce a successful attestation.
-- Any host-supplied extra fields MUST be ignored for canonicalization purposes.
+- Any host-supplied extra fields MUST be ignored for canonicalization purposes, but they remain subject to all structural and leaf-type constraints in this section (including allowed leaf value types, maximum nesting depth, maximum leaf count, and size bounds).
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
 
 Any TEE attestation failure caused by invalid, out-of-bounds, or mismatched host-supplied `settlement_identifiers` hints for a given `{ rail, raw_payload_hash }` instance MUST be treated as a permanent validation failure in the normal automated processing pipeline. Implementations MUST NOT automatically retry the same `{ rail, raw_payload_hash }` with modified or omitted hints in order to probe for a passing combination. Any operator-initiated override that reprocesses such a payload (for example, after a production bug fix) MUST be explicitly configured, strongly audited, and MUST NOT weaken the TEE’s comparison rules.
@@ -173,7 +180,7 @@ Note: This section intentionally tightens earlier guidance. These canonicalizati
 
 If any value in `settlement_identifiers` (including any field-specific rules for optional reconciliation keys) fails canonicalization or validation, the corresponding settlement transaction MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
-For `external-settlement-trigger:v1`, implementations MUST use Unicode 15.1.0 (Unicode Character Database + normalization data) for evaluating `General_Category`, `White_Space`, and NFC normalization.
+For `external-settlement-trigger:v1`, the TEE and all other components that canonicalize or validate `settlement_identifiers` (including host-side validators and offline tooling) MUST use Unicode 15.1.0 (Unicode Character Database + normalization data) for evaluating `General_Category`, `White_Space`, and NFC normalization.
 
 Once an `external-settlement-trigger:vN` protocol version is activated, its pinned Unicode version and canonicalization rules MUST remain fixed. Any change to either requires a spec revision and a protocol version bump (e.g., from `external-settlement-trigger:vN` to `external-settlement-trigger:vN+1`).
 
@@ -223,3 +230,4 @@ Prohibited fields:
 14. Canonical `settlement_identifiers` exceed the bounds in §2.1.1 → proposal emission fails.
 15. `oracle_verification.oracle_proof_bytes_b64` (if present) does not match the persisted `raw_oracle_proof_bytes` or does not hash to `oracle_proof_digest` → proposal emission fails.
 16. `oracle_verification.oracle_proof_bytes_b64` is not valid base64url (e.g., contains padding `=` or characters outside `[A-Za-z0-9_-]`) → proposal emission fails.
+17. Missing, truncated, or oversized persisted `raw_oracle_proof_bytes` for an attested trigger → proposal emission fails.
