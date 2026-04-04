@@ -154,7 +154,7 @@ Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NO
 
 Note: `trigger_id` MUST be a pure function of `{ rail, normalized_settlement_hash }`, where `rail` is the canonical uppercase rail identifier defined in `spec.md`; differences in `raw_payload_hash` alone (e.g., different envelopes/messages carrying the same normalized settlement transaction) MUST NOT affect `trigger_id`.
 
-To ensure cross-implementation stability, `trigger_id` MUST be derived exactly as specified in [spec.md §1.7 (Idempotency / replay protection)](specs/external-settlement-proposal-only-tee/spec.md#idempotency-replay-protection) (illustrative mental model only: `hexLower(sha256(utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": canonical_rail, "normalized_settlement_hash": normalized_settlement_hash}))))`, where `canonical_rail` is the canonical rail identifier from `spec.md` (e.g., `ISO20022`, `PAPSS`, or `BRICS`)).
+To ensure cross-implementation stability, `trigger_id` MUST be derived exactly as specified in [spec.md §1.7 (Idempotency / replay protection)](specs/external-settlement-proposal-only-tee/spec.md#idempotency-replay-protection) (illustrative mental model only: `hexLower(sha256(utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))))`, where `rail` is the canonical rail identifier from `spec.md` (one of `ISO20022`, `PAPSS`, or `BRICS`)).
 
 ### 3.3 `SovereignProposal` (proposal lane)
 
