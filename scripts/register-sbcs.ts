@@ -18,13 +18,14 @@ const network = new StacksTestnet();
 const sbcs = ["Conxian-Core", "Nexus-Labs", "Fiscal-Auth", "Sovereign-Ops"];
 
 function loadDotEnvIfPresent() {
-  const envPath = resolve(
-    dirname(fileURLToPath(import.meta.url)),
-    '..',
-    '.env'
-  );
+  const moduleDir = dirname(fileURLToPath(import.meta.url));
+  const searchDirs = [process.cwd(), resolve(moduleDir, '..'), moduleDir];
 
-  if (!existsSync(envPath)) return;
+  const envPath = searchDirs
+    .map((dir) => resolve(dir, '.env'))
+    .find((candidate) => existsSync(candidate));
+
+  if (!envPath) return;
 
   const fileText = readFileSync(envPath, 'utf8');
   for (const rawLine of fileText.split(/\r?\n/u)) {
