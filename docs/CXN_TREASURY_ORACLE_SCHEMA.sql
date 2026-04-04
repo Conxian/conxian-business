@@ -2,7 +2,7 @@
 -- Single Source of Truth for Yield, Runway, and Locked Principal
 -- Last Update: March 25, 2026
 
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
 
 -- 1. BASE-LAYER ASSETS (LOCKED PRINCIPAL)
 -- Track base BTC locked in DLC Bonds and non-custodial multisigs.
@@ -130,6 +130,7 @@ CREATE INDEX IF NOT EXISTS idx_external_settlement_logs_origin_native_hash
 DO $$
 DECLARE
     fk_applied BOOLEAN := false;
+    fk_candidate_found BOOLEAN := false;
 BEGIN
     IF EXISTS (
         SELECT 1
@@ -163,6 +164,7 @@ BEGIN
                 HAVING COUNT(*) = 1
                    AND MAX(kcu.column_name) = 'native_tx_hash'
             ) THEN
+                fk_candidate_found := true;
                 IF EXISTS (
                     SELECT 1
                     FROM information_schema.columns l
@@ -187,8 +189,10 @@ BEGIN
                             NOT VALID;
                         fk_applied := true;
                     EXCEPTION
+                        WHEN duplicate_object THEN
+                            fk_applied := true;
                         WHEN OTHERS THEN
-                            RAISE NOTICE 'cxn_external_settlement_logs: could not attach FK to public.treasury_actions(native_tx_hash): %', SQLERRM;
+                            RAISE WARNING 'cxn_external_settlement_logs: could not attach FK to public.treasury_actions(native_tx_hash): %', SQLERRM;
                     END;
                 ELSE
                     RAISE NOTICE 'cxn_external_settlement_logs: type mismatch; skipping FK attachment to public.treasury_actions(native_tx_hash)';
@@ -212,6 +216,7 @@ BEGIN
                 HAVING COUNT(*) = 1
                    AND MAX(kcu.column_name) = 'native_transaction_hash'
             ) THEN
+                fk_candidate_found := true;
                 IF EXISTS (
                     SELECT 1
                     FROM information_schema.columns l
@@ -236,8 +241,10 @@ BEGIN
                             NOT VALID;
                         fk_applied := true;
                     EXCEPTION
+                        WHEN duplicate_object THEN
+                            fk_applied := true;
                         WHEN OTHERS THEN
-                            RAISE NOTICE 'cxn_external_settlement_logs: could not attach FK to public.treasury_actions(native_transaction_hash): %', SQLERRM;
+                            RAISE WARNING 'cxn_external_settlement_logs: could not attach FK to public.treasury_actions(native_transaction_hash): %', SQLERRM;
                     END;
                 ELSE
                     RAISE NOTICE 'cxn_external_settlement_logs: type mismatch; skipping FK attachment to public.treasury_actions(native_transaction_hash)';
@@ -261,6 +268,7 @@ BEGIN
                 HAVING COUNT(*) = 1
                    AND MAX(kcu.column_name) = 'tx_hash'
             ) THEN
+                fk_candidate_found := true;
                 IF EXISTS (
                     SELECT 1
                     FROM information_schema.columns l
@@ -285,15 +293,17 @@ BEGIN
                             NOT VALID;
                         fk_applied := true;
                     EXCEPTION
+                        WHEN duplicate_object THEN
+                            fk_applied := true;
                         WHEN OTHERS THEN
-                            RAISE NOTICE 'cxn_external_settlement_logs: could not attach FK to public.treasury_actions(tx_hash): %', SQLERRM;
+                            RAISE WARNING 'cxn_external_settlement_logs: could not attach FK to public.treasury_actions(tx_hash): %', SQLERRM;
                     END;
                 ELSE
                     RAISE NOTICE 'cxn_external_settlement_logs: type mismatch; skipping FK attachment to public.treasury_actions(tx_hash)';
                 END IF;
             END IF;
 
-            IF NOT fk_applied THEN
+            IF NOT fk_applied AND NOT fk_candidate_found THEN
                 RAISE NOTICE 'cxn_external_settlement_logs: expected a single-column PK/UNIQUE native hash on public.treasury_actions but none was found; skipping FK attachment';
             END IF;
         END IF;
