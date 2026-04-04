@@ -132,6 +132,8 @@ _Columns: L = Legal/public-safe, RC = Regulatory/compliance, FT = Funds/treasury
 
 Repos that can generally ship without additional controls are those with `Ship posture = Ship` (not `Conditional`) and `FT < 3` and `OC < 3`.
 
+> Note: For the `.github` repo, treat changes as high-blast-radius infrastructure and require elevated review even if it meets these numeric criteria.
+
 ### What must stay private (content-level, not necessarily repo-level)
 
 Regardless of repo visibility, the following content **must not be tracked in GitHub** and should live in Linear under ZSE:
