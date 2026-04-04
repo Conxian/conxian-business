@@ -207,6 +207,8 @@
     (asserts! (var-get principal-drawdown-enabled) (err ERR_PRINCIPAL_DRAWDOWN_DISABLED))
     (asserts! (not (var-get defaulted)) (err ERR_INACTIVE))
     (asserts! (not (var-get active)) (err ERR_UNAUTHORIZED))
+    (asserts! (is-eq (var-get coupon-index) u0) (err ERR_SUBSCRIPTION_CLOSED))
+    (asserts! (< burn-block-height (var-get next-coupon-height)) (err ERR_SUBSCRIPTION_CLOSED))
     (asserts! (> amount u0) (err ERR_ZERO_AMOUNT))
     (asserts! (<= amount (ft-get-supply dlc-bond)) (err ERR_UNAUTHORIZED))
     (let ((available (unwrap! (get-sbtc-balance) (err ERR_INVALID_SBTC_TOKEN))))
