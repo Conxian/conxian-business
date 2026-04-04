@@ -98,8 +98,33 @@ Example: if a message contains three settlement-transaction entries `[A, B, C]` 
 
 Canonical formatting requirements:
 
-- `transaction_identifiers.transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
+- All string values in `settlement_identifiers` MUST:
+  - be a sequence of Unicode scalar values (no surrogate code points),
+  - be non-empty,
+  - be normalized to Unicode NFC,
+  - and be rejected if, after NFC normalization, they contain any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database) or begin or end with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
+- `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
 - `envelope_identifiers.tx_index` MUST be a non-negative integer.
+
+Note: This section intentionally tightens earlier guidance. These canonicalization rules are normative for the current `external-settlement-trigger:v1` definition. Values that violate these canonical string rules MUST be treated as invalid.
+
+If any value in `settlement_identifiers` (including any field-specific rules for optional reconciliation keys) fails canonicalization or validation, the corresponding settlement transaction MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
+
+For `external-settlement-trigger:v1`, implementations MUST use Unicode 15.1.0 (Unicode Character Database + normalization data) for evaluating `General_Category`, `White_Space`, and NFC normalization.
+
+Once an `external-settlement-trigger:vN` protocol version is activated, its pinned Unicode version and canonicalization rules MUST remain fixed. Any change to either requires a spec revision and a protocol version bump (e.g., from `external-settlement-trigger:vN` to `external-settlement-trigger:vN+1`).
+
+Implementations MUST apply canonicalization/validation before any hashing, attestation, or equality checks. String equality MUST be defined as byte-equality over the UTF-8 encoding of the Unicode NFC-normalized value (no locale-dependent collation). Implementations MUST NOT apply case folding unless explicitly required by a field-specific canonicalization rule.
+
+Implementations MAY accept non-NFC-normalized input from upstream rails, but MUST convert it to Unicode NFC as part of canonicalization; all validation and equality checks operate on the NFC-normalized value.
+
+Rails MAY include additional canonical identifiers (e.g., for reconciliation) in `settlement_identifiers.transaction_identifiers`. These optional identifier values are subject to the canonical string rules above. If a rail includes any of the following identifier keys, their values MUST be emitted in the canonical form specified:
+
+- `settlement_currency`: uppercase ISO 4217 code (`[A-Z]{3}`); implementations MUST convert to uppercase as part of canonicalization and MUST reject any non-ASCII-letter codes.
+- `settlement_amount`: normalized non-negative decimal string (no sign, no exponent; canonical regex: `^(0|[1-9][0-9]*)(\.[0-9]*[1-9])?$`). The emitted value MUST match this regex. Fractional parts MUST NOT end in `0`, and integer values MUST NOT include a decimal point (e.g., `0`, `1`, `0.5`, `123.45` are valid; `01`, `1.0`, `0.50` are invalid).
+- `settlement_date`: ISO 8601 full-date `YYYY-MM-DD`.
+
+Implementations MUST NOT attempt to “fix up” non-canonical decimal strings for `settlement_amount`; any value that does not match the canonical form (after NFC normalization) MUST cause the corresponding settlement transaction to be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
 ### 2.2 `SovereignProposal` (trigger-kind)
 
