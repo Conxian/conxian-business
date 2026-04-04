@@ -49,7 +49,6 @@
 (define-data-var coupon-index uint u0)
 ;; Remainder carried forward when converting funded coupon amounts into index increments.
 (define-data-var coupon-index-remainder uint u0)
-(define-data-var coupon-index-remainder uint u0)
 
 ;; Bond token (1:1 with principal units deposited)
 (define-fungible-token dlc-bond)
