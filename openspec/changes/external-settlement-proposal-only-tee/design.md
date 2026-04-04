@@ -93,8 +93,8 @@ Execution must never accept or interpret raw TradFi payloads.
 
 - `rail`
 - `raw_payload_hash`
-- `normalized_settlement_hash` (hash of the normalized settlement under canonical serialization)
-- `trigger_id` (stable hash over `rail + raw_payload_hash + settlement_identifiers`)
+- `normalized_settlement_hash` (hash of the normalized settlement transaction under canonical serialization)
+- `trigger_id` (stable hash over `rail + normalized_settlement_hash`)
 - `settlement_identifiers` (rail-specific canonical identifiers; see below)
 - `asset_path` (see mapping)
 - `timelock_delay_blocks = 144`
@@ -103,41 +103,40 @@ Execution must never accept or interpret raw TradFi payloads.
 
 #### 3.2.1 `settlement_identifiers` (required; canonical)
 
-To support replay protection and deterministic idempotency, each rail MUST define a canonical identifier set used together with `raw_payload_hash` to compute `trigger_id`.
+To support replay protection and deterministic idempotency, each rail MUST define a canonical identifier set used to populate `settlement_identifiers`.
 
 Trigger granularity:
 
-- A trigger is emitted **per settlement transaction per raw payload** (not per envelope/message).
+- A trigger is emitted **per settlement transaction** (not per envelope/message).
 - If a single inbound message contains multiple settlement transactions (e.g., ISO 20022 `pacs.008` with multiple `CdtTrfTxInf` entries), it produces **one trigger per transaction**.
+- Replaying the same settlement transaction in a different envelope/message MUST produce the same `trigger_id`.
 
 Minimum required identifier set (by rail):
 
 - **ISO20022 (pacs.008)**
-  - `message_id` (e.g., `GrpHdr.MsgId`)
   - `tx_index` (0-based index of the `CdtTrfTxInf` entry in rail-defined document order)
   - `transaction_reference` (MUST use the first available in this order)
     - `uetr` (e.g., `CdtTrfTxInf.PmtId.UETR`), else
     - `end_to_end_id` (e.g., `CdtTrfTxInf.PmtId.EndToEndId`), else
-    - `tx_index` (base-10 string)
+    - `tx_index` (canonical base-10 string; no leading zeros)
 - **PAPSS**
-  - `message_id`
   - `tx_index` (0-based index in rail-defined order)
-  - `transaction_reference` (rail-provided unique reference; if not present, use `tx_index` as a base-10 string)
+  - `transaction_reference` (rail-provided unique reference; if not present, use `tx_index` as a canonical base-10 string)
 - **BRICS**
-  - `message_id`
   - `tx_index` (0-based index in rail-defined order)
-  - `transaction_reference` (rail-provided unique reference; if not present, use `tx_index` as a base-10 string)
+  - `transaction_reference` (rail-provided unique reference; if not present, use `tx_index` as a canonical base-10 string)
 
 Canonical formatting requirements:
 
-- `message_id` and `transaction_reference` MUST be UTF-8 strings (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
+- `transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
 - `tx_index` MUST be a non-negative integer.
+- If `transaction_reference` is derived from `tx_index`, it MUST be the canonical base-10 representation of `tx_index` with no leading zeros.
 
 Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
-Note: if two messages have different `raw_payload_hash` values, they will always yield different `trigger_id`s even if `settlement_identifiers` are identical.
+Note: `raw_payload_hash` differences MUST NOT change `trigger_id`.
 
-To ensure cross-implementation stability, `trigger_id` MUST be computed from a canonical encoding of `{ rail, raw_payload_hash, settlement_identifiers }` (e.g., `sha256("external-settlement-trigger:v1" || JCS({ rail, raw_payload_hash, settlement_identifiers }))`).
+To ensure cross-implementation stability, `trigger_id` MUST be computed from a canonical encoding of `{ rail, normalized_settlement_hash }` (e.g., `sha256("external-settlement-trigger:v1" || JCS({ rail, normalized_settlement_hash }))`).
 
 ### 3.3 `SovereignProposal` (proposal lane)
 
@@ -200,7 +199,7 @@ Invariant:
    - A raw payload (XML/JSON) cannot be supplied to the executor.
 
 4. **Replay is idempotent**
-   - Replaying the same external message (same `trigger_id`) does not create additional proposals or timelocks.
+   - Replaying the same settlement transaction (same `trigger_id`) does not create additional proposals or timelocks.
 
 ### 7.2 Lifecycle tests
 
