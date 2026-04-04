@@ -77,9 +77,10 @@ jobs:
 
             git config "submodule.${name}.branch" "$branch"
             git submodule update --remote -- "$path"
+            if [ -f "$path/.gitmodules" ]; then
+              git -C "$path" submodule update --init --recursive
+            fi
           done < <(git config -f .gitmodules --name-only --get-regexp '^submodule\..*\.path$')
-
-          git submodule update --init --recursive
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
