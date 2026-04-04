@@ -118,7 +118,7 @@ If the canonical `settlement_identifiers` derived from `raw_payload_bytes` fails
 
 The canonical `settlement_identifiers` derived from `raw_payload_bytes` MUST have max nesting depth ≤ 8, contain ≤ 128 leaf fields, and when serialized using RFC 8785 JCS (UTF-8) MUST be ≤ 16384 bytes. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
 
-Because the size bound above uses RFC 8785 JCS, JSON objects with duplicate member names are invalid; if duplicate keys are present in any encoded `settlement_identifiers` value, the TEE MUST refuse to produce a successful attestation.
+Because the size bound above uses RFC 8785 JCS, JSON objects with duplicate member names are invalid; the canonical `settlement_identifiers` MUST NOT contain duplicate member names at any object level, and if duplicates are present the TEE MUST refuse to produce a successful attestation.
 
 `transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
 
@@ -132,7 +132,7 @@ Implementations MUST NOT treat any host-supplied `settlement_identifiers` as aut
 - The TEE MUST treat `raw_settlement_identifiers_hint_bytes` as untrusted input.
 - The byte length of the exact `raw_settlement_identifiers_hint_bytes` provided to the TEE MUST be ≤ 16384 bytes, and this bound MUST be enforced before JSON parsing. If the bound is exceeded, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST parse `raw_settlement_identifiers_hint_bytes` as UTF-8 JSON. If parsing fails or the parsed value is not a JSON object, the TEE MUST refuse to produce a successful attestation.
-- When parsing `raw_settlement_identifiers_hint_bytes`, the TEE MUST reject any JSON object containing duplicate member names at any object level.
+- When parsing `raw_settlement_identifiers_hint_bytes`, the TEE MUST treat any JSON object containing duplicate member names at any object level as invalid input (i.e., MUST NOT apply keep-first/keep-last semantics) and MUST refuse to produce a successful attestation.
 - After parsing, the hint object MUST satisfy the structural and leaf-type constraints in this section, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. The TEE MUST enforce these bounds before deep traversal. If any constraint or bound is violated, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping leaf fields. An overlapping leaf field is any canonical leaf-field JSON key path present in both objects. For each overlapping leaf field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping leaf field differs, the TEE MUST refuse to produce a successful attestation.
 - If any JSON key path present in the hint object has a JSON object value in the canonical `settlement_identifiers` but a non-object value in the hint, the TEE MUST refuse to produce a successful attestation.
