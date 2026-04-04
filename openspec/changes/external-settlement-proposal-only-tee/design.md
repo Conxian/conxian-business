@@ -102,7 +102,7 @@ Execution must never accept or interpret raw TradFi payloads.
 
 #### 3.2.1 `settlement_identifiers` (required; canonical)
 
-To support replay protection and deterministic idempotency, each rail MUST define a canonical identifier set used together with `raw_payload_hash` to compute `trigger_id`.
+To support replay protection and deterministic idempotency at the raw-message level, each rail MUST define a canonical identifier set used together with `raw_payload_hash` to compute `trigger_id`.
 
 Trigger granularity:
 
@@ -111,20 +111,24 @@ Trigger granularity:
 
 Minimum required identifier set (by rail):
 
+For normative `tx_index` requirements (ordering source, no-reorder constraint, and inclusion rules), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#211-settlement_identifiers-per-rail-canonical-set).
+
+The per-rail `tx_index` parentheticals below are summaries; the spec is authoritative.
+
 - **ISO20022 (pacs.008)**
   - `message_id` (e.g., `GrpHdr.MsgId`)
-  - `tx_index` (0-based index of the `CdtTrfTxInf` entry in rail-defined document order)
+  - `tx_index` (0-based index of the `CdtTrfTxInf` element in the order it appears in the received XML document)
   - `transaction_reference` (MUST use the first available in this order)
     - `uetr` (e.g., `CdtTrfTxInf.PmtId.UETR`), else
     - `end_to_end_id` (e.g., `CdtTrfTxInf.PmtId.EndToEndId`), else
     - `tx_index` (base-10 string)
 - **PAPSS**
   - `message_id`
-  - `tx_index` (0-based index in rail-defined order)
+  - `tx_index` (0-based index of the transaction entry in the order it appears in the received message payload)
   - `transaction_reference` (rail-provided unique reference; if not present, use `tx_index` as a base-10 string)
 - **BRICS**
   - `message_id`
-  - `tx_index` (0-based index in rail-defined order)
+  - `tx_index` (0-based index of the transaction entry in the order it appears in the received message payload)
   - `transaction_reference` (rail-provided unique reference; if not present, use `tx_index` as a base-10 string)
 
 Canonical formatting requirements:
