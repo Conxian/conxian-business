@@ -22,20 +22,59 @@ jobs:
           token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
 
       - name: Update Submodules to Latest Main
+        shell: bash
         run: |
+          set -euo pipefail
+
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
           # `.gitmodules` intentionally does not set `submodule.<name>.branch`.
-          # Ensure `git submodule update --remote` tracks `main` rather than each remote's `HEAD`.
-          while read -r key _path; do
+          # Update only top-level submodule gitlinks (this repo's pins). Nested submodules
+          # are synced to whatever each top-level submodule commit pins.
+
+          git submodule update --init --recursive
+
+          pick_branch() {
+            local url="$1"
+            local preferred="$2"
+
+            if git ls-remote --exit-code --heads "$url" "$preferred" >/dev/null 2>&1; then
+              echo "$preferred"
+              return 0
+            fi
+
+            for fallback in main master; do
+              if git ls-remote --exit-code --heads "$url" "$fallback" >/dev/null 2>&1; then
+                echo "$fallback"
+                return 0
+              fi
+            done
+
+            return 1
+          }
+
+          while read -r key path; do
             name=${key#submodule.}
             name=${name%.path}
-            git config "submodule.${name}.branch" main
+
+            url=$(git config -f .gitmodules --get "submodule.${name}.url")
+
+            preferred=main
+            if [[ "$name" == "lib-conclave-sdk" ]]; then
+              preferred=master
+            fi
+
+            if ! branch=$(pick_branch "$url" "$preferred"); then
+              echo "Unable to find an upstream branch for submodule '${name}' (url: ${url})" >&2
+              exit 1
+            fi
+
+            git config "submodule.${name}.branch" "$branch"
+            git submodule update --remote -- "$path"
           done < <(git config -f .gitmodules --get-regexp '^submodule\..*\.path$')
 
-          # Initialize and update submodules recursively to track their configured branches.
-          git submodule update --init --recursive --remote
+          git submodule update --init --recursive
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
