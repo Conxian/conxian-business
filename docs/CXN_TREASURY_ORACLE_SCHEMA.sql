@@ -311,7 +311,7 @@ BEGIN
 END $$;
 
 -- RLS (ROW LEVEL SECURITY) POLICIES
--- Writes are expected via privileged service roles (TEE agents/admin) that bypass RLS.
+-- Writes are expected via privileged service roles (TEE agents/admin).
 ALTER TABLE public.cxn_locked_principal ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cxn_snackable_lockins ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cxn_yield_generation ENABLE ROW LEVEL SECURITY;
