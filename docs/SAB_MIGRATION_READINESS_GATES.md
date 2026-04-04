@@ -62,4 +62,4 @@ All of the following must be true:
 - [ ] No production correctness-path read depends on Supabase or Neon.
 - [ ] Institutional egress datasets are produced from sovereign baselines and are checkpoint-verifiable.
 - [ ] Governance/audit records are anchored on-chain; any mirrors are non-authoritative.
-- [ ] Production can operate through a full checkpoint interval without hosted-provider availability.
+- [ ] Production can maintain correctness through a full checkpoint interval without Supabase/Neon availability, either by continuing from sovereign baselines or by entering a defined safe-halt/degraded mode with documented behavior.
