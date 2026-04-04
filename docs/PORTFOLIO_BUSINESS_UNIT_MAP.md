@@ -62,6 +62,7 @@ Portfolio hygiene automation should validate both directions:
 
 - Every pinned gitlink has a `.gitmodules` entry and a mapping entry.
 - Every `.gitmodules` entry has a corresponding pinned gitlink and mapping entry.
+- Every mapping entry corresponds to a pinned gitlink and `.gitmodules` entry (no extra rows).
 
 Note: `.gitmodules` `branch` affects `git submodule update --remote` only; it does not change what commit is pinned. If a submodule sets `branch`, verify that branch exists upstream.
 
