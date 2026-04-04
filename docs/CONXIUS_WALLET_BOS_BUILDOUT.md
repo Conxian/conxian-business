@@ -9,6 +9,8 @@ Canonical wallet docs live in the wallet repo itself (submodule):
 - Risk registry: [`conxius-wallet/docs/legal/RISK_REGISTRY.md`](../conxius-wallet/docs/legal/RISK_REGISTRY.md)
 - Protocol integration map: [`conxius-wallet/docs/protocols/IMPLEMENTATION_REGISTRY.md`](../conxius-wallet/docs/protocols/IMPLEMENTATION_REGISTRY.md)
 
+Note: these links resolve when `conxius-wallet` is checked out as a git submodule (for example, via `git submodule update --init --recursive`). If rendered docs are published without submodule content, these links may not be clickable.
+
 ## 1) Business-unit role (wallet operations + product delivery)
 
 Conxius Wallet is a **flagship** repo and part of the public Conxian trust surface. It is responsible for:
@@ -50,8 +52,9 @@ This is intentionally role-based (not person-based) so it can be applied regardl
 
 The wallet already contains a strong starting point for release prep. Use it as a checklist, but keep sensitive details out of git:
 
-- Release prep: [`conxius-wallet/docs/operations/ANDROID_RELEASE_PREP.md`](../conxius-wallet/docs/operations/ANDROID_RELEASE_PREP.md)
-- Device readiness: [`conxius-wallet/docs/operations/DEVICE_READINESS_REPORT.md`](../conxius-wallet/docs/operations/DEVICE_READINESS_REPORT.md)
+- Release prep (public-safe only; no store account ops, no signing key custody procedures): [`conxius-wallet/docs/operations/ANDROID_RELEASE_PREP.md`](../conxius-wallet/docs/operations/ANDROID_RELEASE_PREP.md)
+- Device readiness (public-safe only; no production endpoint mapping): [`conxius-wallet/docs/operations/DEVICE_READINESS_REPORT.md`](../conxius-wallet/docs/operations/DEVICE_READINESS_REPORT.md)
+- Internal-only: Play Store operations + signing key custody runbook (Linear Virtual Office)
 
 Minimum release controls:
 
@@ -114,7 +117,7 @@ The wallet repo has extensive product/ops documentation. The main gaps for day-2
 
 - Add a short owner/approval policy (role-based) and link it from the wallet README.
 - Define a support intake path (mailbox, form, or repo discussions) that becomes issues with clear severity.
-- Standardize the wallet README role line against the repo portfolio: [`docs/REPO_PORTFOLIO.md`](REPO_PORTFOLIO.md).
+- Standardize the wallet README role line against the repo portfolio: [`REPO_PORTFOLIO.md`](./REPO_PORTFOLIO.md).
 
 **P2 (documentation hygiene + separation)**
 
