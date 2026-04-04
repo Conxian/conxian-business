@@ -6,11 +6,7 @@ This document is the portfolio-level map that assigns every repo/subrepo (submod
 
 Today, this page is the canonical human-readable portfolio map; machine-readable BOS artifacts in `./conxian-business/` should be treated as derived outputs. When this mapping changes, ensure any intentional BOS runtime/audit updates remain consistent with it. Until a machine-readable portfolio manifest exists, artifacts in `./conxian-business/` are non-authoritative derived outputs and may be regenerated/replaced.
 
-Contributors should not edit generated BOS state artifacts under `./conxian-business/` by hand (for example: `BOS_STATE_MACHINE.json`, `.generated/AUDIT_MANIFEST.generated.json`); treat them as outputs that may be replaced at any time. Source code in that directory (for example: `transparency_custodian.py`) is maintained normally.
-
-Note: `./conxian-business/AUDIT_MANIFEST.json` is a public-safe stub for link stability; the live generated output is written to `./conxian-business/.generated/AUDIT_MANIFEST.generated.json` (gitignored).
-
-Note: `./conxian-business/AUDIT_MANIFEST.json` is a public-safe stub for link stability; the generator writes the generated manifest output to `./conxian-business/.generated/AUDIT_MANIFEST.generated.json`.
+Contributors should not edit generated BOS state artifacts under `./conxian-business/` by hand (for example: `BOS_STATE_MACHINE.json`); treat them as outputs that may be replaced at any time. `./conxian-business/AUDIT_MANIFEST.json` is a public-safe stub for link stability; the generator writes the generated manifest output to `./conxian-business/.generated/AUDIT_MANIFEST.generated.json`. Source code in that directory (for example: `transparency_custodian.py`) is maintained normally.
 
 To regenerate the transparency audit manifest (written to `./conxian-business/.generated/AUDIT_MANIFEST.generated.json`, which is ignored by git), run:
 
