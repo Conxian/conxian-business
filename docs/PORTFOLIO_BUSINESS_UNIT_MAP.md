@@ -1,6 +1,6 @@
 # Portfolio business-unit map and separation of concerns
 
-> Verification: expected to be enforced by P0 portfolio hygiene automation (see the prioritized build/repair list). Until then, keep submodule gitlinks, `.gitmodules`, and this map consistent in every PR.
+> Verification: expected to be enforced by P0 portfolio hygiene automation (see the prioritized build/repair list). Until then, keep the repo’s submodule gitlinks, `.gitmodules`, and the portfolio docs (`docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`, `docs/REPO_PORTFOLIO.md`) consistent in every PR (see “Source-of-truth rule” below).
 
 This document is the portfolio-level map that assigns every repo/subrepo (submodule) and BOS asset to a **business unit** or **operating function**, and defines the separation-of-concerns boundaries needed for business development and business unit management.
 
