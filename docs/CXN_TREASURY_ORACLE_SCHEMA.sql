@@ -148,6 +148,16 @@ BEGIN
                 WHERE table_schema = 'public'
                   AND table_name = 'treasury_actions'
                   AND column_name = 'native_tx_hash'
+            ) AND EXISTS (
+                SELECT 1
+                FROM information_schema.table_constraints tc
+                JOIN information_schema.key_column_usage kcu
+                  ON tc.constraint_name = kcu.constraint_name
+                 AND tc.table_schema = kcu.table_schema
+                WHERE tc.table_schema = 'public'
+                  AND tc.table_name = 'treasury_actions'
+                  AND tc.constraint_type IN ('PRIMARY KEY', 'UNIQUE')
+                  AND kcu.column_name = 'native_tx_hash'
             ) THEN
                 ALTER TABLE public.cxn_external_settlement_logs
                     ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
@@ -160,6 +170,16 @@ BEGIN
                 WHERE table_schema = 'public'
                   AND table_name = 'treasury_actions'
                   AND column_name = 'native_transaction_hash'
+            ) AND EXISTS (
+                SELECT 1
+                FROM information_schema.table_constraints tc
+                JOIN information_schema.key_column_usage kcu
+                  ON tc.constraint_name = kcu.constraint_name
+                 AND tc.table_schema = kcu.table_schema
+                WHERE tc.table_schema = 'public'
+                  AND tc.table_name = 'treasury_actions'
+                  AND tc.constraint_type IN ('PRIMARY KEY', 'UNIQUE')
+                  AND kcu.column_name = 'native_transaction_hash'
             ) THEN
                 ALTER TABLE public.cxn_external_settlement_logs
                     ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
@@ -172,6 +192,16 @@ BEGIN
                 WHERE table_schema = 'public'
                   AND table_name = 'treasury_actions'
                   AND column_name = 'tx_hash'
+            ) AND EXISTS (
+                SELECT 1
+                FROM information_schema.table_constraints tc
+                JOIN information_schema.key_column_usage kcu
+                  ON tc.constraint_name = kcu.constraint_name
+                 AND tc.table_schema = kcu.table_schema
+                WHERE tc.table_schema = 'public'
+                  AND tc.table_name = 'treasury_actions'
+                  AND tc.constraint_type IN ('PRIMARY KEY', 'UNIQUE')
+                  AND kcu.column_name = 'tx_hash'
             ) THEN
                 ALTER TABLE public.cxn_external_settlement_logs
                     ADD CONSTRAINT fk_external_settlement_logs_native_tx_hash
