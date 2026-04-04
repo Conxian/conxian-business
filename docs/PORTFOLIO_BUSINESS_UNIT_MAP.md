@@ -16,8 +16,9 @@ python3 conxian-business/transparency_custodian.py
 
 Until portfolio hygiene automation exists to regenerate and diff BOS state artifacts under `./conxian-business/` in CI (see the P0 backlog), contributor policy is:
 
-- If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks, `.gitmodules`, the asset lists in this document, or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit any files under `./conxian-business/` by hand). The generated audit manifest output lives under `.generated/` and is intentionally ignored; the tracked `./conxian-business/AUDIT_MANIFEST.json` file is a public-safe stub that points to Linear.
-- Reviewers should treat changes that affect BOS state but do not reflect the regeneration step as incomplete and request that the generator be run.
+- If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks, `.gitmodules`, the asset lists in this document, or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit any files under `./conxian-business/` by hand) and review the output locally. Do **not** commit anything under `./conxian-business/.generated/`.
+- If your change affects tracked BOS artifacts under `./conxian-business/` (for example: `BOS_STATE_MACHINE.json`), regenerate/reconcile those tracked artifacts and commit them in the same PR.
+- Reviewers should treat changes that affect tracked BOS state but do not update the corresponding tracked derived artifacts as incomplete and request that the regeneration/reconciliation step be run.
 
 If you are unsure whether a change affects BOS state inputs, err on the side of re-running the generator; it is intended to be cheap and idempotent.
 
