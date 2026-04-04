@@ -63,8 +63,8 @@ Portfolio hygiene automation should validate:
 - Every pinned gitlink has a `.gitmodules` entry and a corresponding row in the ecosystem submodule mapping table.
 - Every `.gitmodules` entry has a corresponding pinned gitlink and row in the ecosystem submodule mapping table.
 - Every row in the ecosystem submodule mapping table corresponds to a pinned gitlink and `.gitmodules` entry (no extra rows).
-- Every governed repo listed in `docs/REPO_PORTFOLIO.md` appears either as a pinned submodule with a row in the ecosystem submodule mapping table or as an explicitly enumerated BOS-native asset.
 - Every pinned gitlink with a row in the ecosystem submodule mapping table appears in `docs/REPO_PORTFOLIO.md` with a flagship/supporting classification.
+- Every BOS-native asset path enumerated in the BOS-native assets table exists in this repo.
 - If a submodule sets `branch` in `.gitmodules`, that branch exists upstream.
 
 Until portfolio hygiene automation is live, reviewers should treat these invariants as manual review criteria and reject PRs that violate them.
