@@ -24,6 +24,7 @@
 (define-constant ERR_PRINCIPAL_DRAWDOWN_DISABLED u20010)
 (define-constant ERR_NO_LIQUIDITY u20011)
 (define-constant ERR_INVALID_SBTC_TOKEN u20012)
+(define-constant ERR_ALREADY_ISSUED u20013)
 
 ;; Fixed point constants
 (define-constant PPM_DENOM u1000000)          ;; 1.0 = 1,000,000 ppm
@@ -201,7 +202,7 @@
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
     (assert-issuer)
-    (asserts! (is-eq (ft-get-supply dlc-bond) u0) (err ERR_UNAUTHORIZED))
+    (asserts! (is-eq (ft-get-supply dlc-bond) u0) (err ERR_ALREADY_ISSUED))
     (var-set principal-drawdown-enabled true)
     (print { event: "dlc-bond-principal-drawdown-enabled", issuer: (var-get issuer) })
     (ok true)
