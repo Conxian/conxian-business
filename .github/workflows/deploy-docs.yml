@@ -54,7 +54,7 @@ jobs:
 
           rm -rf _pages
           mkdir -p _pages
-          touch _pages/.nojekyll
+          : > _pages/.nojekyll
 
           rsync -a --relative "${required[@]/#/.\/}" _pages/
 
