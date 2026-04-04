@@ -39,6 +39,8 @@ The definitive technical specifications for the Conxian ecosystem are maintained
 
 This repository is public. Sensitive strategy, legal, operational, and administrative documents should live in the [Linear Virtual Office](https://linear.app/conxian-labs) in compliance with our Zero Secret Egress (ZSE) mandate.
 
+Detailed strategy and roadmap content must not be duplicated in this README; see `docs/BOS_BUSINESS_BUILDOUT.md` for the public vs internal documentation rules.
+
 ## Agentic EXCO suite
 
 The BOS is powered by an active suite of autonomous agents:

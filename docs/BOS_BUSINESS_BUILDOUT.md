@@ -11,6 +11,8 @@ This document defines the business purpose and operating model for the public `c
 
 **Classification:** Supporting repository (per `docs/REPO_PORTFOLIO.md`).
 
+If the repo’s flagship/supporting placement changes in `docs/REPO_PORTFOLIO.md`, update this document in the same pull request.
+
 **Business purpose (external/public):** provide a versioned, auditable trust surface for Conxian governance, OpenSpec requirements, and how the Conxian ecosystem repositories are coordinated.
 
 **Business purpose (internal/operational):** serve as the canonical BOS (Business Operations System) baseline: a programmatic operating model (service loop + state machine artifacts) plus references to the EXCO agent-suite business units.
@@ -21,7 +23,7 @@ This document defines the business purpose and operating model for the public `c
 | --- | --- | --- | --- |
 | OpenSpec (technical ground truth) | `openspec/` | Public-safe | Requirement definitions and spec-first change sets. |
 | Governance and repo operating model | `GOVERNANCE.md`, `CODEOWNERS`, `CONTRIBUTING.md`, `.github/` | Public-safe | How the repo is run and reviewed. |
-| BOS operating model artifacts | `conxian-business/` | Mixed | Service-loop narrative can be public-safe; automation/state-machine artifacts should be treated as internal-only unless explicitly reviewed for safe disclosure. |
+| BOS operating model artifacts | `conxian-business/` | Mixed (default internal-only for automation/state-machine artifacts) | Service-loop narrative can be public-safe; automation/state-machine artifacts are internal-only unless explicitly reviewed for safe disclosure. |
 | EXCO agent-suite business units | `Sovereign-Strategy-Nexus/`, `Fiscal-Vault-Oracle/`, `Nakamoto-Guardian/`, `Sovereign-Ops-Orchestrator/` | Mixed | Treat strategic/ops runbooks and any monetization/treasury specifics as internal-only by default. |
 | Ecosystem repo map | `docs/REPO_PORTFOLIO.md` | Public-safe | Canonical “flagship vs supporting” placement. |
 | Documentation classification index | `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` | Public-safe | Canonical index of what exists + how it should be referenced/migrated. |
@@ -34,7 +36,7 @@ This repository is public. The split below is a policy recommendation for what s
 
 - OpenSpec requirements and design/spec documents that are intended as external ground truth.
 - Governance docs, repo policies, and contribution requirements.
-- Public product documentation and external-facing architecture/PRD material.
+- Public product documentation and external-facing architecture/PRD material that has been scrubbed of privileged implementation details, secret formats, and exploit-enabling diagrams.
 - Non-sensitive audits and public trust messaging.
 
 ### Internal-only (store in Linear Virtual Office; reference from Git)
@@ -73,9 +75,9 @@ This repository is public. The split below is a policy recommendation for what s
 
 ### Minimum internal-only set (Linear Virtual Office)
 
-Maintain these as Linear documents (canonical), referenced from Git as needed:
+Maintain these as Linear documents (canonical for privileged detail), referenced from Git as needed:
 
-- BOS operating model (service loop + state machine semantics).
+- Detailed BOS operating model semantics (privileged service-loop + state-machine runbooks; Git keeps only public-safe summaries and pointers).
 - Execution wiring: Linear ↔ state layer ↔ repo automation.
 - ZSE / knowledge retention policy and migration manifests.
 - Secret management spec (procedural, privileged access).
@@ -94,6 +96,6 @@ Maintain these as Linear documents (canonical), referenced from Git as needed:
 ## Prioritized build/repair list
 
 1. Keep `README.md` aligned with the “supporting repo” role line and remove internal strategy/ops detail from the public entrypoint.
-2. Expand `GOVERNANCE.md` from a policy stub into an explicit ownership + approval model tied to `CODEOWNERS`.
+2. Keep `GOVERNANCE.md` as an explicit ownership + approval model tied to `CODEOWNERS` (not just a stub).
 3. Treat `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` as the canonical “doc registry” and keep it updated whenever docs are added, moved, or reclassified.
 4. Migrate internal-only documents that materially increase operational exposure to Linear, leaving behind only ZSE-safe summaries and links.

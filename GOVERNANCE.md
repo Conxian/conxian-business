@@ -13,12 +13,7 @@ Canonical business-purpose and public/private split guidance for this repo lives
 
 ## Approval model
 
-1. All changes land via pull request.
-2. Pull requests must link to a Linear issue.
-3. Any change must be reviewed by the relevant code owners.
-4. Changes that impact governance, security posture, OpenSpec requirements, or BOS boundaries must be documented:
-   - update the relevant canonical docs (often `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`), and
-   - add a `CHANGELOG.md` entry when the change is externally visible.
+All changes land via pull request and must follow the workflow defined in `docs/BOS_BUSINESS_BUILDOUT.md` (Linear issue linkage, `CODEOWNERS` review, and documentation-alignment/`CHANGELOG.md` update rules for boundary or policy changes).
 
 ## Documentation confidentiality (ZSE)
 
@@ -31,4 +26,5 @@ Conxian operates under a Zero Secret Egress (ZSE) mandate.
 
 - Contributing guidelines: [`CONTRIBUTING.md`](./CONTRIBUTING.md)
 - Security policy: [`SECURITY.md`](./SECURITY.md)
+- BOS business buildout and repo operating model: [`docs/BOS_BUSINESS_BUILDOUT.md`](./docs/BOS_BUSINESS_BUILDOUT.md)
 - License: [`LICENSE`](./LICENSE) (GNU GPL v3.0)
