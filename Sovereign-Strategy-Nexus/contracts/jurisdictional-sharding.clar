@@ -8,6 +8,9 @@
 (define-constant SHARD_OFFSHORE u1)
 (define-constant SHARD_GLOBAL u2)
 
+(define-constant SECONDS_PER_YEAR u31536000)
+(define-constant UNIX_EPOCH_YEAR u1970)
+
 ;; SARB mandate thresholds (ZAR/year)
 (define-constant SDA_LIMIT_ZAR u1500000)
 (define-constant FIA_LIMIT_ZAR u12000000)
@@ -56,6 +59,10 @@
   )
 )
 
+(define-private (year-from-unix-time (unix-time uint))
+  (+ UNIX_EPOCH_YEAR (/ unix-time SECONDS_PER_YEAR))
+)
+
 (define-read-only (compute-shard
     (sender principal)
     (receiver principal)
@@ -68,10 +75,10 @@
     )
     (if tier1-rail
       SHARD_GLOBAL
-      (if (and (is-eq sender-country "ZAF") (> amount-zar ONSHORE_TRIGGER_ZAR))
-        SHARD_ONSHORE
-        (if (or (not (is-eq sender-country "ZAF")) (not (is-sadc-country receiver-country)))
-          SHARD_OFFSHORE
+      (if (or (not (is-eq sender-country "ZAF")) (not (is-sadc-country receiver-country)))
+        SHARD_OFFSHORE
+        (if (and (is-eq receiver-country "ZAF") (> amount-zar ONSHORE_TRIGGER_ZAR))
+          SHARD_ONSHORE
           SHARD_GLOBAL
         )
       )
@@ -92,7 +99,6 @@
     (sender principal)
     (receiver principal)
     (amount-zar uint)
-    (year uint)
     (tier1-rail bool)
   )
   (begin
@@ -100,7 +106,11 @@
     (match (map-get? settlement-shards tx-id)
       existing-shard
         (ok { tx-id: tx-id, shard: existing-shard })
-      (let ((shard (compute-shard sender receiver amount-zar tier1-rail)))
+      (let (
+          (block-time (unwrap-panic (get-block-info? time stacks-block-height)))
+          (year (year-from-unix-time block-time))
+          (shard (compute-shard sender receiver amount-zar tier1-rail))
+        )
         (begin
           (map-set settlement-shards tx-id shard)
           (let ((prev-total (get-annual-total shard sender year)))
@@ -114,12 +124,18 @@
             receiver: receiver,
             amount-zar: amount-zar,
             year: year,
-            timestamp: burn-block-height
+            timestamp: block-time
           })
           (ok { tx-id: tx-id, shard: shard })
         )
       )
     )
+  )
+)
+
+(define-read-only (get-current-year)
+  (let ((block-time (unwrap-panic (get-block-info? time stacks-block-height))))
+    (ok (year-from-unix-time block-time))
   )
 )
 
