@@ -57,7 +57,7 @@ Additional pinned repos (supporting surfaces):
 - Mainnet checklist (internal): https://linear.app/conxian-labs/issue/CON-7/mainnet-checklist
 - Admin principal centralization risk remediation (security): https://linear.app/conxian-labs/issue/CON-61/security-remediate-hardcoded-admin-principal-centralization-risk
 - ConxianCSF internal wallet + ALEX deployment readiness (signers + treasury wiring): https://linear.app/conxian-labs/issue/CON-136/conxiancsf-internal-wallet-and-alex-deployment-readiness
-- Fix mainnet deploy plan principals (mainnet uses `SP...`, not testnet `ST...`): https://linear.app/conxian-labs/issue/CON-371/fix-mainnet-release-plan-principals-stsp
+- Fix mainnet release plan principals (mainnet uses `SP...`, not testnet `ST...`): https://linear.app/conxian-labs/issue/CON-371/fix-mainnet-release-plan-principals-stsp
 - Remove tracked runtime config / artifacts in Conxian (includes `.env`): https://linear.app/conxian-labs/issue/CON-183/secret-and-artifact-cleanup-conxian
 - Verify wallets, signers, and approval controls for launch: https://linear.app/conxian-labs/issue/CON-233/verify-wallets-signers-and-approval-controls-for-launch
 - Align security/incident contact inbox across repos: https://linear.app/conxian-labs/issue/CON-374/align-securityincident-contact-inbox-across-repos
