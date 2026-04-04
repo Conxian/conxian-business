@@ -15,7 +15,9 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
        - JSON: RFC 8785 JSON Canonicalization Scheme (JCS)
        - XML: W3C XML Canonicalization 1.1
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
-       - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
+       - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST satisfy the identifier inclusion/exclusion rules in §2.1.1.
+       - Compatibility requirement: any implementation that previously computed `normalized_settlement_hash` using envelope/message-local identifiers (including `tx_index`) MUST coordinate a breaking upgrade before enabling this trigger kind on a shared network; implementations MUST NOT reuse the `external-settlement-trigger:v1` label with those draft semantics.
+       - Note: Earlier internal drafts described including envelope/message-local identifiers (including `tx_index`) in `normalized_settlement_hash` inputs; those drafts are non-normative and MUST NOT be used for interoperability.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
@@ -42,7 +44,8 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
      - The canonicalized value MUST be the JCS output for the JSON object `{"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}` (exact key names as shown).
      - The hash MUST be SHA-256 over `utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))`.
      - `trigger_id` MUST be the lowercase hex encoding of the SHA-256 digest.
-   - Idempotency is enforced at the trigger granularity (one trigger per settlement transaction).
+     - NOTE (compatibility): The domain-separation label `external-settlement-trigger:v1` is bound to this spec’s normative definitions. Implementations MUST NOT reuse this label with different `normalized_settlement_hash` semantics.
+   - Idempotency is enforced at the trigger granularity: at most one trigger is emitted per settlement transaction that exposes a canonical envelope-agnostic `transaction_reference` as defined in §2.1.1.
    - Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
 ## 2. Required artifacts
@@ -64,20 +67,34 @@ Minimum fields:
 Prohibited fields:
 
 - `raw_payload_bytes`
-- Any full parsed external-settlement payload structure (XML/JSON) beyond the canonical `settlement_identifiers`.
+- Any full parsed external-settlement payload structure (XML/JSON) beyond `settlement_identifiers` itself; the allowed shape of `settlement_identifiers` is defined normatively in §2.1.1.
 
 #### 2.1.1 `settlement_identifiers` (per-rail canonical set)
 
-`settlement_identifiers` MUST be a JSON object with two namespaces:
+`settlement_identifiers` MUST be a JSON object with exactly two top-level keys: `transaction_identifiers` and `envelope_identifiers`. Both keys MUST be present and MUST map to JSON objects. If there are no envelope/message-local identifiers, `envelope_identifiers` MUST be an empty object.
+
+NOTE (compatibility): Earlier internal drafts described a flat `settlement_identifiers` object with top-level `tx_index` / `transaction_reference` keys; that shape is non-normative and MUST NOT be used for interoperability.
+
+NOTE: This schema is intentionally fixed; adding top-level keys or changing the nesting requires a versioned update to this spec.
 
 - `transaction_identifiers`: envelope-agnostic identifiers for the settlement transaction.
 - `envelope_identifiers`: envelope/message-local identifiers for audit/debug only.
 
+`transaction_identifiers` and `envelope_identifiers` MUST contain only rail-defined identifier keys with string/integer values; they MUST NOT embed parsed XML/JSON fragments or other nested payload structures.
+
 `transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
 
-`envelope_identifiers` MUST NOT affect `normalized_settlement_hash`.
+`envelope_identifiers` MUST NOT be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
 
 Minimum required identifier set (by rail):
+
+For all rails, `transaction_identifiers.transaction_reference` MUST be envelope-agnostic (it MUST NOT be derived from `tx_index` or other envelope/message-local metadata). If a rail does not provide a stable transaction reference, the rail spec MUST define an envelope-agnostic derivation; otherwise this trigger kind is unsupported for that rail.
+
+For any rail, if the canonical `transaction_identifiers.transaction_reference` for a settlement transaction cannot be obtained from the payload or from a rail-defined envelope-agnostic derivation, the implementation MUST reject that settlement transaction and MUST NOT emit a trigger for it.
+
+In messages that contain multiple settlement transactions (e.g., ISO 20022 `pacs.008` with multiple `CdtTrfTxInf` entries), this requirement applies per settlement transaction: transactions that expose a canonical `transaction_reference` MUST still be processed and MAY emit triggers even if other transactions in the same envelope are rejected.
+
+Note: Earlier drafts described using `tx_index` as a fallback for `transaction_reference`; implementations MUST NOT use that fallback.
 
 `tx_index` requirements (all rails):
 
@@ -87,7 +104,7 @@ Minimum required identifier set (by rail):
 Example: if a message contains three settlement-transaction entries `[A, B, C]` and `B` is later rejected or skipped, any triggers emitted for `A` and `C` still use `tx_index = 0` and `tx_index = 2`.
 
 - **ISO20022 (pacs.008)**
-  - `transaction_identifiers.transaction_reference` (prefer `uetr`, else `end_to_end_id`, else `instruction_id`)
+  - `transaction_identifiers.transaction_reference` (MUST use the first available in this order: `uetr`, else `end_to_end_id`)
   - `envelope_identifiers.tx_index`
 - **PAPSS**
   - `transaction_identifiers.transaction_reference`

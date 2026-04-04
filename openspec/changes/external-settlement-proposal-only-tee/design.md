@@ -103,24 +103,34 @@ Execution must never accept or interpret raw TradFi payloads.
 
 #### 3.2.1 `settlement_identifiers` (required; canonical)
 
-Each rail MUST define a canonical identifier set used to populate `settlement_identifiers` for audit and reconciliation.
+This section summarizes the behavior defined normatively in spec §2.1.1; in case of any discrepancy, spec §2.1.1 controls.
 
-`settlement_identifiers` SHOULD be treated as two namespaces:
+Per spec §2.1.1, each rail defines a canonical identifier set used to populate `settlement_identifiers` for audit and reconciliation.
+
+Per spec §2.1.1, `settlement_identifiers` is encoded as a JSON object with exactly two top-level keys: `transaction_identifiers` and `envelope_identifiers`. Both keys are always present and map to JSON objects. If there are no envelope/message-local identifiers, `envelope_identifiers` is the empty object.
 
 - `transaction_identifiers`: envelope-agnostic identifiers for the settlement transaction.
 - `envelope_identifiers`: envelope/message-local identifiers for audit/debug only.
 
-`transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
+Per spec §2.1.1, `transaction_identifiers.transaction_reference` is envelope-agnostic (it is not derived from `tx_index` or other envelope/message-local metadata). If a rail does not provide a stable transaction reference, the rail spec defines an envelope-agnostic derivation; rails that cannot provide such a reference or derivation do not support this trigger kind.
 
-`envelope_identifiers` (including `tx_index`) MUST NOT affect `normalized_settlement_hash`.
+Per spec §2.1.1, if a canonical `transaction_identifiers.transaction_reference` for a settlement transaction cannot be obtained from the payload or from a rail-defined envelope-agnostic derivation, no trigger is emitted for that settlement transaction.
+
+In practice, this means that at most one trigger is emitted per settlement transaction, and only for transactions that expose a canonical envelope-agnostic `transaction_reference` as defined in spec §2.1.1.
+
+Per spec §2.1.1, `transaction_identifiers` and `envelope_identifiers` contain only rail-defined identifier keys with string/integer values; they do not embed parsed XML/JSON fragments or other nested payload structures.
+
+Per spec §2.1.1, `transaction_identifiers` is included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
+
+Per spec §2.1.1, `envelope_identifiers` (including `tx_index`) is not included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
 
 Replay protection and deterministic idempotency are enforced via `trigger_id` derived from `{ rail, normalized_settlement_hash }`.
 
-Trigger granularity:
+Trigger granularity (per spec §2.1.1):
 
-- A trigger is emitted **per settlement transaction** (not per envelope/message).
-- If a single inbound message contains multiple settlement transactions (e.g., ISO 20022 `pacs.008` with multiple `CdtTrfTxInf` entries), it produces **one trigger per transaction**.
-- Replaying the same settlement transaction in a different envelope/message MUST produce the same `trigger_id`.
+- Idempotency is enforced at the trigger granularity: at most one trigger is emitted per settlement transaction that exposes a canonical envelope-agnostic `transaction_reference` (not per envelope/message).
+- If a single inbound message contains multiple settlement transactions (e.g., ISO 20022 `pacs.008` with multiple `CdtTrfTxInf` entries), at most one trigger is emitted per such transaction (subject to the same `transaction_reference` requirement).
+- Replaying the same settlement transaction in a different envelope/message produces the same `trigger_id`.
 
 Minimum required identifier set (by rail):
 
@@ -131,8 +141,7 @@ The per-rail `tx_index` parentheticals below are summaries; the spec is authorit
 - **ISO20022 (pacs.008)**
   - `transaction_identifiers.transaction_reference` (MUST use the first available in this order)
     - `uetr` (e.g., `CdtTrfTxInf.PmtId.UETR`), else
-    - `end_to_end_id` (e.g., `CdtTrfTxInf.PmtId.EndToEndId`), else
-    - `instruction_id` (e.g., `CdtTrfTxInf.PmtId.InstrId`)
+    - `end_to_end_id` (e.g., `CdtTrfTxInf.PmtId.EndToEndId`)
   - `envelope_identifiers.tx_index` (0-based index of the `CdtTrfTxInf` entry in rail-defined document order)
 - **PAPSS**
   - `transaction_identifiers.transaction_reference` (rail-provided unique reference)
