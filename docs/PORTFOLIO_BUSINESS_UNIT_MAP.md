@@ -17,7 +17,7 @@ python3 ./conxian-business/transparency_custodian.py
 Until portfolio hygiene automation exists to regenerate and diff BOS state artifacts under `./conxian-business/` in CI (see the P0 backlog), contributor policy is:
 
 - If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks, `.gitmodules`, the mapping tables in this document (ecosystem submodule rows / BOS-native asset paths), or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit generated BOS state artifacts under `./conxian-business/` by hand) and **commit** all updated derived artifacts in the same PR.
-- Purely editorial changes to this document do not require regeneration.
+- Purely editorial changes to this document (for example: typo fixes, wording clarifications, or moving explanatory sections without changing mapping tables) do not require regeneration.
 - Reviewers should treat changes that affect BOS state but do not update derived artifacts as incomplete and request that the regeneration step be run.
 
 If you are unsure whether a change affects BOS state inputs, err on the side of re-running the generator; it is intended to be cheap and idempotent.
@@ -58,6 +58,7 @@ Source-of-truth rule:
 
 - The repo’s committed git tree (submodule gitlinks) is authoritative for which submodules are pinned (and to what commits).
 - `.gitmodules` is authoritative for expected submodule configuration metadata (`path`, `url`).
+- Submodule bumps should be represented by explicit gitlink updates committed in a PR; do not rely on `git submodule update --remote` as a normal workflow.
 - This document is authoritative for business-unit/operating-function classification.
 - `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view; it may list additional supporting repos for context, but every pinned submodule in the ecosystem mapping table should appear there with a flagship/supporting classification.
 
