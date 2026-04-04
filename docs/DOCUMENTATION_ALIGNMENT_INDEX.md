@@ -7,11 +7,11 @@ This page is a practical index of the documentation already present in this repo
 - **Canonical**: the current “source of truth” for a domain. If two docs disagree, update the non-canonical doc to match the canonical one.
 - **Supporting**: helpful context, audits, reports, briefs, or deep dives that clarify (but don’t define) the system.
 - **Public-safe**: ok to link in public contexts and external conversations.
-- **Internal-only**: strategic / operational / security-adjacent content that should primarily live in Linear documents for durable workspace access.
+- **Internal-only**: strategic / operational / security-adjacent content that must live in the Conxian Linear workspace (the repo may contain a stub placeholder so existing links resolve).
 
 Notes:
 
-- This repo is public. “Internal-only” is a classification for _how we should reference and migrate_ the material (not a claim that it is currently private).
+- This repo is public. “Internal-only” material should not be stored here beyond a stub; see https://linear.app/conxian-labs/issue/CON-256.
 - OpenSpec change sets typically have 4 layers: `proposal.md` (intent), `design.md` (architecture), `specs/*/spec.md` (requirements), `tasks.md` (execution).
 
 ## 1) Repo navigation (start here)
@@ -19,8 +19,9 @@ Notes:
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
 | `README.md` | Canonical | Public-safe | Repository entrypoint and overall orientation. |
-| `SUMMARY.md` | Canonical | Public-safe | GitBook table of contents (what shows up on Pages). |
+| `SUMMARY.md` | Canonical | Public-safe | GitBook table of contents (used for docs navigation; Pages publishing is allowlisted). |
 | `docs/README.md` | Supporting | Public-safe | “Docs hub” landing page. |
+| `docs/BOS_BUSINESS_BUILDOUT.md` | Canonical | Public-safe | Repo business purpose, business-unit placement, governance + ownership model, and public/internal split. |
 | `ARCHIVE_MIGRATION.md` | Canonical | Public-safe | ZSE placeholder + pointer to Linear Virtual Office for legacy material. |
 
 ## 2) BOS (Business Operations System)
@@ -98,6 +99,7 @@ These are the documents most likely to answer “what are we building?” and �
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
+| `docs/CONXIUS_WALLET_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and internal-only vs public-safe separation guidance for the wallet. |
 | `conxius-wallet/docs/business/PRD.md` | Canonical | Public-safe | Wallet PRD. |
 | `conxius-wallet/docs/operations/ROADMAP.md` | Canonical | Public-safe | Wallet strategic roadmap (v1.6.0). |
 | `conxius-wallet/docs/protocols/IMPLEMENTATION_REGISTRY.md` | Canonical | Public-safe | Protocol implementation registry (what’s integrated). |
@@ -118,6 +120,8 @@ These are the documents most likely to answer “what are we building?” and �
 | `docs/BUSINESS_COMPLIANCE_ALIGNMENT_2026.md` | Supporting | Internal-only | Strategy/compliance narrative for 2026 regulatory framing. |
 
 ## 6) Governance / repo operating model / runbooks
+
+See `docs/BOS_BUSINESS_BUILDOUT.md` for repo business purpose, business-unit placement, governance + ownership model, and public/internal split.
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |

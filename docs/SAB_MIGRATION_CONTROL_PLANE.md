@@ -36,8 +36,8 @@ Related execution issues (parallelized):
 
 Baseline specs that constrain decisions:
 
-- SAB datastore mapping: [SAB datastore mapping spec](../openspec/specs/sab-datastore-mapping/spec.md)
-- Sovereign data migration & institutional egress synthesis: [Sovereign data migration & institutional egress synthesis](../openspec/changes/sovereign-data-migration-institutional-egress/specs.md)
+- SAB datastore mapping: [openspec/specs/sab-datastore-mapping/spec.md](../openspec/specs/sab-datastore-mapping/spec.md)
+- Sovereign data migration & institutional egress synthesis: [openspec/changes/sovereign-data-migration-institutional-egress/specs.md](../openspec/changes/sovereign-data-migration-institutional-egress/specs.md)
 
 ## Working rules (program-level)
 
