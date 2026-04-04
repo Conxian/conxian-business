@@ -158,7 +158,7 @@ On successful oracle verification (inside TEE), proposal emission initiates the 
 - `start_height` is sourced from the same canonical chain height source used by the native path
 - `release_height = start_height + delay_blocks`
 
-The TEE should attest `timelock_delay_blocks` but does not need to attest `start_height` or `release_height`.
+The TEE MUST attest `timelock_delay_blocks` but does not need to attest `start_height` or `release_height`.
 
 ## 6. Yield routing invariants (5/5/90)
 

@@ -76,7 +76,8 @@ Prohibited fields:
 
 1. Missing or invalid TEE attestation → proposal emission fails.
 2. Valid payload but invalid oracle proof → proposal emission fails.
-3. Any attempt to supply raw TradFi payload (bytes or parsed structure) to execution code → rejected.
-4. Replay the same external message (same `trigger_id`) → no new proposal/timelock created.
-5. Any attempt to skip multi-sig approvals → rejected.
-6. Any attempt to reduce timelock below 144 blocks → rejected.
+3. Any attempt to include `raw_payload_bytes` or a full external-settlement payload structure in `AttestedExternalSettlementTrigger` → rejected.
+4. Any attempt to supply raw TradFi payload (bytes or parsed structure) to execution code → rejected.
+5. Replay the same external message (same `trigger_id`) → no new proposal/timelock created.
+6. Any attempt to skip multi-sig approvals → rejected.
+7. Any attempt to change timelock away from 144 blocks (increase or decrease) → rejected.
