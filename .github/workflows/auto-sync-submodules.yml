@@ -70,7 +70,7 @@ jobs:
             preferred=${PREFERRED_BRANCHES[$name]:-main}
 
             if ! branch=$(pick_branch "$url" "$preferred"); then
-              echo "::error::auto-sync-submodules: unable to find an upstream branch for '${name}' (url: ${url})"
+              echo "::error::auto-sync-submodules: unable to find an upstream branch for '${name}' (url: ${url}). Ensure the repo exposes a 'main' or 'master' branch, or add '${name}' to PREFERRED_BRANCHES with its canonical branch."
               exit 1
             fi
 
