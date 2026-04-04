@@ -199,7 +199,7 @@ Invariant:
    - A raw payload (XML/JSON) cannot be supplied to the executor.
 
 4. **Replay is idempotent**
-   - Replaying the same external message (same `trigger_id`) does not create additional proposals or timelocks.
+   - Replaying the same external trigger (same `trigger_id`) does not create additional proposals or timelocks.
 
 ### 7.2 Lifecycle tests
 
