@@ -8,7 +8,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
    - A raw ISO 20022 / PAPSS / BRICS payload MUST NOT be consumed by any execution function.
    - Raw payloads MAY be parsed/normalized for audit and mapping.
 
-2. **TEE verification is required before proposal emission**
+2. **TEE verification is required before proposal emission** <a id="tee-verification"></a>
    - A proposal MUST NOT be emitted unless a TEE/StrongBox/CloudTEE attestation verifies:
      - `raw_payload_hash` MUST equal the lowercase hex encoding (no `0x` prefix) of the 32-byte SHA-256 digest of `raw_payload_bytes` (computed from `raw_payload_bytes` inside the TEE),
      - `normalized_settlement_hash` MUST equal the lowercase hex encoding (no `0x` prefix) of the 32-byte SHA-256 digest of `canonical_settlement_tx_bytes`, where `canonical_settlement_tx_bytes` is the rail-specific canonical serialization of the normalized settlement transaction (computed inside the TEE as follows):
@@ -18,12 +18,16 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
          - `canonical_settlement_tx_bytes` MUST be the XML C14N 1.1 octet stream output (not re-encoded as text).
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
        - The canonical settlement transaction bytes (`canonical_settlement_tx_bytes`) hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
+     - `trigger_id` MUST be computed inside the TEE from `{ rail, normalized_settlement_hash }` exactly as specified in §1.7; any host-supplied `trigger_id` MUST be treated as untrusted and any mismatch MUST cause attestation to fail.
+     - `rail` MUST be treated as part of the TEE's attested input: the TEE MUST select its rail-specific normalization pipeline based on the same `rail` value it attests, and MUST refuse to produce a successful attestation if the payload cannot be processed by the normalization pipeline for that `rail`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
      - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`. If the host supplies a `settlement_identifiers` optimization hint, it MUST be provided to the TEE as `raw_settlement_identifiers_hint_bytes` and validated exactly as specified in §2.1.1 (including attestation refusal on mismatch and oversized hints)
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
-Hex encoding conventions: the lowercase hex encoding of any 32-byte SHA-256 digest in this spec (including `raw_payload_hash`, `normalized_settlement_hash`, and `trigger_id`) MUST be exactly 64 characters long (`0-9`, `a-f`) and MUST include leading zeros for leading zero bytes. Implementations MUST reject any value that is not exactly 64 characters of lowercase hex in this range (for example, inputs with `0x` prefixes, uppercase hex, incorrect length, or non-hex characters). For illustration, a regular-expression such as `^[0-9a-f]{64}$` MAY be used to validate this constraint.
+Hex encoding conventions: the lowercase hex encoding of any 32-byte SHA-256 digest in this spec (including `raw_payload_hash`, `normalized_settlement_hash`, `trigger_id`, and `oracle_proof_digest`) MUST be exactly 64 characters long (`0-9`, `a-f`) and MUST include leading zeros for leading zero bytes. Implementations MUST reject any value that is not exactly 64 characters of lowercase hex in this range (for example, inputs with `0x` prefixes, uppercase hex, incorrect length, or non-hex characters). For illustration, a regular-expression such as `^[0-9a-f]{64}$` MAY be used to validate this constraint.
+
+This requirement is intentionally strict; implementations that previously accepted alternate-but-equivalent encodings (for example, uppercase hex or `0x`-prefixed digests) MUST migrate to emitting the 64-character lowercase canonical form.
 
 3. **Timelock is mandatory**
    - Verified external triggers MUST initiate the standard 144-block timelock.
@@ -47,7 +51,7 @@ Hex encoding conventions: the lowercase hex encoding of any 32-byte SHA-256 dige
      - `rail` MUST be encoded as an uppercase ASCII string with one of: `"ISO20022"`, `"PAPSS"`, `"BRICS"`.
      - Implementations MUST reject any external settlement trigger whose `rail` field is not exactly one of the allowed strings above.
      - Expanding the rail identifier set requires a spec update, and may require versioning the `trigger_id` domain separator.
-     - `normalized_settlement_hash` MUST be exactly the 64-character lowercase hex SHA-256 string over `canonical_settlement_tx_bytes` computed as specified in §1.2.
+     - `normalized_settlement_hash` MUST be exactly the 64-character lowercase hex SHA-256 string over `canonical_settlement_tx_bytes` computed as specified in [§1.2 ("TEE verification is required before proposal emission")](#tee-verification).
      - The canonicalized value MUST be the JCS output for the JSON object `{"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}` (exact key names as shown).
      - The hash input MUST be the byte concatenation `utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))`.
      - The hash MUST be SHA-256 over the hash input bytes.
@@ -65,7 +69,7 @@ Minimum fields:
 - `rail` (see §1.7 for canonical encoding and allowed values)
 - `raw_payload_hash` (lowercase hex encoding, no `0x` prefix, of the 32-byte SHA-256 digest of `raw_payload_bytes`)
 - `settlement_identifiers` (per-rail canonical set; see below)
-- `normalized_settlement_hash` (see §1.2 for canonical settlement bytes and encoding)
+- `normalized_settlement_hash` (see [§1.2 ("TEE verification is required before proposal emission")](#tee-verification) for canonical settlement bytes and encoding)
 - `trigger_id` (lowercase hex encoding, no `0x` prefix, of the 32-byte SHA-256 digest computed as specified in §1.7)
 - `asset_path`
 - `timelock_delay_blocks` (must equal `144`)
@@ -74,7 +78,7 @@ Minimum fields:
 
 The TEE attestation MUST bind (directly or by digest) the canonical values of at least `{ rail, raw_payload_hash, normalized_settlement_hash, trigger_id, settlement_identifiers, asset_path, timelock_delay_blocks, oracle_verification }` so they cannot be altered after verification. The canonical `oracle_verification` value that the TEE attests MUST embed `oracle_proof_digest` (and MAY additionally embed the exact oracle proof bytes), and proposal emission MUST verify only that same proof input, so a different proof cannot be substituted before or after attestation.
 
-`oracle_verification` MUST NOT be a bare boolean. It MUST be a JSON object and MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the 64-character lowercase hex encoding (characters `0-9a-f`, no `0x` prefix) of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
+`oracle_verification` MUST NOT be a bare boolean. It MUST be a JSON object and MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined using the hex encoding conventions above (SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`).
 
 The TEE MUST compute `oracle_proof_digest` from the exact `raw_oracle_proof_bytes` it verifies and MUST NOT accept any host-provided digest value as authoritative; any host-provided digest MUST be recomputed and any mismatch MUST cause attestation to fail.
 
@@ -128,7 +132,7 @@ Implementations MUST NOT treat any host-supplied `settlement_identifiers` as aut
 - The TEE MUST parse `raw_settlement_identifiers_hint_bytes` as UTF-8 JSON. If parsing fails or the parsed value is not a JSON object, the TEE MUST refuse to produce a successful attestation.
 - After parsing, the hint object MUST satisfy the structural and leaf-type constraints in this section, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. The TEE MUST enforce these bounds before deep traversal. If any constraint or bound is violated, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping leaf fields. An overlapping leaf field is any canonical leaf-field JSON key path present in both objects. For each overlapping leaf field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping leaf field differs, the TEE MUST refuse to produce a successful attestation.
-- If any JSON key path present in the hint object has a JSON object value in the canonical `settlement_identifiers` but a non-object value in the hint, the TEE MUST refuse to produce a successful attestation.
+- If any JSON key path present in both the canonical `settlement_identifiers` object and the hint object has a JSON object value in one and a non-object value in the other, the TEE MUST refuse to produce a successful attestation.
 - Any host-supplied extra fields MUST be ignored for canonicalization purposes.
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
 
@@ -179,11 +183,13 @@ Implementations MAY accept non-NFC-normalized input from upstream rails, but MUS
 
 Rails MAY include additional canonical identifiers (e.g., for reconciliation) in `settlement_identifiers.transaction_identifiers`. These optional identifier values are subject to the canonical string rules above. If a rail includes any of the following identifier keys, their values MUST be emitted in the canonical form specified:
 
+If a rail includes `settlement_amount` (or any other identifier whose canonical form depends on a rail-specific on-wire field encoding), it MUST define a deterministic mapping from its on-wire representation into the canonical value specified below (including any required scaling and rounding rules).
+
 - `settlement_currency`: ISO 4217 code; the value MUST match `^[A-Za-z]{3}$`. The emitted canonical form MUST be the ASCII uppercase (`A`–`Z`) of those three letters.
-- `settlement_amount`: normalized non-negative decimal string (no sign, no exponent; canonical regex: `^(0|[1-9][0-9]*)(\.[0-9]*[1-9])?$`). The emitted value MUST match this regex. Fractional parts MUST NOT end in `0`, and integer values MUST NOT include a decimal point (e.g., `0`, `1`, `0.5`, `123.45` are valid; `01`, `1.0`, `0.50` are invalid).
+- `settlement_amount`: normalized non-negative decimal string (no sign, no exponent; canonical regex: `^(0|[1-9][0-9]*)(\.[0-9]*[1-9])?$`). The emitted value MUST match this regex and MUST be represented as a JSON string (never as a JSON number). Fractional parts MUST NOT end in `0`, and integer values MUST NOT include a decimal point (e.g., `0`, `1`, `0.5`, `123.45` are valid; `01`, `1.0`, `0.50` are invalid).
 - `settlement_date`: ISO 8601 full-date `YYYY-MM-DD`. The emitted value MUST match `^[0-9]{4}-[0-9]{2}-[0-9]{2}$`, MUST represent a valid proleptic Gregorian calendar date with a year in the range `0001`–`9999`, and MUST NOT include any time-of-day or timezone offset component.
 
-Implementations MUST NOT attempt to “fix up” non-canonical decimal strings for `settlement_amount`; any value that does not match the canonical form (after NFC normalization) MUST cause the corresponding settlement transaction to be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
+Canonicalization from the rail-specific on-wire representation to the canonical `settlement_amount` decimal string MUST occur only inside the TEE's rail-specific normalization pipeline. Once a `settlement_amount` value exists in `settlement_identifiers` (either from the TEE or a host hint), implementations MUST NOT attempt to “fix up” a non-canonical string; any value that does not match the canonical form (after NFC normalization) MUST cause the corresponding settlement transaction to be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
 ### 2.2 `SovereignProposal` (trigger-kind)
 
