@@ -118,6 +118,8 @@ Each rail MUST define a canonical identifier set used to populate `settlement_id
 
 `envelope_identifiers` (including `tx_index`) MUST NOT affect `normalized_settlement_hash`.
 
+`settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`; any host-supplied hints MUST be treated as non-authoritative and MUST match the TEE-derived canonical identifiers for any overlapping fields (see [spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#211-settlement_identifiers-per-rail-canonical-set) for normative semantics).
+
 Replay protection and deterministic idempotency are enforced via `trigger_id` derived from `{ rail, normalized_settlement_hash }`.
 
 Trigger granularity:

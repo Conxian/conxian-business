@@ -17,6 +17,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
        - Additional requirement: rail-specific normalization MUST be envelope-agnostic: the same settlement transaction replayed in different envelopes/messages MUST yield the same `normalized_settlement_hash`, and envelope-level metadata (e.g., message identifiers, timestamps, routing fields) MUST NOT affect `normalized_settlement_hash`.
        - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `transaction_identifiers` defined in §2.1.1, and MUST NOT include any `envelope_identifiers`.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
+     - `settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes` and validated against any host-supplied hints as specified in §2.1.1
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
@@ -61,6 +62,8 @@ Minimum fields:
 - `tee_attestation`
 - `oracle_verification`
 
+The TEE attestation MUST bind (directly or by digest) the canonical values of at least `{ rail, raw_payload_hash, normalized_settlement_hash, trigger_id, settlement_identifiers, asset_path, timelock_delay_blocks, oracle_verification }` so they cannot be altered after verification.
+
 Prohibited fields:
 
 - `raw_payload_bytes`
@@ -73,9 +76,15 @@ Prohibited fields:
 - `transaction_identifiers`: envelope-agnostic identifiers for the settlement transaction.
 - `envelope_identifiers`: envelope/message-local identifiers for audit/debug only.
 
+Within `settlement_identifiers`, implementations MUST use only JSON objects with leaf values restricted to JSON strings and non-negative integers; arrays MUST NOT be used.
+
 `transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
 
 `envelope_identifiers` MUST NOT affect `normalized_settlement_hash`.
+
+`settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`.
+
+Implementations MUST NOT treat any host-supplied `settlement_identifiers` as authoritative. If a host supplies any identifiers as an optimization hint, the TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). Proposal emission MUST be rejected if any overlapping field differs. Any host-supplied extra fields MUST be ignored for canonicalization purposes.
 
 Minimum required identifier set (by rail):
 
@@ -124,3 +133,4 @@ Prohibited fields:
 5. Replay the same settlement transaction (same `trigger_id`) → no new proposal/timelock created.
 6. Any attempt to skip multi-sig approvals → rejected.
 7. Any attempt to change timelock away from 144 blocks (increase or decrease) → rejected.
+8. Host-supplied `settlement_identifiers` mismatch the TEE-derived identifiers (for any overlapping field) for the same `raw_payload_bytes` → proposal emission fails.
