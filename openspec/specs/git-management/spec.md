@@ -1,7 +1,8 @@
 # git-management Specification
 
 ## Purpose
-TBD - created by archiving change review-all-files-and-modules. Update Purpose after archive.
+
+Define the minimum git and submodule management capabilities needed to operate the Conxian workspace (status visibility, clean working trees, and safe synchronization).
 ## Requirements
 ### Requirement: Git status review for all repositories
 

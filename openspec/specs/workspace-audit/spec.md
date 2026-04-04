@@ -1,7 +1,8 @@
 # workspace-audit Specification
 
 ## Purpose
-TBD - created by archiving change review-all-files-and-modules. Update Purpose after archive.
+
+Define the minimum workspace-level audit capabilities required for BOS operations (repo hygiene, documentation alignment, and verification of public/private boundaries).
 ## Requirements
 ### Requirement: Full workspace file audit
 
