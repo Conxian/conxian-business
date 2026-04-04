@@ -4,7 +4,7 @@ This repository is the programmatic **State Machine** for Conxian operations. We
 
 Supporting — Governance + OpenSpec + submodule wiring for the Conxian ecosystem.
 
-See the [repo portfolio](docs/REPO_PORTFOLIO.md#ecosystem-repos) for the flagship/supporting repo map.
+See the [repo portfolio](docs/REPO_PORTFOLIO.md#ecosystem-repos) for the flagship/supporting repo map and `docs/BOS_BUSINESS_BUILDOUT.md` for the business-end operating model and public/internal split.
 
 ## Purpose
 
@@ -46,13 +46,29 @@ See:
 
 Some files are intentionally kept as stubs so existing links continue to resolve.
 
-## Ground Truth (OpenSpec)
+## Ground truth (OpenSpec)
 
 The definitive technical specifications for the Conxian ecosystem are maintained in the `openspec/` directory. See the [Enterprise Sovereignty Baseline](./openspec/changes/remediate-enterprise-sovereignty/specs.md) for the latest architectural standards.
 
-Sensitive strategy and operational documents have been migrated to the [Linear Virtual Office](https://linear.app/conxian-labs) for secure, high-integrity management in compliance with our Zero Secret Egress (ZSE) mandate.
+Detailed strategy and roadmap content must not be duplicated in this README; see `docs/BOS_BUSINESS_BUILDOUT.md` for the public vs internal documentation rules.
 
-## 🛡️ Governance and Security
+## Agentic EXCO suite
+
+The BOS is powered by an active suite of autonomous agents:
+
+- **[Sovereign Strategy Nexus](./Sovereign-Strategy-Nexus)**: Strategic alignment, structural integrity, and hardware-attested ZK-Data Room proofs.
+- **[Fiscal Vault Oracle](./Fiscal-Vault-Oracle)**: Multi-sig Bitcoin treasury and yield automation constraints.
+- **[Nakamoto Guardian](./Nakamoto-Guardian)**: ATS enforcement, immutable IP registry, and CARF/BRS v1.5 regulatory enforcement.
+- **[Sovereign Ops Orchestrator](./Sovereign-Ops-Orchestrator)**: Bitcoin-native bounties, decentralized contributor onboarding, and protocol-owned layer (POL) management.
+
+## Protocol-owned layers (POL)
+
+- **Settlement**: Anchored to Bitcoin L1 via OpenTimestamps and Stacks Nakamoto.
+- **State Layer**: [Supabase](https://supabase.com) (Real-time financials and IP audit metrics).
+- **Execution Engine**: [Linear](https://linear.app) (Programmatic Action Task Specifications).
+- **Monetization**: Protocol fees and licensing.
+
+## Governance and security
 
 We adhere to strict sovereignty and security standards.
 
@@ -67,8 +83,12 @@ This repository is licensed under the GNU GPL v3.0 (see `LICENSE`).
 - [**CHANGELOG.md**](./CHANGELOG.md): History of BOS changes.
 - [**CODEOWNERS**](./CODEOWNERS): Repository ownership and review guidance.
 
-## 📂 Repository Hygiene
+## Repository hygiene
 
 To maintain a clean and sovereign workspace, we adhere to strict hygiene standards:
 - **`scripts/`**: Contains active utility scripts (e.g., `check_links.py`).
+- **`ARCHIVE_MIGRATION.md`**: ZSE-safe pointers to legacy material intentionally kept out of the Git index.
 - **`openspec/`**: Definitive technical specifications.
+
+---
+**Sovereign Autonomous Business (SAB)**. © 2026 Conxian-Labs. Powered by Bitcoin.
