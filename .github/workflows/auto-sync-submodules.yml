@@ -25,7 +25,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          
+
           # `.gitmodules` intentionally does not set `submodule.<name>.branch`.
           # Ensure `git submodule update --remote` tracks `main` rather than each remote's `HEAD`.
           while read -r key _path; do
