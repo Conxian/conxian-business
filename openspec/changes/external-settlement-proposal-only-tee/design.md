@@ -124,6 +124,10 @@ Trigger granularity:
 
 Minimum required identifier set (by rail):
 
+For normative `tx_index` requirements (ordering source, no-reorder constraint, and inclusion rules), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#211-settlement_identifiers-per-rail-canonical-set).
+
+The per-rail `tx_index` parentheticals below are summaries; the spec is authoritative.
+
 - **ISO20022 (pacs.008)**
   - `transaction_identifiers.transaction_reference` (MUST use the first available in this order)
     - `uetr` (e.g., `CdtTrfTxInf.PmtId.UETR`), else
@@ -175,10 +179,10 @@ Example (illustrative only):
 
 ## 5. Time-lock initiation
 
-On successful oracle verification (inside TEE), proposal emission initiates the standard time-lock using the attested delay and the native chain-height source:
+After oracle verification and attestation succeed inside the TEE, proposal emission initiates the standard time-lock using the attested delay and the native chain-height source:
 
 - `delay_blocks = 144`
-- `start_height` is sourced from the same canonical chain height source used by the native path
+- `start_height` is obtained at proposal emission time from the same canonical chain height source used by the native path
 - `release_height = start_height + delay_blocks`
 
 The TEE MUST attest `timelock_delay_blocks` but does not need to attest `start_height` or `release_height`.
