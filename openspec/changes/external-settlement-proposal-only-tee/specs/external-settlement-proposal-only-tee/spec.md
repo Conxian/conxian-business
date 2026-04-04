@@ -99,7 +99,7 @@ Example: if a message contains three settlement-transaction entries `[A, B, C]` 
 Canonical formatting requirements:
 
 - All string values in `settlement_identifiers` MUST be canonicalized and validated as follows:
-  - If an upstream source provides bytes, implementations MUST decode them as UTF-8 and MUST reject any decoding errors (i.e., MUST NOT substitute `U+FFFD`).
+  - If an upstream source provides bytes, implementations MUST decode them as UTF-8 and MUST treat any decoding error as a canonicalization failure for the corresponding settlement transaction (i.e., MUST NOT substitute `U+FFFD`).
   - MUST be a sequence of Unicode scalar values (reject surrogate code points `U+D800..U+DFFF`).
   - MUST be normalized to Unicode NFC; all subsequent validation, equality, and hashing operates on the NFC-normalized value.
   - MUST be rejected if the NFC-normalized value is empty, contains any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database), contains the Unicode replacement character `U+FFFD`, or begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
