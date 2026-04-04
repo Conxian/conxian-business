@@ -97,12 +97,15 @@
 )
 
 (define-private (get-country-region (country (string-ascii 3)))
-  (match (map-get? country-regions { country: country })
-    entry
-      (get region entry)
-    (if (is-sadc-country country)
-      REGION_SADC
-      REGION_UNKNOWN
+  (if (is-eq country (var-get jurisdiction-country))
+    (var-get jurisdiction-region)
+    (match (map-get? country-regions { country: country })
+      entry
+        (get region entry)
+      (if (is-sadc-country country)
+        REGION_SADC
+        REGION_UNKNOWN
+      )
     )
   )
 )
