@@ -13,7 +13,7 @@ Canonical tracker:
 
 ## Current status
 
-**Status:** Living document. Repo `CODEOWNERS` and control-domain owners should update this mapping when any repo is added, renamed, retired/archived, or when gate requirements change.
+**Status:** Living document. Repo `CODEOWNERS` and control-domain owners should update this mapping when any repo is added, renamed, retired/archived, or when gate requirements change. Recommended: enforce updates via `CODEOWNERS` review for this file.
 
 **Recency:** Use Git history for this file to see when the mapping was last updated.
 
@@ -146,7 +146,7 @@ Regardless of repo visibility, the following content **must not be tracked in Gi
 
 Any repo with `FT = 3` and/or `OC = 3` is “break-glass” territory and needs formal operating controls before mainnet rollout.
 
-Service surfaces with `RC >= 2` and `DR >= 3` require an operating owner + incident posture before production use.
+Repos with `Ship posture = Conditional (service gates)` and `RC >= 2` and `DR >= 3` require an operating owner + incident posture before production use.
 
 ## Follow-ups (recommended)
 
