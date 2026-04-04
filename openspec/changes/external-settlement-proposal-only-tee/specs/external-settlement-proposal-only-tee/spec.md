@@ -102,7 +102,12 @@ Canonical formatting requirements:
   1. If an upstream source provides bytes, implementations MUST decode them as UTF-8 and MUST treat any decoding error as a canonicalization failure for the corresponding settlement transaction (i.e., MUST NOT substitute `U+FFFD`).
   2. Implementations MUST reject any value that is not a sequence of Unicode scalar values (reject surrogate code points `U+D800..U+DFFF`).
   3. The value MUST be normalized to Unicode NFC; all subsequent validation, equality, and hashing operates on the NFC-normalized value.
-  4. Implementations MUST reject the value if the NFC-normalized value is empty, the UTF-8 encoding of the NFC-normalized value exceeds 4096 bytes, contains any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database), contains the Unicode replacement character `U+FFFD`, or begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
+  4. Implementations MUST reject the value if any of the following holds:
+     - The NFC-normalized value is empty.
+     - The UTF-8 encoding of the NFC-normalized value exceeds 4096 bytes.
+     - The NFC-normalized value contains any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database).
+     - The NFC-normalized value contains the Unicode replacement character `U+FFFD`.
+     - The NFC-normalized value begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
 - `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
 - `envelope_identifiers.tx_index` MUST be a non-negative integer.
 
@@ -110,7 +115,7 @@ Note: This section intentionally tightens earlier guidance. These canonicalizati
 
 If any value in `settlement_identifiers.transaction_identifiers` (including any field-specific rules for optional reconciliation keys) fails canonicalization or validation, the corresponding settlement transaction MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
-`envelope_identifiers.tx_index` MUST satisfy the field requirements above. Any other `settlement_identifiers.envelope_identifiers` keys are optional; invalid or non-canonical values for those optional envelope identifiers MUST be ignored/omitted and MUST NOT cause the settlement transaction to be treated as invalid for external-settlement trigger purposes.
+`envelope_identifiers.tx_index` MUST satisfy the field requirements above. Any other `settlement_identifiers.envelope_identifiers` keys are optional; invalid or non-canonical values for those optional envelope identifiers MUST be treated as if the corresponding fields were absent and MUST NOT cause the settlement transaction to be treated as invalid for external-settlement trigger purposes.
 
 For `external-settlement-trigger:v1`, implementations MUST use Unicode 15.1.0 (Unicode Character Database + normalization data) for evaluating `General_Category`, `White_Space`, and NFC normalization.
 
@@ -122,7 +127,7 @@ Implementations MAY accept non-NFC-normalized input from upstream rails, but MUS
 
 Rails MAY include additional canonical identifiers (e.g., for reconciliation) in `settlement_identifiers.transaction_identifiers`. These optional identifier values are subject to the canonical string rules above. If a rail includes any of the following identifier keys, their values MUST be emitted in the canonical form specified:
 
-- `settlement_currency`: MUST match `^[A-Za-z]{3}$`; canonical form is the ASCII uppercase of those three letters (`[A-Z]{3}`). Implementations MUST reject anything else.
+- `settlement_currency`: the NFC-normalized value MUST match `^[A-Za-z]{3}$`; implementations MUST convert it to ASCII uppercase as part of canonicalization. The emitted canonical form MUST match `[A-Z]{3}`.
 - `settlement_amount`: normalized non-negative decimal string (no sign, no exponent; canonical regex: `^(0|[1-9][0-9]*)(\.[0-9]*[1-9])?$`). The emitted value MUST match this regex. Fractional parts MUST NOT end in `0`, and integer values MUST NOT include a decimal point (e.g., `0`, `1`, `0.5`, `123.45` are valid; `01`, `1.0`, `0.50` are invalid).
 - `settlement_date`: ISO 8601 full-date `YYYY-MM-DD`. The emitted value MUST match `^[0-9]{4}-[0-9]{2}-[0-9]{2}$`, MUST represent a valid proleptic Gregorian calendar date with a year in the range `0001`–`9999`, and MUST NOT include any time-of-day or timezone offset component.
 
