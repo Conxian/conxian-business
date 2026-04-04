@@ -128,7 +128,7 @@ Trigger granularity:
 
 Minimum required identifier set (by rail):
 
-For normative `tx_index` requirements (ordering source, no-reorder constraint, and inclusion rules), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#211-settlement_identifiers-per-rail-canonical-set).
+For normative `tx_index` requirements (ordering source, no-reorder constraint, and inclusion rules), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical).
 
 The per-rail `tx_index` parentheticals below are summaries; the spec is authoritative.
 
@@ -147,7 +147,7 @@ The per-rail `tx_index` parentheticals below are summaries; the spec is authorit
 
 Canonical formatting requirements:
 
-For normative formatting/equality rules (including any optional reconciliation identifier keys), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#211-settlement_identifiers-per-rail-canonical-set).
+For normative formatting/equality rules (including any optional reconciliation identifier keys), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical).
 
 Informal summary:
 
