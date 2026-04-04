@@ -11,8 +11,25 @@
 (define-constant REGION_UNKNOWN u0)
 (define-constant REGION_SADC u1)
 
-(define-constant SECONDS_PER_YEAR u31536000)
-(define-constant UNIX_EPOCH_YEAR u1970)
+(define-constant YEAR_2024_START u1704067200)
+(define-constant YEAR_2025_START u1735689600)
+(define-constant YEAR_2026_START u1767225600)
+(define-constant YEAR_2027_START u1798761600)
+(define-constant YEAR_2028_START u1830297600)
+(define-constant YEAR_2029_START u1861920000)
+(define-constant YEAR_2030_START u1893456000)
+(define-constant YEAR_2031_START u1924992000)
+(define-constant YEAR_2032_START u1956528000)
+(define-constant YEAR_2033_START u1988150400)
+(define-constant YEAR_2034_START u2019686400)
+(define-constant YEAR_2035_START u2051222400)
+(define-constant YEAR_2036_START u2082758400)
+(define-constant YEAR_2037_START u2114380800)
+(define-constant YEAR_2038_START u2145916800)
+(define-constant YEAR_2039_START u2177452800)
+(define-constant YEAR_2040_START u2208988800)
+(define-constant YEAR_2041_START u2240611200)
+(define-constant YEAR_2042_START u2272147200)
 
 ;; SARB mandate thresholds (ZAR/year)
 (define-constant SDA_LIMIT_ZAR u1500000)
@@ -84,7 +101,61 @@
 )
 
 (define-private (year-from-unix-time (unix-time uint))
-  (+ UNIX_EPOCH_YEAR (/ unix-time SECONDS_PER_YEAR))
+  (if (< unix-time YEAR_2025_START)
+    u2024
+    (if (< unix-time YEAR_2026_START)
+      u2025
+      (if (< unix-time YEAR_2027_START)
+        u2026
+        (if (< unix-time YEAR_2028_START)
+          u2027
+          (if (< unix-time YEAR_2029_START)
+            u2028
+            (if (< unix-time YEAR_2030_START)
+              u2029
+              (if (< unix-time YEAR_2031_START)
+                u2030
+                (if (< unix-time YEAR_2032_START)
+                  u2031
+                  (if (< unix-time YEAR_2033_START)
+                    u2032
+                    (if (< unix-time YEAR_2034_START)
+                      u2033
+                      (if (< unix-time YEAR_2035_START)
+                        u2034
+                        (if (< unix-time YEAR_2036_START)
+                          u2035
+                          (if (< unix-time YEAR_2037_START)
+                            u2036
+                            (if (< unix-time YEAR_2038_START)
+                              u2037
+                              (if (< unix-time YEAR_2039_START)
+                                u2038
+                                (if (< unix-time YEAR_2040_START)
+                                  u2039
+                                  (if (< unix-time YEAR_2041_START)
+                                    u2040
+                                    (if (< unix-time YEAR_2042_START)
+                                      u2041
+                                      u2042
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
 )
 
 (define-read-only (compute-shard
@@ -134,7 +205,7 @@
       existing-shard
         (ok { tx-id: tx-id, shard: existing-shard })
       (let (
-          (block-time (unwrap-panic (get-block-info? time stacks-block-height)))
+          (block-time (unwrap-panic (get-block-info? time block-height)))
           (year (year-from-unix-time block-time))
           (shard (compute-shard sender receiver amount-zar tier1-rail))
         )
@@ -161,7 +232,7 @@
 )
 
 (define-read-only (get-current-year)
-  (let ((block-time (unwrap-panic (get-block-info? time stacks-block-height))))
+  (let ((block-time (unwrap-panic (get-block-info? time block-height))))
     (ok (year-from-unix-time block-time))
   )
 )
