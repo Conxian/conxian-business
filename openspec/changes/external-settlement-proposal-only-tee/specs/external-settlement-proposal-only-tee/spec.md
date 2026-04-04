@@ -115,9 +115,7 @@ Canonical formatting requirements:
 - `envelope_identifiers.tx_index` MUST be a non-negative integer.
   - If `envelope_identifiers.tx_index` is absent or invalid, the settlement transaction MUST be treated as invalid for external-settlement trigger purposes.
 
-Note: This section intentionally tightens earlier guidance. These canonicalization and structural requirements are normative for the current `external-settlement-trigger:v1` definition. Any settlement transaction that fails any of the requirements above (including the type/structure requirements for `settlement_identifiers.transaction_identifiers`) MUST be treated as invalid.
-
-If any value in `settlement_identifiers.transaction_identifiers` (including any field-specific rules for optional reconciliation keys) fails canonicalization or validation, the corresponding settlement transaction MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
+Note: This section intentionally tightens earlier guidance. These canonicalization and structural requirements are normative for the current `external-settlement-trigger:v1` definition. Any settlement transaction that fails any of the requirements above (including the type/structure requirements for `settlement_identifiers.transaction_identifiers` or canonicalization/validation of any of its values, including any optional reconciliation keys) MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
 Any other `settlement_identifiers.envelope_identifiers` keys are optional; invalid values for those optional envelope identifiers MUST be treated as if the corresponding fields were absent and MUST NOT cause the settlement transaction to be treated as invalid for external-settlement trigger purposes.
 
