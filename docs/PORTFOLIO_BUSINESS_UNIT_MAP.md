@@ -58,7 +58,7 @@ Source-of-truth rule:
 
 - The repo’s committed git tree (submodule gitlinks) is authoritative for which submodules are pinned (and to what commits).
 - `.gitmodules` is authoritative for expected submodule configuration metadata (`path`, `url`).
-- Submodule bumps should be represented by explicit gitlink updates committed in a PR; do not rely on `git submodule update --remote` as a normal workflow.
+- Submodule bumps should be represented by explicit gitlink updates committed in a PR; do not rely on `git submodule update --remote` as a normal workflow. The `auto-sync-submodules` workflow is the intentional exception: it uses `git submodule update --remote` internally to create reviewable PRs that update pinned gitlinks.
 - This document is authoritative for business-unit/operating-function classification.
 - `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view; it may list additional supporting repos for context, but every pinned submodule in the ecosystem mapping table should appear there with a flagship/supporting classification.
 
