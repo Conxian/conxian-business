@@ -14,6 +14,7 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
      - `normalized_settlement_hash` (computed inside the TEE) for each settlement transaction using a rail-specific canonical serialization:
        - JSON: RFC 8785 JSON Canonicalization Scheme (JCS)
        - XML: W3C XML Canonicalization 1.1
+       - The normalized settlement transaction hashed to produce `normalized_settlement_hash` MUST include at least the canonical `settlement_identifiers` defined in §2.1.1.
      - any digest/hash computed outside the TEE MUST be treated as untrusted; the TEE MUST recompute authoritative values from `raw_payload_bytes` and reject any mismatch with host-supplied claims
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
