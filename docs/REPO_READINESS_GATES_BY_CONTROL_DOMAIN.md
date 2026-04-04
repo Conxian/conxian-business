@@ -28,7 +28,7 @@ This document defines the _required gates_ by repo and does **not** claim that t
 All repos (public or private) must satisfy:
 
 - No secrets / keys / seed phrases / private endpoints committed (`.env.example` only).
-- No ZSE-restricted content tracked (validated via org-standard ZSE knowledge-retention tooling; in this repo: `scripts/verify_knowledge_retention.py`).
+- No ZSE-restricted content tracked (validated via repo-hygiene CI checks for ZSE knowledge retention).
 - `SECURITY.md` present and accurate reporting flow.
 - `CODEOWNERS` covers the repo and its high-risk paths.
 
@@ -42,6 +42,8 @@ Legend:
 - `1` = baseline controls
 - `2` = elevated controls (security/compliance review required)
 - `3` = critical controls (formal sign-off + multi-party operating controls)
+
+Unless otherwise specified, gate levels are cumulative: level `N` assumes the controls of levels `0..N-1` are also in place.
 
 ### L — Legal / public-safe status
 
