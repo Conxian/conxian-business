@@ -65,17 +65,18 @@ jobs:
             name=${key#submodule.}
             name=${name%.path}
 
-            url=$(git config -f .gitmodules --get "submodule.${name}.url")
-
             preferred=${PREFERRED_BRANCHES[$name]:-main}
 
-            if ! branch=$(pick_branch "$url" "$preferred"); then
-              echo "::error::auto-sync-submodules: unable to find an upstream branch for '${name}' (url: ${url}). Ensure the repo exposes a 'main' or 'master' branch, or add '${name}' to PREFERRED_BRANCHES with its canonical branch."
+            git submodule update --init -- "$path"
+            resolved_url=$(git -C "$path" remote get-url origin)
+
+            if ! branch=$(pick_branch "$resolved_url" "$preferred"); then
+              echo "::error::auto-sync-submodules: unable to find an upstream branch for '${name}'. Ensure the repo exposes a 'main' or 'master' branch, or add '${name}' to PREFERRED_BRANCHES with its canonical branch."
               exit 1
             fi
 
             git config "submodule.${name}.branch" "$branch"
-            git submodule update --init --remote -- "$path"
+            git submodule update --remote -- "$path"
           done < <(git config -f .gitmodules --name-only --get-regexp '^submodule\..*\.path$')
 
           git submodule update --init --recursive
