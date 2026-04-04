@@ -1,0 +1,152 @@
+# Repo readiness gates by control domain (CON-227)
+
+This page defines the **minimum control gates** required for each active Conxian repository, so we can consistently decide:
+
+- what is safe to keep **public**,
+- what can **ship** (be deployed / released) without additional controls,
+- what must remain **private** (kept in Linear under ZSE), and
+- what needs **additional controls** before rollout.
+
+Canonical tracker:
+
+- Linear: https://linear.app/conxian-labs/issue/CON-227/map-repo-readiness-gates-by-control-domain
+
+## Current status (snapshot)
+
+**As of:** 2026-04-04
+
+This document defines the _required gates_ by repo and does **not** claim that those gates are already satisfied.
+
+## How to use this document
+
+1. For a repo, locate its row in the mapping section.
+2. For each control domain, treat the required gate level as **release-blocking** for production rollout.
+3. A repo can remain public if it meets **Public-safe baseline gates** (below) and does not contain ZSE-restricted content.
+
+### Public-safe baseline (applies to all repos)
+
+All repos (public or private) must satisfy:
+
+- No secrets / keys / seed phrases / private endpoints committed (`.env.example` only).
+- No ZSE-restricted content tracked (see `scripts/verify_knowledge_retention.py`).
+- `SECURITY.md` present and accurate reporting flow.
+- `CODEOWNERS` covers the repo and its high-risk paths.
+
+## Control domains and gate levels
+
+Gate levels are intentionally coarse. Use them to prevent “we can ship” ambiguity.
+
+Legend:
+
+- `0` = not applicable / no meaningful exposure
+- `1` = baseline controls
+- `2` = elevated controls (security/compliance review required)
+- `3` = critical controls (formal sign-off + multi-party operating controls)
+
+### L — Legal / public-safe status
+
+- **L1**: License clarity (SPDX-compatible where possible), contributor guidance, and a public-safe README (no claims that contradict repo visibility).
+- **L2**: Explicit user-facing disclaimers (where relevant), trademark/IP review of names/logos, and third-party dependency/license review.
+- **L3**: Formal legal sign-off before production rollout and any public “regulated” positioning.
+
+### RC — Regulatory / compliance controls
+
+- **RC1**: Clear scope boundaries (“not legal advice”, “not a compliance guarantee”), plus audit-friendly logging where applicable.
+- **RC2**: Documented compliance control surface (e.g., sanctions screening hooks, policy-driven allow/deny lists, retention/audit logs).
+- **RC3**: Named compliance owner + evidence trail for changes (change-control, approvals, external review where required).
+
+### FT — Funds / treasury impact
+
+- **FT1**: No funds can be moved; only mocks/simulations/test fixtures.
+- **FT2**: Can construct/sign transactions on testnet or in isolated/dev contexts; requires key-handling docs and “no mainnet by default”.
+- **FT3**: Any codepath that can move or authorize **mainnet** value; requires multi-sig / dual-control approvals, separation of duties, and an incident runbook.
+
+### OC — On-chain execution risk
+
+- **OC1**: Read-only chain interactions.
+- **OC2**: Can deploy/upgrade on testnets or can submit transactions to production networks behind explicit flags.
+- **OC3**: Mainnet deployment/upgrade tooling or protocol contracts; requires preflight checks, staged rollout plan, and security review/audit evidence.
+
+### DC — Decentralization / custody posture
+
+- **DC1**: Explicitly non-custodial posture; keys remain user-controlled; recovery model documented.
+- **DC2**: Key material handled on-device/in-app (wallet-grade security expectations); requires threat model + secure storage and signing boundaries.
+- **DC3**: Custodial or delegated custody model; requires formal custody policy, licensing/compliance posture, and operating controls.
+
+### DR — Deployment readiness
+
+- **DR1**: Build/run instructions + minimal smoke path.
+- **DR2**: CI checks, versioning/release tags, and environment/secrets hygiene.
+- **DR3**: Production runbook: monitoring, rollback, incident response, and change-control.
+
+### OWN — Business-operating ownership
+
+- **OWN1**: Named maintainers (`CODEOWNERS`) and repo mission.
+- **OWN2**: Operating owner (service owner / product owner), escalation path, and basic SLO expectations.
+- **OWN3**: RACI defined for high-risk operations (treasury, deployments, custody) and multi-party approval requirements.
+
+## Repo mapping (required gates)
+
+Notes:
+
+- “Public posture” is about **GitHub visibility**, not production readiness.
+- “Ship posture” is about whether the repo can be used to **deploy / release** without extra controls.
+
+### Flagship repos (public trust surface)
+
+| Repo | Public posture | Ship posture | L | RC | FT | OC | DC | DR | OWN |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `conxius-wallet` | Public (required) | Conditional (wallet-grade gates) | 2 | 2 | 3 | 2 | 2 | 3 | 3 |
+| `conxian-gateway` | Public (required) | Conditional (service gates) | 2 | 2 | 2 | 2 | 1 | 3 | 2 |
+| `Conxian` | Public (required) | Conditional (protocol gates) | 2 | 2 | 3 | 3 | 1 | 3 | 3 |
+| `Conxian_UI` (`conxian-ui`) | Public | Conditional (UI gates) | 2 | 1 | 2 | 1 | 1 | 2 | 2 |
+| `conxian-labs-site` | Public | Ship (standard web) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
+| `conxius-platform` | Public | Conditional (ops/dev-stack gates) | 1 | 1 | 2 | 2 | 1 | 2 | 2 |
+
+### Supporting repos
+
+| Repo | Public posture | Ship posture | L | RC | FT | OC | DC | DR | OWN |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `lib-conxian-core` | Public | Ship (library) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
+| `lib-conclave-sdk` | Public | Conditional (crypto/supply-chain gates) | 1 | 0 | 0 | 0 | 0 | 2 | 2 |
+| `conxian-nexus` | Public | Conditional (service gates) | 1 | 1 | 1 | 1 | 0 | 3 | 2 |
+| `stacksorbit` | Public | Conditional (deployment tool gates) | 1 | 1 | 3 | 3 | 0 | 3 | 3 |
+| `.github` | Public | Ship (org defaults) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
+| `conxian-business` | Public | Ship (docs/specs) | 1 | 1 | 0 | 0 | 0 | 2 | 1 |
+
+## Interpretation / decisions
+
+### What can ship without additional controls
+
+These repos are generally safe to ship with standard engineering hygiene (assuming no secrets and basic CI):
+
+- `conxian-labs-site`
+- `lib-conxian-core`
+- `conxian-business` (docs/spec changes)
+
+### What must stay private (content-level, not necessarily repo-level)
+
+Regardless of repo visibility, the following content **must not be tracked in GitHub** and should live in Linear under ZSE:
+
+- treasury signing procedures, key custody details, seed phrases, private endpoints
+- partner/customer confidential details
+- internal M&A / strategy artifacts that create asymmetric risk
+
+### What needs additional controls before rollout
+
+Anything with `FT3` and/or `OC3` is “break-glass” territory and needs formal operating controls before mainnet rollout:
+
+- `Conxian`
+- `conxius-wallet`
+- `stacksorbit`
+
+Service surfaces with `RC2` and `DR3` require an operating owner + incident posture before production use:
+
+- `conxian-gateway`
+- `conxian-nexus`
+
+## Follow-ups (recommended)
+
+1. Confirm custody posture for `conxius-wallet` (target: non-custodial) and align `DC` level wording accordingly.
+2. Add a lightweight “evidence” section per flagship repo (links to CI, release tags, runbooks in Linear) without embedding sensitive details.
+3. Reconcile public messaging in the `conxian-business` repo description with ZSE language (avoid stating it contains non-public docs if it is public).

@@ -2,6 +2,10 @@
 
 This page defines the Conxian public repo map for external evaluation and internal consistency.
 
+For release governance (what can ship, what must stay private, and what requires additional controls), see:
+
+- `docs/REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md`
+
 ## Standard role line (GitHub description + README top section)
 
 Use the same single **role line** in both the GitHub repo description (plain text; keep it concise—aim for ~160 chars) and the README “top section” (right below the opening paragraph). You may add a separate README-only line below it (for example, a link to this repo portfolio). The 1-line purposes should match the descriptions in the [Ecosystem repos](#ecosystem-repos) section.
