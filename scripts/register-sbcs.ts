@@ -14,11 +14,12 @@ import {
 import { StacksTestnet } from '@stacks/network';
 
 const network = new StacksTestnet();
+const modulePath = fileURLToPath(import.meta.url);
 
 const sbcs = ["Conxian-Core", "Nexus-Labs", "Fiscal-Auth", "Sovereign-Ops"];
 
 function loadDotEnvIfPresent() {
-  const moduleDir = dirname(fileURLToPath(import.meta.url));
+  const moduleDir = dirname(modulePath);
   const searchDirs = [resolve(moduleDir, '..'), moduleDir, process.cwd()];
 
   const envPath = searchDirs
@@ -96,9 +97,7 @@ async function main() {
   await registerSBCs(privateKey);
 }
 
-const isMain = Boolean(
-  process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)
-);
+const isMain = process.argv.slice(1).some((arg) => resolve(arg) === modulePath);
 
 if (isMain) {
   main().catch((err) => {
