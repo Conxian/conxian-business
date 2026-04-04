@@ -6,7 +6,7 @@ This document inventories **current, evidenced** touchpoints to **Supabase** and
 
 Because this repo follows **Zero Secret Egress (ZSE)**, production connection strings, project refs, keys, internal hostnames, and internal endpoints/URLs are intentionally not present here. Wherever possible, each item is labeled with an **evidence level**.
 
-**Redaction convention:** in any environment, **all** internal endpoints, URLs, hostnames, and other secret material (for example: connection strings, project refs, API keys, tokens) **must** be replaced with `<redacted>`. For MCP endpoints, use `mcp://<redacted>`. Referenced evidence artifacts pinned in this repo **must** follow the same convention; older artifacts may not yet comply.
+**Redaction convention:** in any environment, **all** internal endpoints, URLs, hostnames, and other secret material (for example: connection strings, project refs, API keys, tokens) **must** be replaced with `<redacted>`. For URIs, keep the scheme but redact the rest (for example: `https://<redacted>`, `postgresql://<redacted>`); for MCP endpoints, use `mcp://<redacted>`. Referenced evidence artifacts pinned in this repo **must** follow the same convention; older artifacts may not yet comply.
 
 ## Evidence levels
 
