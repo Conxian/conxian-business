@@ -14,29 +14,32 @@ The goals:
 
 These workflows run on every pull request to `main` and are expected to be green before merge:
 
-- `Conxian Unified CI` → `Repo Hygiene (ZSE & Submodules)`
-  - Validates Zero Secret Egress (ZSE) knowledge retention via `scripts/verify_knowledge_retention.py`.
-  - Validates submodule integrity via `scripts/verify_submodule_integrity.py`.
-- `Secret Scan` → `Secret Scan (gitleaks)`
-- `Dependency Review` → `Dependency Review`
+*Note:* check names shown in the PR UI may drift over time; rely on the PR UI’s required checks list when in doubt.
+
+- Unified CI (see [`conxian-unified-ci.yml`](./workflows/conxian-unified-ci.yml))
+  - Repo hygiene:
+    - ZSE knowledge retention via `scripts/verify_knowledge_retention.py`.
+    - Submodule integrity via `scripts/verify_submodule_integrity.py`.
+- Secret scan (see [`secret-scan.yml`](./workflows/secret-scan.yml))
+- Dependency review (see [`dependency-review.yml`](./workflows/dependency-review.yml))
 
 ### Label-gated suites (opt-in, based on change scope)
 
-Some suites only run when a label is applied. Apply the label early so CI starts immediately.
+Some suites only run when a label is applied. Most label-gated suites live in the Unified CI workflow (see [`conxian-unified-ci.yml`](./workflows/conxian-unified-ci.yml)). Apply the label early so CI starts immediately.
 
-| When you touch… | Add label | Expected CI jobs |
+| When you touch… | Add label | Expected CI suite |
 | --- | --- | --- |
-| `conxian-gateway/` or infra deployment concerns | `infra` | `Conxian Unified CI` → `Gateway Suite` |
-| `conxian-nexus/` or `lib-conclave-sdk/` | `b2b` | `Conxian Unified CI` → `B2B Suite (Nexus & SDK)` |
-| `conxius-wallet/` | `b2c` | `Conxian Unified CI` → `B2C Wallet Suite` |
-| transparency audit or documentation validation | `audit` | `Conxian Unified CI` → `Transparency Audit & Docs` |
-| StacksOrbit testnet simulation scripts | `simulation` | `Conxian Unified CI` → `Testnet Simulation` |
+| `conxian-gateway/` or infra deployment concerns | `infra` | Gateway suite |
+| `conxian-nexus/` or `lib-conclave-sdk/` | `b2b` | B2B suite (Nexus & SDK) |
+| `conxius-wallet/` | `b2c` | B2C wallet suite |
+| transparency audit or documentation validation | `audit` | Transparency audit + docs |
+| StacksOrbit testnet simulation scripts | `simulation` | Testnet simulation |
 
 Notes:
 
 - The label-gated jobs only run for PRs opened from branches in this repository (not forks).
 - For PRs opened from forks, a maintainer is responsible for ensuring the relevant suites run before merge.
-- `showcase-dapp/` PRs can also trigger `Showcase DApp - Vercel Deployment` preview when `infra` is applied.
+- `showcase-dapp/` PRs can also trigger the Showcase DApp preview deployment workflow when `infra` is applied (see [`showcase-dapp-deploy.yml`](./workflows/showcase-dapp-deploy.yml)).
 
 ## PR and merge expectations
 
