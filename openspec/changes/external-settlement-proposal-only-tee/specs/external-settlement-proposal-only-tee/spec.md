@@ -99,7 +99,7 @@ Example: if a message contains three settlement-transaction entries `[A, B, C]` 
 Canonical formatting requirements:
 
 - All string values in `settlement_identifiers` MUST:
-  - be a sequence of Unicode scalar values (no surrogate code points),
+  - be a sequence of Unicode scalar values (implementations MUST reject any string containing code points in `U+D800..U+DFFF` and MUST NOT replace invalid encodings / surrogates with `U+FFFD`),
   - be non-empty,
   - be normalized to Unicode NFC,
   - and be rejected if, after NFC normalization, they contain any Unicode control or format character (characters with `General_Category` Cc or Cf in the Unicode Character Database) or begin or end with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
