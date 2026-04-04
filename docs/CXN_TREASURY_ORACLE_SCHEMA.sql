@@ -317,6 +317,9 @@ CREATE POLICY "Read-only for authenticated clients" ON public.cxn_csf_state
 CREATE POLICY "Read-only for authenticated clients" ON public.cxn_external_settlement_logs
     FOR SELECT TO authenticated USING (true);
 
+CREATE POLICY "Write for service role" ON public.cxn_external_settlement_logs
+    FOR ALL TO service_role USING (true) WITH CHECK (true);
+
 -- Indices for performance on large historical datasets
 CREATE INDEX IF NOT EXISTS idx_locked_principal_timestamp ON public.cxn_locked_principal (timestamp DESC);
 CREATE INDEX IF NOT EXISTS idx_yield_generation_timestamp ON public.cxn_yield_generation (timestamp DESC);
