@@ -113,6 +113,7 @@ Current candidates based on assignment + scope (not payout-ready until the ALEX 
 
 - [ ] ALEX deployment prerequisites complete.
 - [ ] Stacks network target, fee assumptions, deployment sequencing, and rollback plan defined.
+- [ ] Testnet-to-mainnet gaps reconciled (principals, config, and any network-specific assumptions).
 - [ ] Preflight checks, post-deploy verification checks, and monitoring expectations documented.
 
 Canonical deployment plan (must be commit-pinned in the go/no-go record):
