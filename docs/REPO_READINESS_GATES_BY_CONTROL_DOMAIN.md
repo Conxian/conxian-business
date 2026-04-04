@@ -109,7 +109,7 @@ Notes:
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | `lib-conxian-core` | Public | Ship (library) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
 | `lib-conclave-sdk` | Public | Conditional (crypto/supply-chain gates) | 1 | 0 | 0 | 0 | 0 | 2 | 2 |
-| `conxian-nexus` | Public | Conditional (service gates) | 1 | 1 | 1 | 1 | 0 | 3 | 2 |
+| `conxian-nexus` | Public | Conditional (service gates) | 1 | 2 | 1 | 1 | 0 | 3 | 2 |
 | `stacksorbit` | Public | Conditional (deployment tool gates) | 1 | 1 | 3 | 3 | 0 | 3 | 3 |
 | `.github` | Public | Ship (org defaults) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
 | `conxian-business` | Public | Ship (docs/specs) | 1 | 1 | 0 | 0 | 0 | 2 | 1 |
