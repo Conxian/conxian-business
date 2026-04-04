@@ -19,7 +19,7 @@ Notes:
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
 | `README.md` | Canonical | Public-safe | Repository entrypoint and overall orientation. |
-| `SUMMARY.md` | Canonical | Public-safe | GitBook table of contents (what shows up on Pages). |
+| `SUMMARY.md` | Canonical | Public-safe | GitBook table of contents (used for docs navigation; Pages publishing is allowlisted). |
 | `docs/README.md` | Supporting | Public-safe | “Docs hub” landing page. |
 | `docs/BOS_BUSINESS_BUILDOUT.md` | Canonical | Public-safe | Repo business purpose, business-unit placement, governance + ownership model, and public/internal split. |
 | `ARCHIVE_MIGRATION.md` | Canonical | Public-safe | ZSE placeholder + pointer to Linear Virtual Office for legacy material. |
