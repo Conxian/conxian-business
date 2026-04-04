@@ -16,8 +16,9 @@ python3 ./conxian-business/transparency_custodian.py
 
 Until portfolio hygiene automation exists to regenerate and diff BOS state artifacts under `./conxian-business/` in CI (see the P0 backlog), contributor policy is:
 
-- If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks, `.gitmodules`, the mapping tables in this document (ecosystem submodule rows / BOS-native asset paths), or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit generated BOS state artifacts under `./conxian-business/` by hand) and **commit** all updated derived artifacts in the same PR.
+- If your change affects portfolio wiring or BOS state inputs (for example: pinned submodule gitlinks (including adding/removing submodules), the mapping tables in this document (ecosystem submodule rows / BOS-native asset paths), or the generator source under `./conxian-business/`), re-run the generator command above (do **not** edit generated BOS state artifacts under `./conxian-business/` by hand) and **commit** all updated derived artifacts in the same PR.
 - Purely editorial changes to this document (for example: typo fixes, wording clarifications, or moving explanatory sections without changing mapping tables) do not require regeneration.
+- Changes to `.gitmodules` metadata alone (for example: changing URLs, removing `branch = ...`, or other formatting-only edits) do not require regeneration unless they also change the pinned gitlinks or the set of submodule paths.
 - Reviewers should treat changes that affect BOS state but do not update derived artifacts as incomplete and request that the regeneration step be run.
 
 If you are unsure whether a change affects BOS state inputs, err on the side of re-running the generator; it is intended to be cheap and idempotent.
@@ -58,9 +59,16 @@ Source-of-truth rule:
 
 - The repo’s committed git tree (submodule gitlinks) is authoritative for which submodules are pinned (and to what commits).
 - `.gitmodules` is authoritative for expected submodule configuration metadata (`path`, `url`).
-- Submodule bumps should be represented by explicit gitlink updates committed in a PR; do not rely on `git submodule update --remote` as a normal workflow. The `auto-sync-submodules` workflow is the intentional exception: it uses `git submodule update --remote` internally to create reviewable PRs that update pinned gitlinks.
+- Submodule bumps should be represented by explicit gitlink updates committed in a PR (see “How to bump a pinned submodule” below); do not rely on `git submodule update --remote` as a normal workflow.
+- The `auto-sync-submodules` workflow (`.github/workflows/auto-sync-submodules.yml`) is the intentional exception: it sets a tracking branch for each submodule in CI and uses `git submodule update --remote` internally to create reviewable PRs that update pinned gitlinks.
 - This document is authoritative for business-unit/operating-function classification.
 - `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view; it may list additional supporting repos for context, but every pinned submodule in the ecosystem mapping table should appear there with a flagship/supporting classification.
+
+How to bump a pinned submodule (gitlink) in a PR (manual workflow):
+
+1. `git submodule update --init <path>`
+2. `cd <path> && git fetch origin --tags && git checkout <sha-or-tag-or-origin/main>`
+3. `cd - && git add <path> && git commit -m "chore: bump <path> pin"`
 
 Portfolio hygiene automation should validate:
 
