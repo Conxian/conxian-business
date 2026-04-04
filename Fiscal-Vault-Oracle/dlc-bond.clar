@@ -21,6 +21,9 @@
 (define-constant ERR_INVALID_COUPON_AMOUNT u20007)
 (define-constant ERR_INVALID_DEFAULT_FLAG u20008)
 (define-constant ERR_SUBSCRIPTION_CLOSED u20009)
+(define-constant ERR_PRINCIPAL_DRAWDOWN_DISABLED u20010)
+(define-constant ERR_NO_LIQUIDITY u20011)
+(define-constant ERR_INVALID_SBTC_TOKEN u20012)
 
 ;; Fixed point constants
 (define-constant PPM_DENOM u1000000)          ;; 1.0 = 1,000,000 ppm
@@ -45,6 +48,7 @@
 (define-data-var next-coupon-height uint u0)
 
 (define-data-var defaulted bool false)
+(define-data-var principal-drawdown-enabled bool false)
 
 ;; Global coupon index (scaled by INDEX_PRECISION)
 (define-data-var coupon-index uint u0)
@@ -84,6 +88,10 @@
     (print { event: "dlc-bond-defaulted", defaulted: true, oracle: tx-sender })
     (ok true)
   )
+)
+
+(define-private (get-sbtc-balance)
+  (contract-call? (var-get sbtc-token) get-balance (bond-contract))
 )
 
 (define-private (get-holder-state (holder principal))
@@ -126,7 +134,8 @@
     coupon-interval-blocks: (var-get coupon-interval-blocks),
     coupon-ppm: (var-get coupon-ppm),
     next-coupon-height: (var-get next-coupon-height),
-    defaulted: (var-get defaulted)
+    defaulted: (var-get defaulted),
+    principal-drawdown-enabled: (var-get principal-drawdown-enabled)
   })
 )
 
@@ -178,6 +187,34 @@
 
 (define-public (declare-default)
   (do-declare-default)
+)
+
+(define-public (enable-principal-drawdown)
+  (begin
+    (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
+    (assert-issuer)
+    (asserts! (is-eq (ft-get-supply dlc-bond) u0) (err ERR_UNAUTHORIZED))
+    (var-set principal-drawdown-enabled true)
+    (print { event: "dlc-bond-principal-drawdown-enabled", issuer: (var-get issuer) })
+    (ok true)
+  )
+)
+
+(define-public (drawdown-principal (amount uint) (recipient principal))
+  (begin
+    (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
+    (assert-issuer)
+    (asserts! (var-get principal-drawdown-enabled) (err ERR_PRINCIPAL_DRAWDOWN_DISABLED))
+    (asserts! (not (var-get defaulted)) (err ERR_INACTIVE))
+    (asserts! (not (var-get active)) (err ERR_UNAUTHORIZED))
+    (asserts! (> amount u0) (err ERR_ZERO_AMOUNT))
+    (asserts! (<= amount (ft-get-supply dlc-bond)) (err ERR_UNAUTHORIZED))
+    (try!
+      (as-contract (contract-call? (var-get sbtc-token) transfer amount tx-sender recipient none))
+    )
+    (print { event: "dlc-bond-principal-drawdown", issuer: (var-get issuer), recipient: recipient, amount: amount })
+    (ok true)
+  )
 )
 
 ;; Bond token (SIP-010 style)
@@ -270,6 +307,7 @@
 (define-public (claim-coupon)
   (begin
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
+    (asserts! (not (and (var-get defaulted) (var-get principal-drawdown-enabled))) (err ERR_INACTIVE))
     (sync-holder tx-sender)
     (let (
       (state (get-holder-state tx-sender))
@@ -292,8 +330,11 @@
     (asserts! (var-get initialized) (err ERR_NOT_INITIALIZED))
     (asserts! (> amount u0) (err ERR_ZERO_AMOUNT))
 
-    (let ((is-matured (>= burn-block-height (var-get maturity-height))))
-      (asserts! (or is-matured (var-get defaulted)) (err ERR_NOT_MATURED))
+    (let (
+      (is-matured (>= burn-block-height (var-get maturity-height)))
+      (is-defaulted (var-get defaulted))
+    )
+      (asserts! (or is-matured is-defaulted) (err ERR_NOT_MATURED))
     )
 
     (sync-holder tx-sender)
@@ -302,17 +343,36 @@
       (coupon-amount (get accrued state))
       (recipient tx-sender)
     )
-      (try! (ft-burn? dlc-bond amount recipient))
-      (map-set holder-coupons { holder: recipient } { index: (get index state), accrued: u0 })
+      (if (and (var-get principal-drawdown-enabled) (var-get defaulted))
+        (let (
+          (supply (ft-get-supply dlc-bond))
+          (available (unwrap! (get-sbtc-balance) (err ERR_INVALID_SBTC_TOKEN)))
+        )
+          (asserts! (> supply u0) (err ERR_ZERO_AMOUNT))
+          (asserts! (> available u0) (err ERR_NO_LIQUIDITY))
+          (let ((principal-paid (/ (* available amount) supply)))
+            (asserts! (> principal-paid u0) (err ERR_NO_LIQUIDITY))
+            (try! (ft-burn? dlc-bond amount recipient))
+            (map-set holder-coupons { holder: recipient } { index: (get index state), accrued: u0 })
+            (try! (as-contract (contract-call? (var-get sbtc-token) transfer principal-paid tx-sender recipient none)))
+            (print { event: "dlc-bond-redeemed", holder: recipient, principal: principal-paid, coupon: u0 })
+            (ok { principal: principal-paid, coupon: u0 })
+          )
+        )
+        (begin
+          (try! (ft-burn? dlc-bond amount recipient))
+          (map-set holder-coupons { holder: recipient } { index: (get index state), accrued: u0 })
 
-      ;; Pay any unclaimed coupon first, then principal
-      (if (> coupon-amount u0)
-        (try! (as-contract (contract-call? (var-get sbtc-token) transfer coupon-amount tx-sender recipient none)))
-        true
+          ;; Pay any unclaimed coupon first, then principal
+          (if (> coupon-amount u0)
+            (try! (as-contract (contract-call? (var-get sbtc-token) transfer coupon-amount tx-sender recipient none)))
+            true
+          )
+          (try! (as-contract (contract-call? (var-get sbtc-token) transfer amount tx-sender recipient none)))
+          (print { event: "dlc-bond-redeemed", holder: recipient, principal: amount, coupon: coupon-amount })
+          (ok { principal: amount, coupon: coupon-amount })
+        )
       )
-      (try! (as-contract (contract-call? (var-get sbtc-token) transfer amount tx-sender recipient none)))
-      (print { event: "dlc-bond-redeemed", holder: recipient, principal: amount, coupon: coupon-amount })
-      (ok { principal: amount, coupon: coupon-amount })
     )
   )
 )
