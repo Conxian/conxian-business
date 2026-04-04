@@ -8,13 +8,14 @@ Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Tria
 
 ## Operating definitions
 
-- **Claim-open now**: `state == Todo` AND category `community-claimable` AND label `Bounty Open` AND unassigned.
+- **Claim-open now (mechanical)**: `state == Todo` AND unassigned AND labels include `Bounty` and `Bounty Open`.
+- **Eligible for claim-open promotion (safety)**: classified as `community-claimable` in this audit.
 - **Community-claimable**: safe to execute externally (docs/repo hygiene), with no privileged deploy/wallet/treasury access required. For governance/content work, this only applies when the issue has concrete acceptance criteria and maintainers retain final approval.
 - **Internal-only**: security-sensitive, deployment-sensitive, wallet/treasury/signer, or release-gating work.
 - **Blocked**: intended work, but can't proceed until a prerequisite is resolved.
 - **Not suitable for bounty execution**: decision-heavy, underspecified, or otherwise not a good fit for external bounty execution as-is.
 
-> Note: `community-claimable` is a safety classification only. An issue is actually open to community claiming only when it also meets the `Claim-open now` conditions (state `Todo`, unassigned, and labeled `Bounty Open`). Other `community-claimable` issues remain maintainer-gated until they are promoted to `Claim-open now`.
+> Note: `community-claimable` is an audit-only safety classification (not a native Linear field). An issue is actually open to community claiming only when it meets the `Claim-open now (mechanical)` conditions. Other `community-claimable` issues remain maintainer-gated until maintainers apply the mechanical claim-open labels.
 
 ## Payout alignment
 
@@ -35,9 +36,9 @@ Query (as of snapshot): union of `ch-linear issue list -T CON -l <LABEL> -s Tria
 - Internal-only: **55**
 - Blocked: **1**
 - Not suitable for bounty execution: **20**
-- Claim-open now (subset): **8**
+- Claim-open now (mechanical subset): **8**
 
-## Claim-open now
+## Claim-open now (mechanical)
 
 | Issue | Title | Assignee | Labels |
 | --- | --- | --- | --- |
