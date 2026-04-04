@@ -1,3 +1,5 @@
+# Spec: Proposal-only external settlement triggers (TEE enforced)
+
 Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS messages may enter the sovereign system.
 
 ## 1. Normative rules
@@ -8,7 +10,10 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
 
 2. **TEE verification is required before proposal emission**
    - A proposal MUST NOT be emitted unless a TEE/StrongBox/CloudTEE attestation verifies:
-     - the payload digest,
+     - the payload digest (computed from `raw_payload_bytes` inside the TEE),
+     - any `normalized_settlement_hash` using a rail-specific canonical serialization:
+       - JSON: RFC 8785 JSON Canonicalization Scheme (JCS)
+       - XML: W3C XML Canonicalization 1.1
      - the oracle authenticity proof,
      - and the deterministic mapping to `asset_path`.
 
@@ -16,12 +21,21 @@ Proposal-only external settlement triggers define how ISO 20022 / PAPSS / BRICS 
    - Verified external triggers MUST initiate the standard 144-block timelock.
    - The start height MUST use the same canonical chain-height source used by the native path.
 
-4. **Multi-sig approvals are mandatory**
+4. **Timelock scheduling is owned by proposal emission**
+   - The TEE MUST attest `timelock_delay_blocks = 144`.
+   - Proposal emission MUST schedule the timelock after verifying TEE attestation.
+   - Execution MUST NOT accept a `start_height` or `release_height` sourced from the raw TradFi payload.
+
+5. **Multi-sig approvals are mandatory**
    - Verified external triggers MUST enter the same multi-sig approval policy as native proposals.
 
-5. **Yield routing invariance**
+6. **Yield routing invariance**
    - Downstream yield routing MUST be identical for native vs external-triggered lock events.
    - Trigger source MUST NOT change the 5/5/90 productive streaming behavior.
+
+7. **Idempotency / replay protection**
+   - `trigger_id` MUST be computed deterministically from `rail`, `raw_payload_hash`, and a rail-specific canonical `settlement_identifiers` set.
+   - Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
 ## 2. Required artifacts
 
@@ -31,6 +45,7 @@ Minimum fields:
 
 - `rail`
 - `raw_payload_hash`
+- `settlement_identifiers`
 - `trigger_id`
 - `asset_path`
 - `timelock_delay_blocks` (must equal `144`)
@@ -55,6 +70,7 @@ Prohibited fields:
 
 1. Missing or invalid TEE attestation → proposal emission fails.
 2. Valid payload but invalid oracle proof → proposal emission fails.
-3. Any attempt to supply raw TradFi payload to execution code → rejected at type boundary.
-4. Any attempt to skip multi-sig approvals → rejected.
-5. Any attempt to reduce timelock below 144 blocks → rejected.
+3. Any attempt to supply raw TradFi payload (bytes or parsed structure) to execution code → rejected.
+4. Replay the same external message (same `trigger_id`) → no new proposal/timelock created.
+5. Any attempt to skip multi-sig approvals → rejected.
+6. Any attempt to reduce timelock below 144 blocks → rejected.
