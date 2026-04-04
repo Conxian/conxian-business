@@ -1,6 +1,6 @@
 # Repo readiness gates by control domain (CON-227)
 
-This page defines the **minimum control gates** required for each active Conxian repository, so we can consistently decide:
+This page defines the **minimum control gates** required for each active Conxian repository listed in the [repo portfolio](./REPO_PORTFOLIO.md), so we can consistently decide:
 
 - what is safe to keep **public**,
 - what can **ship** (be deployed / released) without additional controls,
@@ -28,7 +28,7 @@ This document defines the _required gates_ by repo and does **not** claim that t
 All repos (public or private) must satisfy:
 
 - No secrets / keys / seed phrases / private endpoints committed (`.env.example` only).
-- No ZSE-restricted content tracked (validated via ZSE knowledge-retention tooling, e.g. `scripts/verify_knowledge_retention.py`).
+- No ZSE-restricted content tracked (validated via org-standard ZSE knowledge-retention tooling; in this repo: `scripts/verify_knowledge_retention.py`).
 - `SECURITY.md` present and accurate reporting flow.
 - `CODEOWNERS` covers the repo and its high-risk paths.
 
@@ -125,6 +125,7 @@ These repos are generally safe to ship with standard engineering hygiene (assumi
 - `conxian-labs-site`
 - `lib-conxian-core`
 - `conxian-business` (docs/spec changes)
+- `.github` (org-wide defaults; still requires careful review due to blast radius)
 
 ### What must stay private (content-level, not necessarily repo-level)
 
