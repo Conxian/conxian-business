@@ -1,6 +1,6 @@
 # Portfolio business-unit map and separation of concerns
 
-> Verification: expected to be enforced by P0 portfolio hygiene automation (see the prioritized build/repair list). Until then, keep `.gitmodules` and this map consistent in every PR.
+> Verification: expected to be enforced by P0 portfolio hygiene automation (see the prioritized build/repair list). Until then, keep submodule gitlinks, `.gitmodules`, and this map consistent in every PR.
 
 This document is the portfolio-level map that assigns every repo/subrepo (submodule) and BOS asset to a **business unit** or **operating function**, and defines the separation-of-concerns boundaries needed for business development and business unit management.
 
@@ -23,7 +23,7 @@ Once a machine-readable portfolio manifest exists (see the P0 backlog), that man
 
 Naming note: this repo is `conxian-business`, but it also contains a nested directory `./conxian-business/` for BOS state artifacts. In this document, `./` refers to the repo root, and `./conxian-business/` refers to the nested state directory.
 
-Control note: this map must be updated whenever pinned submodules in `.gitmodules` or BOS-native top-level assets (as enumerated in the tables below) change. Portfolio hygiene automation (under `scripts/`) should treat mismatches as a portfolio integrity failure (both missing mappings and stale mappings).
+Control note: this map must be updated whenever the set of pinned submodule gitlinks (and their `.gitmodules` configuration metadata) or BOS-native top-level assets (as enumerated in the tables below) change. Portfolio hygiene automation (under `scripts/`) should treat mismatches as a portfolio integrity failure (both missing mappings and stale mappings).
 
 This complements (and should remain consistent with):
 
@@ -47,11 +47,23 @@ Alongside the four units, BOS requires separate operating functions that should 
 
 ### Ecosystem repos (submodules pinned by this BOS repo)
 
-This table should be kept consistent with `.gitmodules` (what is actually pinned) and `docs/REPO_PORTFOLIO.md` (flagship vs supporting classification).
+This table should be kept consistent with the repo’s submodule gitlinks (what is actually pinned), `.gitmodules` (expected submodule config metadata), and `docs/REPO_PORTFOLIO.md` (flagship vs supporting classification).
 
 Maintainer note: until the P0 portfolio manifest exists, changes to the asset list here should be reflected in the “Unique value + scope definition” section below as well.
 
-Source-of-truth rule: `.gitmodules` is authoritative for what is pinned; the submodule table below is expected to match it. This document is authoritative for the business-unit/operating-function classification; `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view and must not introduce repos that are not pinned and mapped here.
+Source-of-truth rule:
+
+- The repo’s git tree/index is authoritative for which submodules are pinned (and to what commits).
+- `.gitmodules` is authoritative for expected submodule configuration metadata (`path`, `url`, and optional `branch`).
+- This document is authoritative for business-unit/operating-function classification.
+- `docs/REPO_PORTFOLIO.md` is an explanatory trust-surface view and must not introduce repos that are not pinned and mapped here.
+
+Portfolio hygiene automation should validate both directions:
+
+- Every pinned gitlink has a `.gitmodules` entry and a mapping entry.
+- Every `.gitmodules` entry has a corresponding pinned gitlink and mapping entry.
+
+Note: `.gitmodules` `branch` affects `git submodule update --remote` only; it does not change what commit is pinned. If a submodule sets `branch`, verify that branch exists upstream.
 
 | Asset | Type | Primary BU / function | Primary concern(s) | Notes |
 | --- | --- | --- | --- | --- |
@@ -63,7 +75,7 @@ Source-of-truth rule: `.gitmodules` is authoritative for what is pinned; the sub
 | `conxian-labs-site/` | Submodule | Operating function (Public web) | Public documentation + marketing | Public site; should not include internal-only strategy material. |
 | `conxius-platform/` | Submodule | Operating function (Platform/DevEx) | Local stack orchestration | Dev stack only; should not become a home for core product logic. |
 | `stacksorbit/` | Submodule | Operating function (DevOps tooling) | Deployment tooling | Primarily supports CSF protocol deployment. |
-| `lib-conclave-sdk/` | Submodule | Operating function (Shared SDK) | Shared libraries | Supports services across Fusion/Nexus; should stay dependency-light (default branch: `master`). |
+| `lib-conclave-sdk/` | Submodule | Operating function (Shared SDK) | Shared libraries | Supports services across Fusion/Nexus; should stay dependency-light. |
 | `lib-conxian-core/` | Submodule | Operating function (Shared core) | Shared models + conventions | Shared primitives only; must not contain BU-specific business logic or depend directly on product repos. Layering: sits beneath product repos and shared SDKs; may not depend on them. |
 
 ### BOS-native assets (tracked in this repo)
