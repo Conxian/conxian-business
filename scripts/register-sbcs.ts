@@ -19,7 +19,7 @@ const sbcs = ["Conxian-Core", "Nexus-Labs", "Fiscal-Auth", "Sovereign-Ops"];
 
 function loadDotEnvIfPresent() {
   const moduleDir = dirname(fileURLToPath(import.meta.url));
-  const searchDirs = [process.cwd(), resolve(moduleDir, '..'), moduleDir];
+  const searchDirs = [resolve(moduleDir, '..'), moduleDir, process.cwd()];
 
   const envPath = searchDirs
     .map((dir) => resolve(dir, '.env'))
