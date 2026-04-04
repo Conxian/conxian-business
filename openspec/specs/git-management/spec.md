@@ -24,3 +24,24 @@ The system MUST provide a mechanism to resolve conflicts, commit changes, and sy
 - **THEN** appropriate git commands are proposed or executed to resolve them
 - **THEN** the workspace is brought to a clean and synchronized state
 
+### Requirement: Safe synchronization preconditions
+
+The system MUST refuse to update or synchronize submodules when the root repo or any submodule has uncommitted changes or unmerged paths.
+
+#### Scenario: Preventing sync on dirty workspaces
+
+- **WHEN** a workspace sync is requested
+- **AND** any repo/submodule is not clean
+- **THEN** the operation is aborted
+- **AND** the system reports the specific repos/submodules blocking the sync
+
+### Requirement: Submodule definition integrity
+
+The system MUST detect and report missing or inconsistent submodule definitions (for example, gitlinks present in the index without a corresponding `.gitmodules` entry).
+
+#### Scenario: Validating submodule definitions
+
+- **WHEN** a workspace audit or sync is initiated
+- **THEN** the system validates that all submodules in the index have valid `.gitmodules` entries
+- **AND** it reports missing mappings as a blocking error
+

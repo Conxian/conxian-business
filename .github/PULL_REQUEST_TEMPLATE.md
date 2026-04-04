@@ -2,9 +2,9 @@
 Provide a concise but comprehensive summary of the changes in this Pull Request. Explain **why** this change is necessary and **what** it accomplishes.
 
 ### Strategic Alignment
-- [ ] This PR aligns with the BOS operating model docs (`conxian-business/SERVICE_LOOP.md`, `openspec/`).
+- [ ] This PR aligns with the BOS operating model docs ([SERVICE_LOOP.md](conxian-business/SERVICE_LOOP.md), [openspec/](openspec/)).
 - [ ] If this introduces new documentation or files, `SUMMARY.md` has been updated accordingly.
-- [ ] Security and Compliance considerations have been reviewed (refer to `SECURITY.md` and `docs/CSF_MAINNET_READINESS_GATE.md` where applicable).
+- [ ] Security and Compliance considerations have been reviewed (refer to [SECURITY.md](SECURITY.md) and [CSF_MAINNET_READINESS_GATE.md](docs/CSF_MAINNET_READINESS_GATE.md) where applicable).
 
 ### Type of Change
 *Select all that apply:*

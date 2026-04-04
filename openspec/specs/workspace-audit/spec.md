@@ -24,3 +24,22 @@ The audit MUST categorize files according to their respective business units and
 - **THEN** they are grouped by their respective submodule/module context
 - **THEN** inter-module dependencies are identified and documented
 
+### Requirement: Public/private boundary verification (ZSE)
+
+The audit MUST verify that sensitive roots (for example, `internal/strategy/` and `archive/`) are not tracked in the active Git index, and that any ignored sensitive paths are covered by the knowledge-retention manifest.
+
+#### Scenario: Verifying ZSE compliance
+
+- **WHEN** the workspace audit is executed
+- **THEN** it fails if any sensitive paths are tracked
+- **AND** it fails if any ignored sensitive paths are not covered by `audit/migration_manifest.json`
+
+### Requirement: Documentation alignment
+
+The audit MUST detect broken intra-repo documentation links (including links into checked-out submodules) so documentation remains navigable in BOS-critical workflows.
+
+#### Scenario: Detecting broken markdown links
+
+- **WHEN** the documentation audit is executed
+- **THEN** it reports missing local markdown targets as errors
+
