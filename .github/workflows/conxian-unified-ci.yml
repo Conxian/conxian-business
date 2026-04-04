@@ -140,7 +140,7 @@ jobs:
       with:
         components: clippy
     - name: Rust Cache
-      uses: Swatinem/rust-cache@v2
+      uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       with:
         workspaces: lib-conxian-core
     - name: Check & Test
