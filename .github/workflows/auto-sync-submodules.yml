@@ -26,31 +26,35 @@ jobs:
         run: |
           set -euo pipefail
 
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
 
           # `.gitmodules` intentionally does not set `submodule.<name>.branch`.
           # Update only top-level submodule gitlinks (this repo's pins). Nested submodules
           # are synced to whatever each top-level submodule commit pins.
 
-          # Map of submodule names to their canonical upstream branch when it is not `main`.
-          # If you add a submodule whose canonical branch is not `main` or `master`,
-          # add an entry here so the auto-sync workflow can resolve its branch.
+          # Map of submodule names to their preferred upstream branch.
+          # Resolution order is:
+          # 1) explicit override (if present)
+          # 2) `main`
+          # 3) `master`
+          #
+          # If you add a submodule that has neither `main` nor `master`, add an entry here.
           declare -A PREFERRED_BRANCHES=(
             [lib-conclave-sdk]=master
           )
 
           pick_branch() {
-            local url="$1"
+            local path="$1"
             local preferred="$2"
 
-            if git ls-remote --exit-code --heads "$url" "$preferred" >/dev/null 2>&1; then
+            if git -C "$path" ls-remote --exit-code --heads origin "$preferred" >/dev/null 2>&1; then
               echo "$preferred"
               return 0
             fi
 
             for fallback in main master; do
-              if git ls-remote --exit-code --heads "$url" "$fallback" >/dev/null 2>&1; then
+              if git -C "$path" ls-remote --exit-code --heads origin "$fallback" >/dev/null 2>&1; then
                 echo "$fallback"
                 return 0
               fi
@@ -58,6 +62,9 @@ jobs:
 
             return 1
           }
+
+          submodules_list="$(mktemp)"
+          git config -f .gitmodules --name-only --get-regexp '^submodule\..*\.path$' >"${submodules_list}"
 
           while IFS= read -r key; do
             path=$(git config -f .gitmodules --get "$key")
@@ -68,10 +75,9 @@ jobs:
             preferred=${PREFERRED_BRANCHES[$name]:-main}
 
             git submodule update --init -- "$path"
-            resolved_url=$(git -C "$path" remote get-url origin)
 
-            if ! branch=$(pick_branch "$resolved_url" "$preferred"); then
-              echo "::error::auto-sync-submodules: unable to find an upstream branch for '${name}'. Ensure the repo exposes a 'main' or 'master' branch, or add '${name}' to PREFERRED_BRANCHES with its canonical branch."
+            if ! branch=$(pick_branch "$path" "$preferred"); then
+              echo "auto-sync-submodules: unable to resolve an upstream branch for '${name}'; add an entry to PREFERRED_BRANCHES in .github/workflows/auto-sync-submodules.yml" >&2
               exit 1
             fi
 
@@ -80,7 +86,9 @@ jobs:
             if [ -f "$path/.gitmodules" ]; then
               git -C "$path" submodule update --init --recursive
             fi
-          done < <(git config -f .gitmodules --name-only --get-regexp '^submodule\..*\.path$')
+          done <"${submodules_list}"
+
+          rm -f "${submodules_list}"
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
