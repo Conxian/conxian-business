@@ -9,7 +9,9 @@ This is the coordinating "source of truth" artifact for the SAB infrastructure m
 
 ## Canonical tracker
 
-- Linear: https://linear.app/conxian-labs/issue/CON-329/create-sab-migration-control-plane-and-dependency-inventory
+- Linear: [CON-329][con-329]
+
+[con-329]: https://linear.app/conxian-labs/issue/CON-329/create-sab-migration-control-plane-and-dependency-inventory
 
 Related execution issues (parallelized):
 
@@ -22,7 +24,7 @@ Related execution issues (parallelized):
 
 **Last reviewed:** 2026-04-04
 
-**Live status:** see [Canonical tracker](#canonical-tracker).
+**Canonical tracker / live status:** [CON-329][con-329]
 
 **Review cadence:** at least monthly, and additionally within the same PR/commit whenever any program-level milestone changes (M0-M2) or readiness-gate evidence is updated.
 
