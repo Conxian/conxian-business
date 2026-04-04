@@ -66,7 +66,7 @@ The TEE attestation MUST bind (directly or by digest) the canonical values of at
 
 `oracle_verification` MUST NOT be a bare boolean. It MUST include (directly or by digest) the exact oracle proof bytes verified inside the TEE. At minimum, it MUST include `oracle_proof_digest`, defined as the lowercase hex encoding of SHA-256 over `utf8("oracle-proof:v1") || raw_oracle_proof_bytes`.
 
-Proposal emission MUST verify that the oracle proof bytes it verifies match the attested `oracle_verification.oracle_proof_digest`.
+Proposal emission MUST recompute `oracle_proof_digest` from the exact `raw_oracle_proof_bytes` it verifies and MUST reject if the result differs from the `oracle_proof_digest` value bound by the TEE attestation.
 
 Prohibited fields:
 
@@ -82,6 +82,8 @@ Prohibited fields:
 
 Within `settlement_identifiers`, implementations MUST use only JSON objects with leaf values restricted to JSON strings and JSON numbers that MUST be integers in the range `[0, 9007199254740991]` (inclusive, i.e. `2^53-1`); arrays MUST NOT be used.
 
+If the canonical `settlement_identifiers` derived from `raw_payload_bytes` fails to meet the structural and leaf-type constraints in this section, the TEE MUST refuse to produce a successful attestation.
+
 `transaction_identifiers` MUST be included in the normalized settlement transaction hashed to produce `normalized_settlement_hash`.
 
 `envelope_identifiers` MUST NOT affect `normalized_settlement_hash`.
@@ -91,6 +93,7 @@ Within `settlement_identifiers`, implementations MUST use only JSON objects with
 Implementations MUST NOT treat any host-supplied `settlement_identifiers` as authoritative. If a host supplies any identifiers as an optimization hint:
 
 - The host-supplied hint object MUST be provided to the TEE as input and MUST be treated as untrusted.
+- If the hint fails JSON parsing or fails to meet the structural and leaf-type constraints in this section, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST enforce bounds on the hint object before deep traversal. When encoded as UTF-8 JSON, the hint object MUST be ≤ 16384 bytes, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. If any bound is exceeded, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping fields, defined as any JSON key path (including nested objects) present in both objects. For each overlapping field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping field differs, the TEE MUST refuse to produce a successful attestation.
 - Any host-supplied extra fields MUST be ignored for canonicalization purposes.
@@ -145,3 +148,5 @@ Prohibited fields:
 7. Any attempt to change timelock away from 144 blocks (increase or decrease) → rejected.
 8. Host-supplied `settlement_identifiers` mismatch the TEE-derived identifiers (for any overlapping field) for the same `raw_payload_bytes` → proposal emission fails.
 9. Host-supplied `settlement_identifiers` hints exceed the TEE bounds in §2.1.1 → proposal emission fails.
+10. Oracle proof bytes do not hash to the `oracle_proof_digest` bound by the TEE attestation → proposal emission fails.
+11. `settlement_identifiers` (canonical or host hint) violates the structural/leaf-type constraints in §2.1.1 → proposal emission fails.
