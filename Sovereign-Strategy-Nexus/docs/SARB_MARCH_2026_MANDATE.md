@@ -15,7 +15,7 @@ Codify the specific exchange control rules from the South Africa 2026 Budget Spe
 - **Jurisdictional Sharding**: Automated sharding of state logic based on the counterparty's legal jurisdiction to avoid regulatory overlap.
 
 ## 4. Sovereign Shard Triggers
-- **TRIGGER_SHARD_ONSHORE**: If SARB IP/KYC is detected, sender/receiver are both ZAF, and transaction > 50k ZAR.
+- **TRIGGER_SHARD_ONSHORE**: If SARB KYC is detected, sender/receiver are both ZAF, and transaction > 50k ZAR.
 - **TRIGGER_SHARD_OFFSHORE**: For all non-ZAR residents and non-SADC settlement flows.
 - **TRIGGER_SHARD_GLOBAL**: For transactions involving Global Reserve Banks or Tier-1 institutional rails (SWIFT/Target2).
 
