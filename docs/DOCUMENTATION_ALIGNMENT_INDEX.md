@@ -21,6 +21,7 @@ Notes:
 | `README.md` | Canonical | Public-safe | Repository entrypoint and overall orientation. |
 | `SUMMARY.md` | Canonical | Public-safe | GitBook table of contents (what shows up on Pages). |
 | `docs/README.md` | Supporting | Public-safe | “Docs hub” landing page. |
+| `docs/BOS_BUSINESS_BUILDOUT.md` | Canonical | Public-safe | Repo business purpose, business-unit placement, governance model, and public/internal split. |
 | `ARCHIVE_MIGRATION.md` | Canonical | Public-safe | ZSE placeholder + pointer to Linear Virtual Office for legacy material. |
 
 ## 2) BOS (Business Operations System)
@@ -123,6 +124,7 @@ These are the documents most likely to answer “what are we building?” and �
 | --- | --- | --- | --- |
 | `CONTRIBUTING.md` | Canonical | Public-safe | Contribution expectations and workflow. |
 | `SECURITY.md` | Canonical | Public-safe | Security policy and reporting. |
+| `docs/BOS_BUSINESS_BUILDOUT.md` | Canonical | Public-safe | Repo business purpose, governance + ownership, and public/internal split policy. |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Supporting | Public-safe | PR checklist and norms. |
 | `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md` | Canonical | Internal-only | How maintainer payouts are enabled and validated. |
 | `admin/SECRETS.md` | Canonical | Internal-only | Secret registry + pointers to Linear docs (ZSE-compliant). |
