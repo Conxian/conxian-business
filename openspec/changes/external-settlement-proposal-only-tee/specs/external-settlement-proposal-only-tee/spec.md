@@ -88,8 +88,6 @@ Proposal emission MUST validate that `oracle_verification` is a JSON object cont
 
 `raw_oracle_proof_bytes` MUST be at most 16384 bytes in length. The TEE MUST enforce this bound before attempting to parse or verify the proof and MUST refuse to produce a successful attestation if it is exceeded. Proposal emission MUST reject any trigger whose persisted `raw_oracle_proof_bytes` exceed this bound. If `oracle_verification.oracle_proof_bytes_b64` is present, its decoded length MUST also satisfy this bound.
 
-Proposal emission MUST reject any trigger whose persisted `raw_oracle_proof_bytes` exceed this bound.
-
 The component that invokes the TEE MUST persist the exact `raw_oracle_proof_bytes` alongside the resulting `AttestedExternalSettlementTrigger` so proposal emission can recompute `oracle_proof_digest` deterministically.
 
 If, at proposal emission time, the persisted `raw_oracle_proof_bytes` for an `AttestedExternalSettlementTrigger` are missing, truncated, or otherwise unavailable, the trigger MUST be treated as a permanent validation failure. Implementations MUST NOT attempt to reconstruct the oracle proof from any other source (including `oracle_verification.oracle_proof_bytes_b64`) in order to satisfy the digest checks.
