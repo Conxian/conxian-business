@@ -16,7 +16,6 @@ import {
   type ClarityValue,
   contractPrincipalCV,
   someCV,
-  noneCV,
   uintCV,
   makeContractCall,
   broadcastTransaction,
@@ -310,7 +309,25 @@ async function buildSweepPlan(params: {
       continue;
     }
 
+    if (quote.ok === 0n) {
+      skipped.push({
+        token: tokenPrincipal,
+        dx: dx.toString(),
+        reason: 'quoted dy is 0',
+      });
+      continue;
+    }
+
     const minDy = computeMinDy(quote.ok, params.slippageBps);
+
+    if (minDy <= 0n) {
+      skipped.push({
+        token: tokenPrincipal,
+        dx: dx.toString(),
+        reason: `minDy=${minDy.toString()} computed to a non-positive value; refusing to build swap`,
+      });
+      continue;
+    }
 
     plan.push({
       token: tokenPrincipal,
@@ -338,6 +355,12 @@ async function executeSweepPlan(params: {
     const dx = BigInt(item.dx);
     const minDy = BigInt(item.minDy);
 
+    if (minDy <= 0n) {
+      throw new Error(
+        `Refusing to execute swap with non-positive minDy for token ${item.token} (minDy=${item.minDy})`
+      );
+    }
+
     const txOptions = {
       contractAddress: params.swapHelper.address,
       contractName: params.swapHelper.contractName,
@@ -346,7 +369,7 @@ async function executeSweepPlan(params: {
         contractPrincipalCV(tokenX.address, tokenX.contractName),
         contractPrincipalCV(params.target.address, params.target.contractName),
         uintCV(dx),
-        minDy > 0n ? someCV(uintCV(minDy)) : noneCV(),
+        someCV(uintCV(minDy)),
       ],
       senderKey: params.privateKey,
       validateWithPostConditions: true,
