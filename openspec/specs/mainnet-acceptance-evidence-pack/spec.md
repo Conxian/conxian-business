@@ -90,7 +90,7 @@ rg -n --glob '!docs/**' --glob '!openspec/**' --glob '!**/*.md' --glob '!**/*.te
 
 # Detect testnet principals embedded as string literals (Stacks testnet prefixes).
 rg -n --glob '!docs/**' --glob '!openspec/**' --glob '!**/*.md' \
-  "['\"](?:ST|SN)[0-9A-Z]{20,}(?:\.[a-zA-Z0-9-]{1,128})?['\"]"
+  "['\"](ST|SN)[0-9A-Z]{20,}(\.[a-zA-Z0-9-]{1,128})?['\"]"
 
 # Detect hard-coded testnet defaults in operational scripts.
 rg -n --glob 'scripts/**' "networkFromName\(\s*['\"]testnet['\"]\s*\)"
@@ -121,6 +121,8 @@ The evidence pack MUST name a single accountable owner (human) who accepts respo
 ## Template
 
 Copy/paste and fill out for any `staged` -> `main` promotion PR.
+
+If a profile link is included, it MUST be publicly accessible. Otherwise, omit it.
 
 ```md
 ### Mainnet acceptance evidence pack

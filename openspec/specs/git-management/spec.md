@@ -41,7 +41,7 @@ The workspace MUST enforce an ordered promotion path.
 
 ### Requirement: Mainnet acceptance evidence for `staged` -> `main`
 
-Any `staged` -> `main` promotion MUST include a Mainnet Acceptance Evidence Pack that satisfies all requirements defined in the canonical [mainnet-acceptance-evidence-pack spec](../mainnet-acceptance-evidence-pack/spec.md).
+Any `staged` -> `main` promotion MUST include a Mainnet Acceptance Evidence Pack that satisfies all requirements defined in the [mainnet-acceptance-evidence-pack spec](../mainnet-acceptance-evidence-pack/spec.md).
 
 #### Scenario: Attempting to promote directly into main from a non-staged branch
 
