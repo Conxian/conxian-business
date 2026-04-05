@@ -58,6 +58,43 @@ class PatternRule:
     use_match_text: bool = False
 
 
+def find_first_violation(
+    f, patterns: list[PatternRule]
+) -> tuple[str, int] | None:
+    """Return the first occurrence of the highest-priority pattern.
+
+    Patterns earlier in `patterns` are treated as higher priority than later ones.
+    """
+    best_idx = len(patterns)
+    best_lineno: int | None = None
+    best_marker: str | None = None
+
+    for lineno, line in enumerate(f, start=1):
+        for idx, rule in enumerate(patterns):
+            # `best_idx` tracks the highest-priority (lowest index) rule we've seen so far.
+            if idx >= best_idx:
+                break
+
+            match = rule.pattern.search(line)
+            if not match:
+                continue
+
+            marker = match.group(0) if rule.use_match_text else rule.label
+            best_idx = idx
+            best_lineno = lineno
+            best_marker = marker
+            if best_idx == 0:
+                break
+
+        if best_idx == 0:
+            break
+
+    if best_lineno is None or best_marker is None:
+        return None
+
+    return best_marker, best_lineno
+
+
 def scan_repo(
     root: str,
     label: str,
@@ -95,22 +132,12 @@ def scan_repo(
         full_path = os.path.join(root, rel_path)
         try:
             with open(full_path, "r", encoding="utf-8", errors="replace") as f:
-                found = False
-                for lineno, line in enumerate(f, start=1):
-                    for rule in patterns:
-                        match = rule.pattern.search(line)
-                        if not match:
-                            continue
-
-                        marker = match.group(0) if rule.use_match_text else rule.label
-                        errors.append(
-                            f"{label}: prohibited marker '{marker}' found in {rel_path}:{lineno}"
-                        )
-                        found = True
-                        break
-
-                    if found:
-                        break
+                violation = find_first_violation(f, patterns)
+                if violation:
+                    found_marker, found_lineno = violation
+                    errors.append(
+                        f"{label}: prohibited marker '{found_marker}' found in {rel_path}:{found_lineno}"
+                    )
         except OSError as exc:
             errors.append(f"{label}: failed to read {rel_path}: {exc}")
 
@@ -161,7 +188,7 @@ def main() -> int:
 
     if missing_submodules:
         errors.append(
-            "conxian-business: expected submodule directory missing (did you init submodules?): "
+            "conxian-business: configuration error: expected submodule directory/directories missing (did you init submodules?): "
             + ", ".join(sorted(missing_submodules))
         )
 
