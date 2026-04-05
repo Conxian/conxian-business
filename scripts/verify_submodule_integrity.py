@@ -107,26 +107,60 @@ def _github_json(path: str) -> dict:
     if token:
         headers["Authorization"] = f"Bearer {token}"
 
-    max_attempts = 3
-    for attempt in range(max_attempts):
-        request = urllib.request.Request(url, headers=headers)
+    def _truncate(value: str, limit: int = 200) -> str:
+        if len(value) <= limit:
+            return value
+        return value[:limit] + "…"
+
+    def _retry_delay(attempt: int, retry_after: str | None) -> float:
+        delay = min(2**attempt, 8)
+        if retry_after:
+            try:
+                delay = min(max(int(retry_after), 0), 8)
+            except ValueError:
+                pass
+        return delay
+
+    request = urllib.request.Request(url, headers=headers)
+    for attempt in range(3):
         try:
             with urllib.request.urlopen(request, timeout=30) as response:
                 return json.loads(response.read().decode("utf-8"))
         except urllib.error.HTTPError as e:
             body = e.read().decode("utf-8", "replace")
-            is_retryable = e.code in {429, 500, 502, 503, 504} or (
-                e.code == 403 and "rate limit" in body.lower()
+            message = body
+            try:
+                parsed = json.loads(body)
+                if isinstance(parsed, dict) and parsed.get("message"):
+                    message = str(parsed.get("message"))
+            except json.JSONDecodeError:
+                pass
+
+            message = _truncate(message)
+
+            lower_message = message.lower()
+            is_rate_limited = e.code == 429 or (
+                e.code == 403
+                and ("rate limit" in lower_message or "abuse detection" in lower_message)
             )
-            if is_retryable and attempt < max_attempts - 1:
-                time.sleep(2**attempt)
+
+            if (is_rate_limited or e.code in {500, 502, 503, 504}) and attempt < 2:
+                time.sleep(_retry_delay(attempt, e.headers.get("Retry-After")))
                 continue
-            raise GitHubApiError(f"GitHub API request failed: {url} -> {e.code}: {body}") from e
+
+            raise GitHubApiError(
+                f"GitHub API request failed: {url} -> {e.code}: {message}"
+            ) from e
         except urllib.error.URLError as e:
-            if attempt < max_attempts - 1:
-                time.sleep(2**attempt)
+            reason = str(e.reason)
+
+            if attempt < 2:
+                time.sleep(_retry_delay(attempt, None))
                 continue
-            raise GitHubApiError(f"GitHub API request failed: {url} -> {e.reason}") from e
+
+            raise GitHubApiError(f"GitHub API request failed: {url} -> {reason}") from e
+
+    raise GitHubApiError(f"GitHub API request failed: {url} -> exhausted retries")
 
 
 def _verify_submodule_pins(
@@ -146,20 +180,26 @@ def _verify_submodule_pins(
             failures.append(f"{path}: unsupported submodule url {url}")
             continue
 
-        try:
-            default_branch = default_branch_cache.get(repo)
-            if not default_branch:
+        default_branch = default_branch_cache.get(repo)
+        if not default_branch:
+            try:
                 repo_meta = _github_json(f"/repos/{repo}")
-                default_branch = repo_meta.get("default_branch")
-                if not default_branch:
-                    failures.append(f"{path}: unable to resolve default branch for {repo}")
-                    continue
-                default_branch_cache[repo] = default_branch
+            except GitHubApiError as e:
+                failures.append(f"{path}: GitHub API error for {repo}: {e}")
+                continue
 
-            branch_ref = urllib.parse.quote(default_branch, safe="")
+            default_branch = repo_meta.get("default_branch")
+            if not default_branch:
+                failures.append(f"{path}: unable to resolve default branch for {repo}")
+                continue
+
+            default_branch_cache[repo] = default_branch
+
+        branch_ref = urllib.parse.quote(default_branch, safe="")
+        try:
             compare = _github_json(f"/repos/{repo}/compare/{sha}...{branch_ref}")
         except GitHubApiError as e:
-            failures.append(f"{path}: GitHub API error for {repo}: {e}")
+            failures.append(f"{path}: GitHub API error for {repo}@{default_branch}: {e}")
             continue
 
         status = compare.get("status")
