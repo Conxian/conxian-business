@@ -138,10 +138,10 @@ Implementations MUST NOT treat any host-supplied `settlement_identifiers` as aut
 - The byte length of the exact `raw_settlement_identifiers_hint_bytes` provided to the TEE MUST be ≤ 16384 bytes, and this bound MUST be enforced before JSON parsing. If the bound is exceeded, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST parse `raw_settlement_identifiers_hint_bytes` as UTF-8 JSON. If parsing fails or the parsed value is not a JSON object, the TEE MUST refuse to produce a successful attestation.
 - When parsing `raw_settlement_identifiers_hint_bytes`, the TEE MUST treat any JSON object containing duplicate member names at any object level as invalid input (i.e., MUST NOT apply keep-first/keep-last semantics) and MUST refuse to produce a successful attestation.
-- After parsing, the hint object MUST satisfy the structural and leaf-type constraints in this section, have max nesting depth ≤ 8, and contain ≤ 128 leaf fields. The TEE MUST enforce these bounds before deep traversal. If any constraint or bound is violated, the TEE MUST refuse to produce a successful attestation.
+- After parsing, the hint object MUST satisfy the structural and leaf-type constraints in this section, have max nesting depth ≤ 8, contain ≤ 128 leaf fields, and when serialized using RFC 8785 JCS (UTF-8) MUST be ≤ 16384 bytes. The TEE MUST enforce these bounds during traversal and MUST abort traversal as soon as any bound is exceeded. If any constraint or bound is violated, the TEE MUST refuse to produce a successful attestation.
 - The TEE MUST recompute the canonical `settlement_identifiers` from `raw_payload_bytes` and compare any overlapping leaf fields. An overlapping leaf field is any canonical leaf-field JSON key path present in both objects. For each overlapping leaf field, the host-supplied JSON value MUST exactly equal the TEE-derived canonical JSON value (same JSON type and value). If any overlapping leaf field differs, the TEE MUST refuse to produce a successful attestation.
 - If any JSON key path present in the hint object has a JSON object value in the canonical `settlement_identifiers` but a non-object value in the hint, the TEE MUST refuse to produce a successful attestation.
-- Any host-supplied extra fields MUST be ignored for canonicalization purposes, but they remain subject to all structural and leaf-type constraints in this section (including allowed leaf value types, maximum nesting depth, maximum leaf count, and size bounds).
+- Any host-supplied extra fields MUST be ignored for canonicalization purposes, but the hint object (including any extra fields) remains subject to all constraints above (allowed leaf value types, maximum nesting depth, maximum leaf count, and JCS-serialized size bounds).
 - The `AttestedExternalSettlementTrigger.settlement_identifiers` included in the attested payload MUST be exactly the TEE-derived canonical object; host-supplied hints (including any extra fields) MUST NOT be forwarded or merged into the attested/returned identifiers.
 
 Any TEE attestation failure caused by invalid, out-of-bounds, or mismatched host-supplied `settlement_identifiers` hints for a given `{ rail, raw_payload_hash }` instance MUST be treated as a permanent validation failure in the normal automated processing pipeline. Implementations MUST NOT automatically retry the same `{ rail, raw_payload_hash }` with modified or omitted hints in order to probe for a passing combination. Any operator-initiated override that reprocesses such a payload (for example, after a production bug fix) MUST be explicitly configured, strongly audited, and MUST NOT weaken the TEE’s comparison rules.
@@ -214,19 +214,19 @@ Prohibited fields:
 ## 3. Negative test cases (must exist)
 
 1. Missing or invalid TEE attestation → proposal emission fails.
-2. Valid payload but invalid oracle proof → proposal emission fails.
+2. Valid payload but invalid oracle proof → TEE refuses to produce a successful attestation.
 3. Any attempt to include `raw_payload_bytes` or a full external-settlement payload structure in `AttestedExternalSettlementTrigger` → rejected.
 4. Any attempt to supply raw TradFi payload (bytes or parsed structure) to execution code → rejected.
 5. Replay the same settlement transaction (same `trigger_id`) → no new proposal/timelock created.
 6. Any attempt to skip multi-sig approvals → rejected.
 7. Any attempt to change timelock away from 144 blocks (increase or decrease) → rejected.
-8. Host-supplied `settlement_identifiers` mismatch the TEE-derived identifiers (for any overlapping field) for the same `raw_payload_bytes` → proposal emission fails.
-9. Host-supplied `settlement_identifiers` hints exceed the TEE bounds in §2.1.1 → proposal emission fails.
+8. Host-supplied `settlement_identifiers` mismatch the TEE-derived identifiers (for any overlapping field) for the same `raw_payload_bytes` → TEE refuses to produce a successful attestation.
+9. Host-supplied `settlement_identifiers` hints exceed the TEE bounds in §2.1.1 → TEE refuses to produce a successful attestation.
 10. Oracle proof bytes do not hash to the `oracle_proof_digest` bound by the TEE attestation → proposal emission fails.
-11. `settlement_identifiers` (canonical or host hint) violates the structural/leaf-type constraints in §2.1.1 → proposal emission fails.
+11. `settlement_identifiers` (canonical or host hint) violates the structural/leaf-type constraints in §2.1.1 → TEE refuses to produce a successful attestation.
 12. `oracle_verification` is not a JSON object or is missing `oracle_proof_digest` → proposal emission fails.
 13. `oracle_verification.oracle_proof_digest` is not a lowercase hex-encoded SHA-256 digest → proposal emission fails.
-14. Canonical `settlement_identifiers` exceed the bounds in §2.1.1 → proposal emission fails.
+14. Canonical `settlement_identifiers` exceed the bounds in §2.1.1 → TEE refuses to produce a successful attestation.
 15. `oracle_verification.oracle_proof_bytes_b64` (if present) does not match the persisted `raw_oracle_proof_bytes` or does not hash to `oracle_proof_digest` → proposal emission fails.
 16. `oracle_verification.oracle_proof_bytes_b64` is not valid base64url (e.g., contains padding `=` or characters outside `[A-Za-z0-9_-]`) → proposal emission fails.
 17. Missing, truncated, or oversized persisted `raw_oracle_proof_bytes` for an attested trigger → proposal emission fails.
