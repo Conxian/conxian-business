@@ -66,10 +66,11 @@ function usageAndExit(message?: string, exitCode: number = 1): never {
   process.exit(exitCode);
 }
 
-function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, address: string) {
-  const normalized = address.trim().toUpperCase();
+function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, principalOrAddress: string) {
+  const rawAddress = principalOrAddress.trim().split('.')[0] ?? '';
+  const normalized = rawAddress.toUpperCase();
   if (!validateStacksAddress(normalized)) {
-    usageAndExit(`${flagName} has an invalid Stacks address: ${address}`);
+    usageAndExit(`${flagName} has an invalid Stacks address: ${rawAddress}`);
   }
 
   const prefixes: readonly string[] = STACKS_NETWORK_PREFIXES[networkName];
