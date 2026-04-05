@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 import os
 import re
 import subprocess
@@ -50,11 +51,18 @@ NEXUS_EXCLUDED_PATHS: set[str] = {
 }
 
 
+@dataclass(frozen=True)
+class PatternRule:
+    label: str
+    pattern: re.Pattern[str]
+    use_match_text: bool = False
+
+
 def scan_repo(
     root: str,
     label: str,
     excluded_dirs: set[str],
-    patterns: list[tuple[str, re.Pattern[str]]],
+    patterns: list[PatternRule],
 ) -> list[str]:
     code_exts = {
         ".rs",
@@ -89,12 +97,12 @@ def scan_repo(
             with open(full_path, "r", encoding="utf-8", errors="replace") as f:
                 found = False
                 for lineno, line in enumerate(f, start=1):
-                    for label_text, pattern in patterns:
-                        match = pattern.search(line)
+                    for rule in patterns:
+                        match = rule.pattern.search(line)
                         if not match:
                             continue
 
-                        marker = match.group(0) if label_text == "MOCK_" else label_text
+                        marker = match.group(0) if rule.use_match_text else rule.label
                         errors.append(
                             f"{label}: prohibited marker '{marker}' found in {rel_path}:{lineno}"
                         )
@@ -127,17 +135,17 @@ def main() -> int:
     stub_func_pattern = re.compile(r"\bstub-func\b")
     stub_comment_pattern = re.compile(r"\[STUB\]")
 
-    patterns_default: list[tuple[str, re.Pattern[str]]] = [
-        ("MOCK_", mock_pattern),
-        ("stub-func", stub_func_pattern),
-        ("[STUB]", stub_comment_pattern),
+    patterns_default: list[PatternRule] = [
+        PatternRule("MOCK_", mock_pattern, True),
+        PatternRule("stub-func", stub_func_pattern),
+        PatternRule("[STUB]", stub_comment_pattern),
     ]
 
     errors.extend(scan_repo(root, "conxian-business", common_excluded_dirs, patterns_default))
 
     nexus_excluded_paths = common_excluded_dirs | NEXUS_EXCLUDED_PATHS
 
-    submodules: dict[str, tuple[set[str], list[tuple[str, re.Pattern[str]]]]] = {
+    submodules: dict[str, tuple[set[str], list[PatternRule]]] = {
         "lib-conxian-core": (common_excluded_dirs, patterns_default),
         "lib-conclave-sdk": (common_excluded_dirs, patterns_default),
         "conxian-nexus": (nexus_excluded_paths, patterns_default),
