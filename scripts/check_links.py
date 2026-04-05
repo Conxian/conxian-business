@@ -101,8 +101,11 @@ def check_links() -> None:
             try:
                 target_path.relative_to(repo_root_for_file)
             except ValueError:
-                broken_links.append((md_file.relative_to(REPO_ROOT), link, target_path))
-                continue
+                try:
+                    target_path.relative_to(REPO_ROOT)
+                except ValueError:
+                    broken_links.append((md_file.relative_to(REPO_ROOT), link, target_path))
+                    continue
 
             if not target_path.exists():
                 if _is_within_uninitialized_submodule(target_path, uninitialized_submodule_dirs):
