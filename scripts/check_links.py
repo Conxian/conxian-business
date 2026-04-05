@@ -1,9 +1,11 @@
 import os
 import re
 from pathlib import Path
+from urllib.parse import urlparse
 
 def check_links():
-    md_files = list(Path('.').rglob('*.md'))
+    repo_root = Path('.').resolve()
+    md_files = list(repo_root.rglob('*.md'))
     broken_links = []
 
     for md_file in md_files:
@@ -13,20 +15,27 @@ def check_links():
         with open(md_file, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        # Find markdown links [text](link.md)
-        links = re.findall(r'\[.*?\]\((.*?\.md)\)', content)
+        links = re.findall(r'\[.*?\]\((.*?)\)', content)
 
         for link in links:
             if link.startswith('http'):
                 continue
 
+            parsed = urlparse(link)
+            link_path = parsed.path
+
+            if not link_path.endswith('.md'):
+                continue
+
             # Clean up link (remove fragments)
-            clean_link = link.split('#')[0]
-            if not clean_link:
+            if not link_path:
                 continue
 
             # Resolve relative path
-            target_path = (md_file.parent / clean_link).resolve()
+            if link_path.startswith('/'):
+                target_path = (repo_root / link_path.lstrip('/')).resolve()
+            else:
+                target_path = (md_file.parent / link_path).resolve()
 
             if not target_path.exists():
                 broken_links.append((md_file, link, target_path))
