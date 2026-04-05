@@ -130,7 +130,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Repo: `<org>/<repo>`
 - Promotion PR: <link>
 - Tip-of-`main` SHA at promotion time (e.g. `git rev-parse origin/main`): `<sha>`
-- Merge-base SHA (e.g. `git merge-base origin/main origin/staged`): `<sha>`
+- Merge-base of `main` and `staged` SHA (e.g. `git merge-base origin/main origin/staged`): `<sha>`
 - Head (`staged`) SHA: `<sha>`
 - Accountable owner: `<name>` (`<GitHub handle>`, optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `<name/handle>`, `<name/handle>`
