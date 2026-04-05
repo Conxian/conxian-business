@@ -21,7 +21,7 @@ Until portfolio hygiene automation exists to regenerate and diff BOS audit outpu
 - Changes to `.gitmodules` metadata alone (for example: changing URLs, removing `branch = ...`, or other formatting-only edits) do not require regeneration unless they also change the pinned gitlinks or the set of submodule paths.
 - Reviewers should treat changes that affect BOS audit inputs but do not rerun the generator as incomplete and request that the regeneration step be run.
 
-If you are unsure whether a change affects BOS state inputs, err on the side of re-running the generator; it is intended to be cheap and idempotent.
+If you are unsure whether a change affects BOS audit inputs, err on the side of re-running the generator; it is intended to be cheap and idempotent.
 
 Once a machine-readable portfolio manifest exists (see the P0 backlog), that manifest becomes the single source of truth that generates both this document and BOS runtime artifacts.
 
