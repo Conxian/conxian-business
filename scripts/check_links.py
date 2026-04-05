@@ -7,6 +7,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 
 def check_links():
     md_files = list(REPO_ROOT.rglob('*.md'))
+    md_files += list(REPO_ROOT.rglob('*.markdown'))
     broken_links = []
 
     for md_file in md_files:
@@ -34,11 +35,12 @@ def check_links():
             if not clean_link:
                 continue
 
-            if not clean_link.lower().endswith(('.md', '.markdown')):
+            href = clean_link.split()[0]
+            if not href.lower().endswith(('.md', '.markdown')):
                 continue
 
-            base_dir = REPO_ROOT if clean_link.startswith('/') else md_file.parent
-            target_path = (base_dir / clean_link.lstrip('/')).resolve()
+            base_dir = REPO_ROOT if href.startswith('/') else md_file.parent
+            target_path = (base_dir / href.lstrip('/')).resolve()
 
             if not target_path.exists():
                 try:
