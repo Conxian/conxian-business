@@ -13,6 +13,7 @@ This repository (and the broader Conxian portfolio) uses a three-branch model to
 - Allowed promotion path: `dev` -> `staged` -> `main`.
 - Emergency hotfix path: `hotfix/*` -> `staged` -> `main`.
 - Direct promotion from `dev` to `main` is not allowed.
+- Promotions into `staged` or `main` must originate from an in-repo branch (not a fork).
 
 In practice, “promotion” means opening a pull request from the source branch into the target branch.
 
