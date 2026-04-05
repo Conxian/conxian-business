@@ -59,9 +59,9 @@ The evidence pack MUST include:
 
 Together, these SHAs identify the exact change window being promoted (from the merge-base to the `staged` head) and the pre-merge state of `main`.
 
-Capture these SHAs **before merging** the promotion PR (while the PR is open), after running `git fetch origin main staged` to ensure the `origin/*` refs are current.
+Capture these SHAs **before merging** the promotion PR (while the PR is open): first run `git fetch origin main staged` to ensure the `origin/*` refs are current, then record the SHAs using the commands above.
 
-If these commands are run after the merge, `origin/main` may no longer represent the pre-merge tip; reviewers should rely on the recorded pre-merge tip-of-`main` SHA to reconstruct the exact window.
+If someone later re-runs these commands after the merge has landed, `origin/main` may no longer represent the pre-merge tip; reviewers should rely on the recorded pre-merge tip-of-`main` SHA to reconstruct the exact window.
 
 #### 2) Mainnet-only production scope
 
