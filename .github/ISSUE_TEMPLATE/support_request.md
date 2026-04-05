@@ -11,10 +11,13 @@ assignees: []
 > If this is a security vulnerability, do not open a public issue. Report it privately via the Security Policy: https://github.com/Conxian/conxian-business/security/policy
 
 ### What are you trying to do?
+<!-- Briefly describe your goal or task. -->
 
 ### What happened?
+<!-- What did you observe? Include any errors or logs. -->
 
 ### What did you expect?
+<!-- What outcome were you expecting? -->
 
 ### Additional context
-*Logs, screenshots, environment details, links, etc.*
+<!-- Logs, screenshots, environment details, links, etc. -->

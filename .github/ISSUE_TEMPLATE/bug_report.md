@@ -11,7 +11,7 @@ assignees: []
 > If this is a security vulnerability, do not open a public issue. Report it privately via the Security Policy: https://github.com/Conxian/conxian-business/security/policy
 
 ### Summary
-*What’s broken?*
+<!-- What’s broken? -->
 
 ### Steps to reproduce
 1.
@@ -23,7 +23,7 @@ assignees: []
 ### Actual behavior
 
 ### Environment
-*OS, browser, app/component, version/commit, etc.*
+<!-- OS, browser, app/component, version/commit, etc. -->
 
 ### Additional context
-*Logs, screenshots, environment details, etc.*
+<!-- Logs, screenshots, environment details, etc. -->
