@@ -19,18 +19,23 @@ SKIP_DIR_PARTS = {
     'test-results',
 }
 
+
+def _find_markdown_files() -> list[Path]:
+    md_files: list[Path] = []
+
+    for root, dirs, files in os.walk(REPO_ROOT):
+        dirs[:] = [d for d in dirs if d not in SKIP_DIR_PARTS]
+        for name in files:
+            if name.lower().endswith(('.md', '.markdown')):
+                md_files.append(Path(root) / name)
+
+    return md_files
+
 def check_links():
-    md_files = [
-        path
-        for path in REPO_ROOT.rglob('*')
-        if path.is_file() and path.suffix.lower() in {'.md', '.markdown'}
-    ]
+    md_files = _find_markdown_files()
     broken_links = []
 
     for md_file in md_files:
-        if any(part in SKIP_DIR_PARTS for part in md_file.parts):
-            continue
-
         content = md_file.read_text(encoding='utf-8')
 
         # Find markdown links [text](target)
