@@ -6,16 +6,17 @@
 //     --network mainnet|testnet \
 //     --contract <address.contract-name>
 //   (for --network mainnet, you must also set CONFIRM_MAINNET=1)
+
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  makeContractCall,
-  broadcastTransaction,
   AnchorMode,
   PostConditionMode,
-  stringAsciiCV,
+  broadcastTransaction,
+  makeContractCall,
   validateStacksAddress,
+  stringAsciiCV,
 } from '@stacks/transactions';
 import { networkFromName } from '@stacks/network';
 
@@ -73,11 +74,12 @@ function usageAndExit(message?: string, exitCode: number = 1): never {
   process.exit(exitCode);
 }
 
-function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, principalOrAddress: string) {
-  const rawAddress = principalOrAddress.split('.', 1)[0].trim();
-  const normalized = rawAddress.toUpperCase();
+function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, address: string) {
+  const normalized = address.trim().toUpperCase();
+
   if (!validateStacksAddress(normalized)) {
-    usageAndExit(`${flagName} has an invalid Stacks address: ${rawAddress}`);
+    const hint = address === normalized ? '' : ` (from ${JSON.stringify(address)})`;
+    usageAndExit(`${flagName} has an invalid Stacks address: ${normalized}${hint}`);
   }
 
   const prefixes: readonly string[] = STACKS_NETWORK_PREFIXES[networkName];
@@ -92,9 +94,7 @@ function parseArgs(argv: string[]): { networkName: NetworkName; contract: Princi
 
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
-    if (arg === '--') {
-      break;
-    }
+    if (arg === '--') continue;
     if (arg === '--help' || arg === '-h') {
       usageAndExit(undefined, 0);
     }
