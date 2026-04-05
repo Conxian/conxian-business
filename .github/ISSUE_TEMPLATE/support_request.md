@@ -8,7 +8,7 @@ assignees: []
 
 > Note: This repository is public. Do not include confidential strategy, operational, legal, or infrastructure details.
 >
-> If this is a security vulnerability, do not open a public issue. Report it privately via the Security Policy: https://github.com/Conxian/conxian-business/security/policy
+> If this is a security vulnerability, do not open a public issue. Report it privately via the [Security Policy](https://github.com/Conxian/conxian-business/security/policy).
 
 ### What are you trying to do?
 <!-- Briefly describe your goal or task. -->
