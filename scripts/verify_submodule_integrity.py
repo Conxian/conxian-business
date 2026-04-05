@@ -145,7 +145,9 @@ def _github_json(path: str) -> dict:
             )
 
             if (is_rate_limited or e.code in {500, 502, 503, 504}) and attempt < 2:
-                time.sleep(_retry_delay(attempt, e.headers.get("Retry-After")))
+                headers = getattr(e, "headers", None)
+                retry_after = headers.get("Retry-After") if headers else None
+                time.sleep(_retry_delay(attempt, retry_after))
                 continue
 
             raise GitHubApiError(
