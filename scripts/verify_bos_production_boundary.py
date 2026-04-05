@@ -40,8 +40,9 @@ def git_ls_files(root: str) -> list[str]:
             stderr=subprocess.STDOUT,
         )
     except (subprocess.CalledProcessError, FileNotFoundError) as exc:
-        print(f"Failed to enumerate tracked files via git in {root}: {exc}")
-        sys.exit(1)
+        raise RuntimeError(
+            f"Failed to enumerate tracked files via git in {root}: {exc}"
+        ) from exc
     return [p for p in out.decode("utf-8", errors="replace").split("\x00") if p]
 
 
@@ -56,12 +57,20 @@ def main() -> int:
     submodules = set(read_submodule_paths(root))
     excluded_dirs = {".idx"} | submodules
 
+    exempt_reference_files = {
+        "scripts/verify_bos_production_boundary.py",
+    }
+
     excluded_paths = {p.rstrip("/") for p in excluded_dirs if p.rstrip("/")}
-    repo_files = [
-        p
-        for p in git_ls_files(root)
-        if not any(is_in_dir(p, ex) for ex in excluded_paths)
-    ]
+    try:
+        repo_files = [
+            p
+            for p in git_ls_files(root)
+            if not any(is_in_dir(p, ex) for ex in excluded_paths)
+        ]
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
 
     errors: list[str] = []
 
@@ -92,7 +101,7 @@ def main() -> int:
             continue
         if is_in_dir(rel_path, "docs") or is_in_dir(rel_path, "openspec"):
             continue
-        if rel_path.startswith("scripts/verify_"):
+        if rel_path in exempt_reference_files:
             continue
 
         text = read_text(root, rel_path)
