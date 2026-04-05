@@ -2,7 +2,7 @@
 
 This inventory captures current Web2 dependencies that materially affect SAB sovereignty, verifiability, or operational control, and maps each to a target-state path.
 
-This file is intentionally "program-level" (by dependency). Service-level Supabase/Neon usage is being expanded in https://linear.app/conxian-labs/issue/CON-337/inventory-current-supabase-and-neon-dependencies-by-service.
+This file is intentionally "program-level" (by dependency). Service-level Supabase/Neon usage is captured in [DEPENDENCY_INVENTORY_SUPABASE_NEON.md](DEPENDENCY_INVENTORY_SUPABASE_NEON.md) (tracker: https://linear.app/conxian-labs/issue/CON-337/inventory-current-supabase-and-neon-dependencies-by-service).
 
 ## Inventory
 
