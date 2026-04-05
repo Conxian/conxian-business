@@ -12,6 +12,25 @@ CLASSIFICATION_LABELS = [
 ]
 
 
+def extract_bos_classification_section(body: str) -> str:
+    lines = body.splitlines()
+
+    start = None
+    for i, line in enumerate(lines):
+        if line.strip().lower() == "### bos change classification":
+            start = i + 1
+            break
+
+    if start is None:
+        return ""
+
+    end = next(
+        (j for j in range(start, len(lines)) if lines[j].lstrip().startswith("### ")),
+        len(lines),
+    )
+    return "\n".join(lines[start:end])
+
+
 def main() -> int:
     event_path = os.environ.get("GITHUB_EVENT_PATH")
     if not event_path:
@@ -26,37 +45,18 @@ def main() -> int:
         print("No pull_request payload found; nothing to validate")
         return 0
 
-    actor = (os.environ.get("GITHUB_ACTOR") or "").strip()
     pr_author = ((pr.get("user") or {}).get("login") or "").strip()
-    if actor == "dependabot[bot]" or pr_author == "dependabot[bot]":
+    if pr_author == "dependabot[bot]":
         print("Skipping BOS PR classification for dependabot")
         return 0
 
     body = pr.get("body") or ""
 
-    lines = body.splitlines()
-    section_start = None
-    for i, line in enumerate(lines):
-        if line.strip().lower() == "### bos change classification":
-            section_start = i + 1
-            break
-
-    if section_start is None:
-        section_lines: list[str] = []
-    else:
-        section_end = next(
-            (
-                j
-                for j in range(section_start, len(lines))
-                if lines[j].lstrip().startswith("### ")
-            ),
-            len(lines),
-        )
-        section_lines = lines[section_start:section_end]
+    section = extract_bos_classification_section(body)
 
     selected: list[str] = []
     checkbox_re = re.compile(r"^\s*-\s*\[[xX]\]\s*(.+?)\s*$")
-    for line in section_lines:
+    for line in section.splitlines():
         match = checkbox_re.match(line)
         if not match:
             continue
