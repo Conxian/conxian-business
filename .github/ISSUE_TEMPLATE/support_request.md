@@ -17,3 +17,4 @@ assignees: []
 ### What did you expect?
 
 ### Additional context
+*Logs, screenshots, environment details, links, etc.*

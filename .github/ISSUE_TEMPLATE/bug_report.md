@@ -22,5 +22,8 @@ assignees: []
 
 ### Actual behavior
 
+### Environment
+*OS, browser, app/component, version/commit, etc.*
+
 ### Additional context
 *Logs, screenshots, environment details, etc.*
