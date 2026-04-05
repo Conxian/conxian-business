@@ -28,6 +28,7 @@ The workspace MUST use the following branch roles consistently across all busine
 The workspace MUST enforce an ordered promotion path.
 
 - Promotion to `main` MUST happen only from `staged`.
+- Promotion to `staged` MUST happen only from `dev` (or `hotfix/*`).
 - Direct promotion from `dev` to `main` MUST NOT be permitted.
 
 #### Scenario: Promoting a release to mainnet
@@ -36,10 +37,17 @@ The workspace MUST enforce an ordered promotion path.
 - **THEN** it is promoted by merging `staged` into `main`
 - **AND** the merge is blocked unless required CI checks and required approvals are satisfied
 
-#### Scenario: Attempting to promote directly from dev to main
+#### Scenario: Attempting to promote directly into main from a non-staged branch
 
 - **WHEN** a pull request targets `main`
-- **AND** its source branch is `dev`
+- **AND** its source branch is not `staged`
+- **THEN** the promotion MUST be rejected
+
+#### Scenario: Attempting to promote directly into staged from a non-dev, non-hotfix branch
+
+- **WHEN** a pull request targets `staged`
+- **AND** its source branch is not `dev`
+- **AND** its source branch does not match `hotfix/*`
 - **THEN** the promotion MUST be rejected
 
 ### Requirement: Ownership and business-unit boundaries
