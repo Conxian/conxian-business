@@ -62,11 +62,12 @@ Target flow (high level):
 user tx
   -> module fee is charged (swap/lending/etc)
   -> protocol fee balance accrues in a fee vault / treasury contract
+  -> captured protocol fees are determined (after external/third-party distributions)
   -> allocation policy applies:
-      - reserve / continuity first
+      - Founder’s Cut carve-out -> founder vault
+      - reserve / continuity
       - operating treasury
       - contributor incentives
-      - Founder’s Cut carve-out -> founder vault
       - optional buyback/burn sink (BME)
 ```
 
