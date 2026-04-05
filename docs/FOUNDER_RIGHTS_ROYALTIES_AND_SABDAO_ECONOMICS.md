@@ -64,10 +64,11 @@ user tx
   -> protocol fee balance accrues in a fee vault / treasury contract
   -> allocation policy applies:
       - Founder’s Cut carve-out -> founder vault (off-the-top from captured protocol fees)
-      - reserve / continuity (from the remainder)
-      - operating treasury
-      - contributor incentives
-      - optional buyback/burn sink (BME)
+      - from the remaining captured protocol fees:
+        - reserve / continuity
+        - operating treasury
+        - contributor incentives
+        - optional buyback/burn sink (BME)
 ```
 
 ## Fastest route to real on-chain income (minimal viable operating path)
