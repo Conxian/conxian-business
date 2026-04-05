@@ -11,6 +11,12 @@ CLASSIFICATION_LABELS = [
     "production implementation",
 ]
 
+
+BOS_CLASSIFICATION_HEADER_RE = re.compile(
+    r"^#{2,6}\s*bos change classification\b", re.IGNORECASE
+)
+HEADING_RE = re.compile(r"^#{2,6}\s+")
+
 CLASSIFICATION_LABELS_BY_NORMALIZED = {label.lower(): label for label in CLASSIFICATION_LABELS}
 
 
@@ -19,7 +25,7 @@ def extract_bos_classification_section(body: str) -> str:
 
     start = None
     for i, line in enumerate(lines):
-        if line.strip().lower().startswith("### bos change classification"):
+        if BOS_CLASSIFICATION_HEADER_RE.match(line.strip()):
             start = i + 1
             break
 
@@ -27,7 +33,7 @@ def extract_bos_classification_section(body: str) -> str:
         return ""
 
     end = next(
-        (j for j in range(start, len(lines)) if lines[j].lstrip().startswith("### ")),
+        (j for j in range(start, len(lines)) if HEADING_RE.match(lines[j].lstrip())),
         len(lines),
     )
     return "\n".join(lines[start:end])
@@ -54,7 +60,7 @@ def main() -> int:
 
     body = pr.get("body") or ""
 
-    section = extract_bos_classification_section(body)
+    section = extract_bos_classification_section(body) or body
 
     selected: list[str] = []
     checkbox_re = re.compile(r"^\s*-\s*\[[xX]\]\s*(.+?)\s*$")
