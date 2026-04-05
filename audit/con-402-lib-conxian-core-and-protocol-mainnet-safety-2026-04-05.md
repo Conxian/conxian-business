@@ -28,6 +28,8 @@ python3 scripts/verify_knowledge_retention.py
 python3 scripts/verify_submodule_integrity.py
 ```
 
+After running the commands above, verify that the SHAs printed by `git submodule status --recursive` match the values listed below.
+
 Expected submodule pins:
 
 - `lib-conxian-core`: `2329353a1bee04c137b16b819a46e84530b2b1f4`
@@ -70,7 +72,7 @@ Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallba
   - Mainnet status: present in snapshot; should not be available in default (production) builds.
   - Remediation PR: https://github.com/Conxian/lib-conclave-sdk/pull/22
 
-- **Hard-coded timestamps / fixed-epoch validation:** `1710000000` appeared in:
+- **Hard-coded timestamps / fixed-epoch validation:** `1710000000` (Unix timestamp = 2024-03-09T16:00:00Z) appeared in:
   - Severity: medium
   - Evidence:
     - business attribution generation: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/protocol/business.rs#L143-L170
