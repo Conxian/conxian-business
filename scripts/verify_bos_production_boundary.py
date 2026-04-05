@@ -43,7 +43,9 @@ def git_ls_files(root: str) -> list[str]:
         raise RuntimeError(
             f"Failed to enumerate tracked files via git in {root}: {exc}"
         ) from exc
-    return [p for p in out.decode("utf-8", errors="replace").split("\x00") if p]
+
+    parts = [p for p in out.split(b"\x00") if p]
+    return [os.fsdecode(p) for p in parts]
 
 
 def read_text(root: str, rel_path: str) -> str:
@@ -59,6 +61,7 @@ def main() -> int:
 
     exempt_reference_files = {
         "scripts/verify_bos_production_boundary.py",
+        "scripts/verify_pr_bos_classification.py",
     }
 
     excluded_paths = {p.rstrip("/") for p in excluded_dirs if p.rstrip("/")}
