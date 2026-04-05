@@ -23,9 +23,9 @@ From a clean checkout in the repository root:
 git checkout 4d98df40459927465a081f1df5e535bdd6508b16
 git submodule sync --recursive
 git submodule update --init --recursive
-git submodule status --recursive
 python3 scripts/verify_knowledge_retention.py
 python3 scripts/verify_submodule_integrity.py
+git submodule status --recursive
 ```
 
 After running the commands above, verify that the SHAs printed by `git submodule status --recursive` match the commit IDs listed in the `Scope` section above.
@@ -43,7 +43,7 @@ Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallba
   - Mainnet status: present in snapshot; should be feature-gated or fixed before any mainnet use.
   - Remediation PR: https://github.com/Conxian/lib-conxian-core/pull/30
 
-- **Gateway engine contains multiple simulated/heuristic behaviors:** `gateway/src/engine/mod.rs` includes logic labeled as simulated for:
+- **Gateway engine contains multiple simulated/heuristic behaviors:** `gateway/src/engine/mod.rs` includes simulated logic in several areas.
   - Severity: high (mainnet readiness blocker unless explicitly gated)
   - Evidence:
     - on-chain reserves verification and reserve growth: https://github.com/Conxian/lib-conxian-core/blob/2329353a1bee04c137b16b819a46e84530b2b1f4/gateway/src/engine/mod.rs#L735-L743
@@ -67,7 +67,7 @@ Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallba
   - Mainnet status: present in snapshot; should not be available in default (production) builds.
   - Remediation PR: https://github.com/Conxian/lib-conclave-sdk/pull/22
 
-- **Hard-coded timestamps / fixed-epoch validation:** `1710000000` (Unix timestamp = 2024-03-09T16:00:00Z) appeared in:
+- **Hard-coded timestamps / fixed-epoch validation:** The fixed timestamp `1710000000` (Unix timestamp = 2024-03-09T16:00:00Z) is used in multiple places.
   - Severity: medium
   - Evidence:
     - business attribution generation: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/protocol/business.rs#L143-L185
