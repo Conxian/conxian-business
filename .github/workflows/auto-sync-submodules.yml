@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
 
-      - name: Update submodules to latest tracked branches
+      - name: Update submodules to latest main (PR base: dev)
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
