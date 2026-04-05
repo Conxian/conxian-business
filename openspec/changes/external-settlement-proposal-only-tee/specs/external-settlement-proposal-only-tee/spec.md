@@ -80,7 +80,7 @@ The TEE MUST compute `oracle_proof_digest` from the exact `raw_oracle_proof_byte
 
 If `oracle_verification` embeds the raw oracle proof bytes, they MUST be encoded as base64url as defined in RFC 4648 §5 (URL- and filename-safe alphabet, no padding `=`) in `oracle_proof_bytes_b64`.
 
-If `oracle_verification` includes `oracle_proof_bytes_b64`, decoding it MUST yield exactly the `raw_oracle_proof_bytes` used both to verify the oracle authenticity proof and to compute `oracle_proof_digest`.
+If `oracle_verification` includes `oracle_proof_bytes_b64`, its character length MUST be ≤ 21846, and this bound MUST be enforced before base64url decoding. Decoding it MUST yield exactly the `raw_oracle_proof_bytes` used both to verify the oracle authenticity proof and to compute `oracle_proof_digest`.
 
 Proposal emission MUST validate that `oracle_verification` is a JSON object containing `oracle_proof_digest` in the format defined above and, if present, `oracle_proof_bytes_b64` as valid RFC 4648 §5 base64url (no padding); any violation MUST cause the proposal to be rejected.
 
