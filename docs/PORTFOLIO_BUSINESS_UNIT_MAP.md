@@ -6,9 +6,9 @@ This document is the portfolio-level map that assigns every repo/subrepo (submod
 
 Today, this page is the canonical human-readable portfolio map; machine-readable BOS artifacts in `./conxian-business/` should be treated as derived outputs. When this mapping changes, ensure any intentional BOS runtime/audit updates remain consistent with it. Until a machine-readable portfolio manifest exists, artifacts in `./conxian-business/` are non-authoritative derived outputs and may be regenerated/replaced.
 
-Contributors should not edit generated BOS state artifacts under `./conxian-business/` by hand (for example: `BOS_STATE_MACHINE.json`, `AUDIT_MANIFEST.json`); treat them as outputs that may be replaced at any time. Source code in that directory (for example: `transparency_custodian.py`) is maintained normally.
+Contributors should not edit generated BOS state artifacts under `./conxian-business/` by hand (for example: `BOS_STATE_MACHINE.stub.json`, `AUDIT_MANIFEST.stub.json`); treat them as outputs that may be replaced at any time. Source code in that directory (for example: `transparency_custodian.py`) is maintained normally.
 
-To regenerate BOS state artifacts (including `./conxian-business/AUDIT_MANIFEST.json` and `./conxian-business/BOS_STATE_MACHINE.json`), run from the repo root:
+To regenerate the local audit manifest output (written to `./conxian-business/.generated/AUDIT_MANIFEST.json`, ignored), run from the repo root:
 
 ```bash
 python3 ./conxian-business/transparency_custodian.py
@@ -99,7 +99,7 @@ Until portfolio hygiene automation is live, reviewers should treat these invaria
 | --- | --- | --- | --- |
 | `openspec/` | Governance (OpenSpec) | Ground-truth technical requirements | Public, versioned specs; should not contain sensitive operational strategy. |
 | `docs/` | Governance (Public docs) | Public documentation | Public trust surface docs and portfolio conventions. |
-| `./conxian-business/` | Operating function (Governance/BOS runtime) | Machine-readable BOS state | Nested directory containing state-machine artifacts (`BOS_STATE_MACHINE.json`, audit manifests). |
+| `./conxian-business/` | Operating function (Governance/BOS runtime) | Machine-readable BOS state | Nested directory containing state-machine artifacts (`BOS_STATE_MACHINE.stub.json`, audit manifests). |
 | `.github/` | Governance (Repo operations) | CI/CD, templates | Cross-unit repo hygiene enforcement entrypoint. |
 | `scripts/` | Governance (Portfolio hygiene) | Audits, link checking | BOS utility scripts; avoid embedding product logic. |
 | `audit/` | Governance (Assurance) | Audits and alignment reports | Outputs should be cross-unit and non-sensitive. |
