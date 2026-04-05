@@ -28,12 +28,7 @@ python3 scripts/verify_knowledge_retention.py
 python3 scripts/verify_submodule_integrity.py
 ```
 
-After running the commands above, verify that the SHAs printed by `git submodule status --recursive` match the values listed below.
-
-Expected submodule pins:
-
-- `lib-conxian-core`: `2329353a1bee04c137b16b819a46e84530b2b1f4`
-- `lib-conclave-sdk`: `02f3b42aeb209b57e19cfe6c68d028613ce9a65b`
+After running the commands above, verify that the SHAs printed by `git submodule status --recursive` match the commit IDs listed in the `Scope` section above.
 
 Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallbacks that can execute in production code paths ("fail open" or "silently simulate").
 
@@ -67,7 +62,7 @@ Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallba
   - Severity: high
   - Evidence:
     - module is included by default: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/mod.rs#L1-L3
-    - fixed dummy key + mock attestation report: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/cloud.rs#L9-L82
+    - fixed dummy key + mock attestation report: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/cloud.rs#L9-L38
   - At snapshot, it was compiled by default via `pub mod cloud;`.
   - Mainnet status: present in snapshot; should not be available in default (production) builds.
   - Remediation PR: https://github.com/Conxian/lib-conclave-sdk/pull/22
@@ -75,11 +70,12 @@ Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallba
 - **Hard-coded timestamps / fixed-epoch validation:** `1710000000` (Unix timestamp = 2024-03-09T16:00:00Z) appeared in:
   - Severity: medium
   - Evidence:
-    - business attribution generation: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/protocol/business.rs#L143-L170
+    - business attribution generation: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/protocol/business.rs#L143-L185
     - enclave attestation reports:
       - https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/android_strongbox.rs#L79-L91
       - https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/cloud.rs#L25-L37
     - attribution expiration checks: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/protocol/rails/mod.rs#L132-L154
+  - Impact: fixed timestamps weaken freshness guarantees and can cause stale or replayed data to be treated as valid in production.
   - Mainnet status: present in snapshot; should be removed before enforcing freshness invariants in production.
   - Remediation PR: https://github.com/Conxian/lib-conclave-sdk/pull/22
 
