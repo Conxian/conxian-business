@@ -1,4 +1,3 @@
-import os
 import re
 from pathlib import Path
 from urllib.parse import urlparse
@@ -19,7 +18,7 @@ def check_links():
 
         for link in links:
             parsed = urlparse(link)
-            if parsed.scheme:
+            if parsed.scheme or parsed.netloc:
                 continue
 
             link_path = parsed.path
