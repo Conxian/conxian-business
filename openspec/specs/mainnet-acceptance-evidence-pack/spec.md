@@ -50,7 +50,7 @@ The evidence pack MUST include:
 
 - Repository name
 - Promotion PR link
-- Base (`main`) SHA (tip at promotion time)
+- Base (`main`) SHA at PR open
 - Merge-base (`main`..`staged`) SHA
 - `staged` head commit SHA
 - Change owner (single accountable human)
@@ -86,14 +86,14 @@ Recommended scan set (adapt globs per repo):
 ```bash
 # Fail fast on common residue markers in non-doc code.
 rg -n --glob '!docs/**' --glob '!openspec/**' --glob '!**/*.md' --glob '!**/*.test.*' --glob '!**/*.spec.*' \
-  '(MOCK_|\\bstub\\b|\\bmock\\b|\\bplaceholder\\b|\\bFIXME\\b|\\bTODO\\b)'
+  '(MOCK_|\bstub\b|\bmock\b|\bplaceholder\b|\bFIXME\b|\bTODO\b)'
 
 # Detect testnet principals embedded as string literals (Stacks testnet prefixes).
 rg -n --glob '!docs/**' --glob '!openspec/**' --glob '!**/*.md' \
-  "['\"](?:ST|SN)[0-9A-Z]{20,}(?:\\.[a-zA-Z0-9-]{1,128})?['\"]"
+  "['\"](?:ST|SN)[0-9A-Z]{20,}(?:\.[a-zA-Z0-9-]{1,128})?['\"]"
 
 # Detect hard-coded testnet defaults in operational scripts.
-rg -n --glob 'scripts/**' "networkFromName\\(\\s*['\"]testnet['\"]\\s*\\)"
+rg -n --glob 'scripts/**' "networkFromName\(\s*['\"]testnet['\"]\s*\)"
 ```
 
 #### 4) Successful production validation
@@ -129,10 +129,10 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 
 - Repo: `<org>/<repo>`
 - Promotion PR: <link>
-- Base (`main`) SHA (tip at promotion time): `<sha>`
+- Base (`main`) SHA at PR open: `<sha>`
 - Merge-base (`main`..`staged`) SHA: `<sha>`
 - Head (`staged`) SHA: `<sha>`
-- Accountable owner: `<name>` (`<GitHub handle>`, optional: `<public Linear profile URL if available>`)
+- Accountable owner: `<name>` (`<GitHub handle>`, optional: `<public profile URL if available>`)
 - Approvers (CODEOWNERS): `<name/handle>`, `<name/handle>`
 - Business unit(s): `<bu>`
 
