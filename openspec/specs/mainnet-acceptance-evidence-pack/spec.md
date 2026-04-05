@@ -53,18 +53,25 @@ The evidence pack MUST include:
 - Pre-merge tip-of-`main` SHA
 - Merge-base of `main` and `staged` SHA
 - `staged` head commit SHA
-- SHA capture timestamp (ISO 8601 UTC timestamp for when the above SHAs were captured)
+- SHA capture timestamp (ISO 8601 UTC; canonical remote used)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
 
 Together, these SHAs and the capture timestamp identify the exact change window being promoted (from the merge-base to the `staged` head), the pre-merge state of `main`, and when that snapshot was taken.
 
-Capture these SHAs **before merging** the promotion PR (while the PR is open). You MUST run `git fetch --prune <canonical-remote> main staged` first so that the `<canonical-remote>/*` refs are current (in most clones, `<canonical-remote>` will be `origin`; `--prune` removes stale `<canonical-remote>/*` refs that no longer exist on the remote). Then record each SHA using the commands below.
+Capture these SHAs **immediately before merging** the promotion PR (after all required checks/approvals are green).
+
+You MUST run `git fetch --prune <canonical-remote> main staged` first so that the `<canonical-remote>/*` refs are current (`--prune` removes stale `<canonical-remote>/*` refs that no longer exist on the remote). `<canonical-remote>` MUST point at the canonical `<org>/<repo>` remote, not a fork (on forks this is typically `upstream`).
+
+Record:
 
 - Pre-merge tip-of-`main`: `git rev-parse <canonical-remote>/main`
 - Merge-base: `git merge-base <canonical-remote>/main <canonical-remote>/staged`
 - `staged` head: `git rev-parse <canonical-remote>/staged`
+- SHA capture timestamp: `date -u +%Y-%m-%dT%H:%M:%SZ`
+
+If the merge is delayed or `<canonical-remote>/main` or `<canonical-remote>/staged` advances after capture, re-capture and update the evidence pack before merging.
 
 After the merge (or any other updates to `<canonical-remote>/main` or `<canonical-remote>/staged`), re-running `git fetch --prune <canonical-remote> main staged` and then the commands above will yield different values. Reviewers and auditors SHOULD rely on the SHAs recorded in the evidence pack as the source of truth for the pre-merge window.
 
@@ -143,7 +150,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Pre-merge tip-of-`main` SHA: `<sha>`
 - Merge-base of `main` and `staged` SHA: `<sha>`
 - `staged` head commit SHA: `<sha>`
-- SHA capture timestamp: `<YYYY-MM-DDTHH:MM:SSZ>` (ISO 8601 UTC; timestamp at which the SHAs above were captured; see section 1 for capture procedure)
+- SHA capture timestamp: `Captured at (UTC): <YYYY-MM-DDTHH:MM:SSZ>; Canonical remote: <canonical-remote>` (after `git fetch --prune <canonical-remote> main staged`; before merge)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
