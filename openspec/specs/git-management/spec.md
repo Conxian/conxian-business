@@ -33,6 +33,10 @@ The workspace MUST enforce an ordered promotion path.
 - Promotion to `staged` or `main` MUST originate from a branch in this repository (not a fork).
 - Direct promotion from `dev` to `main` MUST NOT be permitted.
 
+#### Requirement: Mainnet acceptance evidence for `staged` -> `main`
+
+Any `staged` -> `main` promotion MUST include a Mainnet Acceptance Evidence Pack that satisfies all requirements defined in the canonical spec at [`openspec/specs/mainnet-acceptance-evidence-pack/spec.md`](../mainnet-acceptance-evidence-pack/spec.md).
+
 #### Scenario: Promoting a release to mainnet
 
 - **WHEN** a mainnet release is ready to ship
