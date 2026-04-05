@@ -517,6 +517,13 @@ async function main() {
   assertStacksNetworkPrefix(networkName, '--fee-vault', feeVaultAddress);
   assertStacksNetworkPrefix(networkName, '--target', targetPrincipal);
 
+  for (const allowed of allowlist) {
+    if (!allowed.includes('.')) {
+      usageAndExit('--allow must be a contract principal (address.contract-name)');
+    }
+    assertStacksNetworkPrefix(networkName, '--allow', allowed);
+  }
+
   const network = createNetwork(networkName);
   const apiBase = createApiBase(networkName);
 
