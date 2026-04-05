@@ -30,7 +30,12 @@ def read_text(root: str, rel_path: str) -> str:
         return f.read()
 
 
-def scan_repo(root: str, label: str, excluded_dirs: set[str]) -> list[str]:
+def scan_repo(
+    root: str,
+    label: str,
+    excluded_dirs: set[str],
+    patterns: list[tuple[str, re.Pattern[str]]],
+) -> list[str]:
     code_exts = {
         ".rs",
         ".ts",
@@ -42,12 +47,6 @@ def scan_repo(root: str, label: str, excluded_dirs: set[str]) -> list[str]:
         ".sh",
         ".clar",
     }
-
-    patterns: list[tuple[str, re.Pattern[str]]] = [
-        ("MOCK_", re.compile(r"\bMOCK_[A-Z0-9_]+\b")),
-        ("stub-func", re.compile(r"\bstub-func\b")),
-        ("[STUB]", re.compile(r"\[STUB\]")),
-    ]
 
     errors: list[str] = []
     for rel_path in git_ls_files(root):
@@ -84,13 +83,43 @@ def main() -> int:
     }
 
     errors: list[str] = []
-    errors.extend(scan_repo(root, "conxian-business", excluded_dirs))
+    patterns_default: list[tuple[str, re.Pattern[str]]] = [
+        ("MOCK_", re.compile(r"\bMOCK_[A-Z0-9_]+\b")),
+        ("stub-func", re.compile(r"\bstub-func\b")),
+        ("[STUB]", re.compile(r"\[STUB\]")),
+    ]
 
-    for sub in ["lib-conxian-core", "lib-conclave-sdk"]:
+    patterns_without_stub_comments: list[tuple[str, re.Pattern[str]]] = [
+        ("MOCK_", patterns_default[0][1]),
+        ("stub-func", patterns_default[1][1]),
+    ]
+
+    errors.extend(scan_repo(root, "conxian-business", excluded_dirs, patterns_default))
+
+    submodules: dict[str, tuple[set[str], list[tuple[str, re.Pattern[str]]]]] = {
+        "lib-conxian-core": ({"docs", "tests", "test"}, patterns_default),
+        "lib-conclave-sdk": ({"docs", "tests", "test"}, patterns_default),
+        "conxian-nexus": (
+            {
+                "docs",
+                "tests",
+                "test",
+                "src/api/dlc.rs",
+                "src/api/zkml.rs",
+                "src/api/identity.rs",
+                "src/oracle",
+                "src/storage/tableland.rs",
+                "src/storage/kwil.rs",
+            },
+            patterns_without_stub_comments,
+        ),
+    }
+
+    for sub, (exclusions, patterns) in submodules.items():
         sub_path = os.path.join(root, sub)
         if not os.path.isdir(sub_path):
             continue
-        errors.extend(scan_repo(sub_path, sub, {"docs", "tests", "test"}))
+        errors.extend(scan_repo(sub_path, sub, exclusions, patterns))
 
     if errors:
         print("Production contamination guard violations found:\n")
