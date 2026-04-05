@@ -61,7 +61,7 @@ The evidence pack MUST include:
 
 Together, these SHAs identify the exact change window being promoted (from the merge-base to the `staged` head) and the pre-merge state of `main`.
 
-These SHAs MUST be captured **immediately before merging** the promotion PR (while the PR is open and after all required checks/approvals are green).
+The required promotion metadata MUST be captured **immediately before merging** the promotion PR (while the PR is open and after all required checks/approvals are green).
 
 1. Ensure refs are current:
    - `git fetch <canonical-remote> main staged`
