@@ -17,7 +17,7 @@ Scope (repo commit + git submodule pins at snapshot time):
 
 ## Reproducibility
 
-From a clean checkout:
+From a clean checkout in the repository root:
 
 ```bash
 git checkout 4d98df40459927465a081f1df5e535bdd6508b16
