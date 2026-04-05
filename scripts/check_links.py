@@ -4,7 +4,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 def check_links():
-    repo_root = Path('.').resolve()
+    repo_root = Path(__file__).resolve().parents[1]
     md_files = list(repo_root.rglob('*.md'))
     broken_links = []
 
