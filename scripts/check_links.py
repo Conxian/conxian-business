@@ -4,6 +4,7 @@ import re
 import sys
 from pathlib import Path
 
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 SKIP_DIR_PARTS = {
@@ -64,9 +65,10 @@ def _find_markdown_files() -> list[Path]:
 
     return md_files
 
-def check_links():
+
+def check_links() -> None:
     md_files = _find_markdown_files()
-    broken_links = []
+    broken_links: list[tuple[Path, str, Path]] = []
     uninitialized_submodule_dirs = _uninitialized_submodule_dirs()
 
     for md_file in md_files:
@@ -74,20 +76,17 @@ def check_links():
         content = md_file.read_text(encoding='utf-8')
 
         # Find markdown links [text](target)
-        raw_links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
+        links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
 
-        for link in raw_links:
+        for link in links:
             link = link.strip()
             if not link:
                 continue
 
-            if link.startswith('#'):
+            # Skip external URLs, anchors, and any other URI schemes (mailto:, ftp:, etc.)
+            if link.startswith('#') or re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:', link):
                 continue
 
-            if re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:', link):
-                continue
-
-            # Clean up link (remove fragments)
             clean_link = link.split('#', 1)[0].strip()
             if not clean_link:
                 continue
@@ -108,18 +107,13 @@ def check_links():
             if not target_path.exists():
                 if _is_within_uninitialized_submodule(target_path, uninitialized_submodule_dirs):
                     continue
+
                 try:
                     target_rel = target_path.relative_to(REPO_ROOT)
                 except ValueError:
                     target_rel = target_path
 
-                broken_links.append(
-                    (
-                        md_file.relative_to(REPO_ROOT),
-                        link,
-                        target_rel,
-                    )
-                )
+                broken_links.append((md_file.relative_to(REPO_ROOT), link, target_rel))
 
     for source, link, target in broken_links:
         print(f"Broken link in {source}: {link} -> {target}")
@@ -127,5 +121,6 @@ def check_links():
     if broken_links:
         sys.exit(1)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     check_links()
