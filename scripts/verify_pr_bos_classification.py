@@ -13,9 +13,9 @@ CLASSIFICATION_LABELS = [
 
 
 BOS_CLASSIFICATION_HEADER_RE = re.compile(
-    r"^#{1,6}\s*bos change classification\b", re.IGNORECASE
+    r"^\s*#{1,6}\s*bos change classification\s*:?\s*$", re.IGNORECASE
 )
-HEADING_RE = re.compile(r"^#{1,6}\s*\S")
+HEADING_RE = re.compile(r"^\s*#{1,6}\s*\S")
 
 CLASSIFICATION_LABELS_BY_NORMALIZED = {label.lower(): label for label in CLASSIFICATION_LABELS}
 
@@ -63,7 +63,7 @@ def main() -> int:
     section = extract_bos_classification_section(body) or body
 
     selected: list[str] = []
-    checkbox_re = re.compile(r"^\s*-\s*\[[xX]\]\s*(.+?)\s*$")
+    checkbox_re = re.compile(r"^\s*[-*]\s*\[[xX]\]\s*(.+?)\s*$")
     for line in section.splitlines():
         match = checkbox_re.match(line)
         if not match:
