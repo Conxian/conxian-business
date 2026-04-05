@@ -161,7 +161,7 @@ If an issue is in a planning or execution state, the description should link to 
 These are the highest-value sources to copy into Linear so day-to-day work stays stable even if the repo has to remove or relocate sensitive material.
 
 1. **BOS Operating Model (canonical)**
-   - Source: `conxian-business/SERVICE_LOOP.md`, `conxian-business/BOS_STATE_MACHINE.stub.json`.
+   - Source: `conxian-business/SERVICE_LOOP.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` (public-safe pointer; canonical BOS state machine definition is maintained in Linear).
 2. **Execution wiring: Linear ↔ BOS state layer (canonical)**
    - Source: `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`.
 3. **Zero Secret Egress (ZSE) + knowledge retention (canonical)**
