@@ -29,6 +29,7 @@ The workspace MUST enforce an ordered promotion path.
 
 - Promotion to `main` MUST happen only from `staged`.
 - Promotion to `staged` MUST happen only from `dev` (or `hotfix/*`).
+- Promotion to `staged` or `main` MUST originate from a branch in this repository (not a fork).
 - Direct promotion from `dev` to `main` MUST NOT be permitted.
 
 #### Scenario: Promoting a release to mainnet
