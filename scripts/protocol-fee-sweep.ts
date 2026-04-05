@@ -247,8 +247,8 @@ async function quoteDy(
 }
 
 function computeMinDy(quotedDy: bigint, slippageBps: bigint): bigint {
-  if (slippageBps > 10_000n) {
-    throw new Error(`slippage-bps must be <= 10000 (got: ${slippageBps})`);
+  if (slippageBps >= 10_000n) {
+    throw new Error(`slippage-bps must be < 10000 (got: ${slippageBps})`);
   }
   return (quotedDy * (10_000n - slippageBps)) / 10_000n;
 }
@@ -493,6 +493,10 @@ async function main() {
   if (!networkName) usageAndExit('Missing required --network');
   if (!feeVaultAddress) usageAndExit('Missing required --fee-vault');
   if (!targetPrincipal) usageAndExit('Missing required --target');
+
+  if (slippageBps >= 10_000n) {
+    usageAndExit(`Invalid --slippage-bps=${slippageBps.toString()}; expected 0..9999`);
+  }
 
   if (feeVaultAddress.includes('.')) {
     usageAndExit('--fee-vault must be a standard principal (address only, no contract name)');
