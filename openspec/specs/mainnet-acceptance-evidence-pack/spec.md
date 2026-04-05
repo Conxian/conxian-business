@@ -60,7 +60,7 @@ The evidence pack MUST include:
 
 Together, these SHAs and the capture timestamp identify the exact change window being promoted (from the merge-base to the `staged` head), the pre-merge state of `main`, and when that snapshot was taken.
 
-Capture these SHAs **before merging** the promotion PR (while the PR is open). You MUST run `git fetch --prune <canonical-remote> main staged` first so that the `<canonical-remote>/*` refs are current (in most clones, `<canonical-remote>` will be `origin`).
+Capture these SHAs **before merging** the promotion PR (while the PR is open). You MUST run `git fetch --prune <canonical-remote> main staged` first so that the `<canonical-remote>/*` refs are current (in most clones, `<canonical-remote>` will be `origin`; `--prune` removes stale `<canonical-remote>/*` refs that no longer exist on the remote).
 
 - Pre-merge tip-of-`main`: `git rev-parse <canonical-remote>/main`
 - Merge-base: `git merge-base <canonical-remote>/main <canonical-remote>/staged`
@@ -143,7 +143,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Pre-merge tip-of-`main` SHA: `<sha>`
 - Merge-base of `main` and `staged` SHA: `<sha>`
 - Head (`staged`) SHA: `<sha>`
-- SHA capture timestamp: `<YYYY-MM-DDTHH:MM:SSZ>` (ISO 8601 UTC; captured **before merge** after `git fetch --prune <canonical-remote> main staged`)
+- SHA capture timestamp: `<YYYY-MM-DDTHH:MM:SSZ>` (ISO 8601 UTC; timestamp at which the SHAs above were captured, after `git fetch --prune <canonical-remote> main staged` and **before merge**)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
