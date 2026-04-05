@@ -32,6 +32,7 @@ This repository pins and coordinates the flagship Conxian repositories, includin
 - [`conxius-platform/`](./conxius-platform): Stack orchestration and local development
 - [`stacksorbit/`](./stacksorbit): Deployment and operations tooling
 - [`conxian-labs-site/`](./conxian-labs-site): Conxian Labs public site
+- [`showcase-dapp/`](./showcase-dapp): Conxian Showcase DApp (Next.js 15 reference implementation)
 
 ## Cloning
 
