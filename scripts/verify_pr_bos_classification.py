@@ -34,17 +34,35 @@ def main() -> int:
 
     body = pr.get("body") or ""
 
+    lines = body.splitlines()
+    section_start = None
+    for i, line in enumerate(lines):
+        if line.strip().lower() == "### bos change classification":
+            section_start = i + 1
+            break
+
+    if section_start is None:
+        section_lines: list[str] = []
+    else:
+        section_end = next(
+            (
+                j
+                for j in range(section_start, len(lines))
+                if lines[j].lstrip().startswith("### ")
+            ),
+            len(lines),
+        )
+        section_lines = lines[section_start:section_end]
+
     selected: list[str] = []
     checkbox_re = re.compile(r"^\s*-\s*\[[xX]\]\s*(.+?)\s*$")
-    for line in body.splitlines():
+    for line in section_lines:
         match = checkbox_re.match(line)
         if not match:
             continue
         label = match.group(1).strip().lower()
-        for expected in CLASSIFICATION_LABELS:
-            if label == expected:
-                selected.append(expected)
-                break
+        if label in CLASSIFICATION_LABELS:
+            selected.append(label)
 
     if len(selected) != 1:
         expected = ", ".join(CLASSIFICATION_LABELS)
