@@ -5,7 +5,13 @@ All notable changes to the Conxian Business Operations System (BOS) will be docu
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.md](docs/RELEASE_NOTES_AND_CHANGELOG.md).
+
 ## [Unreleased]
+
+### Added
+- Documented the BOS business-end operating model (`docs/BOS_BUSINESS_BUILDOUT.md`), including ZSE public/internal split guidance and governance/README alignment.
+
 ### Changed
 - Clarified repository purpose/status and added an org-level repository catalog.
 - Added always-on metadata CI checks (ZSE manifest coverage + markdown link validation).

@@ -1,5 +1,8 @@
 // scripts/register-sbcs.ts
 // Codifies core Sovereign Business Cells (SBC) in fiscal-intelligence.clar
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   makeContractCall,
   broadcastTransaction,
@@ -8,14 +11,69 @@ import {
   uintCV,
   stringAsciiCV,
 } from '@stacks/transactions';
-import { StacksTestnet } from '@stacks/network';
+import { networkFromName } from '@stacks/network';
 
-const network = new StacksTestnet();
-const privateKey = 'YOUR_PRIVATE_KEY'; // To be sourced from BOS Secrets
+const network = networkFromName('testnet');
+const modulePath = fileURLToPath(import.meta.url);
 
 const sbcs = ["Conxian-Core", "Nexus-Labs", "Fiscal-Auth", "Sovereign-Ops"];
 
-async function registerSBCs() {
+function loadDotEnvIfPresent() {
+  const moduleDir = dirname(modulePath);
+  const searchDirs = [resolve(moduleDir, '..'), moduleDir, process.cwd()];
+
+  const envPath = searchDirs
+    .map((dir) => resolve(dir, '.env'))
+    .find((candidate) => existsSync(candidate));
+
+  if (!envPath) return;
+
+  const fileText = readFileSync(envPath, 'utf8');
+  for (const rawLine of fileText.split(/\r?\n/u)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+
+    const eqIndex = line.indexOf('=');
+    if (eqIndex === -1) continue;
+
+    const key = line.slice(0, eqIndex).trim();
+    if (!key) continue;
+
+    let value = line.slice(eqIndex + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+
+    if (process.env[key] === undefined) {
+      process.env[key] = value;
+    }
+  }
+}
+
+function requirePrivateKey(): string {
+  const privateKey = process.env.STX_PRIVATE_KEY?.trim();
+
+  if (
+    !privateKey ||
+    privateKey === 'CHANGEME' ||
+    privateKey === 'your_private_key_here' ||
+    privateKey === 'YOUR_PRIVATE_KEY' ||
+    privateKey === '<your_stacks_private_key_here>'
+  ) {
+    throw new Error(
+      'STX_PRIVATE_KEY is missing or still set to a placeholder value; please provide a real private key'
+    );
+  }
+
+  return privateKey;
+}
+
+async function registerSBCs(privateKey: string) {
+  const failures: Array<{ sbc: string; error: string; reason: string }> = [];
+
   for (const sbc of sbcs) {
     const txOptions = {
       contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
@@ -30,9 +88,34 @@ async function registerSBCs() {
     };
 
     const transaction = await makeContractCall(txOptions);
-    const broadcastResponse = await broadcastTransaction(transaction, network);
+    const broadcastResponse = await broadcastTransaction({ transaction, network });
+    if ('error' in broadcastResponse) {
+      console.error(`Failed to register SBC "${sbc}":`, broadcastResponse);
+      failures.push({ sbc, error: broadcastResponse.error, reason: broadcastResponse.reason });
+      continue;
+    }
     console.log(`Registering SBC: ${sbc} - TX ID: ${broadcastResponse.txid}`);
+  }
+
+  if (failures.length > 0) {
+    const summary = failures
+      .map((f) => `${f.sbc} (${f.error}: ${f.reason})`)
+      .join(', ');
+    throw new Error(`Failed to register SBCs: ${summary}`);
   }
 }
 
-registerSBCs().catch(console.error);
+async function main() {
+  loadDotEnvIfPresent();
+  const privateKey = requirePrivateKey();
+  await registerSBCs(privateKey);
+}
+
+const isMain = process.argv.slice(1).some((arg) => resolve(arg) === modulePath);
+
+if (isMain) {
+  main().catch((err) => {
+    console.error(err);
+    process.exitCode = 1;
+  });
+}
