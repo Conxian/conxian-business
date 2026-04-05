@@ -14,6 +14,13 @@ Provide a concise but comprehensive summary of the changes in this Pull Request.
 - [ ] 🔒 Security / Compliance Enhancement
 - [ ] 🧹 Maintenance / Chore
 
+### BOS change classification
+*Select exactly one:*
+- [ ] docs-only
+- [ ] stub-isolation
+- [ ] dev-only implementation
+- [ ] production implementation
+
 ### Checklist
 - [ ] I have performed a self-review of my own work.
 - [ ] If label-gated suites apply, I have applied (or requested a maintainer to apply) the correct PR label(s) so the relevant CI suites run (see [`RELEASE_HYGIENE.md`](./RELEASE_HYGIENE.md)).
