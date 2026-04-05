@@ -24,11 +24,8 @@ def check_links():
             parsed = urlparse(link)
             link_path = parsed.path
 
-            if not link_path.endswith('.md'):
-                continue
-
-            # Clean up link (remove fragments)
-            if not link_path:
+            # Only validate local markdown files; urlparse already strips fragments and queries.
+            if not link_path or not link_path.endswith('.md'):
                 continue
 
             # Resolve relative path
