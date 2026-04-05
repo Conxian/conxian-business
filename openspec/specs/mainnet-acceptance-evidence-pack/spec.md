@@ -50,8 +50,8 @@ The evidence pack MUST include:
 
 - Repository name
 - Promotion PR link
-- Pre-merge tip-of-`main` SHA (e.g. `git rev-parse origin/main`)
-- Merge-base of `main` and `staged` SHA (e.g. `git merge-base origin/main origin/staged`)
+- Pre-merge tip-of-`main` SHA (e.g. `git rev-parse <canonical-remote>/main`)
+- Merge-base of `main` and `staged` SHA (e.g. `git merge-base <canonical-remote>/main <canonical-remote>/staged`)
 - `staged` head commit SHA
 - SHA capture timing (ISO 8601 UTC timestamp for when the above SHAs were captured)
 - Change owner (single accountable human)
@@ -60,9 +60,13 @@ The evidence pack MUST include:
 
 Together, these SHAs and the capture timestamp identify the exact change window being promoted (from the merge-base to the `staged` head), the pre-merge state of `main`, and when that snapshot was taken.
 
-Capture these SHAs **before merging** the promotion PR (while the PR is open). You MUST run `git fetch <canonical-remote> main staged` first so that the `<canonical-remote>/*` refs are current (in most clones, `<canonical-remote>` will be `origin`).
+Capture these SHAs **before merging** the promotion PR (while the PR is open). You MUST run `git fetch --prune <canonical-remote> main staged` first so that the `<canonical-remote>/*` refs are current (in most clones, `<canonical-remote>` will be `origin`).
 
-After the merge (or any other updates to `origin/main`), re-running these commands will yield different values. Reviewers and auditors SHOULD rely on the SHAs recorded in the evidence pack as the source of truth for the pre-merge window.
+- Pre-merge tip-of-`main`: `git rev-parse <canonical-remote>/main`
+- Merge-base: `git merge-base <canonical-remote>/main <canonical-remote>/staged`
+- `staged` head: `git rev-parse <canonical-remote>/staged`
+
+After the merge (or any other updates to `<canonical-remote>/main`), re-running these commands will yield different values. Reviewers and auditors SHOULD rely on the SHAs recorded in the evidence pack as the source of truth for the pre-merge window.
 
 #### 2) Mainnet-only production scope
 
