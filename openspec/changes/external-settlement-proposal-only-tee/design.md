@@ -54,9 +54,11 @@ This design makes the boundaries between parsing, attestation, and execution exp
   - `rail`,
   - `raw_payload_hash`,
   - `normalized_settlement_hash`,
+  - `trigger_id`,
+  - `settlement_identifiers`,
   - `asset_path`,
-  - `proposal_kind = EXTERNAL_SETTLEMENT_TRIGGER`,
-  - `timelock_delay_blocks = 144`.
+  - `timelock_delay_blocks = 144`,
+  - and `oracle_verification` (including `oracle_proof_digest` as defined in `spec.md` §2.1).
 
 The attested artifact MUST NOT contain raw payload bytes.
 
@@ -118,6 +120,8 @@ Each rail MUST define a canonical identifier set used to populate `settlement_id
 
 `envelope_identifiers` (including `tx_index`) MUST NOT affect `normalized_settlement_hash`.
 
+`settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`; any host-supplied hints MUST be treated as non-authoritative, MUST be checked inside the TEE (no successful attestation on mismatch), and MUST NOT be forwarded into the attested output (see [spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical) for normative semantics).
+
 Replay protection and deterministic idempotency are enforced via `trigger_id` derived from `{ rail, normalized_settlement_hash }`.
 
 Trigger granularity:
@@ -147,21 +151,13 @@ The per-rail `tx_index` parentheticals below are summaries; the spec is authorit
 
 Canonical formatting requirements:
 
-For normative formatting/equality rules (including any optional reconciliation identifier keys), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical).
-
-Informal summary:
-
-- Values in `settlement_identifiers.transaction_identifiers` (which MUST all be strings, per §2.1.1) are canonicalized using Unicode NFC (per Unicode 15.1.0) and compared byte-for-byte over UTF-8; case is preserved unless a field-specific canonicalization rule (e.g., uppercasing `settlement_currency`) explicitly requires a transform (see §2.1.1).
-- `settlement_identifiers.transaction_identifiers` is present and is a JSON object whose values are strings; if it is missing, not an object, or any value is non-string, canonicalization fails for the corresponding settlement transaction and the transaction is invalid for external-settlement trigger purposes.
-- Each value in `settlement_identifiers.transaction_identifiers` is non-empty, its UTF-8 encoding after NFC normalization is at most 4096 bytes, and it excludes Unicode control/format characters (`General_Category` Cc or Cf), the replacement character `U+FFFD`, and leading/trailing Unicode whitespace (`White_Space=Y`). See §2.1.1 for the precise normative rules.
-- If any value in `settlement_identifiers.transaction_identifiers` fails canonicalization or validation under §2.1.1, that settlement transaction is invalid for external-settlement trigger purposes and does not produce a `normalized_settlement_hash` or `SovereignProposal`.
-- `envelope_identifiers.tx_index` is a non-negative integer (required); if it is absent or invalid, the settlement transaction is invalid for external-settlement trigger purposes. Any other optional `settlement_identifiers.envelope_identifiers.*` values are treated as absent if invalid and do not invalidate the settlement transaction for external-settlement trigger purposes.
+Canonicalization/validation and equality semantics for `settlement_identifiers` are normative in [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical); this design document intentionally does not restate them to avoid drift.
 
 Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
-Note: `trigger_id` MUST be a pure function of `{ rail, normalized_settlement_hash }`; differences in `raw_payload_hash` alone (e.g., different envelopes/messages carrying the same normalized settlement transaction) MUST NOT affect `trigger_id`.
+Note: `trigger_id` MUST be a pure function of `{ rail, normalized_settlement_hash }`, where `rail` is the canonical uppercase rail identifier defined in [spec.md §1.7](specs/external-settlement-proposal-only-tee/spec.md#idempotency-replay-protection) (e.g., `ISO20022`, `PAPSS`, or `BRICS`); differences in `raw_payload_hash` alone (e.g., different envelopes/messages carrying the same normalized settlement transaction) MUST NOT affect `trigger_id`.
 
-To ensure cross-implementation stability, `trigger_id` MUST be computed from a canonical encoding of `{ rail, normalized_settlement_hash }` (e.g., `sha256("external-settlement-trigger:v1" || JCS({ rail, normalized_settlement_hash }))`).
+To ensure cross-implementation stability, `trigger_id` MUST be derived exactly as specified in [spec.md §1.7 (Idempotency / replay protection)](specs/external-settlement-proposal-only-tee/spec.md#idempotency-replay-protection) (illustrative mental model only: `hexLower(sha256(utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))))`).
 
 ### 3.3 `SovereignProposal` (proposal lane)
 
