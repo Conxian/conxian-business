@@ -50,8 +50,8 @@ The evidence pack MUST include:
 
 - Repository name
 - Promotion PR link
-- Pre-merge tip-of-`main` SHA (e.g. `git rev-parse <canonical-remote>/main`)
-- Merge-base of `main` and `staged` SHA (e.g. `git merge-base <canonical-remote>/main <canonical-remote>/staged`)
+- Pre-merge tip-of-`main` SHA
+- Merge-base of `main` and `staged` SHA
 - `staged` head commit SHA
 - SHA capture timestamp (ISO 8601 UTC timestamp for when the above SHAs were captured)
 - Change owner (single accountable human)
@@ -140,9 +140,9 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 
 - Repo: `<org>/<repo>`
 - Promotion PR: <link>
-- Pre-merge tip-of-`main` SHA (e.g. `git rev-parse <canonical-remote>/main`): `<sha>`
-- Merge-base of `main` and `staged` SHA (e.g. `git merge-base <canonical-remote>/main <canonical-remote>/staged`): `<sha>`
-- Head (`staged`) SHA (e.g. `git rev-parse <canonical-remote>/staged`): `<sha>`
+- Pre-merge tip-of-`main` SHA: `<sha>`
+- Merge-base of `main` and `staged` SHA: `<sha>`
+- Head (`staged`) SHA: `<sha>`
 - SHA capture timestamp: `<YYYY-MM-DDTHH:MM:SSZ>` (ISO 8601 UTC; captured **before merge** after `git fetch --prune <canonical-remote> main staged`)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
