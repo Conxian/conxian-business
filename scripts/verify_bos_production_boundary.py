@@ -116,6 +116,7 @@ def main() -> int:
 
     # 4) Avoid hard-coded testnet defaults in operational scripts.
     testnet_network_literal = re.compile(r"networkFromName\(\s*['\"]testnet['\"]\s*\)")
+    # Matches testnet principals like "ST..." or "ST....contract-name" (case-insensitive).
     testnet_principal_literal = re.compile(
         r"['\"](?:ST|SN)[0-9A-Z]{20,}(?:\.[a-zA-Z0-9-]{1,128})?['\"]",
         re.IGNORECASE,
