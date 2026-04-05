@@ -19,7 +19,7 @@ def extract_bos_classification_section(body: str) -> str:
 
     start = None
     for i, line in enumerate(lines):
-        if line.strip().lower() == "### bos change classification":
+        if line.strip().lower().startswith("### bos change classification"):
             start = i + 1
             break
 
