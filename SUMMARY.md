@@ -16,6 +16,7 @@
 * [Mainnet acceptance evidence pack (staged -> main)](openspec/specs/mainnet-acceptance-evidence-pack/spec.md)
 * [Release hygiene — conxian-nexus](docs/RELEASE_HYGIENE_CONXIAN_NEXUS.md)
 * [CSF mainnet readiness gate](docs/CSF_MAINNET_READINESS_GATE.md)
+* [CSF-first operating sequence and proof gates](docs/CSF_FIRST_OPERATING_SEQUENCE_AND_PROOF_GATES.md)
 * [OpenSpec](openspec/README.md)
 
 ## 🤖 Business Operations System (BOS)
