@@ -73,7 +73,7 @@ function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, p
   }
 }
 
-function parseArgs(argv: string[]): { networkName: NetworkName; contract: string } {
+function parseArgs(argv: string[]): { networkName: NetworkName; contract: PrincipalParts } {
   let networkName: NetworkName | undefined;
   let contract: string | undefined;
 
@@ -107,8 +107,21 @@ function parseArgs(argv: string[]): { networkName: NetworkName; contract: string
   if (!networkName) usageAndExit('Missing required --network');
   if (!contract) usageAndExit('Missing required --contract');
 
-  assertStacksNetworkPrefix(networkName, '--contract', contract);
-  return { networkName, contract };
+  let contractParts: PrincipalParts;
+  try {
+    contractParts = parsePrincipal(contract);
+  } catch {
+    usageAndExit(`Invalid --contract principal: ${contract}`);
+  }
+
+  assertStacksNetworkPrefix(networkName, '--contract', contractParts.address);
+  if (contractParts.contractName !== 'fiscal-intelligence') {
+    usageAndExit(
+      `--contract must point to the fiscal-intelligence contract (got: ${contractParts.contractName})`
+    );
+  }
+
+  return { networkName, contract: contractParts };
 }
 
 function loadDotEnvIfPresent() {
@@ -167,16 +180,15 @@ function requirePrivateKey(): string {
 async function registerSBCs(params: {
   privateKey: string;
   networkName: NetworkName;
-  contract: string;
+  contract: PrincipalParts;
 }) {
   const network = networkFromName(params.networkName);
-  const contractParts = parsePrincipal(params.contract);
   const failures: Array<{ sbc: string; error: string; reason: string }> = [];
 
   for (const sbc of sbcs) {
     const txOptions = {
-      contractAddress: contractParts.address,
-      contractName: contractParts.contractName,
+      contractAddress: params.contract.address,
+      contractName: params.contract.contractName,
       functionName: 'codify-sbc',
       functionArgs: [stringAsciiCV(sbc)],
       senderKey: params.privateKey,
