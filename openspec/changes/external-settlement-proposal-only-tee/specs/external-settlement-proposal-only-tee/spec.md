@@ -66,7 +66,7 @@ Prohibited fields:
 - `raw_payload_bytes`
 - Any full parsed external-settlement payload structure (XML/JSON) beyond the canonical `settlement_identifiers`.
 
-#### 2.1.1 `settlement_identifiers` (per-rail canonical set) <a id="settlement-identifiers-canonical"></a><a id="211-settlement_identifiers-per-rail-canonical-set"></a>
+#### 2.1.1 `settlement_identifiers` (per-rail canonical set) <a id="settlement-identifiers-canonical"></a>
 
 `settlement_identifiers` MUST be a JSON object with two namespaces:
 
@@ -112,6 +112,7 @@ Canonical formatting requirements:
 
 - The normalization and validation rules in items 1–4 above apply to all values in `settlement_identifiers.transaction_identifiers` (including any optional reconciliation keys) and do not apply to fields outside `settlement_identifiers.transaction_identifiers`.
 - `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
+- `settlement_identifiers.envelope_identifiers` MUST be present and MUST be a JSON object. If the `settlement_identifiers.envelope_identifiers` member is absent or is not an object, the settlement transaction MUST be treated as invalid for external-settlement trigger purposes.
 - `envelope_identifiers.tx_index` MUST be a non-negative integer.
   - If `envelope_identifiers.tx_index` is absent or invalid, the settlement transaction MUST be treated as invalid for external-settlement trigger purposes.
 
