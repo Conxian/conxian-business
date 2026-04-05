@@ -106,9 +106,8 @@ Prohibited fields:
 - `raw_payload_bytes`
 - Any full parsed external-settlement payload structure (XML/JSON) beyond the canonical `settlement_identifiers`.
 
-<a id="settlement-identifiers-canonical"></a>
-
-#### 2.1.1 `settlement_identifiers` (per-rail canonical set)
+<a id="settlement-identifiers-canonical"></a><a id="211-settlement_identifiers-per-rail-canonical-set"></a>
+#### 2.1.1 `settlement_identifiers` (canonical set)
 
 `settlement_identifiers` MUST be a JSON object with two namespaces:
 
@@ -194,6 +193,8 @@ Note: This section intentionally tightens earlier guidance. These canonicalizati
 Any settlement transaction that fails any of the requirements above (including the type/structure requirements for `settlement_identifiers.transaction_identifiers` or canonicalization/validation of any of its values, including any optional reconciliation keys) MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
 `envelope_identifiers.tx_index` MUST satisfy the field requirements above. If `envelope_identifiers.tx_index` is missing or fails these requirements, the corresponding settlement transaction MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`. Any other `settlement_identifiers.envelope_identifiers` keys are optional metadata; if the value for an optional envelope identifier violates the structural/leaf-type constraints in this section (or any field-specific canonicalization rule for that key, if defined), implementations MUST treat that value as if the corresponding field were absent and MUST NOT treat the settlement transaction as invalid solely because of that field.
+
+Unrecognized keys under `settlement_identifiers.envelope_identifiers` MUST be treated as non-consensus metadata and MUST be ignored for external-settlement trigger purposes (including validity decisions). Their mere presence MUST NOT cause the settlement transaction to be treated as invalid, and they MUST NOT affect any trigger-critical computation such as `normalized_settlement_hash`.
 
 For both the TEE-derived canonical `settlement_identifiers` object and any host-supplied `settlement_identifiers` hints, implementations MUST drop any optional `settlement_identifiers.envelope_identifiers` fields (i.e., any keys other than `tx_index`) whose values individually violate the structural/leaf-type constraints in this section (or any field-specific canonicalization rule for that key, if defined) before enforcing the structural/leaf-type constraints, maximum depth/leaf-count bounds, or RFC 8785 JCS size bounds in this section, and before computing `normalized_settlement_hash`. Optional `settlement_identifiers.envelope_identifiers` fields MUST NOT be discarded in order to bypass the maximum nesting depth, maximum leaf-field count, or RFC 8785 JCS size bounds; any violation of those global bounds MUST be treated as a permanent validation failure.
 
