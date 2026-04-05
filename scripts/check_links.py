@@ -19,6 +19,14 @@ SKIP_DIRS = {
 }
 
 
+def _is_relative_to(path: Path, other: Path) -> bool:
+    try:
+        path.relative_to(other)
+        return True
+    except ValueError:
+        return False
+
+
 def _submodule_dirs() -> list[Path]:
     gitmodules = REPO_ROOT / '.gitmodules'
     if not gitmodules.exists():
@@ -41,27 +49,36 @@ def _uninitialized_submodule_dirs() -> list[Path]:
 
 
 def _is_within_uninitialized_submodule(path: Path, uninitialized_submodule_dirs: list[Path]) -> bool:
-    return any(path.is_relative_to(submodule_dir) for submodule_dir in uninitialized_submodule_dirs)
+    return any(_is_relative_to(path, submodule_dir) for submodule_dir in uninitialized_submodule_dirs)
+
+
+def _is_within_submodule(path: Path, submodule_dirs: list[Path]) -> bool:
+    return any(_is_relative_to(path, submodule_dir) for submodule_dir in submodule_dirs)
 
 
 def _find_markdown_files() -> list[Path]:
     md_files: list[Path] = []
     submodule_dirs = _submodule_dirs()
+
     for root, dirs, files in os.walk(REPO_ROOT):
         root_path = Path(root)
-        if any(root_path.is_relative_to(submodule_dir) for submodule_dir in submodule_dirs):
+
+        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
+
+        if _is_within_submodule(root_path.resolve(), submodule_dirs):
             dirs[:] = []
             continue
 
-        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
         dirs[:] = [
             d
             for d in dirs
-            if not any((root_path / d).resolve().is_relative_to(submodule_dir) for submodule_dir in submodule_dirs)
+            if not _is_within_submodule((root_path / d).resolve(), submodule_dirs)
         ]
+
         for name in files:
             if name.lower().endswith(('.md', '.markdown')):
-                md_files.append(Path(root) / name)
+                md_files.append(root_path / name)
+
     return md_files
 
 
@@ -80,6 +97,13 @@ def _repo_root_for(md_file: Path) -> Path:
             return REPO_ROOT
         current = current.parent
 
+
+def _extract_markdown_links(text: str) -> list[str]:
+    links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', text)
+    links.extend(re.findall(r'^\s*\[[^\]]+\]:\s*(\S+)', text, flags=re.M))
+    return links
+
+
 def check_links():
     md_files = _find_markdown_files()
     broken_links = []
@@ -93,8 +117,7 @@ def check_links():
         content = _strip_fenced_code_blocks(content)
 
         # Find markdown links [text](target)
-        links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
-        links.extend(re.findall(r'^\s*\[[^\]]+\]:\s*([^\s]+)', content, flags=re.M))
+        links = _extract_markdown_links(content)
 
         for link in links:
             link = link.strip()
@@ -121,9 +144,7 @@ def check_links():
             else:
                 target_path = (md_file.parent / href).resolve()
 
-            try:
-                target_path.relative_to(repo_root_for_file)
-            except ValueError:
+            if not _is_relative_to(target_path, repo_root_for_file):
                 broken_links.append((md_file, link, target_path))
                 continue
 
@@ -143,5 +164,6 @@ def check_links():
     if broken_links:
         sys.exit(1)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     check_links()
