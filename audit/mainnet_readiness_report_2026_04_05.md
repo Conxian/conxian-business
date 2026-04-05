@@ -4,23 +4,29 @@
 **Status:** READINESS AUDIT IN PROGRESS
 **Auditor:** Jules (cxn-arch-guardian)
 
-## 1. System Inventory (ZSE-safe)
+## 1. System Inventory (Database & Infrastructure)
 
-This repository is public, and the ZSE policy in `GOVERNANCE.md` prohibits publishing actionable infrastructure maps in Git.
+### A. Neon Project: Conxian-backend (orange-paper-76209725)
+- **Status:** Active, PG 17.
+- **Key Tables:**
+  - `cnx_bos.cxn_external_settlement_logs`: Tracking institutional egress signals.
+  - `cnx_bos.m_and_a_readiness`: Strategic growth tracking.
+  - `cnx_bos.treasury_runway`: Fiscal health monitoring.
+  - `neon_auth.*`: Managed authentication (Better Auth compatible).
+  - `public.mmr_nodes`: Verifiable state commitment storage.
 
-**Canonical inventory (provider/project identifiers, service IDs, schema/table names):** maintained in Linear under CON-416 / CON-421.
+### B. Supabase Project: Conxian-platform (iczqutrbbfudfzfplymc)
+- **Status:** Active, PG 17.
+- **Key Tables:**
+  - `public.deployment_efficiency`: Monitoring release velocity and CI health.
+  - `public.runway_metrics`: Real-time fiscal telemetry.
+  - `public.yield_events`: Protocol revenue and yield tracking.
+  - `public.ip_audit_logs`: Intellectual Property and ZSE compliance auditing.
+  - `public.erp_sync_events`: OData v4 / ISO 20022 synchronization logs.
 
-### A. Managed Postgres (Neon)
-- **Status:** Active (PG 17).
-- **Scope (high level):** institutional egress telemetry, treasury/runway monitoring, managed auth, and verifiable state commitment storage.
-
-### B. Managed Postgres (Supabase)
-- **Status:** Active (PG 17).
-- **Scope (high level):** deployment/CI health metrics, runway metrics, yield events, IP/ZSE audit logging, and ERP sync event logging.
-
-### C. Hosting / Compute (Render)
+### C. Render Workspace: Conxian-Business (tea-d6u0edngi27c73dvhsg0)
 - **Status:** Operational.
-- **Services:** maintained in Linear inventory (see CON-416 / CON-421).
+- **Services:** [Inventory Pending - Requires explicit service listing]
 
 ## 2. Production Readiness Checklist
 
