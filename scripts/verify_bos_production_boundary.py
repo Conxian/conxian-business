@@ -40,8 +40,9 @@ def git_ls_files(root: str) -> list[str]:
             stderr=subprocess.STDOUT,
         )
     except (subprocess.CalledProcessError, FileNotFoundError) as exc:
-        print(f"Failed to enumerate tracked files via git in {root}: {exc}")
-        sys.exit(1)
+        raise RuntimeError(
+            f"Failed to enumerate tracked files via git in {root}: {exc}"
+        ) from exc
     return [p for p in out.decode("utf-8", errors="replace").split("\x00") if p]
 
 
@@ -57,11 +58,15 @@ def main() -> int:
     excluded_dirs = {".idx"} | submodules
 
     excluded_paths = {p.rstrip("/") for p in excluded_dirs if p.rstrip("/")}
-    repo_files = [
-        p
-        for p in git_ls_files(root)
-        if not any(is_in_dir(p, ex) for ex in excluded_paths)
-    ]
+    try:
+        repo_files = [
+            p
+            for p in git_ls_files(root)
+            if not any(is_in_dir(p, ex) for ex in excluded_paths)
+        ]
+    except RuntimeError as exc:
+        print(str(exc))
+        return 1
 
     errors: list[str] = []
 
