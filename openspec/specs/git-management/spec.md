@@ -5,6 +5,7 @@
 Define the minimum git and submodule management capabilities needed to operate the Conxian workspace (status visibility, clean working trees, and safe synchronization).
 
 This spec also defines the canonical branch and promotion model used across the Conxian portfolio.
+
 ## Requirements
 
 ### Requirement: Canonical environment branches
@@ -108,4 +109,3 @@ The system MUST detect and report missing or inconsistent submodule definitions 
 - **WHEN** a workspace audit or sync is initiated
 - **THEN** the system validates that all submodules in the index have valid `.gitmodules` entries
 - **AND** it reports missing mappings as a blocking error
-
