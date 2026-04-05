@@ -151,7 +151,7 @@ The per-rail `tx_index` parentheticals below are summaries; the spec is authorit
 
 Canonical formatting requirements:
 
-Required `settlement_identifiers` structure, canonicalization/validation, and equality semantics (including `settlement_identifiers.envelope_identifiers`) are normative in [spec.md §2.1.1 (`settlement_identifiers` canonical set)](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical); this design document intentionally does not restate them to avoid drift.
+See [spec.md §2.1.1 (`settlement_identifiers` canonical set)](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical) for the required `settlement_identifiers` structure (including `settlement_identifiers.envelope_identifiers`), canonicalization/validation rules, and equality semantics; this design document intentionally does not restate them to avoid drift.
 
 Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
