@@ -41,7 +41,7 @@ The workspace MUST enforce an ordered promotion path.
 
 ### Requirement: Mainnet acceptance evidence for `staged` -> `main`
 
-Any `staged` -> `main` promotion MUST include a Mainnet Acceptance Evidence Pack that satisfies all requirements defined in the canonical spec at `openspec/specs/mainnet-acceptance-evidence-pack/spec.md`.
+Any `staged` -> `main` promotion MUST include a Mainnet Acceptance Evidence Pack that satisfies all requirements defined in the canonical [mainnet-acceptance-evidence-pack spec](../mainnet-acceptance-evidence-pack/spec.md).
 
 #### Scenario: Attempting to promote directly into main from a non-staged branch
 
@@ -55,10 +55,6 @@ Any `staged` -> `main` promotion MUST include a Mainnet Acceptance Evidence Pack
 - **AND** its source branch is not `dev`
 - **AND** its source branch does not match `hotfix/*`
 - **THEN** the promotion MUST be rejected
-
-### Requirement: Mainnet acceptance evidence for `staged` -> `main`
-
-Any `staged` -> `main` promotion MUST include a Mainnet Acceptance Evidence Pack that satisfies all requirements defined in the canonical spec at [openspec/specs/mainnet-acceptance-evidence-pack/spec.md](../mainnet-acceptance-evidence-pack/spec.md).
 
 ### Requirement: Ownership and business-unit boundaries
 
