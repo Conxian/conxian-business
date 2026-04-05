@@ -1,36 +1,36 @@
-# Conxian Showcase DApp (March 2026 Audit Baseline)
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-The **Conxian Showcase DApp** is a reference implementation demonstrating the integration of Conxian protocol primitives (Clarity) with a modern web frontend (Next.js 15).
+## Getting Started
 
-## Purpose
-- Provide a "living specification" for frontend developers.
-- Demonstrate standard patterns for wallet connection, contract interaction, and ZSE (Zero Secret Egress) compliance in the browser.
-- Serve as a staging ground for new UI components from `conxian-ui`.
-
-## Status
-**Incubating.** This is a demonstration tool and reference implementation. For production-ready interfaces, see [Conxian UI](../conxian-ui) and [Conxius Wallet](../conxius-wallet).
-
-## Relationship to the Conxian stack
-- **Consumer**: Interacts with `Conxian` protocol contracts and `conxian-gateway` APIs.
-- **Showcase**: Uses the centralized component library from `conxian-ui`.
-- **Standard-bearer**: Enforces the Conxian Lexicon Enforcement Protocol (cxn- prefixing).
-
-## Development
+First, run the development server:
 
 ```bash
-cd showcase-dapp
-pnpm install
-pnpm run dev
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Governance
-This module is part of the Conxian Sovereign Autonomous Business (SAB).
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- [**LICENSE**](./LICENSE): GNU GPL v3.0.
-- [**CONTRIBUTING.md**](./CONTRIBUTING.md): Project-specific contribution guidance.
-- [**SECURITY.md**](./SECURITY.md): Security reporting process.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-For ecosystem-level governance, see the [Root Governance](../GOVERNANCE.md).
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
----
-🛡️ **Sovereign Autonomous Business (SAB)**. © 2026 Conxian-Labs.
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
