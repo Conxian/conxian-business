@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 import os
 import configparser
@@ -80,9 +82,39 @@ def _find_markdown_files() -> list[Path]:
 
 
 def _strip_fenced_code_blocks(text: str) -> str:
-    text = re.sub(r'```.*?```', '', text, flags=re.S)
-    text = re.sub(r'~~~.*?~~~', '', text, flags=re.S)
-    return text
+    kept_lines: list[str] = []
+
+    in_fence = False
+    fence_char = ''
+    fence_len = 0
+
+    for line in text.splitlines(keepends=True):
+        if not in_fence:
+            match = re.match(
+                r'^[ ]{0,3}(?:>[ ]*)*(?:(?:[*+-]|\d+\.)[ \t]+)?(?:>[ ]*)*([`~]{3,})',
+                line,
+            )
+            if not match:
+                kept_lines.append(line)
+                continue
+
+            fence = match.group(1)
+            in_fence = True
+            fence_char = fence[0]
+            fence_len = len(fence)
+            continue
+
+        closing_match = re.match(
+            rf'^[ ]{{0,3}}(?:>[ ]*)*{re.escape(fence_char)}{{{fence_len},}}[ \t]*$',
+            line,
+        )
+        if closing_match:
+            in_fence = False
+            fence_char = ''
+            fence_len = 0
+            continue
+
+    return ''.join(kept_lines)
 
 
 def _repo_root_for(md_file: Path) -> Path:
