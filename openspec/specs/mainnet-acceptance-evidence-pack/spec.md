@@ -50,7 +50,7 @@ The evidence pack MUST include:
 
 - Repository name
 - Promotion PR link
-- Base (`main`) SHA (tip at promotion time, e.g. `git rev-parse origin/main`)
+- Tip-of-`main` SHA at promotion time (e.g. `git rev-parse origin/main`)
 - Merge-base of `main` and `staged` SHA (e.g. `git merge-base origin/main origin/staged`)
 - `staged` head commit SHA
 - Change owner (single accountable human)
@@ -129,7 +129,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 
 - Repo: `<org>/<repo>`
 - Promotion PR: <link>
-- Base (`main`) SHA (tip at promotion time, e.g. `git rev-parse origin/main`): `<sha>`
+- Tip-of-`main` SHA at promotion time (e.g. `git rev-parse origin/main`): `<sha>`
 - Merge-base SHA (e.g. `git merge-base origin/main origin/staged`): `<sha>`
 - Head (`staged`) SHA: `<sha>`
 - Accountable owner: `<name>` (`<GitHub handle>`, optional: `<public Linear profile URL if available>`)
