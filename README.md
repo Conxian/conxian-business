@@ -1,4 +1,4 @@
-# Conxian: Sovereign Business Operations System (BOS v1.8.2)
+# Conxian: Sovereign Business Operations System (BOS v1.9.0)
 
 This repository is the programmatic **State Machine** for Conxian operations. We have evolved from a system that runs on infrastructure to a system that **is** infrastructure—living directly on Bitcoin.
 
