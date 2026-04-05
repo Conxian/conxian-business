@@ -31,7 +31,7 @@ To ensure the integrity of the Conxian Production Environment, all repositories 
   - **Patterns**: Prefer precise patterns (word boundaries) over broad substrings (avoid generic terms like "placeholder" unless heavily scoped).
   - **Example**:
     ```bash
-    rg -n \
+    if rg -n \
       --glob 'contracts/**' \
       --glob 'src/**' \
       --glob '!**/test/**' \
@@ -39,7 +39,10 @@ To ensure the integrity of the Conxian Production Environment, all repositories 
       --glob '!**/__tests__/**' \
       --glob '!**/fixtures/**' \
       --glob '!**/mocks/**' \
-      '\bMOCK_[A-Z0-9_]+\b|\bstub-func\b'
+      '\bMOCK_[A-Z0-9_]+\b|\bstub-func\b'; then
+      echo 'ERROR: non-production patterns detected in production paths'
+      exit 1
+    fi
     ```
 - **Submodule Integrity**: Parent repositories (like `conxian-business`) must ensure all submodules are pinned to their respective production-ready commits before merging to `main`.
 
