@@ -1,6 +1,7 @@
 import re
 import os
 import configparser
+from functools import lru_cache
 from pathlib import Path
 import sys
 
@@ -27,10 +28,11 @@ def _is_relative_to(path: Path, other: Path) -> bool:
         return False
 
 
-def _submodule_dirs() -> list[Path]:
+@lru_cache(maxsize=1)
+def _submodule_dirs() -> tuple[Path, ...]:
     gitmodules = REPO_ROOT / '.gitmodules'
     if not gitmodules.exists():
-        return []
+        return ()
 
     config = configparser.ConfigParser(interpolation=None)
     config.read(gitmodules, encoding='utf-8')
@@ -41,18 +43,18 @@ def _submodule_dirs() -> list[Path]:
         if config.has_option(section, 'path')
     ]
 
-    return [(REPO_ROOT / p).resolve() for p in submodule_paths]
+    return tuple((REPO_ROOT / p).resolve() for p in submodule_paths)
 
 
-def _uninitialized_submodule_dirs() -> list[Path]:
-    return [d for d in _submodule_dirs() if not (d / '.git').exists()]
+def _uninitialized_submodule_dirs() -> tuple[Path, ...]:
+    return tuple(d for d in _submodule_dirs() if not (d / '.git').exists())
 
 
-def _is_within_uninitialized_submodule(path: Path, uninitialized_submodule_dirs: list[Path]) -> bool:
+def _is_within_uninitialized_submodule(path: Path, uninitialized_submodule_dirs: tuple[Path, ...]) -> bool:
     return any(_is_relative_to(path, submodule_dir) for submodule_dir in uninitialized_submodule_dirs)
 
 
-def _is_within_submodule(path: Path, submodule_dirs: list[Path]) -> bool:
+def _is_within_submodule(path: Path, submodule_dirs: tuple[Path, ...]) -> bool:
     return any(_is_relative_to(path, submodule_dir) for submodule_dir in submodule_dirs)
 
 
@@ -64,11 +66,6 @@ def _find_markdown_files() -> list[Path]:
         root_path = Path(root)
 
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
-
-        if _is_within_submodule(root_path.resolve(), submodule_dirs):
-            dirs[:] = []
-            continue
-
         dirs[:] = [
             d
             for d in dirs
