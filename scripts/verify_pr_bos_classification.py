@@ -13,9 +13,10 @@ CLASSIFICATION_LABELS = [
 
 
 BOS_CLASSIFICATION_HEADER_RE = re.compile(
-    r"^\s*#{1,6}\s*bos change classification\s*:?\s*$", re.IGNORECASE
+    r"^[ ]{0,3}#{1,6}\s*bos change classification\s*:?\s*#*\s*$",
+    re.IGNORECASE,
 )
-HEADING_RE = re.compile(r"^\s*#{1,6}\s*\S")
+HEADING_RE = re.compile(r"^[ ]{0,3}#{1,6}\s*\S")
 
 CLASSIFICATION_LABELS_BY_NORMALIZED = {label.lower(): label for label in CLASSIFICATION_LABELS}
 
@@ -25,7 +26,7 @@ def extract_bos_classification_section(body: str) -> str:
 
     start = None
     for i, line in enumerate(lines):
-        if BOS_CLASSIFICATION_HEADER_RE.match(line.strip()):
+        if BOS_CLASSIFICATION_HEADER_RE.match(line):
             start = i + 1
             break
 
@@ -33,7 +34,7 @@ def extract_bos_classification_section(body: str) -> str:
         return ""
 
     end = next(
-        (j for j in range(start, len(lines)) if HEADING_RE.match(lines[j].lstrip())),
+        (j for j in range(start, len(lines)) if HEADING_RE.match(lines[j])),
         len(lines),
     )
     return "\n".join(lines[start:end])
