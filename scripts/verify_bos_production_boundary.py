@@ -69,7 +69,7 @@ def main() -> int:
             if not any(is_in_dir(p, ex) for ex in excluded_paths)
         ]
     except RuntimeError as exc:
-        print(str(exc))
+        print(str(exc), file=sys.stderr)
         return 1
 
     errors: list[str] = []

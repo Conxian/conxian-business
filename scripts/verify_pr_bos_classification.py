@@ -25,7 +25,7 @@ def extract_bos_classification_section(body: str) -> str:
 
     start = None
     for i, line in enumerate(lines):
-        if BOS_CLASSIFICATION_HEADER_RE.match(line.strip()):
+        if BOS_CLASSIFICATION_HEADER_RE.match(line):
             start = i + 1
             break
 
