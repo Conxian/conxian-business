@@ -229,4 +229,5 @@ Prohibited fields:
 14. Canonical `settlement_identifiers` exceed the bounds in §2.1.1 → TEE refuses to produce a successful attestation.
 15. `oracle_verification.oracle_proof_bytes_b64` (if present) does not match the persisted `raw_oracle_proof_bytes` or does not hash to `oracle_proof_digest` → proposal emission fails.
 16. `oracle_verification.oracle_proof_bytes_b64` is not valid base64url (e.g., contains padding `=` or characters outside `[A-Za-z0-9_-]`) → proposal emission fails.
-17. Missing, truncated, or oversized persisted `raw_oracle_proof_bytes` for an attested trigger → proposal emission fails.
+17. Truncated or oversized persisted `raw_oracle_proof_bytes` for an attested trigger, or missing persisted `raw_oracle_proof_bytes` when `oracle_verification.oracle_proof_bytes_b64` is also unavailable → proposal emission fails.
+18. `oracle_verification.oracle_proof_bytes_b64` exceeds the 21846-character maximum length (even if otherwise valid base64url) → proposal emission fails.
