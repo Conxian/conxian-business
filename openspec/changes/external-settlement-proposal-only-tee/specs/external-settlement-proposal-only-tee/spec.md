@@ -101,7 +101,9 @@ Prohibited fields:
 - `raw_payload_bytes`
 - Any full parsed external-settlement payload structure (XML/JSON) beyond the canonical `settlement_identifiers`.
 
-#### 2.1.1 `settlement_identifiers` (per-rail canonical set) <a id="settlement-identifiers-canonical"></a>
+<h4 id="settlement-identifiers-canonical">2.1.1 <code>settlement_identifiers</code> (per-rail canonical set)</h4>
+
+<a id="211-settlement_identifiers-per-rail-canonical-set"></a>
 
 `settlement_identifiers` MUST be a JSON object with two namespaces:
 
@@ -175,9 +177,9 @@ Canonical formatting requirements:
 
 - The normalization and validation rules in items 1–4 above apply to all values in `settlement_identifiers.transaction_identifiers` (including any optional reconciliation keys) and do not apply to fields outside `settlement_identifiers.transaction_identifiers`.
 - `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
-- `settlement_identifiers.envelope_identifiers` MUST be present and MUST be a JSON object (it contains the required `envelope_identifiers.tx_index`). If the `settlement_identifiers.envelope_identifiers` member is absent or is not an object, the settlement transaction MUST be treated as invalid for external-settlement trigger purposes.
+- `settlement_identifiers.envelope_identifiers` MUST be present and MUST be a JSON object containing the required `envelope_identifiers.tx_index`.
 - `envelope_identifiers.tx_index` MUST be a JSON number that is an integer in the range `[0, 9007199254740991]` (inclusive, i.e. `2^53-1`).
-  - If `envelope_identifiers.tx_index` is absent or invalid, the settlement transaction MUST be treated as invalid for external-settlement trigger purposes.
+  - If `settlement_identifiers.envelope_identifiers` is absent or is not an object, or `envelope_identifiers.tx_index` is absent or invalid, the settlement transaction MUST be treated as invalid for external-settlement trigger purposes.
 
 Note: This section intentionally tightens earlier guidance. These canonicalization and structural requirements are normative for the current `external-settlement-trigger:v1` definition.
 
