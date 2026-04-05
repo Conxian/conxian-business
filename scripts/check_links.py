@@ -64,6 +64,12 @@ def check_links():
             base_dir = REPO_ROOT if href.startswith('/') else md_file.parent
             target_path = (base_dir / href.lstrip('/')).resolve()
 
+            try:
+                target_path.relative_to(repo_root_for_file)
+            except ValueError:
+                broken_links.append((md_file, link, target_path))
+                continue
+
             if not target_path.exists():
                 try:
                     target_rel = target_path.relative_to(REPO_ROOT)
