@@ -31,7 +31,7 @@ These are the “operating-model” documents that explain how BOS components re
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
 | `conxian-business/SERVICE_LOOP.md` | Canonical | Public-safe | BOS service loop (how client/supplier loops connect). |
-| `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Internal-only | BOS state machine definition (automation substrate; public repo stub). |
+| `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Public-safe | Public-safe BOS state machine pointer stub; canonical internal definition is maintained outside this repo. |
 | `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Canonical | Internal-only | Intended Linear ↔ state-layer wiring and webhook triggers. |
 | `Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md` | Supporting | Internal-only | Bottleneck and deployment efficiency metrics. |
 | `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md` | Supporting | Internal-only | Strategy velocity tracking and exit-readiness framing. |
