@@ -25,5 +25,8 @@ assignees: []
 ### Environment
 <!-- OS, browser, app/component, version/commit, etc. -->
 
+### Impact
+<!-- How severe is this for you? (e.g., blocker, high, medium, low) -->
+
 ### Additional context
 <!-- Logs, screenshots, environment details, etc. -->
