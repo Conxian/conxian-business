@@ -11,7 +11,7 @@ The Founder’s Cut amount MUST equal `floor( captured_protocol_fees * 0.001 )`,
 
 Founder’s Cut MUST be computed on captured protocol fees before any internal protocol allocations (reserve/ops/incentives).
 
-Any rounding remainder MUST remain in the protocol treasury/vault balance of the transaction’s fee asset.
+Any truncation remainder from the Founder’s Cut calculation (arising from integer token amounts and the use of floor) MUST remain in the protocol treasury/vault balance of the transaction’s fee asset and MUST NOT be credited to the founder vault.
 
 #### Scenario: Fee Redirection
 - **Given** a successful swap or lending event

@@ -62,7 +62,7 @@ Target flow (high level):
 user tx
   -> module fee is charged (swap/lending/etc)
   -> protocol fee balance accrues in a fee vault / treasury contract
-  -> captured protocol fees are determined (after external/third-party distributions)
+  -> captured protocol fees are determined (the protocol-retained portion of each transaction’s fee after applying any third-party distributions)
   -> allocation policy applies:
       - Founder’s Cut carve-out -> contract-level founder vault
       - reserve / continuity
