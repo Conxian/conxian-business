@@ -19,7 +19,7 @@ SKIP_DIRS = {
 }
 
 
-def _uninitialized_submodule_dirs() -> list[Path]:
+def _submodule_dirs() -> list[Path]:
     gitmodules = REPO_ROOT / '.gitmodules'
     if not gitmodules.exists():
         return []
@@ -33,8 +33,11 @@ def _uninitialized_submodule_dirs() -> list[Path]:
         if config.has_option(section, 'path')
     ]
 
-    dirs = [(REPO_ROOT / p).resolve() for p in submodule_paths]
-    return [d for d in dirs if not (d / '.git').exists()]
+    return [(REPO_ROOT / p).resolve() for p in submodule_paths]
+
+
+def _uninitialized_submodule_dirs() -> list[Path]:
+    return [d for d in _submodule_dirs() if not (d / '.git').exists()]
 
 
 def _is_within_uninitialized_submodule(path: Path, uninitialized_submodule_dirs: list[Path]) -> bool:
@@ -43,12 +46,29 @@ def _is_within_uninitialized_submodule(path: Path, uninitialized_submodule_dirs:
 
 def _find_markdown_files() -> list[Path]:
     md_files: list[Path] = []
+    submodule_dirs = _submodule_dirs()
     for root, dirs, files in os.walk(REPO_ROOT):
+        root_path = Path(root)
+        if any(root_path.is_relative_to(submodule_dir) for submodule_dir in submodule_dirs):
+            dirs[:] = []
+            continue
+
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
+        dirs[:] = [
+            d
+            for d in dirs
+            if not any((root_path / d).resolve().is_relative_to(submodule_dir) for submodule_dir in submodule_dirs)
+        ]
         for name in files:
             if name.lower().endswith(('.md', '.markdown')):
                 md_files.append(Path(root) / name)
     return md_files
+
+
+def _strip_fenced_code_blocks(text: str) -> str:
+    text = re.sub(r'```.*?```', '', text, flags=re.S)
+    text = re.sub(r'~~~.*?~~~', '', text, flags=re.S)
+    return text
 
 
 def _repo_root_for(md_file: Path) -> Path:
@@ -70,8 +90,11 @@ def check_links():
         with open(md_file, 'r', encoding='utf-8') as f:
             content = f.read()
 
+        content = _strip_fenced_code_blocks(content)
+
         # Find markdown links [text](target)
         links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
+        links.extend(re.findall(r'^\s*\[[^\]]+\]:\s*([^\s]+)', content, flags=re.M))
 
         for link in links:
             link = link.strip()
@@ -86,7 +109,7 @@ def check_links():
             if not clean_link:
                 continue
 
-            href = clean_link.split()[0]
+            href = clean_link.split()[0].strip('<>')
             href_lower = href.lower()
 
             # Only validate repository-local markdown files
