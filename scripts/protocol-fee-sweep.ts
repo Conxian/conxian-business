@@ -248,8 +248,8 @@ async function quoteDy(
 }
 
 function computeMinDy(quotedDy: bigint, slippageBps: bigint): bigint {
-  if (slippageBps > 10_000n) {
-    throw new Error(`slippage-bps must be <= 10000 (got: ${slippageBps})`);
+  if (slippageBps >= 10_000n) {
+    throw new Error(`Invalid --slippage-bps=${slippageBps}; expected 0..9999`);
   }
   return (quotedDy * (10_000n - slippageBps)) / 10_000n;
 }
@@ -534,6 +534,10 @@ async function main() {
 
   if (networkName === 'testnet' && !(targetPrincipal.startsWith('ST') || targetPrincipal.startsWith('SN'))) {
     usageAndExit('On testnet, --target must start with ST or SN');
+  }
+
+  if (slippageBps >= 10_000n) {
+    usageAndExit(`Invalid --slippage-bps=${slippageBps.toString()}; expected 0..9999`);
   }
 
   const network = createNetwork(networkName);
