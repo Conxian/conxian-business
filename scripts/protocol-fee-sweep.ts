@@ -15,6 +15,7 @@ import {
   ClarityType,
   type ClarityValue,
   contractPrincipalCV,
+  Pc,
   someCV,
   noneCV,
   uintCV,
@@ -46,6 +47,7 @@ type PrincipalParts = {
 
 type SweepPlanItem = {
   token: string;
+  assetName: string;
   dx: string;
   quotedDy: string;
   minDy: string;
@@ -215,12 +217,12 @@ async function fetchFungibleTokenBalances(
   return out;
 }
 
-function assetIdentifierToTokenPrincipal(assetIdentifier: string): string {
+function assetIdentifierToTokenAsset(assetIdentifier: string): { token: string; assetName: string } {
   const parts = assetIdentifier.split('::');
   if (parts.length !== 2 || !parts[0] || !parts[1]) {
     throw new Error(`Unsupported asset identifier: ${assetIdentifier}`);
   }
-  return parts[0];
+  return { token: parts[0], assetName: parts[1] };
 }
 
 async function quoteDy(
@@ -272,7 +274,8 @@ async function buildSweepPlan(params: {
   const targetPrincipal = `${params.target.address}.${params.target.contractName}`;
 
   for (const [assetIdentifier, balance] of Object.entries(balances)) {
-    const tokenPrincipal = assetIdentifierToTokenPrincipal(assetIdentifier);
+    const tokenAsset = assetIdentifierToTokenAsset(assetIdentifier);
+    const tokenPrincipal = tokenAsset.token;
     if (tokenPrincipal === targetPrincipal) continue;
 
     if (params.allowlist.size > 0 && !params.allowlist.has(tokenPrincipal)) continue;
@@ -314,6 +317,7 @@ async function buildSweepPlan(params: {
 
     plan.push({
       token: tokenPrincipal,
+      assetName: tokenAsset.assetName,
       dx: dx.toString(),
       quotedDy: quote.ok.toString(),
       minDy: minDy.toString(),
@@ -325,7 +329,18 @@ async function buildSweepPlan(params: {
   return { plan, skipped };
 }
 
+async function fetchAccountNonce(apiBase: string, address: string): Promise<bigint> {
+  const res = await fetch(`${apiBase}/v2/accounts/${address}?proof=0`);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch nonce for ${address}: ${res.status} ${res.statusText}`);
+  }
+
+  const json = (await res.json()) as { nonce: number | string };
+  return BigInt(json.nonce);
+}
+
 async function executeSweepPlan(params: {
+  apiBase: string;
   network: StacksNetwork;
   feeVaultAddress: string;
   privateKey: string;
@@ -333,6 +348,8 @@ async function executeSweepPlan(params: {
   target: PrincipalParts;
   plan: SweepPlanItem[];
 }): Promise<void> {
+  let nonce = await fetchAccountNonce(params.apiBase, params.feeVaultAddress);
+
   for (const item of params.plan) {
     const tokenX = parsePrincipal(item.token);
     const dx = BigInt(item.dx);
@@ -352,10 +369,15 @@ async function executeSweepPlan(params: {
       validateWithPostConditions: true,
       network: params.network,
       anchorMode: AnchorMode.Any,
-      postConditionMode: PostConditionMode.Allow,
+      nonce,
+      postConditionMode: PostConditionMode.Deny,
+      postConditions: [
+        Pc.principal(params.feeVaultAddress).willSendLte(dx).ft(item.token, item.assetName),
+      ],
     };
 
     const transaction = await makeContractCall(txOptions);
+    nonce += 1n;
     const broadcastResponse = await broadcastTransaction({ transaction, network: params.network });
 
     console.log(
@@ -521,6 +543,7 @@ async function main() {
 
   const privateKey = requirePrivateKey();
   await executeSweepPlan({
+    apiBase,
     network,
     feeVaultAddress,
     privateKey,
