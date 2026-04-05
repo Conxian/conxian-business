@@ -13,12 +13,19 @@ CLASSIFICATION_LABELS = [
 
 
 BOS_CLASSIFICATION_HEADER_RE = re.compile(
-    r"^[ ]{0,3}#{1,6}\s*bos change classification\s*:?\s*#*\s*$",
+    r"^[ ]{0,3}#{1,6}\s*bos change classification\b.*$",
     re.IGNORECASE,
 )
 HEADING_RE = re.compile(r"^[ ]{0,3}#{1,6}\s*\S")
 
-CLASSIFICATION_LABELS_BY_NORMALIZED = {label.lower(): label for label in CLASSIFICATION_LABELS}
+
+def normalize_label(label: str) -> str:
+    return " ".join(label.lower().split())
+
+
+CLASSIFICATION_LABELS_BY_NORMALIZED = {
+    normalize_label(label): label for label in CLASSIFICATION_LABELS
+}
 
 
 def extract_bos_classification_section(body: str) -> str:
@@ -69,8 +76,9 @@ def main() -> int:
         match = checkbox_re.match(line)
         if not match:
             continue
-        label = match.group(1).strip().lower()
-        canonical = CLASSIFICATION_LABELS_BY_NORMALIZED.get(label)
+        raw_label = match.group(1).strip()
+        raw_label = re.split(r"\s*<!--", raw_label, 1)[0]
+        canonical = CLASSIFICATION_LABELS_BY_NORMALIZED.get(normalize_label(raw_label))
         if canonical is not None:
             selected.append(canonical)
 
