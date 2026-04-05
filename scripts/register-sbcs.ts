@@ -57,8 +57,8 @@ function usageAndExit(message?: string, exitCode: number = 1): never {
       '  --help               Show this message',
       '',
       'Examples:',
-      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network testnet --contract ST...fiscal-intelligence',
-      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network mainnet --contract SP...fiscal-intelligence',
+      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network testnet --contract ST1234...ABCD.fiscal-intelligence',
+      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network mainnet --contract SP1234...ABCD.fiscal-intelligence',
     ].join('\n')
   );
 
