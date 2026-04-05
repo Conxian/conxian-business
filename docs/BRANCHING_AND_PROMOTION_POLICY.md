@@ -24,11 +24,11 @@ To ensure the integrity of the Conxian Production Environment, all repositories 
 
 ## 3. Enforcement (CI/CD Gates)
 
-- **Main Branch Protection**: `main` must be protected with required reviews and passing status checks.
+- **Protected Branches**: `main` and `staged` must be protected with required reviews and passing status checks (including the Contamination Guard).
 - **Contamination Guard**: CI suites on `main` and `staged` must run a blocking scan for and reject non-production patterns, and the scan must be explicitly scoped to avoid false positives.
-  - **Scope**: Scan only production source trees (repo-defined allowlist; e.g., `contracts/**`, `src/**`).
+  - **Scope**: Run as a required status check on pull requests targeting `main` and `staged`. Scan only production source trees (repo-defined allowlist; e.g., `contracts/**`, `src/**`).
   - **Exclusions**: Explicitly exclude `docs/**`, `audit/**`, `**/*.md`, and test/mocks/fixtures paths.
-  - **Patterns**: Prefer precise patterns (word boundaries) over broad substrings (avoid generic terms like "placeholder" unless heavily scoped). Include stable stub sentinels used across the portfolio (e.g., `[STUB]`).
+  - **Patterns**: Prefer precise patterns over broad substrings (avoid generic terms like "placeholder" unless heavily scoped). Include stable stub sentinels used across the portfolio (e.g., `[STUB]`).
   - **Example**:
     ```bash
     # Repo-defined allowlist (update these globs to match this repo's production paths)
@@ -50,7 +50,7 @@ To ensure the integrity of the Conxian Production Environment, all repositories 
       exit 2
     fi
 
-    if rg -n "${RG_GLOBS[@]}" -- '\bMOCK_[A-Z0-9_]+\b|\bstub-func\b|\[STUB\]' .; then
+    if rg -n "${RG_GLOBS[@]}" -- 'MOCK_[A-Z0-9_]+|\bstub-func\b|\[STUB\]' .; then
       echo 'ERROR: non-production patterns detected in production paths'
       exit 1
     else

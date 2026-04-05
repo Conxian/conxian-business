@@ -4,11 +4,17 @@
 **Status:** READINESS AUDIT IN PROGRESS
 **Auditor:** Jules (cxn-arch-guardian)
 
-## 1. System Inventory (ZSE-safe)
+## 1. System Inventory (Database & Infrastructure)
 
-This repository is public, and the ZSE policy in `GOVERNANCE.md` prohibits publishing actionable infrastructure maps in Git.
+This repository is public, and the ZSE policy in [`GOVERNANCE.md`](../GOVERNANCE.md#documentation-confidentiality-zse) prohibits publishing actionable infrastructure maps in Git.
 
 **Canonical inventory (provider/project identifiers, service IDs, schema/table names):** maintained in Linear under CON-416 / CON-421.
+
+**Editors MUST NOT** include provider/project/workspace identifiers, database names, schema/table names, or other environment-specific IDs in this document; those details MUST remain in Linear (CON-416 / CON-421) to comply with the ZSE policy in `GOVERNANCE.md`.
+
+**Examples (for editors):** Safe: high-level provider names and scopes. Unsafe: provider project IDs, database names, or schema/table names.
+
+For this April 2026 readiness gate, CON-416 / CON-421 were reviewed on April 5, 2026 and confirmed to reflect the current production inventory.
 
 If any pre-publication drafts of this report contained infrastructure identifiers, remediation/rotation status is tracked under CON-416 / CON-421.
 
