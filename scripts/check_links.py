@@ -62,11 +62,11 @@ def _repo_root_for(md_file: Path) -> Path:
 
 def check_links():
     md_files = _find_markdown_files()
-    broken_links = []
+    broken_links: list[tuple[Path, str, Path, str]] = []
     uninitialized_submodule_dirs = _uninitialized_submodule_dirs()
 
     for md_file in md_files:
-        repo_root_for_file = _repo_root_for(md_file)
+        repo_root_for_file = _repo_root_for(md_file).resolve()
         with open(md_file, 'r', encoding='utf-8') as f:
             content = f.read()
 
@@ -101,21 +101,21 @@ def check_links():
             try:
                 target_path.relative_to(repo_root_for_file)
             except ValueError:
-                broken_links.append((md_file, link, target_path))
+                broken_links.append((md_file, link, target_path, 'escapes repo root'))
                 continue
 
             if not target_path.exists():
                 if _is_within_uninitialized_submodule(target_path, uninitialized_submodule_dirs):
                     continue
-                broken_links.append((md_file, link, target_path))
+                broken_links.append((md_file, link, target_path, 'missing file'))
 
-    for source, link, target in broken_links:
+    for source, link, target, reason in broken_links:
         rel_source = source.relative_to(REPO_ROOT)
         try:
             rel_target = target.relative_to(REPO_ROOT)
         except ValueError:
             rel_target = target
-        print(f"Broken link in {rel_source}: {link} -> {rel_target}")
+        print(f"Broken link in {rel_source}: {link} -> {rel_target} ({reason})")
 
     if broken_links:
         sys.exit(1)
