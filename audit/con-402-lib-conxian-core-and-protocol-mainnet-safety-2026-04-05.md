@@ -84,6 +84,7 @@ Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallba
   - Evidence: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/attestation.rs#L22-L54
   - Impact: a structurally valid (but forged) report can pass verification.
   - Mainnet status: present in snapshot; should be treated as a hard blocker for mainnet rail execution.
+  - Remediation status: pending as of snapshot (no remediation PR linked in this audit).
   - Suggested next step: define a strict verification contract (chain validation + signature validation + timestamp/freshness bounds) and ensure production rail execution fails closed when strict verification is unavailable.
 
 ## Notes on “staged-to-main” acceptance
