@@ -39,12 +39,6 @@ def is_excluded(rel_path: str, excluded: str) -> bool:
     return excluded in parts[:-1]
 
 
-def read_text(root: str, rel_path: str) -> str:
-    full_path = os.path.join(root, rel_path)
-    with open(full_path, "r", encoding="utf-8", errors="replace") as f:
-        return f.read()
-
-
 NEXUS_EXCLUDED_PATHS: set[str] = {
     "lib-conxian-core",
     "src/api/dlc.rs",
@@ -90,21 +84,27 @@ def scan_repo(
         if ext not in code_exts:
             continue
 
-        lines = read_text(root, rel_path).splitlines()
-        for label_text, pattern in patterns:
-            match_lineno: int | None = None
-            for lineno, line in enumerate(lines, start=1):
-                if pattern.search(line):
-                    match_lineno = lineno
-                    break
+        full_path = os.path.join(root, rel_path)
+        try:
+            with open(full_path, "r", encoding="utf-8", errors="replace") as f:
+                found = False
+                for lineno, line in enumerate(f, start=1):
+                    for label_text, pattern in patterns:
+                        match = pattern.search(line)
+                        if not match:
+                            continue
 
-            if match_lineno is None:
-                continue
+                        marker = match.group(0) if label_text == "MOCK_" else label_text
+                        errors.append(
+                            f"{label}: prohibited marker '{marker}' found in {rel_path}:{lineno}"
+                        )
+                        found = True
+                        break
 
-            errors.append(
-                f"{label}: prohibited marker '{label_text}' found in {rel_path}:{match_lineno}"
-            )
-            break
+                    if found:
+                        break
+        except OSError as exc:
+            errors.append(f"{label}: failed to read {rel_path}: {exc}")
 
     return errors
 
@@ -143,11 +143,19 @@ def main() -> int:
         "conxian-nexus": (nexus_excluded_paths, patterns_default),
     }
 
+    missing_submodules: list[str] = []
     for sub, (exclusions, patterns) in submodules.items():
         sub_path = os.path.join(root, sub)
         if not os.path.isdir(sub_path):
+            missing_submodules.append(sub)
             continue
         errors.extend(scan_repo(sub_path, sub, exclusions, patterns))
+
+    if missing_submodules:
+        errors.append(
+            "conxian-business: expected submodule directory missing (did you init submodules?): "
+            + ", ".join(sorted(missing_submodules))
+        )
 
     if errors:
         print("Production contamination guard violations found:\n")
