@@ -53,7 +53,7 @@ The evidence pack MUST include:
 - Pre-merge tip-of-`main` SHA (e.g. `git rev-parse <canonical-remote>/main`)
 - Merge-base of `main` and `staged` SHA (e.g. `git merge-base <canonical-remote>/main <canonical-remote>/staged`)
 - `staged` head commit SHA
-- SHA capture timing (ISO 8601 UTC timestamp for when the above SHAs were captured)
+- SHA capture timestamp (ISO 8601 UTC timestamp for when the above SHAs were captured)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
@@ -66,7 +66,7 @@ Capture these SHAs **before merging** the promotion PR (while the PR is open). Y
 - Merge-base: `git merge-base <canonical-remote>/main <canonical-remote>/staged`
 - `staged` head: `git rev-parse <canonical-remote>/staged`
 
-After the merge (or any other updates to `<canonical-remote>/main`), re-running these commands will yield different values. Reviewers and auditors SHOULD rely on the SHAs recorded in the evidence pack as the source of truth for the pre-merge window.
+After the merge (or any other updates to `<canonical-remote>/main`), re-running `git fetch --prune <canonical-remote> main staged` and then the commands above will yield different values. Reviewers and auditors SHOULD rely on the SHAs recorded in the evidence pack as the source of truth for the pre-merge window.
 
 #### 2) Mainnet-only production scope
 
