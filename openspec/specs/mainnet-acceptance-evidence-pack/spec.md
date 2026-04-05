@@ -53,6 +53,7 @@ The evidence pack MUST include:
 - Pre-merge tip-of-`main` SHA (e.g. `git rev-parse origin/main`)
 - Merge-base of `main` and `staged` SHA (e.g. `git merge-base origin/main origin/staged`)
 - `staged` head commit SHA
+- SHA capture timing (captured before merge, after `git fetch origin main staged`)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
