@@ -140,10 +140,10 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 
 - Repo: `<org>/<repo>`
 - Promotion PR: <link>
-- Pre-merge tip-of-`main` SHA (e.g. `git rev-parse origin/main`): `<sha>`
-- Merge-base of `main` and `staged` SHA (e.g. `git merge-base origin/main origin/staged`): `<sha>`
-- Head (`staged`) SHA: `<sha>`
-- SHA capture timing: `<YYYY-MM-DDTHH:MM:SSZ>` (ISO 8601 UTC; see section 1 for capture procedure)
+- Pre-merge tip-of-`main` SHA (e.g. `git rev-parse <canonical-remote>/main`): `<sha>`
+- Merge-base of `main` and `staged` SHA (e.g. `git merge-base <canonical-remote>/main <canonical-remote>/staged`): `<sha>`
+- Head (`staged`) SHA (e.g. `git rev-parse <canonical-remote>/staged`): `<sha>`
+- SHA capture timestamp: `<YYYY-MM-DDTHH:MM:SSZ>` (ISO 8601 UTC; captured **before merge** after `git fetch --prune <canonical-remote> main staged`)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
