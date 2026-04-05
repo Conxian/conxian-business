@@ -58,7 +58,7 @@ The evidence pack MUST include:
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
 
-Together, these SHAs identify the exact change window being promoted (from the merge-base to the `staged` head) and the pre-merge state of `main`.
+Together, these SHAs and the capture timestamp identify the exact change window being promoted (from the merge-base to the `staged` head), the pre-merge state of `main`, and when that snapshot was taken.
 
 Capture these SHAs **before merging** the promotion PR (while the PR is open). You MUST run `git fetch <canonical-remote> main staged` first so that the `<canonical-remote>/*` refs are current (in most clones, `<canonical-remote>` will be `origin`).
 
