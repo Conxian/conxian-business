@@ -87,6 +87,14 @@ async function registerSBCs(privateKey: string) {
 
     const transaction = await makeContractCall(txOptions);
     const broadcastResponse = await broadcastTransaction(transaction, network);
+
+    if ('error' in broadcastResponse) {
+      const reason = 'reason' in broadcastResponse ? ` (${broadcastResponse.reason})` : '';
+      throw new Error(
+        `Failed to register SBC "${sbc}": ${broadcastResponse.error}${reason}`
+      );
+    }
+
     console.log(`Registering SBC: ${sbc} - TX ID: ${broadcastResponse.txid}`);
   }
 }

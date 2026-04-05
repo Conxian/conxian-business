@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 from pathlib import Path
 
 def check_links():
@@ -33,6 +34,9 @@ def check_links():
 
     for source, link, target in broken_links:
         print(f"Broken link in {source}: {link} -> {target}")
+
+    if broken_links:
+        sys.exit(1)
 
 if __name__ == "__main__":
     check_links()
