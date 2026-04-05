@@ -10,8 +10,11 @@
 * [Repo Readiness Gates (Control Domains)](docs/REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md)
 * [Partner Overview and Launch FAQ](docs/PARTNER_OVERVIEW_AND_LAUNCH_FAQ.md)
 * [Release notes and changelog format](docs/RELEASE_NOTES_AND_CHANGELOG.md)
+* [Branching and promotion policy (dev/staged/main)](docs/BRANCHING_AND_PROMOTION_POLICY.md)
+* [Mainnet acceptance evidence pack (staged -> main)](openspec/specs/mainnet-acceptance-evidence-pack/spec.md)
 * [Release hygiene — conxian-nexus](docs/RELEASE_HYGIENE_CONXIAN_NEXUS.md)
 * [CSF mainnet readiness gate](docs/CSF_MAINNET_READINESS_GATE.md)
+* [CSF-first operating sequence and proof gates](docs/CSF_FIRST_OPERATING_SEQUENCE_AND_PROOF_GATES.md)
 * [OpenSpec](openspec/README.md)
 
 ## 🤖 Business Operations System (BOS)
