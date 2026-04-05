@@ -132,7 +132,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Base (`main`) SHA at PR open: `<sha>`
 - Merge-base (`main`..`staged`) SHA: `<sha>`
 - Head (`staged`) SHA: `<sha>`
-- Accountable owner: `<name>` (`<GitHub handle>`, optional: `<public profile URL if available>`)
+- Accountable owner: `<name>` (`<GitHub handle>`, optional: `<public profile link>`)
 - Approvers (CODEOWNERS): `<name/handle>`, `<name/handle>`
 - Business unit(s): `<bu>`
 
