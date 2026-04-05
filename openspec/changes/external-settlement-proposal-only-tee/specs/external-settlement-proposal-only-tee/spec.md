@@ -101,9 +101,11 @@ Prohibited fields:
 - `raw_payload_bytes`
 - Any full parsed external-settlement payload structure (XML/JSON) beyond the canonical `settlement_identifiers`.
 
-<h4 id="settlement-identifiers-canonical">2.1.1 <code>settlement_identifiers</code> (per-rail canonical set)</h4>
+<a id="settlement-identifiers-canonical"></a>
 
 <a id="211-settlement_identifiers-per-rail-canonical-set"></a>
+
+#### 2.1.1 `settlement_identifiers` (canonical set)
 
 `settlement_identifiers` MUST be a JSON object with two namespaces:
 
@@ -186,6 +188,8 @@ Note: This section intentionally tightens earlier guidance. These canonicalizati
 Any settlement transaction that fails any of the requirements above (including the type/structure requirements for `settlement_identifiers.transaction_identifiers` or canonicalization/validation of any of its values, including any optional reconciliation keys) MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
 Any other `settlement_identifiers.envelope_identifiers` keys are optional metadata; if the value for an optional envelope identifier fails any of its field-specific type or validation requirements, implementations MUST treat that value as if the corresponding field were absent and MUST NOT treat the settlement transaction as invalid solely because of that field.
+
+Unrecognized keys under `settlement_identifiers.envelope_identifiers` MUST be ignored for external-settlement trigger purposes. Their mere presence MUST NOT cause the settlement transaction to be treated as invalid. However, values under those keys remain subject to the structural and leaf-type constraints in this section; if any such constraint is violated, the settlement transaction MUST be treated as invalid as specified above.
 
 For `external-settlement-trigger:v1`, implementations MUST use Unicode 15.1.0 (Unicode Character Database + normalization data) for evaluating `General_Category`, `White_Space`, and NFC normalization.
 
