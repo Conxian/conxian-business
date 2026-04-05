@@ -11,6 +11,8 @@ CLASSIFICATION_LABELS = [
     "production implementation",
 ]
 
+CLASSIFICATION_LABELS_BY_NORMALIZED = {label.lower(): label for label in CLASSIFICATION_LABELS}
+
 
 def extract_bos_classification_section(body: str) -> str:
     lines = body.splitlines()
@@ -61,8 +63,9 @@ def main() -> int:
         if not match:
             continue
         label = match.group(1).strip().lower()
-        if label in CLASSIFICATION_LABELS:
-            selected.append(label)
+        canonical = CLASSIFICATION_LABELS_BY_NORMALIZED.get(label)
+        if canonical is not None:
+            selected.append(canonical)
 
     if len(selected) != 1:
         expected = ", ".join(CLASSIFICATION_LABELS)
