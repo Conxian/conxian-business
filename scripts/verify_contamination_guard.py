@@ -120,6 +120,9 @@ def main() -> int:
         ".idx",
         "tests",
         "test",
+        "lib-conxian-core",
+        "lib-conclave-sdk",
+        "conxian-nexus",
     }
 
     errors: list[str] = []
