@@ -107,7 +107,7 @@ Prohibited fields:
 - Any full parsed external-settlement payload structure (XML/JSON) beyond the canonical `settlement_identifiers`.
 
 <a id="settlement-identifiers-canonical"></a><a id="211-settlement_identifiers-per-rail-canonical-set"></a>
-#### 2.1.1 `settlement_identifiers` (per-rail canonical set)
+#### 2.1.1 `settlement_identifiers` (canonical set)
 
 `settlement_identifiers` MUST be a JSON object with two namespaces:
 
