@@ -6,6 +6,8 @@
 //
 // Usage (execute):
 //   STX_PRIVATE_KEY=... bun scripts/protocol-fee-sweep.ts --network mainnet --fee-vault SP... --target SP...token-wxbtc-v2 --execute
+//
+// Config: if a `.env` file exists in the current working directory, it is loaded.
 
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -146,6 +148,9 @@ function usageAndExit(message?: string, exitCode: number = 1): never {
       '  --max-dx <uint>             Cap per-token swap size (default: unlimited)',
       '  --slippage-bps <uint>       Slippage guard in basis points (default: 200)',
       '  --execute                   Broadcast swaps (requires STX_PRIVATE_KEY)',
+      '',
+      'Notes:',
+      '  If present, `.env` is loaded from the current working directory (process.cwd()).',
       '',
       'Examples:',
       '  bun scripts/protocol-fee-sweep.ts --network mainnet --fee-vault SP... --target SP...token-wxbtc-v2',
