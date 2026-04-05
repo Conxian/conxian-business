@@ -248,9 +248,6 @@ async function quoteDy(
 }
 
 function computeMinDy(quotedDy: bigint, slippageBps: bigint): bigint {
-  if (slippageBps >= 10_000n) {
-    throw new Error(`Invalid --slippage-bps=${slippageBps}; expected 0..9999`);
-  }
   return (quotedDy * (10_000n - slippageBps)) / 10_000n;
 }
 
