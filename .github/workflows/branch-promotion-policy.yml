@@ -33,6 +33,13 @@ jobs:
               return;
             }
 
+            if ((base === 'main' || base === 'staged') && headRepo !== baseRepo) {
+              core.setFailed(
+                `Promotions into '${base}' must come from an in-repo branch (got fork '${headRepo}:${head}' -> '${baseRepo}:${base}').`
+              );
+              return;
+            }
+
             if (base === 'main' && head !== 'staged') {
               core.setFailed(
                 `PRs into 'main' must come from 'staged' (got '${head}' -> '${base}').`
