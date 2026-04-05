@@ -63,8 +63,8 @@ user tx
   -> module fee is charged (swap/lending/etc)
   -> protocol fee balance accrues in a fee vault / treasury contract
   -> allocation policy applies:
-      - Founder’s Cut carve-out -> founder vault
-      - reserve / continuity first
+      - Founder’s Cut carve-out -> founder vault (off-the-top from captured protocol fees)
+      - reserve / continuity (from the remainder)
       - operating treasury
       - contributor incentives
       - optional buyback/burn sink (BME)
