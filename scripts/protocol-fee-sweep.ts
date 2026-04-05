@@ -540,10 +540,6 @@ async function main() {
     usageAndExit('On testnet, --target must start with ST or SN');
   }
 
-  if (slippageBps >= 10_000n) {
-    usageAndExit(`Invalid --slippage-bps=${slippageBps.toString()}; expected 0..9999`);
-  }
-
   const network = createNetwork(networkName);
   const apiBase = createApiBase(networkName);
 
