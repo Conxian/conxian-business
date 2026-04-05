@@ -139,7 +139,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Pre-merge tip-of-`main` SHA (e.g. `git rev-parse origin/main`): `<sha>`
 - Merge-base of `main` and `staged` SHA (e.g. `git merge-base origin/main origin/staged`): `<sha>`
 - Head (`staged`) SHA: `<sha>`
-- SHA capture timing (UTC): `<YYYY-MM-DDTHH:MM:SSZ>` (e.g. output of `date -u +"%Y-%m-%dT%H:%M:%SZ"`; captured before merge, after `git fetch origin main staged`)
+- SHA capture timing (UTC): `<YYYY-MM-DDTHH:MM:SSZ>` (captured before merge, after `git fetch origin main staged`)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
