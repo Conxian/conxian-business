@@ -1,5 +1,6 @@
 import re
 import os
+import configparser
 from pathlib import Path
 import sys
 
@@ -16,6 +17,28 @@ SKIP_DIRS = {
     'playwright-report',
     'test-results',
 }
+
+
+def _uninitialized_submodule_dirs() -> list[Path]:
+    gitmodules = REPO_ROOT / '.gitmodules'
+    if not gitmodules.exists():
+        return []
+
+    config = configparser.ConfigParser(interpolation=None)
+    config.read(gitmodules, encoding='utf-8')
+
+    submodule_paths = [
+        config.get(section, 'path')
+        for section in config.sections()
+        if config.has_option(section, 'path')
+    ]
+
+    dirs = [(REPO_ROOT / p).resolve() for p in submodule_paths]
+    return [d for d in dirs if not (d / '.git').exists()]
+
+
+def _is_within_uninitialized_submodule(path: Path, uninitialized_submodule_dirs: list[Path]) -> bool:
+    return any(path.is_relative_to(submodule_dir) for submodule_dir in uninitialized_submodule_dirs)
 
 
 def _find_markdown_files() -> list[Path]:
@@ -40,6 +63,7 @@ def _repo_root_for(md_file: Path) -> Path:
 def check_links():
     md_files = _find_markdown_files()
     broken_links = []
+    uninitialized_submodule_dirs = _uninitialized_submodule_dirs()
 
     for md_file in md_files:
         repo_root_for_file = _repo_root_for(md_file)
@@ -75,6 +99,8 @@ def check_links():
                 target_path = (md_file.parent / href).resolve()
 
             if not target_path.exists():
+                if _is_within_uninitialized_submodule(target_path, uninitialized_submodule_dirs):
+                    continue
                 broken_links.append((md_file, link, target_path))
 
     for source, link, target in broken_links:
