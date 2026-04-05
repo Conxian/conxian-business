@@ -25,7 +25,7 @@ Reference: `docs/BRANCH_AND_PROMOTION_STANDARD.md` and `openspec/specs/git-manag
 
 ## Required checks guidance
 
-### Always-on checks for PRs targeting `staged` or `main`
+### Always-on checks for PRs targeting `dev`, `staged`, or `main`
 
 These workflows run on every pull request targeting `dev`, `staged`, or `main`. Required checks are defined by branch protection rules, but merges to `staged` and `main` are expected to be green before merge:
 
