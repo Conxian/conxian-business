@@ -59,7 +59,7 @@ The evidence pack MUST include:
 
 Together, these SHAs identify the exact change window being promoted (from the merge-base to the `staged` head) and the pre-merge state of `main`.
 
-Capture these SHAs **before merging** the promotion PR (while the PR is open). You MUST run `git fetch origin main staged` first so that the `origin/*` refs are current.
+Capture these SHAs **before merging** the promotion PR (while the PR is open). You MUST run `git fetch <canonical-remote> main staged` first so that the `<canonical-remote>/*` refs are current (in most clones, `<canonical-remote>` will be `origin`).
 
 After the merge (or any other updates to `origin/main`), re-running these commands will yield different values. Reviewers and auditors SHOULD rely on the SHAs recorded in the evidence pack as the source of truth for the pre-merge window.
 
@@ -138,7 +138,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Pre-merge tip-of-`main` SHA (e.g. `git rev-parse origin/main`): `<sha>`
 - Merge-base of `main` and `staged` SHA (e.g. `git merge-base origin/main origin/staged`): `<sha>`
 - Head (`staged`) SHA: `<sha>`
-- SHA capture timing: `<YYYY-MM-DDTHH:MM:SSZ>` (ISO 8601 UTC, captured before merge, after `git fetch origin main staged`)
+- SHA capture timing: `<YYYY-MM-DDTHH:MM:SSZ>` (ISO 8601 UTC; see section 1 for capture procedure)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
