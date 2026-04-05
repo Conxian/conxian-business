@@ -142,7 +142,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Promotion PR: <link>
 - Pre-merge tip-of-`main` SHA: `<sha>`
 - Merge-base of `main` and `staged` SHA: `<sha>`
-- Head (`staged`) SHA: `<sha>`
+- `staged` head commit SHA: `<sha>`
 - SHA capture timestamp: `<YYYY-MM-DDTHH:MM:SSZ>` (ISO 8601 UTC; timestamp at which the SHAs above were captured; see section 1 for capture procedure)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
