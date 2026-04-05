@@ -516,6 +516,10 @@ async function main() {
   if (!feeVaultAddress) usageAndExit('Missing required --fee-vault');
   if (!targetPrincipal) usageAndExit('Missing required --target');
 
+  if (slippageBps >= 10_000n) {
+    usageAndExit(`Invalid --slippage-bps=${slippageBps.toString()}; expected 0..9999`);
+  }
+
   if (feeVaultAddress.includes('.')) {
     usageAndExit('--fee-vault must be a standard principal (address only, no contract name)');
   }
