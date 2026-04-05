@@ -57,6 +57,8 @@ The evidence pack MUST include:
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
 
+Together, these SHAs identify the exact change window being promoted (from the merge-base to the `staged` head) and the pre-merge state of `main`.
+
 #### 2) Mainnet-only production scope
 
 The evidence pack MUST clearly state what is being promoted, including:
