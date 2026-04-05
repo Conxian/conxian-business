@@ -33,7 +33,7 @@ def extract_bos_classification_section(body: str) -> str:
         return ""
 
     end = next(
-        (j for j in range(start, len(lines)) if HEADING_RE.match(lines[j].lstrip())),
+        (j for j in range(start, len(lines)) if HEADING_RE.match(lines[j])),
         len(lines),
     )
     return "\n".join(lines[start:end])
