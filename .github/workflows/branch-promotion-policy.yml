@@ -19,8 +19,13 @@ jobs:
             const pr = context.payload.pull_request;
             const base = pr.base.ref;
             const head = pr.head.ref;
-            const baseRepo = pr.base.repo.full_name;
-            const headRepo = pr.head.repo.full_name;
+            const baseRepo =
+              pr.base.repo?.full_name ??
+              `${context.repo.owner}/${context.repo.repo}`;
+            const headRepo =
+              pr.head.repo?.full_name ??
+              pr.head.label?.split(':')[0] ??
+              'unknown';
 
             core.info(
               `Branch promotion check: ${headRepo}:${head} -> ${baseRepo}:${base}`
