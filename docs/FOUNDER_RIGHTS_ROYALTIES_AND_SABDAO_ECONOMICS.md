@@ -64,7 +64,7 @@ user tx
   -> protocol fee balance accrues in a fee vault / treasury contract
   -> captured protocol fees are determined (after external/third-party distributions)
   -> allocation policy applies:
-      - Founder’s Cut carve-out -> founder vault
+      - Founder’s Cut carve-out -> contract-level founder vault
       - reserve / continuity
       - operating treasury
       - contributor incentives
