@@ -33,17 +33,33 @@ def is_in_dir(rel_path: str, rel_dir: str) -> bool:
 
 
 def iter_repo_files(root: str, excluded_dirs: set[str]) -> list[str]:
+    excluded_paths = {
+        p.rstrip("/").replace(os.sep, "/") for p in excluded_dirs if p.rstrip("/")
+    }
+
     files: list[str] = []
     for dirpath, dirnames, filenames in os.walk(root):
-        rel_dir = os.path.relpath(dirpath, root)
+        rel_dir = os.path.relpath(dirpath, root).replace(os.sep, "/")
         if rel_dir == ".":
             rel_dir = ""
 
-        # Prune excluded dirs at the root.
-        if rel_dir == "":
-            dirnames[:] = [d for d in dirnames if d not in excluded_dirs]
-        # Always prune standard noise.
-        dirnames[:] = [d for d in dirnames if d not in {".git", "node_modules", ".next"}]
+        # If we've descended into an excluded path, stop scanning it entirely.
+        if rel_dir and any(is_in_dir(rel_dir, ex) for ex in excluded_paths):
+            dirnames[:] = []
+            continue
+
+        # Always prune standard noise and explicit exclusions.
+        pruned: list[str] = []
+        for d in dirnames:
+            if d in {".git", "node_modules", ".next"}:
+                continue
+
+            child_rel_dir = f"{rel_dir}/{d}" if rel_dir else d
+            if child_rel_dir in excluded_paths:
+                continue
+
+            pruned.append(d)
+        dirnames[:] = pruned
 
         for name in filenames:
             full_path = os.path.join(dirpath, name)
