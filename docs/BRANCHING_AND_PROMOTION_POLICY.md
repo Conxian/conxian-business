@@ -25,7 +25,7 @@ To ensure the integrity of the Conxian Production Environment, all repositories 
 ## 3. Enforcement (CI/CD Gates)
 
 - **Main Branch Protection**: `main` must be protected with required reviews and passing status checks.
-- **Contamination Guard**: CI suites on `main` and `staged` must scan for and reject "MOCK_", "stub-func", "placeholder", and other non-production patterns.
+- **Contamination Guard**: CI suites on `main` and `staged` must scan only production source trees (e.g., `contracts/**`, `src/**`) and must exclude `docs/**`, `audit/**`, `**/*.md`, and test/fixture directories. Prefer precise patterns (e.g., `\bMOCK_[A-Z0-9_]+\b`, `\bstub-func\b`) over generic terms like "placeholder".
 - **Submodule Integrity**: Parent repositories (like `conxian-business`) must ensure all submodules are pinned to their respective production-ready commits before merging to `main`.
 
 ---
