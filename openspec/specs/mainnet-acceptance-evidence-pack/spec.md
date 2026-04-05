@@ -53,7 +53,7 @@ The evidence pack MUST include:
 - Pre-merge tip-of-`main` SHA (e.g. `git rev-parse origin/main`)
 - Merge-base of `main` and `staged` SHA (e.g. `git merge-base origin/main origin/staged`)
 - `staged` head commit SHA
-- SHA capture timing (UTC; captured before merge, after `git fetch origin main staged`)
+- SHA capture timing (UTC; e.g. `date -u +"%Y-%m-%dT%H:%M:%SZ"`; captured before merge, after `git fetch origin main staged`)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
@@ -62,7 +62,7 @@ Together, these SHAs identify the exact change window being promoted (from the m
 
 Capture these SHAs **before merging** the promotion PR (while the PR is open): first run `git fetch origin main staged` to ensure the `origin/*` refs are current, then record the SHAs using the commands above.
 
-If someone later re-runs these commands after the merge has landed, `origin/main` may no longer represent the pre-merge tip; reviewers should rely on the recorded pre-merge tip-of-`main` SHA to reconstruct the exact window.
+If a reviewer re-runs these commands after the merge, the results (especially for `origin/main`) may no longer represent the pre-merge state; reviewers MUST rely on the recorded SHAs (pre-merge tip-of-`main`, merge-base, and `staged` head) captured before merge to reconstruct the exact window.
 
 #### 2) Mainnet-only production scope
 
@@ -139,7 +139,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Pre-merge tip-of-`main` SHA (e.g. `git rev-parse origin/main`): `<sha>`
 - Merge-base of `main` and `staged` SHA (e.g. `git merge-base origin/main origin/staged`): `<sha>`
 - Head (`staged`) SHA: `<sha>`
-- SHA capture timing (UTC): `<YYYY-MM-DDTHH:MM:SSZ>` (captured before merge, after `git fetch origin main staged`)
+- SHA capture timing (UTC): `<YYYY-MM-DDTHH:MM:SSZ>` (e.g. output of `date -u +"%Y-%m-%dT%H:%M:%SZ"`; captured before merge, after `git fetch origin main staged`)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
