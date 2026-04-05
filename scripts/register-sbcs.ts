@@ -8,6 +8,7 @@ import {
   broadcastTransaction,
   AnchorMode,
   PostConditionMode,
+  validateStacksAddress,
   stringAsciiCV,
 } from '@stacks/transactions';
 import { networkFromName } from '@stacks/network';
@@ -57,16 +58,21 @@ function usageAndExit(message?: string, exitCode: number = 1): never {
       '  --help               Show this message',
       '',
       'Examples:',
-      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network testnet --contract ST...fiscal-intelligence',
-      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network mainnet --contract SP...fiscal-intelligence',
+      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network testnet --contract STYOURTESTNETADDRESS.fiscal-intelligence',
+      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network mainnet --contract SPYOURMAINNETADDRESS.fiscal-intelligence',
     ].join('\n')
   );
 
   process.exit(exitCode);
 }
 
-function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, principal: string) {
-  const normalized = principal.trim();
+function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, address: string) {
+  const normalized = address.trim().toUpperCase();
+
+  if (!validateStacksAddress(normalized)) {
+    usageAndExit(`${flagName} has an invalid Stacks address: ${address}`);
+  }
+
   const prefixes: readonly string[] = STACKS_NETWORK_PREFIXES[networkName];
   if (!prefixes.some((prefix) => normalized.startsWith(prefix))) {
     usageAndExit(`On ${networkName}, ${flagName} must start with ${prefixes.join(' or ')}`);
@@ -79,6 +85,7 @@ function parseArgs(argv: string[]): { networkName: NetworkName; contract: Princi
 
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
+    if (arg === '--') break;
     if (arg === '--help' || arg === '-h') {
       usageAndExit(undefined, 0);
     }
@@ -114,7 +121,7 @@ function parseArgs(argv: string[]): { networkName: NetworkName; contract: Princi
     usageAndExit(`Invalid --contract principal: ${contract}`);
   }
 
-  assertStacksNetworkPrefix(networkName, '--contract', contractParts.address);
+  assertStacksNetworkPrefix(networkName, '--contract address', contractParts.address);
   if (contractParts.contractName !== 'fiscal-intelligence') {
     usageAndExit(
       `--contract must point to the fiscal-intelligence contract (got: ${contractParts.contractName})`
