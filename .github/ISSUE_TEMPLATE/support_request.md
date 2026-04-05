@@ -1,6 +1,6 @@
 ---
 name: Support Request
-about: Ask a question, request help, or propose a feature (non-security).
+about: Ask a question or request help (non-security).
 title: "[SUPPORT]: "
 labels: question
 assignees: []
