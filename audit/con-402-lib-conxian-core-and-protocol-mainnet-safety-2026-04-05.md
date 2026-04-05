@@ -4,8 +4,8 @@ Canonical issue: https://linear.app/conxian-labs/issue/CON-402/audit-lib-conxian
 
 Remediation PRs (tracked outside this repo):
 
-- https://github.com/Conxian/lib-conxian-core/pull/30
-- https://github.com/Conxian/lib-conclave-sdk/pull/22
+- https://github.com/Conxian/lib-conxian-core/pull/30 (merged 2026-04-05T12:19:18Z)
+- https://github.com/Conxian/lib-conclave-sdk/pull/22 (merged 2026-04-05T12:17:25Z)
 
 Snapshot date: 2026-04-05 (UTC)
 
@@ -16,6 +16,12 @@ Scope (repo commit + git submodule pins at snapshot time):
 - `lib-conclave-sdk`: `02f3b42aeb209b57e19cfe6c68d028613ce9a65b`
 
 ## Reproducibility
+
+Prerequisites:
+
+- Git
+- Python 3.11+ (scripts are stdlib-only; no `pip install` required)
+- Optional: set `GH_TOKEN`/`GITHUB_TOKEN` to avoid GitHub API rate limiting (used by `verify_submodule_integrity.py`)
 
 From a clean checkout in the repository root:
 
@@ -28,7 +34,10 @@ python3 scripts/verify_submodule_integrity.py
 git submodule status --recursive
 ```
 
-After running the commands above, verify that the SHAs printed by `git submodule status --recursive` match the commit IDs listed in the `Scope` section above.
+Success criteria:
+
+- Both Python scripts exit `0` and print `Success: ...`.
+- The SHAs printed by `git submodule status --recursive` match the commit IDs listed in the `Scope` section above.
 
 Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallbacks that can execute in production code paths ("fail open" or "silently simulate").
 
