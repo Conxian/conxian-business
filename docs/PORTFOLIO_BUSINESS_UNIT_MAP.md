@@ -16,6 +16,8 @@ To regenerate the local audit manifest output (written to `./conxian-business/.g
 python3 ./conxian-business/transparency_custodian.py
 ```
 
+Note: `transparency_custodian.py` writes audit outputs only to `./conxian-business/.generated/` (ignored). The committed `*.stub.json` files are maintained separately as public-safe pointers; tools and CI should not depend on them.
+
 Until portfolio hygiene automation exists to regenerate and diff BOS audit outputs under `./conxian-business/` in CI (see the P0 backlog), contributor policy is:
 
 - If your change affects portfolio wiring or BOS audit inputs (for example: pinned submodule gitlinks (including adding/removing submodules), the mapping tables in this document (ecosystem submodule rows / BOS-native asset paths), or the generator source under `./conxian-business/`), re-run the generator command above and ensure it still succeeds (it writes to `./conxian-business/.generated/`, which is ignored).
