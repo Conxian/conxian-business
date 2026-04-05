@@ -1,5 +1,11 @@
 // scripts/register-sbcs.ts
-// Codifies core Sovereign Business Cells (SBC) in fiscal-intelligence.clar
+// Codifies core Sovereign Business Cells (SBC) in fiscal-intelligence.clar.
+//
+// Usage:
+//   STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts \
+//     --network mainnet|testnet \
+//     --contract <address.contract-name>
+//   (for --network mainnet, you must also set CONFIRM_MAINNET=1)
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,7 +33,7 @@ const STACKS_NETWORK_PREFIXES: Record<NetworkName, readonly string[]> = {
 
 const modulePath = fileURLToPath(import.meta.url);
 
-const sbcs = ["Conxian-Core", "Nexus-Labs", "Fiscal-Auth", "Sovereign-Ops"];
+const sbcs = ['Conxian-Core', 'Nexus-Labs', 'Fiscal-Auth', 'Sovereign-Ops'];
 
 function parsePrincipal(principal: string): PrincipalParts {
   const trimmed = principal.trim();
@@ -51,15 +57,16 @@ function usageAndExit(message?: string, exitCode: number = 1): never {
     [
       'Usage:',
       '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network mainnet|testnet --contract <contract-principal>',
+      '  (for --network mainnet, you must also set CONFIRM_MAINNET=1)',
       '',
       'Options:',
-      '  --network <name>      mainnet or testnet',
+      '  --network <name>        mainnet or testnet',
       '  --contract <principal>  fiscal-intelligence contract principal (address.contract-name)',
-      '  --help               Show this message',
+      '  --help                  Show this message',
       '',
       'Examples:',
-      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network testnet --contract STYOURTESTNETADDRESS.fiscal-intelligence',
-      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network mainnet --contract SPYOURMAINNETADDRESS.fiscal-intelligence',
+      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network testnet --contract ST...fiscal-intelligence',
+      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network mainnet --contract SP...fiscal-intelligence',
     ].join('\n')
   );
 
@@ -226,8 +233,13 @@ async function registerSBCs(params: {
 }
 
 async function main() {
-  const { networkName, contract } = parseArgs(process.argv.slice(2));
   loadDotEnvIfPresent();
+  const { networkName, contract } = parseArgs(process.argv.slice(2));
+
+  if (networkName === 'mainnet' && process.env.CONFIRM_MAINNET !== '1') {
+    usageAndExit('Refusing to run on mainnet without CONFIRM_MAINNET=1');
+  }
+
   const privateKey = requirePrivateKey();
   await registerSBCs({ privateKey, networkName, contract });
 }
