@@ -5,6 +5,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -91,6 +92,10 @@ def _parse_github_repo(url: str) -> str | None:
     return f"{owner}/{repo}"
 
 
+class GitHubApiError(RuntimeError):
+    pass
+
+
 def _github_json(path: str) -> dict:
     url = f"https://api.github.com{path}"
     headers = {
@@ -102,15 +107,26 @@ def _github_json(path: str) -> dict:
     if token:
         headers["Authorization"] = f"Bearer {token}"
 
-    request = urllib.request.Request(url, headers=headers)
-    try:
-        with urllib.request.urlopen(request, timeout=30) as response:
-            return json.loads(response.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        body = e.read().decode("utf-8", "replace")
-        raise RuntimeError(f"GitHub API request failed: {url} -> {e.code}: {body}") from e
-    except urllib.error.URLError as e:
-        raise RuntimeError(f"GitHub API request failed: {url} -> {e.reason}") from e
+    max_attempts = 3
+    for attempt in range(max_attempts):
+        request = urllib.request.Request(url, headers=headers)
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            body = e.read().decode("utf-8", "replace")
+            is_retryable = e.code in {429, 500, 502, 503, 504} or (
+                e.code == 403 and "rate limit" in body.lower()
+            )
+            if is_retryable and attempt < max_attempts - 1:
+                time.sleep(2**attempt)
+                continue
+            raise GitHubApiError(f"GitHub API request failed: {url} -> {e.code}: {body}") from e
+        except urllib.error.URLError as e:
+            if attempt < max_attempts - 1:
+                time.sleep(2**attempt)
+                continue
+            raise GitHubApiError(f"GitHub API request failed: {url} -> {e.reason}") from e
 
 
 def _verify_submodule_pins(
@@ -118,6 +134,7 @@ def _verify_submodule_pins(
     gitlinks: dict[str, str],
 ) -> list[str]:
     failures: list[str] = []
+    default_branch_cache: dict[str, str] = {}
 
     for path, url in sorted(gitmodules.items()):
         sha = gitlinks.get(path)
@@ -129,14 +146,22 @@ def _verify_submodule_pins(
             failures.append(f"{path}: unsupported submodule url {url}")
             continue
 
-        repo_meta = _github_json(f"/repos/{repo}")
-        default_branch = repo_meta.get("default_branch")
-        if not default_branch:
-            failures.append(f"{path}: unable to resolve default branch for {repo}")
+        try:
+            default_branch = default_branch_cache.get(repo)
+            if not default_branch:
+                repo_meta = _github_json(f"/repos/{repo}")
+                default_branch = repo_meta.get("default_branch")
+                if not default_branch:
+                    failures.append(f"{path}: unable to resolve default branch for {repo}")
+                    continue
+                default_branch_cache[repo] = default_branch
+
+            branch_ref = urllib.parse.quote(default_branch, safe="")
+            compare = _github_json(f"/repos/{repo}/compare/{sha}...{branch_ref}")
+        except GitHubApiError as e:
+            failures.append(f"{path}: GitHub API error for {repo}: {e}")
             continue
 
-        branch_ref = urllib.parse.quote(default_branch, safe="")
-        compare = _github_json(f"/repos/{repo}/compare/{sha}...{branch_ref}")
         status = compare.get("status")
         ahead_by = compare.get("ahead_by")
         behind_by = compare.get("behind_by")
@@ -169,7 +194,9 @@ def verify() -> None:
     missing_mappings = sorted(gitlink_paths - gitmodules_paths)
     extra_mappings = sorted(gitmodules_paths - gitlink_paths)
 
-    pin_failures = _verify_submodule_pins(gitmodules, gitlinks)
+    pin_failures: list[str] = []
+    if not missing_mappings and not extra_mappings:
+        pin_failures = _verify_submodule_pins(gitmodules, gitlinks)
 
     if not missing_mappings and not extra_mappings and not pin_failures:
         print("Success: .gitmodules mappings match gitlink entries and submodule pins are on upstream default branches.")
