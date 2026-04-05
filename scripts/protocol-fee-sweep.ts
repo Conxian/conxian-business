@@ -377,7 +377,6 @@ async function executeSweepPlan(params: {
     };
 
     const transaction = await makeContractCall(txOptions);
-    nonce += 1n;
     const broadcastResponse = await broadcastTransaction({ transaction, network: params.network });
 
     console.log(
@@ -400,6 +399,8 @@ async function executeSweepPlan(params: {
         `Transaction broadcast failed for token ${item.token}: ${broadcastResponse.error} (${broadcastResponse.reason})`
       );
     }
+
+    nonce += 1n;
   }
 }
 
