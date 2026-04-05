@@ -34,7 +34,14 @@ def is_in_dir(rel_path: str, rel_dir: str) -> bool:
 
 
 def git_ls_files(root: str) -> list[str]:
-    out = subprocess.check_output(["git", "-C", root, "ls-files", "-z"])
+    try:
+        out = subprocess.check_output(
+            ["git", "-C", root, "ls-files", "-z"],
+            stderr=subprocess.STDOUT,
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        print(f"Failed to enumerate tracked files via git in {root}: {exc}")
+        sys.exit(1)
     return [p for p in out.decode("utf-8", errors="replace").split("\x00") if p]
 
 
