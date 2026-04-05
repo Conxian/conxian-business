@@ -90,11 +90,16 @@ Proposal emission MUST validate that `oracle_verification` is a JSON object cont
 
 The component that invokes the TEE MUST persist the exact `raw_oracle_proof_bytes` alongside the resulting `AttestedExternalSettlementTrigger` so proposal emission can recompute `oracle_proof_digest` deterministically.
 
-If, at proposal emission time, the persisted `raw_oracle_proof_bytes` for an `AttestedExternalSettlementTrigger` are missing, truncated, or otherwise unavailable, the trigger MUST be treated as a permanent validation failure. Implementations MUST NOT attempt to reconstruct the oracle proof from any other source (including `oracle_verification.oracle_proof_bytes_b64`) in order to satisfy the digest checks.
+At proposal emission time, the authoritative oracle proof bytes MUST be obtained from the persisted `raw_oracle_proof_bytes`. If the persisted `raw_oracle_proof_bytes` for an `AttestedExternalSettlementTrigger` are missing, truncated, or otherwise unavailable, proposal emission MAY instead use `oracle_verification.oracle_proof_bytes_b64`, but only if it is present in the TEE-bound `oracle_verification`. If neither persisted `raw_oracle_proof_bytes` nor `oracle_verification.oracle_proof_bytes_b64` are available, the trigger MUST be treated as a permanent validation failure. Implementations MUST NOT attempt to reconstruct the oracle proof bytes from any other non-attested source.
 
-If `oracle_verification` includes `oracle_proof_bytes_b64`, proposal emission MUST decode it and verify that (a) the decoded bytes are byte-identical to the persisted `raw_oracle_proof_bytes` and (b) SHA-256 over `utf8("oracle-proof:v1") || decoded_bytes` equals the attested `oracle_proof_digest`. Proposal emission MUST reject on any mismatch.
+If `oracle_verification` includes `oracle_proof_bytes_b64`, proposal emission MUST decode it and verify that:
 
-Proposal emission MUST recompute `oracle_proof_digest` from the persisted `raw_oracle_proof_bytes` and MUST reject if the result differs from the `oracle_proof_digest` value bound by the TEE attestation.
+- If persisted `raw_oracle_proof_bytes` are present, the decoded bytes are byte-identical to the persisted `raw_oracle_proof_bytes`.
+- SHA-256 over `utf8("oracle-proof:v1") || decoded_bytes` equals the attested `oracle_proof_digest`.
+
+Proposal emission MUST reject on any mismatch.
+
+Proposal emission MUST recompute `oracle_proof_digest` from the authoritative oracle proof bytes (the persisted `raw_oracle_proof_bytes` if available, otherwise the decoded `oracle_verification.oracle_proof_bytes_b64`) and MUST reject if the result differs from the `oracle_proof_digest` value bound by the TEE attestation.
 
 Prohibited fields:
 
