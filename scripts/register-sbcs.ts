@@ -5,6 +5,7 @@
 //   STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts \
 //     --network mainnet|testnet \
 //     --contract <address.contract-name>
+//   (for --network mainnet, you must also set CONFIRM_MAINNET=1)
 
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -55,8 +56,17 @@ function usageAndExit(message?: string, exitCode: number = 1): never {
   console.error(
     [
       'Usage:',
-      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network mainnet|testnet --contract <address.contract-name>',
+      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network mainnet|testnet --contract <contract-principal>',
       '  (for --network mainnet, you must also set CONFIRM_MAINNET=1)',
+      '',
+      'Options:',
+      '  --network <name>        mainnet or testnet',
+      '  --contract <principal>  fiscal-intelligence contract principal (address.contract-name)',
+      '  --help                  Show this message',
+      '',
+      'Examples:',
+      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network testnet --contract ST...fiscal-intelligence',
+      '  STX_PRIVATE_KEY=... bun scripts/register-sbcs.ts --network mainnet --contract SP...fiscal-intelligence',
     ].join('\n')
   );
 
@@ -71,38 +81,55 @@ function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, p
   }
 }
 
-function parseArgs(argv: string[]): { networkName: NetworkName; contractPrincipal: string } {
+function parseArgs(argv: string[]): { networkName: NetworkName; contract: PrincipalParts } {
   let networkName: NetworkName | undefined;
-  let contractPrincipal: string | undefined;
+  let contract: string | undefined;
 
-  const args = [...argv];
-  while (args.length > 0) {
-    const arg = args.shift();
-    if (!arg) break;
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (arg === '--help' || arg === '-h') {
+      usageAndExit(undefined, 0);
+    }
 
     if (arg === '--network') {
-      const raw = args.shift();
+      const raw = argv[i + 1];
       if (!raw) usageAndExit('Missing value for --network');
       const trimmed = raw.trim();
       if (trimmed !== 'mainnet' && trimmed !== 'testnet') usageAndExit(`Invalid --network: ${raw}`);
       networkName = trimmed;
+      i += 1;
       continue;
     }
 
     if (arg === '--contract') {
-      const raw = args.shift();
+      const raw = argv[i + 1];
       if (!raw) usageAndExit('Missing value for --contract');
-      contractPrincipal = raw.trim();
+      contract = raw.trim();
+      i += 1;
       continue;
     }
 
-    usageAndExit(`Unknown argument: ${arg}`);
+    usageAndExit(`Unexpected argument: ${arg}`);
   }
 
   if (!networkName) usageAndExit('Missing required --network');
-  if (!contractPrincipal) usageAndExit('Missing required --contract');
+  if (!contract) usageAndExit('Missing required --contract');
 
-  return { networkName, contractPrincipal };
+  let contractParts: PrincipalParts;
+  try {
+    contractParts = parsePrincipal(contract);
+  } catch {
+    usageAndExit(`Invalid --contract principal: ${contract}`);
+  }
+
+  assertStacksNetworkPrefix(networkName, '--contract', contractParts.address);
+  if (contractParts.contractName !== 'fiscal-intelligence') {
+    usageAndExit(
+      `--contract must point to the fiscal-intelligence contract (got: ${contractParts.contractName})`
+    );
+  }
+
+  return { networkName, contract: contractParts };
 }
 
 function loadDotEnvIfPresent() {
@@ -158,23 +185,28 @@ function requirePrivateKey(): string {
   return privateKey;
 }
 
-async function registerSBCs(privateKey: string, networkName: NetworkName, contract: PrincipalParts) {
-  const network = networkFromName(networkName);
+async function registerSBCs(params: {
+  privateKey: string;
+  networkName: NetworkName;
+  contract: PrincipalParts;
+}) {
+  const network = networkFromName(params.networkName);
   const failures: Array<{ sbc: string; error: string; reason: string }> = [];
 
   for (const sbc of sbcs) {
-    const transaction = await makeContractCall({
-      contractAddress: contract.address,
-      contractName: contract.contractName,
+    const txOptions = {
+      contractAddress: params.contract.address,
+      contractName: params.contract.contractName,
       functionName: 'codify-sbc',
       functionArgs: [stringAsciiCV(sbc)],
-      senderKey: privateKey,
+      senderKey: params.privateKey,
       validateWithPostConditions: true,
       network,
       anchorMode: AnchorMode.Any,
       postConditionMode: PostConditionMode.Allow,
-    });
+    };
 
+    const transaction = await makeContractCall(txOptions);
     const broadcastResponse = await broadcastTransaction({ transaction, network });
     if ('error' in broadcastResponse) {
       console.error(`Failed to register SBC "${sbc}":`, broadcastResponse);
@@ -194,16 +226,14 @@ async function registerSBCs(privateKey: string, networkName: NetworkName, contra
 
 async function main() {
   loadDotEnvIfPresent();
-  const { networkName, contractPrincipal } = parseArgs(process.argv.slice(2));
+  const { networkName, contract } = parseArgs(process.argv.slice(2));
 
   if (networkName === 'mainnet' && process.env.CONFIRM_MAINNET !== '1') {
     usageAndExit('Refusing to run on mainnet without CONFIRM_MAINNET=1');
   }
 
-  assertStacksNetworkPrefix(networkName, '--contract', contractPrincipal);
-  const contract = parsePrincipal(contractPrincipal);
   const privateKey = requirePrivateKey();
-  await registerSBCs(privateKey, networkName, contract);
+  await registerSBCs({ privateKey, networkName, contract });
 }
 
 const isMain = process.argv.slice(1).some((arg) => resolve(arg) === modulePath);
