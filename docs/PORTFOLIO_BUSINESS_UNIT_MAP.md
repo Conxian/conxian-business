@@ -99,7 +99,7 @@ Until portfolio hygiene automation is live, reviewers should treat these invaria
 | --- | --- | --- | --- |
 | `openspec/` | Governance (OpenSpec) | Ground-truth technical requirements | Public, versioned specs; should not contain sensitive operational strategy. |
 | `docs/` | Governance (Public docs) | Public documentation | Public trust surface docs and portfolio conventions. |
-| `./conxian-business/` | Operating function (Governance/BOS runtime) | Machine-readable BOS state | Nested directory containing state-machine artifacts (`BOS_STATE_MACHINE.stub.json`, audit manifests). |
+| `./conxian-business/` | Operating function (Governance/BOS runtime) | Machine-readable BOS state | Nested directory containing public-safe BOS stub artifacts (`BOS_STATE_MACHINE.stub.json`, `AUDIT_MANIFEST.stub.json`, `SARB_COMPLIANCE_REPORT.stub.json`); canonical BOS definitions are maintained outside this repo. |
 | `.github/` | Governance (Repo operations) | CI/CD, templates | Cross-unit repo hygiene enforcement entrypoint. |
 | `scripts/` | Governance (Portfolio hygiene) | Audits, link checking | BOS utility scripts; avoid embedding product logic. |
 | `audit/` | Governance (Assurance) | Audits and alignment reports | Outputs should be cross-unit and non-sensitive. |
