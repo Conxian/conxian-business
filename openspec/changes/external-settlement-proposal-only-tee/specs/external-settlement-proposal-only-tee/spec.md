@@ -80,7 +80,7 @@ The TEE MUST compute `oracle_proof_digest` from the exact `raw_oracle_proof_byte
 
 If `oracle_verification` embeds the raw oracle proof bytes, they MUST be encoded as base64url as defined in RFC 4648 §5 (URL- and filename-safe alphabet, no padding `=`) in `oracle_proof_bytes_b64`.
 
-If `oracle_verification` includes `oracle_proof_bytes_b64`, its character length MUST be ≤ 21846, and this bound MUST be enforced before base64url decoding. Decoding it MUST yield exactly the `raw_oracle_proof_bytes` used both to verify the oracle authenticity proof and to compute `oracle_proof_digest`.
+If `oracle_verification` includes `oracle_proof_bytes_b64`, its character length MUST be ≤ 21846 (the maximum base64url length corresponding to 16384 raw bytes with padding removed), and this bound MUST be enforced before base64url decoding. Decoding it MUST yield exactly the `raw_oracle_proof_bytes` used both to verify the oracle authenticity proof and to compute `oracle_proof_digest`.
 
 Proposal emission MUST validate that `oracle_verification` is a JSON object containing `oracle_proof_digest` in the format defined above and, if present, `oracle_proof_bytes_b64` as valid RFC 4648 §5 base64url (no padding); any violation MUST cause the proposal to be rejected.
 
@@ -90,7 +90,7 @@ Proposal emission MUST validate that `oracle_verification` is a JSON object cont
 
 The component that invokes the TEE MUST persist the exact `raw_oracle_proof_bytes` alongside the resulting `AttestedExternalSettlementTrigger` so proposal emission can recompute `oracle_proof_digest` deterministically.
 
-At proposal emission time, the authoritative oracle proof bytes MUST be obtained from the persisted `raw_oracle_proof_bytes`. If the persisted `raw_oracle_proof_bytes` for an `AttestedExternalSettlementTrigger` are missing, truncated, or otherwise unavailable, proposal emission MAY instead use `oracle_verification.oracle_proof_bytes_b64`, but only if it is present in the TEE-bound `oracle_verification`. If neither persisted `raw_oracle_proof_bytes` nor `oracle_verification.oracle_proof_bytes_b64` are available, the trigger MUST be treated as a permanent validation failure. Implementations MUST NOT attempt to reconstruct the oracle proof bytes from any other non-attested source.
+At proposal emission time, the authoritative oracle proof bytes MUST be obtained from the persisted `raw_oracle_proof_bytes`. If the persisted `raw_oracle_proof_bytes` for an `AttestedExternalSettlementTrigger` are missing or otherwise unavailable, proposal emission MAY instead use `oracle_verification.oracle_proof_bytes_b64`, but only if it is present in the TEE-bound `oracle_verification`. If neither persisted `raw_oracle_proof_bytes` nor `oracle_verification.oracle_proof_bytes_b64` are available, the trigger MUST be treated as a permanent validation failure. Implementations MUST NOT attempt to reconstruct the oracle proof bytes from any other non-attested source.
 
 If `oracle_verification` includes `oracle_proof_bytes_b64`, proposal emission MUST decode it and verify that:
 
