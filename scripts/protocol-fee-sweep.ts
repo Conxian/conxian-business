@@ -8,7 +8,7 @@
 //   STX_PRIVATE_KEY=... bun scripts/protocol-fee-sweep.ts --network mainnet --fee-vault SP... --target SP...token-wxbtc-v2 --execute
 
 import { existsSync, readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   AnchorMode,
@@ -82,14 +82,8 @@ function parseUInt(argName: string, value: string): bigint {
 }
 
 function loadDotEnvIfPresent() {
-  const moduleDir = dirname(modulePath);
-  const searchDirs = [resolve(moduleDir, '..'), moduleDir, process.cwd()];
-
-  const envPath = searchDirs
-    .map((dir) => resolve(dir, '.env'))
-    .find((candidate) => existsSync(candidate));
-
-  if (!envPath) return;
+  const envPath = resolve(process.cwd(), '.env');
+  if (!existsSync(envPath)) return;
 
   const fileText = readFileSync(envPath, 'utf8');
   for (const rawLine of fileText.split(/\r?\n/u)) {
