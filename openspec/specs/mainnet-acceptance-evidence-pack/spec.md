@@ -53,6 +53,7 @@ The evidence pack MUST include:
 - Pre-merge tip-of-`main` SHA (e.g. `git rev-parse <canonical-remote>/main`)
 - Merge-base of `main` and `staged` SHA (e.g. `git merge-base <canonical-remote>/main <canonical-remote>/staged`)
 - Head (`staged`) SHA (e.g. `git rev-parse <canonical-remote>/staged`)
+- Canonical remote URL (e.g. `git remote get-url <canonical-remote>`)
 - SHA capture timing (UTC timestamp; canonical remote used)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
@@ -60,7 +61,18 @@ The evidence pack MUST include:
 
 Together, these SHAs identify the exact change window being promoted (from the merge-base to the `staged` head) and the pre-merge state of `main`.
 
-Capture these SHAs **immediately before merging** the promotion PR (after all required checks/approvals are green): first run `git fetch <canonical-remote> main staged` (where `<canonical-remote>` points at the canonical `<org>/<repo>` remote, not a fork; on forks this is typically `upstream`), then record each SHA explicitly (for example with `git rev-parse <canonical-remote>/main`, `git rev-parse <canonical-remote>/staged`, and `git merge-base <canonical-remote>/main <canonical-remote>/staged`) and paste them into the evidence pack template.
+These SHAs MUST be captured **immediately before merging** the promotion PR (while the PR is open and after all required checks/approvals are green).
+
+1. Ensure refs are current:
+   - `git fetch <canonical-remote> main staged`
+2. Record the required values:
+   - `git rev-parse <canonical-remote>/main`
+   - `git rev-parse <canonical-remote>/staged`
+   - `git merge-base <canonical-remote>/main <canonical-remote>/staged`
+   - `git remote get-url <canonical-remote>`
+3. Paste the captured values into the evidence pack.
+
+`<canonical-remote>` MUST point at the canonical `<org>/<repo>` remote (not a fork). On forks this is typically `upstream`.
 
 If the merge is delayed or `<canonical-remote>/main` advances after capture, re-capture and update the evidence pack before merging.
 
@@ -141,6 +153,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Pre-merge tip-of-`main` SHA (e.g. `git rev-parse <canonical-remote>/main`): `<sha>`
 - Merge-base of `main` and `staged` SHA (e.g. `git merge-base <canonical-remote>/main <canonical-remote>/staged`): `<sha>`
 - Head (`staged`) SHA (e.g. `git rev-parse <canonical-remote>/staged`): `<sha>`
+- Canonical remote URL (e.g. `git remote get-url <canonical-remote>`): `<url>`
 - SHA capture timing: `Captured at (UTC): <YYYY-MM-DDTHH:MM:SSZ>; Canonical remote: <canonical-remote>` (after `git fetch <canonical-remote> main staged`)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
