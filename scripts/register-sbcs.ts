@@ -80,6 +80,7 @@ function usageAndExit(message?: string, exitCode: number = 1): never {
   process.exit(exitCode);
 }
 function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, address: string) {
+  // `address` must be a bare Stacks address (no `.contract-name`).
   const normalized = address.trim().toUpperCase();
 
   if (!validateStacksAddress(normalized)) {
