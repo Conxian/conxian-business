@@ -5,13 +5,27 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
+SKIP_DIR_PARTS = {
+    '.git',
+    '.next',
+    '.venv',
+    '__pycache__',
+    'build',
+    'coverage',
+    'dist',
+    'node_modules',
+    'out',
+    'playwright-report',
+    'test-results',
+}
+
 def check_links():
     md_files = list(REPO_ROOT.rglob('*.md'))
     md_files += list(REPO_ROOT.rglob('*.markdown'))
     broken_links = []
 
     for md_file in md_files:
-        if any(part in {'node_modules', '.git'} for part in md_file.parts):
+        if any(part in SKIP_DIR_PARTS for part in md_file.parts):
             continue
 
         content = md_file.read_text(encoding='utf-8')
