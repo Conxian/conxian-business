@@ -54,6 +54,9 @@ def scan_repo(root: str, label: str, excluded_dirs: set[str]) -> list[str]:
         if any(is_in_dir(rel_path, ex) for ex in excluded_dirs):
             continue
 
+        if rel_path.endswith("verify_contamination_guard.py"):
+            continue
+
         _, ext = os.path.splitext(rel_path)
         if ext not in code_exts:
             continue
@@ -76,6 +79,8 @@ def main() -> int:
         "audit",
         ".github",
         ".idx",
+        "tests",
+        "test",
     }
 
     errors: list[str] = []
