@@ -18,10 +18,10 @@ def check_links():
         links = re.findall(r'\[.*?\]\((.*?)\)', content)
 
         for link in links:
-            if link.startswith('http'):
+            parsed = urlparse(link)
+            if parsed.scheme:
                 continue
 
-            parsed = urlparse(link)
             link_path = parsed.path
 
             # Only validate local markdown files; urlparse already strips fragments and queries.
