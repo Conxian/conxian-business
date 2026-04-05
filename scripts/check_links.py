@@ -20,8 +20,11 @@ SKIP_DIR_PARTS = {
 }
 
 def check_links():
-    md_files = list(REPO_ROOT.rglob('*.md'))
-    md_files += list(REPO_ROOT.rglob('*.markdown'))
+    md_files = [
+        path
+        for path in REPO_ROOT.rglob('*')
+        if path.is_file() and path.suffix.lower() in {'.md', '.markdown'}
+    ]
     broken_links = []
 
     for md_file in md_files:
