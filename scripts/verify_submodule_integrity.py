@@ -145,8 +145,8 @@ def _github_json(path: str) -> dict:
             )
 
             if (is_rate_limited or e.code in {500, 502, 503, 504}) and attempt < 2:
-                headers = getattr(e, "headers", None)
-                retry_after = headers.get("Retry-After") if headers else None
+                error_headers = getattr(e, "headers", None)
+                retry_after = error_headers.get("Retry-After") if error_headers else None
                 time.sleep(_retry_delay(attempt, retry_after))
                 continue
 
@@ -161,8 +161,6 @@ def _github_json(path: str) -> dict:
                 continue
 
             raise GitHubApiError(f"GitHub API request failed: {url} -> {reason}") from e
-
-    raise GitHubApiError(f"GitHub API request failed: {url} -> exhausted retries")
 
 
 def _verify_submodule_pins(
