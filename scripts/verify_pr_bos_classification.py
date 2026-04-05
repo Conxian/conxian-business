@@ -13,9 +13,9 @@ CLASSIFICATION_LABELS = [
 
 
 BOS_CLASSIFICATION_HEADER_RE = re.compile(
-    r"^#{2,6}\s*bos change classification\b", re.IGNORECASE
+    r"^#{1,6}\s*bos change classification\b", re.IGNORECASE
 )
-HEADING_RE = re.compile(r"^#{2,6}\s+")
+HEADING_RE = re.compile(r"^#{1,6}\s+")
 
 CLASSIFICATION_LABELS_BY_NORMALIZED = {label.lower(): label for label in CLASSIFICATION_LABELS}
 
