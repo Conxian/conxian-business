@@ -2,12 +2,12 @@
 
 Canonical issue: https://linear.app/conxian-labs/issue/CON-402/audit-lib-conxian-core-and-protocol-libraries-for-mainnet-safety
 
-Snapshot date: 2026-04-05 (UTC)
-
 Remediation PRs (tracked outside this repo):
 
 - https://github.com/Conxian/lib-conxian-core/pull/30
 - https://github.com/Conxian/lib-conclave-sdk/pull/22
+
+Snapshot date: 2026-04-05 (UTC)
 
 Scope (repo commit + git submodule pins at snapshot time):
 
@@ -49,18 +49,12 @@ Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallba
 - **Gateway engine contains multiple simulated/heuristic behaviors:** `gateway/src/engine/mod.rs` includes logic labeled as simulated for:
   - Severity: high (mainnet readiness blocker unless explicitly gated)
   - Evidence:
-    - on-chain reserves verification and reserve growth: https://github.com/Conxian/lib-conxian-core/blob/2329353a1bee04c137b16b819a46e84530b2b1f4/gateway/src/engine/mod.rs#L735-L742
+    - on-chain reserves verification and reserve growth: https://github.com/Conxian/lib-conxian-core/blob/2329353a1bee04c137b16b819a46e84530b2b1f4/gateway/src/engine/mod.rs#L735-L743
     - BitVM2 health/challenge status: https://github.com/Conxian/lib-conxian-core/blob/2329353a1bee04c137b16b819a46e84530b2b1f4/gateway/src/engine/mod.rs#L772-L784
-    - compliance checks: https://github.com/Conxian/lib-conxian-core/blob/2329353a1bee04c137b16b819a46e84530b2b1f4/gateway/src/engine/mod.rs#L925-L933
-    - ZKML proof "verification": https://github.com/Conxian/lib-conxian-core/blob/2329353a1bee04c137b16b819a46e84530b2b1f4/gateway/src/engine/mod.rs#L936-L948
+    - compliance checks: https://github.com/Conxian/lib-conxian-core/blob/2329353a1bee04c137b16b819a46e84530b2b1f4/gateway/src/engine/mod.rs#L925-L934
+    - ZKML proof "verification": https://github.com/Conxian/lib-conxian-core/blob/2329353a1bee04c137b16b819a46e84530b2b1f4/gateway/src/engine/mod.rs#L936-L949
     - identity resolution and ERP sync: https://github.com/Conxian/lib-conxian-core/blob/2329353a1bee04c137b16b819a46e84530b2b1f4/gateway/src/engine/mod.rs#L1165-L1210
     - protocol fee metrics derived from request count: https://github.com/Conxian/lib-conxian-core/blob/2329353a1bee04c137b16b819a46e84530b2b1f4/gateway/src/engine/mod.rs#L965-L973
-  - on-chain reserves verification and reserve growth
-  - BitVM2 health/challenge status
-  - compliance checks (string contains "bad")
-  - ZKML proof "verification" (string prefix check)
-  - identity resolution and ERP sync
-  - protocol fee metrics derived from request count
   - Impact: if deployed, these code paths can report plausible but incorrect operational/security/financial status.
   - Mainnet status: present in snapshot; should be explicitly gated to fail closed in any mainnet deployment.
   - Suggested next step: gate simulation-only paths behind an explicit build feature or runtime config that fails closed in production.
@@ -71,7 +65,7 @@ Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallba
   - Severity: high
   - Evidence:
     - module is included by default: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/mod.rs#L1-L3
-    - fixed dummy key + mock attestation report: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/cloud.rs#L9-L38
+    - fixed dummy key + mock attestation report: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/cloud.rs#L9-L82
   - At snapshot, it was compiled by default via `pub mod cloud;`.
   - Mainnet status: present in snapshot; should not be available in default (production) builds.
   - Remediation PR: https://github.com/Conxian/lib-conclave-sdk/pull/22
@@ -79,14 +73,11 @@ Audit intent: identify testnet-only logic, mocks, placeholders, or unsafe fallba
 - **Hard-coded timestamps / fixed-epoch validation:** `1710000000` appeared in:
   - Severity: medium
   - Evidence:
-    - business attribution generation: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/protocol/business.rs#L143-L185
+    - business attribution generation: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/protocol/business.rs#L143-L170
     - enclave attestation reports:
       - https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/android_strongbox.rs#L79-L91
       - https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/enclave/cloud.rs#L25-L37
     - attribution expiration checks: https://github.com/Conxian/lib-conclave-sdk/blob/02f3b42aeb209b57e19cfe6c68d028613ce9a65b/src/protocol/rails/mod.rs#L132-L154
-  - business attribution generation (`src/protocol/business.rs`)
-  - enclave attestation reports (`src/enclave/android_strongbox.rs`, `src/enclave/cloud.rs`)
-  - attribution expiration checks (`src/protocol/rails/mod.rs`)
   - Mainnet status: present in snapshot; should be removed before enforcing freshness invariants in production.
   - Remediation PR: https://github.com/Conxian/lib-conclave-sdk/pull/22
 
