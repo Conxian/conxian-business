@@ -1,21 +1,19 @@
-import configparser
-import os
 import re
-import sys
+import os
+import configparser
 from pathlib import Path
+import sys
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-
-SKIP_DIR_PARTS = {
+SKIP_DIRS = {
+    'node_modules',
     '.git',
     '.next',
     '.venv',
-    '__pycache__',
     'build',
-    'coverage',
     'dist',
-    'node_modules',
     'out',
+    '__pycache__',
     'playwright-report',
     'test-results',
 }
@@ -39,21 +37,17 @@ def _uninitialized_submodule_dirs() -> list[Path]:
     return [d for d in dirs if not (d / '.git').exists()]
 
 
-def _is_within_uninitialized_submodule(
-    path: Path, uninitialized_submodule_dirs: list[Path]
-) -> bool:
+def _is_within_uninitialized_submodule(path: Path, uninitialized_submodule_dirs: list[Path]) -> bool:
     return any(path.is_relative_to(submodule_dir) for submodule_dir in uninitialized_submodule_dirs)
 
 
 def _find_markdown_files() -> list[Path]:
     md_files: list[Path] = []
-
     for root, dirs, files in os.walk(REPO_ROOT):
-        dirs[:] = [d for d in dirs if d not in SKIP_DIR_PARTS]
+        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
         for name in files:
             if name.lower().endswith(('.md', '.markdown')):
                 md_files.append(Path(root) / name)
-
     return md_files
 
 
@@ -66,20 +60,20 @@ def _repo_root_for(md_file: Path) -> Path:
             return REPO_ROOT
         current = current.parent
 
-
-def check_links() -> None:
+def check_links():
     md_files = _find_markdown_files()
-    broken_links: list[tuple[Path, str, Path]] = []
+    broken_links = []
     uninitialized_submodule_dirs = _uninitialized_submodule_dirs()
 
     for md_file in md_files:
         repo_root_for_file = _repo_root_for(md_file)
-        content = md_file.read_text(encoding='utf-8')
+        with open(md_file, 'r', encoding='utf-8') as f:
+            content = f.read()
 
         # Find markdown links [text](target)
-        raw_links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
+        links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
 
-        for link in raw_links:
+        for link in links:
             link = link.strip()
             if not link:
                 continue
@@ -93,11 +87,16 @@ def check_links() -> None:
                 continue
 
             href = clean_link.split()[0]
-            if not href.lower().endswith(('.md', '.markdown')):
+            href_lower = href.lower()
+
+            # Only validate repository-local markdown files
+            if not (href_lower.endswith('.md') or href_lower.endswith('.markdown')):
                 continue
 
-            base_dir = repo_root_for_file if href.startswith('/') else md_file.parent
-            target_path = (base_dir / href.lstrip('/')).resolve()
+            if href.startswith('/'):
+                target_path = (repo_root_for_file / href.lstrip('/')).resolve()
+            else:
+                target_path = (md_file.parent / href).resolve()
 
             try:
                 target_path.relative_to(repo_root_for_file)
@@ -116,12 +115,10 @@ def check_links() -> None:
             rel_target = target.relative_to(REPO_ROOT)
         except ValueError:
             rel_target = target
-
         print(f"Broken link in {rel_source}: {link} -> {rel_target}")
 
     if broken_links:
         sys.exit(1)
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     check_links()
