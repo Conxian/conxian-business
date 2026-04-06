@@ -17,16 +17,31 @@ def git_ls_files(root: str) -> list[str]:
             ["git", "-C", root, "ls-files", "-z"],
             stderr=subprocess.STDOUT,
         )
-    except subprocess.CalledProcessError:
-        return []
+    except subprocess.CalledProcessError as exc:
+        output = getattr(exc, "output", b"")
+        output_text = output.decode("utf-8", "replace") if output else ""
+        details = f"\n\nGit output:\n{output_text}" if output_text else ""
+        raise SystemExit(
+            f"Failed to list tracked files in {root!r}. Ensure this directory is a Git repo and submodules are initialized (e.g., `git submodule update --init --recursive`).{details}"
+        ) from exc
     parts = [p for p in out.split(b"\x00") if p]
     return [os.fsdecode(p) for p in parts]
 
 def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
+    parts = rel_path.strip("/").split("/")
     for excluded in excluded_set:
         excluded = excluded.strip("/")
-        if rel_path == excluded or rel_path.startswith(excluded + "/"):
-            return True
+        if not excluded:
+            continue
+
+        if "/" in excluded:
+            if rel_path == excluded or rel_path.startswith(excluded + "/"):
+                return True
+        else:
+            if excluded in parts[:-1]:
+                return True
+            if parts and parts[-1] == excluded:
+                return True
     return False
 
 def read_text(root: str, rel_path: str) -> str:
@@ -38,7 +53,7 @@ def read_text(root: str, rel_path: str) -> str:
 
 # Patterns that indicate contamination in production code
 CONTAMINATION_PATTERNS = [
-    ("Hardcoded Devnet Principal", re.compile(r"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM")),
+    ("Hardcoded Testnet Principal", re.compile(r"\bST[0-9A-Z]{38,}\b", re.IGNORECASE)),
     ("Stub Function Marker", re.compile(r"\bstub-func\b")),
     ("Explicit [STUB] Marker", re.compile(r"\[STUB\]")),
     ("Mock Pattern", re.compile(r"\bMOCK_[A-Z0-9_]+\b")),
@@ -58,6 +73,8 @@ GLOBAL_EXCLUSIONS = {
     "scripts/verify_contamination_guard.py",
     "README.md",
     "CONTRIBUTING.md",
+    "pnpm-lock.yaml",
+    "package-lock.json",
 }
 
 # Repo-specific exclusions for intentional stubs (ZSE Compliance)
@@ -117,12 +134,6 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
     exclusions = GLOBAL_EXCLUSIONS | REPO_EXCLUSIONS.get(repo_name, set())
 
     files = git_ls_files(root)
-    if not files:
-        for dirpath, _, filenames in os.walk(root):
-            for f in filenames:
-                full_path = os.path.join(dirpath, f)
-                rel_path = os.path.relpath(full_path, root)
-                files.append(rel_path)
 
     code_exts = {".rs", ".ts", ".tsx", ".clar", ".yaml", ".yml", ".json", ".toml"}
 
