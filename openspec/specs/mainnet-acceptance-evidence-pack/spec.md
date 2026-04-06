@@ -56,7 +56,7 @@ The evidence pack MUST include:
 - SHA capture timestamp (ISO 8601 UTC)
 - Canonical remote name (used for all SHA/URL capture, e.g. `origin` or `upstream`)
 - Canonical remote fetch URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --all <canonical-remote>`; MUST NOT include embedded credentials; if embedded credentials are present, remediate the git remote configuration and re-run capture before recording)
-- Canonical remote push URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --push --all <canonical-remote>`; MUST NOT include embedded credentials; if embedded credentials are present, remediate the git remote configuration and re-run capture before recording; if identical to fetch, repeat the same URL output and add a separate `(same as fetch)` note)
+- Canonical remote push URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --push --all <canonical-remote>`; MUST NOT include embedded credentials; if embedded credentials are present, remediate the git remote configuration and re-run capture before recording; if identical to fetch, repeat the same URL output and then add a separate `(same as fetch)` note)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
@@ -170,7 +170,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
   - `<url>` (one line per command output line; preserve order)
 - Canonical remote push URL(s) (e.g. from `git remote get-url --push --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.pushurl`; preserve line order; MUST NOT include embedded credentials; if embedded credentials are present, remediate the git remote configuration and re-run capture before recording):
   - `<url>` (one line per command output line; preserve order)
-  - `(same as fetch URL(s) above)` (include only if all push URL(s) are identical to the fetch URL(s); otherwise delete this line)
+  - `Note: (same as fetch URL(s) above)` (include only if all push URL(s) are identical to the fetch URL(s); otherwise delete this line)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
