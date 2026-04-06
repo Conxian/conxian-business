@@ -42,7 +42,7 @@ def git_ls_files(root: str) -> list[str]:
 
 def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
     rel_path = rel_path.strip("/")
-    parts = rel_path.split("/")
+    parts = rel_path.split("/") if rel_path else []
     filename = parts[-1] if parts else ""
     for excluded in excluded_set:
         ex = excluded.strip("/")
@@ -52,9 +52,9 @@ def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
         if "/" in ex:
             if rel_path == ex or rel_path.startswith(ex + "/"):
                 return True
-        else:
-            if ex == filename or ex in parts[:-1]:
-                return True
+            continue
+        if ex == filename or ex in parts[:-1]:
+            return True
     return False
 
 def read_text(root: str, rel_path: str) -> str:
@@ -66,13 +66,27 @@ def read_text(root: str, rel_path: str) -> str:
 
 # Patterns that indicate contamination in production code
 CONTAMINATION_PATTERNS = [
-    ("Hardcoded Devnet Principal", re.compile(r"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM")),
+    ("Hardcoded Testnet Principal", re.compile(r"\bST[0-9A-Z]{38,}\b", re.IGNORECASE)),
     ("Stub Function Marker", re.compile(r"\bstub-func\b")),
     ("Explicit [STUB] Marker", re.compile(r"\[STUB\]")),
     ("Mock Pattern", re.compile(r"\bMOCK_[A-Z0-9_]+\b")),
     ("Hardcoded Mock OTP", re.compile(r'"123456"')),
     ("Placeholder simulation", re.compile(r"Placeholder for simulation")),
 ]
+
+GATEABLE_LABELS = {
+    "Stub Function Marker",
+    "Explicit [STUB] Marker",
+    "Mock Pattern",
+    "Hardcoded Mock OTP",
+    "Placeholder simulation",
+}
+
+GATE_REQUIRED: dict[str, dict[str, re.Pattern[str]]] = {
+    "conxian-gateway": {
+        "internal/api/src/a2p.rs": re.compile(r'feature\s*=\s*"mock-integrations"'),
+    },
+}
 
 # Paths that are ALLOWED to contain these patterns (e.g. tests, documentation)
 GLOBAL_EXCLUSIONS = {
@@ -86,6 +100,8 @@ GLOBAL_EXCLUSIONS = {
     "scripts/verify_contamination_guard.py",
     "README.md",
     "CONTRIBUTING.md",
+    "pnpm-lock.yaml",
+    "package-lock.json",
 }
 
 # Repo-specific exclusions for intentional stubs (ZSE Compliance)
@@ -107,9 +123,6 @@ REPO_EXCLUSIONS = {
         "src/storage/kwil.rs",
         "src/storage/tableland.rs",
         "lib-conxian-core/src/lib.rs",
-    },
-    "conxian-gateway": {
-        "internal/api/src/a2p.rs", # Gated by feature flag
     },
     "Conxian": {
         "contracts/governance/proposal-engine-trait.clar",
@@ -144,6 +157,8 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
     errors = []
     exclusions = GLOBAL_EXCLUSIONS | REPO_EXCLUSIONS.get(repo_name, set())
 
+    gate_requirements = GATE_REQUIRED.get(repo_name, {})
+
     files = git_ls_files(root)
 
     code_exts = {".rs", ".ts", ".tsx", ".clar", ".yaml", ".yml", ".json", ".toml"}
@@ -164,6 +179,15 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
         for label, pattern in CONTAMINATION_PATTERNS:
             for i, line in enumerate(lines, start=1):
                 if pattern.search(line):
+                    gate_regex = gate_requirements.get(rel_path)
+                    if gate_regex and label in GATEABLE_LABELS:
+                        if gate_regex.search(content):
+                            break
+                        errors.append(
+                            f"[{repo_name}] {label} found in {rel_path}:{i} without required gate"
+                        )
+                        break
+
                     errors.append(f"[{repo_name}] {label} found in {rel_path}:{i}")
                     break
 
