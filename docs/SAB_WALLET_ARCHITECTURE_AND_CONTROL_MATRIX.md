@@ -27,12 +27,12 @@ This document defines the canonical wallet-control model for the Conxian Busines
 
 ## Spending limit tier definitions
 
-Spending limits are defined as a per-transaction maximum, expressed in STX-equivalent value transferred (as recorded by the custody system of record).
-Concrete numeric caps per wallet, plus the pricing source/timing used to value non-STX transfers, are recorded in the custody system of record outside Git (public-safe pointer stub: [`admin/SECRETS.md`](../admin/SECRETS.md)).
+Spending limits are defined as a per-transaction maximum, expressed in STX-equivalent value transferred.
+Concrete numeric caps per wallet, and the pricing source and timing used to value non-STX transfers, are recorded in the custody system of record outside Git (public-safe pointer stub: [`admin/SECRETS.md`](../admin/SECRETS.md)).
 
 These tiers apply to value-bearing transfers (network gas fees excluded). Parenthetical notes in the control matrix (for example: `None (Gas-only)` or `None (Inbound-only)`) are operational constraints, not separate tiers.
 
-- **None:** No value-bearing outbound transfers are permitted. Wallets may still pay network gas fees. Any permitted contract calls MUST be non-value-bearing and MUST NOT enable indirect value transfers (for example: granting roles, changing parameters, or triggering execution paths that allow other contracts to move funds on this wallet's behalf). Gas-only wallets are therefore always classified as `None`.
+- **None:** No value-bearing outbound transfers are permitted from this wallet. Wallets may still pay network gas fees. Any permitted contract calls MUST be non-value-bearing. They also MUST NOT confer or modify any authority that would allow other contracts or actors to move funds from this wallet (for example: granting withdrawal roles, changing payout parameters, or triggering execution paths that can debit this wallet). Gas-only wallets are therefore always classified as `None`.
 - **Low:** Minimal value-bearing transfers only (for example: dust-level operational transfers or small top-ups).
 - **Medium:** Budgeted operational or contributor payout transfers.
 - **High:** Large treasury movements, reserve rebalancing, or cross-asset conversion.
