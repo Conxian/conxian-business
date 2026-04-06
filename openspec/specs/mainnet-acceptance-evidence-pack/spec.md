@@ -55,8 +55,8 @@ The evidence pack MUST include:
 - `staged` head commit SHA
 - SHA capture timestamp (ISO 8601 UTC)
 - Canonical remote name (used for all SHA/URL capture, e.g. `origin` or `upstream`)
-- Canonical remote fetch URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --all <canonical-remote>`; MUST be credential-free; if embedded credentials are present, fix the git remote configuration and re-run until output is credential-free)
-- Canonical remote push URL(s) (record output verbatim; preserve line order; may be multi-line. If all push URL(s) are identical to fetch URL(s), you may record `Same as fetch URL(s) above` instead of duplicating the list) (e.g. `git remote get-url --push --all <canonical-remote>`; MUST be credential-free; if embedded credentials are present, fix the git remote configuration and re-run until output is credential-free)
+- Canonical remote fetch URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --all <canonical-remote>`; MUST be credential-free; if embedded credentials are present, fix the git remote configuration and re-run capture until output is credential-free)
+- Canonical remote push URL(s) (verbatim output; preserve line order; may be multi-line. If all push URL(s) are identical to fetch URL(s), you may record `Same as fetch URL(s) above` instead of duplicating the list) (e.g. `git remote get-url --push --all <canonical-remote>`; MUST be credential-free; if embedded credentials are present, fix the git remote configuration and re-run capture until output is credential-free)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
@@ -74,14 +74,14 @@ Record:
 - Merge-base: `git merge-base <canonical-remote>/main <canonical-remote>/staged`
 - `staged` head: `git rev-parse <canonical-remote>/staged`
 - SHA capture timestamp: `date -u +%Y-%m-%dT%H:%M:%SZ`
-- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (record output verbatim; preserve line order)
+- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (record output verbatim; preserve line order; MUST be credential-free; if output contains embedded credentials, fix the git remote configuration and re-run capture until output is credential-free)
   - Fallback (older Git): `git config --get-all remote.<canonical-remote>.url` (or `git remote -v` and take the `(fetch)` lines)
-- Canonical remote push URL(s): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order. If all push URL(s) are identical to fetch URL(s), you may record `Same as fetch URL(s) above` instead of duplicating the list)
+- Canonical remote push URL(s): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order; MUST be credential-free; if output contains embedded credentials, fix the git remote configuration and re-run capture until output is credential-free. If all push URL(s) are identical to fetch URL(s), you may record `Same as fetch URL(s) above` instead of duplicating the list)
   - Fallback (older Git): `git config --get-all remote.<canonical-remote>.pushurl` (or `git remote -v` and take the `(push)` lines)
 
 The configured canonical remote URL(s) can be multi-line (multi-URL remotes). Preserve the output verbatim (including line order).
 
-The configured canonical remote URL(s) MUST be credential-free. If embedded credentials are present, do not record the output; fix the git remote configuration and re-run until output is credential-free before proceeding.
+The configured canonical remote URL(s) MUST be credential-free. If embedded credentials (tokens, `user:pass@`, etc.) are discovered during capture, fix the git remote configuration to remove embedded credentials and re-run the URL capture commands above until output is credential-free. If embedded credentials were captured in any drafts, redact them immediately. The final evidence pack MUST contain only credential-free URL(s).
 
 If the merge is delayed or `<canonical-remote>/main` or `<canonical-remote>/staged` advances after capture, re-capture and update the evidence pack before merging.
 
