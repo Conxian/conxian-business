@@ -17,7 +17,7 @@ The canonical content for [PURPOSE/DOMAIN] is maintained in the Conxian Linear w
 See:
 
 - https://linear.app/conxian-labs
-- https://linear.app/conxian-labs/issue/[ISSUE_KEY]  <!-- canonical doc owner -->
+- https://linear.app/conxian-labs/issue/[ISSUE_KEY]  <!-- canonical doc owner; do not commit with [ISSUE_KEY] -->
 - https://linear.app/conxian-labs/issue/CON-256  <!-- ZSE policy/tracking (optional) -->
 
 This file is intentionally kept as a stub so existing links continue to resolve.
