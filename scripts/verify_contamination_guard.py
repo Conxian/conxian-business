@@ -32,6 +32,13 @@ def git_ls_files(root: str) -> list[str]:
     return [os.fsdecode(p) for p in parts]
 
 def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
+    """Return True when `rel_path` should be skipped during scanning.
+
+    Exclusion semantics:
+    - Entries containing `/` match an exact relative path or a directory prefix.
+    - Bare entries match either a root-level file (exact match) or any directory
+      name anywhere in the path.
+    """
     rel_path = rel_path.replace(os.sep, "/").replace("\\", "/")
     while rel_path.startswith("./"):
         rel_path = rel_path[2:]
