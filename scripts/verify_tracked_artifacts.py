@@ -100,7 +100,8 @@ def _match_any(rel_path: str, patterns: tuple[str, ...]) -> bool:
         normalized = _normalize_path(pattern)
 
         if normalized.endswith("/**"):
-            if _is_in_dir(rel_path, normalized[:-3]):
+            dir_name = normalized[:-3]
+            if f"/{dir_name}/" in f"/{rel_path}/":
                 return True
             continue
 
@@ -193,9 +194,12 @@ def _secret_filename_violation(rel_path: str) -> str | None:
     rel_path = _normalize_path(rel_path)
     base = rel_path.rsplit("/", 1)[-1]
 
+    lower = base.lower()
+    is_example = any(token in lower for token in ("example", "sample", "template"))
+
     if base == ".env":
         return "Secrets and env files"
-    if base.startswith(".env.") and base != ".env.example":
+    if base.startswith(".env.") and not is_example:
         return "Secrets and env files"
     if base in {"secrets.json", "id_rsa", "id_ed25519"}:
         return "Secrets and env files"
