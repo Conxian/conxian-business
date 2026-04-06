@@ -4,7 +4,7 @@ USAGE:
 - Link 1: Linear workspace root.
 - Link 2: replace `[DOC_ISSUE_KEY]` with the doc-specific Linear issue owning the canonical content (preferred; create one if missing).
   - If you do not have the issue key yet, leave the placeholder link in place rather than removing it.
-- Link 3: include https://linear.app/conxian-labs/issue/CON-256 as a ZSE index (not doc ownership).
+- Link 3 (optional): include https://linear.app/conxian-labs/issue/CON-256 as a ZSE index (not doc ownership).
 -->
 
 # [TITLE] (migrated to Linear)
@@ -19,7 +19,7 @@ See:
 
 - https://linear.app/conxian-labs
 - https://linear.app/conxian-labs/issue/[DOC_ISSUE_KEY]
-- https://linear.app/conxian-labs/issue/CON-256 (ZSE index; not doc ownership)
+<!-- Optional: - https://linear.app/conxian-labs/issue/CON-256 (ZSE index; not doc ownership) -->
 
 Internal: search Linear for "[TITLE]" / this document title.
 
