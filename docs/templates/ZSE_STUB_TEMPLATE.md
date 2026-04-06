@@ -2,7 +2,10 @@
 USAGE:
 - Replace [TITLE] and [PURPOSE/DOMAIN].
 - Link 1: Linear workspace root.
-- Link 2: the doc-specific Linear issue owning the canonical content (fallback: CON-256).
+- Link 2: doc-specific Linear issue owning canonical content (preferred).
+  - Replace `[DOC_CANONICAL_ISSUE_URL]` below if you include Link 2.
+  - If no owner issue exists, omit Link 2 and add an `Internal:` search hint.
+  - If you include CON-256, label it explicitly as a ZSE index (not doc ownership).
 -->
 
 # [TITLE] (migrated to Linear)
@@ -14,6 +17,9 @@ The canonical content for [PURPOSE/DOMAIN] is maintained in the Conxian Linear w
 See:
 
 - https://linear.app/conxian-labs
-- https://linear.app/conxian-labs/issue/CON-256
+- [DOC_CANONICAL_ISSUE_URL]
+- (ZSE index; not doc ownership) https://linear.app/conxian-labs/issue/CON-256
+
+Internal: search Linear for "[TITLE]" / this document title.
 
 This file is intentionally kept as a stub so existing links continue to resolve.
