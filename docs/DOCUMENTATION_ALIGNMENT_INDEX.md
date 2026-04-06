@@ -8,7 +8,7 @@ This page is a practical index of the documentation already present in this repo
 - **Supporting**: helpful context, audits, reports, briefs, or deep dives that clarify (but don’t define) the system.
 - **Public-safe**: ok to link in public contexts and external conversations.
 - **Public-safe stub (canonical in Linear)**: safe to link publicly; this repo file is a short pointer stub (see `docs/templates/ZSE_STUB_TEMPLATE.md`), and the full operational/strategy/legal detail is maintained in Linear under ZSE.
-- **Internal-only (canonical in Linear only)**: strategic / operational / security-adjacent material whose canonical document must live only in the Conxian Linear workspace; if a repo path must exist for link integrity, it must be represented as a `Public-safe stub (canonical in Linear)` pointer stub.
+- **Internal-only (canonical in Linear only)**: strategic / operational / security-adjacent material whose canonical document must live only in the Conxian Linear workspace; if a repo path must exist for link integrity, it must be represented as a `Public-safe stub (canonical in Linear)` pointer.
 
 Notes:
 
