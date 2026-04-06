@@ -8,11 +8,11 @@ This page is a practical index of the documentation already present in this repo
 - **Supporting**: helpful context, audits, reports, briefs, or deep dives that clarify (but don’t define) the system.
 - **Public-safe**: ok to link in public contexts and external conversations.
 - **Public-safe stub (canonical in Linear)**: safe to link publicly, but the canonical operational/strategy/legal detail is maintained in Linear under ZSE.
-- **Internal-only**: strategic / operational / security-adjacent content that must live in the Conxian Linear workspace (the repo may contain a stub placeholder so existing links resolve).
+- **Internal-only**: strategic / operational / security-adjacent content that must live in the Conxian Linear workspace.
 
 Notes:
 
-- This repo is public. “Internal-only” material should not be stored here beyond a stub; see https://linear.app/conxian-labs/issue/CON-256.
+- This repo is public. “Internal-only” material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see https://linear.app/conxian-labs/issue/CON-256).
 - OpenSpec change sets typically have 4 layers: `proposal.md` (intent), `design.md` (architecture), `specs/*/spec.md` (requirements), `tasks.md` (execution).
 
 ## 1) Repo navigation (start here)
