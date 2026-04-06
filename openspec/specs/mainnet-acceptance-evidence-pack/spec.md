@@ -53,9 +53,10 @@ The evidence pack MUST include:
 - Pre-merge tip-of-`main` SHA
 - Merge-base of `main` and `staged` SHA
 - `staged` head commit SHA
-- SHA capture timestamp (ISO 8601 UTC; canonical remote used)
-- Canonical remote fetch URL(s) (MUST be credential-free) (e.g. `git remote get-url --all <canonical-remote>`)
-- Canonical remote push URL(s) (record separately only if configured differently from fetch; MUST be credential-free) (e.g. `git remote get-url --push --all <canonical-remote>`)
+- SHA capture timestamp (ISO 8601 UTC)
+- Canonical remote name (used for all SHA/URL capture, e.g. `origin` or `upstream`)
+- Canonical remote fetch URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --all <canonical-remote>`; MUST NOT include embedded credentials; if any are present, redact them in the evidence pack and fix the git remote configuration before proceeding)
+- Canonical remote push URL(s) (record separately only if configured differently from fetch; verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --push --all <canonical-remote>`; MUST NOT include embedded credentials; if any are present, redact them in the evidence pack and fix the git remote configuration before proceeding)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
@@ -68,14 +69,19 @@ You MUST run `git fetch --prune <canonical-remote> main staged` first so that th
 
 Record:
 
+- Canonical remote name: `<canonical-remote>`
 - Pre-merge tip-of-`main`: `git rev-parse <canonical-remote>/main`
 - Merge-base: `git merge-base <canonical-remote>/main <canonical-remote>/staged`
 - `staged` head: `git rev-parse <canonical-remote>/staged`
 - SHA capture timestamp: `date -u +%Y-%m-%dT%H:%M:%SZ`
-- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (fallback: `git config --get-all remote.<canonical-remote>.url`)
-- Canonical remote push URL(s) (record separately only if configured differently from fetch): `git remote get-url --push --all <canonical-remote>` (fallback: `git config --get-all remote.<canonical-remote>.pushurl`)
+- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (record output verbatim; preserve line order; redact embedded credentials before recording)
+  - Fallback (older Git): `git config --get-all remote.<canonical-remote>.url` (or `git remote -v` and take the `(fetch)` lines)
+- Canonical remote push URL(s) (record separately only if configured differently from fetch): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order; redact embedded credentials before recording)
+  - Fallback (older Git): `git config --get-all remote.<canonical-remote>.pushurl` (or `git remote -v` and take the `(push)` lines)
 
-Remote URLs MUST NOT include embedded credentials (tokens, `user:pass@`, etc.). If embedded credentials are discovered during capture, redact them before recording in the evidence pack, remediate the remote configuration to remove embedded credentials, and re-run the URL capture commands above so the recorded URL(s) match the credential-free configuration before proceeding.
+The configured canonical remote URL(s) can be multi-line (multi-URL remotes). Preserve the output verbatim (including line order), allowing only credential redactions.
+
+The configured canonical remote URL(s) MUST NOT include embedded credentials (tokens, `user:pass@`, etc.). If any are discovered during capture, redact them in the evidence pack, remediate the git remote configuration to remove embedded credentials, and re-run the URL capture commands above so the recorded URL(s) match the credential-free configuration before proceeding.
 
 If the merge is delayed or `<canonical-remote>/main` or `<canonical-remote>/staged` advances after capture, re-capture and update the evidence pack before merging.
 
@@ -156,9 +162,10 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Pre-merge tip-of-`main` SHA: `<sha>`
 - Merge-base of `main` and `staged` SHA: `<sha>`
 - `staged` head commit SHA: `<sha>`
-- SHA capture timestamp: `Captured at (UTC): <YYYY-MM-DDTHH:MM:SSZ>; Canonical remote: <canonical-remote>` (after `git fetch --prune <canonical-remote> main staged`; before merge)
-- Canonical remote fetch URL(s): `<url(s)>` (from `git remote get-url --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.url`; MUST be credential-free)
-- Canonical remote push URL(s): `<same as fetch>` or `<url(s)>` (record separately only if configured differently from fetch; from `git remote get-url --push --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.pushurl`; MUST be credential-free)
+- SHA capture timestamp: `Captured at (UTC): <YYYY-MM-DDTHH:MM:SSZ>` (after `git fetch --prune <canonical-remote> main staged`; before merge)
+- Canonical remote: `<canonical-remote>` (MUST point at the canonical `<org>/<repo>` remote; on forks this is typically `upstream`)
+- Canonical remote fetch URL(s): `<url(s)>` (verbatim output; preserve line order; may be multi-line) (e.g. from `git remote get-url --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.url`; MUST NOT include embedded credentials; if any are present, redact them in the evidence pack and fix the git remote configuration before proceeding)
+- Canonical remote push URL(s): `<same as fetch>` or `<url(s)>` (only if different; verbatim output; preserve line order; may be multi-line) (e.g. from `git remote get-url --push --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.pushurl`; MUST NOT include embedded credentials; if any are present, redact them in the evidence pack and fix the git remote configuration before proceeding)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
