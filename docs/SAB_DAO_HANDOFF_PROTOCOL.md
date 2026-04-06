@@ -50,8 +50,9 @@ Definition: "SAB authority" means the designated SAB-controlled multisig or exec
 - **Single-step transfers:** **H-2** completes the transfer, and **H-3** is skipped.
 
 ### V-1 on-chain checklist (per core contract, per control matrix)
-- `owner`/`admin` (or equivalent privileged roles, including any privileged role maps) match the designated SAB authority
-- all fee/recipient addresses match the control matrix
+- enumerate all `owner`/`admin` (or equivalent privileged roles, including any privileged role maps) and verify they match the designated SAB authority
+- enumerate all fee/recipient addresses present on-chain for the contract and verify they match the control matrix
+- verify that no bootstrap or personal address appears as any privileged role or recipient
 
 ## Rollback authority (Emergency Action)
 During the transition between Stage 2 and Stage 3, a **rollback authority** is maintained by the **Emergency Control** wallet class to revert changes if critical bugs are found. Once Stage 3 is fully achieved, this authority is strictly bounded by the DAO-controlled timelock (default 144 blocks).
