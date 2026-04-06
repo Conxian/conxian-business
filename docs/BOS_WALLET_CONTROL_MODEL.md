@@ -1,8 +1,8 @@
 # BOS wallet control model (SAB-owned custody + DAO-aligned governance)
 
-This document defines the canonical wallet-control model for BOS and related ConxianCSF system operations so automation stays **system-controlled** (SAB custody + contract principals) rather than **person-controlled**.
+This document defines the canonical wallet-control model for BOS and related ConxianCSF system operations so automation stays **system-controlled** (SAB custody + contract principals) rather than **person-controlled**, with policy changes delegated to DAO-aligned governance (DAO = decentralized autonomous organization).
 
-This repository is public. Under Zero Secret Egress (ZSE), this doc:
+This repository is public. Under Zero Secret Egress (ZSE: no sensitive operational, strategy, or financial material in the active Git index), this doc:
 
 - **does** define wallet classes, authority boundaries, and on-chain control paths
 - **does not** include signer identities, key material, key-ceremony steps, or concrete wallet principals (those belong in the internal custody record; canonical pointer: `admin/SECRETS.md`)
@@ -13,7 +13,18 @@ This repository is public. Under Zero Secret Egress (ZSE), this doc:
 - ConxianCSF launch gates + ALEX funding path: `docs/CSF_MAINNET_READINESS_GATE.md`
 - Internal custody record pointer (concrete principals + signer sets live outside Git): `admin/SECRETS.md`
 
-## Core invariants (what must stay true)
+## Terms (used in this document)
+
+- **BOS**: Conxian's Business Operations System (the orchestration/policy/evidence layer for system operations; see `README.md`).
+- **SAB**: Conxian Sovereign Autonomous Business (the governing entity for this repo; see `GOVERNANCE.md`).
+- **ConxianCSF**: the Conxian Finance protocol system on Stacks (see `docs/CSF_MAINNET_READINESS_GATE.md`).
+- **DAO**: the ConxianCSF-aligned governance authority for policy changes, executed via `DAO_TIMELOCK`.
+- **ALEX**: the ALEX protocol's Stacks smart contracts, used as an execution venue and launch funding path for ConxianCSF flows (see `docs/CSF_MAINNET_READINESS_GATE.md`).
+- **ZSE**: Zero Secret Egress, the public-repo operating constraint that keeps signer identities, key material, and concrete principals out of Git (see `docs/SAB_MIGRATION_CONTROL_PLANE.md`).
+
+## Canonical model (stable)
+
+### Core invariants (what must stay true)
 
 1. **Wallet/enclave = signing authority (where a signature is required).** If a standard-principal transaction is broadcast, it must have been signed by the correct authority wallet/enclave. For contract principals, authority is enforced by on-chain access control.
 2. **BOS = orchestration + policy enforcement + evidence capture.** BOS may build unsigned transactions, check policy, and record evidence, but it must not "be the signing key".
@@ -21,13 +32,13 @@ This repository is public. Under Zero Secret Egress (ZSE), this doc:
 4. **Custody lives in contract principals.** Treasury/vault balances should live in contract principals (vaults/treasuries), not in human wallets.
 5. **No single personal wallet after handoff.** After the automation cutover stage, no launch-critical automation may depend on a single personal/bootstrap wallet.
 
-## Current bootstrap constraint
+### Current bootstrap constraint
 
 Treat `BOOTSTRAP_OPERATOR_WALLET` as the **current bootstrap wallet** under operator control (see the internal custody record; pointer: `admin/SECRETS.md`).
 
 Bootstrap use is allowed only for launch preparation and one-time initialization. It must not remain a durable deployer/admin/treasury/payout authority after handoff.
 
-## Canonical wallet inventory (v1)
+### Canonical wallet inventory (v1)
 
 Naming convention: identifiers below are **wallet classes**. Concrete principals and signer sets are tracked in the internal custody record (pointer: `admin/SECRETS.md`).
 
@@ -49,7 +60,7 @@ Naming convention: identifiers below are **wallet classes**. Concrete principals
 
 Splitting emergency into **fast pause** (2-of-3) vs **slow recovery** (3-of-5) is the main way to keep incident response fast without weakening the "no single person / no 2-person collusion" line.
 
-## Control matrix (owner, purpose, signer model, allowed actions)
+### Control matrix (owner, purpose, signer model, allowed actions)
 
 | Class | Owner | Allowed actions (canonical) | Not allowed |
 | --- | --- | --- | --- |
@@ -63,7 +74,7 @@ Splitting emergency into **fast pause** (2-of-3) vs **slow recovery** (3-of-5) i
 | `DAO_POLICY_AUTHORITY` | DAO-aligned governance | Queue/cancel timelock proposals; set/rotate governance role holders | Direct custody withdrawals (should route via timelock + vault rules) |
 | `PROTOCOL_VAULTS` | System / DAO via contracts | Custody + rules-based withdraw via timelock and narrowly scoped agent contracts | Direct spend by a standard principal without an on-chain approval path |
 
-## Approval policy, spending limits, rollback authority (v1 defaults)
+### Approval policy, spending limits, rollback authority (v1 defaults)
 
 These are policy-level defaults; concrete numbers (caps, tranche sizes, delay windows) belong in the internal custody/ops record (pointer: `admin/SECRETS.md`).
 
@@ -86,7 +97,7 @@ These are policy-level defaults; concrete numbers (caps, tranche sizes, delay wi
   - Unpause and recovery actions require the higher-quorum recovery authority plus a documented incident record.
   - Rollback: restore last known good configuration (roles, allowlists, timelock targets) and rotate any suspected-compromised keys.
 
-## Governance boundary (SAB execution authority vs DAO policy authority)
+### Governance boundary (SAB execution authority vs DAO policy authority)
 
 This is the canonical boundary:
 
@@ -113,20 +124,20 @@ SAB operations
   -> can recover / rotate keys with higher quorum (SAB_EMERGENCY_RECOVERY_MULTISIG)
 ```
 
-## Staged migration protocol (bootstrap -> SAB custody -> DAO-aligned governance)
+### Staged migration protocol (bootstrap -> SAB custody -> DAO-aligned governance)
 
-### Stage 0 — Bootstrap allowed (now)
+#### Stage 0 — Bootstrap allowed (now)
 
 - `BOOTSTRAP_OPERATOR_WALLET` may deploy and initialize.
 - No production automation may permanently assume the bootstrap key exists.
 
-### Stage 1 — Establish SAB custody (durable control plane)
+#### Stage 1 — Establish SAB custody (durable control plane)
 
 - Create `SAB_DEPLOYER_MULTISIG`, `SAB_PAYOUT_MULTISIG`, `SAB_EMERGENCY_PAUSE_MULTISIG`, `SAB_EMERGENCY_RECOVERY_MULTISIG`.
 - Provision `SAB_BOS_EXECUTOR_KEY` in system custody (enclave/HSM-equivalent) with a strict operational allowlist.
 - Record signer set + quorum + recovery contacts in the internal custody record (pointer: `admin/SECRETS.md`).
 
-### Stage 2 — Move admin/owner surfaces out of bootstrap
+#### Stage 2 — Move admin/owner surfaces out of bootstrap
 
 - Transfer contract-level `admin`/`contract-owner` variables away from bootstrap to SAB authorities (typically `SAB_DEPLOYER_MULTISIG` and the emergency model). Where timelock-gated governance is required, defer final transfer to `DAO_TIMELOCK` in Stage 4.
 - Set `.conxian-access` owner + roles so:
@@ -134,7 +145,7 @@ SAB operations
   - keeper/executor can perform allowlisted operational calls
   - emergency pause authority is distinct from deploy authority
 
-### Stage 3 — Automation cutover (hard requirement before broad launch)
+#### Stage 3 — Automation cutover (hard requirement before broad launch)
 
 - All BOS automation that signs transactions must use `SAB_BOS_EXECUTOR_KEY`.
 - The bootstrap wallet must not be required for:
@@ -145,18 +156,18 @@ SAB operations
 
 **Explicit rule:** after Stage 3, no launch-critical automation may depend on a single personal wallet.
 
-### Stage 4 — DAO alignment (policy control moves behind timelock)
+#### Stage 4 — DAO alignment (policy control moves behind timelock)
 
 - Configure `DAO_TIMELOCK` and set governance role holders (`DAO_POLICY_AUTHORITY`).
 - Transfer policy-critical admin surfaces to timelock where supported.
 - Leave SAB with execution + emergency, but remove unilateral policy mutation capability.
 
-### Stage 5 — Bootstrap decommission
+#### Stage 5 — Bootstrap decommission
 
 - Remove bootstrap principal from allowlists/roles.
 - Treat the bootstrap key as revoked for production.
 
-## BOS initiation rules (what BOS may do without signing authority)
+### BOS initiation rules (what BOS may do without signing authority)
 
 BOS may:
 
@@ -171,7 +182,11 @@ BOS must not:
 - broadcast unsigned or personally signed production transactions
 - use bootstrap keys in any automated production path after Stage 3
 
-## Authority surfaces that must migrate off personal/placeholder control (current pinned contracts)
+## Current implementation status (as-of pinned contracts)
+
+This section is intentionally mutable. Update it whenever the `Conxian/` submodule pin or runtime signing surfaces change.
+
+### Authority surfaces that must migrate off personal/placeholder control (current pinned contracts)
 
 This is the concrete "move into SAB/DAO control" checklist visible in the pinned `Conxian/contracts` set (paths relative to the `Conxian/` submodule):
 
@@ -191,14 +206,14 @@ This is the concrete "move into SAB/DAO control" checklist visible in the pinned
 - `contracts/security/*`
   - pause/circuit-breaker admin must map to `SAB_EMERGENCY_PAUSE_MULTISIG` / `SAB_EMERGENCY_RECOVERY_MULTISIG`.
 
-Runtime/automation surfaces in this repo:
+### Runtime/automation surfaces in this repo
 
 - `scripts/register-sbcs.ts` uses `STX_PRIVATE_KEY` for signing.
   - In production, that key must map to `SAB_BOS_EXECUTOR_KEY` or `SAB_DEPLOYER_MULTISIG` (depending on the action), never to a personal bootstrap key.
 
 Note: the pinned contract set still contains placeholder/testnet principals (e.g., `ST...`) and some authorization checks that are not yet compatible with contract-mediated governance (timelock/agent contracts). Treat those as hard blockers to completing Stage 4 until remediated.
 
-## Pre-launch verification checklist (authority-path / secret-ownership)
+### Pre-launch verification checklist (authority-path / secret-ownership)
 
 Before broad launch or payout enablement:
 
