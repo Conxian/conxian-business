@@ -19,8 +19,12 @@ def format_git_ls_files_error(root: str, details: str = "") -> str:
 
 def git_ls_files(root: str) -> list[str]:
     try:
+        prefix = subprocess.check_output(
+            ["git", "-C", root, "rev-parse", "--show-prefix"],
+            stderr=subprocess.STDOUT,
+        )
         out = subprocess.check_output(
-            ["git", "-C", root, "ls-files", "-z"],
+            ["git", "-C", root, "ls-files", "-z", "--", "."],
             stderr=subprocess.STDOUT,
         )
     except (FileNotFoundError, OSError) as exc:
@@ -31,7 +35,16 @@ def git_ls_files(root: str) -> list[str]:
         details = f"\n\nGit output:\n{output_text}" if output_text else ""
         raise SystemExit(format_git_ls_files_error(root, details)) from exc
     parts = [p for p in out.split(b"\x00") if p]
-    return [os.fsdecode(p) for p in parts]
+    prefix_text = prefix.decode("utf-8", "replace")
+    prefix_text = prefix_text.strip()
+    prefix_text = prefix_text.lstrip("/")
+    if prefix_text and not prefix_text.endswith("/"):
+        prefix_text += "/"
+
+    paths = [os.fsdecode(p) for p in parts]
+    if prefix_text:
+        paths = [p[len(prefix_text) :] if p.startswith(prefix_text) else p for p in paths]
+    return paths
 
 def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
     """Return True when `rel_path` should be skipped during scanning.
@@ -46,9 +59,10 @@ def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
         rel_path = rel_path[2:]
     rel_path = rel_path.strip("/")
     parts = rel_path.split("/") if rel_path else []
-
     for excluded in excluded_set:
         ex = excluded.replace(os.sep, "/").replace("\\", "/").strip("/")
+        while ex.startswith("./"):
+            ex = ex[2:]
         if not ex:
             continue
 
@@ -56,7 +70,6 @@ def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
             if rel_path == ex or rel_path.startswith(ex + "/"):
                 return True
             continue
-
         if rel_path == ex:
             return True
         if ex in parts[:-1]:
