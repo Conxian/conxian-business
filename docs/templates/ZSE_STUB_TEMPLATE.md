@@ -5,7 +5,7 @@ USAGE:
 - Link 2: doc-specific Linear issue owning canonical content (preferred).
   - Uncomment and replace `[DOC_CANONICAL_ISSUE_URL]` below if you include Link 2.
   - If no owner issue exists, omit Link 2; the `Internal:` search hint below covers discovery.
-  - If you include CON-256, label it explicitly as a ZSE index (not doc ownership).
+  - Include CON-256 as a ZSE index (not doc ownership).
 -->
 
 # [TITLE] (migrated to Linear)
