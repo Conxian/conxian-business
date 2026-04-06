@@ -7,7 +7,7 @@ The canonical content for vendor audits and LSEG MCP integration is maintained i
 See:
 
 - https://linear.app/conxian-labs
-- (ZSE index; not doc ownership) https://linear.app/conxian-labs/issue/CON-256
+- https://linear.app/conxian-labs/issue/CON-256 (ZSE index; not doc ownership)
 
 Internal: search Linear for "LSEG MCP audit" / this document title.
 
