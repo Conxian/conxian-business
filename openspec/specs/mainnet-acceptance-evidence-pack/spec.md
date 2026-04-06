@@ -79,7 +79,7 @@ Record:
 - Canonical remote push URL(s): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order; if output contains embedded credentials, remediate the git remote configuration and re-run capture before recording)
   - Fallback (older Git): `git config --get-all remote.<canonical-remote>.pushurl` (or `git remote -v` and take the `(push)` lines)
 
-The configured canonical remote URL(s) can be multi-line (multi-URL remotes). Preserve the output verbatim (including line order).
+The configured canonical remote URL(s) can be multi-line (multi-URL remotes). After any necessary remediation, preserve the command output verbatim (including line order).
 
 The configured canonical remote URL(s) MUST NOT include embedded credentials. "Embedded credentials" means secrets present in the URL itself (for example: access tokens, `user:pass@`, or `https://<token>@...`). SSH forms like `git@github.com:org/repo.git` or `ssh://git@github.com/org/repo.git` are not embedded credentials.
 
