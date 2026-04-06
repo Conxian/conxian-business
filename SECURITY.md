@@ -24,6 +24,7 @@ If you prefer, you may also use GitHub's private vulnerability reporting (when e
 ## Secrets and environment files
 
 - Do not commit any `.env*` files (for example: `.env`, `.env.local`), private keys, or API tokens.
+- Ensure `.env*` patterns are listed in `.gitignore` so they are never committed by default.
 - Use `.env.example` as a template for local configuration.
 - This repository runs a `gitleaks` secret scan in GitHub Actions on pull requests and pushes to `main` to catch new secret leaks.
 
@@ -32,6 +33,8 @@ If a secret was committed to a public branch (even temporarily), treat it as com
 - Rotate/revoke the secret at the source (wallet/private key, API provider, cloud console).
 - Update any dependent deployments/configuration to use the new secret.
 - Consider rewriting Git history to remove the secret material (rotation is still required regardless).
+
+If you discover that a secret was previously committed, also follow the reporting process in "Reporting a Vulnerability" so the team can assess impact and coordinate incident response.
 
 ## Security Controls
 
