@@ -7,12 +7,12 @@ This page is a practical index of the documentation already present in this repo
 - **Canonical**: the current “source of truth” for a domain. If two docs disagree, update the non-canonical doc to match the canonical one.
 - **Supporting**: helpful context, audits, reports, briefs, or deep dives that clarify (but don’t define) the system.
 - **Public-safe**: ok to link in public contexts and external conversations.
-- **Public-safe stub (canonical in Linear)**: safe to link publicly; this repo file is a short pointer stub (see `docs/templates/ZSE_STUB_TEMPLATE.md`), and the full operational/strategy/legal detail is maintained in Linear under ZSE.
+- **Public-safe stub (canonical in Linear)**: safe to link publicly; this repository file is only a pointer stub (see `docs/templates/ZSE_STUB_TEMPLATE.md`), and the canonical document is maintained in Linear under ZSE.
 - **Internal-only (Linear-only canonical)**: strategic / operational / security-adjacent material whose full text must live only in the Conxian Linear workspace. If a repo path must exist for link integrity, it must be represented as a `Public-safe stub (canonical in Linear)` pointer stub.
 
 Notes:
 
-- This repo is public. “Internal-only” material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see https://linear.app/conxian-labs/issue/CON-256).
+- This repo is public. “Internal-only” canonical material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see https://linear.app/conxian-labs/issue/CON-256).
 - OpenSpec change sets typically have 4 layers: `proposal.md` (intent), `design.md` (architecture), `specs/*/spec.md` (requirements), `tasks.md` (execution).
 
 ## 1) Repo navigation (start here)
@@ -69,7 +69,7 @@ OpenSpec is the best place to point issue descriptions when work is “spec-firs
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
-| `audit/strategos-alignment.md` | Supporting | Internal-only | Audit of repo alignment to Strategos mandate + next steps. |
+| `audit/strategos-alignment.md` | Supporting | Public-safe stub (canonical in Linear) | Audit of repo alignment to Strategos mandate + next steps. |
 | `audit/nomenclature-alignment.md` | Supporting | Public-safe | Corporate vs product nomenclature separation rules. |
 
 ## 4) Architecture, PRDs, whitepapers, roadmaps
@@ -115,11 +115,11 @@ These are the documents most likely to answer “what are we building?” and �
 | `docs/CJCS_v2.0_SPEC.md` | Canonical | Public-safe | Job Card schema (CJCS v2.0). |
 | `docs/ERP_MCP_HANDSHAKE_SPEC.md` | Canonical | Public-safe | ERP handshake spec (SAP/Oracle mapping). |
 | `docs/AGENTS.md` | Canonical | Public-safe | Agent operating rules (including knowledge retention rules). |
-| `docs/ATS_v11.0_MASTER_BASELINE.md` | Supporting | Internal-only | Baseline snapshot and executive alignment language. |
+| `docs/ATS_v11.0_MASTER_BASELINE.md` | Supporting | Public-safe stub (canonical in Linear) | Baseline snapshot and executive alignment language. |
 | `docs/TEE_SECURITY_AUDIT.md` | Supporting | Public-safe | TEE security audit notes. |
 | `docs/DASHBOARD_SPEC.md` | Supporting | Public-safe | Audit dashboard spec. |
 | `docs/SOVEREIGN_SHARD_SPEC.md` | Canonical | Public-safe | Sharding spec (Sovereign Shard). |
-| `docs/BUSINESS_COMPLIANCE_ALIGNMENT_2026.md` | Supporting | Internal-only | Strategy/compliance narrative for 2026 regulatory framing. |
+| `docs/BUSINESS_COMPLIANCE_ALIGNMENT_2026.md` | Supporting | Public-safe stub (canonical in Linear) | Strategy/compliance narrative for 2026 regulatory framing. |
 
 ## 6) Governance / repo operating model / runbooks
 
