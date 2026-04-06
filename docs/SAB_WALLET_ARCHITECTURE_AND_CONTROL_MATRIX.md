@@ -23,7 +23,7 @@ This document defines the canonical wallet-control model for the Conxian Busines
 | **BOUNTY-PAYOUT-MS** | Contributor payouts | Multi-sig (Maintainer) | 2 of 3 | Low/Medium | Bounty settlement |
 | **PROTOCOL-PAUSE-MS** | Emergency pause and circuit-breaking | Multi-sig (Guardian) | 2 of 3 | N/A | Contract pause/isolate, circuit-breaking |
 
-**Note:** `PROTOCOL-PAUSE-MS` maps to `SAB_EMERGENCY_PAUSE_MULTISIG` in [`BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md) and is pause/isolation-only. Administrative recovery (including unpause, key rotation, role revokes, and rollback) must use `SAB_EMERGENCY_RECOVERY_MULTISIG` (higher quorum) and/or the DAO timelock.
+**Note:** `PROTOCOL-PAUSE-MS` maps to `SAB_EMERGENCY_PAUSE_MULTISIG` in [`BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md) and is pause/isolation-only. Administrative recovery (including unpause, key rotation, role revokes, and rollback) must use `SAB_EMERGENCY_RECOVERY_MULTISIG` (higher quorum; see that doc) and/or the `DAO_TIMELOCK` contract.
 
 ## Governance and authority boundaries
 
