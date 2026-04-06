@@ -3,8 +3,8 @@ USAGE:
 - Replace [TITLE] and [PURPOSE/DOMAIN].
 - Link 1: Linear workspace root.
 - Link 2: replace `[ISSUE_KEY]` with the doc-specific Linear issue owning the canonical content (preferred; create one if missing).
-  - While drafting locally, keep the placeholder link line in place rather than deleting it, but replace `[ISSUE_KEY]` with the real issue key before committing.
-- Link 3 (optional): include `CON-256` as a ZSE index/policy/tracking reference (not doc ownership).
+  - While drafting locally, keep the placeholder link line in place rather than deleting it, but do not commit/merge this stub until `[ISSUE_KEY]` is replaced.
+- Link 3 (optional): include `CON-256` as a ZSE index/policy/tracking reference (not doc ownership). Uncomment the link below to include it.
 -->
 
 # [TITLE] (migrated to Linear)
@@ -19,9 +19,9 @@ See:
 
 - https://linear.app/conxian-labs
 - https://linear.app/conxian-labs/issue/[ISSUE_KEY]
-  - Canonical doc owner (replace `[ISSUE_KEY]` before committing)
+  - Canonical doc owner (replace `[ISSUE_KEY]` before committing/merging)
 
-<!-- Optional: ZSE index/policy/tracking reference (not doc ownership) -->
+<!-- Optional: ZSE index/policy/tracking reference (not doc ownership). Uncomment the link below to include it. -->
 <!-- - https://linear.app/conxian-labs/issue/CON-256 -->
 
 Internal: search Linear for "[TITLE]" / this document title.
