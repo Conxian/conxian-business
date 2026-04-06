@@ -17,6 +17,10 @@ def git_ls_files(root: str) -> list[str]:
             ["git", "-C", root, "ls-files", "-z"],
             stderr=subprocess.STDOUT,
         )
+    except (FileNotFoundError, OSError) as exc:
+        raise SystemExit(
+            f"Failed to run `git ls-files` in {root!r}. Ensure `git` is installed and available on PATH, and that this directory is a Git repo and submodules are initialized (e.g., `git submodule update --init --recursive`).\n\nOS error:\n{exc}"
+        ) from exc
     except subprocess.CalledProcessError as exc:
         output = getattr(exc, "output", b"")
         output_text = output.decode("utf-8", "replace") if output else ""
@@ -28,11 +32,14 @@ def git_ls_files(root: str) -> list[str]:
     return [os.fsdecode(p) for p in parts]
 
 def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
+    rel_path = rel_path.replace(os.sep, "/").replace("\\", "/")
+    while rel_path.startswith("./"):
+        rel_path = rel_path[2:]
     rel_path = rel_path.strip("/")
     parts = rel_path.split("/") if rel_path else []
 
     for excluded in excluded_set:
-        ex = excluded.strip("/")
+        ex = excluded.replace(os.sep, "/").replace("\\", "/").strip("/")
         if not ex:
             continue
 
@@ -41,9 +48,9 @@ def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
                 return True
             continue
 
-        if ex in parts[:-1]:
+        if rel_path == ex:
             return True
-        if parts and parts[-1] == ex:
+        if ex in parts[:-1]:
             return True
     return False
 
@@ -56,7 +63,10 @@ def read_text(root: str, rel_path: str) -> str:
 
 # Patterns that indicate contamination in production code
 CONTAMINATION_PATTERNS = [
-    ("Hardcoded Testnet Principal", re.compile(r"\bST[0-9A-Z]{38,}\b", re.IGNORECASE)),
+    (
+        "Hardcoded Testnet Principal",
+        re.compile(r"(?<![0-9A-Z])ST[0-9A-Z]{38,}(?![0-9A-Z])", re.IGNORECASE),
+    ),
     ("Stub Function Marker", re.compile(r"\bstub-func\b")),
     ("Explicit [STUB] Marker", re.compile(r"\[STUB\]")),
     ("Mock Pattern", re.compile(r"\bMOCK_[A-Z0-9_]+\b")),
@@ -92,6 +102,7 @@ GLOBAL_EXCLUSIONS = {
     "CONTRIBUTING.md",
     "pnpm-lock.yaml",
     "package-lock.json",
+    "showcase-dapp/package-lock.json",
 }
 
 # Repo-specific exclusions for intentional stubs (ZSE Compliance)
