@@ -10,7 +10,7 @@ This document defines the canonical wallet-control model for the Conxian Busines
 | **Treasury (Vault)** | Passive asset custody, protocol fee accumulation, and reserve management. | Contract-controlled (Vault Principal) | Immutable / Rules-based |
 | **Payout** | Distribution of bounties, royalties, and contributor incentives. | Multi-sig (SAB-controlled) | Approved / Threshold-based |
 | **Signer Authority** | Root of trust for TEE attestations and multi-sig authorizations. | TEE / Hardware-backed Multi-sig | Authoritative / Signer-only |
-| **Emergency Pause (Guardian)** | Emergency pause and circuit-breaking. | Multi-sig (Guardian / DAO-aligned) | Override / Veto-only |
+| **Emergency Pause (Guardian)** | Emergency pause and circuit-breaking. | Multi-sig (Guardian) | Override / Veto-only |
 
 ## Control matrix
 
@@ -21,9 +21,9 @@ This document defines the canonical wallet-control model for the Conxian Busines
 | **SAB-TREASURY-MS** | Operational treasury | Multi-sig (SAB) | 3 of 5 | Medium | Ops funding, conversion |
 | **DAO-TREASURY-MS** | Long-term reserves | Multi-sig (DAO) | 5 of 7 | High | Reserve rebalancing, large spends |
 | **BOUNTY-PAYOUT-MS** | Contributor payouts | Multi-sig (Maintainer) | 2 of 3 | Low/Medium | Bounty settlement |
-| **PROTOCOL-PAUSE-MS** | Emergency pause and circuit-breaking | Multi-sig (Guardian) | 3 of 5 | N/A | Contract pause/resume, circuit-breaking |
+| **PROTOCOL-PAUSE-MS** | Emergency pause and circuit-breaking | Multi-sig (Guardian) | 2 of 3 | N/A | Contract pause/isolate, circuit-breaking |
 
-**Note:** `PROTOCOL-PAUSE-MS` is pause/isolation-only. Administrative recovery (including key rotation, role revokes, and rollback) must use the higher-quorum recovery authority defined in [`BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md) and/or the DAO timelock.
+**Note:** `PROTOCOL-PAUSE-MS` maps to `SAB_EMERGENCY_PAUSE_MULTISIG` in [`BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md) and is pause/isolation-only. Administrative recovery (including unpause, key rotation, role revokes, and rollback) must use `SAB_EMERGENCY_RECOVERY_MULTISIG` (higher quorum) and/or the DAO timelock.
 
 ## Governance and authority boundaries
 
