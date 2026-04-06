@@ -2,9 +2,9 @@ name: Conxian Unified CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, staged, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, staged, dev ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -43,7 +43,7 @@ jobs:
     name: Repo Hygiene (ZSE & Submodules)
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -55,10 +55,23 @@ jobs:
     - name: Verify knowledge retention (ZSE)
       run: |
         python3 scripts/verify_knowledge_retention.py
+    - name: Verify BOS production boundary
+      run: |
+        python3 scripts/verify_bos_production_boundary.py
     - name: Verify submodule integrity
       run: |
         python3 scripts/verify_submodule_integrity.py
         git submodule status --recursive
+    - name: Verify BOS production boundary
+      run: |
+        python3 scripts/verify_bos_production_boundary.py
+    - name: Verify production contamination guard
+      run: |
+        python3 scripts/verify_contamination_guard.py
+    - name: Enforce BOS PR classification
+      if: github.event_name == 'pull_request'
+      run: |
+        python3 scripts/verify_pr_bos_classification.py
 
   gateway-suite:
     name: Gateway Suite
@@ -70,7 +83,7 @@ jobs:
         github.event.pull_request.head.repo.full_name == github.repository
       )
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -102,7 +115,7 @@ jobs:
         )
       )
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -127,17 +140,18 @@ jobs:
       github.event_name == 'push' ||
       (
         github.event_name == 'pull_request' &&
-        github.event.pull_request.head.repo.full_name == github.repository &&
-        contains(github.event.pull_request.labels.*.name, 'b2b')
+        github.event.pull_request.head.repo.full_name == github.repository
       )
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup Rust
-      uses: dtolnay/rust-toolchain@stable
+      uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
+      with:
+        components: clippy
     - name: Rust Cache
       uses: Swatinem/rust-cache@v2
       with:
@@ -146,10 +160,13 @@ jobs:
       run: |
         cd lib-conxian-core
         cargo test --locked
-        cargo clippy --all-targets --all-features -- -D warnings
+        cargo clippy --locked --all-targets --all-features -- -D warnings
+    - name: Install cargo-audit
+      uses: taiki-e/install-action@1ed3272338f573e042a2e6bca3893aa19f43b47a # v2
+      with:
+        tool: cargo-audit@0.22.1
     - name: Dependency audit
       run: |
-        cargo install cargo-audit --version 0.22.1 --locked
         cd lib-conxian-core
         cargo audit
 
@@ -163,7 +180,7 @@ jobs:
         github.event.pull_request.head.repo.full_name == github.repository
       )
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -209,7 +226,7 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository &&
       contains(github.event.pull_request.labels.*.name, 'audit')
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -238,7 +255,7 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository &&
       contains(github.event.pull_request.labels.*.name, 'simulation')
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}

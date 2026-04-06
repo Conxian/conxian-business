@@ -15,18 +15,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           submodules: true
           fetch-depth: 0
           token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
 
-      - name: Update Submodules to Latest Main
+      - name: Update submodules to latest main (PR base: dev)
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          
-          # Initialize and update submodules recursively to track their defined branches (main)
+
+          # `.gitmodules` intentionally does not set `submodule.<name>.branch`.
+          # Ensure `git submodule update --remote` tracks `main` rather than each remote's `HEAD`.
+          while read -r key _path; do
+            name=${key#submodule.}
+            name=${name%.path}
+            git config "submodule.${name}.branch" main
+          done < <(git config -f .gitmodules --get-regexp '^submodule\..*\.path$')
+
+          # Initialize and update submodules recursively to track their configured branches.
           git submodule update --init --recursive --remote
 
       - name: Create pull request
