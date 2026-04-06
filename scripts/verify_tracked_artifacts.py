@@ -208,7 +208,7 @@ def _secret_filename_violation(rel_path: str) -> str | None:
 def verify() -> None:
     repo_root = _repo_root()
     submodules = _read_submodule_paths(repo_root)
-    excluded_dirs = {".idx"} | submodules
+    excluded_dirs = set(submodules)
     allowlist = _load_allowlist(repo_root)
 
     excluded_paths = {p.rstrip("/") for p in excluded_dirs if p.rstrip("/")}
