@@ -55,8 +55,8 @@ The evidence pack MUST include:
 - `staged` head commit SHA
 - SHA capture timestamp (ISO 8601 UTC)
 - Canonical remote name (used for all SHA/URL capture, e.g. `origin` or `upstream`)
-- Canonical remote fetch URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --all <canonical-remote>`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording)
-- Canonical remote push URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --push --all <canonical-remote>`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording)
+- Canonical remote fetch URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --all <canonical-remote>`; recorded value MUST be credential-free; if capture output contains embedded credentials, remediate the git remote configuration and re-run capture before recording)
+- Canonical remote push URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --push --all <canonical-remote>`; recorded value MUST be credential-free; if identical to fetch, repeat the same value and note `(same as fetch)`)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
@@ -74,16 +74,16 @@ Record:
 - Merge-base: `git merge-base <canonical-remote>/main <canonical-remote>/staged`
 - `staged` head: `git rev-parse <canonical-remote>/staged`
 - SHA capture timestamp: `date -u +%Y-%m-%dT%H:%M:%SZ`
-- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (record output verbatim; preserve line order; if output contains embedded credentials, remediate the git remote configuration and re-run capture before recording)
+- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (record output verbatim; preserve line order; may be multi-line)
   - Fallback (older Git): `git config --get-all remote.<canonical-remote>.url` (or `git remote -v` and take the `(fetch)` lines)
-- Canonical remote push URL(s): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order; if output contains embedded credentials, remediate the git remote configuration and re-run capture before recording)
+- Canonical remote push URL(s): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order; may be multi-line; if identical to fetch, repeat the same value and note `(same as fetch)`)
   - Fallback (older Git): `git config --get-all remote.<canonical-remote>.pushurl` (or `git remote -v` and take the `(push)` lines)
 
 The configured canonical remote URL(s) can be multi-line (multi-URL remotes). Preserve the output verbatim (including line order).
 
-The configured canonical remote URL(s) MUST NOT include embedded credentials. "Embedded credentials" means secrets present in the URL itself (for example: access tokens, `user:pass@`, or `https://<token>@...`). SSH forms like `git@github.com:org/repo.git` or `ssh://git@github.com/org/repo.git` are not embedded credentials.
+Embedded credentials means secrets present in the URL itself (for example: access tokens, `user:pass@`, or `https://<token>@...`). SSH forms like `git@github.com:org/repo.git` or `ssh://git@github.com/org/repo.git` are OK and do not count as embedded credentials.
 
-If embedded credentials are discovered during capture, immediately redact them from any draft notes, remediate the git remote configuration to remove embedded credentials, and then re-run the URL capture commands above. The final evidence pack MUST contain only the post-remediation, credential-free URL(s).
+The final evidence pack MUST contain only credential-free canonical remote URL(s), captured after remediation. If any embedded credentials are discovered during URL capture, stop: remediate the git remote configuration to remove embedded credentials, then re-run the URL capture commands above and record the post-remediation output. If the canonical remote URL changes during remediation, confirm it still points at the intended canonical `<org>/<repo>` before proceeding. If embedded credentials were captured in any PR drafts, redact them immediately.
 
 If the merge is delayed or `<canonical-remote>/main` or `<canonical-remote>/staged` advances after capture, re-capture and update the evidence pack before merging.
 
@@ -166,8 +166,8 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - `staged` head commit SHA: `<sha>`
 - SHA capture timestamp: `Captured at (UTC): <YYYY-MM-DDTHH:MM:SSZ>` (after `git fetch --prune <canonical-remote> main staged`; before merge)
 - Canonical remote: `<canonical-remote>` (MUST point at the canonical `<org>/<repo>` remote; on forks this is typically `upstream`)
-- Canonical remote fetch URL(s): `<url(s)>` (verbatim output; preserve line order; may be multi-line) (e.g. from `git remote get-url --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.url`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording)
-- Canonical remote push URL(s): `<url(s)>` (verbatim output; preserve line order; may be multi-line) (e.g. from `git remote get-url --push --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.pushurl`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording; if identical to fetch, repeat the same value and add "(same as fetch)")
+- Canonical remote fetch URL(s): `<url(s)>` (verbatim output; preserve line order; may be multi-line) (e.g. from `git remote get-url --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.url`; recorded value MUST be credential-free; if capture output contains embedded credentials, remediate the git remote configuration and re-run capture before recording)
+- Canonical remote push URL(s): `<url(s)>` (verbatim output; preserve line order; may be multi-line) (e.g. from `git remote get-url --push --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.pushurl`; recorded value MUST be credential-free; if identical to fetch, repeat the same value and note `(same as fetch)`)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
