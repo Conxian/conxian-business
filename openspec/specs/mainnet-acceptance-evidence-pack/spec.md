@@ -55,7 +55,7 @@ The evidence pack MUST include:
 - `staged` head commit SHA
 - SHA capture timestamp (ISO 8601 UTC; canonical remote used)
 - Canonical remote fetch URL(s) (credential-free; redact any embedded credentials) (e.g. `git remote get-url --all <canonical-remote>`)
-- Canonical remote push URL(s) (record separately only if configured differently from fetch; credential-free; redact any embedded credentials) (e.g. `git remote get-url --push --all <canonical-remote>`)
+- Canonical remote push URL(s) (only if configured differently from fetch; otherwise write `same as fetch`; credential-free; redact any embedded credentials) (e.g. `git remote get-url --push --all <canonical-remote>`)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
@@ -73,7 +73,7 @@ Record:
 - `staged` head: `git rev-parse <canonical-remote>/staged`
 - SHA capture timestamp: `date -u +%Y-%m-%dT%H:%M:%SZ`
 - Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>`
-- Canonical remote push URL(s) (record separately only if configured differently from fetch): `git remote get-url --push --all <canonical-remote>`
+- Canonical remote push URL(s): if configured differently from fetch, `git remote get-url --push --all <canonical-remote>`; otherwise write `same as fetch`
 
 If the merge is delayed or `<canonical-remote>/main` or `<canonical-remote>/staged` advances after capture, re-capture and update the evidence pack before merging.
 
@@ -155,8 +155,8 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - Merge-base of `main` and `staged` SHA: `<sha>`
 - `staged` head commit SHA: `<sha>`
 - SHA capture timestamp: `Captured at (UTC): <YYYY-MM-DDTHH:MM:SSZ>; Canonical remote: <canonical-remote>` (after `git fetch --prune <canonical-remote> main staged`; before merge)
-- Canonical remote fetch URL(s) (credential-free; redact any embedded credentials) (e.g. `git remote get-url --all <canonical-remote>`): `<url>`
-- Canonical remote push URL(s) (record separately only if configured differently from fetch; credential-free; redact any embedded credentials) (e.g. `git remote get-url --push --all <canonical-remote>`): `<url>`
+- Canonical remote fetch URL(s) (credential-free; redact any embedded credentials) (e.g. `git remote get-url --all <canonical-remote>`): `<one or more URL lines>`
+- Canonical remote push URL(s) (only if configured differently from fetch; otherwise write `same as fetch`; credential-free; redact any embedded credentials) (e.g. `git remote get-url --push --all <canonical-remote>`): `<same as fetch | one or more URL lines>`
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
