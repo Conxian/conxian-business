@@ -18,7 +18,7 @@ jobs:
       contents: read
       pull-requests: read
     outputs:
-      b2b: ${{ steps.filter_pr.outputs.b2b || steps.filter_push.outputs.b2b }}
+      b2b: ${{ (github.event_name == 'push' && steps.filter_push.outputs.b2b) || (github.event_name == 'pull_request' && steps.filter_pr.outputs.b2b) || 'false' }}
     steps:
     - name: Detect B2B changes (PR)
       if: github.event_name == 'pull_request'
