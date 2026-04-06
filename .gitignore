@@ -2,7 +2,7 @@
 node_modules/
 jspm_packages/
 
-# Root-only npm lockfile (workspace uses pnpm)
+# Root-only npm lockfile
 /package-lock.json
 
 # Firebase CLI
