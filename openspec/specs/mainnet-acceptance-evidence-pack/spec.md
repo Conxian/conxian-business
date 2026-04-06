@@ -54,7 +54,8 @@ The evidence pack MUST include:
 - Merge-base of `main` and `staged` SHA
 - `staged` head commit SHA
 - SHA capture timestamp (ISO 8601 UTC; canonical remote used)
-- Canonical remote URL(s) (credential-free; redact any embedded credentials) (e.g. `git remote get-url --all <canonical-remote>`)
+- Canonical remote fetch URL(s) (credential-free; redact any embedded credentials) (e.g. `git remote get-url --all <canonical-remote>`)
+- Canonical remote push URL(s) (if different; credential-free; redact any embedded credentials) (e.g. `git remote get-url --push --all <canonical-remote>`)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
