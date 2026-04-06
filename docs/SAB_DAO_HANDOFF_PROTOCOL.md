@@ -4,7 +4,7 @@ This document defines the staged handoff protocol from personal bootstrap contro
 
 For canonical wallet classes and the more granular staged migration protocol, see [`docs/BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md).
 
-Stage mapping note: this document uses a high-level Stage 1–3 view that roughly corresponds to Stage 0 (bootstrap allowed), Stage 1–3 (SAB custody establishment + admin surface migration + automation cutover), and Stage 4+ (DAO alignment) in the canonical model.
+Stage mapping note: relative to `docs/BOS_WALLET_CONTROL_MODEL.md`, Stage 1 here ≈ Stage 0 (bootstrap allowed), Stage 2 here ≈ Stage 1–3 (SAB custody establishment + admin surface migration + automation cutover), and Stage 3 here ≈ Stage 4+ (DAO alignment).
 
 ## Handoff stages
 
