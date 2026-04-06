@@ -7,6 +7,10 @@ Canonical trackers:
 - Linear: https://linear.app/conxian-labs/issue/CON-129/csf-mainnet-readiness-gate
 - GitHub (synced thread): https://github.com/Conxian/conxius-platform/issues/101
 
+Related operating order + cross-domain proof gates:
+
+- `docs/CSF_FIRST_OPERATING_SEQUENCE_AND_PROOF_GATES.md` (CON-426)
+
 ## Current gate status (snapshot)
 
 **As of:** 2026-04-04
@@ -76,11 +80,9 @@ Additional pinned repos (supporting surfaces):
 
 ### Missing dependency references (must be reconciled)
 
-The CON-129 description previously referenced issues that no longer exist in Linear (confirmed as of 2026-04-04) (`CON-130`, `CON-64`, `CON-65`, `CON-79`).
-
-Track replacements and/or removals under: https://linear.app/conxian-labs/issue/CON-375
-
-Treat CON-375 as a **documentation blocker** for this gate until the replacements/removals are fully reconciled.
+- The CON-129 description previously referenced issues that no longer exist in Linear (confirmed as of 2026-04-04): `CON-130`, `CON-64`, `CON-65`, `CON-79`.
+- Track replacements and/or removals under: https://linear.app/conxian-labs/issue/CON-375
+- Treat CON-375 as a **documentation blocker** for this gate until the replacements/removals are fully reconciled.
 
 ## Bounty-ready subset (externalizable candidates only)
 
