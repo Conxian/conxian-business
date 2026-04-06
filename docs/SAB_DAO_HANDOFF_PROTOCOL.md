@@ -2,6 +2,8 @@
 
 This document defines the staged handoff protocol from personal bootstrap control to the Sovereign Advisory Board (SAB) and finally to the Decentralized Autonomous Organization (DAO).
 
+For canonical wallet classes and the more granular staged migration protocol, see [`docs/BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md).
+
 ## Handoff stages
 
 ### Stage 1: Personal bootstrap (Initial Deployment)
@@ -15,7 +17,7 @@ This document defines the staged handoff protocol from personal bootstrap contro
 - **Status:** Required for Initial Mainnet Release.
 - **Custodian:** SAB-controlled multi-sigs and system-controlled agents.
 - **Authority:** Operational execution, parameter adjustments within defined bounds, and initial fee capture.
-- **Handoff action:** Transfer contract-owner roles to the appropriate SAB multi-sigs (e.g., `SAB-TREASURY-MS`, `BOUNTY-PAYOUT-MS`).
+- **Handoff action:** Transfer contract-owner roles to the appropriate SAB multi-sigs and emergency authorities as defined in [`docs/BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md).
 - **Exit criterion:** Payouts enabled and protocol fees provably accruing to SAB-owned vaults.
 
 ### Stage 3: DAO-aligned governance (Long-term Decentralization)
