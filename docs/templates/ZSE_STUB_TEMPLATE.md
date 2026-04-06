@@ -3,7 +3,7 @@ USAGE:
 - Replace [TITLE] and [PURPOSE/DOMAIN].
 - Link 1: Linear workspace root.
 - Link 2: replace `[ISSUE_KEY]` with the doc-specific Linear issue owning the canonical content (preferred; create one if missing).
-  - If you do not have the issue key yet, leave the `https://linear.app/conxian-labs/issue/[ISSUE_KEY]` placeholder link in place rather than removing it.
+  - If you do not have the issue key yet, leave the `https://linear.app/conxian-labs/issue/[ISSUE_KEY]` placeholder link in place rather than removing it, and replace `[ISSUE_KEY]` as soon as a canonical Linear issue exists.
 - Link 3: include https://linear.app/conxian-labs/issue/CON-256 as a ZSE index (not doc ownership).
 -->
 
