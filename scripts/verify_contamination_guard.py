@@ -31,12 +31,13 @@ def git_ls_files(root: str) -> list[str]:
     parts = [p for p in out.split(b"\x00") if p]
     return [os.fsdecode(p) for p in parts]
 
+BASENAME_EXCLUSIONS = {"pnpm-lock.yaml", "package-lock.json"}
+
 def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
     rel_path = rel_path.replace(os.sep, "/").strip("/")
     if rel_path.startswith("./"):
         rel_path = rel_path[2:]
     parts = rel_path.split("/") if rel_path else []
-    basename_exclusions = {"pnpm-lock.yaml", "package-lock.json"}
 
     for excluded in excluded_set:
         ex = excluded.replace(os.sep, "/").strip("/")
@@ -50,7 +51,7 @@ def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
 
         if rel_path == ex:
             return True
-        if ex in basename_exclusions and parts and parts[-1] == ex:
+        if ex in BASENAME_EXCLUSIONS and parts and parts[-1] == ex:
             return True
         if ex in parts[:-1]:
             return True
