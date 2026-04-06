@@ -56,7 +56,7 @@ The evidence pack MUST include:
 - SHA capture timestamp (ISO 8601 UTC)
 - Canonical remote name (used for all SHA/URL capture, e.g. `origin` or `upstream`)
 - Canonical remote fetch URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --all <canonical-remote>`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording)
-- Canonical remote push URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --push --all <canonical-remote>`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording)
+- Canonical remote push URL(s) (verbatim output; preserve line order; may be multi-line; if identical to fetch, repeat the same value and add "(same as fetch)") (e.g. `git remote get-url --push --all <canonical-remote>`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
