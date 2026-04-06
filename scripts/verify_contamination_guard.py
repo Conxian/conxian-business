@@ -13,7 +13,7 @@ def repo_root() -> str:
 
 def format_git_ls_files_error(root: str, details: str = "") -> str:
     return (
-        f"Failed to run `git ls-files` in {root!r}. Ensure `git` is installed and available on PATH, and that this directory is a Git repo and submodules are initialized (e.g., `git submodule update --init --recursive`)."
+        f"Failed to run `git rev-parse --show-prefix` or `git ls-files` in {root!r}. Ensure `git` is installed and available on PATH, and that this directory is a Git repo and submodules are initialized (e.g., `git submodule update --init --recursive`)."
         + details
     )
 
