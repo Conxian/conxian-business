@@ -20,7 +20,7 @@ Stage mapping note: relative to `docs/BOS_WALLET_CONTROL_MODEL.md`, Stage 1 here
 - **Custodian:** SAB-controlled multi-sigs and system-controlled agents.
 - **Authority:** Operational execution, parameter adjustments within defined bounds, and initial fee capture.
 - **Handoff action:** Transfer contract-owner roles to the appropriate SAB multi-sigs and emergency authorities as defined in [`docs/BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md).
-- **Exit criterion:** Payouts enabled and protocol fees provably accruing to SAB-owned vaults.
+- **Exit criterion:** Protocol fees provably accruing to SAB-owned vaults; payout enablement (if any) follows separate readiness gates.
 
 ### Stage 3: DAO-aligned governance (Long-term Decentralization)
 - **Status:** Post-launch maturity.
