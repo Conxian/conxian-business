@@ -6,7 +6,7 @@ This document inventories **current, evidenced** touchpoints to **Supabase** and
 
 Because this repo follows **Zero Secret Egress (ZSE)**, production connection strings, project refs, keys, internal hostnames, and internal endpoints/URLs are intentionally not present here. Wherever possible, each item is labeled with an **evidence level**.
 
-**Redaction convention:** replace any internal endpoint/URL/hostname and any secret material (connection strings, project refs, keys) with the literal `<redacted>` placeholder per the rules below. Do not partially mask values other than optionally preserving a URI scheme. Always render the placeholder in Markdown as code (`<redacted>`) so it remains visible.
+**Redaction convention:** replace any internal endpoint/URL/hostname and any secret material (connection strings, project refs, keys) with a literal `<redacted>` placeholder rendered in Markdown as code, per the rules below. Do not partially mask values; for URIs you may only preserve the scheme (for example, `https://<redacted>`, `postgresql://<redacted>`).
 
 - **Whole value**: replace the entire value with `<redacted>` (covers bare hostnames, project refs, keys, connection strings when not presented as URIs).
 - **URIs with `://`**: keep the scheme and replace everything after `://` (credentials, host, port, path, query, fragment) with `<redacted>` (e.g., `https://<redacted>`, `mcp://<redacted>`, `postgresql://<redacted>`).
