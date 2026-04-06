@@ -75,7 +75,7 @@ Record:
 - Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (fallback: `git config --get-all remote.<canonical-remote>.url`)
 - Canonical remote push URL(s) (record separately only if configured differently from fetch): `git remote get-url --push --all <canonical-remote>` (fallback: `git config --get-all remote.<canonical-remote>.pushurl`)
 
-Remote URLs MUST NOT include embedded credentials (tokens, `user:pass@`, etc.). If embedded credentials are discovered during capture, redact them before recording in the evidence pack and remediate the remote configuration before proceeding.
+Remote URLs MUST NOT include embedded credentials (tokens, `user:pass@`, etc.). If embedded credentials are discovered during capture, redact them before recording in the evidence pack, remediate the remote configuration to remove embedded credentials, and re-run the URL capture commands above so the recorded URL(s) match the credential-free configuration before proceeding.
 
 If the merge is delayed or `<canonical-remote>/main` or `<canonical-remote>/staged` advances after capture, re-capture and update the evidence pack before merging.
 
