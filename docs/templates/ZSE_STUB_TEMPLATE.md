@@ -2,7 +2,7 @@
 USAGE:
 - Replace [TITLE] and [PURPOSE/DOMAIN].
 - Link 1: Linear workspace root.
-- Link 2: the doc-specific Linear issue owning the canonical content (fallback: CON-256).
+- Link 2: replace with the doc-specific Linear issue owning the canonical content (use CON-256 only if there is no dedicated issue).
 -->
 
 # [TITLE] (migrated to Linear)
