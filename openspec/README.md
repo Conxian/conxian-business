@@ -9,7 +9,7 @@ OpenSpec is the public specification set for Conxian. The goal is to make the sy
 
 ## Status
 
-Active. OpenSpec is maintained as the public source of truth for Conxian technical specifications.
+active — OpenSpec is maintained as the public source of truth for Conxian technical specifications.
 
 Start here:
 

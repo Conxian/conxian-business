@@ -17,7 +17,7 @@ This repository is public. Detailed operational enforcement rules and internal c
 
 ## Status
 
-Active. Public-safe enforcement and audit artifacts live here; detailed enforcement rules and compliance reporting is maintained in Linear.
+active — Public-safe enforcement and audit artifacts live here; detailed enforcement rules and compliance reporting is maintained in Linear.
 
 ## Key Components
 

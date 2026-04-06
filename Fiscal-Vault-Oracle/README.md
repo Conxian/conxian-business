@@ -16,7 +16,7 @@ This repository is public. Detailed treasury operations, vendor integrations, an
 
 ## Status
 
-Active. Public-safe treasury policy constraints and interfaces live here; detailed treasury operations and vendor terms are maintained in Linear.
+active — Public-safe treasury policy constraints and interfaces live here; detailed treasury operations and vendor terms are maintained in Linear.
 
 ## Key Components
 

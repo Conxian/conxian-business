@@ -6,7 +6,7 @@ A lightweight Next.js app used to demonstrate Conxian UI patterns and end-to-end
 
 ## Status
 
-Prototype. This app is intended for demos and experimentation rather than production deployment.
+alpha — This app is intended for demos and experimentation rather than production deployment.
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 

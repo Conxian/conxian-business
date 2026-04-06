@@ -9,7 +9,7 @@ Welcome to the central documentation hub for the Conxian ecosystem. This site is
 
 ## Status
 
-Active. This documentation hub is published from the public-safe allowlist used by GitHub Pages.
+active — This documentation hub is published from the public-safe allowlist used by GitHub Pages.
 
 ## Quick start
 - **[System Whitepaper](../Conxian/docs/WHITEPAPER.md)**

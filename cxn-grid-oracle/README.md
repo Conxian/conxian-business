@@ -11,7 +11,7 @@ The cxn-grid-oracle module handles agnostic demand-response routing and energy o
 
 ## Status
 
-Draft. This module currently provides schema documentation and governance scaffolding; production integrations should treat it as non-stable.
+alpha — This module currently provides schema documentation and governance scaffolding; production integrations should treat it as non-stable.
 
 ## Universal Oracle Schema
 

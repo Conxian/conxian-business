@@ -36,7 +36,7 @@ If we can only pin a few repos on the GitHub org profile, these are the clearest
 
 1. `conxius-wallet` (Wallet)
 2. `conxian-gateway` (Gateway)
-3. `Conxian_UI` or `conxius-platform` (Platform)
+3. `Conxian_UI` (UI) or `conxius-platform` (Platform)
 4. `Conxian` (Protocol)
 5. `lib-conxian-core` (Shared core)
 6. `conxian-labs-site` (Website)

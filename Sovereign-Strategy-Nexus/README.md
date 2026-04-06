@@ -16,7 +16,7 @@ This repository is public. Detailed strategy planning and internal operating mat
 
 ## Status
 
-Active. Public-facing strategy coordination artifacts live here; detailed internal planning and operating material is maintained in Linear.
+active — Public-facing strategy coordination artifacts live here; detailed internal planning and operating material is maintained in Linear.
 
 ## Key Components
 

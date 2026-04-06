@@ -16,7 +16,7 @@ This repository is public. Detailed wiring, operational dashboards, and executio
 
 ## Status
 
-Active. Public-safe orchestration and wiring artifacts live here; detailed runbooks and dashboards are maintained in Linear.
+active — Public-safe orchestration and wiring artifacts live here; detailed runbooks and dashboards are maintained in Linear.
 
 ## Key Components
 

@@ -17,7 +17,7 @@ This repository is public. Internal BOS state-machine configuration and complian
 
 ## Status
 
-Active. This module documents BOS-level service-loop expectations and public-safe operational boundaries; detailed state-machine configuration and compliance reports live in Linear.
+active — This module documents BOS-level service-loop expectations and public-safe operational boundaries; detailed state-machine configuration and compliance reports live in Linear.
 
 ## Key Components
 
