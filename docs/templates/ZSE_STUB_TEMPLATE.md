@@ -11,7 +11,7 @@ USAGE:
 
 This repository is public.
 
-Do not add operational, security, financial, legal, or strategic details to this repository file beyond this pointer stub.
+Do not add any operational, security, financial, legal, strategic, customer-identifying, or other non-public details to this file; only include this pointer stub and the Linear links below.
 
 The canonical content for [PURPOSE/DOMAIN] is maintained in the Conxian Linear workspace to comply with our Zero Secret Egress (ZSE) mandate and to protect sensitive strategy, legal, or operational details.
 
