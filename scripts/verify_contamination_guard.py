@@ -11,6 +11,12 @@ import sys
 def repo_root() -> str:
     return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
+def format_git_ls_files_error(root: str, details: str = "") -> str:
+    return (
+        f"Failed to run `git ls-files` in {root!r}. Ensure `git` is installed and available on PATH, and that this directory is a Git repo and submodules are initialized (e.g., `git submodule update --init --recursive`)."
+        + details
+    )
+
 def git_ls_files(root: str) -> list[str]:
     try:
         out = subprocess.check_output(
@@ -18,16 +24,12 @@ def git_ls_files(root: str) -> list[str]:
             stderr=subprocess.STDOUT,
         )
     except (FileNotFoundError, OSError) as exc:
-        raise SystemExit(
-            f"Failed to run `git ls-files` in {root!r}. Ensure `git` is installed and available on PATH, and that this directory is a Git repo and submodules are initialized (e.g., `git submodule update --init --recursive`).\n\nOS error:\n{exc}"
-        ) from exc
+        raise SystemExit(format_git_ls_files_error(root, f"\n\nOS error:\n{exc}")) from exc
     except subprocess.CalledProcessError as exc:
         output = getattr(exc, "output", b"")
         output_text = output.decode("utf-8", "replace") if output else ""
         details = f"\n\nGit output:\n{output_text}" if output_text else ""
-        raise SystemExit(
-            f"Failed to list tracked files in {root!r}. Ensure this directory is a Git repo and submodules are initialized (e.g., `git submodule update --init --recursive`).{details}"
-        ) from exc
+        raise SystemExit(format_git_ls_files_error(root, details)) from exc
     parts = [p for p in out.split(b"\x00") if p]
     return [os.fsdecode(p) for p in parts]
 
