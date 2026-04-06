@@ -3,6 +3,7 @@ USAGE:
 - Replace [TITLE] and [PURPOSE/DOMAIN].
 - Link 1: Linear workspace root.
 - Link 2: replace `[ISSUE_KEY]` with the doc-specific Linear issue owning the canonical content.
+- If no doc-specific Linear issue exists yet, create one (and assign ownership) before publishing this stub.
 - Link 3 (optional): add `CON-256` as ZSE policy/tracking (do not use it for canonical doc ownership).
 -->
 
