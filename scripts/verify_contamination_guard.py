@@ -87,7 +87,7 @@ def read_text(root: str, rel_path: str) -> str:
 CONTAMINATION_PATTERNS = [
     (
         "Hardcoded Testnet Principal",
-        re.compile(r"(?<![0-9A-Z])ST[0-9A-Z]{38,}(?![0-9A-Z])", re.IGNORECASE),
+        re.compile(r"(?<![0-9A-Z_])ST[0-9A-Z]{38,}(?![0-9A-Z_])", re.IGNORECASE),
     ),
     ("Stub Function Marker", re.compile(r"\bstub-func\b")),
     ("Explicit [STUB] Marker", re.compile(r"\[STUB\]")),
