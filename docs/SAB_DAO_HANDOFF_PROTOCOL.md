@@ -33,7 +33,7 @@ Stage mapping note: relative to `docs/BOS_WALLET_CONTROL_MODEL.md`, Stage 1 here
 
 Note: contract ownership transfer interfaces vary by contract. Some use a two-step (pending -> claim) flow; others are single-step. The steps below are intentionally interface-agnostic and list common function names as examples.
 
-Definition: in this table, "SAB authority" means the designated SAB-controlled multisig or executor principal for that contract, as defined in `docs/SAB_WALLET_ARCHITECTURE_AND_CONTROL_MATRIX.md`.
+Definition: in this table, "SAB authority" means the designated SAB-controlled multisig or executor principal for that contract, as defined in `docs/SAB_WALLET_ARCHITECTURE_AND_CONTROL_MATRIX.md`. Before executing **H-2**/**H-3**, record each core contract's transfer mode (single-step vs two-step) in the control matrix and follow it during handoff.
 
 | Step | Action | Responsibility | Verification |
 | :--- | :--- | :--- | :--- |
