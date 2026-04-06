@@ -56,7 +56,7 @@ The evidence pack MUST include:
 - SHA capture timestamp (ISO 8601 UTC)
 - Canonical remote name (used for all SHA/URL capture, e.g. `origin` or `upstream`)
 - Canonical remote fetch URL(s) (verbatim output; preserve line order; may be multi-line) (e.g. `git remote get-url --all <canonical-remote>`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording)
-- Canonical remote push URL(s) (verbatim output; preserve line order; may be multi-line; if identical to fetch, repeat the same value and add "(same as fetch)") (e.g. `git remote get-url --push --all <canonical-remote>`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording)
+- Canonical remote push URL(s) (verbatim URL output; preserve line order; may be multi-line; if identical to fetch, repeat the same URL output and then note "(same as fetch)") (e.g. `git remote get-url --push --all <canonical-remote>`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
@@ -167,7 +167,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - SHA capture timestamp: `Captured at (UTC): <YYYY-MM-DDTHH:MM:SSZ>` (after `git fetch --prune <canonical-remote> main staged`; before merge)
 - Canonical remote: `<canonical-remote>` (MUST point at the canonical `<org>/<repo>` remote; on forks this is typically `upstream`)
 - Canonical remote fetch URL(s): `<url(s)>` (verbatim output; preserve line order; may be multi-line) (e.g. from `git remote get-url --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.url`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording)
-- Canonical remote push URL(s): `<url(s)>` (verbatim output; preserve line order; may be multi-line) (e.g. from `git remote get-url --push --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.pushurl`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording; if identical to fetch, repeat the same value and add "(same as fetch)")
+- Canonical remote push URL(s): `<url(s)>` (verbatim output; preserve line order; may be multi-line) (e.g. from `git remote get-url --push --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.pushurl`; MUST NOT include embedded credentials; if any are present, remediate the git remote configuration and re-run capture before recording; if identical to fetch, repeat the same URL output and then note "(same as fetch)")
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
