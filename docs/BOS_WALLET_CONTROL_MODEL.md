@@ -5,12 +5,13 @@ This document defines the canonical wallet-control model for BOS and related Con
 This repository is public. Under Zero Secret Egress (ZSE), this doc:
 
 - **does** define wallet classes, authority boundaries, and on-chain control paths
-- **does not** include signer identities, key material, key-ceremony steps, or concrete wallet principals (those belong in the internal custody record)
+- **does not** include signer identities, key material, key-ceremony steps, or concrete wallet principals (those belong in the internal custody record; canonical pointer: `admin/SECRETS.md`)
 
 ## Canonical references
 
 - SAB program and migration context: `docs/SAB_MIGRATION_CONTROL_PLANE.md`
 - ConxianCSF launch gates + ALEX funding path: `docs/CSF_MAINNET_READINESS_GATE.md`
+- Internal custody record pointer (concrete principals + signer sets live outside Git): `admin/SECRETS.md`
 
 ## Core invariants (what must stay true)
 
@@ -22,13 +23,13 @@ This repository is public. Under Zero Secret Egress (ZSE), this doc:
 
 ## Current bootstrap constraint
 
-Treat `BOOTSTRAP_OPERATOR_WALLET` as the **current bootstrap wallet** under operator control (see the internal custody record for the current principal).
+Treat `BOOTSTRAP_OPERATOR_WALLET` as the **current bootstrap wallet** under operator control (see the internal custody record; pointer: `admin/SECRETS.md`).
 
 Bootstrap use is allowed only for launch preparation and one-time initialization. It must not remain a durable deployer/admin/treasury/payout authority after handoff.
 
 ## Canonical wallet inventory (v1)
 
-Naming convention: identifiers below are **wallet classes**. Concrete principals and signer sets are tracked in the internal custody record (not in Git).
+Naming convention: identifiers below are **wallet classes**. Concrete principals and signer sets are tracked in the internal custody record (pointer: `admin/SECRETS.md`).
 
 | Wallet / principal class | Type | Custody owner | Purpose | Recommended signer model | Spend / authority limits (policy) |
 | --- | --- | --- | --- | --- | --- |
@@ -64,7 +65,7 @@ Splitting emergency into **fast pause** (2-of-3) vs **slow recovery** (3-of-5) i
 
 ## Approval policy, spending limits, rollback authority (v1 defaults)
 
-These are policy-level defaults; concrete numbers (caps, tranche sizes, delay windows) belong in the internal custody/ops record.
+These are policy-level defaults; concrete numbers (caps, tranche sizes, delay windows) belong in the internal custody/ops record (pointer: `admin/SECRETS.md`).
 
 - `SAB_DEPLOYER_MULTISIG`
   - Approval: only signs deploy/upgrade/admin-migration transactions that are linked to an approved change record (issue + commit/PR) and have a reviewed transaction plan.
@@ -123,7 +124,7 @@ SAB operations
 
 - Create `SAB_DEPLOYER_MULTISIG`, `SAB_PAYOUT_MULTISIG`, `SAB_EMERGENCY_PAUSE_MULTISIG`, `SAB_EMERGENCY_RECOVERY_MULTISIG`.
 - Provision `SAB_BOS_EXECUTOR_KEY` in system custody (enclave/HSM-equivalent) with a strict operational allowlist.
-- Record signer set + quorum + recovery contacts in the internal custody record (not in Git).
+- Record signer set + quorum + recovery contacts in the internal custody record (pointer: `admin/SECRETS.md`).
 
 ### Stage 2 — Move admin/owner surfaces out of bootstrap
 
@@ -206,4 +207,4 @@ Before broad launch or payout enablement:
    - the temporary bootstrap wallet (Stage 0 only), or
    - the intended SAB-controlled authority (Stages 3+)
 3. Verify deploy / keeper / payout / emergency keys are not unintentionally shared.
-4. Record last-rotation / replacement status for each production signing secret in the internal custody record.
+4. Record last-rotation / replacement status for each production signing secret in the internal custody record (pointer: `admin/SECRETS.md`).
