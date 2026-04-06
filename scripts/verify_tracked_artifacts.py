@@ -91,19 +91,21 @@ def _is_allowlisted(rel_path: str, allowlist: list[str]) -> bool:
 
 def _match_any(rel_path: str, patterns: tuple[str, ...]) -> bool:
     rel_path = _normalize_path(rel_path)
+    base = rel_path.rsplit("/", 1)[-1]
     for pattern in patterns:
         normalized = _normalize_path(pattern)
-        if normalized.endswith("/"):
-            if _is_in_dir(rel_path, normalized[:-1]):
+
+        if normalized.endswith("/**"):
+            if _is_in_dir(rel_path, normalized[:-3]):
                 return True
             continue
 
-        if "/" not in normalized and normalized.endswith("**"):
-            if _is_in_dir(rel_path, normalized[:-2]):
+        if "/" in normalized:
+            if fnmatch.fnmatch(rel_path, normalized):
                 return True
             continue
 
-        if fnmatch.fnmatch(rel_path, normalized):
+        if fnmatch.fnmatch(base, normalized):
             return True
     return False
 
