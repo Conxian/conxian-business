@@ -74,9 +74,9 @@ Record:
 - Merge-base: `git merge-base <canonical-remote>/main <canonical-remote>/staged`
 - `staged` head: `git rev-parse <canonical-remote>/staged`
 - SHA capture timestamp: `date -u +%Y-%m-%dT%H:%M:%SZ`
-- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (record output verbatim; preserve line order; may be multi-line)
+- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (record output verbatim; preserve line order; may be multi-line; recorded value MUST be credential-free; if capture output contains embedded credentials, remediate the git remote configuration and re-run capture before recording)
   - Fallback (older Git): `git config --get-all remote.<canonical-remote>.url` (or `git remote -v` and take the `(fetch)` lines)
-- Canonical remote push URL(s): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order; may be multi-line; if identical to fetch, repeat the same value and note `(same as fetch)`)
+- Canonical remote push URL(s): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order; may be multi-line; recorded value MUST be credential-free; if capture output contains embedded credentials, remediate the git remote configuration and re-run capture before recording; if identical to fetch, repeat the same value and note `(same as fetch)`)
   - Fallback (older Git): `git config --get-all remote.<canonical-remote>.pushurl` (or `git remote -v` and take the `(push)` lines)
 
 The configured canonical remote URL(s) can be multi-line (multi-URL remotes). Preserve the output verbatim (including line order).
