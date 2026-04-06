@@ -35,9 +35,11 @@ This design makes the boundaries between parsing, attestation, and execution exp
 
 **Boundary contract**:
 
-- `raw_payload_bytes` MUST be the exact byte sequence obtained from the rail message body after removal of rail-specific transport framing (e.g., headers/envelopes).
+- `raw_payload_bytes` MUST be the exact octet sequence of the rail application payload at the capture point on the rail ingress boundary, after **only** removing rail-specific transport framing that delimits and exposes the message-body bytes (e.g., envelope/header stripping, record/frame boundary removal, removal of HTTP `Transfer-Encoding: chunked` framing).
+- Construction of `raw_payload_bytes` MUST occur **before** any operation that interprets or transforms those bytes, including content decoding (e.g., base64), decompression (e.g., gzip or HTTP `Content-Encoding`), character-set decoding, parsing, or normalization.
+- All intermediaries and ingress components between the external rail and this ingress capture point for `raw_payload_bytes` MUST be configured such that they do not transform the application payload octets other than performing the allowed transport-framing removal described above.
 - The TEE MUST receive `raw_payload_bytes` exactly as defined above.
-- `raw_payload_bytes` MUST NOT undergo any transformation (including, but not limited to, re-encoding, whitespace normalization, parser round-tripping, BOM insertion/removal, or newline translation).
+- Other than the allowed transport-framing removal defined above, `raw_payload_bytes` MUST NOT undergo any transformation (including, but not limited to, re-encoding, whitespace normalization, parser round-tripping, BOM insertion/removal, or newline translation).
 - The TEE MUST NOT treat any untrusted-side hash computation as authoritative.
 
 **Trusted responsibilities** (TEE / Conclave):
@@ -52,9 +54,11 @@ This design makes the boundaries between parsing, attestation, and execution exp
   - `rail`,
   - `raw_payload_hash`,
   - `normalized_settlement_hash`,
+  - `trigger_id`,
+  - `settlement_identifiers`,
   - `asset_path`,
-  - `proposal_kind = EXTERNAL_SETTLEMENT_TRIGGER`,
-  - `timelock_delay_blocks = 144`.
+  - `timelock_delay_blocks = 144`,
+  - and `oracle_verification` (including `oracle_proof_digest` as defined in `spec.md` §2.1).
 
 The attested artifact MUST NOT contain raw payload bytes.
 
@@ -116,6 +120,8 @@ Each rail MUST define a canonical identifier set used to populate `settlement_id
 
 `envelope_identifiers` (including `tx_index`) MUST NOT affect `normalized_settlement_hash`.
 
+`settlement_identifiers` MUST be derived/normalized inside the TEE from `raw_payload_bytes`; any host-supplied hints MUST be treated as non-authoritative, MUST be checked inside the TEE (no successful attestation on mismatch), and MUST NOT be forwarded into the attested output (see [spec.md §2.1.1 (`settlement_identifiers` canonical set)](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical) for normative semantics).
+
 Replay protection and deterministic idempotency are enforced via `trigger_id` derived from `{ rail, normalized_settlement_hash }`.
 
 Trigger granularity:
@@ -126,7 +132,7 @@ Trigger granularity:
 
 Minimum required identifier set (by rail):
 
-For normative `tx_index` requirements (ordering source, no-reorder constraint, and inclusion rules), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#211-settlement_identifiers-per-rail-canonical-set).
+For normative `tx_index` requirements (ordering source, no-reorder constraint, and inclusion rules), see [spec.md §2.1.1 (`settlement_identifiers` canonical set)](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical).
 
 The per-rail `tx_index` parentheticals below are summaries; the spec is authoritative.
 
@@ -145,14 +151,13 @@ The per-rail `tx_index` parentheticals below are summaries; the spec is authorit
 
 Canonical formatting requirements:
 
-- `transaction_identifiers.transaction_reference` MUST be a UTF-8 string (Unicode NFC), MUST NOT contain `\n`, and MUST preserve case.
-- `envelope_identifiers.tx_index` MUST be a non-negative integer.
+See [spec.md §2.1.1 (`settlement_identifiers` canonical set)](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical) for the required `settlement_identifiers` structure (including `settlement_identifiers.envelope_identifiers`), canonicalization/validation rules, and equality semantics; this design document intentionally does not restate them to avoid drift.
 
 Proposal emission MUST be idempotent on `trigger_id`: duplicate triggers MUST NOT create additional proposals or timelocks.
 
-Note: `trigger_id` MUST be a pure function of `{ rail, normalized_settlement_hash }`; differences in `raw_payload_hash` alone (e.g., different envelopes/messages carrying the same normalized settlement transaction) MUST NOT affect `trigger_id`.
+Note: `trigger_id` MUST be a pure function of `{ rail, normalized_settlement_hash }`, where `rail` is the canonical uppercase rail identifier defined in [spec.md §1.7](specs/external-settlement-proposal-only-tee/spec.md#idempotency-replay-protection) (e.g., `ISO20022`, `PAPSS`, or `BRICS`); differences in `raw_payload_hash` alone (e.g., different envelopes/messages carrying the same normalized settlement transaction) MUST NOT affect `trigger_id`.
 
-To ensure cross-implementation stability, `trigger_id` MUST be computed from a canonical encoding of `{ rail, normalized_settlement_hash }` (e.g., `sha256("external-settlement-trigger:v1" || JCS({ rail, normalized_settlement_hash }))`).
+To ensure cross-implementation stability, `trigger_id` MUST be derived exactly as specified in [spec.md §1.7 (Idempotency / replay protection)](specs/external-settlement-proposal-only-tee/spec.md#idempotency-replay-protection) (illustrative mental model only: `hexLower(sha256(utf8("external-settlement-trigger:v1") || utf8(JCS({"rail": rail, "normalized_settlement_hash": normalized_settlement_hash}))))`).
 
 ### 3.3 `SovereignProposal` (proposal lane)
 
