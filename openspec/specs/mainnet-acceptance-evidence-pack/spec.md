@@ -74,14 +74,14 @@ Record:
 - Merge-base: `git merge-base <canonical-remote>/main <canonical-remote>/staged`
 - `staged` head: `git rev-parse <canonical-remote>/staged`
 - SHA capture timestamp: `date -u +%Y-%m-%dT%H:%M:%SZ`
-- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (record output verbatim; preserve line order)
+- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (record output verbatim; preserve line order; MUST be credential-free; if embedded credentials are present, fix the git remote configuration and re-run until output is credential-free)
   - Fallback (older Git): `git config --get-all remote.<canonical-remote>.url` (or `git remote -v` and take the `(fetch)` lines)
-- Canonical remote push URL(s): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order. If all push URL(s) are identical to fetch URL(s), you may record `Same as fetch URL(s) above` instead of duplicating the list)
+- Canonical remote push URL(s): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order; MUST be credential-free; if embedded credentials are present, fix the git remote configuration and re-run until output is credential-free. If all push URL(s) are identical to fetch URL(s), you may record `Same as fetch URL(s) above` instead of duplicating the list)
   - Fallback (older Git): `git config --get-all remote.<canonical-remote>.pushurl` (or `git remote -v` and take the `(push)` lines)
 
 The configured canonical remote URL(s) can be multi-line (multi-URL remotes). Preserve the output verbatim (including line order).
 
-The configured canonical remote URL(s) MUST be credential-free. If embedded credentials are present, do not record the output; fix the git remote configuration and re-run until output is credential-free before proceeding.
+The configured canonical remote URL(s) MUST be credential-free (no embedded tokens, `user:pass@`, etc.). If embedded credentials are present, do not record the output; fix the git remote configuration and re-run until output is credential-free. If embedded credentials were captured in any drafts, redact them immediately.
 
 If the merge is delayed or `<canonical-remote>/main` or `<canonical-remote>/staged` advances after capture, re-capture and update the evidence pack before merging.
 
