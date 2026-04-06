@@ -31,7 +31,9 @@ Stage mapping note: relative to `docs/BOS_WALLET_CONTROL_MODEL.md`, Stage 1 here
 
 ## Step-by-step handoff procedure
 
-Note: contract ownership transfer interfaces vary by contract. Some use a two-step (pending -> claim) flow; others are single-step. The steps below are intentionally interface-agnostic and list common function names as examples. In this table, "SAB authority" means the designated SAB-controlled multisig or executor principal for that contract, as defined in `docs/SAB_WALLET_ARCHITECTURE_AND_CONTROL_MATRIX.md`.
+Note: contract ownership transfer interfaces vary by contract. Some use a two-step (pending -> claim) flow; others are single-step. The steps below are intentionally interface-agnostic and list common function names as examples.
+
+Definition: in this table, "SAB authority" means the designated SAB-controlled multisig or executor principal for that contract, as defined in `docs/SAB_WALLET_ARCHITECTURE_AND_CONTROL_MATRIX.md`.
 
 | Step | Action | Responsibility | Verification |
 | :--- | :--- | :--- | :--- |
@@ -40,7 +42,7 @@ Note: contract ownership transfer interfaces vary by contract. Some use a two-st
 | **H-1** | Deploy and initialize the `governance-handover` contract. | Operator | Verify contract on Stacks Explorer. |
 | **H-2** | Execute the contract-specific ownership/admin transfer action, targeting the designated SAB authority. For two-step contracts, set the pending/next owner/admin to the intended SAB authority (e.g., `set-pending-owner`). For single-step contracts, complete the transfer in this step (e.g., `transfer-ownership`, `set-owner`). | Bootstrap Wallet | Confirm transaction status on-chain. |
 | **H-3** | Only for two-step contracts: from the designated SAB authority, accept/claim the pending owner/admin update (e.g., `claim-ownership`, `accept-ownership`). Skip this step for single-step transfers (ownership/admin is already fully transferred in **H-2**). | SAB Signers | Confirm final owner/admin update. |
-| **V-1** | Verify that no bootstrap or personal address remains as a privileged role or recipient in the protocol. | Auditor | Run `python3 scripts/verify_bos_production_boundary.py` + `python3 scripts/verify_contamination_guard.py` (repo/system boundary checks; does **not** replace on-chain privilege verification). Independently confirm on-chain (via explorer/read-only calls) that for every core contract enumerated in the control matrix: `owner`/`admin` (or equivalent privileged roles, including any privileged role maps) match the designated SAB authority, and all fee/recipient addresses match the control matrix. |
+| **V-1** | Verify that no bootstrap or personal address remains as a privileged role or recipient in the protocol. | Auditor | (1) Run `python3 scripts/verify_bos_production_boundary.py` + `python3 scripts/verify_contamination_guard.py` (repo/system boundary checks; does **not** replace on-chain privilege verification).<br>(2) On-chain checklist (per control matrix, for every core contract):<br>- `owner`/`admin` (or equivalent privileged roles, including any privileged role maps) match the designated SAB authority<br>- all fee/recipient addresses match the control matrix |
 
 ## Rollback authority (Emergency Action)
 During the transition between Stage 2 and Stage 3, a **rollback authority** is maintained by the **Emergency Control** wallet class to revert changes if critical bugs are found. Once Stage 3 is fully achieved, this authority is strictly bounded by the DAO-controlled timelock (default 144 blocks).
