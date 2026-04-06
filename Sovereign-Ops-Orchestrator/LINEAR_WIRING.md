@@ -1,18 +1,12 @@
-# Ops Engine: Linear & Stitch Integration Wiring
+# BOS automation wiring (migrated to Linear)
 
-## 1. Objective
+This repository is public.
 
-Establish the programmatic link between the execution engine (Linear) and the state layer (Supabase).
+The canonical content for Linear webhook wiring and BOS automation is maintained in the Conxian Linear workspace to comply with our Zero Secret Egress (ZSE) mandate and to protect sensitive strategy, legal, or operational details.
 
-## 2. Webhook Triggers
+See:
 
-- **Issue Creation**: Tagged with `cxn-` suite labels (e.g., `Nakamoto-Guardian`) triggers a new state entry in `ats_violations` if ATS metadata is missing.
-- **Issue Completion**: Triggers a performance update in `deployment_efficiency`.
-- **Valuation Impact**: Issues with the `ValuationImpact` label update the `exit_velocity` integrity score upon completion.
+- https://linear.app/conxian-labs
+- https://linear.app/conxian-labs/issue/CON-256
 
-## 3. Stitch Dashboard
-
-The internal dashboard is hosted on Render and visualizes the Supabase state.
-
-- **Project ID**: 17743348077285403443
-- **Dashboard URL**: [CONXIAN-BOS-INTERNAL]
+This file is intentionally kept as a stub so existing links continue to resolve.

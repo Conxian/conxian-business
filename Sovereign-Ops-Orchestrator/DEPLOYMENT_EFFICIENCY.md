@@ -1,15 +1,12 @@
-# Ops Engine: Deployment Efficiency & Bottleneck Resolution
+# Deployment efficiency (migrated to Linear)
 
-## 1. Objective
+This repository is public.
 
-Measuring the gas-efficiency of operational execution and agent deployment cycles.
+The canonical content for operational performance metrics and deployment efficiency is maintained in the Conxian Linear workspace to comply with our Zero Secret Egress (ZSE) mandate and to protect sensitive strategy, legal, or operational details.
 
-## 2. Performance Tracking
+See:
 
-- **Deployment Gas**: Cost-per-unit of operational state change.
-- **Linear Bottlenecks**: Automated detection of "blocked" states in Linear.
+- https://linear.app/conxian-labs
+- https://linear.app/conxian-labs/issue/CON-256
 
-## 3. Integration
-
-- **Source**: Linear + Stitch Webhooks
-- **Status**: INITIALIZING
+This file is intentionally kept as a stub so existing links continue to resolve.
