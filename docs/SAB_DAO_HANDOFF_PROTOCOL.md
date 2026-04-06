@@ -9,10 +9,10 @@ This document defines the staged handoff protocol from personal bootstrap contro
 - **Custodian:** Developer / Operator personal address.
 - **Authority:** Full administrative control for deployment, initialization, and testnet validation.
 - **Risk:** High centralization / single-point-of-failure.
-- **Exit criterion:** Core protocol contracts deployed and verified on mainnet.
+- **Exit criterion:** Core protocol contracts deployed and verified on testnet; mainnet deployment plan finalized.
 
 ### Stage 2: SAB-controlled custody (Operational Launch)
-- **Status:** Target for Initial Mainnet Release.
+- **Status:** Required for Initial Mainnet Release.
 - **Custodian:** SAB-controlled multi-sigs and system-controlled agents.
 - **Authority:** Operational execution, parameter adjustments within defined bounds, and initial fee capture.
 - **Handoff action:** Transfer contract-owner roles to the appropriate SAB multi-sigs (e.g., `SAB-TREASURY-MS`, `BOUNTY-PAYOUT-MS`).
