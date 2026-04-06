@@ -33,7 +33,7 @@ Stage mapping note: relative to `docs/BOS_WALLET_CONTROL_MODEL.md`, Stage 1 here
 
 Note: contract ownership transfer interfaces vary by contract. Some use a two-step (pending -> claim) flow; others are single-step. The steps below are intentionally interface-agnostic and list common function names as examples.
 
-Definition: in this table, "SAB authority" means the designated SAB-controlled multisig or executor principal for that contract, as defined in `docs/SAB_WALLET_ARCHITECTURE_AND_CONTROL_MATRIX.md`.
+Definition: "SAB authority" means the designated SAB-controlled multisig or executor principal for that contract, as defined in [`docs/SAB_WALLET_ARCHITECTURE_AND_CONTROL_MATRIX.md`](./SAB_WALLET_ARCHITECTURE_AND_CONTROL_MATRIX.md).
 
 | Step | Action | Responsibility | Verification |
 | :--- | :--- | :--- | :--- |
@@ -45,11 +45,11 @@ Definition: in this table, "SAB authority" means the designated SAB-controlled m
 | **H-3** | Only for two-step contracts: from the designated SAB authority, accept/claim the pending owner/admin update (e.g., `claim-ownership`, `accept-ownership`). Skip this step for single-step transfers (ownership/admin is already fully transferred in **H-2**). | SAB Signers | Confirm final owner/admin update. |
 | **V-1** | Verify that no bootstrap or personal address remains as a privileged role or recipient in the protocol. | Auditor | Run `python3 scripts/verify_bos_production_boundary.py` + `python3 scripts/verify_contamination_guard.py` (repo/system boundary checks; does **not** replace on-chain privilege verification). Then complete the on-chain checklist below for each core contract enumerated in the control matrix. |
 
-**H-2/H-3 transfer mode notes**
+### H-2/H-3 transfer mode notes
 - **Two-step transfers:** **H-2** sets the pending/next owner/admin to the designated SAB authority, and **H-3** is executed by the SAB authority to accept/claim the pending owner/admin update.
 - **Single-step transfers:** **H-2** completes the transfer, and **H-3** is skipped.
 
-**V-1 on-chain checklist (per core contract, per control matrix)**
+### V-1 on-chain checklist (per core contract, per control matrix)
 - `owner`/`admin` (or equivalent privileged roles, including any privileged role maps) match the designated SAB authority
 - all fee/recipient addresses match the control matrix
 
