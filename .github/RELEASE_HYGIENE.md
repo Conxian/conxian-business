@@ -10,9 +10,9 @@ The goals:
 
 ## Required checks guidance
 
-### Always-on checks for PRs targeting `main`
+### Always-on checks for PRs targeting `dev`, `staged`, or `main`
 
-These workflows run on every pull request to `main` and are expected to be green before merge:
+These workflows run on every pull request targeting `dev`, `staged`, or `main`. Branch protection rules determine which checks are *required* to merge into protected branches (typically `staged`/`main`), and promotion PRs are expected to have all checks green before merge.
 
 *Note:* check names shown in the PR UI may drift over time; rely on the PR UI’s required checks list when in doubt.
 
