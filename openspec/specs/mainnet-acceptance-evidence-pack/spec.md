@@ -168,7 +168,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
   - `<url>` (one line per command output line; preserve order)
 - Canonical remote push URL(s) (e.g. from `git remote get-url --push --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.pushurl`; preserve line order; MUST be credential-free; if embedded credentials are present, fix the git remote configuration and re-run until output is credential-free):
   - `Same as fetch URL(s) above` (use only if all push URL(s) are identical to the fetch URL(s); otherwise delete this line)
-  - `<url>` (one line per command output line; preserve order)
+  - `<url>` (one line per command output line; preserve order; if you list URLs here, remove the `Same as fetch URL(s) above` line above)
 - Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
 - Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
