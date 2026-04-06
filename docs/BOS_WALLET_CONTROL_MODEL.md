@@ -128,9 +128,9 @@ SAB operations
 
 ### Stage 2 — Move admin/owner surfaces out of bootstrap
 
-- Transfer contract-level `admin`/`contract-owner` variables away from bootstrap to the correct SAB/DAO authority.
+- Transfer contract-level `admin`/`contract-owner` variables away from bootstrap to SAB authorities (typically `SAB_DEPLOYER_MULTISIG` and the emergency model). Where timelock-gated governance is required, defer final transfer to `DAO_TIMELOCK` in Stage 4.
 - Set `.conxian-access` owner + roles so:
-  - governance policy changes flow through `DAO_TIMELOCK`
+  - governance policy changes are timelock-gated once `DAO_TIMELOCK` is live (Stage 4)
   - keeper/executor can perform allowlisted operational calls
   - emergency pause authority is distinct from deploy authority
 
