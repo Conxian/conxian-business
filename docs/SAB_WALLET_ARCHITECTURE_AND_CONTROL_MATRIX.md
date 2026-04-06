@@ -23,7 +23,7 @@ This document defines the canonical wallet-control model for the Conxian Busines
 | **BOUNTY-PAYOUT-MS** | Contributor payouts | Multi-sig (Maintainer) | 2 of 3 | Medium | Bounty settlement (caps defined in the custody system of record) |
 | **PROTOCOL-PAUSE-MS** | Emergency pause (veto-only; maps to `SAB_EMERGENCY_PAUSE_MULTISIG` in [`BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md)) | Multi-sig (Guardian) | 2 of 3 | None | Contract pause/isolation actions; enable-only circuit breakers; MUST NOT sign unpause/resume operations or value-bearing transfers |
 
-**Note:** `PROTOCOL-PAUSE-MS` maps to `SAB_EMERGENCY_PAUSE_MULTISIG` in [`BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md) and is pause/isolation-only. The quorum and signer set for `SAB_EMERGENCY_PAUSE_MULTISIG` in that document MUST match this table. Administrative recovery (including unpause, key rotation, role revokes, and rollback) must use `SAB_EMERGENCY_RECOVERY_MULTISIG` (higher quorum; see that doc) and/or the `DAO_TIMELOCK` contract.
+**Note:** `PROTOCOL-PAUSE-MS` maps to `SAB_EMERGENCY_PAUSE_MULTISIG` in [`BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md) and is pause/isolation-only. The quorum and signer set for `SAB_EMERGENCY_PAUSE_MULTISIG` in that document MUST match this table. Administrative recovery (including unpause, key rotation, role revokes, and rollback) must use `SAB_EMERGENCY_RECOVERY_MULTISIG` (higher quorum; see that doc) and/or the `DAO_TIMELOCK` contract. `PROTOCOL-PAUSE-MS` MUST NOT be granted unpause/resume or value-bearing transfer permissions in any deployed contract.
 
 ## Spending limit tier definitions
 
