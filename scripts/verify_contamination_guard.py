@@ -17,7 +17,7 @@ def git_ls_files(root: str) -> list[str]:
             ["git", "-C", root, "ls-files", "-z"],
             stderr=subprocess.STDOUT,
         )
-    except (FileNotFoundError, OSError) as exc:
+    except OSError as exc:
         raise SystemExit(
             f"Failed to execute `git` while scanning {root!r}. Ensure Git is installed and available on PATH.{os.linesep}{os.linesep}Error: {exc}"
         ) from exc
@@ -34,6 +34,12 @@ def git_ls_files(root: str) -> list[str]:
 BASENAME_EXCLUSIONS = {"pnpm-lock.yaml", "package-lock.json"}
 
 def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
+    """Return True when `rel_path` should be skipped while scanning for contamination.
+
+    - Exclusions containing a `/` are treated as exact path prefixes.
+    - Basename-only exclusions match directory names at any depth, and exact file paths.
+    - `BASENAME_EXCLUSIONS` are also excluded by basename anywhere in the tree.
+    """
     rel_path = rel_path.replace(os.sep, "/").strip("/")
     if rel_path.startswith("./"):
         rel_path = rel_path[2:]
