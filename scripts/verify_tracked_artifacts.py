@@ -86,6 +86,10 @@ def _is_allowlisted(rel_path: str, allowlist: list[str]) -> bool:
     for pattern in allowlist:
         if fnmatch.fnmatch(rel_path, pattern):
             return True
+
+        if not any(ch in pattern for ch in "*?[]"):
+            if rel_path == pattern or rel_path.startswith(pattern + "/"):
+                return True
     return False
 
 
@@ -258,6 +262,6 @@ def verify() -> None:
 if __name__ == "__main__":
     try:
         verify()
-    except Exception as e:
+    except RuntimeError as e:
         print(str(e), file=sys.stderr)
         sys.exit(1)
