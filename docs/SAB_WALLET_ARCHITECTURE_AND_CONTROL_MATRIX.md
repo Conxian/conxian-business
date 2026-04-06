@@ -32,8 +32,8 @@ Concrete numeric caps per wallet, plus the pricing source/timing used to value n
 
 These tiers apply to value-bearing transfers (network gas fees excluded). Parenthetical notes in the control matrix (for example: `None (Gas-only)` or `None (Inbound-only)`) are operational constraints, not separate tiers.
 
-- **None:** No value-bearing outbound transfers are permitted. Wallets may still pay network gas fees. Any permitted contract calls MUST be non-value-bearing and MUST NOT enable indirect value transfers.
-- **Low:** Minimal value-bearing transfers only (for example: dust-level operational transfers or small top-ups). Gas-only wallets are still classified as `None`.
+- **None:** No value-bearing outbound transfers are permitted. Wallets may still pay network gas fees. Any permitted contract calls MUST be non-value-bearing and MUST NOT enable indirect value transfers (for example: granting roles, changing parameters, or triggering execution paths that allow other contracts to move funds on this wallet's behalf). Gas-only wallets are therefore always classified as `None`.
+- **Low:** Minimal value-bearing transfers only (for example: dust-level operational transfers or small top-ups).
 - **Medium:** Budgeted operational or contributor payout transfers.
 - **High:** Large treasury movements, reserve rebalancing, or cross-asset conversion.
 
