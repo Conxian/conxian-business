@@ -3,9 +3,6 @@ import os
 import json
 from datetime import datetime, timezone
 
-# NOTE: `.gitignore` and `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md` assume the same directory name.
-GENERATED_DIR_NAME = ".generated"
-
 def calculate_hash(file_path):
     sha256_hash = hashlib.sha256()
     try:
@@ -31,7 +28,6 @@ def generate_manifest():
     for target in targets:
         if os.path.isdir(target):
             for root, dirs, files in os.walk(target):
-                dirs[:] = [d for d in dirs if d not in {GENERATED_DIR_NAME}]
                 for file in files:
                     if file.endswith((".md", ".json", ".py", ".clar")):
                         file_path = os.path.join(root, file)
@@ -48,9 +44,9 @@ def generate_manifest():
 
     # Determine manifest path relative to script
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    generated_dir = os.path.join(script_dir, GENERATED_DIR_NAME)
+    generated_dir = os.path.join(script_dir, ".generated")
     os.makedirs(generated_dir, exist_ok=True)
-    manifest_path = os.path.join(generated_dir, "AUDIT_MANIFEST.generated.json")
+    manifest_path = os.path.join(generated_dir, "AUDIT_MANIFEST.json")
 
     with open(manifest_path, "w") as f:
         json.dump(manifest, f, indent=2)
