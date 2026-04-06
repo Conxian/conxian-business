@@ -23,9 +23,9 @@ If you prefer, you may also use GitHub's private vulnerability reporting (when e
 
 ## Secrets and environment files
 
-- Do not commit any `.env*` files (for example: `.env`, `.env.local`), private keys, or API tokens.
-- Ensure `.env*` patterns are listed in `.gitignore` so they are never committed by default.
-- Use `.env.example` as a template for local configuration.
+- Do not commit any secret-bearing environment files (for example: `.env`, `.env.local`), private keys, or API tokens.
+- `.env.example` may be committed as a non-secret template, but it must never contain real secrets.
+- Ensure `.env`/`.env.*` patterns are listed in `.gitignore` so they are never committed by default (use an `!.env.example` exception if needed).
 - This repository runs a `gitleaks` secret scan in GitHub Actions on pull requests and pushes to `main` to catch new secret leaks.
 
 If a secret was committed to a public branch (even temporarily), treat it as compromised:
