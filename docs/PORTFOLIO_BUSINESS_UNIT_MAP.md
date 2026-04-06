@@ -222,6 +222,8 @@ Definitions used below:
 
 A refactor is considered in-bounds only when it (1) reduces duplicated sources of truth, (2) makes the dependency direction clearer, and (3) does not move a stable, working responsibility into a different business unit.
 
+For this portfolio, dependencies should generally flow from **Protocol → Nexus → Gateway → UI/Wallet**, with **Platform** orchestrating those services without owning product logic.
+
 Notes on the requested repos:
 
 - `Conxian/` (Protocol)
@@ -230,6 +232,9 @@ Notes on the requested repos:
 - `conxian-gateway/` (Fusion / Gateway)
   - Preserve: external integration surface (APIs/webhooks/partner adapters) and compliance/aggregation pipelines that consume Nexus/Protocol as upstream sources.
   - Enhance: consolidate shared event/schema definitions behind an explicit boundary (often in `lib-conxian-core/`) so Wallet/UI/Platform are consumers, not re-implementers.
+- `conxian-nexus/` (Nexus)
+  - Preserve: authoritative off-chain state, state services, and telemetry/metrics that downstream services consume as read-only.
+  - Enhance: keep Nexus focused on being a source of truth and avoid embedding product-specific UX or integration logic; expose versioned APIs/schemas so Gateway/UI/Wallet treat it as an upstream dependency.
 - `lib-conxian-core/` (Shared core)
   - Preserve: dependency-light primitives intended for cross-repo use (types/models, serialization, shared error conventions, stable schema definitions).
   - Enhance: extract duplicated “boundary types” out of product repos _only_ when they are truly cross-unit and do not pull in product-specific dependencies.
