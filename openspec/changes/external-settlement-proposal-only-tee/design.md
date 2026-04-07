@@ -126,7 +126,7 @@ Trigger granularity:
 - If a single inbound message contains multiple settlement transactions (e.g., ISO 20022 `pacs.008` with multiple `CdtTrfTxInf` entries), it produces **one trigger per transaction**.
 - Replaying the same settlement transaction in a different envelope/message MUST produce the same `trigger_id`.
 
-Minimum required identifier set (by rail):
+Minimum required `transaction_identifiers` set (by rail):
 
 For normative `tx_index` requirements (ordering source, no-reorder constraint, and computation rules when included), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical).
 
