@@ -77,24 +77,25 @@ Prohibited fields:
 
 `envelope_identifiers` MUST NOT affect `normalized_settlement_hash`.
 
-Minimum required identifier set (by rail):
-
-`tx_index` requirements (all rails):
-
-- `tx_index` MUST be computed over the rail-defined settlement-transaction entries (e.g., ISO20022 `pacs.008` `CdtTrfTxInf` elements) in the exact sequence they appear in the received message payload, before any internal normalization or reordering. Implementations MUST NOT reorder transactions for indexing.
-- The index MUST be computed over all transaction entries present in the received message payload, including any that are later rejected or skipped.
-
-Example: if a message contains three settlement-transaction entries `[A, B, C]` and `B` is later rejected or skipped, any triggers emitted for `A` and `C` still use `tx_index = 0` and `tx_index = 2`.
+Minimum required `transaction_identifiers` set (by rail):
 
 - **ISO20022 (pacs.008)**
   - `transaction_identifiers.transaction_reference` (prefer `uetr`, else `end_to_end_id`, else `instruction_id`)
-  - `envelope_identifiers.tx_index`
 - **PAPSS**
   - `transaction_identifiers.transaction_reference`
-  - `envelope_identifiers.tx_index`
 - **BRICS**
   - `transaction_identifiers.transaction_reference`
-  - `envelope_identifiers.tx_index`
+
+Optional envelope identifiers (audit/debug only):
+
+- `envelope_identifiers.tx_index`
+
+`tx_index` requirements (all rails):
+
+- If `envelope_identifiers.tx_index` is included, it MUST be computed over the rail-defined settlement-transaction entries (e.g., ISO20022 `pacs.008` `CdtTrfTxInf` elements) in the exact sequence they appear in the received message payload, before any internal normalization or reordering. Implementations MUST NOT reorder transactions for indexing.
+- If `envelope_identifiers.tx_index` is included, it MUST be computed over all transaction entries present in the received message payload, including any that are later rejected or skipped.
+
+Example: if a message contains three settlement-transaction entries `[A, B, C]` and `B` is later rejected or skipped, any triggers emitted for `A` and `C` still use `tx_index = 0` and `tx_index = 2`.
 
 Canonical formatting requirements:
 
@@ -109,13 +110,13 @@ Canonical formatting requirements:
      - The NFC-normalized value contains the Unicode replacement character `U+FFFD`.
      - The NFC-normalized value begins or ends with any Unicode whitespace character (characters with `White_Space=Y` in the Unicode Character Database).
 - `transaction_identifiers.transaction_reference` MUST satisfy the canonical string rules above and MUST preserve case.
-- `envelope_identifiers.tx_index` MUST be a non-negative integer.
+- If `envelope_identifiers.tx_index` is included, it MUST be a non-negative integer.
 
 Note: This section intentionally tightens earlier guidance. These canonicalization rules are normative for the current `external-settlement-trigger:v1` definition. Values that violate these canonical string rules MUST be treated as invalid.
 
 If any value in `settlement_identifiers.transaction_identifiers` (including any field-specific rules for optional reconciliation keys) fails canonicalization or validation, the corresponding settlement transaction MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`.
 
-`envelope_identifiers.tx_index` MUST satisfy the field requirements above. If `envelope_identifiers.tx_index` is missing or fails these requirements, the corresponding settlement transaction MUST be treated as invalid for external-settlement trigger purposes and MUST NOT produce a `normalized_settlement_hash` or `SovereignProposal`. Any other `settlement_identifiers.envelope_identifiers` keys are optional; invalid or non-canonical values for those optional envelope identifiers MUST be treated as if the corresponding fields were absent and MUST NOT cause the settlement transaction to be treated as invalid for external-settlement trigger purposes.
+Invalid or non-canonical values in `settlement_identifiers.envelope_identifiers` (including `envelope_identifiers.tx_index`) MUST be ignored/omitted and MUST NOT cause the settlement transaction to be treated as invalid for external-settlement trigger purposes.
 
 For `external-settlement-trigger:v1`, implementations MUST use Unicode 15.1.0 (Unicode Character Database + normalization data) for evaluating `General_Category`, `White_Space`, and NFC normalization.
 
