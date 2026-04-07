@@ -130,7 +130,7 @@ Minimum required identifier set (by rail):
 
 For normative `tx_index` requirements (ordering source, no-reorder constraint, and computation rules when included), see [specs/external-settlement-proposal-only-tee/spec.md §2.1.1](specs/external-settlement-proposal-only-tee/spec.md#settlement-identifiers-canonical).
 
-The per-rail `tx_index` parentheticals below are summaries; the spec is authoritative.
+The `tx_index` summary below is non-normative; the spec is authoritative.
 
 - **ISO20022 (pacs.008)**
   - `transaction_identifiers.transaction_reference` (MUST use the first available in this order)

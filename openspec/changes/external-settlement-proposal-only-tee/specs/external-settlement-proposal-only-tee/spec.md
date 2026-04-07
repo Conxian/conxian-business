@@ -130,6 +130,8 @@ Rails MAY define additional reconciliation identifiers in `settlement_identifier
 
 For `external-settlement-trigger:v1`, the only optional reconciliation keys defined by this spec are listed below. Implementations MUST include these keys in the normalized settlement transaction hashed to produce `normalized_settlement_hash` when they are present in the upstream settlement transaction, and MUST omit them when absent. Implementations MUST NOT include any other `transaction_identifiers` keys when computing `normalized_settlement_hash`.
 
+For `external-settlement-trigger:v1`, the normalized `settlement_identifiers.transaction_identifiers` object MUST NOT contain any keys other than `transaction_reference`, `settlement_currency`, `settlement_amount`, and `settlement_date`; any other upstream `transaction_identifiers` keys MUST be ignored/omitted before computing `normalized_settlement_hash`.
+
 These optional reconciliation identifier values are subject to the canonical string rules above. If present, their values MUST be emitted in the canonical form specified:
 
 - `settlement_currency`: the NFC-normalized value MUST match `^[A-Za-z]{3}$`; implementations MUST convert it to ASCII uppercase as part of canonicalization. The emitted canonical form MUST match `[A-Z]{3}`.
