@@ -1,6 +1,6 @@
 # Nakamoto Guardian
 
-> Current workspace release: **v1.8.2** (see [`CHANGELOG.md`](../CHANGELOG.md))
+> Current workspace release: **v1.9.0** (see [`CHANGELOG.md`](../CHANGELOG.md))
 
 The **Nakamoto Guardian** is the architectural enforcement layer of the Conxian Business Operations System (BOS).
 
@@ -14,6 +14,10 @@ This repository is public. Detailed operational enforcement rules and internal c
 - **ATS Enforcement**: Verifying that all code and operational actions adhere to the Action Task Specification.
 - **Anti-Fragility**: Continuous monitoring and collision audits across the Conxian ecosystem.
 - **Regulatory Compliance**: Compliance reporting and enforcement workflows (internal details live in Linear).
+
+## Status
+
+active — Public-safe enforcement and audit artifacts live here; detailed enforcement rules and compliance reporting is maintained in Linear.
 
 ## Key Components
 

@@ -7,11 +7,12 @@ This page is a practical index of the documentation already present in this repo
 - **Canonical**: the current “source of truth” for a domain. If two docs disagree, update the non-canonical doc to match the canonical one.
 - **Supporting**: helpful context, audits, reports, briefs, or deep dives that clarify (but don’t define) the system.
 - **Public-safe**: ok to link in public contexts and external conversations.
-- **Internal-only**: strategic / operational / security-adjacent content that must live in the Conxian Linear workspace (the repo may contain a stub placeholder so existing links resolve).
+- **Public-safe stub (canonical in Linear)**: safe to link publicly; this repo file is a short pointer stub (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)). It must not contain any operational, security, financial, legal, and strategic details beyond the pointer. The full canonical content is maintained in Linear under ZSE.
+- **Internal-only (canonical in Linear only)**: operational, security, financial, legal, and strategic material whose canonical document must live only in the Conxian Linear workspace. If a repo link target must be preserved, use a **Public-safe stub (canonical in Linear)** (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)) so existing links continue to resolve.
 
 Notes:
 
-- This repo is public. “Internal-only” material should not be stored here beyond a stub; see https://linear.app/conxian-labs/issue/CON-256.
+- This repo is public. “Internal-only” material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see https://linear.app/conxian-labs/issue/CON-256).
 - OpenSpec change sets typically have 4 layers: `proposal.md` (intent), `design.md` (architecture), `specs/*/spec.md` (requirements), `tasks.md` (execution).
 
 ## 1) Repo navigation (start here)
@@ -31,16 +32,16 @@ These are the “operating-model” documents that explain how BOS components re
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
 | `conxian-business/SERVICE_LOOP.md` | Canonical | Public-safe | BOS service loop (how client/supplier loops connect). |
-| `conxian-business/BOS_STATE_MACHINE.json` | Supporting | Internal-only | BOS state machine definition (automation substrate). |
-| `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Canonical | Internal-only | Intended Linear ↔ state-layer wiring and webhook triggers. |
-| `Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md` | Supporting | Internal-only | Bottleneck and deployment efficiency metrics. |
-| `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md` | Supporting | Internal-only | Strategy velocity tracking and exit-readiness framing. |
-| `Sovereign-Strategy-Nexus/docs/SOVEREIGN_MOI_ALIGNMENT.md` | Canonical | Internal-only | “MOI” alignment source for Strategy Nexus narratives. |
-| `Sovereign-Strategy-Nexus/docs/ZK_DATA_ROOM_SCHEMA.md` | Canonical | Internal-only | ZK data room schema (what proofs/data exist). |
-| `Sovereign-Strategy-Nexus/docs/SOVEREIGN_PITCH_DECK_NARRATIVE.md` | Supporting | Internal-only | Pitch narrative scaffolding. |
-| `Fiscal-Vault-Oracle/SOVEREIGN_RUNWAY.md` | Canonical | Internal-only | Treasury runway and yield execution constraints. |
-| `Fiscal-Vault-Oracle/LSEG_MCP_AUDIT.md` | Supporting | Internal-only | LSEG MCP audit context for treasury/oracle integrity. |
-| `Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md` | Canonical | Internal-only | ATS enforcement + collision audits framing. |
+| `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Public-safe stub (canonical in Linear) | Public-safe BOS state machine pointer stub (standardized ZSE stub). |
+| `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Canonical | Public-safe stub (canonical in Linear) | Intended Linear ↔ state-layer wiring and webhook triggers (standardized ZSE stub). |
+| `Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md` | Supporting | Public-safe stub (canonical in Linear) | Bottleneck and deployment efficiency metrics (standardized ZSE stub). |
+| `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md` | Supporting | Public-safe stub (canonical in Linear) | Strategy velocity tracking and exit-readiness framing (standardized ZSE stub). |
+| `Sovereign-Strategy-Nexus/docs/SOVEREIGN_MOI_ALIGNMENT.md` | Canonical | Public-safe stub (canonical in Linear) | “MOI” alignment source for Strategy Nexus narratives (standardized ZSE stub). |
+| `Sovereign-Strategy-Nexus/docs/ZK_DATA_ROOM_SCHEMA.md` | Canonical | Public-safe stub (canonical in Linear) | ZK data room schema (standardized ZSE stub). |
+| `Sovereign-Strategy-Nexus/docs/SOVEREIGN_PITCH_DECK_NARRATIVE.md` | Supporting | Public-safe stub (canonical in Linear) | Pitch narrative scaffolding (standardized ZSE stub). |
+| `Fiscal-Vault-Oracle/SOVEREIGN_RUNWAY.md` | Canonical | Public-safe stub (canonical in Linear) | Treasury runway and yield execution constraints (standardized ZSE stub). |
+| `Fiscal-Vault-Oracle/LSEG_MCP_AUDIT.md` | Supporting | Public-safe stub (canonical in Linear) | LSEG MCP audit context for treasury/oracle integrity (standardized ZSE stub). |
+| `Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md` | Canonical | Public-safe stub (canonical in Linear) | ATS enforcement + collision audits framing (standardized ZSE stub). |
 | `cxn-grid-oracle/README.md` | Supporting | Public-safe | Grid oracle overview (agnostic). |
 
 ## 3) OpenSpec (ground truth specs)
@@ -52,6 +53,7 @@ OpenSpec is the best place to point issue descriptions when work is “spec-firs
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
 | `openspec/specs/git-management/spec.md` | Canonical | Public-safe | Git hygiene, branching, and repo discipline expectations. |
+| `openspec/specs/mainnet-acceptance-evidence-pack/spec.md` | Canonical | Public-safe | Canonical evidence pack required for promoting `staged` into `main`. |
 | `openspec/specs/workspace-audit/spec.md` | Canonical | Public-safe | Workspace audit / cleanliness requirements. |
 | `openspec/specs/sab-datastore-mapping/spec.md` | Canonical | Public-safe | SAB datastore mapping requirements (persistence + mapping rules). |
 
@@ -128,8 +130,10 @@ See `docs/BOS_BUSINESS_BUILDOUT.md` for repo business purpose, business-unit pla
 | `CONTRIBUTING.md` | Canonical | Public-safe | Contribution expectations and workflow. |
 | `SECURITY.md` | Canonical | Public-safe | Security policy and reporting. |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Supporting | Public-safe | PR checklist and norms. |
-| `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md` | Canonical | Internal-only | How maintainer payouts are enabled and validated. |
-| `admin/SECRETS.md` | Canonical | Internal-only | Secret registry + pointers to Linear docs (ZSE-compliant). |
+| `docs/CSF_FIRST_OPERATING_SEQUENCE_AND_PROOF_GATES.md` | Canonical | Public-safe | Locks the CSF → economy → gateway operating order and the minimum proof gates that keep launch, economy design, and go-to-market claims aligned. |
+| `docs/BOS_WALLET_CONTROL_MODEL.md` | Canonical | Public-safe | Canonical BOS wallet-control model (bootstrap → SAB custody → DAO-aligned governance). |
+| `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md` | Canonical | Public-safe stub (canonical in Linear) | How maintainer payouts are enabled and validated (standardized ZSE stub). |
+| `admin/SECRETS.md` | Canonical | Public-safe stub (canonical in Linear) | Secret registry + pointers to Linear docs (standardized ZSE stub). |
 
 ## 7) Known doc gaps / broken references (should not be re-created blindly)
 
@@ -148,7 +152,7 @@ If an issue is in a planning or execution state, the description should link to 
 | --- | --- | --- |
 | https://linear.app/conxian-labs/issue/CON-343 | `openspec/changes/sovereign-data-migration-institutional-egress/specs.md`, `openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md`, `ARCHIVE_MIGRATION.md` | This issue is spec-first and directly tied to ZSE + migration. |
 | https://linear.app/conxian-labs/issue/CON-158 | `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`, `SUMMARY.md`, `openspec/changes/remediate-enterprise-sovereignty/specs.md` | This is the “alignment” umbrella; it should anchor to the index + baseline OpenSpec. |
-| https://linear.app/conxian-labs/issue/CON-152 | `conxian-business/SERVICE_LOOP.md`, `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`, `conxian-business/BOS_STATE_MACHINE.json` | BOS operating model work should reference the service loop + wiring + state machine. |
+| https://linear.app/conxian-labs/issue/CON-152 | `conxian-business/SERVICE_LOOP.md`, `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` | BOS operating model work should reference the service loop + wiring + state machine. |
 | https://linear.app/conxian-labs/issue/CON-157 | `Conxian/PRD.md`, `conxian-gateway/PRD.md`, `conxian-nexus/docs/PRD.md` | “Business-unit model” extraction should start from PRDs (what exists and how it’s separated). |
 | https://linear.app/conxian-labs/issue/CON-160 | `conxian-gateway/PRD.md`, `lib-conxian-core/docs/PRD.md`, `openspec/changes/remediate-enterprise-sovereignty/specs/enterprise-sovereignty/spec.md` | Settlement ingress touches gateway/core-lib conventions + sovereignty requirements. |
 | https://linear.app/conxian-labs/issue/CON-131 | `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`, `CONTRIBUTING.md` | Bounty workflow should reference the payout runbook + repo workflow norms. |
@@ -161,7 +165,7 @@ If an issue is in a planning or execution state, the description should link to 
 These are the highest-value sources to copy into Linear so day-to-day work stays stable even if the repo has to remove or relocate sensitive material.
 
 1. **BOS Operating Model (canonical)**
-   - Source: `conxian-business/SERVICE_LOOP.md`, `conxian-business/BOS_STATE_MACHINE.json`.
+   - Source: `conxian-business/SERVICE_LOOP.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` (public-safe pointer; canonical BOS state machine definition is maintained in Linear).
 2. **Execution wiring: Linear ↔ BOS state layer (canonical)**
    - Source: `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`.
 3. **Zero Secret Egress (ZSE) + knowledge retention (canonical)**
