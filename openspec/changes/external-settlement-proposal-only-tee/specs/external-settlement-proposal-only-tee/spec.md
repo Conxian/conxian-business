@@ -126,7 +126,11 @@ Implementations MUST apply canonicalization/validation before any hashing, attes
 
 Implementations MAY accept non-NFC-normalized input from upstream rails, but MUST convert it to Unicode NFC as part of canonicalization; all validation and equality checks operate on the NFC-normalized value.
 
-Rails MAY include additional canonical identifiers (e.g., for reconciliation) in `settlement_identifiers.transaction_identifiers`. These optional identifier values are subject to the canonical string rules above. If a rail includes any of the following identifier keys, their values MUST be emitted in the canonical form specified:
+Rails MAY define additional reconciliation identifiers in `settlement_identifiers.transaction_identifiers`, but to preserve cross-implementation determinism of `normalized_settlement_hash` (and therefore `trigger_id`), the per-rail canonical identifier key set and inclusion rules MUST be protocol-defined.
+
+For `external-settlement-trigger:v1`, the only optional reconciliation keys defined by this spec are listed below. Implementations MUST include these keys in the normalized settlement transaction hashed to produce `normalized_settlement_hash` when they are present in the upstream settlement transaction, and MUST omit them when absent. Implementations MUST NOT include any other `transaction_identifiers` keys when computing `normalized_settlement_hash`.
+
+These optional reconciliation identifier values are subject to the canonical string rules above. If present, their values MUST be emitted in the canonical form specified:
 
 - `settlement_currency`: the NFC-normalized value MUST match `^[A-Za-z]{3}$`; implementations MUST convert it to ASCII uppercase as part of canonicalization. The emitted canonical form MUST match `[A-Z]{3}`.
 - `settlement_amount`: normalized non-negative decimal string (no sign, no exponent; canonical regex: `^(0|[1-9][0-9]*)(\.[0-9]*[1-9])?$`). The emitted value MUST match this regex. Fractional parts MUST NOT end in `0`, and integer values MUST NOT include a decimal point (e.g., `0`, `1`, `0.5`, `123.45` are valid; `01`, `1.0`, `0.50` are invalid).
