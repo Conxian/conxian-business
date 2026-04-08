@@ -248,6 +248,30 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - I (accountable owner) confirm this evidence pack is complete and accurate.
   - Name/date: `<name>, <YYYY-MM-DD>`
 
+#### Evidence required before merge (required)
+
+##### Promotion provenance
+
+- Source branch: `staged`
+- Compare link / commit range: `<link>`
+
+##### Linked readiness work (mainnet pass)
+
+- Tracker link (public): `<link>`
+- If not accessible to reviewers: pass status recorded here + non-sensitive artifact: `<text/link>`
+
+##### Repo audit (no stub/testnet contamination)
+
+- Scope/paths scanned: `<paths>`
+- Tooling/commands used: `<commands>`
+- Findings: `PASS` / `FAIL`
+- Evidence: `<link/artifact>`
+
+##### Reviewer sign-off
+
+- Reviewer: `@<handle>`
+- Evidence reviewed: `<links>`
+
 #### Strict acceptance checklist (`staged` -> `main`)
 
 - [ ] All criteria in "Requirement: Strict acceptance criteria for `staged` -> `main`" are satisfied.
