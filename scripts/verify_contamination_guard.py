@@ -232,6 +232,20 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
     allowlist = LABEL_ALLOWLIST.get(repo_name, {})
 
     files = git_ls_files(root)
+    files_set = set(files)
+
+    if allowlist:
+        known_labels = {lbl for (lbl, _) in CONTAMINATION_PATTERNS}
+        unknown_labels = set(allowlist) - known_labels
+        for lbl in sorted(unknown_labels):
+            errors.append(f"[{repo_name}] LABEL_ALLOWLIST references unknown label: {lbl!r}")
+
+        for lbl, paths in allowlist.items():
+            missing = sorted(p for p in paths if p not in files_set)
+            for p in missing:
+                errors.append(
+                    f"[{repo_name}] LABEL_ALLOWLIST references missing path for {lbl!r}: {p}"
+                )
 
     code_exts = {".rs", ".ts", ".tsx", ".clar", ".yaml", ".yml", ".json", ".toml"}
 
