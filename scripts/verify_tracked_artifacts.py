@@ -84,28 +84,21 @@ def _load_allowlist(repo_root: Path) -> list[str]:
 def _is_allowlisted(rel_path: str, allowlist: list[str]) -> bool:
     rel_path = _normalize_path(rel_path)
     base = rel_path.rsplit("/", 1)[-1]
-    for pattern in allowlist:
-        pattern = _normalize_path(pattern)
+    for raw_pattern in allowlist:
+        pattern = _normalize_path(raw_pattern)
         has_glob = any(ch in pattern for ch in "*?[]")
+        is_basename_pattern = "/" not in pattern
 
-        if "/" not in pattern:
-            if fnmatch.fnmatchcase(base, pattern):
-                return True
+        target = base if is_basename_pattern else rel_path
 
-            if has_glob and fnmatch.fnmatchcase(rel_path, pattern):
-                return True
-
-            if not has_glob:
-                if rel_path == pattern or rel_path.startswith(pattern + "/"):
-                    return True
-            continue
-
-        if fnmatch.fnmatchcase(rel_path, pattern):
+        if fnmatch.fnmatchcase(target, pattern):
             return True
 
-        if not has_glob:
-            if rel_path == pattern or rel_path.startswith(pattern + "/"):
-                return True
+        if is_basename_pattern and has_glob and fnmatch.fnmatchcase(rel_path, pattern):
+            return True
+
+        if not has_glob and (rel_path == pattern or rel_path.startswith(pattern + "/")):
+            return True
     return False
 
 
