@@ -14,7 +14,7 @@ The `conxian-business` repository is an umbrella repo that vendors key Conxian r
 - **Shared core**: libraries intended to be depended on by other repos.
 - **Protocol**: smart contracts and protocol logic.
 - **State node**: long-running nodes that maintain Conxian/BOS state and participate in protocol operations.
-- **Specs**: OpenSpec and other public technical specification corpora.
+- **Specs**: `OpenSpec` and other public technical specification corpora.
 - **Internal (Ops/Admin)**: governance, audits, and internal orchestration.
 - **Tooling**: CLI tools and supporting utilities used for deployment, monitoring, or developer workflows.
 
