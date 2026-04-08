@@ -4,7 +4,7 @@
 
 Security fixes are applied on a rolling basis to the default branch (`main`).
 
-If release branches/tags exist, we backport security fixes only to the latest supported release line (for example, the latest major/minor series).
+If release branches/tags exist, we backport security fixes only to the latest supported release line (for example, the latest `MAJOR.MINOR` series like `1.2.x`).
 
 | Channel | Security fixes |
 | --- | --- |
@@ -21,7 +21,7 @@ Report vulnerabilities privately using one of these channels:
 
 1. GitHub private vulnerability reporting (Security Advisories): if enabled, use the repository Security tab and choose "Report a vulnerability".
 2. Email: security@conxian-labs.com
-3. Fallback: admin@conxian-labs.com (clearly mark the message as a security report)
+3. If you cannot use either of the above channels, email admin@conxian-labs.com and clearly mark the message as a security report.
 
 When possible, include:
 
