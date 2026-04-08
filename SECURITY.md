@@ -2,9 +2,9 @@
 
 ## Support Policy
 
-Security fixes are applied on a rolling basis to the default branch (`main`).
+Security fixes are developed and merged to the default branch (`main`) on a rolling basis.
 
-If release branches/tags exist, we backport security fixes only to the latest supported release line (for example, the latest `MAJOR.MINOR` series like `1.2.x`).
+If the repository publishes tagged releases, we backport security fixes only to the latest supported release line (for example, the latest `MAJOR.MINOR` series like `1.2.x`).
 
 | Channel | Security fixes |
 | --- | --- |
@@ -13,6 +13,7 @@ If release branches/tags exist, we backport security fixes only to the latest su
 | Releases/tags older than the latest supported release line | No (please upgrade to the latest supported release line) |
 | Other branches/commits | Not actively maintained for security |
 
+<a id="reporting-vulnerability"></a>
 ## Reporting a Vulnerability
 
 Do not report security vulnerabilities via public GitHub issues.
@@ -21,7 +22,8 @@ Report vulnerabilities privately using one of these channels:
 
 1. GitHub private vulnerability reporting (Security Advisories): if enabled, use the repository Security tab and choose "Report a vulnerability".
 2. Email: security@conxian-labs.com
-3. Email: admin@conxian-labs.com (fallback if you cannot use the channels above; clearly mark the message as a security report)
+
+If you cannot use either of the above, email admin@conxian-labs.com and clearly mark the message as a security report.
 
 When possible, include:
 
@@ -33,7 +35,6 @@ When possible, include:
 ## Disclosure Policy
 
 We follow a coordinated disclosure model:
-
 1. We will acknowledge receipt of your report within 48-72 hours.
 2. We will investigate and provide a timeline for remediation.
 3. We ask that you do not disclose the vulnerability publicly until a fix has been released and coordinated.
@@ -44,7 +45,7 @@ We follow a coordinated disclosure model:
 - Do not commit any secret-bearing environment files (for example: `.env`, `.env.local`), private keys, or API tokens.
 - `.env.example` may be committed as a non-secret template, but it must never contain real secrets.
 - Ensure `.env`/`.env.*` patterns are listed in `.gitignore` so they are never committed by default (use an `!.env.example` exception if needed).
-- This repository runs a `gitleaks` secret scan in GitHub Actions on pull requests and pushes to `main` to catch new secret leaks.
+- This repository runs a `gitleaks` secret scan in GitHub Actions on pull requests and selected branch pushes (see [`.github/workflows/secret-scan.yml`](./.github/workflows/secret-scan.yml)) to catch new secret leaks.
 
 If a secret was committed to a public branch (even temporarily), treat it as compromised:
 
@@ -52,7 +53,7 @@ If a secret was committed to a public branch (even temporarily), treat it as com
 - Update any dependent deployments/configuration to use the new secret.
 - Consider rewriting Git history to remove the secret material (rotation is still required regardless).
 
-If you discover that a secret was previously committed, also follow the reporting process in "Reporting a Vulnerability" so the team can assess impact and coordinate incident response.
+If you discover that a secret was previously committed, also follow the reporting process in [Reporting a Vulnerability](#reporting-vulnerability) so the team can assess impact and coordinate incident response.
 
 ## Security Controls
 

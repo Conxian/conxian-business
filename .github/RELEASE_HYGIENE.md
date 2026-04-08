@@ -34,6 +34,16 @@ These workflows run on every pull request targeting `dev`, `staged`, or `main`. 
 - Unified CI (see [`conxian-unified-ci.yml`](./workflows/conxian-unified-ci.yml))
   - Repo hygiene:
     - ZSE knowledge retention via `scripts/verify_knowledge_retention.py`.
+    - Tracked artifact scanning via `scripts/verify_tracked_artifacts.py`.
+      - False positives can be allowlisted via `.github/artifact-scan-allowlist.txt` (case-sensitive; paths are normalized to forward slashes with no leading `./`):
+        - Patterns containing `/` are matched against the full normalized path; plain (non-glob) patterns can also match directory prefixes.
+        - Patterns without `/`:
+          - Plain strings (no glob wildcards: `*`, `?`, `[]`) match basenames, exact normalized paths, and directory prefixes.
+          - Glob patterns match basenames and also the full normalized path for compatibility, so keep patterns as specific as possible.
+        - Examples:
+          - `junit.xml` matches any tracked file with basename `junit.xml` anywhere in the repo.
+          - `audit/reports` matches any tracked file under `audit/reports/` (directory-prefix match).
+          - `*.log` matches any tracked `.log` file by basename, and also any full path ending in `.log` (compatibility), so use with care.
     - Submodule integrity via `scripts/verify_submodule_integrity.py`.
 - Branch promotion policy (see [`branch-promotion-policy.yml`](./workflows/branch-promotion-policy.yml))
 - Secret scan (see [`secret-scan.yml`](./workflows/secret-scan.yml))
@@ -68,6 +78,15 @@ Notes:
   - Required checks are green.
   - Appropriate label-gated suites ran (when relevant).
   - Changelog is updated when user-facing behavior or security posture changes.
+
+## Tagged releases (public repos)
+
+For user-facing repositories (starting with `conxius-wallet`), we expect releases to be cut as **SemVer tags** (`vX.Y.Z`) with:
+
+- a matching `CHANGELOG.md` entry, and
+- GitHub Release notes copied from the matching changelog section.
+
+`Conxian Unified CI` runs `scripts/verify_release_hygiene.py` to enforce that this repo’s root `CHANGELOG.md` contains an `## [Unreleased]` section, and to emit warnings when critical user-facing repos are missing tags.
 
 Merge preference:
 

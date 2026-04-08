@@ -1,19 +1,22 @@
-import re
-import os
 import configparser
-from pathlib import Path
+import os
+import re
 import sys
+from pathlib import Path
+
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SKIP_DIRS = {
-    'node_modules',
+
+SKIP_DIR_PARTS = {
     '.git',
     '.next',
     '.venv',
-    'build',
-    'dist',
-    'out',
     '__pycache__',
+    'build',
+    'coverage',
+    'dist',
+    'node_modules',
+    'out',
     'playwright-report',
     'test-results',
 }
@@ -37,18 +40,12 @@ def _uninitialized_submodule_dirs() -> list[Path]:
     return [d for d in dirs if not (d / '.git').exists()]
 
 
-def _is_within_uninitialized_submodule(path: Path, uninitialized_submodule_dirs: list[Path]) -> bool:
-    return any(path.is_relative_to(submodule_dir) for submodule_dir in uninitialized_submodule_dirs)
-
-
-def _find_markdown_files() -> list[Path]:
-    md_files: list[Path] = []
-    for root, dirs, files in os.walk(REPO_ROOT):
-        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
-        for name in files:
-            if name.lower().endswith(('.md', '.markdown')):
-                md_files.append(Path(root) / name)
-    return md_files
+def _is_within_uninitialized_submodule(
+    path: Path, uninitialized_submodule_dirs: list[Path]
+) -> bool:
+    return any(
+        path.is_relative_to(submodule_dir) for submodule_dir in uninitialized_submodule_dirs
+    )
 
 
 def _repo_root_for(md_file: Path) -> Path:
@@ -60,20 +57,39 @@ def _repo_root_for(md_file: Path) -> Path:
             return REPO_ROOT
         current = current.parent
 
-def check_links():
+
+def _find_markdown_files() -> list[Path]:
+    md_files: list[Path] = []
+
+    for root, dirs, files in os.walk(REPO_ROOT):
+        dirs[:] = [d for d in dirs if d not in SKIP_DIR_PARTS]
+        for name in files:
+            if name.lower().endswith(('.md', '.markdown')):
+                md_files.append(Path(root) / name)
+
+    return md_files
+
+
+def _target_rel_for_display(target_path: Path) -> Path:
+    try:
+        return target_path.relative_to(REPO_ROOT)
+    except ValueError:
+        return Path(os.path.relpath(target_path, REPO_ROOT))
+
+
+def check_links() -> None:
     md_files = _find_markdown_files()
-    broken_links = []
+    broken_links: list[tuple[Path, str, Path]] = []
     uninitialized_submodule_dirs = _uninitialized_submodule_dirs()
 
     for md_file in md_files:
         repo_root_for_file = _repo_root_for(md_file)
-        with open(md_file, 'r', encoding='utf-8') as f:
-            content = f.read()
+        content = md_file.read_text(encoding='utf-8')
 
         # Find markdown links [text](target)
-        links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
+        raw_links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
 
-        for link in links:
+        for link in raw_links:
             link = link.strip()
             if not link:
                 continue
@@ -82,43 +98,54 @@ def check_links():
             if link.startswith('#') or re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:', link):
                 continue
 
+            # Clean up link (remove fragments)
             clean_link = link.split('#', 1)[0].strip()
             if not clean_link:
                 continue
 
             href = clean_link.split()[0]
-            href_lower = href.lower()
-
-            # Only validate repository-local markdown files
-            if not (href_lower.endswith('.md') or href_lower.endswith('.markdown')):
+            if not href.lower().endswith(('.md', '.markdown')):
                 continue
 
-            if href.startswith('/'):
-                target_path = (repo_root_for_file / href.lstrip('/')).resolve()
-            else:
-                target_path = (md_file.parent / href).resolve()
+            base_dir = repo_root_for_file if href.startswith('/') else md_file.parent
+            target_path = (base_dir / href.lstrip('/')).resolve()
 
             try:
                 target_path.relative_to(repo_root_for_file)
             except ValueError:
-                broken_links.append((md_file, link, target_path))
-                continue
+                # Allow links that escape a submodule root but remain within the parent repo.
+                try:
+                    target_path.relative_to(REPO_ROOT)
+                except ValueError:
+                    broken_links.append(
+                        (
+                            md_file.relative_to(REPO_ROOT),
+                            link,
+                            _target_rel_for_display(target_path),
+                        )
+                    )
+                    continue
 
             if not target_path.exists():
-                if _is_within_uninitialized_submodule(target_path, uninitialized_submodule_dirs):
+                if _is_within_uninitialized_submodule(
+                    target_path, uninitialized_submodule_dirs
+                ):
                     continue
-                broken_links.append((md_file, link, target_path))
+
+                broken_links.append(
+                    (
+                        md_file.relative_to(REPO_ROOT),
+                        link,
+                        _target_rel_for_display(target_path),
+                    )
+                )
 
     for source, link, target in broken_links:
-        rel_source = source.relative_to(REPO_ROOT)
-        try:
-            rel_target = target.relative_to(REPO_ROOT)
-        except ValueError:
-            rel_target = target
-        print(f"Broken link in {rel_source}: {link} -> {rel_target}")
+        print(f"Broken link in {source}: {link} -> {target}")
 
     if broken_links:
         sys.exit(1)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     check_links()

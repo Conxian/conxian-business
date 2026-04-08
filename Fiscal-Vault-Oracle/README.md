@@ -14,6 +14,10 @@ This repository is public. Detailed treasury operations, vendor integrations, an
 - Coordinating treasury policy and execution constraints.
 - Maintaining boundaries between public specifications and internal operational material.
 
+## Status
+
+active — Public-safe treasury policy constraints and interfaces live here; detailed treasury operations and vendor terms are maintained in Linear. Internal details: <https://linear.app/conxian-labs/issue/CON-435/improve-portfolio-clarity-across-org-facing-repositories>.
+
 ## Key Components
 
 - **[BOS integration map](./BOS_INTEGRATION_MAP.md)**
