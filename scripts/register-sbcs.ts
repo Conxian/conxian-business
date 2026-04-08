@@ -82,7 +82,8 @@ function usageAndExit(message?: string, exitCode: number = 1): never {
 function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, address: string): string {
   const raw = address.trim();
   if (!validateStacksAddress(raw)) {
-    usageAndExit(`${flagName} has an invalid Stacks address: ${raw}`);
+    const hint = address === raw ? '' : ` (from ${JSON.stringify(address)})`;
+    usageAndExit(`${flagName} has an invalid Stacks address: ${raw}${hint}`);
   }
 
   const normalized = raw.toUpperCase();
