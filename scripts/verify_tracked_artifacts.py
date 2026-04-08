@@ -32,7 +32,8 @@ def _repo_root() -> Path:
             f"Failed to execute git to determine repository root: {exc}"
         ) from exc
     except subprocess.CalledProcessError as exc:
-        output = " ".join((exc.output or "").split())
+        raw_output = exc.output or ""
+        output = raw_output.strip().replace("\n", " ")
         details = f": {output}" if output else ""
         raise RuntimeError(
             f"Failed to determine repo root via git (exit {exc.returncode}){details}"
