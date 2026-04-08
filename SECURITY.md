@@ -10,7 +10,7 @@ If release branches/tags exist, we backport security fixes only to the latest su
 | --- | --- |
 | `main` (default branch) | Yes |
 | Latest supported release line (if any) | Yes (backported as needed) |
-| Releases/tags older than the latest supported release line | No |
+| Releases/tags older than the latest supported release line | No (please upgrade to the latest supported release line) |
 | Other branches/commits | Not actively maintained for security |
 
 ## Reporting a Vulnerability
