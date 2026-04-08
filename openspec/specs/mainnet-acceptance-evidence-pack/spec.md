@@ -250,7 +250,7 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 
 #### Strict acceptance checklist (`staged` -> `main`)
 
-- [ ] All criteria in `Requirement: Strict acceptance criteria for staged -> main` are satisfied.
-- [ ] No items in `Requirement: Hard blockers` apply.
-- [ ] All items in `Requirement: Evidence required before merge` are included in this evidence pack.
+- [ ] All criteria in "Requirement: Strict acceptance criteria for `staged` -> `main`" are satisfied.
+- [ ] No items in "Requirement: Hard blockers" apply.
+- [ ] All items in "Requirement: Evidence required before merge" are included in this evidence pack.
 ```
