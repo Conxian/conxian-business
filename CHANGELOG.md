@@ -43,6 +43,8 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 - Added Independent Lab Development Kit (ILDK) README (`docs/ILDK_README.md`) defining the "Morpho Blue" base-layer strategy for BOS.
 - Added Strategic Growth Model (`docs/STRATEGIC_GROWTH_MODEL_2026.md`) outlining comparison with legacy/DeFi models and governance-minimized scaling rules.
 
+Note: CJCS v2.0.1 / ILDK documentation updates landed on 2026-04-08.
+
 ### Changed
 - **Mainnet Release Plan Alignment (CON-371):** Updated `mainnet-release-plan.yaml` to use canonical mainnet principals ('SP...').
 - **Sanitized Integration Adapters:** Updated `alex-adapter.clar` and `redstone-oracle-adapter.clar` to production integration status, removing simulation placeholders.
