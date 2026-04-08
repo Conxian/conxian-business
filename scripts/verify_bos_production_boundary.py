@@ -40,11 +40,15 @@ def is_in_dir(rel_path: str, rel_dir: str) -> bool:
     return rel_path == rel_dir or rel_path.startswith(rel_dir + "/")
 
 
-def is_top_level_verifier_entrypoint(rel_path: str) -> bool:
+def normalize_rel_path(rel_path: str) -> str:
     rel_path = rel_path.replace(os.sep, "/").replace("\\", "/")
     while rel_path.startswith("./"):
         rel_path = rel_path[2:]
-    path = PurePosixPath(rel_path)
+    return rel_path
+
+
+def is_top_level_verifier_entrypoint(rel_path: str) -> bool:
+    path = PurePosixPath(normalize_rel_path(rel_path))
     return path.parent == PurePosixPath("scripts") and path.name.startswith("verify_")
 
 
@@ -69,7 +73,7 @@ def read_text(root: str, rel_path: str) -> str:
         return f.read()
 def main() -> int:
     root = repo_root()
-    this_script_rel = os.path.relpath(os.path.abspath(__file__), root).replace(os.sep, "/")
+    this_script_rel = normalize_rel_path(os.path.relpath(os.path.abspath(__file__), root))
     submodules = set(read_submodule_paths(root))
     excluded_dirs = {".idx"} | submodules
 

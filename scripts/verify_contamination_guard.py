@@ -84,9 +84,9 @@ def repo_relative_path_for_exclusions(repo_name: str, rel_path: str) -> str:
         rel_path = rel_path[2:]
     rel_path = rel_path.strip("/")
 
-    prefix = repo_name.strip("/") + "/"
-    if prefix != "/" and rel_path.startswith(prefix):
-        return rel_path[len(prefix) :]
+    repo_prefix = repo_name.strip("/")
+    if repo_prefix and rel_path.startswith(repo_prefix + "/"):
+        return rel_path[len(repo_prefix) + 1 :]
 
     return rel_path
 
@@ -238,7 +238,7 @@ REPO_EXCLUSIONS = {
 
 def scan_repo(root: str, repo_name: str) -> list[str]:
     errors = []
-    exclusions = GLOBAL_EXCLUSIONS | REPO_EXCLUSIONS.get(repo_name, set())
+    repo_exclusions = REPO_EXCLUSIONS.get(repo_name, set())
 
     gate_requirements = GATE_REQUIRED.get(repo_name, {})
     allowlist = LABEL_ALLOWLIST.get(repo_name, {})
@@ -262,8 +262,11 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
     code_exts = {".rs", ".ts", ".tsx", ".clar", ".yaml", ".yml", ".json", ".toml"}
 
     for rel_path in files:
+        if is_excluded(rel_path, GLOBAL_EXCLUSIONS):
+            continue
+
         exclusion_path = repo_relative_path_for_exclusions(repo_name, rel_path)
-        if is_excluded(exclusion_path, exclusions):
+        if repo_exclusions and is_excluded(exclusion_path, repo_exclusions):
             continue
 
         _, ext = os.path.splitext(rel_path)
