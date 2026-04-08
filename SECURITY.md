@@ -9,7 +9,8 @@ If release branches/tags exist, we backport security fixes only to the latest su
 | Channel | Security fixes |
 | --- | --- |
 | `main` (default branch) | Yes |
-| Releases/tags older than the latest | No |
+| Latest supported release line (if any) | Yes (backported as needed) |
+| Releases/tags older than the latest supported release line | No |
 | Other branches/commits | Not actively maintained for security |
 
 ## Reporting a Vulnerability
