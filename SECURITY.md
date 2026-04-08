@@ -2,14 +2,15 @@
 
 ## Support Policy
 
-Security fixes are applied on a rolling basis to the default branch (`main`).
+Security fixes are developed and merged to the default branch (`main`) on a rolling basis.
 
-When a tagged release line exists, only the latest release is supported with security updates.
+If the repository publishes tagged releases, we backport security fixes only to the latest tagged release.
 
 | Channel | Security fixes |
 | --- | --- |
 | `main` (default branch) | Yes |
-| Releases/tags older than the latest | No |
+| Latest tagged release (if any) | Yes |
+| All other releases/tags | No |
 | Other branches/commits | Not actively maintained for security |
 
 ## Reporting a Vulnerability
@@ -18,7 +19,7 @@ Do not report security vulnerabilities via public GitHub issues.
 
 Report vulnerabilities privately using one of these channels:
 
-1. GitHub private vulnerability reporting (Security Advisories): use the repository Security tab and choose "Report a vulnerability".
+1. GitHub private vulnerability reporting (Security Advisories): if enabled, use the repository Security tab and choose "Report a vulnerability".
 2. Email: security@conxian-labs.com
 
 When possible, include:
@@ -44,7 +45,7 @@ We follow a coordinated disclosure model:
 - Do not commit any secret-bearing environment files (for example: `.env`, `.env.local`), private keys, or API tokens.
 - `.env.example` may be committed as a non-secret template, but it must never contain real secrets.
 - Ensure `.env`/`.env.*` patterns are listed in `.gitignore` so they are never committed by default (use an `!.env.example` exception if needed).
-- This repository runs a `gitleaks` secret scan in GitHub Actions on pull requests and pushes to `main` to catch new secret leaks.
+- This repository runs a `gitleaks` secret scan in GitHub Actions (see [`.github/workflows/secret-scan.yml`](./.github/workflows/secret-scan.yml)) on pull requests and pushes to `main`, `staged`, and `dev` to catch new secret leaks.
 
 If a secret was committed to a public branch (even temporarily), treat it as compromised:
 
@@ -52,7 +53,7 @@ If a secret was committed to a public branch (even temporarily), treat it as com
 - Update any dependent deployments/configuration to use the new secret.
 - Consider rewriting Git history to remove the secret material (rotation is still required regardless).
 
-If you discover that a secret was previously committed, also follow the reporting process in "Reporting a Vulnerability" so the team can assess impact and coordinate incident response.
+If you discover that a secret was previously committed, also follow the reporting process in [Reporting a Vulnerability](#reporting-a-vulnerability) so the team can assess impact and coordinate incident response.
 
 ## Security Controls
 
