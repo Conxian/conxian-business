@@ -78,25 +78,18 @@ def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
     return False
 
 
-def normalize_repo_exclusion_path(repo_name: str, rel_path: str) -> str:
-    """Normalize paths used for repo-specific exclusions.
+def repo_relative_path_for_exclusions(repo_name: str, rel_path: str) -> str:
+    rel_path = rel_path.replace(os.sep, "/").replace("\\", "/")
+    while rel_path.startswith("./"):
+        rel_path = rel_path[2:]
+    rel_path = rel_path.strip("/")
 
-    The root repo contains a nested directory named `conxian-business/` holding
-    public-safe BOS stub artifacts. For `REPO_EXCLUSIONS["conxian-business"]` we
-    treat that directory as the effective root when matching exclusions.
-    """
-    if repo_name != "conxian-business":
-        return rel_path
+    if repo_name == "conxian-business":
+        prefix = "conxian-business/"
+        if rel_path.startswith(prefix):
+            return rel_path[len(prefix) :]
 
-    normalized = rel_path.replace(os.sep, "/").replace("\\", "/")
-    while normalized.startswith("./"):
-        normalized = normalized[2:]
-    normalized = normalized.strip("/")
-
-    prefix = "conxian-business/"
-    if normalized.startswith(prefix):
-        return normalized[len(prefix) :]
-    return normalized
+    return rel_path
 
 def read_text(root: str, rel_path: str) -> str:
     full_path = os.path.join(root, rel_path)
@@ -246,8 +239,7 @@ REPO_EXCLUSIONS = {
 
 def scan_repo(root: str, repo_name: str) -> list[str]:
     errors = []
-    global_exclusions = GLOBAL_EXCLUSIONS
-    repo_exclusions = REPO_EXCLUSIONS.get(repo_name, set())
+    exclusions = GLOBAL_EXCLUSIONS | REPO_EXCLUSIONS.get(repo_name, set())
 
     gate_requirements = GATE_REQUIRED.get(repo_name, {})
     allowlist = LABEL_ALLOWLIST.get(repo_name, {})
@@ -271,11 +263,8 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
     code_exts = {".rs", ".ts", ".tsx", ".clar", ".yaml", ".yml", ".json", ".toml"}
 
     for rel_path in files:
-        if is_excluded(rel_path, global_exclusions):
-            continue
-
-        rel_path_for_repo_exclusions = normalize_repo_exclusion_path(repo_name, rel_path)
-        if repo_exclusions and is_excluded(rel_path_for_repo_exclusions, repo_exclusions):
+        exclusion_path = repo_relative_path_for_exclusions(repo_name, rel_path)
+        if is_excluded(exclusion_path, exclusions):
             continue
 
         _, ext = os.path.splitext(rel_path)

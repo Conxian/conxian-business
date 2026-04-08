@@ -8,6 +8,7 @@ import os
 import re
 import subprocess
 import sys
+from pathlib import PurePosixPath
 
 
 def repo_root() -> str:
@@ -39,6 +40,12 @@ def is_in_dir(rel_path: str, rel_dir: str) -> bool:
     return rel_path == rel_dir or rel_path.startswith(rel_dir + "/")
 
 
+def is_top_level_verifier_entrypoint(rel_path: str) -> bool:
+    rel_path = rel_path.replace(os.sep, "/").replace("\\", "/")
+    path = PurePosixPath(rel_path)
+    return path.parent == PurePosixPath("scripts") and path.name.startswith("verify_")
+
+
 def git_ls_files(root: str) -> list[str]:
     try:
         out = subprocess.check_output(
@@ -58,11 +65,6 @@ def read_text(root: str, rel_path: str) -> str:
     full_path = os.path.join(root, rel_path)
     with open(full_path, "r", encoding="utf-8", errors="replace") as f:
         return f.read()
-
-
-def is_verifier_entrypoint(rel_path: str) -> bool:
-    rel_path = rel_path.replace("\\", "/")
-    return re.fullmatch(r"scripts/verify_[^/]+", rel_path) is not None
 
 
 def main() -> int:
@@ -112,11 +114,11 @@ def main() -> int:
             continue
         if is_in_dir(rel_path, "docs") or is_in_dir(rel_path, "openspec"):
             continue
-
-        is_verifier = is_verifier_entrypoint(rel_path)
         text = read_text(root, rel_path)
         for needle in forbidden_substrings:
-            if needle == ".stub.json" and is_verifier:
+            # Verifier entrypoints may reference stub artifacts to enforce hygiene rules,
+            # but should still be checked for all other forbidden references.
+            if needle == ".stub.json" and is_top_level_verifier_entrypoint(rel_path):
                 continue
             if (
                 needle == "conxian-business/.generated/"
