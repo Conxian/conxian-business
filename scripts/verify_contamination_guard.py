@@ -4,6 +4,7 @@ import os
 import re
 import subprocess
 import sys
+from typing import Union
 
 # Production Contamination Guard
 # This script scans production-track repositories for non-production patterns.
@@ -104,7 +105,7 @@ GATEABLE_LABELS = {
     "Placeholder simulation",
 }
 
-GateRule = re.Pattern[str] | dict[str, re.Pattern[str]]
+GateRule = Union[re.Pattern[str], dict[str, re.Pattern[str]]]
 
 GATE_REQUIRED: dict[str, dict[str, GateRule]] = {
     "conxian-gateway": {
@@ -261,9 +262,15 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
             for i, line in enumerate(lines, start=1):
                 if pattern.search(line):
                     gate_rule = gate_requirements.get(rel_path)
-                    if gate_rule and label in GATEABLE_LABELS:
-                        gate_regex = gate_rule.get(label) if isinstance(gate_rule, dict) else gate_rule
-                        if gate_regex and gate_regex.search(content):
+                    gate_regex = None
+                    if label in GATEABLE_LABELS:
+                        if isinstance(gate_rule, dict):
+                            gate_regex = gate_rule.get(label)
+                        else:
+                            gate_regex = gate_rule
+
+                    if gate_regex:
+                        if gate_regex.search(content):
                             break
                         errors.append(
                             f"[{repo_name}] {label} found in {rel_path}:{i} without required gate"
