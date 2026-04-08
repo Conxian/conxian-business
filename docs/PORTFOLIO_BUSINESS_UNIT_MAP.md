@@ -222,7 +222,12 @@ Definitions used below:
 
 A refactor is considered in-bounds only when it (1) reduces duplicated sources of truth, (2) makes the dependency direction clearer, and (3) does not move a stable, working responsibility into a different business unit.
 
-For this portfolio, **authority/source-of-truth** should generally flow **Protocol → Nexus → Gateway → UI/Wallet**, while **code/build-time dependencies** generally point the other way (**UI/Wallet → Gateway → Nexus → Protocol**). **Platform** should orchestrate those services without owning product logic.
+For this portfolio:
+
+- **Authority / source of truth**: `Protocol → Nexus → Gateway → UI/Wallet`
+- **Code / build-time dependencies (imports)**: `UI/Wallet → Gateway → Nexus → Protocol`
+
+**Platform** should orchestrate those services without owning product logic.
 
 Notes on the requested repos:
 
