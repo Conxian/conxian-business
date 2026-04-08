@@ -81,13 +81,13 @@ function usageAndExit(message?: string, exitCode: number = 1): never {
 }
 function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, address: string): string {
   const raw = address.trim();
-  if (!validateStacksAddress(raw)) {
+  const normalized = raw.toUpperCase();
+  if (!validateStacksAddress(raw) && !validateStacksAddress(normalized)) {
     const hint = address === raw ? '' : ` (from ${JSON.stringify(address)})`;
     usageAndExit(`${flagName} has an invalid Stacks address: ${raw}${hint}`);
   }
 
   const prefixes: readonly string[] = STACKS_NETWORK_PREFIXES[networkName];
-  const normalized = raw.toUpperCase();
   if (!prefixes.some((prefix) => normalized.startsWith(prefix))) {
     usageAndExit(
       `On ${networkName}, ${flagName} must start with ${prefixes.join(' or ')} (got: ${raw})`
