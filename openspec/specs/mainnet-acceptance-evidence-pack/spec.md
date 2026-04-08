@@ -42,7 +42,7 @@ Any `staged` -> `main` promotion MUST satisfy all criteria below.
 - No temporary bypasses, relaxed checks, or debug-only execution paths remain enabled.
 - No testnet principals, endpoints, contract identifiers, wallets, or configuration remain in production configuration.
 - Release artifacts, docs, and readiness notes refer to mainnet deployment only.
-- Linked mainnet readiness work (e.g., readiness tracker) is updated and shows mainnet pass status (see [Requirement: Readiness work visibility](#requirement-readiness-work-visibility)).
+- Mainnet readiness pass status is verifiable to PR reviewers (see [Requirement: Readiness work visibility](#requirement-readiness-work-visibility)).
 - Required checks pass for the promotion candidate.
 - Any security, signer, settlement, and governance controls required for production are verified against mainnet expectations.
 
@@ -61,7 +61,7 @@ The promotion MUST NOT be merged into `main` if any of the following are true:
 Before merging a promotion PR, the evidence pack MUST include explicit evidence that:
 
 - Branch source is `staged`.
-- Linked mainnet readiness work (e.g., readiness tracker) is updated and shows mainnet pass status (see [Requirement: Readiness work visibility](#requirement-readiness-work-visibility)).
+- Mainnet readiness pass status is verifiable to PR reviewers (see [Requirement: Readiness work visibility](#requirement-readiness-work-visibility)).
 - A repo audit confirms no stub or testnet contamination on production paths.
 - Reviewer sign-off confirms mainnet-only production integrity.
 
@@ -250,9 +250,33 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 - I (accountable owner) confirm this evidence pack is complete and accurate.
   - Name/date: `<name>, <YYYY-MM-DD>`
 
+#### Evidence required before merge (required)
+
+##### Promotion provenance
+
+- Source branch: `staged`
+- Compare link / commit range: `<link>`
+
+##### Linked readiness work (mainnet pass)
+
+- Tracker link (public): `<link>`
+- If not accessible to reviewers: pass status recorded here + non-sensitive artifact: `<text/link>`
+
+##### Repo audit (no stub/testnet contamination)
+
+- Scope/paths scanned: `<paths>`
+- Tooling/commands used: `<commands>`
+- Findings: `PASS` / `FAIL`
+- Evidence: `<link/artifact>`
+
+##### Reviewer sign-off
+
+- Reviewer: `@<handle>`
+- Evidence reviewed: `<links>`
+
 #### Strict acceptance checklist (`staged` -> `main`)
 
-- [ ] All criteria in “Requirement: Strict acceptance criteria for `staged` -> `main`” are satisfied.
-- [ ] No items in “Requirement: Hard blockers” apply.
-- [ ] All items in “Requirement: Evidence required before merge” are included in this evidence pack.
+- [ ] All criteria in "Requirement: Strict acceptance criteria for `staged` -> `main`" are satisfied.
+- [ ] No items in "Requirement: Hard blockers" apply.
+- [ ] All items in "Requirement: Evidence required before merge" are included in this evidence pack.
 ```

@@ -75,6 +75,13 @@ OpenSpec is the best place to point issue descriptions when work is “spec-firs
 
 ## 4) Architecture, PRDs, whitepapers, roadmaps
 
+### Independent Lab Development Kit (ILDK)
+
+| Document | Role | Visibility | What it’s for |
+| --- | --- | --- | --- |
+| `docs/ILDK_README.md` | Canonical | Public-safe | Technical framework for external labs to build specialized Industrial Management modules. |
+| `docs/STRATEGIC_GROWTH_MODEL_2026.md` | Canonical | Public-safe | Strategic comparison of growth models and governance-minimized scaling. |
+
 These are the documents most likely to answer “what are we building?” and “how is it structured?”
 
 ### Platform / protocol
@@ -95,6 +102,7 @@ These are the documents most likely to answer “what are we building?” and �
 | `conxian-gateway/PRD.md` | Canonical | Public-safe | Gateway PRD (institutional compliance pipe). |
 | `conxian-nexus/docs/PRD.md` | Canonical | Public-safe | Nexus PRD (Glass Node). |
 | `lib-conxian-core/docs/PRD.md` | Canonical | Public-safe | Core library PRD (shared models + gateway alignment). |
+| `docs/LIB_CONCLAVE_SDK_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and internal-only vs public-safe separation guidance for the SDK. |
 | `conxius-platform/services/lib-conxian-core/docs/PRD.md` | Supporting | Public-safe | Service-local copy; treat `lib-conxian-core/docs/PRD.md` as canonical. |
 | `conxius-wallet/lib-conxian-core/docs/PRD.md` | Supporting | Public-safe | Wallet-local copy; treat `lib-conxian-core/docs/PRD.md` as canonical. |
 
@@ -113,7 +121,7 @@ These are the documents most likely to answer “what are we building?” and �
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
-| `docs/CJCS_v2.0_SPEC.md` | Canonical | Public-safe | Job Card schema (CJCS v2.0). |
+| `docs/CJCS_v2.0_SPEC.md` | Canonical | Public-safe | Job Card schema (CJCS v2.0.1). |
 | `docs/ERP_MCP_HANDSHAKE_SPEC.md` | Canonical | Public-safe | ERP handshake spec (SAP/Oracle mapping). |
 | `docs/AGENTS.md` | Canonical | Public-safe | Agent operating rules (including knowledge retention rules). |
 | `docs/ATS_v11.0_MASTER_BASELINE.md` | Supporting | Internal-only | Baseline snapshot and executive alignment language. |
@@ -181,7 +189,7 @@ These are the highest-value sources to copy into Linear so day-to-day work stays
    - Source: `Conxian/PRD.md`, `Conxian/docs/ROADMAP.md`.
 8. **Gateway / Nexus / Core-lib PRDs (canonical)**
    - Source: `conxian-gateway/PRD.md`, `conxian-nexus/docs/PRD.md`, `lib-conxian-core/docs/PRD.md`.
-9. **CJCS v2.0 + ERP handshake (canonical)**
+9. **CJCS v2.0.1 + ERP handshake (canonical)**
    - Source: `docs/CJCS_v2.0_SPEC.md`, `docs/ERP_MCP_HANDSHAKE_SPEC.md`.
 10. **Maintainer payout enablement runbook (internal-only, but operationally critical)**
    - Source: `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`.
