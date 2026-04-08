@@ -12,6 +12,8 @@ Canonical wallet docs live in the wallet repo itself (`Conxian/conxius-wallet`).
 
 Note: in this repo, those artifacts live under the `conxius-wallet/` submodule when it is checked out (for example, via `git submodule update --init conxius-wallet`). The GitHub links above pin to the wallet submodule SHA used by this repo.
 
+If `conxius-wallet` is repinned in this repo, update the SHA in the links above at the same time to avoid documentation drift.
+
 ## 1) Business-unit role (wallet operations + product delivery)
 
 Conxius Wallet is a **flagship** repo and part of the public Conxian trust surface. It is responsible for:
