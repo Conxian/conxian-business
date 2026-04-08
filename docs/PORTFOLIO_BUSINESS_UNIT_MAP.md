@@ -222,7 +222,15 @@ Definitions used below:
 
 A refactor is considered in-bounds only when it (1) reduces duplicated sources of truth, (2) makes the dependency direction clearer, and (3) does not move a stable, working responsibility into a different business unit.
 
-For this portfolio, dependencies should generally flow from **Protocol → Nexus → Gateway → UI/Wallet**, with **Platform** orchestrating those services without owning product logic.
+For this portfolio:
+
+- **Authority / source of truth** (left-to-right, upstream → downstream): `Protocol → Nexus → Gateway → UI/Wallet`
+- **Code / build-time dependencies (product chain; who imports whom):** `UI/Wallet → Gateway → Nexus → Protocol`
+  - **Must:** dependency edges point **inward (toward Protocol)** (no **outward** edges, e.g. `Nexus → Gateway`).
+  - **Must:** avoid **lateral** peer dependencies.
+  - **Prefer:** adjacent-only imports (`UI/Wallet → Gateway`, `Gateway → Nexus`, `Nexus → Protocol`).
+  - **If needed:** expose deeper primitives via the immediate upstream boundary or an inward-owned boundary/types package.
+- **Platform (cross-cutting orchestration, orthogonal to the chain above)**: UI/Wallet may depend on Platform for orchestration helpers; Platform may depend inward on Protocol/Nexus/Gateway. Protocol/Nexus/Gateway must not depend on Platform, and Platform must not become a new source of product logic or authority.
 
 Notes on the requested repos:
 
