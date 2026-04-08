@@ -36,15 +36,16 @@ These workflows run on every pull request targeting `dev`, `staged`, or `main`. 
     - ZSE knowledge retention via `scripts/verify_knowledge_retention.py`.
     - Tracked artifact scanning via `scripts/verify_tracked_artifacts.py`.
       - False positives can be allowlisted via `.github/artifact-scan-allowlist.txt` (case-sensitive; paths are normalized to forward slashes with no leading `./`):
-        - Plain (non-glob) patterns (no glob metacharacters such as `*`, `?`, or character classes like `[a-z]`):
-          - Match exact normalized paths and directory prefixes (directory-prefix matching only applies to plain patterns).
+        - Plain (non-glob) patterns (no glob metacharacters such as `*`, `?`, or bracket expressions like `[a-z]`):
+          - If the pattern contains `/`, it is matched against the full normalized path.
+          - Plain patterns can also match a directory prefix at a path boundary (e.g., `audit/reports` matches `audit/reports/<...>` but not `audit/reports-old/<...>`).
           - If the pattern does not contain `/`, it also matches basenames anywhere in the repo.
-        - Glob patterns (contain glob metacharacters such as `*`, `?`, or character classes like `[a-z]`):
+        - Glob patterns (contain glob metacharacters such as `*`, `?`, or bracket expressions like `[a-z]`):
           - If the pattern contains `/`, it is matched against the full normalized path.
           - If the pattern does not contain `/`, it is matched against basenames and (for backward compatibility) also the full normalized path, so keep patterns as specific as possible.
         - Examples:
           - `junit.xml` matches any tracked file with basename `junit.xml` anywhere in the repo.
-          - `audit/reports` matches any tracked file under `audit/reports/` (directory-prefix match).
+          - `audit/reports` matches any tracked file under `audit/reports/` (path-boundary directory-prefix match; does not match `audit/reports-old/`).
           - `*.log` matches any tracked `.log` file by basename, and also any full path ending in `.log` (compatibility), so use with care.
     - Submodule integrity via `scripts/verify_submodule_integrity.py`.
 - Branch promotion policy (see [`branch-promotion-policy.yml`](./workflows/branch-promotion-policy.yml))
