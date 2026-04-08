@@ -226,7 +226,7 @@ For this portfolio:
 
 - **Authority / source of truth** (left-to-right, upstream → downstream): `Protocol → Nexus → Gateway → UI/Wallet`
 - **Code / build-time dependencies (who depends on whom):** `UI/Wallet → Gateway → Nexus → Protocol`. At build time, each layer **must only depend on the next one closer to Protocol** (UI/Wallet → Gateway, Gateway → Nexus, Nexus → Protocol); no outward or cross-layer dependencies. This keeps authority flowing from Protocol out to UI/Wallet while higher layers compose lower ones without redefining sources of truth.
-- **Platform (cross-cutting orchestration, orthogonal to the chain above)**: may depend on Protocol/Nexus/Gateway (and may be consumed by UI/Wallet) to coordinate workflows, but must not become a new source of product logic or authority.
+- **Platform (cross-cutting orchestration, orthogonal to the chain above)**: may depend on Protocol/Nexus/Gateway (and may be consumed by UI/Wallet) to coordinate workflows, but must not become a new source of product logic or authority. Platform may depend on lower layers, but those layers must not depend on Platform.
 
 Notes on the requested repos:
 
