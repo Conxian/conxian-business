@@ -111,30 +111,19 @@ GATE_REQUIRED: dict[str, dict[str, GateRule]] = {
     "conxian-gateway": {
         "internal/api/src/a2p.rs": re.compile(r'feature\s*=\s*"mock-integrations"'),
     },
+}
+
+LABEL_ALLOWLIST: dict[str, dict[str, set[str]]] = {
     "conxius-wallet": {
-        "components/AssetDetailModal.tsx": {
-            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
-        },
-        "components/CitadelManager.tsx": {
-            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
-        },
-        "components/GovernancePortal.tsx": {
-            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
-        },
-        "components/InvestorDashboard.tsx": {
-            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
-        },
-        "components/Marketplace.tsx": {
-            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
-        },
-        "components/RewardsHub.tsx": {
-            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
-        },
-        "components/StackingManager.tsx": {
-            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
-        },
-        "constants.tsx": {
-            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
+        "Mock Pattern": {
+            "components/AssetDetailModal.tsx",
+            "components/CitadelManager.tsx",
+            "components/GovernancePortal.tsx",
+            "components/InvestorDashboard.tsx",
+            "components/Marketplace.tsx",
+            "components/RewardsHub.tsx",
+            "components/StackingManager.tsx",
+            "constants.tsx",
         },
     },
 }
@@ -214,7 +203,7 @@ REPO_EXCLUSIONS = {
     },
     "conxius-wallet": {
         # UI mock data/constants (e.g. `MOCK_*`) are allowed in a small set of files that are
-        # explicitly gated in `GATE_REQUIRED` above. We keep scanning the rest of the UI and
+        # allowlisted in `LABEL_ALLOWLIST` above. We keep scanning the rest of the UI and
         # all production-facing service integrations (such as `services/`).
         "scripts/update_mocks.py",
     },
@@ -240,6 +229,7 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
     exclusions = GLOBAL_EXCLUSIONS | REPO_EXCLUSIONS.get(repo_name, set())
 
     gate_requirements = GATE_REQUIRED.get(repo_name, {})
+    allowlist = LABEL_ALLOWLIST.get(repo_name, {})
 
     files = git_ls_files(root)
 
@@ -259,8 +249,12 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
 
         lines = content.splitlines()
         for label, pattern in CONTAMINATION_PATTERNS:
+            label_allowlist = allowlist.get(label)
             for i, line in enumerate(lines, start=1):
                 if pattern.search(line):
+                    if label_allowlist and rel_path in label_allowlist:
+                        break
+
                     gate_rule = gate_requirements.get(rel_path)
                     gate_regex = None
                     if label in GATEABLE_LABELS:
