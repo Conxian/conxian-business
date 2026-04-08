@@ -46,7 +46,7 @@ We follow a coordinated disclosure model:
 - Do not commit any secret-bearing environment files (for example: `.env`, `.env.local`), private keys, or API tokens.
 - `.env.example` may be committed as a non-secret template, but it must never contain real secrets.
 - Ensure `.env`/`.env.*` patterns are listed in `.gitignore` so they are never committed by default (use an `!.env.example` exception if needed).
-- This repository runs a `gitleaks` secret scan in GitHub Actions on pull requests and selected branch pushes (see [`.github/workflows/secret-scan.yml`](https://github.com/Conxian/conxian-business/blob/main/.github/workflows/secret-scan.yml)) to catch new secret leaks.
+- This repository runs a `gitleaks` secret scan in GitHub Actions on pull requests and selected branch pushes (see [`.github/workflows/secret-scan.yml`](./.github/workflows/secret-scan.yml)) to catch new secret leaks.
 
 If a secret was committed to a public branch (even temporarily), treat it as compromised:
 
