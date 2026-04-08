@@ -82,6 +82,16 @@ def _load_allowlist(repo_root: Path) -> list[str]:
 
 
 def _is_allowlisted(rel_path: str, allowlist: list[str]) -> bool:
+    """Return True if `rel_path` is allowlisted.
+
+    Semantics:
+    - Patterns containing "/" are matched against the full normalized path.
+    - Patterns without "/" are matched against the basename (anywhere in the tree), which can be more permissive than root-anchored matching.
+      - For backward compatibility, glob patterns without "/" are also matched against the full path.
+    - Plain (non-glob) patterns also allow exact path and directory-prefix matches.
+
+    Matching is case-sensitive to avoid OS-dependent behavior.
+    """
     rel_path = _normalize_path(rel_path)
     base = rel_path.rsplit("/", 1)[-1]
     for raw_pattern in allowlist:
@@ -89,13 +99,14 @@ def _is_allowlisted(rel_path: str, allowlist: list[str]) -> bool:
         has_glob = any(ch in pattern for ch in "*?[]")
         is_basename_pattern = "/" not in pattern
 
-        target = base if is_basename_pattern else rel_path
-
-        if fnmatch.fnmatchcase(target, pattern):
-            return True
-
-        if is_basename_pattern and has_glob and fnmatch.fnmatchcase(rel_path, pattern):
-            return True
+        if is_basename_pattern:
+            if fnmatch.fnmatchcase(base, pattern):
+                return True
+            if has_glob and fnmatch.fnmatchcase(rel_path, pattern):
+                return True
+        else:
+            if fnmatch.fnmatchcase(rel_path, pattern):
+                return True
 
         if not has_glob and (rel_path == pattern or rel_path.startswith(pattern + "/")):
             return True
