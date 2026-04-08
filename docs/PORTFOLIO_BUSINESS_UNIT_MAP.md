@@ -225,9 +225,9 @@ A refactor is considered in-bounds only when it (1) reduces duplicated sources o
 For this portfolio:
 
 - **Authority / source of truth** (left-to-right, upstream → downstream): `Protocol → Nexus → Gateway → UI/Wallet`
-- **Code / build-time dependencies (imports)** (left-to-right, each layer may import only modules to its right): `UI/Wallet → Gateway → Nexus → Protocol`
+- **Code / build-time dependencies (depends-on direction)**: `Protocol ← Nexus ← Gateway ← UI/Wallet`
 
-Notice that authority flows outward from Protocol while imports flow inward toward it; this is intentional so higher layers compose lower ones without redefining sources of truth.
+Authority flows from Protocol out to UI/Wallet, but code dependencies are only allowed in the opposite direction (UI/Wallet depends on Gateway/Nexus/Protocol), so higher layers compose lower ones without redefining sources of truth.
 
 **Platform** should orchestrate these services across layers without becoming a new source of product logic or authority.
 
