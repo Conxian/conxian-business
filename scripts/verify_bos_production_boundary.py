@@ -65,11 +65,6 @@ def main() -> int:
     submodules = set(read_submodule_paths(root))
     excluded_dirs = {".idx"} | submodules
 
-    exempt_reference_files = {
-        "scripts/verify_bos_production_boundary.py",
-        "scripts/verify_pr_bos_classification.py",
-    }
-
     excluded_paths = {p.rstrip("/") for p in excluded_dirs if p.rstrip("/")}
     try:
         repo_files = [
@@ -92,7 +87,9 @@ def main() -> int:
             )
 
     # 2) Generated BOS audit outputs must never be committed.
-    generated_files = [p for p in repo_files if is_in_dir(p, "conxian-business/.generated")]
+    generated_files = [
+        p for p in repo_files if is_in_dir(p, "conxian-business/.generated")
+    ]
     if generated_files:
         errors.append(
             "Committed generated artifacts detected under conxian-business/.generated/: "
@@ -110,7 +107,10 @@ def main() -> int:
             continue
         if is_in_dir(rel_path, "docs") or is_in_dir(rel_path, "openspec"):
             continue
-        if rel_path in exempt_reference_files:
+        # Verifier entrypoints may reference stub artifacts to enforce hygiene rules.
+        if os.path.dirname(rel_path) == "scripts" and os.path.basename(rel_path).startswith(
+            "verify_"
+        ):
             continue
 
         text = read_text(root, rel_path)
@@ -121,7 +121,9 @@ def main() -> int:
                 )
 
     # 4) Avoid hard-coded testnet defaults in operational scripts.
-    testnet_network_literal = re.compile(r"networkFromName\(\s*['\"]testnet['\"]\s*\)")
+    testnet_network_literal = re.compile(
+        r"(?:networkFromName\(\s*['\"]testnet['\"]\s*\)|new\s+StacksTestnet\s*\()"
+    )
     # Matches testnet principals like "ST..." or "ST....contract-name" (case-insensitive).
     testnet_principal_literal = re.compile(
         r"['\"](?:ST|SN)[0-9A-Z]{20,}(?:\.[a-zA-Z0-9-]{1,128})?['\"]",
