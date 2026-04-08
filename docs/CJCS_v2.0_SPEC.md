@@ -1,4 +1,4 @@
-# Conxian Job Card Schema (CJCS) v2.0 - Industrial Specification
+# Conxian Job Card Schema (CJCS) v2.0.1 - Industrial Specification
 
 **Date**: March 26, 2026 (Updated April 8, 2026)
 **Version**: 2.0.1 (Industrial Release + Intent Standard)
@@ -11,7 +11,7 @@ The Conxian Job Card Schema (CJCS) is a machine-readable JSON-LD definition for 
 
 ```json
 {
-  "@context": "https://conxian.com/contexts/job-card/v2.0",
+  "@context": "https://conxian.com/contexts/job-card/v2.0.1",
   "@type": "ConxianJobCard",
   "id": "JOB-2026-001",
   "priority": 1,
@@ -51,7 +51,7 @@ The Conxian Job Card Schema (CJCS) is a machine-readable JSON-LD definition for 
 
 ## 4. The "Industrial Intent" Standard
 
-Virality in the B2B sector occurs when one lab's output is another lab's input. CJCS v2.0 serves as the "HTTP" of industrial coordination, enabling a **Dependency Web**.
+Virality in the B2B sector occurs when one lab's output is another lab's input. CJCS v2.0.1 serves as the "HTTP" of industrial coordination, enabling a **Dependency Web**.
 
 - **Composable Intent**: If a lab builds an AI for "Warehouse Automation," they use CJCS as their native language.
 - **Verification Loop**: If "Lab A" uses Conxian for *Inventory Proofs*, and "Lab B" builds a *CapEx Loan* engine, Lab B relies on CJCS to verify Lab A's data on-chain.

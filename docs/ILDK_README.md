@@ -18,10 +18,12 @@ Independent labs (e.g., "Logistics Lab", "Mining Ops Lab") build their own **Mar
 
 ## 2. Technical Integration: JSON-LD Mandates
 
-All modules communicate with the CNS Core using the **Conxian Job Card Schema (CJCS) v2.0**. This JSON-LD format ensures that domain-specific work orders are translated into protocol-executable intents.
+All modules communicate with the CNS Core using the **Conxian Job Card Schema (CJCS) v2.0.1**. This JSON-LD format ensures that domain-specific work orders are translated into protocol-executable intents.
+
+See: [CJCS v2.0.1 spec](CJCS_v2.0_SPEC.md).
 
 ### Industrial Intent Standard
-Labs must use CJCS v2.0 as their native language. This creates a **Dependency Web** where:
+Labs must use CJCS v2.0.1 as their native language. This creates a **Dependency Web** where:
 - **Lab A** (Inventory) outputs "Inventory Proofs".
 - **Lab B** (Finance) inputs those proofs to trigger a "CapEx Loan".
 
@@ -45,7 +47,9 @@ Scaling is achieved through **Policy-as-Code**:
 
 ## 6. Licensing: Dual-License Strategy
 
-The CNS Core and ILDK are offered under a **Dual-License** model:
+As of 2026-04-08, the effective license for this repository is GNU GPL v3.0 (see [LICENSE](../LICENSE)).
+
+The following dual-license model is a proposal for the CNS Core and ILDK artifacts:
 1. **BUSL (Business Source License)**: Protects the core platform during its early growth phase.
 2. **GPL v3.0**: Ensures long-term open-source sovereignty once the system reaches a specified maturity milestone.
 
