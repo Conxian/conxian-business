@@ -124,11 +124,15 @@ def verify() -> None:
                 f"Required file too small ({size} bytes < {required.min_bytes}): {required.rel_path}"
             )
 
-    if not missing:
+    if "README.md" not in missing:
         _verify_readme(repo_root, errors)
+    if "SECURITY.md" not in missing:
         _verify_security(repo_root, errors)
+    if "CONTRIBUTING.md" not in missing:
         _verify_contributing(repo_root, errors)
+    if "CODEOWNERS" not in missing:
         _verify_codeowners(repo_root, errors)
+    if "CHANGELOG.md" not in missing:
         _verify_changelog(repo_root, errors)
 
     if errors:
