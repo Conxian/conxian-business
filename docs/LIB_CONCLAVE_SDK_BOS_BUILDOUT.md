@@ -35,7 +35,7 @@ The SDK currently exposes two public integration surfaces:
 
 1. **Rust crate API** (system/service integrations)
    - Cargo package name: `lib-conclave-sdk` (see `Cargo.toml` for the version at this pin).
-   - Canonical “integration contract” types include:
+   - Examples of “integration contract” types include (non-exhaustive; treat the SDK docs as authoritative):
      - `enclave::EnclaveManager` (hardware abstraction)
      - `enclave::SignRequest` / `enclave::SignResponse`
      - `ConclaveError` / `ConclaveResult<T>`
