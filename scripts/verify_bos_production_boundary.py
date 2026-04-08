@@ -60,6 +60,11 @@ def read_text(root: str, rel_path: str) -> str:
         return f.read()
 
 
+def is_verifier_entrypoint(rel_path: str) -> bool:
+    rel_path = rel_path.replace("\\", "/")
+    return re.fullmatch(r"scripts/verify_[^/]+", rel_path) is not None
+
+
 def main() -> int:
     root = repo_root()
     submodules = set(read_submodule_paths(root))
@@ -107,14 +112,17 @@ def main() -> int:
             continue
         if is_in_dir(rel_path, "docs") or is_in_dir(rel_path, "openspec"):
             continue
-        # Verifier entrypoints may reference stub artifacts to enforce hygiene rules.
-        if os.path.dirname(rel_path) == "scripts" and os.path.basename(rel_path).startswith(
-            "verify_"
-        ):
-            continue
 
+        is_verifier = is_verifier_entrypoint(rel_path)
         text = read_text(root, rel_path)
         for needle in forbidden_substrings:
+            if needle == ".stub.json" and is_verifier:
+                continue
+            if (
+                needle == "conxian-business/.generated/"
+                and rel_path == "scripts/verify_bos_production_boundary.py"
+            ):
+                continue
             if needle in text:
                 errors.append(
                     f"Production/CI code must not reference {needle}: {rel_path}"
