@@ -36,10 +36,10 @@ These workflows run on every pull request targeting `dev`, `staged`, or `main`. 
     - ZSE knowledge retention via `scripts/verify_knowledge_retention.py`.
     - Tracked artifact scanning via `scripts/verify_tracked_artifacts.py`.
       - False positives can be allowlisted via `.github/artifact-scan-allowlist.txt` (case-sensitive; paths are normalized to forward slashes with no leading `./`):
-        - Plain (non-glob) patterns (no glob metacharacters like `*`, `?`, or `[ ... ]`):
+        - Plain (non-glob) patterns (no glob metacharacters: `*`, `?`, or `[...]`):
           - Match exact normalized paths and directory prefixes.
           - If the pattern does not contain `/`, it also matches basenames anywhere in the repo.
-        - Glob patterns (contain glob metacharacters like `*`, `?`, or `[ ... ]`):
+        - Glob patterns (contain glob metacharacters: `*`, `?`, or `[...]`):
           - If the pattern contains `/`, it is matched against the full normalized path.
           - If the pattern does not contain `/`, it is matched against basenames and (for backward compatibility) also the full normalized path, so keep patterns as specific as possible.
         - Examples:
