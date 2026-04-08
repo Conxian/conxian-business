@@ -9,6 +9,7 @@ Related docs:
 - [Repo trust-surface view (flagship vs supporting)](./REPO_PORTFOLIO.md)
 - [Business-unit separation map (what belongs where)](./PORTFOLIO_BUSINESS_UNIT_MAP.md)
 - [Branch model (dev/staged/main)](./BRANCHING_AND_PROMOTION_POLICY.md)
+- [Branch and promotion standard (dev/staged/main)](./BRANCH_AND_PROMOTION_STANDARD.md)
 
 ## Legend
 
@@ -28,7 +29,7 @@ Related docs:
 
 Scope: all repositories under the `Conxian` GitHub organization.
 
-Branch model column references the expected taxonomy in `./BRANCHING_AND_PROMOTION_POLICY.md`.
+Branch model column references the expected taxonomy in `./BRANCH_AND_PROMOTION_STANDARD.md`.
 
 | Repository | BU / function | Owner (CODEOWNERS) | Production relevance | Branch model (observed) | Release criticality | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -84,7 +85,9 @@ Source-of-truth notes:
 
 ## Inventory-driven deltas (to enforce the mainnet production standard)
 
-1. Repos missing the `dev`/`staged` promotion chain: `Conxian`, `conxian-nexus`, `conxian-gateway`, `conxius-wallet`, `conxius-platform`, `stacksorbit`, `lib-conxian-core`, `lib-conclave-sdk`, `Conxian_UI`, `conxian-labs-site`, `.github`, `.github-private`.
-2. Repos missing root `CODEOWNERS`: `Conxian`, `conxian-nexus`, `conxian-gateway`, `conxius-wallet`, `stacksorbit`, `lib-conxian-core`, `Conxian_UI`, `.github-private`.
-3. Repo default branch mismatch with portfolio standard (`main`): `lib-conclave-sdk` uses `master`.
-4. Submodule pin not on upstream default branch: `Conxian/` diverges from `Conxian/Conxian@main` (fails `scripts/verify_submodule_integrity.py`).
+To keep this page single-sourced (and avoid drift between the tables above and hand-maintained lists), treat the tables as canonical and apply these criteria:
+
+1. **Branch model gaps**: any repo row where `dev=n` or `staged=n` (unless explicitly exempt from promotion).
+2. **Missing ownership**: any repo row where Owner is `Missing (no root CODEOWNERS)`.
+3. **Default branch mismatch**: any repo row where observed `default` is not `main`.
+4. **Submodule pin divergence**: any pinned submodule gitlink that diverges from the upstream default branch (enforced by `scripts/verify_submodule_integrity.py`).
