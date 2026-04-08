@@ -57,7 +57,7 @@ Source-of-truth notes:
 
 | Asset (path in this repo) | Type | BU / function | Owner | Production relevance | Branch model | Release criticality | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `Conxian/` | Submodule | CSF (Protocol) | `@botshelomokoka @admin-conxian-labs` | Mainnet runtime | See `Conxian/Conxian` | P0 | Canonical on-chain source. Pin `c2ef30d85905` diverges from `Conxian/Conxian@main` (fails `scripts/verify_submodule_integrity.py`). |
+| `Conxian/` | Submodule | CSF (Protocol) | `@botshelomokoka @admin-conxian-labs` | Mainnet runtime | See `Conxian/Conxian` | P0 | Canonical on-chain source. |
 | `conxius-wallet/` | Submodule | Conxius (Wallet) | `@botshelomokoka @admin-conxian-labs` | Mainnet runtime | See `Conxian/conxius-wallet` | P0 | Sovereign custody and signing surface. |
 | `conxian-gateway/` | Submodule | Fusion (Gateway) | `@botshelomokoka @admin-conxian-labs` | Mainnet runtime | See `Conxian/conxian-gateway` | P0 | Integration + compliance surface. |
 | `conxian-nexus/` | Submodule | Nexus (State node) | `@botshelomokoka @admin-conxian-labs` | Mainnet runtime | See `Conxian/conxian-nexus` | P0 | Authoritative state + telemetry surface. |
@@ -84,7 +84,7 @@ Source-of-truth notes:
 
 ## Inventory-driven deltas (to enforce the mainnet production standard)
 
-1. Repos missing the `dev`/`staged` promotion chain: `conxian-nexus`, `conxian-gateway`, `conxius-wallet`, `conxius-platform`, `stacksorbit`, `lib-conxian-core`, `lib-conclave-sdk`, `Conxian_UI`, `conxian-labs-site`, `.github`, `.github-private`.
+1. Repos missing the `dev`/`staged` promotion chain: `Conxian`, `conxian-nexus`, `conxian-gateway`, `conxius-wallet`, `conxius-platform`, `stacksorbit`, `lib-conxian-core`, `lib-conclave-sdk`, `Conxian_UI`, `conxian-labs-site`, `.github`, `.github-private`.
 2. Repos missing root `CODEOWNERS`: `Conxian`, `conxian-nexus`, `conxian-gateway`, `conxius-wallet`, `stacksorbit`, `lib-conxian-core`, `Conxian_UI`, `.github-private`.
 3. Repo default branch mismatch with portfolio standard (`main`): `lib-conclave-sdk` uses `master`.
-4. Submodule pin not on upstream default branch: `Conxian/` is pinned to `c2ef30d85905`, which diverges from `Conxian/Conxian@main`.
+4. Submodule pin not on upstream default branch: `Conxian/` diverges from `Conxian/Conxian@main` (fails `scripts/verify_submodule_integrity.py`).
