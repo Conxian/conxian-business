@@ -10,6 +10,7 @@ When this BOS repo bumps the `lib-conclave-sdk` submodule pin, update the URLs b
 - SDK governance: https://github.com/Conxian/lib-conclave-sdk/blob/f75bf82aedb1ef7dd3f1ed2fedbf5822f5ab6d23/GOVERNANCE.md
 - SDK releasing: https://github.com/Conxian/lib-conclave-sdk/blob/f75bf82aedb1ef7dd3f1ed2fedbf5822f5ab6d23/RELEASING.md
 - SDK security policy: https://github.com/Conxian/lib-conclave-sdk/blob/f75bf82aedb1ef7dd3f1ed2fedbf5822f5ab6d23/SECURITY.md
+- SDK changelog: https://github.com/Conxian/lib-conclave-sdk/blob/f75bf82aedb1ef7dd3f1ed2fedbf5822f5ab6d23/CHANGELOG.md
 
 Note: in this repo, those artifacts live under the `lib-conclave-sdk/` submodule when it is checked out (for example, via `git submodule update --init lib-conclave-sdk`).
 
@@ -33,7 +34,7 @@ The business obligation of the SDK is to provide a single integration contract s
 The SDK currently exposes two public integration surfaces:
 
 1. **Rust crate API** (system/service integrations)
-   - Cargo package name: `lib-conclave-sdk` (current version at this pin: `0.1.0`).
+   - Cargo package name: `lib-conclave-sdk` (see `Cargo.toml` for the version at this pin).
    - Canonical “integration contract” types include:
      - `enclave::EnclaveManager` (hardware abstraction)
      - `enclave::SignRequest` / `enclave::SignResponse`
