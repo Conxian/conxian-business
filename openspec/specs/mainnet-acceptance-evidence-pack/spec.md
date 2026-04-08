@@ -50,12 +50,44 @@ The evidence pack MUST include:
 
 - Repository name
 - Promotion PR link
-- Base (`main`) SHA (tip at promotion time)
-- Merge-base (`main`..`staged`) SHA
+- Pre-merge tip-of-`main` SHA
+- Merge-base of `main` and `staged` SHA
 - `staged` head commit SHA
+- SHA capture timestamp (ISO 8601 UTC)
+- Canonical remote name (used for all SHA/URL capture, e.g. `origin` or `upstream`)
+- Canonical remote fetch URL(s) (record output verbatim; preserve line order; may be multi-line) (e.g. `git remote get-url --all <canonical-remote>`; MUST NOT include embedded credentials; if output contains embedded credentials, remediate the git remote configuration and re-run capture before recording)
+- Canonical remote push URL(s) (record output verbatim; preserve line order; may be multi-line. If all push URL(s) are identical to fetch URL(s), repeat the same URL output and add a separate `(same as fetch)` note) (e.g. `git remote get-url --push --all <canonical-remote>`; MUST NOT include embedded credentials; if output contains embedded credentials, remediate the git remote configuration and re-run capture before recording)
 - Change owner (single accountable human)
 - Required approvers (CODEOWNERS) who signed off
 - Business unit(s) impacted
+
+Together, these SHAs and the capture timestamp identify the exact change window being promoted (from the merge-base to the `staged` head), the pre-merge state of `main`, and when that snapshot was taken.
+
+Capture these SHAs **immediately before merging** the promotion PR (after all required checks/approvals are green).
+
+You MUST run `git fetch --prune <canonical-remote> main staged` first so that the `<canonical-remote>/*` refs are current (`--prune` removes stale `<canonical-remote>/*` refs that no longer exist on the remote). `<canonical-remote>` MUST point at the canonical `<org>/<repo>` remote, not a fork (on forks this is typically `upstream`).
+
+Record:
+
+- Canonical remote name: `<canonical-remote>`
+- Pre-merge tip-of-`main`: `git rev-parse <canonical-remote>/main`
+- Merge-base: `git merge-base <canonical-remote>/main <canonical-remote>/staged`
+- `staged` head: `git rev-parse <canonical-remote>/staged`
+- SHA capture timestamp: `date -u +%Y-%m-%dT%H:%M:%SZ`
+- Canonical remote fetch URL(s): `git remote get-url --all <canonical-remote>` (record output verbatim; preserve line order; if output contains embedded credentials, remediate the git remote configuration and re-run capture before recording)
+  - Fallback (older Git): `git config --get-all remote.<canonical-remote>.url` (or `git remote -v` and take the `(fetch)` lines)
+- Canonical remote push URL(s): `git remote get-url --push --all <canonical-remote>` (record output verbatim; preserve line order; if all push URL(s) are identical to fetch URL(s), repeat the same URL output and add a separate `(same as fetch)` note; if output contains embedded credentials, remediate the git remote configuration and re-run capture before recording)
+  - Fallback (older Git): `git config --get-all remote.<canonical-remote>.pushurl` (or `git remote -v` and take the `(push)` lines)
+
+The configured canonical remote URL(s) can be multi-line (multi-URL remotes). After any necessary remediation, preserve the command output verbatim (including line order).
+
+The configured canonical remote URL(s) MUST NOT include embedded credentials. "Embedded credentials" means secrets present in the URL itself (for example: access tokens, `user:pass@`, or `https://<token>@...`). SSH remote URL forms are allowed (e.g. `git@github.com:org/repo.git` or `ssh://git@github.com/org/repo.git`), provided the URL itself does not contain secrets.
+
+If embedded credentials are discovered during capture, immediately redact them from any draft notes, remediate the git remote configuration to remove embedded credentials, and then re-run the URL capture commands above. The final evidence pack MUST contain only the post-remediation, credential-free URL(s).
+
+If the merge is delayed or `<canonical-remote>/main` or `<canonical-remote>/staged` advances after capture, re-capture and update the evidence pack before merging.
+
+After the merge (or any other updates to `<canonical-remote>/main` or `<canonical-remote>/staged`), re-running `git fetch --prune <canonical-remote> main staged` and then the commands above will yield different values. Reviewers and auditors SHOULD rely on the SHAs recorded in the evidence pack as the source of truth for the pre-merge window.
 
 #### 2) Mainnet-only production scope
 
@@ -129,11 +161,18 @@ Copy/paste and fill out for any `staged` -> `main` promotion PR.
 
 - Repo: `<org>/<repo>`
 - Promotion PR: <link>
-- Base (`main`) SHA (tip at promotion time): `<sha>`
-- Merge-base (`main`..`staged`) SHA: `<sha>`
-- Head (`staged`) SHA: `<sha>`
-- Accountable owner: `<name>` (`<GitHub handle>`, optional: `<public Linear profile URL if available>`)
-- Approvers (CODEOWNERS): `<name/handle>`, `<name/handle>`
+- Pre-merge tip-of-`main` SHA: `<sha>`
+- Merge-base of `main` and `staged` SHA: `<sha>`
+- `staged` head commit SHA: `<sha>`
+- SHA capture timestamp: `Captured at (UTC): <YYYY-MM-DDTHH:MM:SSZ>` (after `git fetch --prune <canonical-remote> main staged`; before merge)
+- Canonical remote name: `<canonical-remote>` (MUST point at the canonical `<org>/<repo>` remote; on forks this is typically `upstream`)
+- Canonical remote fetch URL(s) (e.g. from `git remote get-url --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.url`; preserve line order; MUST NOT include embedded credentials; if output contains embedded credentials, remediate the git remote configuration and re-run capture before recording):
+  - `<url>` (one line per command output line; preserve order)
+- Canonical remote push URL(s) (e.g. from `git remote get-url --push --all <canonical-remote>`; fallback: `git config --get-all remote.<canonical-remote>.pushurl`; preserve line order; MUST NOT include embedded credentials; if output contains embedded credentials, remediate the git remote configuration and re-run capture before recording. If all push URL(s) are identical to fetch URL(s), repeat the same URL output and add a separate `(same as fetch)` note):
+  - `<url>` (one line per command output line; preserve order)
+  - Note: `(same as fetch)` (use only if all push URL(s) are identical to the fetch URL(s); otherwise delete this line)
+- Accountable owner: `<name>` (GitHub: `@<handle>`; optional: `<public Linear profile URL if available>`)
+- Approvers (CODEOWNERS): `@<handle>`, `@<handle>` (optional: names)
 - Business unit(s): `<bu>`
 
 #### Mainnet-only production scope

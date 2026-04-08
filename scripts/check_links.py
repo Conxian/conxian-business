@@ -104,7 +104,8 @@ def check_links() -> None:
                 try:
                     target_path.relative_to(REPO_ROOT)
                 except ValueError:
-                    broken_links.append((md_file.relative_to(REPO_ROOT), link, target_path))
+                    target_rel = Path(os.path.relpath(target_path, REPO_ROOT))
+                    broken_links.append((md_file.relative_to(REPO_ROOT), link, target_rel))
                     continue
 
             if not target_path.exists():
@@ -114,7 +115,7 @@ def check_links() -> None:
                 try:
                     target_rel = target_path.relative_to(REPO_ROOT)
                 except ValueError:
-                    target_rel = target_path
+                    target_rel = Path(os.path.relpath(target_path, REPO_ROOT))
 
                 broken_links.append((md_file.relative_to(REPO_ROOT), link, target_rel))
 

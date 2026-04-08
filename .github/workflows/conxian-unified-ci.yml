@@ -18,12 +18,12 @@ jobs:
       contents: read
       pull-requests: read
     outputs:
-      b2b: ${{ steps.filter_pr.outputs.b2b || steps.filter_push.outputs.b2b }}
+      b2b: ${{ (github.event_name == 'push' && steps.filter_push.outputs.b2b) || (github.event_name == 'pull_request' && steps.filter_pr.outputs.b2b) || 'false' }}
     steps:
     - name: Detect B2B changes (PR)
       if: github.event_name == 'pull_request'
       id: filter_pr
-      uses: dorny/paths-filter@v3
+      uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3
       with:
         filters: |
           b2b:
@@ -55,13 +55,16 @@ jobs:
     - name: Verify knowledge retention (ZSE)
       run: |
         python3 scripts/verify_knowledge_retention.py
+    - name: Verify tracked artifacts
+      run: |
+        python3 scripts/verify_tracked_artifacts.py
+    - name: Verify BOS production boundary
+      run: |
+        python3 scripts/verify_bos_production_boundary.py
     - name: Verify submodule integrity
       run: |
         python3 scripts/verify_submodule_integrity.py
         git submodule status --recursive
-    - name: Verify BOS production boundary
-      run: |
-        python3 scripts/verify_bos_production_boundary.py
     - name: Verify production contamination guard
       run: |
         python3 scripts/verify_contamination_guard.py

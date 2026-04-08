@@ -6,11 +6,13 @@
 * [Documentation Alignment Index](docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
 * [BOS business buildout (this repo)](docs/BOS_BUSINESS_BUILDOUT.md)
 * [Repo Portfolio (Flagship vs Supporting)](docs/REPO_PORTFOLIO.md)
+* [Governance files standardization (public repos)](docs/GOVERNANCE_FILES_STANDARDIZATION.md)
 * [Portfolio business-unit map and separation of concerns](docs/PORTFOLIO_BUSINESS_UNIT_MAP.md)
 * [Repo Readiness Gates (Control Domains)](docs/REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md)
 * [Partner Overview and Launch FAQ](docs/PARTNER_OVERVIEW_AND_LAUNCH_FAQ.md)
 * [Release notes and changelog format](docs/RELEASE_NOTES_AND_CHANGELOG.md)
-* [Branching and promotion policy (dev/staged/main)](docs/BRANCHING_AND_PROMOTION_POLICY.md)
+* [Branching and promotion policy](docs/BRANCHING_AND_PROMOTION_POLICY.md)
+* [Branch and promotion standard (dev/staged/main)](docs/BRANCH_AND_PROMOTION_STANDARD.md)
 * [Mainnet acceptance evidence pack (staged -> main)](openspec/specs/mainnet-acceptance-evidence-pack/spec.md)
 * [Release hygiene — conxian-nexus](docs/RELEASE_HYGIENE_CONXIAN_NEXUS.md)
 * [CSF mainnet readiness gate](docs/CSF_MAINNET_READINESS_GATE.md)
@@ -19,6 +21,7 @@
 
 ## 🤖 Business Operations System (BOS)
 
+* [BOS wallet control model](docs/BOS_WALLET_CONTROL_MODEL.md)
 * [Conxius Wallet BOS buildout](docs/CONXIUS_WALLET_BOS_BUILDOUT.md)
 * [Strategy Nexus](Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md)
   * [Sovereign MOI Alignment](Sovereign-Strategy-Nexus/docs/SOVEREIGN_MOI_ALIGNMENT.md)
