@@ -232,9 +232,9 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
     allowlist = LABEL_ALLOWLIST.get(repo_name, {})
 
     files = git_ls_files(root)
-    files_set = set(files)
 
     if allowlist:
+        files_set = set(files)
         known_labels = {lbl for (lbl, _) in CONTAMINATION_PATTERNS}
         unknown_labels = set(allowlist) - known_labels
         for lbl in sorted(unknown_labels):
