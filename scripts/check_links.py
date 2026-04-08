@@ -40,8 +40,12 @@ def _uninitialized_submodule_dirs() -> list[Path]:
     return [d for d in dirs if not (d / '.git').exists()]
 
 
-def _is_within_uninitialized_submodule(path: Path, uninitialized_submodule_dirs: list[Path]) -> bool:
-    return any(path.is_relative_to(submodule_dir) for submodule_dir in uninitialized_submodule_dirs)
+def _is_within_uninitialized_submodule(
+    path: Path, uninitialized_submodule_dirs: list[Path]
+) -> bool:
+    return any(
+        path.is_relative_to(submodule_dir) for submodule_dir in uninitialized_submodule_dirs
+    )
 
 
 def _repo_root_for(md_file: Path) -> Path:
@@ -66,6 +70,13 @@ def _find_markdown_files() -> list[Path]:
     return md_files
 
 
+def _target_rel_for_display(target_path: Path) -> Path:
+    try:
+        return target_path.relative_to(REPO_ROOT)
+    except ValueError:
+        return Path(os.path.relpath(target_path, REPO_ROOT))
+
+
 def check_links() -> None:
     md_files = _find_markdown_files()
     broken_links: list[tuple[Path, str, Path]] = []
@@ -76,9 +87,9 @@ def check_links() -> None:
         content = md_file.read_text(encoding='utf-8')
 
         # Find markdown links [text](target)
-        links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
+        raw_links = re.findall(r'\[[^\]]*\]\(([^)]+)\)', content)
 
-        for link in links:
+        for link in raw_links:
             link = link.strip()
             if not link:
                 continue
@@ -87,6 +98,7 @@ def check_links() -> None:
             if link.startswith('#') or re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:', link):
                 continue
 
+            # Clean up link (remove fragments)
             clean_link = link.split('#', 1)[0].strip()
             if not clean_link:
                 continue
@@ -101,22 +113,32 @@ def check_links() -> None:
             try:
                 target_path.relative_to(repo_root_for_file)
             except ValueError:
+                # Allow links that escape a submodule root but remain within the parent repo.
                 try:
                     target_path.relative_to(REPO_ROOT)
                 except ValueError:
-                    broken_links.append((md_file.relative_to(REPO_ROOT), link, target_path))
+                    broken_links.append(
+                        (
+                            md_file.relative_to(REPO_ROOT),
+                            link,
+                            _target_rel_for_display(target_path),
+                        )
+                    )
                     continue
 
             if not target_path.exists():
-                if _is_within_uninitialized_submodule(target_path, uninitialized_submodule_dirs):
+                if _is_within_uninitialized_submodule(
+                    target_path, uninitialized_submodule_dirs
+                ):
                     continue
 
-                try:
-                    target_rel = target_path.relative_to(REPO_ROOT)
-                except ValueError:
-                    target_rel = target_path
-
-                broken_links.append((md_file.relative_to(REPO_ROOT), link, target_rel))
+                broken_links.append(
+                    (
+                        md_file.relative_to(REPO_ROOT),
+                        link,
+                        _target_rel_for_display(target_path),
+                    )
+                )
 
     for source, link, target in broken_links:
         print(f"Broken link in {source}: {link} -> {target}")
