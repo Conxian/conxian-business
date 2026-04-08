@@ -52,7 +52,6 @@ The Conxian Job Card Schema (CJCS) is a machine-readable JSON-LD definition for 
 | `unit_id` | `WORK_CENTER` | `OperationalUnit` | The Conxian Unit executing |
 
 ## 4. The "Industrial Intent" Standard
-
 Virality in the B2B sector occurs when one lab's output is another lab's input. CJCS v2.0.1 serves as the "HTTP" of industrial coordination, enabling a **Dependency Web**.
 
 - **Composable Intent**: If a lab builds an AI for "Warehouse Automation," they use CJCS as their native language.

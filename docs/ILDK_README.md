@@ -17,7 +17,6 @@ The core kernel handles only three things:
 Independent labs (e.g., "Logistics Lab", "Mining Ops Lab") build their own **Marketplaces of Logic** on top of this kernel. They own their specialized UI and domain-specific logic, but the **Value/Data flows** through the Conxian platform.
 
 ## 2. Technical Integration: JSON-LD Mandates
-
 All modules communicate with the CNS Core using the **Conxian Job Card Schema (CJCS) v2.0.1**. This JSON-LD format ensures that domain-specific work orders are translated into protocol-executable intents.
 
 See: [CJCS v2.0.1 spec](CJCS_v2.0_SPEC.md).
@@ -45,11 +44,12 @@ Scaling is achieved through **Policy-as-Code**:
 - **Permissionless Onboarding**: Any lab can build on the platform without centralized committee approval.
 - **Sovereign Guardrails**: Guardian wallets enforce the "StrongBox" floor. A module can build any logic, but payouts require a verified 144-block Time-Lock or multi-sig state-proof.
 
-## 6. Licensing: Dual-License Strategy
+## 6. Licensing
+This repository is currently licensed under the GNU GPL v3.0 (see [`LICENSE`](../LICENSE)).
 
-As of 2026-04-08, the effective license for this repository is GNU GPL v3.0 (see [LICENSE](../LICENSE)).
+The **dual-license** model described below is a proposed future policy for BOS kernel / ILDK components; it is not currently in effect in this repository.
 
-The following dual-license model is a future proposal for the CNS Core and ILDK artifacts and is not yet in effect:
+Proposed model:
 1. **BUSL (Business Source License)**: Protects the core platform during its early growth phase.
 2. **GPL v3.0**: Ensures long-term open-source sovereignty once the system reaches a specified maturity milestone.
 
