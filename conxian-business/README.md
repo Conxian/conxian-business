@@ -1,6 +1,6 @@
 # Conxian Business
 
-> Current workspace release: **v1.8.2** (see [`CHANGELOG.md`](../CHANGELOG.md))
+> Current workspace release: **v1.9.0** (see [`CHANGELOG.md`](../CHANGELOG.md))
 
 **Conxian Business** defines the core service loop and state machine transitions of the Sovereign Autonomous Business (SAB).
 
@@ -14,6 +14,10 @@ This repository is public. Internal BOS state-machine configuration and complian
 - **Service Loop Orchestration**: Managing the relationship between the BOS as a Client (Intelligence/Yield) and the BOS as a Supplier (Governance/Settlement).
 - **Compliance Monitoring**: Compliance reporting and enforcement workflows (internal details live in Linear).
 - **Transparency Custody**: Managing the Python-based transparency custodian for verifiable operations.
+
+## Status
+
+active — This module documents BOS-level service-loop expectations and public-safe operational boundaries; detailed state-machine configuration and compliance reports live in Linear. Internal details: <https://linear.app/conxian-labs/issue/CON-435/improve-portfolio-clarity-across-org-facing-repositories>.
 
 ## Key Components
 
