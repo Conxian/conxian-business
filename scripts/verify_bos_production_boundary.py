@@ -69,6 +69,7 @@ def read_text(root: str, rel_path: str) -> str:
         return f.read()
 def main() -> int:
     root = repo_root()
+    this_script_rel = os.path.relpath(os.path.abspath(__file__), root).replace(os.sep, "/")
     submodules = set(read_submodule_paths(root))
     excluded_dirs = {".idx"} | submodules
 
@@ -122,7 +123,7 @@ def main() -> int:
                 continue
             if (
                 needle == "conxian-business/.generated/"
-                and rel_path == "scripts/verify_bos_production_boundary.py"
+                and rel_path == this_script_rel
             ):
                 continue
             if needle in text:
