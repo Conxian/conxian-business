@@ -178,6 +178,8 @@ REPO_EXCLUSIONS = {
         "deployment/testnet_complete_manifest.json",
         "deployments/default.simnet-plan.yaml",
         "deployments/full-system.testnet-plan.yaml",
+        "deployments/mainnet-release-plan.yaml",
+        "deployments/testnet-plan.yaml",
     },
     "conxius-wallet": {
         "components",
