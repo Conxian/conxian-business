@@ -40,6 +40,7 @@ The workspace MUST enforce an ordered promotion path.
 - **AND** the merge is blocked unless required CI checks and required approvals are satisfied
 
 See [Requirement: Mainnet acceptance evidence for `staged` -> `main`](#mainnet-acceptance-evidence-staged-to-main) below.
+
 #### Scenario: Attempting to promote directly into main from a non-staged branch
 
 - **WHEN** a pull request targets `main`
