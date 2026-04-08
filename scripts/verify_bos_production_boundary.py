@@ -42,6 +42,8 @@ def is_in_dir(rel_path: str, rel_dir: str) -> bool:
 
 def is_top_level_verifier_entrypoint(rel_path: str) -> bool:
     rel_path = rel_path.replace(os.sep, "/").replace("\\", "/")
+    while rel_path.startswith("./"):
+        rel_path = rel_path[2:]
     path = PurePosixPath(rel_path)
     return path.parent == PurePosixPath("scripts") and path.name.startswith("verify_")
 
@@ -65,8 +67,6 @@ def read_text(root: str, rel_path: str) -> str:
     full_path = os.path.join(root, rel_path)
     with open(full_path, "r", encoding="utf-8", errors="replace") as f:
         return f.read()
-
-
 def main() -> int:
     root = repo_root()
     submodules = set(read_submodule_paths(root))
