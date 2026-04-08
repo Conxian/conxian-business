@@ -225,10 +225,8 @@ A refactor is considered in-bounds only when it (1) reduces duplicated sources o
 For this portfolio:
 
 - **Authority / source of truth** (left-to-right, upstream → downstream): `Protocol → Nexus → Gateway → UI/Wallet`
-- **Code / build-time dependencies (who depends on whom):** `UI/Wallet → Gateway → Nexus → Protocol`
+- **Code / build-time dependencies (who depends on whom):** `UI/Wallet → Gateway → Nexus → Protocol` — authority flows from Protocol out to UI/Wallet, but code dependencies are only allowed in this opposite direction (each layer depends on the one immediately upstream), so higher layers compose lower ones without redefining sources of truth.
 - **Platform (cross-cutting orchestration, orthogonal to the chain above)**: may depend on Protocol/Nexus/Gateway (and may be consumed by UI/Wallet) to coordinate workflows, but must not become a new source of product logic or authority.
-
-Authority flows from Protocol out to UI/Wallet, but code dependencies are only allowed in the opposite direction: UI/Wallet depends on Gateway, Gateway depends on Nexus, and Nexus depends on Protocol. Higher layers compose lower ones without redefining sources of truth.
 
 Notes on the requested repos:
 
