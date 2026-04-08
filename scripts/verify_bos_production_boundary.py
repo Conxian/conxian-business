@@ -107,7 +107,9 @@ def main() -> int:
             continue
         if is_in_dir(rel_path, "docs") or is_in_dir(rel_path, "openspec"):
             continue
-        if rel_path.startswith("scripts/verify_"):
+        if os.path.dirname(rel_path) == "scripts" and os.path.basename(rel_path).startswith(
+            "verify_"
+        ):
             continue
 
         text = read_text(root, rel_path)
