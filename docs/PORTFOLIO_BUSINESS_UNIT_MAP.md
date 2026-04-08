@@ -227,6 +227,8 @@ For this portfolio:
 - **Authority / source of truth**: `Protocol → Nexus → Gateway → UI/Wallet`
 - **Code / build-time dependencies (imports)**: `UI/Wallet → Gateway → Nexus → Protocol`
 
+In other words: authority flows from Protocol down to UI/Wallet, while code imports should point back up from UI/Wallet to Protocol.
+
 **Platform** should orchestrate those services without owning product logic.
 
 Notes on the requested repos:
