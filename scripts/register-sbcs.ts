@@ -86,13 +86,15 @@ function assertStacksNetworkPrefix(networkName: NetworkName, flagName: string, a
     usageAndExit(`${flagName} has an invalid Stacks address: ${raw}${hint}`);
   }
 
-  const normalized = raw.toUpperCase();
   const prefixes: readonly string[] = STACKS_NETWORK_PREFIXES[networkName];
+  const normalized = raw.toUpperCase();
   if (!prefixes.some((prefix) => normalized.startsWith(prefix))) {
-    usageAndExit(`On ${networkName}, ${flagName} must start with ${prefixes.join(' or ')}`);
+    usageAndExit(
+      `On ${networkName}, ${flagName} must start with ${prefixes.join(' or ')} (got: ${raw})`
+    );
   }
 
-  return normalized;
+  return raw;
 }
 
 function parseArgs(argv: string[]): { networkName: NetworkName; contract: PrincipalParts } {
