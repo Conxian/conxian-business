@@ -177,15 +177,18 @@ def verify() -> None:
 
     # Tag expectations (advisory for now): user-facing repos should have release tags.
     repos_to_check: dict[str, str] = {}
-
-    origin_url = _run_git(["remote", "get-url", "origin"]).strip()
-    origin_repo = _parse_github_repo(origin_url)
-
     check_origin_tags = (
         os.environ.get("VERIFY_RELEASE_HYGIENE_CHECK_ORIGIN_TAGS", "").lower() == "true"
     )
-    if check_origin_tags and origin_repo:
-        repos_to_check["."] = origin_repo
+    if check_origin_tags:
+        try:
+            origin_url = _run_git(["remote", "get-url", "origin"]).strip()
+        except RuntimeError as exc:
+            _warning(f".: unable to resolve origin remote; skipping origin tag check ({exc})")
+        else:
+            origin_repo = _parse_github_repo(origin_url)
+            if origin_repo:
+                repos_to_check["."] = origin_repo
 
     for rel_path, url in sorted(gitmodules.items()):
         if rel_path not in TAG_EXPECTATION_SUBMODULE_PATHS:
