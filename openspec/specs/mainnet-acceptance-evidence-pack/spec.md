@@ -14,7 +14,7 @@ The evidence pack is an auditable, reviewable artifact that proves:
 
 ## Requirements
 
-> **Note (Readiness tracker visibility):** If the readiness tracker is not public, the evidence pack MUST record the pass status directly.
+> **Note (Readiness tracker visibility):** If the linked mainnet readiness tracker is not directly accessible to PR reviewers, the evidence pack MUST record the pass status of that readiness work directly.
 
 ### Requirement: Evidence pack is mandatory for `staged` -> `main`
 
