@@ -14,6 +14,8 @@ The evidence pack is an auditable, reviewable artifact that proves:
 
 ## Requirements
 
+> **Note (Readiness tracker visibility):** If the readiness tracker is not public, the evidence pack MUST record the pass status directly.
+
 ### Requirement: Evidence pack is mandatory for `staged` -> `main`
 
 For any repository in the Conxian portfolio:
@@ -38,7 +40,7 @@ Any `staged` -> `main` promotion MUST satisfy all criteria below.
 - No temporary bypasses, relaxed checks, or debug-only execution paths remain enabled.
 - No testnet principals, endpoints, contract identifiers, wallets, or configuration remain in production configuration.
 - Release artifacts, docs, and readiness notes refer to mainnet deployment only.
-- Mainnet readiness work linked to the release is updated and shows pass status (or the evidence pack explicitly records the pass status when the tracker is not public).
+- Mainnet readiness work linked to the release is updated and shows pass status.
 - Required checks pass for the promotion candidate.
 - Any security, signer, settlement, and governance controls required for production are verified against mainnet expectations.
 
@@ -57,7 +59,7 @@ The promotion MUST NOT be merged into `main` if any of the following are true:
 Before merging a promotion PR, the evidence pack MUST include explicit evidence that:
 
 - Branch source is `staged`.
-- Linked readiness work is updated and shows mainnet pass status (or the evidence pack explicitly records the pass status when the tracker is not public).
+- Linked readiness work is updated and shows mainnet pass status.
 - A repo audit confirms no stub or testnet contamination on production paths.
 - Reviewer sign-off confirms mainnet-only production integrity.
 
