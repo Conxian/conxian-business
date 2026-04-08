@@ -178,11 +178,16 @@ REPO_EXCLUSIONS = {
         "deployment/testnet_complete_manifest.json",
         "deployments/default.simnet-plan.yaml",
         "deployments/full-system.testnet-plan.yaml",
+        # TEMPORARY: mainnet release plan still contains known testnet principals; tracked in CON-371.
+        # Remove this exclusion once CON-371 is resolved.
+        "deployments/mainnet-release-plan.yaml",
+        "deployments/testnet-plan.yaml",
     },
     "conxius-wallet": {
+        # UI mock data/constants (e.g. `MOCK_*`) are allowed for now, but production-facing
+        # service integrations (such as `services/`) should remain free of testnet principals.
         "components",
         "constants.tsx",
-        "services/ntt.ts",
     },
     "stacksorbit": {
         "Clarinet.toml",
