@@ -86,16 +86,24 @@ def _is_allowlisted(rel_path: str, allowlist: list[str]) -> bool:
     base = rel_path.rsplit("/", 1)[-1]
     for pattern in allowlist:
         pattern = _normalize_path(pattern)
+        has_glob = any(ch in pattern for ch in "*?[]")
 
         if "/" not in pattern:
             if fnmatch.fnmatchcase(base, pattern):
                 return True
+
+            if has_glob and fnmatch.fnmatchcase(rel_path, pattern):
+                return True
+
+            if not has_glob:
+                if rel_path == pattern or rel_path.startswith(pattern + "/"):
+                    return True
             continue
 
         if fnmatch.fnmatchcase(rel_path, pattern):
             return True
 
-        if not any(ch in pattern for ch in "*?[]"):
+        if not has_glob:
             if rel_path == pattern or rel_path.startswith(pattern + "/"):
                 return True
     return False
