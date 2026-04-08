@@ -3,6 +3,9 @@ from __future__ import annotations
 import subprocess
 import sys
 from dataclasses import dataclass
+from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).resolve().parent
 
 
 @dataclass(frozen=True)
@@ -12,18 +15,33 @@ class Check:
 
 
 CHECKS: tuple[Check, ...] = (
-    Check("Knowledge retention (ZSE)", ("python3", "scripts/verify_knowledge_retention.py")),
-    Check("Tracked artifacts", ("python3", "scripts/verify_tracked_artifacts.py")),
+    Check(
+        "Knowledge retention (ZSE)",
+        (sys.executable, str(SCRIPT_DIR / "verify_knowledge_retention.py")),
+    ),
+    Check(
+        "Tracked artifacts",
+        (sys.executable, str(SCRIPT_DIR / "verify_tracked_artifacts.py")),
+    ),
     Check(
         "BOS production boundary",
-        ("python3", "scripts/verify_bos_production_boundary.py"),
+        (sys.executable, str(SCRIPT_DIR / "verify_bos_production_boundary.py")),
     ),
-    Check("Submodule integrity", ("python3", "scripts/verify_submodule_integrity.py")),
-    Check("Release hygiene", ("python3", "scripts/verify_release_hygiene.py")),
-    Check("Governance baseline", ("python3", "scripts/verify_repo_governance_baseline.py")),
+    Check(
+        "Submodule integrity",
+        (sys.executable, str(SCRIPT_DIR / "verify_submodule_integrity.py")),
+    ),
+    Check(
+        "Release hygiene",
+        (sys.executable, str(SCRIPT_DIR / "verify_release_hygiene.py")),
+    ),
+    Check(
+        "Governance baseline",
+        (sys.executable, str(SCRIPT_DIR / "verify_repo_governance_baseline.py")),
+    ),
     Check(
         "Contamination guard",
-        ("python3", "scripts/verify_contamination_guard.py"),
+        (sys.executable, str(SCRIPT_DIR / "verify_contamination_guard.py")),
     ),
 )
 
