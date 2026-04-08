@@ -9,6 +9,9 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added
+- Documented the BOS business-end operating model (`docs/BOS_BUSINESS_BUILDOUT.md`), including ZSE public/internal split guidance and governance/README alignment.
+
 ### Changed
 - **Devcontainer (CON-383):** Added Rust stable and Python 3.10 to `.devcontainer/Dockerfile` so `cargo test` and CI scripts run locally.
 - **BOS production boundary (CON-383):** Removed residual `// Simulate execution success` placeholder comment from `conxian-nexus/src/api/rest.rs`. Replaced empty `test_health_check_stub` with a real assertion.
@@ -50,6 +53,12 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 ### Changed
 - Updated [BOS Business Buildout](docs/BOS_BUSINESS_BUILDOUT.md) to include the new Branching and Promotion Policy and align with the "Mainnet Readiness Gate".
 - Updated [active session](audit/active_session.json) to reflect the transition from individual issue resolution to holistic system readiness.
+
+### Changed
+- gateway: **Behavior change** when `BITCOIN_RPC_URL` is unset: Gateway now defaults to the public Bitcoin mainnet RPC endpoint (`https://bitcoin-rpc.publicnode.com`). (CON-418, #354)
+
+### Security
+- gateway: **Operator action**: This default is intended only for non-production, non-funds-bearing development and low-traffic open-tier usage. Before upgrading, production, funds-bearing, or privacy-sensitive environments must set `BITCOIN_RPC_URL` explicitly (see [docs/BOS_BUSINESS_BUILDOUT.md](docs/BOS_BUSINESS_BUILDOUT.md) for environment tier definitions). Traffic to this default endpoint is handled by a third-party public RPC operator and may be logged (including IP addresses and request metadata). (CON-418, #354)
 
 ## [1.8.2] - 2026-03-31
 ### Security
