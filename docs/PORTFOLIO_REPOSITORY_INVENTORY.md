@@ -34,14 +34,14 @@ Branch model column references the expected taxonomy in `./BRANCH_AND_PROMOTION_
 | Repository | BU / function | Owner (CODEOWNERS) | Production relevance | Branch model (observed) | Release criticality | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
 | `Conxian/conxian-business` | Governance (BOS + OpenSpec) | `@botshelomokoka @admin-conxian-labs` | Mainnet support | `default=main; dev=Y; staged=Y` | P0 | Umbrella repo; pins submodules and defines portfolio hygiene guardrails. |
-| `Conxian/Conxian` | CSF (Protocol) | Pending (PR [#373](https://github.com/Conxian/Conxian/pull/373)) | Mainnet runtime | `default=main; dev=Y; staged=n` | P0 | Add `staged` to complete the promotion chain. Ownership: [#373](https://github.com/Conxian/Conxian/pull/373). |
-| `Conxian/conxian-nexus` | Nexus (State node) | Pending (PR [#42](https://github.com/Conxian/conxian-nexus/pull/42)) | Mainnet runtime | `default=main; dev=n; staged=n` | P0 | Missing `dev` and `staged`. Ownership: [#42](https://github.com/Conxian/conxian-nexus/pull/42). |
-| `Conxian/conxian-gateway` | Fusion (Gateway) | Pending (PR [#43](https://github.com/Conxian/conxian-gateway/pull/43)) | Mainnet runtime | `default=main; dev=n; staged=n` | P0 | Missing `dev` and `staged`. Ownership: [#43](https://github.com/Conxian/conxian-gateway/pull/43). |
-| `Conxian/conxius-wallet` | Conxius (Wallet) | Pending (PR [#178](https://github.com/Conxian/conxius-wallet/pull/178)) | Mainnet runtime | `default=main; dev=n; staged=n` | P0 | Missing `dev` and `staged`. Ownership: [#178](https://github.com/Conxian/conxius-wallet/pull/178). |
-| `Conxian/lib-conxian-core` | Shared core | Pending (PR [#42](https://github.com/Conxian/lib-conxian-core/pull/42)) | Mainnet support | `default=main; dev=n; staged=n` | P0 | Missing `dev` and `staged`. Ownership: [#42](https://github.com/Conxian/lib-conxian-core/pull/42). |
+| `Conxian/Conxian` | CSF (Protocol) | Missing (PR open) | Mainnet runtime | `default=main; dev=Y; staged=n` | P0 | Add `staged` to complete the promotion chain. Ownership: [#373](https://github.com/Conxian/Conxian/pull/373). |
+| `Conxian/conxian-nexus` | Nexus (State node) | Missing (PR open) | Mainnet runtime | `default=main; dev=n; staged=n` | P0 | Missing `dev` and `staged`. Ownership: [#42](https://github.com/Conxian/conxian-nexus/pull/42). |
+| `Conxian/conxian-gateway` | Fusion (Gateway) | Missing (PR open) | Mainnet runtime | `default=main; dev=n; staged=n` | P0 | Missing `dev` and `staged`. Ownership: [#43](https://github.com/Conxian/conxian-gateway/pull/43). |
+| `Conxian/conxius-wallet` | Conxius (Wallet) | Missing (PR open) | Mainnet runtime | `default=main; dev=n; staged=n` | P0 | Missing `dev` and `staged`. Ownership: [#178](https://github.com/Conxian/conxius-wallet/pull/178). |
+| `Conxian/lib-conxian-core` | Shared core | Missing (PR open) | Mainnet support | `default=main; dev=n; staged=n` | P0 | Missing `dev` and `staged`. Ownership: [#42](https://github.com/Conxian/lib-conxian-core/pull/42). |
 | `Conxian/lib-conclave-sdk` | Shared SDK (TEE/crypto) | `@botshelomokoka` | Mainnet support | `default=master; dev=n; staged=n` | P0 | Default branch is `master` (portfolio standard expects `main`). Missing `dev` and `staged`. Ownership: [#24](https://github.com/Conxian/lib-conclave-sdk/pull/24). |
-| `Conxian/stacksorbit` | DevOps tooling (deployments) | Pending (PR [#206](https://github.com/Conxian/stacksorbit/pull/206)) | Mainnet support | `default=main; dev=n; staged=n` | P0 | Missing `dev` and `staged`. Ownership: [#206](https://github.com/Conxian/stacksorbit/pull/206). |
-| `Conxian/Conxian_UI` | Operating function (UI) | Pending (PR [#88](https://github.com/Conxian/Conxian_UI/pull/88)) | Non-mainnet | `default=main; dev=n; staged=n` | P1 | Planned rename to `conxian-ui` (see `./REPO_PORTFOLIO.md`). Ownership: [#88](https://github.com/Conxian/Conxian_UI/pull/88). |
+| `Conxian/stacksorbit` | DevOps tooling (deployments) | Missing (PR open) | Mainnet support | `default=main; dev=n; staged=n` | P0 | Missing `dev` and `staged`. Ownership: [#206](https://github.com/Conxian/stacksorbit/pull/206). |
+| `Conxian/Conxian_UI` | Operating function (UI) | Missing (PR open) | Non-mainnet | `default=main; dev=n; staged=n` | P1 | Planned rename to `conxian-ui` (see `./REPO_PORTFOLIO.md`). Ownership: [#88](https://github.com/Conxian/Conxian_UI/pull/88). |
 | `Conxian/conxius-platform` | Operating function (Platform/DevEx) | `@conxian/core-devs` | Non-mainnet | `default=main; dev=n; staged=n` | P1 | Local stack orchestration; should not become a home for product logic. Ownership: [#452](https://github.com/Conxian/conxius-platform/pull/452). |
 | `Conxian/conxian-labs-site` | Operating function (Public web) | `@botshelomokoka` | Non-mainnet | `default=main; dev=n; staged=n` | P2 | Public site; ZSE-sensitive material must remain in Linear. Ownership: [#7](https://github.com/Conxian/conxian-labs-site/pull/7). |
 | `Conxian/.github` | Governance (org defaults) | `@Conxian/Admins` | Mainnet support | `default=main; dev=n; staged=n` | P0 | Centralized templates/workflows; treat as production-relevant governance surface. Ownership: [#11](https://github.com/Conxian/.github/pull/11). |
@@ -89,6 +89,6 @@ Source-of-truth notes:
 To keep this page single-sourced (and avoid drift between the tables above and hand-maintained lists), treat the tables as canonical and apply these criteria:
 
 1. **Branch model gaps**: any repo row where `dev=n` or `staged=n` (unless explicitly exempt from promotion).
-2. **Missing ownership**: any repo row where Owner is `Missing (no root CODEOWNERS)`.
+2. **Missing ownership**: any repo row where Owner starts with `Missing`.
 3. **Default branch mismatch**: any repo row where observed `default` is not `main`.
 4. **Submodule pin divergence**: any pinned submodule gitlink that diverges from the upstream default branch (enforced by `scripts/verify_submodule_integrity.py`).
