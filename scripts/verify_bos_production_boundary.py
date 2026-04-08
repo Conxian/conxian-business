@@ -107,6 +107,7 @@ def main() -> int:
             continue
         if is_in_dir(rel_path, "docs") or is_in_dir(rel_path, "openspec"):
             continue
+        # Verifier entrypoints may reference stub artifacts to enforce hygiene rules.
         if os.path.dirname(rel_path) == "scripts" and os.path.basename(rel_path).startswith(
             "verify_"
         ):
