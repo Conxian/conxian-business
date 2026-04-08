@@ -69,3 +69,14 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 - Cleaned up `SUMMARY.md` and `docs/README.md` to remove legacy links to missing historical artifacts.
 
 [... Output truncated ...]
+
+## [1.9.1] - 2026-04-08
+
+### Added
+- Added Independent Lab Development Kit (ILDK) README (`docs/ILDK_README.md`) defining the "Morpho Blue" base-layer strategy for BOS.
+- Added Strategic Growth Model (`docs/STRATEGIC_GROWTH_MODEL_2026.md`) outlining comparison with legacy/DeFi models and governance-minimized scaling rules.
+
+### Changed
+- Enhanced Conxian Job Card Schema (CJCS) v2.0 (`docs/CJCS_v2.0_SPEC.md`) with "Industrial Intent" standard and dependency web logic.
+- Upgraded BOS Business Buildout (`docs/BOS_BUSINESS_BUILDOUT.md`) to include Real Yield Flywheel, Agentic App Store, and Policy-as-Code scaling.
+- Updated Documentation Hub entrypoint (`docs/README.md`) and alignment index (`docs/DOCUMENTATION_ALIGNMENT_INDEX.md`) to include new strategic artifacts.

@@ -75,6 +75,13 @@ OpenSpec is the best place to point issue descriptions when work is “spec-firs
 
 ## 4) Architecture, PRDs, whitepapers, roadmaps
 
+### Independent Lab Development Kit (ILDK)
+
+| Document | Role | Visibility | What it’s for |
+| --- | --- | --- | --- |
+| `docs/ILDK_README.md` | Canonical | Public-safe | Technical framework for external labs to build specialized Industrial Management modules. |
+| `docs/STRATEGIC_GROWTH_MODEL_2026.md` | Canonical | Public-safe | Strategic comparison of growth models and governance-minimized scaling. |
+
 These are the documents most likely to answer “what are we building?” and “how is it structured?”
 
 ### Platform / protocol
