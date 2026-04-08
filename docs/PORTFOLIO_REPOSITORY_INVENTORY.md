@@ -55,8 +55,9 @@ Source-of-truth notes:
 
 - Submodule set and BU/function mapping must remain consistent with `./PORTFOLIO_BUSINESS_UNIT_MAP.md`.
 - Submodule pin metadata lives in `.gitmodules` + the committed gitlinks.
+- Governance owners listed below reflect `conxian-business` portfolio governance, not the upstream repo's `CODEOWNERS`.
 
-| Asset (path in this repo) | Type | BU / function | Owner | Production relevance | Branch model | Release criticality | Notes |
+| Asset (path in this repo) | Type | BU / function | Governance owner (`conxian-business`) | Production relevance | Branch model | Release criticality | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `Conxian/` | Submodule | CSF (Protocol) | `@botshelomokoka @admin-conxian-labs` | Mainnet runtime | See `Conxian/Conxian` | P0 | Canonical on-chain source. |
 | `conxius-wallet/` | Submodule | Conxius (Wallet) | `@botshelomokoka @admin-conxian-labs` | Mainnet runtime | See `Conxian/conxius-wallet` | P0 | Sovereign custody and signing surface. |
