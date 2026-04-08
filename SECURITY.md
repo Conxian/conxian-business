@@ -21,7 +21,7 @@ Report vulnerabilities privately using one of these channels:
 
 1. GitHub private vulnerability reporting (Security Advisories): if enabled, use the repository Security tab and choose "Report a vulnerability".
 2. Email: security@conxian-labs.com
-3. If you cannot use either of the above channels, email admin@conxian-labs.com and clearly mark the message as a security report.
+3. Email: admin@conxian-labs.com (fallback if you cannot use the channels above; clearly mark the message as a security report)
 
 When possible, include:
 
