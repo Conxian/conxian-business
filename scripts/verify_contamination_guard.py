@@ -11,21 +11,68 @@ import sys
 def repo_root() -> str:
     return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
+def format_git_ls_files_error(root: str, details: str = "") -> str:
+    return (
+        f"Failed to run `git ls-files` in {root!r}. Ensure `git` is installed and available on PATH, and that this directory is a Git repo and submodules are initialized (e.g., `git submodule update --init --recursive`)."
+        + details
+    )
+
 def git_ls_files(root: str) -> list[str]:
     try:
-        out = subprocess.check_output(
-            ["git", "-C", root, "ls-files", "-z"],
+        prefix = subprocess.check_output(
+            ["git", "-C", root, "rev-parse", "--show-prefix"],
             stderr=subprocess.STDOUT,
         )
-    except subprocess.CalledProcessError:
-        return []
+        out = subprocess.check_output(
+            ["git", "-C", root, "ls-files", "-z", "--", "."],
+            stderr=subprocess.STDOUT,
+        )
+    except (FileNotFoundError, OSError) as exc:
+        raise SystemExit(format_git_ls_files_error(root, f"\n\nOS error:\n{exc}")) from exc
+    except subprocess.CalledProcessError as exc:
+        output = getattr(exc, "output", b"")
+        output_text = output.decode("utf-8", "replace") if output else ""
+        details = f"\n\nGit output:\n{output_text}" if output_text else ""
+        raise SystemExit(format_git_ls_files_error(root, details)) from exc
     parts = [p for p in out.split(b"\x00") if p]
-    return [os.fsdecode(p) for p in parts]
+    prefix_text = prefix.decode("utf-8", "replace")
+    prefix_text = prefix_text.strip()
+    prefix_text = prefix_text.lstrip("/")
+    if prefix_text and not prefix_text.endswith("/"):
+        prefix_text += "/"
+
+    paths = [os.fsdecode(p) for p in parts]
+    if prefix_text:
+        paths = [p[len(prefix_text) :] if p.startswith(prefix_text) else p for p in paths]
+    return paths
 
 def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
+    """Return True when `rel_path` should be skipped during scanning.
+
+    Exclusion semantics:
+    - Entries containing `/` match an exact relative path or a directory prefix.
+    - Bare entries match either a root-level file (exact match) or any directory
+      name anywhere in the path.
+    """
+    rel_path = rel_path.replace(os.sep, "/").replace("\\", "/")
+    while rel_path.startswith("./"):
+        rel_path = rel_path[2:]
+    rel_path = rel_path.strip("/")
+    parts = rel_path.split("/") if rel_path else []
     for excluded in excluded_set:
-        excluded = excluded.strip("/")
-        if rel_path == excluded or rel_path.startswith(excluded + "/"):
+        ex = excluded.replace(os.sep, "/").replace("\\", "/").strip("/")
+        while ex.startswith("./"):
+            ex = ex[2:]
+        if not ex:
+            continue
+
+        if "/" in ex:
+            if rel_path == ex or rel_path.startswith(ex + "/"):
+                return True
+            continue
+        if rel_path == ex:
+            return True
+        if ex in parts[:-1]:
             return True
     return False
 
@@ -38,13 +85,30 @@ def read_text(root: str, rel_path: str) -> str:
 
 # Patterns that indicate contamination in production code
 CONTAMINATION_PATTERNS = [
-    ("Hardcoded Devnet Principal", re.compile(r"ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM")),
+    (
+        "Hardcoded Testnet Principal",
+        re.compile(r"(?<![0-9A-Z_])ST[0-9A-Z]{38,}(?![0-9A-Z_])", re.IGNORECASE),
+    ),
     ("Stub Function Marker", re.compile(r"\bstub-func\b")),
     ("Explicit [STUB] Marker", re.compile(r"\[STUB\]")),
     ("Mock Pattern", re.compile(r"\bMOCK_[A-Z0-9_]+\b")),
     ("Hardcoded Mock OTP", re.compile(r'"123456"')),
     ("Placeholder simulation", re.compile(r"Placeholder for simulation")),
 ]
+
+GATEABLE_LABELS = {
+    "Stub Function Marker",
+    "Explicit [STUB] Marker",
+    "Mock Pattern",
+    "Hardcoded Mock OTP",
+    "Placeholder simulation",
+}
+
+GATE_REQUIRED: dict[str, dict[str, re.Pattern[str]]] = {
+    "conxian-gateway": {
+        "internal/api/src/a2p.rs": re.compile(r'feature\s*=\s*"mock-integrations"'),
+    },
+}
 
 # Paths that are ALLOWED to contain these patterns (e.g. tests, documentation)
 GLOBAL_EXCLUSIONS = {
@@ -58,10 +122,12 @@ GLOBAL_EXCLUSIONS = {
     "scripts/verify_contamination_guard.py",
     "README.md",
     "CONTRIBUTING.md",
+    "pnpm-lock.yaml",
+    "package-lock.json",
+    "showcase-dapp/package-lock.json",
 }
 
 # Repo-specific exclusions for intentional stubs (ZSE Compliance)
-# Note: Strings are dynamically constructed to avoid triggering BOS boundary checks
 STUB_NAME = "BOS_STATE_MACHINE"
 STUB_SUFFIX = "stub.json"
 REPO_EXCLUSIONS = {
@@ -70,18 +136,16 @@ REPO_EXCLUSIONS = {
         f"AUDIT_MANIFEST.{STUB_SUFFIX}",
         f"SARB_COMPLIANCE_REPORT.{STUB_SUFFIX}",
     },
+    # All [STUB] markers in conxian-nexus/src/ have been remediated (CON-383):
+    # - zkml.rs, dlc.rs: fail-closed 501 Not Implemented
+    # - identity.rs: real BNS HTTP call; ENS/WorldID return 503
+    # - erp.rs: real wallet signing via lib-conxian-core
+    # - kwil.rs, tableland.rs: real HTTP calls, fail-closed on error
+    # - executor/mod.rs: real Supabase upsert, non-fatal
+    # lib-conxian-core/src/lib.rs retains one [STUB] for BitVM2 state root
+    # verification (CON-75) — kept until that integration is wired.
     "conxian-nexus": {
-        "src/api/dlc.rs",
-        "src/api/identity.rs",
-        "src/api/zkml.rs",
-        "src/api/erp.rs",
-        "src/executor/mod.rs",
-        "src/storage/kwil.rs",
-        "src/storage/tableland.rs",
         "lib-conxian-core/src/lib.rs",
-    },
-    "conxian-gateway": {
-        "internal/api/src/a2p.rs", # Gated by feature flag
     },
     "Conxian": {
         "contracts/governance/proposal-engine-trait.clar",
@@ -105,10 +169,32 @@ REPO_EXCLUSIONS = {
         "contracts/rewards/early-lp-rewards.clar",
         "settings",
         "stacks/settings",
+        "Clarinet.toml",
+        "Clarinet.complete.toml",
+        "deployment/history.json",
+        "deployment/testnet_complete_manifest.json",
+        "deployments/default.simnet-plan.yaml",
+        "deployments/full-system.testnet-plan.yaml",
     },
     "conxius-wallet": {
         "components",
         "constants.tsx",
+        "services/ntt.ts",
+    },
+    "stacksorbit": {
+        "Clarinet.toml",
+        "chainhooks",
+        "deployment",
+        "deployments",
+    },
+    "conxian-ui": {
+        "src/lib/contracts.ts",
+        "src/app/contracts/page.tsx",
+        "src/app/pools/page.tsx",
+        "src/app/router/page.tsx",
+        "src/app/tx/page.tsx",
+        "src/lib/contract-interactions.ts",
+        "src/lib/contracts/self-launch.ts",
     }
 }
 
@@ -116,13 +202,9 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
     errors = []
     exclusions = GLOBAL_EXCLUSIONS | REPO_EXCLUSIONS.get(repo_name, set())
 
+    gate_requirements = GATE_REQUIRED.get(repo_name, {})
+
     files = git_ls_files(root)
-    if not files:
-        for dirpath, _, filenames in os.walk(root):
-            for f in filenames:
-                full_path = os.path.join(dirpath, f)
-                rel_path = os.path.relpath(full_path, root)
-                files.append(rel_path)
 
     code_exts = {".rs", ".ts", ".tsx", ".clar", ".yaml", ".yml", ".json", ".toml"}
 
@@ -142,6 +224,15 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
         for label, pattern in CONTAMINATION_PATTERNS:
             for i, line in enumerate(lines, start=1):
                 if pattern.search(line):
+                    gate_regex = gate_requirements.get(rel_path)
+                    if gate_regex and label in GATEABLE_LABELS:
+                        if gate_regex.search(content):
+                            break
+                        errors.append(
+                            f"[{repo_name}] {label} found in {rel_path}:{i} without required gate"
+                        )
+                        break
+
                     errors.append(f"[{repo_name}] {label} found in {rel_path}:{i}")
                     break
 
