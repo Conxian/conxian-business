@@ -182,7 +182,6 @@ REPO_EXCLUSIONS = {
     "conxius-wallet": {
         "components",
         "constants.tsx",
-        "services/ntt.ts",
     },
     "stacksorbit": {
         "Clarinet.toml",
