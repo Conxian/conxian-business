@@ -49,7 +49,7 @@ Scaling is achieved through **Policy-as-Code**:
 
 As of 2026-04-08, the effective license for this repository is GNU GPL v3.0 (see [LICENSE](../LICENSE)).
 
-The following dual-license model is a proposal for the CNS Core and ILDK artifacts:
+The following dual-license model is a future proposal for the CNS Core and ILDK artifacts and is not yet in effect:
 1. **BUSL (Business Source License)**: Protects the core platform during its early growth phase.
 2. **GPL v3.0**: Ensures long-term open-source sovereignty once the system reaches a specified maturity milestone.
 
