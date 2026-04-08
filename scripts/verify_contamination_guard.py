@@ -104,9 +104,37 @@ GATEABLE_LABELS = {
     "Placeholder simulation",
 }
 
-GATE_REQUIRED: dict[str, dict[str, re.Pattern[str]]] = {
+GateRule = re.Pattern[str] | dict[str, re.Pattern[str]]
+
+GATE_REQUIRED: dict[str, dict[str, GateRule]] = {
     "conxian-gateway": {
         "internal/api/src/a2p.rs": re.compile(r'feature\s*=\s*"mock-integrations"'),
+    },
+    "conxius-wallet": {
+        "components/AssetDetailModal.tsx": {
+            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
+        },
+        "components/CitadelManager.tsx": {
+            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
+        },
+        "components/GovernancePortal.tsx": {
+            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
+        },
+        "components/InvestorDashboard.tsx": {
+            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
+        },
+        "components/Marketplace.tsx": {
+            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
+        },
+        "components/RewardsHub.tsx": {
+            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
+        },
+        "components/StackingManager.tsx": {
+            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
+        },
+        "constants.tsx": {
+            "Mock Pattern": re.compile(r"\bMOCK_[A-Z0-9_]+\b"),
+        },
     },
 }
 
@@ -184,10 +212,10 @@ REPO_EXCLUSIONS = {
         "deployments/testnet-plan.yaml",
     },
     "conxius-wallet": {
-        # UI mock data/constants (e.g. `MOCK_*`) are allowed for now, but production-facing
-        # service integrations (such as `services/`) should remain free of testnet principals.
-        "components",
-        "constants.tsx",
+        # UI mock data/constants (e.g. `MOCK_*`) are allowed in a small set of files that are
+        # explicitly gated in `GATE_REQUIRED` above. We keep scanning the rest of the UI and
+        # all production-facing service integrations (such as `services/`).
+        "scripts/update_mocks.py",
     },
     "stacksorbit": {
         "Clarinet.toml",
@@ -232,9 +260,10 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
         for label, pattern in CONTAMINATION_PATTERNS:
             for i, line in enumerate(lines, start=1):
                 if pattern.search(line):
-                    gate_regex = gate_requirements.get(rel_path)
-                    if gate_regex and label in GATEABLE_LABELS:
-                        if gate_regex.search(content):
+                    gate_rule = gate_requirements.get(rel_path)
+                    if gate_rule and label in GATEABLE_LABELS:
+                        gate_regex = gate_rule.get(label) if isinstance(gate_rule, dict) else gate_rule
+                        if gate_regex and gate_regex.search(content):
                             break
                         errors.append(
                             f"[{repo_name}] {label} found in {rel_path}:{i} without required gate"
