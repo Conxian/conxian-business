@@ -4,6 +4,8 @@ This document defines the BOS-level business role, governance controls, and docu
 
 Canonical SDK docs live in the SDK repo itself (Conxian/lib-conclave-sdk). The links below are pinned to the current submodule SHA used by this BOS repo.
 
+When this BOS repo bumps the `lib-conclave-sdk` submodule pin, update the URLs below in the same PR so the buildout doc stays aligned to the vendored SDK version.
+
 - SDK README: https://github.com/Conxian/lib-conclave-sdk/blob/f75bf82aedb1ef7dd3f1ed2fedbf5822f5ab6d23/README.md
 - SDK governance: https://github.com/Conxian/lib-conclave-sdk/blob/f75bf82aedb1ef7dd3f1ed2fedbf5822f5ab6d23/GOVERNANCE.md
 - SDK releasing: https://github.com/Conxian/lib-conclave-sdk/blob/f75bf82aedb1ef7dd3f1ed2fedbf5822f5ab6d23/RELEASING.md
@@ -31,6 +33,7 @@ The business obligation of the SDK is to provide a single integration contract s
 The SDK currently exposes two public integration surfaces:
 
 1. **Rust crate API** (system/service integrations)
+   - Cargo package name: `lib-conclave-sdk` (current version at this pin: `0.1.0`).
    - Canonical “integration contract” types include:
      - `enclave::EnclaveManager` (hardware abstraction)
      - `enclave::SignRequest` / `enclave::SignResponse`
@@ -39,6 +42,8 @@ The SDK currently exposes two public integration surfaces:
 
 2. **WASM bindings** (browser/mobile JS runtimes)
    - Canonical entrypoint is `ConclaveWasmClient` exposed via `src/wasm_bindings.rs`.
+   - Expected build target: `wasm32-unknown-unknown` (built via `wasm-pack`).
+   - Build output packaging details (npm package name, publish channel) should be treated as part of release governance and called out explicitly in release notes once the WASM artifact is shipped publicly.
 
 Because the SDK is currently `0.x` (beta), the “integration contract” is best treated as:
 
