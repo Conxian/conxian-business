@@ -39,14 +39,14 @@ These workflows run on every pull request targeting `dev`, `staged`, or `main`. 
         - Plain (non-glob) patterns (no glob metacharacters such as `*`, `?`, or bracket expressions like `[a-z]`):
           - If the pattern contains `/`, it is matched against the full normalized path.
           - Plain patterns can also match a directory prefix at a path boundary (e.g., `audit/reports` matches `audit/reports/<...>` but not `audit/reports-old/<...>`).
-          - If the pattern does not contain `/`, it also matches basenames anywhere in the repo.
+          - If the pattern does not contain `/`, it also matches basenames anywhere in the repo and exact normalized paths.
         - Glob patterns (contain glob metacharacters such as `*`, `?`, or bracket expressions like `[a-z]`):
           - If the pattern contains `/`, it is matched against the full normalized path.
-          - If the pattern does not contain `/`, it is matched against basenames and (for backward compatibility) also the full normalized path, so keep patterns as specific as possible.
+          - If the pattern does not contain `/`, it is matched against basenames only (it does not match full normalized paths; add `/` when you need full-path matching).
         - Examples:
           - `junit.xml` matches any tracked file with basename `junit.xml` anywhere in the repo.
           - `audit/reports` matches any tracked file under `audit/reports/` (path-boundary directory-prefix match; does not match `audit/reports-old/`).
-          - `*.log` matches any tracked `.log` file by basename, and also any full path ending in `.log` (compatibility), so use with care.
+          - `*.log` matches any tracked `.log` file by basename, so use with care.
     - Submodule integrity via `scripts/verify_submodule_integrity.py`.
 - Branch promotion policy (see [`branch-promotion-policy.yml`](./workflows/branch-promotion-policy.yml))
 - Secret scan (see [`secret-scan.yml`](./workflows/secret-scan.yml))
