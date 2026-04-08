@@ -91,7 +91,6 @@ def _parse_github_repo(url: str) -> str | None:
         repo = repo[:-4]
     return f"{owner}/{repo}"
 
-
 class GitHubApiError(RuntimeError):
     pass
 
@@ -187,7 +186,6 @@ def _verify_submodule_pins(
             except GitHubApiError as e:
                 failures.append(f"{path}: GitHub API error for {repo}: {e}")
                 continue
-
             default_branch = repo_meta.get("default_branch")
             if not default_branch:
                 failures.append(f"{path}: unable to resolve default branch for {repo}")
@@ -201,7 +199,6 @@ def _verify_submodule_pins(
         except GitHubApiError as e:
             failures.append(f"{path}: GitHub API error for {repo}@{default_branch}: {e}")
             continue
-
         status = compare.get("status")
         ahead_by = compare.get("ahead_by")
         behind_by = compare.get("behind_by")
