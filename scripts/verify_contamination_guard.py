@@ -84,10 +84,9 @@ def repo_relative_path_for_exclusions(repo_name: str, rel_path: str) -> str:
         rel_path = rel_path[2:]
     rel_path = rel_path.strip("/")
 
-    if repo_name == "conxian-business":
-        prefix = "conxian-business/"
-        if rel_path.startswith(prefix):
-            return rel_path[len(prefix) :]
+    prefix = repo_name.strip("/") + "/"
+    if prefix != "/" and rel_path.startswith(prefix):
+        return rel_path[len(prefix) :]
 
     return rel_path
 
