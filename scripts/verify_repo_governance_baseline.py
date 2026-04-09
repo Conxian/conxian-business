@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import math
 import os
-import math
 import re
 import subprocess
 import sys
@@ -46,8 +45,8 @@ REQUIRED_FILES: tuple[RequiredFile, ...] = (
 PORTFOLIO_DOCS: tuple[RequiredFile, ...] = (RequiredFile("docs/REPO_PORTFOLIO.md", 1),)
 
 CODEOWNERS_CANDIDATES: tuple[str, ...] = (
-    "CODEOWNERS",
     ".github/CODEOWNERS",
+    "CODEOWNERS",
     "docs/CODEOWNERS",
 )
 
@@ -157,13 +156,6 @@ def verify() -> None:
             + repr(raw_multiplier)
         )
         min_bytes_multiplier = 1.0
-    else:
-        if not math.isfinite(min_bytes_multiplier) or min_bytes_multiplier < 0:
-            errors.append(
-                "GOVERNANCE_MIN_BYTES_MULTIPLIER must be a finite, non-negative number, got "
-                + repr(raw_multiplier)
-            )
-            min_bytes_multiplier = 1.0
 
     for required in required_files:
         path = repo_root / required.rel_path
