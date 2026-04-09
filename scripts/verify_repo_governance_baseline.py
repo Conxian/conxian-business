@@ -78,7 +78,7 @@ def _read_text(path: Path) -> str:
 
 
 def _require_heading(text: str, heading: str) -> bool:
-    pattern = f"(?im)^[ ]{{0,3}}#{{1,3}}\s+{re.escape(heading)}\b"
+    pattern = rf"(?im)^[ ]{{0,3}}#{{1,3}}\s+{re.escape(heading)}\b"
     return bool(re.search(pattern, text))
 
 
