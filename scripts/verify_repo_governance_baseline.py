@@ -78,8 +78,12 @@ def _read_text(path: Path) -> str:
 
 
 def _require_heading(text: str, heading: str) -> bool:
-    pattern = rf"(?im)^[ ]{{0,3}}#{{1,3}}\s+{re.escape(heading)}\b"
-    return bool(re.search(pattern, text))
+    return bool(
+        re.search(
+            rf"(?im)^\s{{0,3}}#{{1,3}}\s+{re.escape(heading)}\b",
+            text,
+        )
+    )
 
 
 def _verify_readme(repo_root: Path, errors: list[str]) -> None:
