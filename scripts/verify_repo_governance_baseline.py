@@ -185,7 +185,9 @@ def verify() -> None:
     codeowners = _find_codeowners(repo_root)
     if codeowners is None:
         errors.append(
-            "CODEOWNERS: missing (expected one of: CODEOWNERS, .github/CODEOWNERS, docs/CODEOWNERS)"
+            "CODEOWNERS: missing (expected one of: "
+            + ", ".join(CODEOWNERS_CANDIDATES)
+            + ")"
         )
     else:
         _verify_codeowners(codeowners, repo_root=repo_root, errors=errors)
