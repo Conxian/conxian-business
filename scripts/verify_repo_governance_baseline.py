@@ -37,7 +37,6 @@ REQUIRED_FILES: tuple[RequiredFile, ...] = (
     RequiredFile("CHANGELOG.md", 256),
     RequiredFile("RELEASING.md", 128),
     RequiredFile(".github/RELEASE_HYGIENE.md", 256),
-    RequiredFile("docs/REPO_PORTFOLIO.md", 256),
 )
 
 
@@ -46,6 +45,12 @@ CODEOWNERS_CANDIDATES: tuple[str, ...] = (
     ".github/CODEOWNERS",
     "docs/CODEOWNERS",
 )
+
+CODEOWNERS_MIN_BYTES = 64
+
+
+def _is_truthy_env(var_name: str) -> bool:
+    return os.environ.get(var_name, "").strip().lower() in {"1", "true", "yes", "y"}
 
 
 def _find_codeowners(repo_root: Path) -> Path | None:
@@ -87,17 +92,8 @@ def _verify_contributing(repo_root: Path, errors: list[str]) -> None:
         errors.append("CONTRIBUTING.md: missing Pull Request guidance")
 
 
-def _verify_codeowners(repo_root: Path, errors: list[str]) -> None:
-    codeowners = _find_codeowners(repo_root)
-    if codeowners is None:
-        errors.append(
-            "Missing required file: CODEOWNERS (supported locations: "
-            + ", ".join(CODEOWNERS_CANDIDATES)
-            + ")"
-        )
-        return
-
-    lines = _read_text(codeowners).splitlines()
+def _verify_codeowners(path: Path, *, rel_path: str, errors: list[str]) -> None:
+    lines = _read_text(path).splitlines()
 
     owner_lines = [
         line.strip()
@@ -106,20 +102,16 @@ def _verify_codeowners(repo_root: Path, errors: list[str]) -> None:
     ]
 
     if not owner_lines:
-        errors.append(f"{codeowners.relative_to(repo_root)}: no ownership rules found")
+        errors.append(f"{rel_path}: no ownership rules found")
         return
 
     covers_all = any(line.split() and line.split()[0] == "*" for line in owner_lines)
     if not covers_all:
-        errors.append(
-            f"{codeowners.relative_to(repo_root)}: must include a '*' rule to cover the entire repo"
-        )
+        errors.append(f"{rel_path}: must include a '*' rule to cover the entire repo")
 
     has_github_owner = any("@" in token for line in owner_lines for token in line.split()[1:])
     if not has_github_owner:
-        errors.append(
-            f"{codeowners.relative_to(repo_root)}: no GitHub usernames found in ownership rules"
-        )
+        errors.append(f"{rel_path}: no GitHub usernames found in ownership rules")
 
 
 def _verify_changelog(repo_root: Path, errors: list[str]) -> None:
@@ -134,7 +126,11 @@ def verify() -> None:
     errors: list[str] = []
     missing: set[str] = set()
 
-    for required in REQUIRED_FILES:
+    required_files: list[RequiredFile] = list(REQUIRED_FILES)
+    if _is_truthy_env("BOS_REQUIRE_PORTFOLIO_DOCS"):
+        required_files.append(RequiredFile("docs/REPO_PORTFOLIO.md", 256))
+
+    for required in required_files:
         path = repo_root / required.rel_path
         if not path.exists():
             errors.append(f"Missing required file: {required.rel_path}")
@@ -150,13 +146,29 @@ def verify() -> None:
                 f"Required file too small ({size} bytes < {required.min_bytes}): {required.rel_path}"
             )
 
+    codeowners = _find_codeowners(repo_root)
+    if codeowners is None:
+        errors.append(
+            "Missing CODEOWNERS file (tried: "
+            + ", ".join(CODEOWNERS_CANDIDATES)
+            + ")"
+        )
+    else:
+        codeowners_rel = codeowners.relative_to(repo_root).as_posix()
+        size = codeowners.stat().st_size
+        if size < CODEOWNERS_MIN_BYTES:
+            errors.append(
+                f"Required file too small ({size} bytes < {CODEOWNERS_MIN_BYTES}): {codeowners_rel}"
+            )
+
     if "README.md" not in missing:
         _verify_readme(repo_root, errors)
     if "SECURITY.md" not in missing:
         _verify_security(repo_root, errors)
     if "CONTRIBUTING.md" not in missing:
         _verify_contributing(repo_root, errors)
-    _verify_codeowners(repo_root, errors)
+    if codeowners is not None:
+        _verify_codeowners(codeowners, rel_path=codeowners_rel, errors=errors)
     if "CHANGELOG.md" not in missing:
         _verify_changelog(repo_root, errors)
 

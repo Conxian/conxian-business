@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -26,6 +27,7 @@ def _repo_root() -> Path:
 class Check:
     label: str
     argv: tuple[str, ...]
+    env: dict[str, str] | None = None
 
 
 CHECKS: tuple[Check, ...] = (
@@ -52,6 +54,7 @@ CHECKS: tuple[Check, ...] = (
     Check(
         "Governance baseline",
         (sys.executable, str(SCRIPT_DIR / "verify_repo_governance_baseline.py")),
+        env={"BOS_REQUIRE_PORTFOLIO_DOCS": "true"},
     ),
     Check(
         "Contamination guard",
@@ -62,7 +65,11 @@ CHECKS: tuple[Check, ...] = (
 
 def _run(check: Check, *, cwd: Path) -> int:
     print(f"\n==> {check.label}", flush=True)
-    proc = subprocess.run(check.argv, check=False, cwd=str(cwd))
+    env = os.environ.copy()
+    if check.env:
+        env.update(check.env)
+
+    proc = subprocess.run(check.argv, check=False, cwd=str(cwd), env=env)
     return int(proc.returncode)
 
 
