@@ -44,18 +44,21 @@ REQUIRED_FILES: tuple[RequiredFile, ...] = (
 
 
 CODEOWNERS_CANDIDATES: tuple[str, ...] = (
-    "CODEOWNERS",
     ".github/CODEOWNERS",
+    "CODEOWNERS",
     "docs/CODEOWNERS",
 )
 
+CODEOWNERS_MIN_BYTES = 64
 
-def _find_codeowners(repo_root: Path) -> Path | None:
+
+def _find_codeowners(repo_root: Path) -> list[Path]:
+    found: list[Path] = []
     for rel_path in CODEOWNERS_CANDIDATES:
         path = repo_root / rel_path
         if path.is_file():
-            return path
-    return None
+            found.append(path)
+    return found
 
 
 def _read_text(path: Path) -> str:
@@ -90,12 +93,25 @@ def _verify_contributing(repo_root: Path, errors: list[str]) -> None:
 
 
 def _verify_codeowners(repo_root: Path, errors: list[str]) -> None:
-    codeowners = _find_codeowners(repo_root)
-    if codeowners is None:
+    found = _find_codeowners(repo_root)
+    if not found:
         errors.append(
             "Missing required file: CODEOWNERS (supported locations: "
             + ", ".join(CODEOWNERS_CANDIDATES)
             + ")"
+        )
+        return
+
+    if len(found) > 1:
+        rels = ", ".join(str(path.relative_to(repo_root)) for path in found)
+        errors.append(f"Multiple CODEOWNERS files found: {rels}; keep exactly one")
+        return
+
+    codeowners = found[0]
+    size = codeowners.stat().st_size
+    if size < CODEOWNERS_MIN_BYTES:
+        errors.append(
+            f"Required file too small ({size} bytes < {CODEOWNERS_MIN_BYTES}): {codeowners.relative_to(repo_root)}"
         )
         return
 
