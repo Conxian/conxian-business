@@ -45,8 +45,8 @@ REQUIRED_FILES: tuple[RequiredFile, ...] = (
 PORTFOLIO_DOCS: tuple[RequiredFile, ...] = (RequiredFile("docs/REPO_PORTFOLIO.md", 1),)
 
 CODEOWNERS_CANDIDATES: tuple[str, ...] = (
-    "CODEOWNERS",
     ".github/CODEOWNERS",
+    "CODEOWNERS",
     "docs/CODEOWNERS",
 )
 
@@ -148,18 +148,14 @@ def verify() -> None:
     raw_multiplier = os.environ.get("GOVERNANCE_MIN_BYTES_MULTIPLIER", "1")
     try:
         min_bytes_multiplier = float(raw_multiplier)
+        if not math.isfinite(min_bytes_multiplier) or min_bytes_multiplier <= 0:
+            raise ValueError
     except ValueError:
         errors.append(
-            f"GOVERNANCE_MIN_BYTES_MULTIPLIER must be numeric, got {raw_multiplier!r}"
+            "GOVERNANCE_MIN_BYTES_MULTIPLIER must be a positive, finite number, got "
+            + repr(raw_multiplier)
         )
         min_bytes_multiplier = 1.0
-    else:
-        if not math.isfinite(min_bytes_multiplier) or min_bytes_multiplier < 0:
-            errors.append(
-                "GOVERNANCE_MIN_BYTES_MULTIPLIER must be a finite, non-negative number, got "
-                + repr(raw_multiplier)
-            )
-            min_bytes_multiplier = 1.0
 
     for required in required_files:
         path = repo_root / required.rel_path
@@ -189,7 +185,9 @@ def verify() -> None:
     codeowners = _find_codeowners(repo_root)
     if codeowners is None:
         errors.append(
-            "CODEOWNERS: missing (expected one of: CODEOWNERS, .github/CODEOWNERS, docs/CODEOWNERS)"
+            "CODEOWNERS: missing (expected one of: "
+            + ", ".join(CODEOWNERS_CANDIDATES)
+            + ")"
         )
     else:
         _verify_codeowners(codeowners, repo_root=repo_root, errors=errors)
