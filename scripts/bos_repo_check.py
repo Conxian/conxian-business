@@ -46,26 +46,48 @@ CHECKS: tuple[Check, ...] = (
 )
 
 
-def _run(check: Check) -> int:
-    print(f"\n==> {check.label}")
-    proc = subprocess.run(check.argv, check=False)
+def _repo_root() -> Path:
+    try:
+        out = subprocess.check_output(
+            ["git", "-C", str(SCRIPT_DIR), "rev-parse", "--show-toplevel"],
+            stderr=subprocess.STDOUT,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except (FileNotFoundError, OSError, subprocess.CalledProcessError) as exc:
+        raise RuntimeError(f"Failed to determine repo root via git: {exc}") from exc
+    return Path(out.strip())
+
+
+def _run(check: Check, *, cwd: Path) -> int:
+    print(f"\n==> {check.label}", flush=True)
+    proc = subprocess.run(check.argv, check=False, cwd=str(cwd))
     return int(proc.returncode)
 
 
 def main() -> int:
+    try:
+        repo_root = _repo_root()
+    except RuntimeError as exc:
+        print(f"\nBOS repo-check: FAILED\n- {exc}", flush=True)
+        return 1
+
+    print(f"Repo root: {repo_root}", flush=True)
+
     failures: list[str] = []
     for check in CHECKS:
-        status = _run(check)
+        status = _run(check, cwd=repo_root)
         if status != 0:
             failures.append(f"{check.label} (exit {status})")
 
     if failures:
-        print("\nBOS repo-check: FAILED")
+        print("\nBOS repo-check: FAILED", flush=True)
         for failure in failures:
-            print(f"- {failure}")
+            print(f"- {failure}", flush=True)
         return 1
 
-    print("\nBOS repo-check: OK")
+    print("\nBOS repo-check: OK", flush=True)
     return 0
 
 

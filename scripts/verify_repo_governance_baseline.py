@@ -7,6 +7,8 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+
 
 @dataclass(frozen=True)
 class RequiredFile:
@@ -17,7 +19,7 @@ class RequiredFile:
 def _repo_root() -> Path:
     try:
         out = subprocess.check_output(
-            ["git", "rev-parse", "--show-toplevel"],
+            ["git", "-C", str(SCRIPT_DIR), "rev-parse", "--show-toplevel"],
             stderr=subprocess.STDOUT,
             text=True,
             encoding="utf-8",
@@ -33,13 +35,27 @@ REQUIRED_FILES: tuple[RequiredFile, ...] = (
     RequiredFile("LICENSE", 256),
     RequiredFile("SECURITY.md", 256),
     RequiredFile("CONTRIBUTING.md", 256),
-    RequiredFile("CODEOWNERS", 64),
     RequiredFile("GOVERNANCE.md", 128),
     RequiredFile("CHANGELOG.md", 256),
     RequiredFile("RELEASING.md", 128),
     RequiredFile(".github/RELEASE_HYGIENE.md", 256),
     RequiredFile("docs/REPO_PORTFOLIO.md", 256),
 )
+
+
+CODEOWNERS_CANDIDATES: tuple[str, ...] = (
+    "CODEOWNERS",
+    ".github/CODEOWNERS",
+    "docs/CODEOWNERS",
+)
+
+
+def _find_codeowners(repo_root: Path) -> Path | None:
+    for rel_path in CODEOWNERS_CANDIDATES:
+        path = repo_root / rel_path
+        if path.is_file():
+            return path
+    return None
 
 
 def _read_text(path: Path) -> str:
@@ -74,7 +90,15 @@ def _verify_contributing(repo_root: Path, errors: list[str]) -> None:
 
 
 def _verify_codeowners(repo_root: Path, errors: list[str]) -> None:
-    codeowners = repo_root / "CODEOWNERS"
+    codeowners = _find_codeowners(repo_root)
+    if codeowners is None:
+        errors.append(
+            "Missing required file: CODEOWNERS (supported locations: "
+            + ", ".join(CODEOWNERS_CANDIDATES)
+            + ")"
+        )
+        return
+
     lines = _read_text(codeowners).splitlines()
 
     owner_lines = [
@@ -84,16 +108,20 @@ def _verify_codeowners(repo_root: Path, errors: list[str]) -> None:
     ]
 
     if not owner_lines:
-        errors.append("CODEOWNERS: no ownership rules found")
+        errors.append(f"{codeowners.relative_to(repo_root)}: no ownership rules found")
         return
 
     covers_all = any(line.split() and line.split()[0] == "*" for line in owner_lines)
     if not covers_all:
-        errors.append("CODEOWNERS: must include a '*' rule to cover the entire repo")
+        errors.append(
+            f"{codeowners.relative_to(repo_root)}: must include a '*' rule to cover the entire repo"
+        )
 
     has_github_owner = any("@" in token for line in owner_lines for token in line.split()[1:])
     if not has_github_owner:
-        errors.append("CODEOWNERS: no GitHub usernames found in ownership rules")
+        errors.append(
+            f"{codeowners.relative_to(repo_root)}: no GitHub usernames found in ownership rules"
+        )
 
 
 def _verify_changelog(repo_root: Path, errors: list[str]) -> None:
@@ -130,8 +158,7 @@ def verify() -> None:
         _verify_security(repo_root, errors)
     if "CONTRIBUTING.md" not in missing:
         _verify_contributing(repo_root, errors)
-    if "CODEOWNERS" not in missing:
-        _verify_codeowners(repo_root, errors)
+    _verify_codeowners(repo_root, errors)
     if "CHANGELOG.md" not in missing:
         _verify_changelog(repo_root, errors)
 
