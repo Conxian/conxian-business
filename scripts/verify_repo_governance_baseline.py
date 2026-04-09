@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 import os
 import math
 import re
@@ -148,9 +149,12 @@ def verify() -> None:
     raw_multiplier = os.environ.get("GOVERNANCE_MIN_BYTES_MULTIPLIER", "1")
     try:
         min_bytes_multiplier = float(raw_multiplier)
+        if not math.isfinite(min_bytes_multiplier) or min_bytes_multiplier <= 0:
+            raise ValueError
     except ValueError:
         errors.append(
-            f"GOVERNANCE_MIN_BYTES_MULTIPLIER must be numeric, got {raw_multiplier!r}"
+            "GOVERNANCE_MIN_BYTES_MULTIPLIER must be a positive, finite number, got "
+            + repr(raw_multiplier)
         )
         min_bytes_multiplier = 1.0
     else:
