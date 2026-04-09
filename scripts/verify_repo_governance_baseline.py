@@ -144,7 +144,14 @@ def verify() -> None:
     if _is_truthy_env("BOS_REQUIRE_PORTFOLIO_DOCS"):
         required_files.extend(PORTFOLIO_DOCS)
 
-    min_bytes_multiplier = float(os.environ.get("GOVERNANCE_MIN_BYTES_MULTIPLIER", "1"))
+    raw_multiplier = os.environ.get("GOVERNANCE_MIN_BYTES_MULTIPLIER", "1")
+    try:
+        min_bytes_multiplier = float(raw_multiplier)
+    except ValueError:
+        errors.append(
+            f"GOVERNANCE_MIN_BYTES_MULTIPLIER must be numeric, got {raw_multiplier!r}"
+        )
+        min_bytes_multiplier = 1.0
 
     for required in required_files:
         path = repo_root / required.rel_path
