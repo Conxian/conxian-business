@@ -168,7 +168,7 @@ def verify() -> None:
             missing.add(required.rel_path)
             continue
 
-        required_min = int(required.min_bytes * min_bytes_multiplier)
+        required_min = math.ceil(required.min_bytes * min_bytes_multiplier)
         size = path.stat().st_size
         if required_min > 0 and size < required_min:
             errors.append(
