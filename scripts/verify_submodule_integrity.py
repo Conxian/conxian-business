@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+"""Verify that this repo's submodule pins stay aligned with upstream defaults.
+
+This check queries the GitHub REST API. It is intended to be CI-gating, and
+requires network access plus a token via GITHUB_TOKEN or GH_TOKEN.
+"""
+
 import configparser
 import dataclasses
 import json
@@ -308,6 +314,11 @@ def _verify_submodule_pins(
         behind_by = compare.get("behind_by")
 
         if status in {"identical", "ahead"}:
+            continue
+
+        allowlisted_entry = allowlist.get(path, {}).get(sha.lower())
+        if allowlisted_entry is not None:
+            allowlisted_hits.append(allowlisted_entry)
             continue
 
         failures.append(
