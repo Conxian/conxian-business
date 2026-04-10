@@ -7,10 +7,10 @@ This dashboard provides a high-level maturity and readiness overview for the Con
 | Layer | Repo / Asset | Status | Readiness | Release Criticality |
 | --- | --- | --- | --- | --- |
 | **Governance** | `conxian-business` | Active | **READINESS VERIFIED** | P0 |
-| **Protocol** | `Conxian` | Active | Mainnet Pending | P0 |
+| **Protocol** | `Conxian` | Active | Mainnet Ready | P0 |
 | **State Node** | `conxian-nexus` | Active | Mainnet Pending | P0 |
-| **Gateway** | `conxian-gateway` | Active | Mainnet Pending | P0 |
-| **Wallet** | `conxius-wallet` | Active | Mainnet Pending | P0 |
+| **Gateway** | `conxian-gateway` | Active | Mainnet Ready | P0 |
+| **Wallet** | `conxius-wallet` | Active | Mainnet Ready | P0 |
 | **Shared Core** | `lib-conxian-core` | Stable | Stable | P0 |
 | **Shared SDK** | `lib-conclave-sdk` | Beta | Mainnet Ready | P0 |
 | **Tooling** | `stacksorbit` | Active | Mainnet Ready | P0 |
