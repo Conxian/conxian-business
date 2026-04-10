@@ -32,17 +32,17 @@ def _repo_root() -> Path:
 
 
 REQUIRED_FILES: tuple[RequiredFile, ...] = (
-    RequiredFile("README.md", 1),
-    RequiredFile("LICENSE", 1),
-    RequiredFile("SECURITY.md", 1),
-    RequiredFile("CONTRIBUTING.md", 1),
-    RequiredFile("GOVERNANCE.md", 1),
-    RequiredFile("CHANGELOG.md", 1),
-    RequiredFile("RELEASING.md", 1),
-    RequiredFile(".github/RELEASE_HYGIENE.md", 1),
+    RequiredFile("README.md", 256),
+    RequiredFile("LICENSE", 256),
+    RequiredFile("SECURITY.md", 256),
+    RequiredFile("CONTRIBUTING.md", 256),
+    RequiredFile("GOVERNANCE.md", 128),
+    RequiredFile("CHANGELOG.md", 256),
+    RequiredFile("RELEASING.md", 128),
+    RequiredFile(".github/RELEASE_HYGIENE.md", 256),
 )
 
-PORTFOLIO_DOCS: tuple[RequiredFile, ...] = (RequiredFile("docs/REPO_PORTFOLIO.md", 1),)
+PORTFOLIO_DOCS: tuple[RequiredFile, ...] = (RequiredFile("docs/REPO_PORTFOLIO.md", 256),)
 
 CODEOWNERS_CANDIDATES: tuple[str, ...] = (
     ".github/CODEOWNERS",
