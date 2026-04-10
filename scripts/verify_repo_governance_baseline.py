@@ -5,6 +5,7 @@ import os
 import re
 import subprocess
 import sys
+import traceback
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -50,6 +51,7 @@ CODEOWNERS_CANDIDATES: tuple[str, ...] = (
     "docs/CODEOWNERS",
 )
 
+CODEOWNERS_MIN_BYTES = 64
 
 def _is_truthy_env(var_name: str) -> bool:
     return os.environ.get(var_name, "").strip().lower() in {
@@ -61,12 +63,13 @@ def _is_truthy_env(var_name: str) -> bool:
     }
 
 
-def _find_codeowners(repo_root: Path) -> Path | None:
-    for rel in CODEOWNERS_CANDIDATES:
-        path = repo_root / rel
+def _find_codeowners(repo_root: Path) -> list[Path]:
+    found: list[Path] = []
+    for rel_path in CODEOWNERS_CANDIDATES:
+        path = repo_root / rel_path
         if path.is_file():
-            return path
-    return None
+            found.append(path)
+    return found
 
 
 def _read_text(path: Path) -> str:
@@ -76,7 +79,7 @@ def _read_text(path: Path) -> str:
 def _require_heading(text: str, heading: str) -> bool:
     return bool(
         re.search(
-            rf"(?im)^#{{1,3}}\s+{re.escape(heading)}\s*$",
+            rf"(?im)^\s{{0,3}}#{{1,3}}\s+{re.escape(heading)}\b",
             text,
         )
     )
@@ -93,7 +96,7 @@ def _verify_readme(repo_root: Path, errors: list[str]) -> None:
 def _verify_security(repo_root: Path, errors: list[str]) -> None:
     text = _read_text(repo_root / "SECURITY.md")
     if not re.search(
-        r"(?im)^#{1,3}\s+reporting\s+a\s+vulnerabilit(y|ies)\b",
+        r"(?im)^\s{0,3}#{1,3}\s+reporting\s+a\s+vulnerabilit(y|ies)\b",
         text,
     ):
         errors.append("SECURITY.md: missing 'Reporting a Vulnerability' section")
@@ -122,7 +125,6 @@ def _verify_codeowners(codeowners: Path, *, repo_root: Path, errors: list[str]) 
     covers_all = any(line.split() and line.split()[0] == "*" for line in owner_lines)
     if not covers_all:
         errors.append(f"{rel_path}: must include a '*' rule to cover the entire repo")
-
     has_github_owner = any(
         token.startswith("@") for line in owner_lines for token in line.split()[1:]
     )
@@ -182,15 +184,27 @@ def verify() -> None:
     if "CONTRIBUTING.md" not in missing:
         _verify_contributing(repo_root, errors)
 
-    codeowners = _find_codeowners(repo_root)
-    if codeowners is None:
+    found_codeowners = _find_codeowners(repo_root)
+    if not found_codeowners:
         errors.append(
             "CODEOWNERS: missing (expected one of: "
             + ", ".join(CODEOWNERS_CANDIDATES)
             + ")"
         )
+    elif len(found_codeowners) > 1:
+        rels = ", ".join(str(path.relative_to(repo_root)) for path in found_codeowners)
+        errors.append(f"Multiple CODEOWNERS files found: {rels}; keep exactly one")
     else:
-        _verify_codeowners(codeowners, repo_root=repo_root, errors=errors)
+        codeowners = found_codeowners[0]
+        rel_path = codeowners.relative_to(repo_root).as_posix()
+        required_min = math.ceil(CODEOWNERS_MIN_BYTES * min_bytes_multiplier)
+        size = codeowners.stat().st_size
+        if required_min > 0 and size < required_min:
+            errors.append(
+                f"Required file too small ({size} bytes < {required_min}): {rel_path}"
+            )
+        else:
+            _verify_codeowners(codeowners, repo_root=repo_root, errors=errors)
 
     if "CHANGELOG.md" not in missing:
         _verify_changelog(repo_root, errors)
@@ -208,6 +222,9 @@ def verify() -> None:
 if __name__ == "__main__":
     try:
         verify()
-    except Exception as exc:
+    except RuntimeError as exc:
         print(str(exc), file=sys.stderr)
+        sys.exit(1)
+    except Exception:
+        traceback.print_exc()
         sys.exit(1)
