@@ -17,7 +17,7 @@ active — This documentation hub is published from the public-safe allowlist us
 - **[Introduction](../README.md)**
 - **[Repo portfolio (flagship vs supporting)](REPO_PORTFOLIO.md#ecosystem-repos)**
 
-Note: Cross-repo docs links are pinned to the Conxian submodule SHA for reproducibility; update the SHA when bumping the submodule.
+Note: Cross-repo docs links are pinned to the Conxian submodule SHA for reproducibility; update the SHA to match `git submodule status Conxian` when bumping the submodule.
 
 ## Strategic knowledge base
 - **[Strategic Growth Model (2026)](STRATEGIC_GROWTH_MODEL_2026.md)**
