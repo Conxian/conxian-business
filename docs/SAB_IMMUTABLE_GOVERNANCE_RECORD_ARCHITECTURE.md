@@ -17,6 +17,7 @@ It classifies governance record domains, establishes datastore boundaries with o
 The `record_id` for any JSON-LD governance record MUST be computed deterministically to prevent “same semantics, different hash” failures across implementations.
 
 - **Canonicalization:** JSON-LD RDF Dataset Canonicalization using **URDNA2015**, yielding canonical N-Quads.
+- **JSON-LD processing:** implementations MUST use JSON-LD 1.1 (`processingMode: "json-ld-1.1"`) and MUST NOT rely on library/environment defaults. IRIs MUST be absolute in the source material (no ambient base IRI).
 - **Bytes:** UTF-8 bytes of the canonical N-Quads (LF line endings).
 - **Hash:** `sha256(canonical_nquads_bytes)` (32 bytes).
 - **Representation:**
