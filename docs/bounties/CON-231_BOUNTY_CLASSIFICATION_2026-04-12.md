@@ -21,6 +21,9 @@ Replay queries used to derive the snapshot above:
 # GitHub open bounty set
 gh issue list -R Conxian/conxius-platform -S 'label:Bounty state:open'
 
+# GitHub open bounty set (Bounty Open)
+gh issue list -R Conxian/conxius-platform -S 'label:"Bounty Open" state:open'
+
 # Linear bounty sets (Conxian-Labs team)
 ch-linear issue list -T CON -l Bounty
 ch-linear issue list -T CON -l 'Bounty Open'
@@ -120,3 +123,4 @@ To make the repo and Linear states accurately reflect the classification above:
    - the issue is in `Todo` (claimable),
    - it is unassigned,
    - it has explicit acceptance criteria that can be validated via a PR/commit artifact.
+4. For https://linear.app/conxian-labs/issue/CON-231/decide-which-bounties-can-open-before-mainnet-go-live specifically, all currently visible claims are considered invalid for approval as of 2026-04-12 because they lack linked implementation artifacts.
