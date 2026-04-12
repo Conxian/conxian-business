@@ -66,6 +66,24 @@ As of 2026-04-12, the lists above represent the full set of active `Bounty` / `B
 
 Coverage check (as of 2026-04-12): 13 unique `CON-` issues classified (2 internal-only, 7 security-sensitive, 2 payout-gated, 2 claimable later). GitHub mirrors are not counted separately.
 
+### Classification table (canonical)
+
+| Issue | Category | `Bounty Open` on Linear (2026-04-12) |
+|---|---|---|
+| https://linear.app/conxian-labs/issue/CON-231/decide-which-bounties-can-open-before-mainnet-go-live | Internal-only | No |
+| https://linear.app/conxian-labs/issue/CON-131/adopt-stricter-bounty-workflow-for-conxian-labs | Internal-only | No |
+| https://linear.app/conxian-labs/issue/CON-178/release-hygiene-github | Security-sensitive | Yes |
+| https://linear.app/conxian-labs/issue/CON-182/release-hygiene-conxian | Security-sensitive | Yes |
+| https://linear.app/conxian-labs/issue/CON-186/release-hygiene-conxian-ui | Security-sensitive | Yes |
+| https://linear.app/conxian-labs/issue/CON-198/release-hygiene-conxian-labs-site | Security-sensitive | Yes |
+| https://linear.app/conxian-labs/issue/CON-218/release-hygiene-lib-conxian-core | Security-sensitive | Yes |
+| https://linear.app/conxian-labs/issue/CON-222/release-hygiene-stacksorbit | Security-sensitive | Yes |
+| https://linear.app/conxian-labs/issue/CON-129/csf-mainnet-readiness-gate | Security-sensitive | No |
+| https://linear.app/conxian-labs/issue/CON-167/maintainer-payout-enablement-checklist-for-alex-funded-bounties | Payout-gated | No |
+| https://linear.app/conxian-labs/issue/CON-230/confirm-bounty-funding-and-payout-activation-for-mainnet | Payout-gated | No |
+| https://linear.app/conxian-labs/issue/CON-78/con-75-bounty-gateway-edge-offline-first-pos-sync | Claimable later | Yes |
+| https://linear.app/conxian-labs/issue/CON-142/mainnet-readiness-checklist-conxius-platform | Claimable later | No |
+
 ## Classification
 
 Everything below other than **Externally claimable (pre-mainnet)** is treated as **non-public / maintainer-gated work** for the pre-mainnet window. `Security-sensitive` and `Payout-gated` are subtypes of internal work that must not be treated as publicly claimable.
@@ -119,3 +137,23 @@ To make the repo and Linear states accurately reflect the classification above:
 5. Before adding or keeping `Bounty Open` on any GitHub issue, ensure it is linked to a `CON-` issue that appears in this classification snapshot (or a successor) and inherits its classification. Unmapped GitHub bounty issues must not be treated as externally claimable.
 
 Given there are no **Externally claimable (pre-mainnet)** items as of 2026-04-12, all audited issues should end up without the `Bounty Open` label until after mainnet go-live.
+
+## Appendix: snapshot data (2026-04-12)
+
+GitHub (`Conxian/conxius-platform`) open issues labeled `Bounty`:
+
+```txt
+210, 197, 170, 159, 152, 153, 139, 102, 101
+```
+
+GitHub (`Conxian/conxius-platform`) open issues labeled `Bounty Open`:
+
+```txt
+197, 170, 159, 152, 153
+```
+
+Linear (team `CON`) issues labeled `Bounty Open`:
+
+```txt
+CON-178, CON-182, CON-186, CON-198, CON-218, CON-222, CON-78
+```
