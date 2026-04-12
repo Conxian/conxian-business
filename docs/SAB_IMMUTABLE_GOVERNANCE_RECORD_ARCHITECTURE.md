@@ -16,9 +16,12 @@ It classifies governance record domains, establishes datastore boundaries with o
 
 The `record_id` for any JSON-LD governance record MUST be computed deterministically to prevent “same semantics, different hash” failures across implementations.
 
-- **Canonicalization:** JSON-LD RDF Dataset Canonicalization using **URDNA2015**.
-- **Hash:** `sha256` over the canonicalized N-Quads bytes (UTF-8).
-- **Digest encoding:** lowercase hex (64 chars). The on-chain anchor MUST store the exact same digest value (ideally as the raw 32-byte digest).
+- **Canonicalization:** JSON-LD RDF Dataset Canonicalization using **URDNA2015**, yielding canonical N-Quads.
+- **Bytes:** UTF-8 bytes of the canonical N-Quads (LF line endings).
+- **Hash:** `sha256(canonical_nquads_bytes)` (32 bytes).
+- **Representation:**
+  - human-readable: lowercase hex (64 chars)
+  - on-chain: the raw 32-byte digest (or an equivalent canonical encoding) that MUST match the above bytes exactly
 - **Context resolution:** canonicalization MUST run with network fetch disabled; any JSON-LD contexts MUST be resolved from pinned, content-addressed artifacts.
 
 ## Target record planes
@@ -40,9 +43,11 @@ These records are authoritative and MUST be discoverable by clients and agents d
 
 Fluree is used for:
 
-- governance resolutions, voting records, and policy bundles as versioned JSON-LD
-- audit trails for operator/agent actions (derived from on-chain + signed off-chain events)
+- governance resolutions, voting records, and policy bundles as versioned JSON-LD (content-addressed by `record_id` and anchored on Stacks L1)
+- audit trails for operator/agent actions as signed attestations; off-chain attestations MUST NOT be correctness-critical unless included in a checkpointed batch whose root is anchored on Stacks L1
 - provenance graphs across policies, identities, controls, and evidence
+
+No policy-sensitive execution may depend on off-chain-only events.
 
 Fluree is NOT used as a canonical authority. Every correctness-relevant record MUST be anchored on-chain by content hash (Plane A) and validated before use.
 
@@ -77,7 +82,7 @@ Operational systems may depend on governance records only through validated, rea
 
 1. **Read policy snapshots:** operational components may read policy bundles by digest and compute “effective policy” at a given Stacks block-height.
 2. **Validate before execute:** any policy-sensitive write MUST validate policy digest and its on-chain anchor before signing or broadcasting a transaction.
-3. **Emit audit events:** operational components MAY emit signed audit events into the governance ledger, but those events MUST NOT be treated as authoritative without anchors/checkpoints.
+3. **Emit audit events:** operational components MAY produce signed audit events and submit them to a governance-ingress service; they MUST NOT append directly to the governance ledger.
 
 ### Prohibited interactions
 
@@ -106,14 +111,16 @@ If the precondition fails, the system halts rather than executing with degraded 
 
 | Component | Governance dependency | If policy cannot be fetched | If policy cannot be validated against L1 | If policy is stale (anchor height behind current) |
 | :--- | :--- | :--- | :--- | :--- |
-| Gateway (tx relay) | Deployment/tx policy bundle | Reject request (503) | Reject request (403/503) | Reject writes; allow read-only queries |
+| Gateway (tx relay) | Deployment/tx policy bundle | Reject writes (503) | Reject writes (412) | Reject writes (412); allow read-only queries |
 | Nexus (indexer) | Checkpoint scheme + dataset roots | Stop serving derived correctness-dependent reads; continue indexing if safe | Halt indexing and mark replica invalid until rebuilt | Continue indexing but flag replica “untrusted” until next validated checkpoint |
 | Ops Orchestrator (automation loop) | Action allowlists + spend tiers | Do not execute jobs; surface “blocked by governance” | Do not execute; require operator intervention | Do not execute policy-sensitive jobs |
 | Signing surface (TEE / secure element) | Signing policy + authority sets | Refuse to sign | Refuse to sign | Refuse to sign |
 
 Notes:
 
-- “Reject request (503)” is a service error, not a retry suggestion for policy-sensitive writes.
+- `503` is reserved for “governance dependency unavailable”. For policy-sensitive writes, callers MUST treat this as a hard block and MUST NOT proceed.
+- `412` is reserved for “governance precondition failed” (invalid, mismatched, or stale governance state).
+- `403` should be reserved for explicit policy denial when governance is available and validated.
 - The only safe degradation mode is **read-only** when no policy-sensitive execution can occur.
 
 ## Sandbox and isolation requirements

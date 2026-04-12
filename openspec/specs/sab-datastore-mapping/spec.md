@@ -120,7 +120,7 @@ Any non-authoritative central derived or query layer that is used as a shared re
 
 These constraints do not apply to ephemeral caches (e.g., Redis) or device-local wallet caches, which may hold only non-canonical, non-secret convenience state.
 
-1. **Deterministic rebuild**: the dataset **MUST** be rebuildable solely from Stacks L1 events/state and the published on-chain checkpoint history.
+1. **Deterministic rebuild (correctness-sensitive)**: any dataset that is used for correctness- or policy-sensitive decisions **MUST** be rebuildable solely from Stacks L1 events/state and the published on-chain checkpoint/anchor history. Off-chain payload bodies (e.g., governance JSON-LD documents) **MAY** be stored for query ergonomics, but they **MUST NOT** be required for correctness beyond matching on-chain digests.
 2. **Checkpoint validation**: before a replica is treated as trusted for serving requests, its current dataset version **MUST** be validated against the latest on-chain checkpoint.
 3. **Correctness isolation**: derived/query layers **MUST NOT** be required for protocol correctness; on mismatch or unavailability, clients/services **MUST** fall back to Stacks L1 and/or rebuild the dataset.
 
