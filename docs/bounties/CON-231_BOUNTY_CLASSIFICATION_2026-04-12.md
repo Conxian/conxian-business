@@ -15,6 +15,17 @@ This classification is based on the two active “bounty registries” that are 
 1. Linear team **Conxian-Labs** (`CON`) issues labeled `Bounty` / `Bounty Open`.
 2. GitHub issues in `Conxian/conxius-platform` labeled `Bounty` / `Bounty Open` (synced to Linear for the overlapping subset).
 
+Replay queries used to derive the snapshot above:
+
+```bash
+# GitHub open bounty set
+gh issue list -R Conxian/conxius-platform -S 'label:Bounty state:open'
+
+# Linear bounty sets (Conxian-Labs team)
+ch-linear issue list -T CON -l Bounty
+ch-linear issue list -T CON -l 'Bounty Open'
+```
+
 Additional Linear bounty items labeled `Bounty` (but not `Bounty Open`) and not present in the active GitHub open set as of 2026-04-12:
 
 - https://linear.app/conxian-labs/issue/CON-142/mainnet-readiness-checklist-conxius-platform
@@ -103,7 +114,7 @@ These items touch release discipline, required checks, tags, and/or `.github`-pr
 
 To make the repo and Linear states accurately reflect the classification above:
 
-1. Remove `Bounty Open` from any issue that is **not** in **Externally claimable (pre-mainnet)** (i.e., anything classified as internal-only, security-sensitive, payout-gated, or claimable later).
+1. For any issue in the audited Conxian-Labs Linear team or `Conxian/conxius-platform` repo, remove `Bounty Open` from anything that is **not** in **Externally claimable (pre-mainnet)** (i.e., anything classified as internal-only, security-sensitive, payout-gated, or claimable later).
 2. For any issue with existing “claims”, only treat a claim as payout-eligible if it links to a concrete implementation artifact (PR, commit, or equivalent). Claims without such evidence should be treated as invalid for payout/approval.
 3. Only use `Bounty Open` when:
    - the issue is in `Todo` (claimable),
