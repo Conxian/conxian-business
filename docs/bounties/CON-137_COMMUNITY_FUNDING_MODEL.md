@@ -17,7 +17,7 @@ Until ConxianCSF is verifiably deployed and ALEX launch-path funding is enabled,
    - Concretely: do not claim/label it as funded, do not publish payout amounts, and do not mark it as `Bounty Open` unless the ConxianCSF/ALEX gates are met.
    - Eligibility classification (community-contributable vs internal-only) is allowed and is not a payout promise.
 2. Maintainers MUST NOT request, confirm, or act on payout instructions (addresses, payment rails, etc.) in issue threads.
-3. Payout-enabling controls remain maintainer-only (see `MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`).
+3. Payout-enabling controls remain maintainer-only (see [`MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`](./MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md)).
 
 ## Eligibility: which work can be community-funded
 
@@ -44,11 +44,11 @@ The following categories remain internal-only even if they are “code work”:
 - Security-sensitive work (authn/authz, permissions, coordinated disclosure fixes).
 - Operational configuration or anything that would require disclosing “how production is run.”
 
-If an issue is covered by `CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md`, that classification is the source of truth for whether it is externally claimable at all; this document only further constrains which claimable issues may also be treated as community-funded.
+If an issue is covered by [`CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md`](./CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md), that classification is the source of truth for whether it is externally claimable at all; this document only further constrains which claimable issues may also be treated as community-funded.
 
 ## Claim discipline (anti-parking)
 
-Claim semantics and timeboxing follow the canonical workflow in `BOUNTY_WORKFLOW.md` (status model, `/claim` flow, and timeouts). This funding model only adds that an issue must first pass the eligibility gate above before any claim can be treated as community-funded.
+Claim semantics and timeboxing follow the canonical workflow in [`BOUNTY_WORKFLOW.md`](./BOUNTY_WORKFLOW.md) (status model, `/claim` flow, and timeouts). This funding model only adds that an issue must first pass the eligibility gate above before any claim can be treated as community-funded.
 
 ## Bounty sizing rubric (Bounty Points)
 
@@ -93,7 +93,7 @@ Apply multipliers for review cost and priority (round to nearest 5 BP).
 ### Step 3 — limits
 
 - Do not publish single issues larger than `L`.
-- Treat any sizing that lands above **40 BP** as `XL` and split the work into multiple S/M/L issues before marking them community-funded. The `XL` row in the table is a smell indicator, not an allowed base size for a single bounty.
+- Treat any sizing that lands above **40 BP** as an “XL” smell and split the work into multiple S/M/L issues before marking them community-funded; there is intentionally no XL row in the base-size table for a single bounty.
 
 ## ConxianCSF mapping (post-ALEX)
 
@@ -108,6 +108,6 @@ Once ConxianCSF is live and ALEX funding is the active bounty source of funds, s
 
 ## References
 
-- `BOUNTY_WORKFLOW.md`
-- `CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md`
-- `MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`
+- [`BOUNTY_WORKFLOW.md`](./BOUNTY_WORKFLOW.md)
+- [`CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md`](./CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md)
+- [`MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`](./MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md)
