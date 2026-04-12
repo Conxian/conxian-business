@@ -52,6 +52,20 @@ From `Conxian/conxius-platform` open issues labeled `Bounty`:
 
 For audit and enforcement purposes, each GitHub issue inherits the same classification as its mapped Linear `CON-` issue in the **Classification** section below.
 
+Derived GitHub classifications (snapshot 2026-04-12):
+
+```txt
+#210 → Internal-only (CON-231)
+#197 → Security-sensitive (CON-222)
+#170 → Security-sensitive (CON-198)
+#159 → Security-sensitive (CON-186)
+#152 → Security-sensitive (CON-178)
+#153 → Security-sensitive (CON-182)
+#139 → Payout-gated (CON-167)
+#102 → Internal-only (CON-131)
+#101 → Security-sensitive (CON-129)
+```
+
 ### Active Linear “public claimable” set (`Bounty Open`, as of 2026-04-12)
 
 - https://linear.app/conxian-labs/issue/CON-178/release-hygiene-github
