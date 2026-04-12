@@ -19,15 +19,17 @@ Replay queries used to derive the snapshot above:
 
 ```bash
 # GitHub open bounty set
-gh issue list -R Conxian/conxius-platform -l Bounty --state open --limit 500
+gh issue list -R Conxian/conxius-platform -l Bounty --state open --limit 1000
 
 # GitHub open bounty set (Bounty Open)
-gh issue list -R Conxian/conxius-platform -l 'Bounty Open' --state open --limit 500
+gh issue list -R Conxian/conxius-platform -l 'Bounty Open' --state open --limit 1000
 
 # Linear bounty sets (Conxian-Labs team; all workflow states via no --state filter)
-ch-linear issue list -T CON -l Bounty --limit 500
-ch-linear issue list -T CON -l 'Bounty Open' --limit 500
+ch-linear issue list -T CON -l Bounty --limit 1000
+ch-linear issue list -T CON -l 'Bounty Open' --limit 1000
 ```
+
+If either list ever grows beyond the `--limit` value, increase it to keep the snapshot complete.
 
 These queries were run on 2026-04-12 to produce this point-in-time snapshot. Future runs of the same commands may return a different set of issues; any new or relabeled `Bounty` / `Bounty Open` items must be explicitly reclassified before being treated as externally claimable.
 
