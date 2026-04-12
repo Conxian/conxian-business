@@ -113,24 +113,22 @@ The allowlist is out of band (policy registry, config, or on-chain registry). Th
 
 Messages carry signatures in `sigs`. Multiple signatures MAY be provided.
 
-All signatures MUST sign the 32-byte `event_id` (not raw JSON).
+All signatures MUST sign the raw 32-byte `event_id` bytes (not the hex string representation and not raw JSON).
 
 ### 4.1 BIP-340 Schnorr (`bip340-schnorr-secp256k1-sha256`)
 
 Required for all v1 messages.
 
 - `pubkey`: x-only `secp256k1` public key (32 bytes, hex). MUST equal the top-level `publisher`.
-- `sig`: 64-byte Schnorr signature (hex) computed per BIP-340 with message = `event_id`.
+- `sig`: 64-byte Schnorr signature (hex) computed per BIP-340 with message = raw 32-byte `event_id`.
 
 ### 4.2 Stacks on-chain ECDSA (`stacks-secp256k1-ecdsa-sha256`)
 
 Optional. Intended for deployments that want to accept user-submitted updates and verify them on-chain in Clarity.
 
 - `pubkey`: compressed `secp256k1` public key (33 bytes, hex).
-- `sig`: ECDSA signature (hex). For Clarity `secp256k1-verify`, this is either:
-  - 64-byte compact `r || s`, or
-  - 65-byte recoverable `r || s || v` (where `v` is the recovery parameter)
-- message = `event_id`.
+- `sig`: 65-byte recoverable ECDSA signature (hex) formatted as `r || s || v` (where `v` is the recovery parameter).
+- message = raw 32-byte `event_id`.
 
 Note: The Stacks pubkey MAY be derived from the BIP-340 x-only key, but v1 does not require a specific derivation.
 
@@ -152,7 +150,7 @@ export type SignatureV1 =
   | {
       suite: 'stacks-secp256k1-ecdsa-sha256';
       pubkey: Hex; // 33-byte compressed secp256k1 pubkey
-      sig: Hex; // 64-byte (r||s) or 65-byte (r||s||v)
+      sig: Hex; // 65-byte (r||s||v)
     };
 
 export type SignedEnvelopeV1<Kind extends string, Payload extends Record<string, unknown>> = {
@@ -291,7 +289,7 @@ Reject if:
 - `expires_height` is present and `expires_height <= created_height`.
 - `expires_height` is present and the collector cannot verify Stacks chain height.
 - `expires_height` is present and `stacks_tip_height > expires_height`.
-- `sequence` is present and is not a base-10 integer string.
+- `sequence` is present and is not a base-10, non-negative integer string (no leading sign).
 
 Replay protection rules:
 
