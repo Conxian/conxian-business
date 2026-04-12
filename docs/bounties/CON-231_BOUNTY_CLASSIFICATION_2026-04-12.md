@@ -50,6 +50,8 @@ From `Conxian/conxius-platform` open issues labeled `Bounty`:
 - https://github.com/Conxian/conxius-platform/issues/102 → https://linear.app/conxian-labs/issue/CON-131/adopt-stricter-bounty-workflow-for-conxian-labs
 - https://github.com/Conxian/conxius-platform/issues/101 → https://linear.app/conxian-labs/issue/CON-129/csf-mainnet-readiness-gate
 
+For audit and enforcement purposes, each GitHub issue inherits the same classification as its mapped Linear `CON-` issue in the **Classification** section below.
+
 ### Active Linear “public claimable” set (`Bounty Open`, as of 2026-04-12)
 
 - https://linear.app/conxian-labs/issue/CON-178/release-hygiene-github
@@ -62,7 +64,7 @@ From `Conxian/conxius-platform` open issues labeled `Bounty`:
 
 As of 2026-04-12, the lists above represent the full set of active `Bounty` / `Bounty Open` items that were included in this classification (limited to the Conxian-Labs Linear team and the `Conxian/conxius-platform` GitHub repository).
 
-Coverage check (as of 2026-04-12): 13 items classified (2 internal-only, 7 security-sensitive, 2 payout-gated, 2 claimable later).
+Coverage check (as of 2026-04-12): 13 unique `CON-` issues classified (2 internal-only, 7 security-sensitive, 2 payout-gated, 2 claimable later). GitHub mirrors are not counted separately.
 
 ## Classification
 
