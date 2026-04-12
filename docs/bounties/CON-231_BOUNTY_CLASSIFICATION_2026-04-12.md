@@ -15,6 +15,11 @@ This classification is based on the two active “bounty registries” that are 
 1. Linear team **Conxian-Labs** (`CON`) issues labeled `Bounty` / `Bounty Open`.
 2. GitHub issues in `Conxian/conxius-platform` labeled `Bounty` / `Bounty Open` (synced to Linear for the overlapping subset).
 
+Additional Linear bounty items (not present in the active GitHub open set, but still labeled `Bounty` as of 2026-04-12):
+
+- https://linear.app/conxian-labs/issue/CON-142/mainnet-readiness-checklist-conxius-platform
+- https://linear.app/conxian-labs/issue/CON-230/confirm-bounty-funding-and-payout-activation-for-mainnet
+
 ### Active GitHub bounty set (open, as of 2026-04-12)
 
 From `Conxian/conxius-platform` open issues labeled `Bounty`:
@@ -40,6 +45,8 @@ From `Conxian/conxius-platform` open issues labeled `Bounty`:
 - https://linear.app/conxian-labs/issue/CON-78/con-75-bounty-gateway-edge-offline-first-pos-sync
 
 ## Classification
+
+Everything below other than **Externally claimable (pre-mainnet)** is treated as **non-public / maintainer-gated work** for the pre-mainnet window. `Security-sensitive` and `Payout-gated` are subtypes of internal work that must not be treated as publicly claimable.
 
 ### Externally claimable (pre-mainnet)
 
@@ -78,7 +85,7 @@ These items touch release discipline, required checks, tags, and/or `.github`-pr
 
 To make the repo and Linear states accurately reflect the classification above:
 
-1. Remove `Bounty Open` from any issue that is internal-only, security-sensitive, or payout-gated.
+1. Remove `Bounty Open` from any issue that is **not** in **Externally claimable (pre-mainnet)** (i.e., anything classified as internal-only, security-sensitive, payout-gated, or claimable later).
 2. Only use `Bounty Open` when:
    - the issue is in `Todo` (claimable),
    - it is unassigned,
