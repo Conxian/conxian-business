@@ -2,7 +2,7 @@
   "entries": [
     {
       "path": "conxian-nexus",
-      "sha": "06531dc36bd22c57d9f24a3c7967c9371bc34663",
+      "sha": "06531dc72a34f19a81a71aa44226399808d02b4c",
       "expiresOn": "2026-04-26",
       "reason": "Temporary CON-67 pin while Conxian/conxian-nexus#49 lands on main"
     },
