@@ -44,6 +44,8 @@ From `Conxian/conxius-platform` open issues labeled `Bounty`:
 - https://linear.app/conxian-labs/issue/CON-222/release-hygiene-stacksorbit
 - https://linear.app/conxian-labs/issue/CON-78/con-75-bounty-gateway-edge-offline-first-pos-sync
 
+As of 2026-04-12, the lists above represent the full set of active `Bounty` / `Bounty Open` items that were included in this classification (limited to the Conxian-Labs Linear team and the `Conxian/conxius-platform` GitHub repository).
+
 ## Classification
 
 Everything below other than **Externally claimable (pre-mainnet)** is treated as **non-public / maintainer-gated work** for the pre-mainnet window. `Security-sensitive` and `Payout-gated` are subtypes of internal work that must not be treated as publicly claimable.
