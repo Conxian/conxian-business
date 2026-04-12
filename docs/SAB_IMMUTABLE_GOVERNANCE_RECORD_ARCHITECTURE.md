@@ -21,7 +21,7 @@ The `record_id` for any JSON-LD governance record MUST be computed deterministic
 - **Hash:** `sha256(canonical_nquads_bytes)` (32 bytes).
 - **Representation:**
   - human-readable: lowercase hex (64 chars)
-  - on-chain: the raw 32-byte digest (or an equivalent canonical encoding) that MUST match the above bytes exactly
+  - on-chain: the canonical form is the raw 32-byte digest stored as fixed-length bytes (e.g., Clarity `buff(32)`). Any other encoding MUST be a lossless view over these bytes and MUST NOT reinterpret byte order.
 - **Hash input:** the JSON-LD graph used for canonicalization and hashing MUST NOT include the `record_id` property. `record_id` is computed over the content-only record and then inserted as an immutable identifier.
 - **Context resolution:** canonicalization MUST run with network fetch disabled; any JSON-LD contexts MUST be resolved from pinned, content-addressed artifacts.
 
@@ -85,6 +85,13 @@ Operational systems may depend on governance records only through validated, rea
 2. **Validate before execute:** any policy-sensitive write MUST validate policy digest and its on-chain anchor before signing or broadcasting a transaction.
 3. **Emit audit events:** operational components MAY produce signed audit events and submit them to a governance-ingress service; they MUST NOT append directly to the governance ledger.
 
+The governance-ingress service is the choke point for ledger writes:
+
+- it is the only system permitted to append to the governance ledger
+- it MUST validate signature provenance and schema (rejecting invalid or ambiguous events)
+- it MUST enforce append-only semantics (no update/delete)
+- for correctness-sensitive datasets, it MUST batch and anchor checkpoints on Stacks L1
+
 ### Prohibited interactions
 
 - Governance/policy decisions MUST NOT be stored in operational databases as canonical.
@@ -119,7 +126,7 @@ If the precondition fails, the system halts rather than executing with degraded 
 
 Notes:
 
-- `503` is reserved for “governance dependency unavailable”. For policy-sensitive writes, callers MUST treat this as a hard block and MUST NOT proceed.
+- `503` is reserved for “governance dependency unavailable”. For policy-sensitive writes, callers MUST treat this as a hard block (no alternate execution paths) and infrastructure MUST NOT blindly replay/auto-retry writes.
 - `412` is reserved for “governance precondition failed” (invalid, mismatched, or stale governance state).
 - `403` should be reserved for explicit policy denial when governance is available and validated.
 - The only safe degradation mode is **read-only** when no policy-sensitive execution can occur.
