@@ -15,7 +15,7 @@ This classification is based on the two active “bounty registries” that are 
 1. Linear team **Conxian-Labs** (`CON`) issues labeled `Bounty` / `Bounty Open`.
 2. GitHub issues in `Conxian/conxius-platform` labeled `Bounty` / `Bounty Open` (synced to Linear for the overlapping subset).
 
-Additional Linear bounty items (not present in the active GitHub open set, but still labeled `Bounty` as of 2026-04-12):
+Additional Linear bounty items labeled `Bounty` (but not `Bounty Open`) and not present in the active GitHub open set as of 2026-04-12:
 
 - https://linear.app/conxian-labs/issue/CON-142/mainnet-readiness-checklist-conxius-platform
 - https://linear.app/conxian-labs/issue/CON-230/confirm-bounty-funding-and-payout-activation-for-mainnet
@@ -45,6 +45,22 @@ From `Conxian/conxius-platform` open issues labeled `Bounty`:
 - https://linear.app/conxian-labs/issue/CON-78/con-75-bounty-gateway-edge-offline-first-pos-sync
 
 As of 2026-04-12, the lists above represent the full set of active `Bounty` / `Bounty Open` items that were included in this classification (limited to the Conxian-Labs Linear team and the `Conxian/conxius-platform` GitHub repository).
+
+### Coverage check
+
+- https://linear.app/conxian-labs/issue/CON-231/decide-which-bounties-can-open-before-mainnet-go-live → Internal-only
+- https://linear.app/conxian-labs/issue/CON-131/adopt-stricter-bounty-workflow-for-conxian-labs → Internal-only
+- https://linear.app/conxian-labs/issue/CON-178/release-hygiene-github → Security-sensitive
+- https://linear.app/conxian-labs/issue/CON-182/release-hygiene-conxian → Security-sensitive
+- https://linear.app/conxian-labs/issue/CON-186/release-hygiene-conxian-ui → Security-sensitive
+- https://linear.app/conxian-labs/issue/CON-198/release-hygiene-conxian-labs-site → Security-sensitive
+- https://linear.app/conxian-labs/issue/CON-218/release-hygiene-lib-conxian-core → Security-sensitive
+- https://linear.app/conxian-labs/issue/CON-222/release-hygiene-stacksorbit → Security-sensitive
+- https://linear.app/conxian-labs/issue/CON-129/csf-mainnet-readiness-gate → Security-sensitive
+- https://linear.app/conxian-labs/issue/CON-167/maintainer-payout-enablement-checklist-for-alex-funded-bounties → Payout-gated
+- https://linear.app/conxian-labs/issue/CON-230/confirm-bounty-funding-and-payout-activation-for-mainnet → Payout-gated
+- https://linear.app/conxian-labs/issue/CON-78/con-75-bounty-gateway-edge-offline-first-pos-sync → Claimable later
+- https://linear.app/conxian-labs/issue/CON-142/mainnet-readiness-checklist-conxius-platform → Claimable later
 
 ## Classification
 
