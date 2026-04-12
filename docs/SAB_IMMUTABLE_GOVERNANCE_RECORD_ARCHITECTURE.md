@@ -17,9 +17,22 @@ It classifies governance record domains, establishes datastore boundaries with o
 The `record_id` for any JSON-LD governance record MUST be computed deterministically to prevent “same semantics, different hash” failures across implementations.
 
 - **Canonicalization:** JSON-LD RDF Dataset Canonicalization using **URDNA2015**.
-- **Hash:** `sha256` over the canonicalized N-Quads bytes (UTF-8).
-- **Digest encoding:** `record_id` is the raw 32-byte digest; when represented as text it MUST be encoded as lowercase hex (64 chars). The on-chain anchor MUST store the same 32-byte digest (or, if stored as text, the same lowercase-hex encoding).
-- **Context resolution:** canonicalization MUST run with network fetch disabled; any JSON-LD contexts MUST be resolved from pinned, content-addressed artifacts.
+- **JSON-LD processing mode:** implementations MUST use JSON-LD 1.1 processing mode when expanding inputs prior to RDF dataset canonicalization, and MUST use the JSON-LD 1.1 `toRdf` algorithm with default options (options that change the resulting RDF dataset MUST NOT be overridden).
+- **Hash input (normalization):**
+  1. Run URDNA2015 to obtain the canonical N-Quads string `s`.
+  2. Replace all occurrences of `\r\n` in `s` with `\n`.
+  3. Replace all remaining `\r` characters in `s` with `\n`.
+  4. Remove all trailing `\n` characters from `s`.
+  5. If `s` is non-empty, append a single `\n`.
+  Implementations MUST NOT modify the canonical N-Quads output other than performing the normalization above and MUST NOT re-serialize the dataset in a way that changes the order or content of statements.
+- **Hash:** `sha256` over the UTF-8 bytes of the normalized N-Quads string produced in the previous step.
+- **Digest representation:**
+  - **Digest bytes:** 32-byte `sha256` digest.
+  - **In-record text form:** when embedded in any JSON/JSON-LD record or API payload, `record_id` MUST be lowercase hex (64 chars, no `0x` prefix).
+  - **On-chain anchor:** MUST store the same digest either as raw 32 bytes or (if stored as text) the exact same lowercase-hex string.
+- **Context resolution:** canonicalization MUST run with network fetch disabled and MUST fail if any JSON-LD context (including any `@import`) cannot be resolved locally from pinned, content-addressed artifacts or if any context IRI is not absolute (relative IRIs MUST NOT be used).
+
+No legacy verification mode is defined by this specification. Records that do not satisfy these requirements MUST be treated as invalid for policy-sensitive execution. Governance records minted prior to adoption of this specification MUST NOT be used for policy-sensitive execution and SHOULD be reissued under this canonical pipeline.
 
 ## Target record planes
 
