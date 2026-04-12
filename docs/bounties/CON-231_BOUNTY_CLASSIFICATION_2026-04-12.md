@@ -24,7 +24,7 @@ gh issue list -R Conxian/conxius-platform -S 'label:Bounty state:open'
 # GitHub open bounty set (Bounty Open)
 gh issue list -R Conxian/conxius-platform -S 'label:"Bounty Open" state:open'
 
-# Linear bounty sets (Conxian-Labs team)
+# Linear bounty sets (Conxian-Labs team; all workflow states)
 ch-linear issue list -T CON -l Bounty
 ch-linear issue list -T CON -l 'Bounty Open'
 ```
@@ -60,21 +60,7 @@ From `Conxian/conxius-platform` open issues labeled `Bounty`:
 
 As of 2026-04-12, the lists above represent the full set of active `Bounty` / `Bounty Open` items that were included in this classification (limited to the Conxian-Labs Linear team and the `Conxian/conxius-platform` GitHub repository).
 
-### Coverage check
-
-- https://linear.app/conxian-labs/issue/CON-231/decide-which-bounties-can-open-before-mainnet-go-live → Internal-only
-- https://linear.app/conxian-labs/issue/CON-131/adopt-stricter-bounty-workflow-for-conxian-labs → Internal-only
-- https://linear.app/conxian-labs/issue/CON-178/release-hygiene-github → Security-sensitive
-- https://linear.app/conxian-labs/issue/CON-182/release-hygiene-conxian → Security-sensitive
-- https://linear.app/conxian-labs/issue/CON-186/release-hygiene-conxian-ui → Security-sensitive
-- https://linear.app/conxian-labs/issue/CON-198/release-hygiene-conxian-labs-site → Security-sensitive
-- https://linear.app/conxian-labs/issue/CON-218/release-hygiene-lib-conxian-core → Security-sensitive
-- https://linear.app/conxian-labs/issue/CON-222/release-hygiene-stacksorbit → Security-sensitive
-- https://linear.app/conxian-labs/issue/CON-129/csf-mainnet-readiness-gate → Security-sensitive
-- https://linear.app/conxian-labs/issue/CON-167/maintainer-payout-enablement-checklist-for-alex-funded-bounties → Payout-gated
-- https://linear.app/conxian-labs/issue/CON-230/confirm-bounty-funding-and-payout-activation-for-mainnet → Payout-gated
-- https://linear.app/conxian-labs/issue/CON-78/con-75-bounty-gateway-edge-offline-first-pos-sync → Claimable later
-- https://linear.app/conxian-labs/issue/CON-142/mainnet-readiness-checklist-conxius-platform → Claimable later
+Coverage check (as of 2026-04-12): 13 items classified (2 internal-only, 7 security-sensitive, 2 payout-gated, 2 claimable later).
 
 ## Classification
 
