@@ -29,6 +29,8 @@ ch-linear issue list -T CON -l Bounty
 ch-linear issue list -T CON -l 'Bounty Open'
 ```
 
+These queries were run on 2026-04-12 to produce this point-in-time snapshot. Future runs of the same commands may return a different set of issues; any new or relabeled `Bounty` / `Bounty Open` items must be explicitly reclassified before being treated as externally claimable.
+
 Additional Linear bounty items labeled `Bounty` (but not `Bounty Open`) and not present in the active GitHub open set as of 2026-04-12:
 
 - https://linear.app/conxian-labs/issue/CON-142/mainnet-readiness-checklist-conxius-platform
@@ -73,7 +75,7 @@ None.
 ### Internal-only (meta/process work)
 
 - https://linear.app/conxian-labs/issue/CON-231/decide-which-bounties-can-open-before-mainnet-go-live (meta classification)
-- https://linear.app/conxian-labs/issue/CON-131/adopt-stricter-bounty-workflow-for-conxian-labs (workflow enforcement)
+- https://linear.app/conxian-labs/issue/CON-131/adopt-stricter-bounty-workflow-for-conxian-labs (workflow enforcement + label automation)
 
 Note: the issue referenced in older threads as `CON-135` is not retrievable via the Linear API as of 2026-04-12 (it may have been deleted or renumbered). If it reappears, it should remain internal-only unless it is split into tightly scoped, reviewable sub-tasks.
 
@@ -81,23 +83,23 @@ Note: the issue referenced in older threads as `CON-135` is not retrievable via 
 
 These items touch release discipline, required checks, tags, and/or `.github`-propagated standards. Even when the concrete work is “just docs,” the operational blast radius (and common requirement for maintainer privileges) makes them unsafe to treat as publicly claimable before mainnet.
 
-- https://linear.app/conxian-labs/issue/CON-178/release-hygiene-github
-- https://linear.app/conxian-labs/issue/CON-182/release-hygiene-conxian
-- https://linear.app/conxian-labs/issue/CON-186/release-hygiene-conxian-ui
-- https://linear.app/conxian-labs/issue/CON-198/release-hygiene-conxian-labs-site
-- https://linear.app/conxian-labs/issue/CON-218/release-hygiene-lib-conxian-core
-- https://linear.app/conxian-labs/issue/CON-222/release-hygiene-stacksorbit
-- https://linear.app/conxian-labs/issue/CON-129/csf-mainnet-readiness-gate
+- https://linear.app/conxian-labs/issue/CON-178/release-hygiene-github (org-wide checks + CI blast radius)
+- https://linear.app/conxian-labs/issue/CON-182/release-hygiene-conxian (core repo release gating)
+- https://linear.app/conxian-labs/issue/CON-186/release-hygiene-conxian-ui (release/CI discipline)
+- https://linear.app/conxian-labs/issue/CON-198/release-hygiene-conxian-labs-site (deploy hygiene)
+- https://linear.app/conxian-labs/issue/CON-218/release-hygiene-lib-conxian-core (core library release gating)
+- https://linear.app/conxian-labs/issue/CON-222/release-hygiene-stacksorbit (release discipline)
+- https://linear.app/conxian-labs/issue/CON-129/csf-mainnet-readiness-gate (launch readiness gate)
 
 ### Payout-gated (blocked on verified mainnet + funding path + maintainer controls)
 
-- https://linear.app/conxian-labs/issue/CON-167/maintainer-payout-enablement-checklist-for-alex-funded-bounties
-- https://linear.app/conxian-labs/issue/CON-230/confirm-bounty-funding-and-payout-activation-for-mainnet
+- https://linear.app/conxian-labs/issue/CON-167/maintainer-payout-enablement-checklist-for-alex-funded-bounties (payout enablement runbook)
+- https://linear.app/conxian-labs/issue/CON-230/confirm-bounty-funding-and-payout-activation-for-mainnet (funding + payout activation)
 
 ### Claimable later (post-go-live, after being split into verifiable units)
 
-- https://linear.app/conxian-labs/issue/CON-78/con-75-bounty-gateway-edge-offline-first-pos-sync
-- https://linear.app/conxian-labs/issue/CON-142/mainnet-readiness-checklist-conxius-platform
+- https://linear.app/conxian-labs/issue/CON-78/con-75-bounty-gateway-edge-offline-first-pos-sync (too broad for pre-mainnet verification)
+- https://linear.app/conxian-labs/issue/CON-142/mainnet-readiness-checklist-conxius-platform (readiness artifact, not open claims)
 
 ## Workflow hygiene recommendations
 
@@ -110,3 +112,5 @@ To make the repo and Linear states accurately reflect the classification above:
    - it is unassigned,
    - it has explicit acceptance criteria that can be validated via a PR/commit artifact.
 4. For https://linear.app/conxian-labs/issue/CON-231/decide-which-bounties-can-open-before-mainnet-go-live specifically, all currently visible claims are considered invalid for approval as of 2026-04-12 because they lack linked implementation artifacts.
+
+Given there are no **Externally claimable (pre-mainnet)** items as of 2026-04-12, all audited issues should end up without the `Bounty Open` label until after mainnet go-live.
