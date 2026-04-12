@@ -13,6 +13,8 @@ Related policy docs:
 - [`docs/bounties/CON-137_COMMUNITY_FUNDING_MODEL.md`](./CON-137_COMMUNITY_FUNDING_MODEL.md)
 - [`docs/bounties/CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md`](./CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md)
 
+Being claimable under this workflow means maintainers will review contributions; it does not, by itself, mean the issue is community-funded or payable.
+
 ## Status model
 
 Recommended Linear team workflow states:
