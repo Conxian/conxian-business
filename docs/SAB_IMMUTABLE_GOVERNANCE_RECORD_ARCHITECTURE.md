@@ -19,6 +19,7 @@ The `record_id` for any JSON-LD governance record MUST be computed deterministic
 - **Canonicalization:** JSON-LD RDF Dataset Canonicalization using **URDNA2015**, yielding canonical N-Quads.
 - **JSON-LD processing:** implementations MUST use JSON-LD 1.1 (`processingMode: "json-ld-1.1"`) and MUST NOT rely on library/environment defaults. IRIs MUST be absolute in the source material (no ambient base IRI).
 - **Bytes:** UTF-8 bytes of the canonical N-Quads (LF line endings).
+- **Canonical output handling:** implementations MUST feed the exact N-Quads string produced by URDNA2015 into the hash function without adding, removing, or normalizing whitespace or line endings (including any trailing newline).
 - **Hash:** `sha256(canonical_nquads_bytes)` (32 bytes).
 - **Representation:**
   - human-readable: lowercase hex (64 chars)
@@ -49,7 +50,7 @@ Fluree is used for:
 - audit trails for operator/agent actions as signed attestations; off-chain attestations MUST NOT be correctness-critical unless included in a checkpointed batch whose root is anchored on Stacks L1
 - provenance graphs across policies, identities, controls, and evidence
 
-No policy-sensitive execution may depend on off-chain-only events.
+Policy-sensitive execution MUST NOT depend on off-chain-only events.
 
 Fluree is NOT used as a canonical authority. Every correctness-relevant record MUST be anchored on-chain by content hash (Plane A) and validated before use.
 
@@ -91,7 +92,7 @@ The governance-ingress service is the choke point for ledger writes:
 - it is the only system permitted to append to the governance ledger
 - it MUST validate signature provenance and schema (rejecting invalid or ambiguous events)
 - it MUST enforce append-only semantics (no update/delete)
-- for correctness-sensitive datasets, it MUST batch and anchor checkpoints on Stacks L1
+- for correctness-sensitive datasets, it MUST ensure every correctness-relevant record is covered by an on-chain anchor (direct record hash anchors and/or inclusion in an anchored checkpoint root) and MUST batch and anchor dataset-level checkpoints on Stacks L1
 
 ### Prohibited interactions
 
@@ -120,7 +121,7 @@ If the precondition fails, the system halts rather than executing with degraded 
 
 | Component | Governance dependency | If policy cannot be fetched | If policy cannot be validated against L1 | If policy is stale (anchor height behind current) |
 | :--- | :--- | :--- | :--- | :--- |
-| Gateway (tx relay) | Deployment/tx policy bundle | Reject writes (503) | Reject writes (412) | Reject writes (412); allow read-only queries |
+| Gateway (tx relay) | Deployment/tx policy bundle | Reject writes (503); allow read-only queries | Reject writes (412); allow read-only queries | Reject writes (412); allow read-only queries |
 | Nexus (indexer) | Checkpoint scheme + dataset roots | Stop serving derived correctness-dependent reads; continue indexing if safe | Halt indexing and mark replica invalid until rebuilt | Continue indexing but flag replica “untrusted” until next validated checkpoint |
 | Ops Orchestrator (automation loop) | Action allowlists + spend tiers | Do not execute jobs; surface “blocked by governance” | Do not execute; require operator intervention | Do not execute policy-sensitive jobs |
 | Signing surface (TEE / secure element) | Signing policy + authority sets | Refuse to sign | Refuse to sign | Refuse to sign |
@@ -128,6 +129,7 @@ If the precondition fails, the system halts rather than executing with degraded 
 Notes:
 
 - `503` is reserved for “governance dependency unavailable”. For policy-sensitive writes, callers MUST treat this as a hard block (no alternate execution paths) and infrastructure MUST NOT blindly replay/auto-retry writes.
+- Load balancers and retrying clients MUST be configured not to automatically retry `503` responses for write endpoints.
 - `412` is reserved for “governance precondition failed” (invalid, mismatched, or stale governance state).
 - `403` should be reserved for explicit policy denial when governance is available and validated.
 - The only safe degradation mode is **read-only** when no policy-sensitive execution can occur.
