@@ -51,14 +51,11 @@ Recommended Linear team workflow states:
 
 ### Timeboxing (anti-parking)
 
-Within **48 hours** of assignment/claim acceptance, the assignee must open a draft PR (or link an equivalent concrete artifact, such as an in-repo design doc, a spike branch with notes, or a reproducible test harness). If not, unassign and move the issue back to `Todo`.
+Within **48 hours** of assignment/claim acceptance (calendar time; resets on reassignment), the assignee must open a draft PR (or link an equivalent concrete artifact, such as an in-repo design doc, a spike branch with notes, or a reproducible test harness). If not, unassign and move the issue back to `Todo`.
 
 ## Funding + payout constraints
 
-- Assume **no dedicated bounty budget** unless explicitly funded through the ALEX launch path.
-- Until ConxianCSF is fully deployed via ALEX on Stacks mainnet, the bounty workflow must not imply treasury-backed payout certainty.
-- Once ConxianCSF is deployed, align bounty management, approval, and payout readiness through ConxianCSF.
-- Once payouts are enabled, all bounty funds must come from the ALEX launch path.
+Normative funding/payout rules are defined in [`docs/bounties/CON-137_COMMUNITY_FUNDING_MODEL.md`](./CON-137_COMMUNITY_FUNDING_MODEL.md). In particular, treat “claimable” as reviewable work, not as a payout promise, until ConxianCSF is verifiably deployed and ALEX-funded payouts are explicitly enabled.
 
 Maintainer-only payout enablement checklist:
 
