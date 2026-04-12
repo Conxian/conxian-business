@@ -44,15 +44,11 @@ The following categories remain internal-only even if they are “code work”:
 - Security-sensitive work (authn/authz, permissions, coordinated disclosure fixes).
 - Operational configuration or anything that would require disclosing “how production is run.”
 
-If an issue is covered by `CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md`, that classification is the source of truth for whether it can be treated as externally claimable.
+If an issue is covered by `CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md`, that classification is the source of truth for whether it is externally claimable at all; this document only further constrains which claimable issues may also be treated as community-funded.
 
 ## Claim discipline (anti-parking)
 
-To prevent “parking” an issue with no progress:
-
-1. The canonical claim intent is `/claim` on the synced GitHub issue (when available).
-2. If GitHub claim automation is not available, a claim is only valid when a maintainer assigns the issue and moves it to `Claimed`.
-3. Within **48 hours** of assignment, the assignee must open a draft PR (or an equivalent concrete artifact). If not, unassign and move the issue back to `Todo`.
+Claim semantics and timeboxing follow the canonical workflow in `BOUNTY_WORKFLOW.md` (status model, `/claim` flow, and timeouts). This funding model only adds that an issue must first pass the eligibility gate above before any claim can be treated as community-funded.
 
 ## Bounty sizing rubric (Bounty Points)
 

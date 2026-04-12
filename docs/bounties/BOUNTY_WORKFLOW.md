@@ -49,6 +49,10 @@ Recommended Linear team workflow states:
 3. The canonical claim intent is a `/claim` comment on the synced GitHub issue (if GitHub sync + automation is enabled).
 4. If there is no `/claim` automation, maintainers may accept a claim by explicitly assigning the issue and moving it to `Claimed`.
 
+### Timeboxing (anti-parking)
+
+Within **48 hours** of assignment/claim acceptance, the assignee must open a draft PR (or an equivalent concrete artifact). If not, unassign and move the issue back to `Todo`.
+
 ## Funding + payout constraints
 
 - Assume **no dedicated bounty budget** unless explicitly funded through the ALEX launch path.
