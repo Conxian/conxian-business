@@ -14,7 +14,7 @@ Until ConxianCSF is verifiably deployed and ALEX launch-path funding is enabled,
 ## Funding constraints (normative)
 
 1. Do not advertise an issue as a paid bounty unless it is ConxianCSF-backed and ALEX-funded.
-2. Do not accept payout instructions (addresses, payment rails, etc.) in issue threads.
+2. Maintainers MUST NOT request, confirm, or act on payout instructions (addresses, payment rails, etc.) in issue threads.
 3. Payout-enabling controls remain maintainer-only (see `MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`).
 
 ## Eligibility: which work can be community-funded
