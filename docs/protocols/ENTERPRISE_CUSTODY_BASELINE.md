@@ -57,6 +57,7 @@ Normative mapping: any privileged action that can move value, rotate keys, chang
 - **Time-lock (baseline)**:
   - High-risk actions (payments classified as `high-risk`, all key rotations, and all deploy/upgrade actions) MUST enforce a minimum delay starting when the action enters the execution-eligible state; once the delay has elapsed, the action enters the execution-ready state.
   - When a high-risk action enters the execution-eligible state, a dedicated **time-lock-start reference** (block height for chain-settled assets or timestamp for non-chain rails) MUST be appended to the custody/approval system of record in a tamper-evident way and treated as an immutable field; any attempted in-place change for an in-flight request MUST cause the action to be blocked and audited. This time-lock-start reference MAY, but does not have to, equal the classification reference block height recorded earlier.
+    - For non-chain rails, the time-lock-start reference timestamp MUST be derived from the same hardened, auditable time source used for time-lock verification, and the recorded reference MUST include the time-source identity.
   - For chain-settled assets, this delay MUST be at least 144 blocks on the asset’s settlement chain (for example: 144 Stacks L1 blocks for STX-settled flows).
   - For non-chain settlement rails, this delay MUST be at least `86400` seconds (24 hours) and MUST be expressed in seconds in policy.
   - Policy MAY increase this delay but MUST NOT reduce or disable it for these flows.
