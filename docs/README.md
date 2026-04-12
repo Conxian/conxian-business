@@ -17,6 +17,8 @@ active — This documentation hub is published from the public-safe allowlist us
 - **[Introduction](../README.md)**
 - **[Repo portfolio (flagship vs supporting)](REPO_PORTFOLIO.md#ecosystem-repos)**
 
+Note: Cross-repo docs links are pinned to the Conxian submodule SHA for reproducibility; update the SHA when bumping the submodule.
+
 ## Strategic knowledge base
 - **[Strategic Growth Model (2026)](STRATEGIC_GROWTH_MODEL_2026.md)**
 Detailed strategic alignment, roadmap, and company strategy documents have been migrated to the [Linear Virtual Office](https://linear.app/conxian-labs) (Parent Issue: CON-306) to ensure Zero Secret Egress (ZSE) compliance.
