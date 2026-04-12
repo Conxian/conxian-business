@@ -17,9 +17,14 @@ It classifies governance record domains, establishes datastore boundaries with o
 The `record_id` for any JSON-LD governance record MUST be computed deterministically to prevent “same semantics, different hash” failures across implementations.
 
 - **Canonicalization:** JSON-LD RDF Dataset Canonicalization using **URDNA2015**.
-- **Hash:** `sha256` over the canonicalized N-Quads bytes (UTF-8).
-- **Digest encoding:** `record_id` is the raw 32-byte digest; when represented as text it MUST be encoded as lowercase hex (64 chars). The on-chain anchor MUST store the same 32-byte digest (or, if stored as text, the same lowercase-hex encoding).
-- **Context resolution:** canonicalization MUST run with network fetch disabled; any JSON-LD contexts MUST be resolved from pinned, content-addressed artifacts.
+- **Hashed bytes:** Serialize the URDNA2015 canonicalized dataset to N-Quads using LF (U+000A) line endings (no CRLF). The serialization MUST end with a final LF. Hash the exact UTF-8 bytes of that serialization.
+- **Hash:** `sha256` over the hashed bytes above.
+- **`record_id` representation:** Inside any JSON/JSON-LD governance record, `record_id` MUST be the lowercase-hex encoding of the digest (64 chars, no prefix).
+- **On-chain anchor representation:** The on-chain anchor MUST store the same digest, either as 32 raw bytes or (if stored as text) the exact same lowercase-hex string.
+- **Context resolution / document loader policy:** canonicalization MUST run with network fetch disabled and MUST fail closed.
+  - Any attempt to resolve a remote context/document MUST fail.
+  - `@context` references MUST be absolute and MUST resolve only via pinned, content-addressed artifacts from an allowlisted local store; any unpinned context MUST fail.
+  - Relative IRIs in `@context` references (and any document loader base IRI) MUST NOT be used; if present, canonicalization MUST fail.
 
 ## Target record planes
 
