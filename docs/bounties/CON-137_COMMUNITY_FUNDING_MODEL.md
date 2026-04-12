@@ -69,7 +69,7 @@ Pick the smallest base size that matches the acceptance criteria.
 | S | 5 | Small doc/spec change or isolated fix; low review load |
 | M | 10 | Feature slice or adapter module; tests included |
 | L | 20 | Multi-module but still reviewable; integration tests or end-to-end local sim |
-| XL | 40 | Not bountyable as one unit; must be split into multiple M/L issues |
+| XL | 40 | Decomposition signal; do not publish as one bounty (split into multiple M/L issues) |
 
 BP = “Bounty Points” (token-agnostic).
 
@@ -95,7 +95,8 @@ Apply multipliers for review cost and priority (round to nearest 5 BP).
 
 ### Step 3 — limits
 
-- **Max single-unit bounty size should be `L`**. Anything that computes above ~40 BP is treated as XL and must be split.
+- Do not publish single issues larger than `L`.
+- Treat any sizing that lands above **40 BP** as `XL` and split the work into multiple S/M/L issues before marking them community-funded. The `XL` row in the table is a smell indicator, not an allowed base size for a single bounty.
 
 ## ConxianCSF mapping (post-ALEX)
 
