@@ -68,7 +68,9 @@ Coverage check (as of 2026-04-12): 13 unique `CON-` issues classified (2 interna
 
 ### Classification table (canonical)
 
-| Issue | Category | `Bounty Open` on Linear (2026-04-12) |
+_The `Bounty Open` column shows the label state at snapshot time, not the recommended state after applying this classification._
+
+| Issue | Category | `Bounty Open` on Linear (snapshot before applying this classification, 2026-04-12) |
 |---|---|---|
 | https://linear.app/conxian-labs/issue/CON-231/decide-which-bounties-can-open-before-mainnet-go-live | Internal-only | No |
 | https://linear.app/conxian-labs/issue/CON-131/adopt-stricter-bounty-workflow-for-conxian-labs | Internal-only | No |
@@ -134,7 +136,7 @@ To make the repo and Linear states accurately reflect the classification above:
    - it is unassigned,
    - it has explicit acceptance criteria that can be validated via a PR/commit artifact.
 4. For https://linear.app/conxian-labs/issue/CON-231/decide-which-bounties-can-open-before-mainnet-go-live specifically, all currently visible claims are considered invalid for approval as of 2026-04-12 because they lack linked implementation artifacts.
-5. Before adding or keeping `Bounty Open` on any GitHub issue, ensure it is linked to a `CON-` issue that appears in this classification snapshot (or a successor) and inherits its classification. Unmapped GitHub bounty issues must not be treated as externally claimable.
+5. Before adding or keeping `Bounty Open` on any GitHub issue, ensure it is linked to a `CON-` issue that is explicitly covered by this document (or a clearly linked successor classification artifact) and inherits its classification. Unmapped GitHub bounty issues must not be treated as externally claimable.
 
 Given there are no **Externally claimable (pre-mainnet)** items as of 2026-04-12, all audited issues should end up without the `Bounty Open` label until after mainnet go-live.
 
@@ -143,17 +145,42 @@ Given there are no **Externally claimable (pre-mainnet)** items as of 2026-04-12
 GitHub (`Conxian/conxius-platform`) open issues labeled `Bounty`:
 
 ```txt
-210, 197, 170, 159, 152, 153, 139, 102, 101
+#210 Decide which bounties can open before mainnet go-live [Governance, Bounty]
+#197 Release hygiene — stacksorbit [Release, Bounty, Bounty Open]
+#170 Release hygiene — conxian-labs-site [Release, Bounty, Bounty Open]
+#159 Release hygiene — Conxian_UI [Release, Bounty, Bounty Open]
+#152 Release hygiene — .github [Release, Bounty, Bounty Open]
+#153 Release hygiene — Conxian [Release, Bounty, Bounty Open]
+#139 Maintainer payout enablement checklist for ALEX-funded bounties [Bounty]
+#102 Adopt stricter bounty workflow for Conxian-Labs [Bounty]
+#101 CSF mainnet readiness gate [Release, Bounty]
 ```
 
 GitHub (`Conxian/conxius-platform`) open issues labeled `Bounty Open`:
 
 ```txt
-197, 170, 159, 152, 153
+#197 Release hygiene — stacksorbit [Release, Bounty, Bounty Open]
+#170 Release hygiene — conxian-labs-site [Release, Bounty, Bounty Open]
+#159 Release hygiene — Conxian_UI [Release, Bounty, Bounty Open]
+#152 Release hygiene — .github [Release, Bounty, Bounty Open]
+#153 Release hygiene — Conxian [Release, Bounty, Bounty Open]
 ```
 
 Linear (team `CON`) issues labeled `Bounty Open`:
 
 ```txt
-CON-178, CON-182, CON-186, CON-198, CON-218, CON-222, CON-78
+CON-178 Release hygiene — .github [Release, Bounty, Bounty Open]
+CON-182 Release hygiene — Conxian [Release, Bounty, Bounty Open]
+CON-186 Release hygiene — Conxian_UI [Release, Bounty, Bounty Open]
+CON-198 Release hygiene — conxian-labs-site [Release, Bounty, Bounty Open]
+CON-218 Release hygiene — lib-conxian-core [Release, Bounty, Bounty Open]
+CON-222 Release hygiene — stacksorbit [Release, Bounty, Bounty Open]
+CON-78 CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync [Bounty, Bounty Open]
+```
+
+Linear (team `CON`) additional issues labeled `Bounty` (but not `Bounty Open`) in this snapshot:
+
+```txt
+CON-142 Mainnet readiness checklist — conxius-platform [Release, Bounty]
+CON-230 Confirm bounty funding and payout activation for mainnet [Bounty, Release]
 ```
