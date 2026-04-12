@@ -52,7 +52,7 @@ Everything below other than **Externally claimable (pre-mainnet)** is treated as
 
 None.
 
-### Internal-only (maintainer-controlled)
+### Internal-only (meta/process work)
 
 - https://linear.app/conxian-labs/issue/CON-231/decide-which-bounties-can-open-before-mainnet-go-live (meta classification)
 - https://linear.app/conxian-labs/issue/CON-131/adopt-stricter-bounty-workflow-for-conxian-labs (workflow enforcement)
@@ -86,7 +86,8 @@ These items touch release discipline, required checks, tags, and/or `.github`-pr
 To make the repo and Linear states accurately reflect the classification above:
 
 1. Remove `Bounty Open` from any issue that is **not** in **Externally claimable (pre-mainnet)** (i.e., anything classified as internal-only, security-sensitive, payout-gated, or claimable later).
-2. Only use `Bounty Open` when:
+2. For any issue with existing “claims”, only treat a claim as payout-eligible if it links to a concrete implementation artifact (PR, commit, or equivalent). Claims without such evidence should be treated as invalid for payout/approval.
+3. Only use `Bounty Open` when:
    - the issue is in `Todo` (claimable),
    - it is unassigned,
    - it has explicit acceptance criteria that can be validated via a PR/commit artifact.
