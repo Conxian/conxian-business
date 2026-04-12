@@ -56,7 +56,7 @@ Size bounties off **reviewable delivery**, not hours spent.
 
 ### Step 0 — eligibility gate
 
-If the issue fails eligibility (see above), it is not community-funded and should not be sized.
+If the issue fails eligibility (see above), it is not community-funded and must not be marked or communicated externally as a community-funded bounty or given a public BP size. Internal planning estimates are allowed, but must not be framed as payout promises.
 
 ### Step 1 — base size
 
