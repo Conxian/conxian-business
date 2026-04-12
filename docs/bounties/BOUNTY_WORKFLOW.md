@@ -8,6 +8,11 @@ This document defines the **Conxian-Labs** Linear bounty workflow and the operat
 - Prevent assignment/claim spam from being interpreted as an accepted claim.
 - Keep payout expectations accurate until ConxianCSF is verifiably deployed and ALEX-funded payouts are explicitly enabled.
 
+Related policy docs:
+
+- [`docs/bounties/CON-137_COMMUNITY_FUNDING_MODEL.md`](./CON-137_COMMUNITY_FUNDING_MODEL.md)
+- [`docs/bounties/CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md`](./CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md)
+
 ## Status model
 
 Recommended Linear team workflow states:
