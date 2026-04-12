@@ -60,14 +60,13 @@ If the issue fails eligibility (see above), it is not community-funded and must 
 
 ### Step 1 — base size
 
-Pick the smallest base size that matches the acceptance criteria.
+Pick the smallest base size (S/M/L) that matches the acceptance criteria. If the work would naturally size as XL, treat that as a decomposition signal and split it into multiple issues before assigning BP.
 
 | Size | Base BP | Typical “done” shape |
 |---|---:|---|
 | S | 5 | Small doc/spec change or isolated fix; low review load |
 | M | 10 | Feature slice or adapter module; tests included |
 | L | 20 | Multi-module but still reviewable; integration tests or end-to-end local sim |
-| XL | 40 | Decomposition signal; do not publish as one bounty (split into multiple M/L issues) |
 
 BP = “Bounty Points” (token-agnostic).
 
