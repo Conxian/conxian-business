@@ -22,6 +22,7 @@ The `record_id` for any JSON-LD governance record MUST be computed deterministic
 - **Representation:**
   - human-readable: lowercase hex (64 chars)
   - on-chain: the raw 32-byte digest (or an equivalent canonical encoding) that MUST match the above bytes exactly
+- **Hash input:** the JSON-LD graph used for canonicalization and hashing MUST NOT include the `record_id` property. `record_id` is computed over the content-only record and then inserted as an immutable identifier.
 - **Context resolution:** canonicalization MUST run with network fetch disabled; any JSON-LD contexts MUST be resolved from pinned, content-addressed artifacts.
 
 ## Target record planes
