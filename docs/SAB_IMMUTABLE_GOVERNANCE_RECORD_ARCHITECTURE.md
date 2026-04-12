@@ -17,12 +17,12 @@ It classifies governance record domains, establishes datastore boundaries with o
 The `record_id` for any JSON-LD governance record MUST be computed deterministically to prevent “same semantics, different hash” failures across implementations.
 
 - **Canonicalization:** JSON-LD RDF Dataset Canonicalization using **URDNA2015**.
-- **Hash domain:** The digest MUST be computed over the governance record with `record_id` omitted; `record_id` MUST NOT be included in the RDF dataset used for canonicalization and hashing.
+- **Hash domain:** The digest MUST be computed over the governance record with the `record_id` property removed from the JSON/JSON-LD input prior to JSON-LD processing; `record_id` MUST NOT be included in the RDF dataset used for canonicalization and hashing.
 - **Hash input bytes:** Serialize the URDNA2015 canonicalized dataset to N-Quads using LF (U+000A) line endings (no CRLF). The serialization MUST end with a final LF. The hash input is the exact UTF-8 bytes of that serialization.
 - **Hash:** `sha256` over the hash input bytes above.
 - **`record_id` representation:** Inside any JSON/JSON-LD governance record, `record_id` MUST be the lowercase-hex encoding of the digest (64 chars, no prefix).
 - **On-chain anchor representation:** The on-chain anchor MUST store the same digest, either as 32 raw bytes or (if stored as text) the exact same lowercase-hex string.
-- **JSON-LD processing profile:** Canonicalization MUST be performed in JSON-LD 1.1 processing mode. Contexts MUST NOT define `@base`. Implementations MUST use a null/absent base IRI and MUST fail if any relative IRI would require base resolution.
+- **JSON-LD processing profile:** Canonicalization MUST be performed in JSON-LD 1.1 processing mode with a null/absent base IRI. No inline or remote `@context` used during canonicalization MAY define `@base`; if any `@base` is encountered, or if any relative IRI would require base resolution, canonicalization MUST fail.
 - **Context resolution / document loader policy:** canonicalization MUST run with network fetch disabled and MUST fail closed.
   - Any attempt to perform a network fetch for a context/document MUST fail; resolution via pinned, content-addressed local artifacts is permitted.
   - `@context` references MUST be absolute and MUST resolve only via pinned, content-addressed artifacts from an allowlisted local store; any unpinned context MUST fail.
