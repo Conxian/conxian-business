@@ -81,6 +81,8 @@ None.
 
 Note: the issue referenced in older threads as `CON-135` is not retrievable via the Linear API as of 2026-04-12 (it may have been deleted or renumbered). If it reappears, it should remain internal-only unless it is split into tightly scoped, reviewable sub-tasks.
 
+For readers comparing against earlier discussion on CON-231: `CON-129` and `CON-167` were previously lumped into `internal-only` but are refined here into `Security-sensitive` and `Payout-gated` respectively. This does not change their pre-mainnet status (both remain non-public / maintainer-gated) but makes the risk and dependency structure more explicit.
+
 ### Security-sensitive (hold until after mainnet + maintainer review gates)
 
 These items touch release discipline, required checks, tags, and/or `.github`-propagated standards. Even when the concrete work is “just docs,” the operational blast radius (and common requirement for maintainer privileges) makes them unsafe to treat as publicly claimable before mainnet.
@@ -114,5 +116,6 @@ To make the repo and Linear states accurately reflect the classification above:
    - it is unassigned,
    - it has explicit acceptance criteria that can be validated via a PR/commit artifact.
 4. For https://linear.app/conxian-labs/issue/CON-231/decide-which-bounties-can-open-before-mainnet-go-live specifically, all currently visible claims are considered invalid for approval as of 2026-04-12 because they lack linked implementation artifacts.
+5. Before adding or keeping `Bounty Open` on any GitHub issue, ensure it is linked to a `CON-` issue that appears in this classification snapshot (or a successor) and inherits its classification. Unmapped GitHub bounty issues must not be treated as externally claimable.
 
 Given there are no **Externally claimable (pre-mainnet)** items as of 2026-04-12, all audited issues should end up without the `Bounty Open` label until after mainnet go-live.
