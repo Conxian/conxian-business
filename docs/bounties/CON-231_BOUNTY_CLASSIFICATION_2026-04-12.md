@@ -19,10 +19,10 @@ Replay queries used to derive the snapshot above:
 
 ```bash
 # GitHub open bounty set
-gh issue list -R Conxian/conxius-platform -S 'label:Bounty state:open'
+gh issue list -R Conxian/conxius-platform -l Bounty --state open
 
 # GitHub open bounty set (Bounty Open)
-gh issue list -R Conxian/conxius-platform -S 'label:"Bounty Open" state:open'
+gh issue list -R Conxian/conxius-platform -l 'Bounty Open' --state open
 
 # Linear bounty sets (Conxian-Labs team; all workflow states)
 ch-linear issue list -T CON -l Bounty
