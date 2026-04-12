@@ -4,7 +4,7 @@ This document is the classification artifact for https://linear.app/conxian-labs
 
 ## Decision
 
-As of **2026-04-12**, **no current Conxian-Labs bounty items should remain publicly claimable** before mainnet go-live.
+As of **2026-04-12**, **no current bounty items in the audited Conxian-Labs Linear team and `Conxian/conxius-platform` registries should remain publicly claimable** before mainnet go-live.
 
 Rationale (high level): the current bounty set is dominated by maintainer-only workflow/governance work, payout-gated enablement work, and release/CI hygiene items that require privileged repository access and are not safely reviewable as “open claims” during a mainnet cutover window.
 
