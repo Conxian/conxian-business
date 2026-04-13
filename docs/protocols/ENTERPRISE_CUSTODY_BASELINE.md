@@ -21,6 +21,7 @@ Related references:
   - The risk-classification snapshot that justified the transition MUST be recorded immutably.
   - Additional classification events MAY be appended later without mutating the request's policy hash/version or the eligibility snapshot; each classification event MUST record the policy hash/version used for that classification event.
   - Effective risk classification MUST follow the rules in **High-risk threshold**.
+  - If no time-lock applies under the effective risk classification, a request MAY transition directly from the execution-eligible state to the execution-ready state immediately after eligibility checks pass.
 - **Execution-ready state**: the point where all applicable time-lock windows have elapsed under the effective risk classification, and the only remaining step is to execute/sign/broadcast the action.
   - Protected actions MUST NOT be executed, signed, or broadcast unless the request is in the execution-ready state.
 - **High-risk threshold**: a policy-defined set of predicates (for example: per-asset amount limits, destination classes, or environments) that classify a request as high risk and thereby trigger enhanced controls (for example: quorum and time-lock).
@@ -55,13 +56,15 @@ Normative mapping: any privileged action that can move value, rotate keys, chang
 - **Separation of duties**: at least one approval step for value-bearing actions MUST be performed by an identity/capability that is not the requester.
 - **Time-lock (baseline)**:
   - High-risk actions (payments classified as `high-risk`, all key rotations, and all deploy/upgrade actions) MUST enforce a minimum delay starting when the action enters the execution-eligible state; once the delay has elapsed, the action enters the execution-ready state.
-  - At that transition, a dedicated **time-lock-start reference** (block height for chain-settled assets or timestamp for non-chain rails) MUST be appended to the custody/approval system of record in a tamper-evident way and treated as an immutable field; any attempted in-place change for an in-flight request MUST cause the action to be blocked and audited. This time-lock-start reference MAY, but does not have to, equal the classification reference block height recorded earlier.
+  - Upon entry into the execution-eligible state (i.e., when the time-lock window starts), a dedicated **time-lock-start reference** (block height for chain-settled assets or timestamp for non-chain rails) MUST be appended to the custody/approval system of record in a tamper-evident way and treated as an immutable field; any attempted in-place change for an in-flight request MUST cause the action to be blocked and audited.
+    - For non-chain rails, the time-lock-start reference timestamp MUST be derived from a hardened, auditable time source, and the time-lock-start reference MUST record the time-source identity used.
+    - This time-lock-start reference MAY, but does not have to, equal the classification reference block height recorded earlier.
   - For chain-settled assets, this delay MUST be at least 144 blocks on the asset’s settlement chain (for example: 144 Stacks L1 blocks for STX-settled flows).
   - For non-chain settlement rails, this delay MUST be at least `86400` seconds (24 hours) and MUST be expressed in seconds in policy.
   - Policy MAY increase this delay but MUST NOT reduce or disable it for these flows.
   - If the delay (block-height or wall-clock) cannot be verified from an authoritative source (for chain-settled assets: validated chain/indexer data; for non-chain rails: a hardened, auditable time source whose outputs are recorded in the custody/approval system of record), the action MUST be blocked.
   - If an in-flight request is re-classified into a stricter risk category after it has entered the execution-eligible state, a new immutable time-lock-start reference MUST be appended as part of that stricter classification event (not mutating any prior reference) and the time-lock window for that stricter category MUST be restarted and measured from that new time-lock-start reference. Enforcement MUST use the most recently appended time-lock-start reference for the strictest effective risk classification when checking time-lock expiry.
-  - If the minimum delay required for the effective risk classification increases while a request is in flight but before it has entered the execution-ready state (even if its risk category does not change), enforcement MUST apply the stricter delay when determining entry into the execution-ready state.
+  - If, while a request is in flight but before it has entered the execution-ready state, a later classification event records a policy hash/version that requires a stricter minimum delay for the effective risk classification (even if its risk category does not change), enforcement MUST apply the strictest such delay across all recorded classification events when determining entry into the execution-ready state.
 
 ## 3) Capability boundaries for privileged tools/services
 
