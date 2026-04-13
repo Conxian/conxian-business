@@ -22,6 +22,7 @@ Related references:
   - Effective risk classification MUST follow the rules in **High-risk threshold**.
 - **Execution-ready state**: the point where all applicable time-lock windows have elapsed under the effective risk classification, and the only remaining step is to execute/sign/broadcast the action.
   - Protected actions MUST NOT be executed, signed, or broadcast unless the request is in the execution-ready state.
+  - If no time-lock is required for the effective risk classification, the request transitions directly from execution-eligible to execution-ready (potentially immediately at the same logical time).
 - **High-risk threshold**: a policy-defined set of predicates (for example: per-asset amount limits, destination classes, or environments) that classify a request as high risk and thereby trigger enhanced controls (for example: quorum and time-lock).
   - High-risk threshold predicates MUST be stored in the policy source of truth.
   - For every classification event (including the initial evaluation and any subsequent re-classification), the policy hash/version used for classification, the evaluation timestamp, the resulting risk classification (for example: `high-risk` vs `standard`), and for chain-settled assets a reference block height MUST be appended to the custody/approval system of record in a tamper-evident way.
