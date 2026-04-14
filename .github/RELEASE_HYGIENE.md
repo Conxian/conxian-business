@@ -8,6 +8,21 @@ The goals:
 - Ensure every merge has clear provenance (Linear issue + PR).
 - Make releases and changelogs easy to audit.
 
+## Branch and promotion standard
+
+This repository uses a three-branch model:
+
+- `dev` = testnet-only and non-production validation
+- `staged` = mainnet candidate validation
+- `main` = mainnet-only production code
+
+Promotion rules:
+
+- No direct promotion from `dev` to `main`.
+- Promotion to `main` happens only from `staged`.
+
+Reference: `docs/BRANCH_AND_PROMOTION_STANDARD.md` and `openspec/specs/git-management/spec.md`.
+
 ## Required checks guidance
 
 ### Always-on checks for PRs targeting `dev`, `staged`, or `main`
@@ -19,7 +34,22 @@ These workflows run on every pull request targeting `dev`, `staged`, or `main`. 
 - Unified CI (see [`conxian-unified-ci.yml`](./workflows/conxian-unified-ci.yml))
   - Repo hygiene:
     - ZSE knowledge retention via `scripts/verify_knowledge_retention.py`.
+    - Tracked artifact scanning via `scripts/verify_tracked_artifacts.py`.
+      - False positives can be allowlisted via `.github/artifact-scan-allowlist.txt` (case-sensitive; paths are normalized to forward slashes with no leading `./`):
+        - Plain (non-glob) patterns (no glob metacharacters such as `*`, `?`, or bracket expressions like `[a-z]`):
+          - If the pattern contains `/`, it is matched against the full normalized path.
+          - Plain patterns can also match a directory prefix at a path boundary (e.g., `audit/reports` matches `audit/reports/<...>` but not `audit/reports-old/<...>`).
+          - If the pattern does not contain `/`, it also matches basenames anywhere in the repo and exact normalized paths.
+        - Glob patterns (contain glob metacharacters such as `*`, `?`, or bracket expressions like `[a-z]`):
+          - If the pattern contains `/`, it is matched against the full normalized path.
+          - If the pattern does not contain `/`, it is matched against basenames only (it does not match full normalized paths; add `/` when you need full-path matching).
+        - Examples:
+          - `junit.xml` matches any tracked file with basename `junit.xml` anywhere in the repo.
+          - `audit/reports` matches any tracked file under `audit/reports/` (path-boundary directory-prefix match; does not match `audit/reports-old/`).
+          - `*.log` matches any tracked `.log` file by basename, so use with care.
     - Submodule integrity via `scripts/verify_submodule_integrity.py`.
+    - Governance baseline via `scripts/verify_repo_governance_baseline.py`.
+- Branch promotion policy (see [`branch-promotion-policy.yml`](./workflows/branch-promotion-policy.yml))
 - Secret scan (see [`secret-scan.yml`](./workflows/secret-scan.yml))
 - Dependency review (see [`dependency-review.yml`](./workflows/dependency-review.yml))
 
@@ -44,6 +74,7 @@ Notes:
 ## PR and merge expectations
 
 - No direct commits to `main`. Use a PR.
+- Use the correct base branch (`dev`, `staged`, or `main`) based on the branch and promotion standard.
 - One PR = one focused change (keep it reviewable).
 - PRs should map to a Linear issue (include it in the PR description).
 - Follow `CODEOWNERS` for review routing.
@@ -51,6 +82,15 @@ Notes:
   - Required checks are green.
   - Appropriate label-gated suites ran (when relevant).
   - Changelog is updated when user-facing behavior or security posture changes.
+
+## Tagged releases (public repos)
+
+For user-facing repositories (starting with `conxius-wallet`), we expect releases to be cut as **SemVer tags** (`vX.Y.Z`) with:
+
+- a matching `CHANGELOG.md` entry, and
+- GitHub Release notes copied from the matching changelog section.
+
+`Conxian Unified CI` runs `scripts/verify_release_hygiene.py` to enforce that this repo’s root `CHANGELOG.md` contains an `## [Unreleased]` section, and to emit warnings when critical user-facing repos are missing tags.
 
 Merge preference:
 

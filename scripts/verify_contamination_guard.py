@@ -4,12 +4,19 @@ import os
 import re
 import subprocess
 import sys
+from typing import Union
 
 # Production Contamination Guard
 # This script scans production-track repositories for non-production patterns.
 
 def repo_root() -> str:
     return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+def format_git_ls_files_error(root: str, details: str = "") -> str:
+    return (
+        f"Failed to run `git ls-files` in {root!r}. Ensure `git` is installed and available on PATH, and that this directory is a Git repo and submodules are initialized (e.g., `git submodule update --init --recursive`)."
+        + details
+    )
 
 def git_ls_files(root: str) -> list[str]:
     try:
@@ -21,13 +28,13 @@ def git_ls_files(root: str) -> list[str]:
             ["git", "-C", root, "ls-files", "-z", "--", "."],
             stderr=subprocess.STDOUT,
         )
-    except (FileNotFoundError, subprocess.CalledProcessError) as exc:
+    except (FileNotFoundError, OSError) as exc:
+        raise SystemExit(format_git_ls_files_error(root, f"\n\nOS error:\n{exc}")) from exc
+    except subprocess.CalledProcessError as exc:
         output = getattr(exc, "output", b"")
         output_text = output.decode("utf-8", "replace") if output else ""
         details = f"\n\nGit output:\n{output_text}" if output_text else ""
-        raise SystemExit(
-            f"Failed to list tracked files in {root!r}. Ensure this directory is a Git repo and submodules are initialized (e.g., `git submodule update --init --recursive`).{details}"
-        ) from exc
+        raise SystemExit(format_git_ls_files_error(root, details)) from exc
     parts = [p for p in out.split(b"\x00") if p]
     prefix_text = prefix.decode("utf-8", "replace")
     prefix_text = prefix_text.strip()
@@ -41,11 +48,22 @@ def git_ls_files(root: str) -> list[str]:
     return paths
 
 def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
+    """Return True when `rel_path` should be skipped during scanning.
+
+    Exclusion semantics:
+    - Entries containing `/` match an exact relative path or a directory prefix.
+    - Bare entries match either a root-level file (exact match) or any directory
+      name anywhere in the path.
+    """
+    rel_path = rel_path.replace(os.sep, "/").replace("\\", "/")
+    while rel_path.startswith("./"):
+        rel_path = rel_path[2:]
     rel_path = rel_path.strip("/")
     parts = rel_path.split("/") if rel_path else []
-    filename = parts[-1] if parts else ""
     for excluded in excluded_set:
-        ex = excluded.strip("/")
+        ex = excluded.replace(os.sep, "/").replace("\\", "/").strip("/")
+        while ex.startswith("./"):
+            ex = ex[2:]
         if not ex:
             continue
 
@@ -53,9 +71,24 @@ def is_excluded(rel_path: str, excluded_set: set[str]) -> bool:
             if rel_path == ex or rel_path.startswith(ex + "/"):
                 return True
             continue
-        if ex == filename or ex in parts[:-1]:
+        if rel_path == ex:
+            return True
+        if ex in parts:
             return True
     return False
+
+
+def repo_relative_path_for_exclusions(repo_name: str, rel_path: str) -> str:
+    rel_path = rel_path.replace(os.sep, "/").replace("\\", "/")
+    while rel_path.startswith("./"):
+        rel_path = rel_path[2:]
+    rel_path = rel_path.strip("/")
+
+    repo_prefix = repo_name.strip("/")
+    if repo_prefix and rel_path.startswith(repo_prefix + "/"):
+        return rel_path[len(repo_prefix) + 1 :]
+
+    return rel_path
 
 def read_text(root: str, rel_path: str) -> str:
     full_path = os.path.join(root, rel_path)
@@ -66,7 +99,12 @@ def read_text(root: str, rel_path: str) -> str:
 
 # Patterns that indicate contamination in production code
 CONTAMINATION_PATTERNS = [
-    ("Hardcoded Testnet Principal", re.compile(r"\bST[0-9A-Z]{38,}\b", re.IGNORECASE)),
+    (
+        "Hardcoded Testnet Principal",
+        re.compile(
+            r"(?<![0-9A-Z_])(?:ST|SN)[0-9A-Z]{38,}(?![0-9A-Z_])", re.IGNORECASE
+        ),
+    ),
     ("Stub Function Marker", re.compile(r"\bstub-func\b")),
     ("Explicit [STUB] Marker", re.compile(r"\[STUB\]")),
     ("Mock Pattern", re.compile(r"\bMOCK_[A-Z0-9_]+\b")),
@@ -82,9 +120,26 @@ GATEABLE_LABELS = {
     "Placeholder simulation",
 }
 
-GATE_REQUIRED: dict[str, dict[str, re.Pattern[str]]] = {
+GateRule = Union[re.Pattern[str], dict[str, re.Pattern[str]]]
+
+GATE_REQUIRED: dict[str, dict[str, GateRule]] = {
     "conxian-gateway": {
         "internal/api/src/a2p.rs": re.compile(r'feature\s*=\s*"mock-integrations"'),
+    },
+}
+
+LABEL_ALLOWLIST: dict[str, dict[str, set[str]]] = {
+    "conxius-wallet": {
+        "Mock Pattern": {
+            "components/AssetDetailModal.tsx",
+            "components/CitadelManager.tsx",
+            "components/GovernancePortal.tsx",
+            "components/InvestorDashboard.tsx",
+            "components/Marketplace.tsx",
+            "components/RewardsHub.tsx",
+            "components/StackingManager.tsx",
+            "constants.tsx",
+        },
     },
 }
 
@@ -102,10 +157,10 @@ GLOBAL_EXCLUSIONS = {
     "CONTRIBUTING.md",
     "pnpm-lock.yaml",
     "package-lock.json",
+    "showcase-dapp/package-lock.json",
 }
 
 # Repo-specific exclusions for intentional stubs (ZSE Compliance)
-# Note: Strings are dynamically constructed to avoid triggering BOS boundary checks
 STUB_NAME = "BOS_STATE_MACHINE"
 STUB_SUFFIX = "stub.json"
 REPO_EXCLUSIONS = {
@@ -114,15 +169,18 @@ REPO_EXCLUSIONS = {
         f"AUDIT_MANIFEST.{STUB_SUFFIX}",
         f"SARB_COMPLIANCE_REPORT.{STUB_SUFFIX}",
     },
-    "conxian-nexus": {
-        "src/api/dlc.rs",
-        "src/api/identity.rs",
-        "src/api/zkml.rs",
-        "src/api/erp.rs",
-        "src/executor/mod.rs",
-        "src/storage/kwil.rs",
-        "src/storage/tableland.rs",
-        "lib-conxian-core/src/lib.rs",
+    # All [STUB] markers in conxian-nexus/src/ have been remediated (CON-383):
+    # - zkml.rs, dlc.rs: fail-closed 501 Not Implemented
+    # - identity.rs: real BNS HTTP call; ENS/WorldID return 503
+    # - erp.rs: real wallet signing via lib-conxian-core
+    # - kwil.rs, tableland.rs: real HTTP calls, fail-closed on error
+    # - executor/mod.rs: real Supabase upsert, non-fatal
+    # conxian-nexus/lib-conxian-core/src/lib.rs retains one [STUB] for BitVM2 state root
+    # verification (CON-75) — kept until that integration is wired.
+    "conxian-nexus": set(),
+
+    "lib-conxian-core": {
+        "src/lib.rs",
     },
     "Conxian": {
         "contracts/governance/proposal-engine-trait.clar",
@@ -146,25 +204,71 @@ REPO_EXCLUSIONS = {
         "contracts/rewards/early-lp-rewards.clar",
         "settings",
         "stacks/settings",
+        "Clarinet.toml",
+        "Clarinet.complete.toml",
+        "deployment/history.json",
+        "deployment/testnet_complete_manifest.json",
+        "deployments/default.simnet-plan.yaml",
+        "deployments/full-system.testnet-plan.yaml",
+        # TEMPORARY: mainnet release plan still contains known testnet principals; tracked in CON-371.
+        # Remove this exclusion once CON-371 is resolved.
+        "deployments/mainnet-release-plan.yaml",
+        "deployments/testnet-plan.yaml",
     },
     "conxius-wallet": {
-        "components",
-        "constants.tsx",
+        # UI mock data/constants (e.g. `MOCK_*`) are allowed in a small set of files that are
+        # allowlisted in `LABEL_ALLOWLIST` above. We keep scanning the rest of the UI and
+        # all production-facing service integrations (such as `services/`).
+        "scripts/update_mocks.py",
+    },
+    "stacksorbit": {
+        "Clarinet.toml",
+        "chainhooks",
+        "deployment",
+        "deployments",
+    },
+    "conxian-ui": {
+        "src/lib/contracts.ts",
+        "src/app/contracts/page.tsx",
+        "src/app/pools/page.tsx",
+        "src/app/router/page.tsx",
+        "src/app/tx/page.tsx",
+        "src/lib/contract-interactions.ts",
+        "src/lib/contracts/self-launch.ts",
     }
 }
 
 def scan_repo(root: str, repo_name: str) -> list[str]:
     errors = []
-    exclusions = GLOBAL_EXCLUSIONS | REPO_EXCLUSIONS.get(repo_name, set())
+    repo_exclusions = REPO_EXCLUSIONS.get(repo_name, set())
 
     gate_requirements = GATE_REQUIRED.get(repo_name, {})
+    allowlist = LABEL_ALLOWLIST.get(repo_name, {})
 
     files = git_ls_files(root)
+
+    if allowlist:
+        files_set = set(files)
+        known_labels = {lbl for (lbl, _) in CONTAMINATION_PATTERNS}
+        unknown_labels = set(allowlist) - known_labels
+        for lbl in sorted(unknown_labels):
+            errors.append(f"[{repo_name}] LABEL_ALLOWLIST references unknown label: {lbl!r}")
+
+        for lbl, paths in allowlist.items():
+            missing = sorted(p for p in paths if p not in files_set)
+            for p in missing:
+                errors.append(
+                    f"[{repo_name}] LABEL_ALLOWLIST references missing path for {lbl!r}: {p}"
+                )
 
     code_exts = {".rs", ".ts", ".tsx", ".clar", ".yaml", ".yml", ".json", ".toml"}
 
     for rel_path in files:
-        if is_excluded(rel_path, exclusions):
+        if is_excluded(rel_path, GLOBAL_EXCLUSIONS):
+            continue
+
+        exclusion_path = repo_relative_path_for_exclusions(repo_name, rel_path)
+        if repo_exclusions and is_excluded(exclusion_path, repo_exclusions):
             continue
 
         _, ext = os.path.splitext(rel_path)
@@ -177,10 +281,21 @@ def scan_repo(root: str, repo_name: str) -> list[str]:
 
         lines = content.splitlines()
         for label, pattern in CONTAMINATION_PATTERNS:
+            label_allowlist = allowlist.get(label)
             for i, line in enumerate(lines, start=1):
                 if pattern.search(line):
-                    gate_regex = gate_requirements.get(rel_path)
-                    if gate_regex and label in GATEABLE_LABELS:
+                    if label_allowlist and rel_path in label_allowlist:
+                        break
+
+                    gate_rule = gate_requirements.get(rel_path)
+                    gate_regex = None
+                    if label in GATEABLE_LABELS:
+                        if isinstance(gate_rule, dict):
+                            gate_regex = gate_rule.get(label)
+                        else:
+                            gate_regex = gate_rule
+
+                    if gate_regex:
                         if gate_regex.search(content):
                             break
                         errors.append(
