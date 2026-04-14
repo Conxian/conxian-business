@@ -133,6 +133,16 @@ def _is_allowlisted(rel_path: str, allowlist: list[str]) -> bool:
 
 
 def _match_any(rel_path: str, patterns: tuple[str, ...]) -> bool:
+    """Return True if `rel_path` matches any pattern.
+
+    Semantics (intentionally more explicit than shell-style globbing):
+    - Patterns ending in `/**` match descendants of that directory.
+      - For patterns like `foo/**` (no `/` in `foo`), `foo` is treated as a directory
+        segment that can appear anywhere in the path.
+      - For patterns like `foo/bar/**`, the `foo/bar` prefix must match from the repo
+        root.
+      - These patterns do not match a file named exactly `foo` or `foo/bar`.
+    """
     rel_path = _normalize_path(rel_path)
     base = rel_path.rsplit("/", 1)[-1]
     for pattern in patterns:
