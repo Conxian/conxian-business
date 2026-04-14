@@ -7,6 +7,8 @@ This document is a lightweight index for `conxian-nexus` mainnet readiness. It i
 The canonical evidence pack lives in the `conxian-nexus` repo (pinned by this repo’s `conxian-nexus` submodule):
 - [conxian-nexus/docs/MAINNET_EVIDENCE.md](https://github.com/Conxian/conxian-nexus/blob/06531dc72a34f19a81a71aa44226399808d02b4c/docs/MAINNET_EVIDENCE.md)
 
+Links in this document are pinned to the same `conxian-nexus` submodule SHA shown above. If the submodule pin is updated, update the links here in the same change.
+
 ### Evidence index
 
 | Area | Claim | Evidence |
@@ -25,3 +27,9 @@ The canonical evidence pack lives in the `conxian-nexus` repo (pinned by this re
 
 - “Implemented in code” is not the same as “verified in production.” Before declaring readiness, each claim should link to concrete evidence (tests, configs, runbooks, sign-off).
 - In this repo, `Cargo.lock` should remain reproducible (`cargo metadata --locked`). Avoid landing lockfile diffs that don’t correspond to actual manifest changes.
+
+### Gating criteria (before declaring READY)
+
+- Link the evidence pack to specific CI runs (build/test) for the release tag or commit being asserted.
+- Link an operational runbook for microblock reorg handling and a rollback validation procedure.
+- Link an operational runbook for external settlement ingress (attestation floor, incident response, and time-lock release).
