@@ -16,13 +16,14 @@ Related references:
 - **Privileged action**: any action that can move value, sign, rotate keys, modify policy, change identity/authorization, deploy/upgrade, or alter infrastructure control-plane settings.
 - **Protected action**: a privileged action with an enforced policy/quorum boundary (for example: payments, treasury spends, key rotation, deploy/upgrade).
 - **Agent**: any automation (LLM or non-LLM) that can request or perform actions.
-- **Execution-eligible state**: the point in the approval lifecycle where all required approvals are recorded, all policy checks (including risk classification) have passed, and the action is eligible to start any required time-lock window. While in this state, the action MUST NOT be executed/signed/broadcast until all applicable time-lock windows have elapsed.
-  - At entry, an execution-eligibility snapshot (including the request payload hash, the request's policy hash/version, the approval set, and the risk-classification result) MUST be recorded immutably and treated as immutable; any change to these fields MUST be expressed as a new request that re-enters the approval lifecycle.
-  - Additional classification events MAY be appended later without mutating that execution-eligibility snapshot; each classification event MUST record the policy hash/version used for that classification event.
+- **Execution-eligible state**: the point in the approval lifecycle where all required approvals are recorded, all policy checks (including risk classification) have passed, and the action is eligible to start any required time-lock window. While in this state, the action MUST NOT be executed/signed/broadcast; execution is permitted only in the execution-ready state.
+  - At entry, an execution-eligibility snapshot (including the request payload hash, the request's policy hash/version (the policy snapshot used to justify approvals/eligibility), the approval set, and the risk-classification result) MUST be recorded immutably; any change to these fields MUST be expressed as a new request that re-enters the approval lifecycle.
+  - Additional classification events MAY be appended later without mutating the request's policy hash/version or the execution-eligibility snapshot; each classification event MUST record the policy hash/version used for that classification event.
   - Effective risk classification MUST follow the rules in **High-risk threshold**.
 - **Execution-ready state**: the point where all applicable time-lock windows have elapsed under the effective risk classification, and the only remaining step is to execute/sign/broadcast the action.
+  - If no time-lock applies under the effective risk classification, the request MAY transition directly from `execution-eligible` to `execution-ready` immediately after eligibility checks pass.
   - Protected actions MUST NOT be executed, signed, or broadcast unless the request is in the execution-ready state.
-  - If no time-lock is required for the effective risk classification, the request transitions directly from execution-eligible to execution-ready (potentially immediately at the same logical time).
+  - If and only if the effective risk classification's policy defines no time-lock for this action type and the action is not subject to the baseline time-lock requirements in **Time-lock (baseline)**, the request MAY transition to the execution-ready state immediately upon entering the execution-eligible state; all execution-eligible immutability and recording requirements still apply. In this no-lock case, no **time-lock-start reference** is required.
 - **High-risk threshold**: a policy-defined set of predicates (for example: per-asset amount limits, destination classes, or environments) that classify a request as high risk and thereby trigger enhanced controls (for example: quorum and time-lock).
   - High-risk threshold predicates MUST be stored in the policy source of truth.
   - For every classification event (including the initial evaluation and any subsequent re-classification), the policy hash/version used for classification, the evaluation timestamp, the resulting risk classification (for example: `high-risk` vs `standard`), and for chain-settled assets a reference block height MUST be appended to the custody/approval system of record in a tamper-evident way.
@@ -38,9 +39,9 @@ Normative mapping: any privileged action that can move value, rotate keys, chang
 
 - **Hardware-anchored keys**: signing keys MUST be held in an HSM/MPC/TEE-backed boundary (for example: StrongBox / enclave-class custody). Plaintext private keys MUST NOT exist in application containers, CI, or general-purpose agent runtimes.
 - **Key separation**: payment, treasury, identity/admin, and deployment keys MUST be separate keys with separate policies and audit trails (no shared “root key”).
-- **Quorum**: for any key that can (a) move value or (b) mutate the control plane, the custody boundary MUST support threshold approval (minimum 2-of-3; target 3-of-5 where liveness allows) and MUST enforce it for:
-  - any value movement request classified as `high-risk` under policy (including any value movement that meets an amount-based high-risk predicate for that rail/asset);
-  - all production control-plane mutations (including key rotations, deploy/upgrade, identity/authorization changes, and policy changes).
+- **Quorum**: for any key that can (a) move value or (b) mutate the control plane, the custody boundary MUST support threshold approval (minimum 2-of-3; target 3-of-5 where liveness allows) and MUST enforce it for the following protected actions:
+  - This quorum is required for any value movement request classified as `high-risk` under policy (including any value movement that meets an amount-based high-risk predicate for that rail/asset).
+  - This quorum is required for all production control-plane mutations (including key rotations, deploy/upgrade, identity/authorization changes, and policy changes).
 - **Fail-closed signing**: signing MUST fail closed if any of the following cannot be verified at request time:
   - policy version/hash
   - approval quorum and signer identities (as tracked by the custody system of record)
@@ -55,7 +56,9 @@ Normative mapping: any privileged action that can move value, rotate keys, chang
 - **Separation of duties**: at least one approval step for value-bearing actions MUST be performed by an identity/capability that is not the requester.
 - **Time-lock (baseline)**:
   - High-risk actions (payments classified as `high-risk`, all key rotations, and all deploy/upgrade actions) MUST enforce a minimum delay starting when the action enters the execution-eligible state; once the delay has elapsed, the action enters the execution-ready state.
-  - At that transition, a dedicated **time-lock-start reference** (block height for chain-settled assets or timestamp for non-chain rails) MUST be appended to the custody/approval system of record in a tamper-evident way and treated as an immutable field; any attempted in-place change for an in-flight request MUST cause the action to be blocked and audited. For non-chain rails, the time-lock-start reference MUST include both the timestamp and the identity of the hardened, auditable time source used. This time-lock-start reference MAY, but does not have to, equal the classification reference block height or timestamp recorded earlier.
+  - For actions where a time-lock applies under the effective risk classification, upon entry into the execution-eligible state (i.e., when the time-lock window starts), a dedicated **time-lock-start reference** (block height for chain-settled assets or timestamp for non-chain rails) MUST be appended to the custody/approval system of record in a tamper-evident way and treated as an immutable field; any attempted in-place change for an in-flight request MUST cause the action to be blocked and audited.
+    - For non-chain rails, the time-lock-start reference timestamp MUST be derived from the same hardened, auditable time source used for time-lock verification, and the record MUST include the time-source identity used.
+    - This time-lock-start reference MAY, but does not have to, equal the classification reference block height or timestamp recorded earlier.
   - For chain-settled assets, this delay MUST be at least 144 blocks on the asset’s settlement chain (for example: 144 Stacks L1 blocks for STX-settled flows).
   - For non-chain settlement rails, this delay MUST be at least `86400` seconds (24 hours) and MUST be expressed in seconds in policy.
   - Policy MAY increase this delay but MUST NOT reduce or disable it for these flows.
@@ -208,4 +211,4 @@ For recovery workflows, the same event taxonomy applies. At minimum:
 Implementation note (public-safe): an append-only public audit manifest MAY be anchored to Stacks L1, while detailed logs are kept in an enterprise-controlled datastore, as long as both preserve the attempted/blocked/completed distinctions.
 
 ---
-© 2026 Conxian-Labs (Pty) Ltd | Omphile Ndaloenhle Legacy Trust
+© 2026 Conxian-Labs (Pty) Ltd.
