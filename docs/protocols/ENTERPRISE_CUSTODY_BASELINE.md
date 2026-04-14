@@ -24,7 +24,7 @@ Related references:
 - **Execution-ready state**: the point where all applicable time-lock windows have elapsed under the effective risk classification, and the only remaining step is to execute/sign/broadcast the action.
   - If no time-lock applies under the effective risk classification, the request MAY transition directly from `execution-eligible` to `execution-ready` immediately after eligibility checks pass.
   - Protected actions MUST NOT be executed, signed, or broadcast unless the request is in the execution-ready state.
-  - If and only if the effective risk classification's policy defines no time-lock for this action type and the action is not subject to the baseline time-lock requirements in **Time-lock (baseline)**, the request MAY transition directly from the execution-eligible state to the execution-ready state immediately after eligibility checks pass.
+  - If and only if the effective risk classification's policy defines no time-lock for this action type and the action is not subject to the baseline time-lock requirements in **Time-lock (baseline)**, the request MAY transition to the execution-ready state immediately upon entering the execution-eligible state; all execution-eligible immutability and recording requirements still apply. In this no-lock case, no **time-lock-start reference** is required.
 - **High-risk threshold**: a policy-defined set of predicates (for example: per-asset amount limits, destination classes, or environments) that classify a request as high risk and thereby trigger enhanced controls (for example: quorum and time-lock).
   - High-risk threshold predicates MUST be stored in the policy source of truth.
   - For every classification event (including the initial evaluation and any subsequent re-classification), the policy hash/version used for classification, the evaluation timestamp, the resulting risk classification (for example: `high-risk` vs `standard`), and for chain-settled assets a reference block height MUST be appended to the custody/approval system of record in a tamper-evident way.
@@ -212,4 +212,4 @@ For recovery workflows, the same event taxonomy applies. At minimum:
 Implementation note (public-safe): an append-only public audit manifest MAY be anchored to Stacks L1, while detailed logs are kept in an enterprise-controlled datastore, as long as both preserve the attempted/blocked/completed distinctions.
 
 ---
-© 2026 Conxian-Labs (Pty) Ltd | Omphile Ndaloenhle Legacy Trust
+© 2026 Conxian-Labs (Pty) Ltd.
