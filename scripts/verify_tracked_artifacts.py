@@ -140,11 +140,15 @@ def _match_any(rel_path: str, patterns: tuple[str, ...]) -> bool:
 
         if normalized.endswith("/**"):
             dir_name = normalized[:-3].rstrip("/")
+            if not dir_name:
+                continue
+
             if "/" in dir_name:
-                if rel_path == dir_name or rel_path.startswith(dir_name + "/"):
+                if rel_path.startswith(dir_name + "/"):
                     return True
             else:
-                if f"/{dir_name}/" in f"/{rel_path}/":
+                segments = rel_path.split("/")
+                if dir_name in segments[:-1]:
                     return True
             continue
 
