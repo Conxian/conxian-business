@@ -12,7 +12,7 @@ This page is a practical index of the documentation already present in this repo
 
 Notes:
 
-- This repo is public. “Internal-only” material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see https://linear.app/conxian-labs/issue/CON-256).
+- Treat this repo as public for boundary purposes. (This GitHub repository is private as of April 8, 2026.) “Internal-only” material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see https://linear.app/conxian-labs/issue/CON-256).
 - OpenSpec change sets typically have 4 layers: `proposal.md` (intent), `design.md` (architecture), `specs/*/spec.md` (requirements), `tasks.md` (execution).
 
 ## 1) Repo navigation (start here)
@@ -23,6 +23,8 @@ Notes:
 | `SUMMARY.md` | Canonical | Public-safe | GitBook table of contents (used for docs navigation; Pages publishing is allowlisted). |
 | `docs/README.md` | Supporting | Public-safe | “Docs hub” landing page. |
 | `docs/BOS_BUSINESS_BUILDOUT.md` | Canonical | Public-safe | Repo business purpose, business-unit placement, governance + ownership model, and public/internal split. |
+| `docs/PRIVATE_REPO_REPO_CHECK_WORKFLOW.md` | Canonical | Public-safe | Repo-check workflow for private repositories (boundary, secrets, hygiene, governance, release maturity). |
+| `docs/BRANCH_AND_PROMOTION_STANDARD.md` | Canonical | Public-safe | Canonical `dev`/`staged`/`main` branch roles and promotion workflow. |
 | `ARCHIVE_MIGRATION.md` | Canonical | Public-safe | ZSE placeholder + pointer to Linear Virtual Office for legacy material. |
 
 ## 2) BOS (Business Operations System)
@@ -74,6 +76,13 @@ OpenSpec is the best place to point issue descriptions when work is “spec-firs
 
 ## 4) Architecture, PRDs, whitepapers, roadmaps
 
+### Independent Lab Development Kit (ILDK)
+
+| Document | Role | Visibility | What it’s for |
+| --- | --- | --- | --- |
+| `docs/ILDK_README.md` | Canonical | Public-safe | Technical framework for external labs to build specialized Industrial Management modules. |
+| `docs/STRATEGIC_GROWTH_MODEL_2026.md` | Canonical | Public-safe | Strategic comparison of growth models and governance-minimized scaling. |
+
 These are the documents most likely to answer “what are we building?” and “how is it structured?”
 
 ### Platform / protocol
@@ -94,6 +103,22 @@ These are the documents most likely to answer “what are we building?” and �
 | `conxian-gateway/PRD.md` | Canonical | Public-safe | Gateway PRD (institutional compliance pipe). |
 | `conxian-nexus/docs/PRD.md` | Canonical | Public-safe | Nexus PRD (Glass Node). |
 | `lib-conxian-core/docs/PRD.md` | Canonical | Public-safe | Core library PRD (shared models + gateway alignment). |
+| `docs/LIB_CONCLAVE_SDK_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and internal-only vs public-safe separation guidance for the SDK. |
+| `docs/CONXIUS_PLATFORM_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxius-platform. |
+| `docs/CONXIAN_PROTOCOL_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for Conxian protocol. |
+| `docs/CONXIAN_GATEWAY_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-gateway. |
+| `docs/CONXIAN_NEXUS_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-nexus. |
+| `docs/STACKSORBIT_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for stacksorbit. |
+| `docs/CONXIAN_UI_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for Conxian_UI. |
+| `docs/GITHUB_GOVERNANCE_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for .github. |
+| `docs/LIB_CONXIAN_CORE_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for lib-conxian-core. |
+| `docs/CONXIAN_LABS_SITE_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-labs-site. |
+| `docs/MAINNET_READINESS_CONXIAN_PROTOCOL.md` | Supporting | Public-safe | Mainnet readiness checklist for Conxian protocol. |
+| `docs/MAINNET_READINESS_CONXIUS_WALLET.md` | Supporting | Public-safe | Mainnet readiness checklist for conxius-wallet. |
+| `docs/MAINNET_READINESS_CONXIAN_GATEWAY.md` | Supporting | Public-safe | Mainnet readiness checklist for conxian-gateway. |
+| `docs/MAINNET_READINESS_CONXIUS_PLATFORM.md` | Supporting | Public-safe | Mainnet readiness checklist for conxius-platform. |
+| `docs/WALLET_SIGNER_CONTROL_VERIFICATION_REPORT.md` | Supporting | Public-safe | Wallet and signer control verification report for mainnet launch. |
+| `docs/PUBLIC_VISIBILITY_AUDIT_REPORT.md` | Supporting | Public-safe | Public visibility boundary audit report. |
 | `conxius-platform/services/lib-conxian-core/docs/PRD.md` | Supporting | Public-safe | Service-local copy; treat `lib-conxian-core/docs/PRD.md` as canonical. |
 | `conxius-wallet/lib-conxian-core/docs/PRD.md` | Supporting | Public-safe | Wallet-local copy; treat `lib-conxian-core/docs/PRD.md` as canonical. |
 
@@ -112,7 +137,7 @@ These are the documents most likely to answer “what are we building?” and �
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
-| `docs/CJCS_v2.0_SPEC.md` | Canonical | Public-safe | Job Card schema (CJCS v2.0). |
+| `docs/CJCS_v2.0_SPEC.md` | Canonical | Public-safe | Job Card schema (CJCS v2.0.1). |
 | `docs/ERP_MCP_HANDSHAKE_SPEC.md` | Canonical | Public-safe | ERP handshake spec (SAP/Oracle mapping). |
 | `docs/AGENTS.md` | Canonical | Public-safe | Agent operating rules (including knowledge retention rules). |
 | `docs/ATS_v11.0_MASTER_BASELINE.md` | Supporting | Internal-only | Baseline snapshot and executive alignment language. |
@@ -180,7 +205,7 @@ These are the highest-value sources to copy into Linear so day-to-day work stays
    - Source: `Conxian/PRD.md`, `Conxian/docs/ROADMAP.md`.
 8. **Gateway / Nexus / Core-lib PRDs (canonical)**
    - Source: `conxian-gateway/PRD.md`, `conxian-nexus/docs/PRD.md`, `lib-conxian-core/docs/PRD.md`.
-9. **CJCS v2.0 + ERP handshake (canonical)**
+9. **CJCS v2.0.1 + ERP handshake (canonical)**
    - Source: `docs/CJCS_v2.0_SPEC.md`, `docs/ERP_MCP_HANDSHAKE_SPEC.md`.
 10. **Maintainer payout enablement runbook (internal-only, but operationally critical)**
    - Source: `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`.

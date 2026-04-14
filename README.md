@@ -1,6 +1,5 @@
-# Conxian: Sovereign Business Operations System (BOS v1.9.0)
+# Conxian: Sovereign Business Operations System (BOS v1.9.1)
 
-[![Repo Metadata CI](https://github.com/Conxian/conxian-business/actions/workflows/repo-metadata-ci.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/repo-metadata-ci.yml)
 [![Conxian Unified CI](https://github.com/Conxian/conxian-business/actions/workflows/conxian-unified-ci.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/conxian-unified-ci.yml)
 [![Deploy Documentation](https://github.com/Conxian/conxian-business/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/deploy-docs.yml)
 
@@ -33,15 +32,16 @@ Ownership and review requirements are defined in [`CODEOWNERS`](./CODEOWNERS).
 
 This repository pins and coordinates the flagship Conxian repositories, including:
 
-- [`Conxian/`](./Conxian): Conxian Finance Protocol (Clarity smart contracts)
-- [`conxian-gateway/`](./conxian-gateway): Conxian Gateway (Rust)
-- [`conxian-nexus/`](./conxian-nexus): Conxian Nexus (Rust)
-- [`lib-conxian-core/`](./lib-conxian-core): Shared core libraries centered around the Gateway
-- [`conxian-ui/`](./conxian-ui): Conxian UI (web)
-- [`conxius-wallet/`](./conxius-wallet): Conxius Wallet (mobile)
-- [`conxius-platform/`](./conxius-platform): Stack orchestration and local development
-- [`stacksorbit/`](./stacksorbit): Deployment and operations tooling
-- [`conxian-labs-site/`](./conxian-labs-site): Conxian Labs public site
+- [`Conxian/`](./Conxian): Conxian Finance Protocol (Protocol; Clarity smart contracts)
+- [`conxian-gateway/`](./conxian-gateway): Conxian Gateway (Gateway; Rust)
+- [`conxian-nexus/`](./conxian-nexus): Conxian Nexus (State node; Rust)
+- [`lib-conxian-core/`](./lib-conxian-core): Shared core libraries centered around the Gateway (Shared core; Rust)
+- [`lib-conclave-sdk/`](./lib-conclave-sdk): Enclave + hardware attestation SDK (SDK)
+- [`conxian-ui/`](./conxian-ui): Conxian UI (UI; web) — upstream: `Conxian_UI` *(to be renamed to `conxian-ui`)*
+- [`conxius-wallet/`](./conxius-wallet): Conxius Wallet (Wallet; mobile)
+- [`conxius-platform/`](./conxius-platform): Stack orchestration and local development (Platform)
+- [`stacksorbit/`](./stacksorbit): Deployment and operations tooling (Tooling)
+- [`conxian-labs-site/`](./conxian-labs-site): Conxian Labs public site (Website)
 
 ## Cloning
 
@@ -67,16 +67,9 @@ git submodule update --init services/conxian-ui
 
 ## Repository visibility and public/private boundary
 
-This repository is intended to be public.
+Treat this repository as public for boundary purposes. Detailed strategy, legal interpretations, operational runbooks, infrastructure identifiers, and any secret inventory are maintained in the Conxian Linear workspace (not in git), in compliance with our Zero Secret Egress (ZSE) mandate.
 
-To reduce public/private boundary risk, detailed strategy, legal interpretations, operational runbooks, infrastructure identifiers, and any secret inventory are maintained in the Conxian Linear workspace (not in git).
-
-This repository is public. Sensitive strategy, legal, operational, and administrative documents should live in the [Linear Virtual Office](https://linear.app/conxian-labs) in compliance with our Zero Secret Egress (ZSE) mandate.
-
-See:
-
-- https://linear.app/conxian-labs
-- https://linear.app/conxian-labs/issue/CON-256
+See https://linear.app/conxian-labs/issue/CON-256 for ZSE background and operating requirements.
 
 Detailed strategy and roadmap content must not be duplicated in this README; see `docs/BOS_BUSINESS_BUILDOUT.md` for the public vs internal documentation rules.
 
@@ -102,6 +95,8 @@ For general support and non-security bug reports, open a GitHub issue. For secur
 
 This repository is licensed under the GNU GPL v3.0 (see `LICENSE`).
 
+Exception note: some Conxian public repositories use MIT (for example, `.github` and `conxius-platform`). This repository remains GPL v3.0 because it is the BOS governance and OpenSpec source of truth.
+
 - [**CONTRIBUTING.md**](./CONTRIBUTING.md): Guidelines for contributing to the BOS.
 - [**SECURITY.md**](./SECURITY.md): How to report vulnerabilities and our security posture.
 - [**Trust & Proof Messaging**](./docs/TRUST_AND_PROOF_MESSAGING.md): Public-facing trust surface guidance.
@@ -117,8 +112,7 @@ See [`docs/REPOSITORY_CATALOG.md`](./docs/REPOSITORY_CATALOG.md) for the org-lev
 ## Repository hygiene
 
 To maintain a clean and sovereign workspace, we adhere to strict hygiene standards:
+
 - **`scripts/`**: Contains active utility scripts (e.g., `check_links.py`).
 - **`ARCHIVE_MIGRATION.md`**: ZSE-safe pointers to legacy material intentionally kept out of the Git index.
 - **`openspec/`**: Definitive technical specifications.
----
-**Sovereign Autonomous Business (SAB)**. © 2026 Conxian-Labs. Powered by Bitcoin.
