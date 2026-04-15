@@ -10,14 +10,15 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 ## [Unreleased]
 
 ### Added
-- **Decentralized Edge Topology (Nexus):** Implemented fallback Nostr relay communication (Kind 26003) for state root and MMR root broadcast to ensure zero-dependency sync.
-- **Integrated MCP Server (Nexus):** Deployed a parallel Model Context Protocol (MCP) server exposing treasury state and verifiable MMR proofs to multi-modal agents.
-- **Sovereign Handshake Workflow (Wallet):** Integrated an AI-powered Intent Translator and SovereignHandshake TEE component for secure local intent verification and approval.
-- **Deterministic Deployment Verification (StacksOrbit):** Added an agent-readable JSON export mode to the GUI for verifying Nakamoto L2 smart contract deployment manifests.
+- (None currently)
 
 ## [1.9.2] - 2026-04-14
 
 ### Added
+- **Decentralized Edge Topology (Nexus):** Implemented fallback Nostr relay communication (Kind 26003) for state root and MMR root broadcast to ensure zero-dependency sync.
+- **Integrated MCP Server (Nexus):** Deployed a parallel Model Context Protocol (MCP) server exposing treasury state and verifiable MMR proofs to multi-modal agents.
+- **Sovereign Handshake Workflow (Wallet):** Integrated an AI-powered Intent Translator and SovereignHandshake TEE component for secure local intent verification and approval.
+- **Deterministic Deployment Verification (StacksOrbit):** Added an agent-readable JSON export mode to the GUI for verifying Nakamoto L2 smart contract deployment manifests.
 - **Decentralized RPC Architecture (CON-463):** Implemented `StacksRpcAggregator` and `BitcoinRpcAggregator` in `conxian-gateway`. These provide provider pooling with automatic failover, tip consistency checks, and latency-aware selection to remove reliance on single centralized RPC providers.
 - **Sovereign Persistence Layer (CON-69 / CON-337):** Upgraded `KwilAdapter` and `TablelandAdapter` in `conxian-nexus` from stubs to functional REST-based implementations, enabling decentralized relational state and state-root persistence.
 - **Autonomous Node Orchestration:** Integrated `AutonomousOrchestrator` and Nostr telemetry collectors in Nexus for self-healing and decentralized health reporting.
