@@ -24,6 +24,7 @@ Non-goals:
 1. **No dashboard-to-contract coupling**
    - Dashboards MUST NOT hold production signing keys.
    - Dashboards MUST NOT broadcast value-bearing transactions.
+   - Broadcast endpoints (BOS or Gateway) for value-bearing transactions MUST only accept transactions that are the result of validated BOS workflows (for example: approved `treasury.intent.v1` intents) and MUST NOT be exposed as generic transaction relays to dashboard-tier clients.
 
 2. **Canonical truth is on-chain**
    - Off-chain databases (including `cxn-treasury-oracle`) MUST be treated as derived/non-authoritative.
@@ -86,6 +87,7 @@ The payload must remain public-safe (ZSE). It should contain:
 - `intent_id` (string): stable id for idempotency and reconciliation.
 - `action` (string enum): canonical treasury action type.
 - `requested_at` (number): unix seconds.
+- `meta` (object): optional public-safe origin metadata (source system, pseudonymous requestor refs).
 - `target_contract` (string): contract to call (by name), or a role-based identifier resolved via `operational-treasury`.
 - `params` (object): action parameters (amounts, assets, recipients) expressed as atomic units.
 - `policy` (object): optional public-safe policy tags (e.g., “requires-timelock”).
@@ -113,6 +115,10 @@ Recommended `action` values:
     "intent_id": "treasury-intent-00000001",
     "action": "treasury.withdraw",
     "requested_at": 1776297600,
+    "meta": {
+      "source_system": "sap-fpa-prod",
+      "requestor_ref": "role:finance-ops"
+    },
     "target_contract": "operational-treasury",
     "params": {
       "asset": "STX",
@@ -172,6 +178,10 @@ This architecture assumes principals are represented as **roles** and resolved d
 
 Guardrails are enforced by BOS preflight and SHOULD also be reflected on-chain where possible.
 
+Guardrail evaluation MUST use canonical on-chain state (or projections that are cryptographically checkpointed on-chain) as its correctness source.
+`cxn-treasury-oracle` MAY be used as a cached, observable view, but MUST NOT be the sole input to liquidity or risk guardrails.
+Any divergence between the read model and on-chain checkpoints MUST be treated as a reconciliation fault.
+
 Minimum guardrail classes:
 
 - **Reserve floor**: maintain a minimum liquid reserve by asset class.
@@ -224,7 +234,7 @@ The derived action log SHOULD track:
 
 - `intent_id`
 - `intent_event_id` (from the signed envelope)
-- `status`: `PENDING` | `APPROVED` | `BROADCAST` | `CONFIRMED` | `REJECTED` | `FAILED`
+- `status`: `PENDING` | `APPROVED` | `BROADCAST` | `CONFIRMED` | `REJECTED` | `FAILED` | `EXPIRED`
 - `onchain_txid`
 - `confirmed_height`
 - `error_code` / `error_detail` (public-safe)
@@ -249,6 +259,14 @@ Failure modes and required behavior:
 5. **Reconciliation mismatch**
    - Freeze downstream automated actions that depend on the mismatched state.
    - Require explicit review (SAB/DAO policy) before continuing.
+
+6. **Treasury read model unavailable / write failure**
+   - Do not block value-bearing on-chain execution if correctness can be proven without the read model.
+   - Enqueue reconciliation records and re-materialize `treasury_actions` and related projections from on-chain events once storage recovers.
+   - Emit an operator alert and flag affected intents as reconciled on-chain but pending off-chain ledger repair until the backlog is cleared.
+
+7. **Intent expired**
+   - If an intent reaches its `expires_at` / `expires_height` before BOS can safely broadcast, mark it `EXPIRED`, do not attempt execution, and require issuance of a fresh intent if the action is still desired.
 
 ---
 
