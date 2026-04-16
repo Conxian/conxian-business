@@ -11,7 +11,7 @@ Goal: ensure changes that affect artifacts (lockfiles, build scripts, containers
   - repo hygiene / verification scripts (`scripts/*`)
   - lockfiles (`Cargo.lock`, `pnpm-lock.yaml`, submodule pins)
   - container build or runtime packaging (`Dockerfile*`, compose/k8s manifests)
-  - release policy and promotion surfaces (`docs/*`, `openspec/*`)
+  - release/promotion policy or artifact-provenance documentation (e.g. `docs/BRANCH_*`, release hygiene docs, evidence-pack specs under `openspec/specs/…`)
 - **Runtime lane**: the environment branch + deployment context used for validation and promotion:
   - `dev`: testnet-only and non-production validation
   - `staged`: mainnet candidate validation
@@ -73,7 +73,7 @@ This lane is where packaging changes become **pilot-ready** for mainnet-candidat
 **Test**
 
 - All always-on PR checks are green.
-- Any repo/business-unit suite relevant to the change scope must run (see `.github/RELEASE_HYGIENE.md`).
+- Any repo/business-unit suite relevant to the change scope must run (see `docs/RELEASE_HYGIENE_CONXIAN_NEXUS.md`).
 - Candidate smoke test(s) run in a prod-like configuration where feasible (without leaking operational details into git).
 
 **Security**
@@ -93,7 +93,7 @@ This lane is where packaging changes become **pilot-ready** for mainnet-candidat
 
 **Verification outputs (minimum evidence)**
 
-- CI run link + residue scan results (or a repo-provided boundary check).
+- CI run link + residue/boundary check output (e.g. `python3 scripts/verify_contamination_guard.py`, `python3 scripts/verify_bos_production_boundary.py`).
 - Candidate smoke test evidence (commands + “passed” note, or CI job output link).
 - Artifact digest / checksum and the exact commit SHA the artifact was built from.
 
