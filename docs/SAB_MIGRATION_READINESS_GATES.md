@@ -69,7 +69,7 @@ Gate 1 targets correctness-relevant dependencies (typically the Nexus derived re
 
 ### Common exit criteria (minimums)
 
-- [ ] Pilot outputs meet the target-state spec and the domain's defined comparison/validation thresholds (dual-run or equivalent) when compared to the hosted baseline (or deltas are explicitly documented and accepted).
+- [ ] Pilot outputs meet the target-state spec and the domain's defined comparison/validation thresholds (dual-run or equivalent) when compared to the existing baseline path (or deltas are explicitly documented and accepted).
 - [ ] Any comparison thresholds, SLOs, RPO/RTOs, or divergence deltas referenced by the pilot have commit-pinned evidence (runbook, SLO doc, benchmark artifact, or dashboard snapshot) linked.
 - [ ] Pilot can be rebuilt from L1 without manual patching.
 - [ ] Pilot roll-forward and rollback are exercised at least once in a controlled environment (including a read-switch rollback where applicable).
