@@ -31,7 +31,8 @@ These invariants apply to every lane.
    - Off-chain databases and indexes are derived and non-authoritative.
 
 2. **No dashboard-to-contract coupling**
-   - Dashboards/UX surfaces MUST NOT hold production signing keys and MUST NOT broadcast value-bearing transactions.
+   - BOS dashboards and other operational UX surfaces MUST NOT hold production signing keys and MUST NOT broadcast value-bearing transactions.
+   - End-user non-custodial wallets are a separate trust boundary and MAY hold user-controlled keys and broadcast transactions on their owner’s behalf.
 
 3. **Dynamic principals (no hardcoded production addresses)**
    - Contracts and privileged workflows MUST resolve principals dynamically via `operational-treasury.clar`.
@@ -44,7 +45,7 @@ These invariants apply to every lane.
 
 ## 3) Canonical component model
 
-The Conxian runtime is best understood as four planes.
+The Conxian runtime is best understood as five planes.
 
 ### 3.1 Settlement + policy plane (on-chain)
 
@@ -76,6 +77,14 @@ Control plane surfaces are the “roots” that can:
 - change policy gates or environment promotion rules
 
 The enterprise custody baseline (`docs/protocols/ENTERPRISE_CUSTODY_BASELINE.md`) defines minimum requirements for these protected actions.
+
+### 3.5 Derived / UX plane (consumers, not anchors)
+
+Derived/UX surfaces consume proofs, events, and derived projections, but are not allowed to become correctness or custody anchors.
+
+- **Dashboards and ops consoles**: propose intents and render derived state; never sign/broadcast privileged actions.
+- **Public web surfaces**: informational and discoverability surfaces; must remain replaceable and non-critical.
+- **Non-custodial wallets (end-user trust boundary)**: hold user keys and can broadcast user-authorized transactions, but must not be treated as production control-plane roots.
 
 ## 4) Reference topology (lane-neutral)
 
