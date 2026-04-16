@@ -183,7 +183,11 @@ def _http_json(url: str) -> dict:
             time.sleep(0.5 * (2**attempt))
 
     if last_err is not None:
-        if isinstance(last_err, TimeoutError):
+        is_timeout = isinstance(last_err, TimeoutError) or (
+            isinstance(last_err, urllib.error.URLError)
+            and isinstance(getattr(last_err, "reason", None), TimeoutError)
+        )
+        if is_timeout:
             raise urllib.error.URLError(
                 f"Hiro API request timed out after retries: {url}"
             ) from last_err
