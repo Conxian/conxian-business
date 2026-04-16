@@ -17,7 +17,8 @@ It captures the approved packaging decisions from https://linear.app/conxian-lab
 
 - Shape: JSON
 - JSON Schema: `rpc-config.v1.schema.json`
-- Schema identifier: `conxian.rpc-config.v1`
+- Contract identifier (config `schema` field): `conxian.rpc-config.v1`
+- JSON Schema `$id`: `urn:conxian:rpc-config:v1`
 
 ### 2.1 Example (Home / open tier)
 
@@ -44,7 +45,17 @@ It captures the approved packaging decisions from https://linear.app/conxian-lab
 
 The contract is designed so `.env` generation is a straightforward projection.
 
-### 3.1 Core routing
+### 3.1 `rpcStrategy` semantics
+
+`rpcStrategy` communicates the intended routing posture for consumers of this config (UI, admin tooling, orchestration). It is not projected into `.env` variables directly.
+
+- `Public-Only`: remote/public RPC is allowed and preferred.
+- `Mixed`: remote/public RPC is allowed, but local/sovereign endpoints should be used when available.
+- `Sovereign-First`: local/private RPC is preferred; remote endpoints should be treated as a fallback (or disabled) depending on the distribution.
+
+Tier defaults (from https://linear.app/conxian-labs/issue/CON-457): Home = `Public-Only`, Retail = `Mixed`, Enterprise = `Sovereign-First`.
+
+### 3.2 Core routing
 
 | Config field | Env var | Consumer |
 | :--- | :--- | :--- |
@@ -59,7 +70,7 @@ Notes:
 - If a field is omitted, the consuming service’s built-in default applies.
 - If `bitcoin.rpcAuth` is present, both `user` and `pass` are required.
 
-### 3.2 Add-on packs
+### 3.3 Add-on packs
 
 Known packs in v1: `bisq`, `rgb`, `bitvm`.
 
@@ -73,6 +84,9 @@ Known packs in v1: `bisq`, `rgb`, `bitvm`.
 Notes:
 
 - When `addOns.<pack>.enabled` is `true`, the pack **MUST** include `addOns.<pack>.rpc.host`.
+- If `addOns` is omitted, all packs are treated as disabled.
+- If `addOns.<pack>` is omitted, that pack is treated as disabled.
+- If `addOns.<pack>.enabled` is `false` and `addOns.<pack>.rpc` is present, the pack is still treated as disabled; the RPC details may be retained for UI defaults but must not be used for runtime routing until enabled.
 - In the current `conxius-platform/.env.schema`, only Bisq declares an explicit `*_RPC_PORT` variable (Bisq is `host` + `port`; RGB/BitVM are `host` only).
 
 For future packs, env var names **SHOULD** follow the convention:
@@ -81,3 +95,9 @@ For future packs, env var names **SHOULD** follow the convention:
 - `addOns.<pack>.rpc.port` → `<PACK>_RPC_PORT` (optional)
 
 Where `<PACK>` is the `addOns` key uppercased, with non-alphanumeric characters replaced by `_`.
+
+### 3.4 Metadata
+
+The config may include a top-level `metadata` object for producer-specific annotations (for example, UI hints or provenance).
+
+Consumers **must** ignore `metadata` for routing decisions and `.env` generation.

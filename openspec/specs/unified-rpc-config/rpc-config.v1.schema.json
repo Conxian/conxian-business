@@ -48,9 +48,19 @@
     },
     "addOns": {
       "type": "object",
+      "properties": {
+        "bisq": { "$ref": "#/$defs/addOnPack" },
+        "rgb": { "$ref": "#/$defs/addOnPack" },
+        "bitvm": { "$ref": "#/$defs/addOnPack" }
+      },
       "additionalProperties": {
         "$ref": "#/$defs/addOnPack"
       }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional producer-specific metadata. Consumers MUST ignore this for routing/env projection.",
+      "additionalProperties": true
     }
   },
   "$defs": {
