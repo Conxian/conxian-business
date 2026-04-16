@@ -15,10 +15,12 @@
     },
     "bitcoin": {
       "type": "object",
+      "minProperties": 1,
       "additionalProperties": false,
       "properties": {
         "rpcUrl": {
           "type": "string",
+          "minLength": 1,
           "format": "uri"
         },
         "rpcAuth": {
@@ -30,18 +32,27 @@
             "pass": { "type": "string", "minLength": 1 }
           }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["rpcAuth"] },
+          "then": { "required": ["rpcUrl"] }
+        }
+      ]
     },
     "stacks": {
       "type": "object",
+      "minProperties": 1,
       "additionalProperties": false,
       "properties": {
         "gatewayRpcUrl": {
           "type": "string",
+          "minLength": 1,
           "format": "uri"
         },
         "nodeRpcUrl": {
           "type": "string",
+          "minLength": 1,
           "format": "uri"
         }
       }
