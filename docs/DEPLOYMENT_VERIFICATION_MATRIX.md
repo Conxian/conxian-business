@@ -26,7 +26,7 @@ The table below is intentionally compact; details are defined in the lane sectio
 | Lane | Build | Test | Security | Upgrade | Rollback | Verification outputs |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | `dev` | Deterministic artifact build; dependency pins intentional | CI green + testnet smoke where applicable | Secret scan + dependency review clean | Upgrade path rehearsed (non-prod) | Rollback rehearsed (non-prod) | CI run link + artifact digests + smoke evidence |
-| `staged` | Same as `dev`, plus mainnet-candidate build parity | CI green + candidate smoke + migration checks | Mainnet acceptance pre-checks; no testnet residue in production paths | Roll-forward rehearsed with prod-like config | Rollback exercised in controlled candidate env | Candidate validation notes + residue scans + pre-evidence pack |
+| `staged` | Same as `dev`, plus mainnet-candidate build parity | CI green + candidate smoke + migration checks | Secret scan + dependency review clean; no testnet residue in production paths | Roll-forward rehearsed with prod-like config | Rollback exercised in controlled candidate env | Candidate validation notes + residue scans + pre-evidence pack |
 | `main` | Reproducible production artifacts | Required checks green | Full mainnet acceptance evidence pack | Production upgrade is policy-guarded | Production rollback trigger + last-known-good proven | Evidence pack + commit SHA → artifact digest map |
 
 ## Lane criteria
