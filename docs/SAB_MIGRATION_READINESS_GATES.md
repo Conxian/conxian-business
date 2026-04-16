@@ -58,6 +58,12 @@ Gate 1 targets correctness-relevant dependencies (typically the Nexus derived re
 - [ ] At least one pilot domain under [Pilot domain readiness gates (CON-335)](#pilot-domain-readiness-gates-con-335) reaches its domain Go decision gate (e.g., `TSQL-G3`) with linked evidence.
 - [ ] For that chosen pilot domain, the **common evidence requirements** and **common exit criteria** below are satisfied.
 
+Go decision gates by pilot domain:
+
+- Transactional SQL: `TSQL-G3`
+- Proof-carrying analytics: `AN-G3`
+- Governance record: `GOV-G3`
+
 ### Common evidence requirements (apply to any chosen pilot domain)
 
 - [ ] **Dependency cut list**: which hosted dependency is being piloted (e.g., Neon) and which dataset(s)/services are in-scope.
@@ -153,7 +159,7 @@ Canonical constraints to align to:
   - [ ] Dataset definitions exist (schema, canonical ordering, serialization format).
   - [ ] Checkpoint scheme is selected and documented (including how snapshot hashes are computed).
   - [ ] "Not a source of truth" constraints are documented for all consumers (what they may and may not assume).
-  - [ ] Threat model exists (data poisoning, replay, proof invalidity, and ZSE (Zero Secret Egress) constraints; see [DOCUMENTATION_CLASSIFICATION.md](DOCUMENTATION_CLASSIFICATION.md)).
+  - [ ] Threat model exists (data poisoning, replay, proof invalidity, and ZSE (Zero Secret Egress) constraints; see [DOCUMENTATION_CLASSIFICATION.md](./DOCUMENTATION_CLASSIFICATION.md)).
 
 - **AN-G1: Integration-ready (end-to-end verification)**
   - [ ] Reproducible pipeline exists from L1 inputs → snapshot → checkpoint → proof/verification artifact.
