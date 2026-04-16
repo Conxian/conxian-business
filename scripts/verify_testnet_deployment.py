@@ -44,6 +44,9 @@ def _strip_yaml_scalar(value: str) -> str:
             return value
         return value[1:end]
 
+    if value.startswith("#"):
+        return ""
+
     for i, ch in enumerate(value):
         if ch == "#" and i > 0 and value[i - 1].isspace():
             value = value[: i - 1].rstrip()
