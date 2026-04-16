@@ -55,7 +55,12 @@ The evidence can be a spec section, PRD section, or a commit-pinned checklist. T
 
 This gate is satisfied when at least one correctness-relevant dependency (typically the Nexus derived read model) has a sovereign baseline that can be exercised end-to-end.
 
-### Evidence requirements
+Gate 1 is only considered **met** when:
+
+- [ ] At least one pilot domain under **Pilot domain readiness gates (CON-335)** reaches its `*-G3` **Go decision** with linked evidence.
+- [ ] For that chosen pilot domain, the **common evidence requirements** and **common exit criteria** below are satisfied.
+
+### Common evidence requirements (apply to any chosen pilot domain)
 
 - [ ] **Dependency cut list**: which hosted dependency is being piloted (e.g., Neon) and which dataset(s)/services are in-scope.
 - [ ] **Target-state spec link**: commit-pinned spec section(s) defining "what correct means" for the pilot.
@@ -64,15 +69,13 @@ This gate is satisfied when at least one correctness-relevant dependency (typica
 - [ ] **Checkpoint validation behavior**: defined behavior when checkpoints mismatch (rebuild rules + service degradation rules).
 - [ ] **Rollback plan**: explicit rollback trigger and rollback steps.
 
-### Exit criteria
+### Common exit criteria (minimums)
 
-- [ ] Pilot produces identical query results (or an explicitly documented superset) for the in-scope datasets when compared to the hosted baseline.
+- [ ] Pilot outputs meet the target-state spec and dual-run comparison thresholds when compared to the hosted baseline (or deltas are explicitly documented and accepted).
 - [ ] Pilot can be rebuilt from L1 without manual patching.
-- [ ] Pilot roll-forward and rollback are exercised at least once in a controlled environment.
+- [ ] Pilot roll-forward and rollback are exercised at least once in a controlled environment (including a read-switch rollback where applicable).
 
-## Pilot domain readiness gates (CON-335)
-
-Gate 1 (pilot readiness) is only considered "met" when at least one pilot domain below reaches its own "go" state with linked evidence.
+### Pilot domain readiness gates (CON-335)
 
 Each domain has:
 
@@ -80,7 +83,7 @@ Each domain has:
 - **Readiness gates** (what must be true before the program treats the pilot path as ready)
 - **No-go and rollback** expectations (when to stop / revert)
 
-### 1) Transactional SQL pilot (sovereign relational read model)
+#### 1) Transactional SQL pilot (sovereign relational read model)
 
 This gate applies to the Nexus/Glass-Node class of derived read models (currently backed by Postgres/Neon), including any sovereign/self-hostable Postgres baseline.
 
@@ -88,7 +91,7 @@ This gate applies to the Nexus/Glass-Node class of derived read models (currentl
 
 - **Correctness parity:** key query surfaces match the hosted baseline for an agreed validation window, or any deltas are explicitly documented and accepted.
 - **Checkpoint safety:** no unchecked checkpoint mismatches; mismatch behavior is deterministic (rebuild or safe-halt).
-- **Performance parity:** p95/p99 latency and throughput are within an agreed delta versus the hosted baseline under the same load profile.
+- **Performance parity:** p95/p99 latency and throughput are within an agreed delta (recorded and linked as evidence) versus the hosted baseline under the same load profile.
 - **Rebuildability:** the in-scope dataset can be rebuilt from Stacks L1 without manual patching.
 
 **Readiness gates (evidence required)**
@@ -101,6 +104,7 @@ This gate applies to the Nexus/Glass-Node class of derived read models (currentl
 
 - **TSQL-G1: Integration-ready (dual-run + read-switchable)**
   - [ ] Dual-run comparison plan (which queries compare, how often, and what divergence threshold triggers rollback).
+  - [ ] Agreed deltas/SLO thresholds are recorded in a commit-pinned artifact (SLO doc, benchmark run report, or dashboard snapshot) and linked.
   - [ ] Read-switch mechanism exists (ability to flip reads between baselines without code changes).
   - [ ] Checkpoint mismatch behavior is defined and wired to explicit service behavior (rebuild vs safe-halt).
   - [ ] Snapshot/export format is defined for any institutional egress datasets produced from this read model.
@@ -128,13 +132,13 @@ This gate applies to the Nexus/Glass-Node class of derived read models (currentl
 
 Rollback expectation: rollback is primarily a **read flip** back to the prior baseline, followed by rebuild/reconciliation in the sovereign baseline before re-attempting cutover.
 
-### 2) Proof-carrying analytics pilot (treasury/oracle workflows)
+#### 2) Proof-carrying analytics pilot (treasury/oracle workflows)
 
 This gate applies to "proof/visual-proof" datasets used as evidence in decision workflows (dashboards, reports, attestations). Analytics layers must remain derived/query systems and must not become a new source of truth.
 
 Canonical constraints to align to:
 
-- [openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md)
+- [openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/)
 - [openspec/specs/sab-datastore-mapping/spec.md](../openspec/specs/sab-datastore-mapping/spec.md)
 
 **Success metrics (minimums)**
@@ -150,7 +154,7 @@ Canonical constraints to align to:
   - [ ] Dataset definitions exist (schema, canonical ordering, serialization format).
   - [ ] Checkpoint scheme is selected and documented (including how snapshot hashes are computed).
   - [ ] "Not a source of truth" constraints are documented for all consumers (what they may and may not assume).
-  - [ ] Threat model exists (data poisoning, replay, proof invalidity, and ZSE constraints).
+  - [ ] Threat model exists (data poisoning, replay, proof invalidity, and ZSE (Zero Secret Egress) constraints, per [DOCUMENTATION_CLASSIFICATION.md](DOCUMENTATION_CLASSIFICATION.md)).
 
 - **AN-G1: Integration-ready (end-to-end verification)**
   - [ ] Reproducible pipeline exists from L1 inputs → snapshot → checkpoint → proof/verification artifact.
@@ -177,7 +181,7 @@ Canonical constraints to align to:
 
 Rollback expectation: stop publishing the affected dataset version, switch consumers back to the prior evidence path, and backfill/rebuild to the last known-good checkpoint.
 
-### 3) Governance record pilot (governance + audit anchoring)
+#### 3) Governance record pilot (governance + audit anchoring)
 
 This gate applies to governance/audit records where the default truth and discoverability must be anchored on-chain. Optional mirrors (Tableland/Fluree/Kwil) may improve query ergonomics but must never become correctness dependencies.
 
