@@ -20,7 +20,14 @@ def _read_text(path: str) -> str:
 
 def _strip_yaml_scalar(value: str) -> str:
     value = value.strip()
-    if value.startswith("\"") and value.endswith("\"") and len(value) >= 2:
+    if value and value[0] not in ('"', "'"):
+        for i, ch in enumerate(value):
+            if ch == "#" and i > 0 and value[i - 1].isspace():
+                value = value[: i - 1].rstrip()
+                break
+    if value.startswith('"') and value.endswith('"') and len(value) >= 2:
+        return value[1:-1]
+    if value.startswith("'") and value.endswith("'") and len(value) >= 2:
         return value[1:-1]
     return value
 
