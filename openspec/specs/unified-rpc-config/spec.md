@@ -76,8 +76,10 @@ Known packs in v1: `bisq`, `rgb`, `bitvm`.
 `addOns` keys are extensible but must be stable and deterministic for `.env` projection. Pack identifiers **must** match:
 
 ```
-^[a-z][a-z0-9-]*$
+^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$
 ```
+
+Pack identifiers must be lowercase alphanumeric strings that start with a letter and may include `-` separators between segments.
 
 Pack identifiers must also be no longer than 64 characters.
 
