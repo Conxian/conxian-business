@@ -187,7 +187,7 @@ This gate applies to governance/audit records where the default truth and discov
 
 Canonical constraints to align to:
 
-- [openspec/specs/sab-datastore-mapping/spec.md](../openspec/specs/sab-datastore-mapping/spec.md)
+- [SAB datastore mapping spec](../openspec/specs/sab-datastore-mapping/spec.md)
 
 **Success metrics (minimums)**
 
