@@ -69,6 +69,7 @@ Notes:
 
 - If a field is omitted, the consuming service’s built-in default applies.
 - If `bitcoin.rpcAuth` is present, both `user` and `pass` are required.
+- `bitcoin.rpcAuth.pass` is a secret. Producers should avoid committing RPC credentials into version control; prefer injecting secrets at deploy time.
 
 ### 3.3 Add-on packs
 
@@ -97,6 +98,7 @@ Notes:
 - If `addOns.<pack>` is omitted, that pack is treated as disabled.
 - If `addOns.<pack>.enabled` is `false` and `addOns.<pack>.rpc` is present, the pack is still treated as disabled; the RPC details may be retained for UI defaults but must not be used for runtime routing until enabled.
 - In the current `conxius-platform/.env.schema`, only Bisq declares an explicit `*_RPC_PORT` variable (Bisq is `host` + `port`; RGB/BitVM are `host` only).
+- Consumers **MUST** ignore `addOns.<pack>.rpc.port` unless the pack’s env surface explicitly declares a `<PACK>_RPC_PORT` variable.
 
 For future packs, env var names **SHOULD** follow the convention:
 
@@ -104,6 +106,8 @@ For future packs, env var names **SHOULD** follow the convention:
 - `addOns.<pack>.rpc.port` → `<PACK>_RPC_PORT` (optional)
 
 Where `<PACK>` is the `addOns` key uppercased, with non-alphanumeric characters replaced by `_`.
+
+Because pack identifiers are restricted to lowercase letters, digits, and `-`, the above normalization is equivalent to `-` → `_`.
 
 ### 3.4 Metadata
 
