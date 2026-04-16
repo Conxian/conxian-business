@@ -151,6 +151,8 @@ def _http_json(url: str) -> dict:
         timeout_secs = float(os.environ.get("HIRO_TIMEOUT_SECS", "30"))
     except ValueError:
         timeout_secs = 30.0
+    if timeout_secs <= 0:
+        timeout_secs = 30.0
     try:
         max_attempts = int(os.environ.get("HIRO_MAX_ATTEMPTS", "4"))
     except ValueError:
@@ -216,7 +218,9 @@ def _fetch_contract_meta(
     except urllib.error.HTTPError as e:
         if e.code == 404:
             return None, None
-        raise
+        raise HiroRequestError(
+            f"Hiro API request failed for metadata {principal}.{name}: HTTP {e.code}"
+        ) from e
     tx_id = data.get("tx_id")
     block_height = data.get("block_height")
     return (tx_id if isinstance(tx_id, str) else None), (
