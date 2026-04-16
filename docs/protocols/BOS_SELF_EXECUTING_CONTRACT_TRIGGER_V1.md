@@ -79,7 +79,7 @@ Let:
 
 - `timestamp = X-CLM-Timestamp` (exact header bytes; parsed as integer for freshness checks)
 - `method = UPPERCASE(HTTP method)` (for example `POST`)
-- `path = raw request path` (must match the raw `path` as received by the server, including any query string)
+- `path = raw request path` (the exact UTF-8 bytes of the path-and-query portion of the request target as observed by BOS ingress after all intermediary rewrites; no additional normalization)
 - `raw_body_bytes = the raw HTTP request body bytes (unmodified)`
 
 Deployments MUST ensure the `path` value signed by CLM is byte-for-byte identical to the `path` observed by BOS ingress after any intermediate hops (reverse proxies, API gateways, load balancers). If an intermediary rewrites the request path, CLM and BOS MUST agree on the exact rewritten path that is signed and verified.
@@ -100,9 +100,11 @@ BOS ingress MUST enforce a bounded freshness window for `X-CLM-Timestamp` to red
 
 Requirements:
 
-- Requests with timestamps in the future MUST be rejected.
+- Requests with timestamps more than `skew_tolerance` seconds in the future MUST be rejected.
 - Requests older than a deployment-defined window `W` seconds MUST be rejected.
 - The value of `W` is policy-defined and intentionally not specified here.
+
+`skew_tolerance` is policy-defined and expected to be small relative to `W`.
 
 ## 5) Message verification (`SignedEnvelopeV1`)
 
@@ -114,12 +116,15 @@ Envelope acceptance requirements (in addition to the `SignedEnvelopeV1` spec):
 - `kind` MUST be one of the kinds defined in section 3.
 - `payload_hash` MUST equal `SHA-256(JCS(payload))`.
 - `event_id` MUST equal `SHA-256(JCS(signing_root))` (per the envelope spec).
-- Exactly one of `expires_at` or `expires_height` MAY be set; if both are present, the envelope MUST be rejected.
+- At most one of `expires_at` or `expires_height` MAY be set; if both are present, the envelope MUST be rejected. If neither is set, the envelope is valid and has no envelope-level expiry.
+- If either `expires_at` or `expires_height` is set, BOS ingress MUST enforce the expiry semantics defined in `SIGNED_EVENT_ENVELOPE_V1` and reject envelopes that are expired at verification time, even if transport HMAC and freshness checks succeed.
 
 Replay protection requirement:
 
 - BOS ingress MUST persist a durable idempotency record keyed by `event_id`.
 - A given `event_id` MUST NOT be accepted more than once, even if the transport HMAC is valid.
+- The idempotency record MUST include a final processing result for the `event_id` (for example: `ACCEPTED`, `REJECTED`, `BLOCKED`, `NO_OP`). Duplicate deliveries with the same `event_id` MUST be short-circuited to a no-op that reuses the recorded result; they MUST NOT re-run policy checks or create new on-chain attempts.
+- The idempotency store MUST enforce uniqueness on `event_id`, and the check-and-record step MUST be implemented as an atomic operation so that concurrent deliveries of the same `event_id` cannot both proceed past idempotency enforcement.
 
 ## 6) Payload schemas
 
@@ -142,6 +147,9 @@ Normative requirements:
 - BOS ingress MUST compute `SHA-256(JCS(action))` and verify it equals `action_hash`.
 - BOS ingress MUST verify `action_id == event_id`.
 - BOS ingress MUST pass the validated `action_hash` unchanged into the queue transaction and MUST persist that same `action_hash` for `action_id`.
+- If any accepted cancellation intent already exists for `action_id` with a different `action_hash`, BOS ingress MUST fail closed (reject) and MUST audit log the protocol violation.
+- If a prior accepted cancellation intent exists for the same (`action_id`, `action_hash`), BOS ingress MUST NOT queue the action and MUST emit an audit event indicating a pre-queue cancellation.
+- Queueing and recording cancellation intent for a given (`action_id`, `action_hash`) MUST be serialized at the BOS ingress persistence layer so that, in BOS’s durable records, at most one of {`QUEUE_ACCEPTED`, `PRE_QUEUE_CANCELLATION_ACCEPTED`} is ever recorded for that pair.
 
 Informal TypeScript shape:
 
@@ -164,6 +172,15 @@ Required fields:
 - `action_hash` (string): lowercase hex `SHA-256(JCS(action))` for the action being canceled.
 - `reason_code` (string): public-safe cancellation code.
 
+Normative requirements:
+
+- If an accepted cancellation intent already exists for the same (`action_id`, `action_hash`), BOS ingress MUST treat the new event as an idempotent `NO_OP` and MUST NOT modify previously persisted state for that (`action_id`, `action_hash`).
+- If any accepted cancellation intent already exists for `action_id` with a different `action_hash`, the cancellation MUST be rejected and audit logged.
+- If a pending action record exists for `action_id` and the payload `action_hash` equals the queued `action_hash`, BOS ingress MUST persist the cancellation intent keyed by (`action_id`, `action_hash`) and MUST emit an audit event.
+- If a pending action record exists for `action_id` and the payload `action_hash` does not equal the queued `action_hash`, the cancellation MUST be rejected and audit logged.
+- If no pending action record exists for `action_id`, BOS ingress MUST persist the cancellation intent keyed by (`action_id`, `action_hash`) so later queueing attempts can be deterministically blocked. If on-chain or archival state indicates `action_id` is already terminal (`EXECUTED`, `CANCELED`, or `EXPIRED`), BOS MUST also emit the “CLM–chain disagreement” audit event described in section 10.
+- The cancellation-intent store MUST enforce concurrency-safe uniqueness on cancellations per `action_id`, so that at most one distinct `action_hash` can ever be accepted for a given `action_id`. The check-and-persist operation MUST be atomic with respect to other in-flight cancellations for the same `action_id`.
+
 Informal TypeScript shape:
 
 ```ts
@@ -177,6 +194,11 @@ export type ClmOnchainActionCanceledV1 = {
 ## 7) Queueing semantics (pending action record)
 
 When an approved event is accepted, BOS ingress MUST create an on-chain pending action record keyed by `action_id`.
+
+Queue idempotency requirements:
+
+- If a pending action already exists for `action_id` with the same `action_hash`, BOS ingress MUST treat the queue step as an idempotent no-op and MUST audit log the duplicate queue attempt.
+- If a pending action already exists for `action_id` with a different `action_hash`, BOS ingress MUST fail closed (reject) and MUST audit log the collision.
 
 The pending action record MUST include (directly or derivable):
 
@@ -207,7 +229,7 @@ Requirements:
 
 ## 8) Approval semantics (multisig gating)
 
-After an action becomes `READY` (i.e., `current_height >= unlock_height`), governance-authorized signers may record approvals.
+After an action is queued, governance-authorized signers MAY record approvals at any time. Execution remains height-gated by section 9.
 
 Requirements:
 
@@ -224,10 +246,12 @@ Implementations MUST expose a deterministic way to derive:
 
 An action may be executed only if all of the following are true:
 
+- the on-chain state for `action_id` is non-terminal (i.e., not `EXECUTED`, `CANCELED`, or `EXPIRED`)
 - `current_height >= unlock_height`
 - `current_height <= execution_expiry_height`
 - `approvals_count >= required_quorum`
 - `action_hash` provided to finalization matches the queued `action_hash`
+- no accepted cancellation intent exists for (`action_id`, `action_hash`)
 
 Execution MUST fail closed if any condition is not met.
 
@@ -242,13 +266,19 @@ CLM cancellation events:
 
 - MUST be stored as durable audit records.
 - MUST NOT directly trigger on-chain cancellation; on-chain cancellation MUST be governance-authorized.
-- MAY be used by BOS ingress to avoid queueing an action if the cancellation arrives before queueing.
+- MUST be used by BOS ingress to block queueing an action if the cancellation arrives before queueing and references the same (`action_id`, `action_hash`).
+
+If a cancellation intent exists for a queued action, BOS approval/finalization automation MUST treat the action as blocked and MUST NOT execute it. CLM can “reverse” a cancellation only by issuing a new approved event (which will have a new `action_id`).
+
+CLM MUST NOT reuse an `action_id` once a cancellation intent exists. To “reverse” a cancellation it MUST issue a new approved event with a new `action_id`.
 
 On-chain cancellation requirements:
 
 - Cancellation MUST be bound to `action_id` and MUST verify the queued `action_hash`.
 - Cancellation MUST be permitted for non-terminal states (`QUEUED`, `READY`, `APPROVING`) and MUST NOT require waiting for `unlock_height`.
 - Cancellation MUST require `approvals_count >= required_quorum` (same quorum as execution).
+
+This spec intentionally uses the same quorum for cancellation and execution. Any emergency-stop primitive with a different threshold must be modeled as a separate action type and governance rule.
 - Cancellation MUST be rejected (or explicit no-op) for terminal states (`EXECUTED`, `CANCELED`, `EXPIRED`).
 - If a CLM cancellation is received after an action is terminal, BOS MUST record a “CLM–chain disagreement” audit event.
 
@@ -256,7 +286,7 @@ On-chain cancellation requirements:
 
 Implementations MUST produce an audit trail sufficient to reconstruct:
 
-- exactly what bytes were authenticated at the transport layer
+- a cryptographic commitment to the exact bytes authenticated at the transport layer
 - exactly what envelope/payload was accepted at the message layer
 - how the action was mapped into an on-chain pending record
 - why execution/cancellation attempts were accepted, rejected, or blocked
@@ -270,6 +300,8 @@ Minimum required identifiers to persist for each accepted webhook:
 - `action_id`
 - `action_hash` (if applicable)
 - transport timestamp (`X-CLM-Timestamp`) and verification result
+- `http_method` and `request_path` as used in the HMAC verification
+- `raw_body_hash` (recommended: `SHA-256(raw_body_bytes)`)
 
 Minimum required identifiers to persist for each on-chain attempt (queue/approve/execute/cancel):
 
@@ -287,6 +319,9 @@ Ingress MUST, in order:
 2. Verify transport freshness and `X-CLM-Signature` per section 4.
 3. Parse body as `SignedEnvelopeV1` and verify envelope per section 5.
 4. Enforce durable idempotency on `event_id`.
+   - If an idempotency record already exists, short-circuit processing to a no-op and reuse the recorded result.
+   - Otherwise create an idempotency record before proceeding. This MUST be concurrency-safe and atomic with respect to other in-flight processing of the same `event_id`.
 5. Validate the payload schema and hashes per section 6.
 6. Perform allowlist/policy checks for the action (policy-defined, out of scope here).
+   - This applies to both approval and cancellation events.
 7. Queue or record cancellation intent, emitting audit events per section 11.
