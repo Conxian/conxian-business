@@ -55,7 +55,7 @@ The evidence can be a spec section, PRD section, or a commit-pinned checklist. T
 
 Gate 1 targets correctness-relevant dependencies (typically the Nexus derived read model) and is considered **met** only when:
 
-- [ ] At least one pilot domain under **Pilot domain readiness gates (CON-335)** reaches its `*-G3` **Go decision** with linked evidence.
+- [ ] At least one pilot domain under **Pilot domain readiness gates (CON-335)** reaches its domain Go decision gate (e.g., `TSQL-G3`, `AN-G3`, `GOV-G3`) with linked evidence.
 - [ ] For that chosen pilot domain, the **common evidence requirements** and **common exit criteria** below are satisfied.
 
 ### Common evidence requirements (apply to any chosen pilot domain)
