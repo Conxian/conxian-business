@@ -4,6 +4,7 @@ import argparse
 import dataclasses
 import json
 import os
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -103,16 +104,34 @@ def parse_deployment_plan(plan_text: str) -> ParsedPlan:
 
 
 def _http_json(url: str) -> dict:
-    req = urllib.request.Request(
-        url,
-        headers={
-            "Accept": "application/json",
-            "User-Agent": "conxian-business-testnet-deployment-verifier",
-        },
-    )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        payload = resp.read().decode("utf-8", "replace")
-    return json.loads(payload)
+    last_err: Exception | None = None
+    for attempt in range(4):
+        try:
+            req = urllib.request.Request(
+                url,
+                headers={
+                    "Accept": "application/json",
+                    "User-Agent": "conxian-business-testnet-deployment-verifier",
+                },
+            )
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                payload = resp.read().decode("utf-8", "replace")
+            try:
+                return json.loads(payload)
+            except json.JSONDecodeError as e:
+                last_err = e
+        except urllib.error.HTTPError as e:
+            if e.code == 429 or (500 <= e.code < 600):
+                last_err = e
+            else:
+                raise
+        except (urllib.error.URLError, TimeoutError) as e:
+            last_err = e
+
+        if attempt < 3:
+            time.sleep(0.5 * (2**attempt))
+
+    raise SystemExit(f"Hiro API request failed after retries: {url} ({last_err})")
 
 
 def _fetch_contract_source(hiro_base: str, principal: str, name: str) -> str | None:
