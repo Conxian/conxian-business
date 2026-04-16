@@ -11,7 +11,7 @@ Goal: ensure changes that affect artifacts (lockfiles, build scripts, containers
   - repo hygiene / verification scripts (`scripts/*`)
   - lockfiles (`Cargo.lock`, `pnpm-lock.yaml`, submodule pins)
   - container build or runtime packaging (`Dockerfile*`, compose/k8s manifests)
-  - release/promotion policy or artifact-provenance documentation (e.g. `docs/BRANCH_*`, release hygiene docs, evidence-pack specs under `openspec/specs/…`)
+  - release/promotion policy or artifact-provenance documentation (e.g. `docs/BRANCH_*`, release hygiene docs, evidence-pack specs under `openspec/specs/*`)
 - **Runtime lane**: the environment branch + deployment context used for validation and promotion:
   - `dev`: testnet-only and non-production validation
   - `staged`: mainnet candidate validation
