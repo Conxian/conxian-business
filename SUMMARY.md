@@ -14,6 +14,7 @@
 * [Release notes and changelog format](docs/RELEASE_NOTES_AND_CHANGELOG.md)
 * [Branching and promotion policy](docs/BRANCHING_AND_PROMOTION_POLICY.md)
 * [Branch and promotion standard (dev/staged/main)](docs/BRANCH_AND_PROMOTION_STANDARD.md)
+* [Deployment verification matrix (runtime lanes)](docs/DEPLOYMENT_VERIFICATION_MATRIX.md)
 * [Mainnet acceptance evidence pack (staged -> main)](openspec/specs/mainnet-acceptance-evidence-pack/spec.md)
 * [Release hygiene — conxian-nexus](docs/RELEASE_HYGIENE_CONXIAN_NEXUS.md)
 * [Mainnet readiness checklist — lib-conclave-sdk](docs/MAINNET_READINESS_LIB_CONCLAVE_SDK.md)
@@ -80,6 +81,7 @@
 ## 📦 Architecture
 
 * [Conxian Protocol](Conxian/docs/ARCHITECTURE.md)
+* [Three-lane runtime deployment architecture (CON-455)](docs/architecture/THREE_LANE_RUNTIME_DEPLOYMENT_ARCHITECTURE.md)
 * [Nexus State Node](conxian-nexus/docs/PRD.md)
 * [Fusion Gateway](conxian-gateway/PRD.md)
 * [Sovereign Shard Spec](docs/SOVEREIGN_SHARD_SPEC.md)
