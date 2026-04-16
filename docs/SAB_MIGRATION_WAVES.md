@@ -2,9 +2,13 @@
 
 This document sequences the SAB migration program into ordered waves, prioritized by **strategic value**, **reversibility**, and **operational risk**.
 
-Canonical tracker:
+Primary tracker: https://linear.app/conxian-labs/issue/CON-336/sequence-sab-migration-waves-by-value-reversibility-and-risk
+
+Related:
 
 - https://linear.app/conxian-labs/issue/CON-329/create-sab-migration-control-plane-and-dependency-inventory
+- https://linear.app/conxian-labs/issue/CON-335/define-pilot-readiness-gates-and-evidence-requirements
+- https://linear.app/conxian-labs/issue/CON-337/inventory-current-supabase-and-neon-dependencies-by-service
 
 ## Scoring rubric (why this ordering is explainable)
 
@@ -17,7 +21,7 @@ Canonical tracker:
 | Wave | Scope | Primary dependencies | Value | Reversibility | Risk | Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **W0: Inventory + invariants** | Freeze the dependency list and define correctness isolation constraints + evidence gates. | Supabase, Neon, Tableland | High | High | Low | Prevent hidden coupling before any cutovers; make open questions explicit. |
-| **W1: Transactional SQL pilot (Nexus "Glass Node")** | Establish a sovereign PostgreSQL baseline for Nexus derived read models, with dual-run + rollback. | Neon (phase-out path) | High | Medium | High | Treat Neon as a hosted deployment, not a product dependency; remove Neon-specific assumptions. |
+| **W1: Transactional SQL pilot (Nexus "Glass Node")** | Establish a sovereign PostgreSQL baseline for Nexus derived read models, with dual-run + rollback. | Neon (phase-out path) | High | Medium | High | Treat Neon as a hosted deployment, not a product dependency; remove Neon-specific assumptions. "Glass Node" = derived-only Nexus read model that is checkpoint-verifiable and read-switchable for rollback. |
 | **W2: Supabase correctness isolation (treasury/oracle state)** | Contain Supabase write-path risk: move correctness paths to derived-only, checkpointed state with explicit ownership. | Supabase (phase-out path) | High | Medium | High | Requires per-service dependency truth and a decision on whether Model Context Protocol (MCP) remains the stable abstraction boundary. |
 | **W3: Analytics phase-out (proof/visual-proof datasets)** | Replace Supabase-backed analytics with a verifiable, rebuildable derived dataset layer. | Supabase analytics (phase-out path) | High | Medium | High | Depends on checkpoint discipline + a target-state decision for analytics (see `SAB-DS-002`). |
 | **W4: Governance/audit mirrors** | Reduce mirror dependencies; make on-chain audit registries the default discovery mechanism. | Tableland (optional mirror), Fluree/Kwil (candidates) | Medium | High | Medium | Mirrors remain optional; must never become correctness dependencies. |
