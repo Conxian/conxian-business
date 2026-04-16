@@ -59,6 +59,11 @@
     },
     "addOns": {
       "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$",
+        "maxLength": 64
+      },
       "properties": {
         "bisq": { "$ref": "#/$defs/addOnPack" },
         "rgb": { "$ref": "#/$defs/addOnPack" },

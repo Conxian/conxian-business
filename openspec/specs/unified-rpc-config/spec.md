@@ -74,6 +74,12 @@ Notes:
 
 Known packs in v1: `bisq`, `rgb`, `bitvm`.
 
+`addOns` keys are extensible but must be stable and deterministic for `.env` projection. Pack identifiers **must** match:
+
+```
+^[a-z][a-z0-9-]*$
+```
+
 | Pack | Config field | Env var | Consumer |
 | :--- | :--- | :--- | :--- |
 | `bisq` | `addOns.bisq.rpc.host` | `BISQ_RPC_HOST` | `conxius-platform` |
