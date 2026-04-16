@@ -1,0 +1,329 @@
+from __future__ import annotations
+
+import argparse
+import dataclasses
+import json
+import os
+import urllib.error
+import urllib.parse
+import urllib.request
+
+
+def repo_root() -> str:
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+
+def _read_text(path: str) -> str:
+    with open(path, "r", encoding="utf-8", errors="replace") as f:
+        return f.read()
+
+
+def _strip_yaml_scalar(value: str) -> str:
+    value = value.strip()
+    if value.startswith("\"") and value.endswith("\"") and len(value) >= 2:
+        return value[1:-1]
+    return value
+
+
+@dataclasses.dataclass(frozen=True)
+class PlanContract:
+    name: str
+    expected_sender: str | None
+    path: str | None
+
+
+@dataclasses.dataclass(frozen=True)
+class ParsedPlan:
+    network: str | None
+    deployer: str | None
+    contracts: list[PlanContract]
+
+
+def parse_deployment_plan(plan_text: str) -> ParsedPlan:
+    network: str | None = None
+    deployer: str | None = None
+    contracts: list[PlanContract] = []
+
+    current: dict[str, str | None] | None = None
+
+    for raw_line in plan_text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+
+        if line.startswith("network:"):
+            network = _strip_yaml_scalar(line.split(":", 1)[1])
+            continue
+
+        if line.startswith("deployer:"):
+            deployer = _strip_yaml_scalar(line.split(":", 1)[1])
+            continue
+
+        if line.startswith("- contract-publish:"):
+            if current is not None:
+                contracts.append(
+                    PlanContract(
+                        name=str(current.get("contract-name") or "").strip(),
+                        expected_sender=current.get("expected-sender"),
+                        path=current.get("path"),
+                    )
+                )
+            current = {"contract-name": None, "expected-sender": None, "path": None}
+            continue
+
+        if current is None:
+            continue
+
+        if line.startswith("contract-name:"):
+            current["contract-name"] = _strip_yaml_scalar(line.split(":", 1)[1])
+        elif line.startswith("expected-sender:"):
+            current["expected-sender"] = _strip_yaml_scalar(line.split(":", 1)[1])
+        elif line.startswith("path:"):
+            current["path"] = _strip_yaml_scalar(line.split(":", 1)[1])
+
+    if current is not None:
+        contracts.append(
+            PlanContract(
+                name=str(current.get("contract-name") or "").strip(),
+                expected_sender=current.get("expected-sender"),
+                path=current.get("path"),
+            )
+        )
+
+    contracts = [c for c in contracts if c.name]
+
+    return ParsedPlan(network=network, deployer=deployer, contracts=contracts)
+
+
+def _http_json(url: str) -> dict:
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Accept": "application/json",
+            "User-Agent": "conxian-business-testnet-deployment-verifier",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        payload = resp.read().decode("utf-8", "replace")
+    return json.loads(payload)
+
+
+def _fetch_contract_source(hiro_base: str, principal: str, name: str) -> str | None:
+    principal_q = urllib.parse.quote(principal, safe="")
+    name_q = urllib.parse.quote(name, safe="")
+    url = f"{hiro_base}/v2/contracts/source/{principal_q}/{name_q}"
+    try:
+        data = _http_json(url)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return None
+        raise
+    source = data.get("source")
+    if not isinstance(source, str):
+        return None
+    return source
+
+
+def _fetch_contract_meta(
+    hiro_base: str, principal: str, name: str
+) -> tuple[str | None, int | None]:
+    contract_id = f"{principal}.{name}"
+    contract_id_q = urllib.parse.quote(contract_id, safe="")
+    url = f"{hiro_base}/extended/v1/contract/{contract_id_q}"
+    try:
+        data = _http_json(url)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return None, None
+        raise
+    tx_id = data.get("tx_id")
+    block_height = data.get("block_height")
+    return (tx_id if isinstance(tx_id, str) else None), (
+        block_height if isinstance(block_height, int) else None
+    )
+
+
+def _normalize_source(text: str) -> str:
+    return text.replace("\r\n", "\n").replace("\r", "\n")
+
+
+@dataclasses.dataclass(frozen=True)
+class VerificationResult:
+    name: str
+    local_path: str
+    expected_sender: str | None
+    sender_matches_deployer: bool
+    deployed: bool
+    tx_id: str | None
+    block_height: int | None
+    source_matches: bool | None
+
+
+def verify_plan(
+    *,
+    plan_path: str,
+    hiro_base: str,
+    strict_expected_sender: bool,
+    strict_source_match: bool,
+) -> tuple[str, str, list[VerificationResult], list[str]]:
+    if not os.path.isfile(plan_path):
+        raise SystemExit(
+            f"Plan not found: {plan_path}\n\nIf this references a submodule file, ensure submodules are initialized:\n  git submodule update --init --recursive"
+        )
+
+    plan = parse_deployment_plan(_read_text(plan_path))
+    if not plan.deployer:
+        raise SystemExit(f"Plan is missing required field: deployer ({plan_path})")
+    if not plan.network:
+        raise SystemExit(f"Plan is missing required field: network ({plan_path})")
+
+    deployer = plan.deployer
+    network = plan.network
+
+    failures: list[str] = []
+    results: list[VerificationResult] = []
+
+    for c in plan.contracts:
+        local_path = c.path or ""
+        if not local_path:
+            failures.append(f"{c.name}: missing path in plan")
+            continue
+        abs_local_path = os.path.join(os.path.dirname(plan_path), "..", local_path)
+        abs_local_path = os.path.abspath(abs_local_path)
+        if not os.path.isfile(abs_local_path):
+            failures.append(f"{c.name}: local contract source missing: {abs_local_path}")
+            continue
+
+        sender_matches = (c.expected_sender == deployer) if c.expected_sender else False
+        if strict_expected_sender and not sender_matches:
+            failures.append(
+                f"{c.name}: expected-sender {c.expected_sender!r} does not match deployer {deployer!r}"
+            )
+
+        chain_source = _fetch_contract_source(hiro_base, deployer, c.name)
+        deployed = chain_source is not None
+        tx_id: str | None = None
+        block_height: int | None = None
+
+        if deployed:
+            tx_id, block_height = _fetch_contract_meta(hiro_base, deployer, c.name)
+
+        source_matches: bool | None = None
+        if deployed:
+            local_source = _normalize_source(_read_text(abs_local_path))
+            chain_source_norm = _normalize_source(chain_source)
+            source_matches = local_source == chain_source_norm
+            if strict_source_match and not source_matches:
+                failures.append(f"{c.name}: source drift vs {abs_local_path}")
+
+        results.append(
+            VerificationResult(
+                name=c.name,
+                local_path=abs_local_path,
+                expected_sender=c.expected_sender,
+                sender_matches_deployer=sender_matches,
+                deployed=deployed,
+                tx_id=tx_id,
+                block_height=block_height,
+                source_matches=source_matches,
+            )
+        )
+
+        if not deployed:
+            failures.append(f"{c.name}: missing on-chain contract {deployer}.{c.name}")
+
+    return network, deployer, results, failures
+
+
+def main() -> None:
+    default_plan = os.path.join(
+        repo_root(), "Conxian", "deployments", "full-system.testnet-plan.yaml"
+    )
+    parser = argparse.ArgumentParser(
+        description=(
+            "Verify that a testnet deployment plan's contract-publish set exists on-chain and (optionally) matches local sources."
+        )
+    )
+    parser.add_argument(
+        "--plan",
+        default=default_plan,
+        help=f"Path to a Clarinet deployment plan YAML (default: {default_plan})",
+    )
+    parser.add_argument(
+        "--hiro-base",
+        default="https://api.testnet.hiro.so",
+        help="Hiro API base URL (default: https://api.testnet.hiro.so)",
+    )
+    parser.add_argument(
+        "--strict-expected-sender",
+        action="store_true",
+        help="Fail if any contract-publish expected-sender differs from the plan deployer.",
+    )
+    parser.add_argument(
+        "--strict-source-match",
+        action="store_true",
+        help="Fail if any deployed contract source differs from the local file referenced by the plan.",
+    )
+    parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Output machine-readable JSON instead of human text.",
+    )
+    args = parser.parse_args()
+
+    network, deployer, results, failures = verify_plan(
+        plan_path=os.path.abspath(args.plan),
+        hiro_base=args.hiro_base.rstrip("/"),
+        strict_expected_sender=args.strict_expected_sender,
+        strict_source_match=args.strict_source_match,
+    )
+
+    if args.json:
+        print(
+            json.dumps(
+                {
+                    "network": network,
+                    "deployer": deployer,
+                    "plan": os.path.abspath(args.plan),
+                    "contracts": [dataclasses.asdict(r) for r in results],
+                    "failures": failures,
+                },
+                indent=2,
+                sort_keys=True,
+            )
+        )
+    else:
+        print(f"network={network}")
+        print(f"deployer={deployer}")
+        print(f"plan={os.path.abspath(args.plan)}")
+        print(f"contracts_in_plan={len(results)}")
+
+        for r in results:
+            if not r.deployed:
+                status = "missing"
+            elif r.source_matches is True:
+                status = "ok"
+            else:
+                status = "drift"
+
+            sender_flag = "ok" if r.sender_matches_deployer else "mismatch"
+            meta = []
+            if r.block_height is not None:
+                meta.append(f"height={r.block_height}")
+            if r.tx_id:
+                meta.append(f"tx={r.tx_id}")
+            meta_text = " " + " ".join(meta) if meta else ""
+            print(
+                f"- {r.name}: {status} expected-sender={sender_flag}{meta_text} local={r.local_path}"
+            )
+
+        if failures:
+            print("\nFailures:")
+            for f in failures:
+                print(f"- {f}")
+
+    raise SystemExit(1 if failures else 0)
+
+
+if __name__ == "__main__":
+    main()
