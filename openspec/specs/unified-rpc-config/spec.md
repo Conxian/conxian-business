@@ -80,6 +80,8 @@ Known packs in v1: `bisq`, `rgb`, `bitvm`.
 ^[a-z][a-z0-9-]*$
 ```
 
+Pack identifiers must also be no longer than 64 characters.
+
 | Pack | Config field | Env var | Consumer |
 | :--- | :--- | :--- | :--- |
 | `bisq` | `addOns.bisq.rpc.host` | `BISQ_RPC_HOST` | `conxius-platform` |
