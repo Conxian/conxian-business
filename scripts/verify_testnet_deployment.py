@@ -226,7 +226,8 @@ def _fetch_contract_meta(
 
 def _normalize_source(text: str) -> str:
     text = text.replace("\r\n", "\n").replace("\r", "\n")
-    return text.rstrip() + "\n"
+    text = text.rstrip("\n")
+    return text + "\n"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -237,6 +238,7 @@ class VerificationResult:
     expected_sender: str | None
     sender_matches_deployer: bool
     deployed: bool
+    source_lookup_failed: bool
     tx_id: str | None
     block_height: int | None
     source_matches: bool | None
@@ -334,6 +336,7 @@ def verify_plan(
                 expected_sender=c.expected_sender,
                 sender_matches_deployer=sender_matches,
                 deployed=deployed,
+                source_lookup_failed=lookup_failed,
                 tx_id=tx_id,
                 block_height=block_height,
                 source_matches=source_matches,
@@ -418,14 +421,16 @@ def main() -> None:
         print(f"contracts_in_plan={len(results)}")
 
         for r in results:
-            if not r.deployed:
+            if r.source_lookup_failed:
+                status = "unknown"
+            elif not r.deployed:
                 status = "missing"
             elif r.source_matches is True:
                 status = "ok"
             elif r.source_matches is False:
                 status = "drift"
             else:
-                status = "unverified"
+                status = "deployed"
 
             sender_flag = "ok" if r.sender_matches_deployer else "mismatch"
             meta = []
