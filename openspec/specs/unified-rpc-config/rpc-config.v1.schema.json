@@ -70,7 +70,10 @@
         "bitvm": { "$ref": "#/$defs/addOnPackHostOnly" }
       },
       "additionalProperties": {
-        "$ref": "#/$defs/addOnPackHostPort"
+        "anyOf": [
+          { "$ref": "#/$defs/addOnPackHostOnly" },
+          { "$ref": "#/$defs/addOnPackHostPort" }
+        ]
       }
     },
     "metadata": {

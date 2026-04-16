@@ -74,15 +74,10 @@ Notes:
 ### 3.3 Add-on packs
 
 Known packs in v1: `bisq`, `rgb`, `bitvm`.
-`addOns` keys are extensible but must be stable and deterministic for `.env` projection. Pack identifiers **must** match:
 
-```
-^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$
-```
+`addOns` keys are extensible but must be stable and deterministic for `.env` projection. The authoritative validation rules are defined in `rpc-config.v1.schema.json` under `addOns.propertyNames`.
 
-Pack identifiers must be lowercase alphanumeric strings that start with a letter and may include `-` separators between segments.
-
-Pack identifiers must also be no longer than 64 characters.
+In short: pack identifiers must be lowercase alphanumeric strings that start with a letter, may include `-` separators between segments (for example `my-pack-1`), and must be no longer than 64 characters.
 
 Custom packs (producer-defined `addOns.<pack>` keys) **MUST** use the same shape as known packs: an `enabled` boolean and an optional `rpc` object (`rpc.host` is required when enabled; `rpc.port` is optional).
 
