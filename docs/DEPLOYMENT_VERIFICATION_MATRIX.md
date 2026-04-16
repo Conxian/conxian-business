@@ -37,7 +37,7 @@ The table below is intentionally compact; details are defined in the lane sectio
 
 - CI must build from a clean checkout (and, if the repo uses submodules, `actions/checkout` + `submodules: recursive`).
 - Any dependency pin changes are explicit (lockfiles, submodule SHAs) and reviewable.
-- If submodule SHAs change, record the old/new SHAs and include the relevant boundary/contamination check output in the evidence.
+- If submodule SHAs change, record the old/new SHAs in the PR description (or other lane evidence notes) and include the relevant boundary/contamination check output.
 
 **Test**
 
