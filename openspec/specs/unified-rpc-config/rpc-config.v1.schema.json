@@ -50,11 +50,6 @@
       "type": "object",
       "additionalProperties": {
         "$ref": "#/$defs/addOnPack"
-      },
-      "properties": {
-        "bisq": { "$ref": "#/$defs/addOnPack" },
-        "rgb": { "$ref": "#/$defs/addOnPack" },
-        "bitvm": { "$ref": "#/$defs/addOnPack" }
       }
     }
   },
@@ -73,7 +68,23 @@
             "port": { "type": "integer", "minimum": 1, "maximum": 65535 }
           }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "enabled": { "const": true } },
+            "required": ["enabled"]
+          },
+          "then": {
+            "required": ["rpc"],
+            "properties": {
+              "rpc": {
+                "required": ["host"]
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

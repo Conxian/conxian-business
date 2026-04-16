@@ -70,6 +70,11 @@ Known packs in v1: `bisq`, `rgb`, `bitvm`.
 | `rgb` | `addOns.rgb.rpc.host` | `RGB_RPC_HOST` | `conxius-platform` |
 | `bitvm` | `addOns.bitvm.rpc.host` | `BITVM_RPC_HOST` | `conxius-platform` |
 
+Notes:
+
+- When `addOns.<pack>.enabled` is `true`, the pack **MUST** include `addOns.<pack>.rpc.host`.
+- In the current `conxius-platform/.env.schema`, only Bisq declares an explicit `*_RPC_PORT` variable (Bisq is `host` + `port`; RGB/BitVM are `host` only).
+
 For future packs, env var names **SHOULD** follow the convention:
 
 - `addOns.<pack>.rpc.host` → `<PACK>_RPC_HOST`
