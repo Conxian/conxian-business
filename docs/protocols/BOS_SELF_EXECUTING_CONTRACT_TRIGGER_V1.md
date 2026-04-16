@@ -82,6 +82,8 @@ Let:
 - `path = raw request path` (must match the raw `path` as received by the server, including any query string)
 - `raw_body_bytes = the raw HTTP request body bytes (unmodified)`
 
+Deployments MUST ensure the `path` value signed by CLM is byte-for-byte identical to the `path` observed by BOS ingress after any intermediate hops (reverse proxies, API gateways, load balancers). If an intermediary rewrites the request path, CLM and BOS MUST agree on the exact rewritten path that is signed and verified.
+
 Construct:
 
 - `prefix = timestamp || '.' || method || '.' || path || '.'`
@@ -159,19 +161,16 @@ The canceled payload records CLM’s intent that an action should not execute.
 Required fields:
 
 - `action_id` (string): the action identifier to cancel.
+- `action_hash` (string): lowercase hex `SHA-256(JCS(action))` for the action being canceled.
 - `reason_code` (string): public-safe cancellation code.
-
-Optional fields:
-
-- `action_hash` (string): if present, BOS ingress SHOULD verify it matches the queued action.
 
 Informal TypeScript shape:
 
 ```ts
 export type ClmOnchainActionCanceledV1 = {
   action_id: string;
+  action_hash: string;
   reason_code: string;
-  action_hash?: string;
 };
 ```
 
@@ -242,12 +241,14 @@ Cancellation has two layers:
 CLM cancellation events:
 
 - MUST be stored as durable audit records.
-- MUST NOT bypass timelock or quorum checks.
+- MUST NOT directly trigger on-chain cancellation; on-chain cancellation MUST be governance-authorized.
 - MAY be used by BOS ingress to avoid queueing an action if the cancellation arrives before queueing.
 
 On-chain cancellation requirements:
 
-- Cancellation MUST be bound to `action_id` and MUST verify the queued `action_hash` if provided.
+- Cancellation MUST be bound to `action_id` and MUST verify the queued `action_hash`.
+- Cancellation MUST be permitted for non-terminal states (`QUEUED`, `READY`, `APPROVING`) and MUST NOT require waiting for `unlock_height`.
+- Cancellation MUST require `approvals_count >= required_quorum` (same quorum as execution).
 - Cancellation MUST be rejected (or explicit no-op) for terminal states (`EXECUTED`, `CANCELED`, `EXPIRED`).
 - If a CLM cancellation is received after an action is terminal, BOS MUST record a “CLM–chain disagreement” audit event.
 
