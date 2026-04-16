@@ -29,4 +29,9 @@ EXPOSE 3000
 ENV RUST_LOG=info
 ENV API_PORT=3000
 
+RUN useradd -m -u 10001 -s /usr/sbin/nologin gateway \
+    && chown -R gateway:gateway /data
+
+USER gateway
+
 CMD ["gateway"]
