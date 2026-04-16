@@ -136,6 +136,10 @@ def parse_deployment_plan(plan_text: str) -> ParsedPlan:
     return ParsedPlan(network=network, deployer=deployer, contracts=contracts)
 
 
+class HiroRequestError(RuntimeError):
+    pass
+
+
 def _http_json(url: str) -> dict:
     last_err: Exception | None = None
     for attempt in range(4):
@@ -154,17 +158,19 @@ def _http_json(url: str) -> dict:
             except json.JSONDecodeError as e:
                 last_err = e
         except urllib.error.HTTPError as e:
+            if e.code == 404:
+                raise
             if e.code == 429 or (500 <= e.code < 600):
                 last_err = e
             else:
-                raise
+                raise HiroRequestError(f"Hiro API request failed: {url} (HTTP {e.code})") from e
         except (urllib.error.URLError, TimeoutError) as e:
             last_err = e
 
         if attempt < 3:
             time.sleep(0.5 * (2**attempt))
 
-    raise SystemExit(f"Hiro API request failed after retries: {url} ({last_err})")
+    raise HiroRequestError(f"Hiro API request failed after retries: {url} ({last_err})") from last_err
 
 
 def _fetch_contract_source(hiro_base: str, principal: str, name: str) -> str | None:
@@ -203,7 +209,8 @@ def _fetch_contract_meta(
 
 
 def _normalize_source(text: str) -> str:
-    return text.replace("\r\n", "\n").replace("\r", "\n")
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    return text.rstrip() + "\n"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -246,36 +253,38 @@ def verify_plan(
     results: list[VerificationResult] = []
 
     for c in plan.contracts:
+        local_source: str | None = None
+        abs_local_path = ""
         local_path = c.path or ""
         if not local_path:
-            failures.append(f"{c.name}: missing path in plan")
-            continue
-        abs_local_path = (
-            local_path
-            if os.path.isabs(local_path)
-            else os.path.join(project_root, local_path)
-        )
-        abs_local_path = os.path.abspath(abs_local_path)
-        if not os.path.isfile(abs_local_path):
-            failures.append(f"{c.name}: local contract source missing: {abs_local_path}")
-            continue
+            if strict_source_match:
+                failures.append(f"{c.name}: missing path in plan")
+        else:
+            if os.path.isabs(local_path):
+                abs_local_path = os.path.abspath(local_path)
+            else:
+                abs_local_path = os.path.abspath(os.path.join(project_root, local_path))
+            if os.path.isfile(abs_local_path):
+                local_source = _read_text(abs_local_path)
+            elif strict_source_match:
+                failures.append(f"{c.name}: local contract source missing: {abs_local_path}")
 
-        sender_matches = (c.expected_sender == deployer) if c.expected_sender else False
+        sender_matches = True if not c.expected_sender else (c.expected_sender == deployer)
         if strict_expected_sender and c.expected_sender and not sender_matches:
             failures.append(
                 f"{c.name}: expected-sender {c.expected_sender!r} does not match deployer {deployer!r}"
             )
 
         principal = principal_override or c.expected_sender or deployer
-        source_lookup_failed = False
+        chain_source: str | None = None
+        lookup_failed = False
         try:
             chain_source = _fetch_contract_source(hiro_base, principal, c.name)
-        except (urllib.error.HTTPError, urllib.error.URLError, json.JSONDecodeError) as e:
+        except HiroRequestError as e:
+            lookup_failed = True
             failures.append(
                 f"{c.name}: Hiro API error querying source for {principal}.{c.name}: {e}"
             )
-            source_lookup_failed = True
-            chain_source = None
         deployed = chain_source is not None
         tx_id: str | None = None
         block_height: int | None = None
@@ -283,17 +292,16 @@ def verify_plan(
         if deployed:
             try:
                 tx_id, block_height = _fetch_contract_meta(hiro_base, principal, c.name)
-            except (urllib.error.HTTPError, urllib.error.URLError, json.JSONDecodeError) as e:
+            except HiroRequestError as e:
                 failures.append(
                     f"{c.name}: Hiro API error querying metadata for {principal}.{c.name}: {e}"
                 )
-                tx_id, block_height = None, None
 
         source_matches: bool | None = None
-        if deployed:
-            local_source = _normalize_source(_read_text(abs_local_path))
+        if deployed and local_source is not None:
+            local_source_norm = _normalize_source(local_source)
             chain_source_norm = _normalize_source(chain_source)
-            source_matches = local_source == chain_source_norm
+            source_matches = local_source_norm == chain_source_norm
             if strict_source_match and not source_matches:
                 failures.append(f"{c.name}: source drift vs {abs_local_path}")
 
@@ -311,7 +319,7 @@ def verify_plan(
             )
         )
 
-        if not deployed and not source_lookup_failed:
+        if not deployed and not lookup_failed:
             failures.append(f"{c.name}: missing on-chain contract {principal}.{c.name}")
 
     return network, deployer, results, failures
@@ -391,10 +399,10 @@ def main() -> None:
         for r in results:
             if not r.deployed:
                 status = "missing"
-            elif r.source_matches is True:
-                status = "ok"
-            else:
+            elif r.source_matches is False:
                 status = "drift"
+            else:
+                status = "ok"
 
             sender_flag = "ok" if r.sender_matches_deployer else "mismatch"
             meta = []
