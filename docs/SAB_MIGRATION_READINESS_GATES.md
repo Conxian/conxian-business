@@ -55,7 +55,7 @@ The evidence can be a spec section, PRD section, or a commit-pinned checklist. T
 
 Gate 1 targets correctness-relevant dependencies (typically the Nexus derived read model) and is considered **met** only when:
 
-- [ ] At least one pilot domain under [Pilot domain readiness gates (CON-335)](#pilot-domain-readiness-gates-con-335) reaches its domain Go decision gate (e.g., `TSQL-G3`, `AN-G3`, `GOV-G3`) with linked evidence.
+- [ ] At least one pilot domain under [Pilot domain readiness gates (CON-335)](#pilot-domain-readiness-gates-con-335) reaches its domain Go decision gate (e.g., `TSQL-G3`) with linked evidence.
 - [ ] For that chosen pilot domain, the **common evidence requirements** and **common exit criteria** below are satisfied.
 
 ### Common evidence requirements (apply to any chosen pilot domain)
@@ -103,7 +103,7 @@ This gate applies to the Nexus/Glass-Node class of derived read models (currentl
 
 - **TSQL-G1: Integration-ready (dual-run + read-switchable)**
   - [ ] Dual-run comparison plan (which queries compare, how often, and the divergence threshold that triggers rollback; threshold evidence linked).
-  - [ ] Agreed deltas/SLO thresholds are recorded in a commit-pinned artifact (SLO doc, benchmark run report, or dashboard snapshot) and linked.
+  - [ ] Evidence for dual-run thresholds and SLO deltas is recorded in a commit-pinned artifact, satisfying Gate 1's common exit criteria requirements for thresholds/SLOs.
   - [ ] Read-switch mechanism exists (ability to flip reads between baselines without code changes).
   - [ ] Checkpoint mismatch behavior is defined and wired to explicit service behavior (rebuild vs safe-halt).
   - [ ] Snapshot/export format is defined for any institutional egress datasets produced from this read model.
