@@ -147,8 +147,18 @@ class HiroRequestError(RuntimeError):
 
 
 def _http_json(url: str) -> dict:
+    try:
+        timeout_secs = float(os.environ.get("HIRO_TIMEOUT_SECS", "30"))
+    except ValueError:
+        timeout_secs = 30.0
+    try:
+        max_attempts = int(os.environ.get("HIRO_MAX_ATTEMPTS", "4"))
+    except ValueError:
+        max_attempts = 4
+    max_attempts = max(1, max_attempts)
+
     last_err: Exception | None = None
-    for attempt in range(4):
+    for attempt in range(max_attempts):
         try:
             req = urllib.request.Request(
                 url,
@@ -157,7 +167,7 @@ def _http_json(url: str) -> dict:
                     "User-Agent": "conxian-business-testnet-deployment-verifier",
                 },
             )
-            with urllib.request.urlopen(req, timeout=30) as resp:
+            with urllib.request.urlopen(req, timeout=timeout_secs) as resp:
                 payload = resp.read().decode("utf-8", "replace")
             try:
                 return json.loads(payload)
@@ -173,7 +183,7 @@ def _http_json(url: str) -> dict:
         except (urllib.error.URLError, TimeoutError) as e:
             last_err = e
 
-        if attempt < 3:
+        if attempt < max_attempts - 1:
             time.sleep(0.5 * (2**attempt))
 
     raise HiroRequestError(f"Hiro API request failed after retries: {url} ({last_err})") from last_err
