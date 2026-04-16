@@ -21,15 +21,33 @@ def _read_text(path: str) -> str:
 
 def _strip_yaml_scalar(value: str) -> str:
     value = value.strip()
-    if value and value[0] not in ('"', "'"):
-        for i, ch in enumerate(value):
-            if ch == "#" and i > 0 and value[i - 1].isspace():
-                value = value[: i - 1].rstrip()
-                break
-    if value.startswith('"') and value.endswith('"') and len(value) >= 2:
-        return value[1:-1]
-    if value.startswith("'") and value.endswith("'") and len(value) >= 2:
-        return value[1:-1]
+    if not value:
+        return value
+
+    quote = value[0]
+    if quote in ('"', "'"):
+        end: int | None = None
+        i = 1
+        while i < len(value):
+            if value[i] != quote:
+                i += 1
+                continue
+            if quote == "'" and i + 1 < len(value) and value[i + 1] == "'":
+                i += 2
+                continue
+            if quote == '"' and i > 0 and value[i - 1] == "\\":
+                i += 1
+                continue
+            end = i
+            break
+        if end is None:
+            return value
+        return value[1:end]
+
+    for i, ch in enumerate(value):
+        if ch == "#" and i > 0 and value[i - 1].isspace():
+            value = value[: i - 1].rstrip()
+            break
     return value
 
 
@@ -246,13 +264,27 @@ def verify_plan(
             )
 
         principal = principal_override or c.expected_sender or deployer
-        chain_source = _fetch_contract_source(hiro_base, principal, c.name)
+        source_lookup_failed = False
+        try:
+            chain_source = _fetch_contract_source(hiro_base, principal, c.name)
+        except (urllib.error.HTTPError, urllib.error.URLError, json.JSONDecodeError) as e:
+            failures.append(
+                f"{c.name}: Hiro API error querying source for {principal}.{c.name}: {e}"
+            )
+            source_lookup_failed = True
+            chain_source = None
         deployed = chain_source is not None
         tx_id: str | None = None
         block_height: int | None = None
 
         if deployed:
-            tx_id, block_height = _fetch_contract_meta(hiro_base, principal, c.name)
+            try:
+                tx_id, block_height = _fetch_contract_meta(hiro_base, principal, c.name)
+            except (urllib.error.HTTPError, urllib.error.URLError, json.JSONDecodeError) as e:
+                failures.append(
+                    f"{c.name}: Hiro API error querying metadata for {principal}.{c.name}: {e}"
+                )
+                tx_id, block_height = None, None
 
         source_matches: bool | None = None
         if deployed:
@@ -276,7 +308,7 @@ def verify_plan(
             )
         )
 
-        if not deployed:
+        if not deployed and not source_lookup_failed:
             failures.append(f"{c.name}: missing on-chain contract {principal}.{c.name}")
 
     return network, deployer, results, failures
