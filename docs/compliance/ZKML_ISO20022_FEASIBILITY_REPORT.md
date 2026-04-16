@@ -8,7 +8,7 @@ This report assesses whether privacy-preserving proof workflows (including zkML)
 - **ISO 20022 rendering over verifiable datasets is feasible now** using Conxian’s existing “Glass Node / checkpoint-verified datasets” direction.
 - **Privacy-preserving compliance evidence is feasible in a hybrid model**:
   - keep full ISO 20022 payloads (and other PII-bearing artifacts) **off-chain** as encrypted objects,
-  - anchor commitments (hashes) on-chain or in checkpointed datasets,
+  - anchor binding-and-hiding commitments for identity-bearing inputs (not plain hashes) plus payload digests for ISO payload bytes,
   - provide **attestation and/or ZK proofs** about policy checks.
 - **zkML is not required for an ISO 20022 pilot** and is unlikely to be the critical path. zkML becomes relevant only if a pilot explicitly requires verifiable ML inference (for example, “prove this model scored this transaction below a threshold”) rather than rule-based checks.
 
@@ -35,11 +35,11 @@ For this report:
 The repo already encodes key constraints that strongly shape feasibility:
 
 1. **Institutional egress is read-only and proof-carrying** (datasets are derived, checkpointed, and verifiable).
-   - See: `openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md`.
+   - See: [`sovereign-data-migration-institutional-egress` spec](../../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md).
 2. **TradFi payloads are not execution authority; ingestion is proposal-only and verified inside a TEE**.
-   - See: `openspec/changes/external-settlement-proposal-only-tee/specs/external-settlement-proposal-only-tee/spec.md`.
+   - See: [`external-settlement-proposal-only-tee` spec](../../openspec/changes/external-settlement-proposal-only-tee/specs/external-settlement-proposal-only-tee/spec.md).
 3. **Fail closed**: functional stubs (including ZKML) must return explicit errors in production paths.
-   - See: `docs/BRANCHING_AND_PROMOTION_POLICY.md`.
+   - See: [`docs/BRANCHING_AND_PROMOTION_POLICY.md`](../BRANCHING_AND_PROMOTION_POLICY.md).
 4. **No secret egress / no private identity disclosures in egress datasets**.
    - This is compatible with ISO 20022 only if identity-bearing fields are handled via an authorized disclosure channel (encrypted payloads + selective disclosure), rather than being emitted into public/general-purpose “egress datasets.”
 
@@ -82,6 +82,10 @@ Institutional compliance is typically identity-heavy (names, addresses, account 
 3. Provide **selective disclosure** paths for authorized verifiers (institutions, auditors, regulators), where they can obtain:
    - the decrypted ISO 20022 payload, and
    - a proof bundle that binds the payload to checkpointed datasets / on-chain anchors.
+
+ISO 20022 rendering for the pilot should be treated as a **private service** that has access to full, non-public identity-bearing inputs. Public/verifiable egress datasets may only contain commitments to these payloads (and other non-PII linkage identifiers) and **must not** store raw identity-bearing ISO 20022 fields.
+
+Note: plain hashes of PII (names, account identifiers, etc.) are generally linkable and are not sufficient as a privacy mechanism. For identity-bearing fields, the pilot should use a binding-and-hiding commitment construction (or an equivalent keyed commitment scheme) rather than emitting raw hashes.
 
 Proof bundle options:
 
@@ -128,6 +132,7 @@ Deliverables:
   - payload bytes
   - payload hash
   - mapping profile version
+  - mapping profile fingerprint (hash of the canonical mapping artifact)
   - dataset identifiers required to recompute rendering from a snapshot
 
 Constraints:
@@ -141,9 +146,11 @@ Constraints:
 Deliverables:
 
 - Define a versioned “compliance evidence” artifact that binds:
-  - commitment to the ISO 20022 payload (hash),
-  - commitment(s) to identity inputs (hashes or commitments),
+  - commitment to the ISO 20022 payload (hash over canonicalized payload bytes),
+  - commitment(s) to identity inputs (binding-and-hiding commitments; never raw hashes for PII fields),
+  - dataset snapshot/checkpoint identifier(s) and canonical record reference(s) used for rendering,
   - policy version identifier(s),
+  - mapping profile fingerprint,
   - a structured outcome (pass/fail + reason codes).
 - Implement production behavior as:
   - TEE attests canonicalization and the outcome,
@@ -154,6 +161,8 @@ Constraints:
 - Must fail closed: if evidence cannot be produced, the workflow must produce explicit service errors.
 - Must keep private identity data out of public egress datasets.
 - Must not treat the compliance evidence as execution authority (it is an audit/control artifact).
+- For any institution-facing ISO 20022 payload delivery, emission/serving MUST NOT succeed unless a corresponding compliance evidence artifact has been generated, linked, and persisted.
+- Compliance evidence generation may be asynchronous relative to rendering, but ISO 20022 payload serving MUST block until the corresponding evidence artifact exists and is durably persisted.
 
 #### Phase 3 (optional): ZK proofs for a narrow compliance claim
 
@@ -197,6 +206,7 @@ Constraints:
 3. **Private artifact lane**
    - encrypted payload storage + access control + key custody boundaries.
    - explicit policy for what gets committed in public datasets.
+   - commitment randomness/keys used for identity-bearing inputs must remain private and must not appear in verifiable datasets or other egress surfaces.
 
 4. **Proof system and verification surface**
    - if ZK proofs are used, decide where verification happens (off-chain service vs. on-chain anchoring of receipts).
