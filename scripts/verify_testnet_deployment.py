@@ -187,9 +187,22 @@ def _http_json(url: str) -> dict:
             isinstance(last_err, urllib.error.URLError)
             and isinstance(getattr(last_err, "reason", None), TimeoutError)
         )
-        kind = "timed out" if is_timeout else "failed"
+        if is_timeout:
+            raise urllib.error.URLError(
+                f"Hiro API request timed out after {max_attempts} attempts: {url}"
+            ) from last_err
+
+        if isinstance(last_err, urllib.error.HTTPError):
+            raise urllib.error.HTTPError(
+                last_err.url,
+                last_err.code,
+                f"Hiro API request failed after {max_attempts} attempts: {url} ({last_err})",
+                last_err.hdrs,
+                last_err.fp,
+            ) from last_err
+
         raise urllib.error.URLError(
-            f"Hiro API request {kind} after {max_attempts} attempts: {url} ({last_err})"
+            f"Hiro API request failed after {max_attempts} attempts: {url} ({last_err})"
         ) from last_err
     raise urllib.error.URLError(
         f"Hiro API request failed after {max_attempts} attempts: {url}"
