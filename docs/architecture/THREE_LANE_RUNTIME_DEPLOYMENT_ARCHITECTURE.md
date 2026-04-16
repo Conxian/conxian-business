@@ -38,10 +38,11 @@ These invariants apply to every lane.
    - Contracts and privileged workflows MUST resolve principals dynamically via `operational-treasury.clar`.
 
 4. **Signed, replay-resistant events**
-   - Inter-service requests (especially privileged actions) SHOULD be expressed as signed envelopes (see `docs/protocols/SIGNED_EVENT_ENVELOPE_V1.md`).
+   - Any correctness- or custody-impacting workflow MUST be expressed as a signed envelope (see `docs/protocols/SIGNED_EVENT_ENVELOPE_V1.md`).
+   - Purely informational traffic MAY be unsigned.
 
 5. **Fail closed**
-   - If a privileged workflow cannot prove it is valid, the runtime MUST stop and record an explicit error state.
+   - If a privileged workflow cannot prove it is valid, that workflow MUST fail closed and record an explicit, durable error state.
 
 ## 3) Canonical component model
 
@@ -55,7 +56,7 @@ The Conxian runtime is best understood as five planes.
 
 ### 3.2 Proof plane (verification)
 
-- **`lib-conxian-core`**: SNARK-based state proof verification primitives.
+- **`lib-conxian-core`**: SNARK-based state proof verification primitives (including BitVM2 bridge verification).
 - **State proof artifacts**: proofs, commitments, and verification receipts used to bind off-chain observations to on-chain state.
 
 ### 3.3 Data plane (runtime services)
@@ -66,6 +67,8 @@ Lane-neutral services (deployment location varies by lane):
 - **Gateway**: broadcast boundary + ingress enforcement for value-bearing transactions (no generic relay behavior).
 - **Nexus**: state indexing/projection + derived query surfaces.
 - **Oracle publishers**: signed feeds and derived read-model publishing (never a correctness dependency).
+
+> **Derived stores:** SQL read models, caches, and other “state layer” databases live in the data plane but are always non-authoritative. They must be populated from Nexus and/or on-chain/proof outputs and treated as derived-only per `docs/architecture/BOS_PRESERVE_ENHANCE_REPLACE_GAP_MATRIX.md` (see “BOS state layer (hosted SQL)”).
 
 ### 3.4 Control plane (who can mutate production)
 
@@ -78,6 +81,8 @@ Control plane surfaces are the “roots” that can:
 
 The enterprise custody baseline (`docs/protocols/ENTERPRISE_CUSTODY_BASELINE.md`) defines minimum requirements for these protected actions.
 
+Custody-critical signing authorities (the signer boundary: MS/HSM/DAO/SAB) are treated as part of the protected control plane even when provided as an external service. Data-plane services should only be able to request signatures through a narrow, audited interface.
+
 ### 3.5 Derived / UX plane (consumers, not anchors)
 
 Derived/UX surfaces consume proofs, events, and derived projections, but are not allowed to become correctness or custody anchors.
@@ -89,36 +94,32 @@ Derived/UX surfaces consume proofs, events, and derived projections, but are not
 ## 4) Reference topology (lane-neutral)
 
 ```text
-                        +-----------------------+
-                        |      Dashboards       |
-                        | (observe / propose)   |
-                        +-----------+-----------+
-                                    |
-                                    | (signed intents, requests)
-                                    v
-+---------------------+   +---------------------+   +---------------------+
-|   Intent adapters   |-->|   BOS orchestrator  |-->|   Signer boundary   |
-| (ERP/MCP, tooling)  |   | (policy + guardrails)|   | (MS/HSM/DAO/SAB)   |
-+----------+----------+   +----------+----------+   +----------+----------+
-            |                         |                         |
-            |                         | (broadcast)             | (execute)
-            v                         v                         v
-   +----------------+        +----------------+         +-------------------+
-   |  Derived stores|<-------|      Nexus     |<--------|      Gateway       |
-   | (read models)  | (index)| (projections)  | (events)| (ingress boundary) |
-   +----------------+        +----------------+         +----------+--------+
-                                                                |
-                                                                v
-                                                       +-------------------+
-                                                       |   Stacks / Bitcoin |
-                                                       | (policy + settle)  |
-                                                       +-------------------+
+Dashboards / ops consoles (observe / propose)
+  |
+  | (signed intents, requests)
+  v
+Intent adapters (ERP/MCP, tooling) -----> BOS orchestrator (policy + guardrails)
+                                             |
+                                             | (sign request)
+                                             v
+                                 Signer boundary (MS/HSM/DAO/SAB)
+                                             |
+                                             | (signed tx)
+                                             v
+                                 Gateway (ingress + broadcast boundary)
+                                             |
+                                             | (broadcast)
+                                             v
+                                       Stacks / Bitcoin
+
+Stacks / Bitcoin --(events)--> Nexus --(derived)--> Derived stores --> Dashboards
 ```
 
 Notes:
 
 - “Derived stores” can include SQL read models (e.g., treasury/oracle) and cache layers.
 - The signer boundary is explicitly separated so hosting the data plane does not imply custody.
+- The diagram focuses on BOS-managed operational flows; direct non-custodial wallet transactions to Stacks/Bitcoin remain valid as long as they respect on-chain policy and signing boundaries.
 
 ## 5) Lane definitions
 
@@ -200,7 +201,7 @@ The runtime should support changing lanes without changing protocol correctness.
 
 1. **Lane B -> Lane A (managed -> self-hosted)**
    - Tenant takes ownership of deployments + observability.
-   - Derived state is rebuilt by replaying signed events and on-chain receipts.
+   - Derived state is rebuilt (where signed envelopes exist) by replaying signed events and on-chain receipts.
 
 2. **Lane B -> Lane C (managed -> enterprise)**
    - Enterprise assumes control-plane roots (IdP + CI/CD + allowlists).
@@ -209,7 +210,13 @@ The runtime should support changing lanes without changing protocol correctness.
 3. **Lane A -> Lane C (self-hosted -> enterprise)**
    - Move from operator-local keys and infra to enterprise custody/IAM and hardened promotion gates.
 
+4. **Lane A -> Lane B (self-hosted -> managed)**
+   - Operator delegates hosting and day-2 operations to a managed operator.
+   - Custody boundaries must be re-established so hosting does not imply unilateral signing authority.
+
 In all cases, the protocol correctness boundary stays anchored to on-chain policy and proof verification.
+
+Other transitions not listed above (for example: Lane C -> Lane B or Lane C -> Lane A) are intentionally out of scope for this document and require an explicit exit design (custody unwinding, audit export, and redeployment runbooks).
 
 ## 7) Lane comparison matrix (public-safe)
 
