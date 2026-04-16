@@ -26,17 +26,74 @@ def _read_submodule_paths(repo_root: Path) -> list[str]:
     if not gitmodules.exists():
         return []
 
+    try:
+        out = subprocess.check_output(
+            [
+                "git",
+                "config",
+                "-f",
+                gitmodules.as_posix(),
+                "--null",
+                "--get-regexp",
+                r"^submodule\..*\.path$",
+            ],
+            stderr=subprocess.STDOUT,
+        )
+    except subprocess.CalledProcessError as exc:
+        # `git config --get-regexp` returns exit code 1 when no keys match.
+        if exc.returncode == 1 and not exc.output:
+            return []
+
+        msg = os.fsdecode(exc.output) if exc.output else str(exc)
+        raise RuntimeError(f"Failed to read submodule paths via git config: {msg}") from exc
+    except FileNotFoundError as exc:
+        raise RuntimeError(f"Failed to read submodule paths via git config: {exc}") from exc
+
     paths: list[str] = []
-    for raw_line in gitmodules.read_text(encoding="utf-8", errors="replace").splitlines():
-        line = raw_line.strip()
-        if not line.startswith("path ="):
+    records = [p for p in out.split(b"\x00") if p]
+    for record in records:
+        if b"\n" not in record:
             continue
-        _, value = line.split("=", 1)
-        candidate = value.strip().strip("/")
-        if candidate:
-            paths.append(candidate)
+        _, value_raw = record.split(b"\n", 1)
+        value = os.fsdecode(value_raw).strip().strip("/")
+        if value:
+            paths.append(value)
 
     return sorted(set(paths))
+
+
+def _assert_initialized_submodule(submodule_dir: Path, submodule_path: str) -> None:
+    if not submodule_dir.exists():
+        raise RuntimeError(
+            f"Submodule not initialized: {submodule_path}\n"
+            "Run: git submodule update --init --recursive"
+        )
+
+    try:
+        out = subprocess.check_output(
+            [
+                "git",
+                "-C",
+                submodule_dir.as_posix(),
+                "rev-parse",
+                "--is-inside-work-tree",
+            ],
+            stderr=subprocess.STDOUT,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        raise RuntimeError(
+            f"Submodule not initialized: {submodule_path}\n"
+            "Run: git submodule update --init --recursive"
+        ) from exc
+
+    if out.strip().lower() != "true":
+        raise RuntimeError(
+            f"Submodule not initialized: {submodule_path}\n"
+            "Run: git submodule update --init --recursive"
+        )
 
 
 def _git_ls_files(repo_dir: Path) -> list[str]:
@@ -84,22 +141,22 @@ def verify(repo_root: Path, targets: list[str]) -> None:
 
     unknown = sorted([p for p in targets if p not in known_submodules])
     if unknown:
-        raise RuntimeError(
-            "Unknown submodule path(s): "
-            + ", ".join(unknown)
-            + "\n\nKnown submodules:\n  - "
-            + "\n  - ".join(sorted(known_submodules))
-        )
+        if known_submodules:
+            known_block = "Known submodules:\n  - " + "\n  - ".join(sorted(known_submodules))
+        else:
+            known_block = (
+                "No submodules found in .gitmodules."
+                if (repo_root / ".gitmodules").exists()
+                else ".gitmodules not found."
+            )
+
+        raise RuntimeError("Unknown submodule path(s): " + ", ".join(unknown) + "\n\n" + known_block)
 
     violations: dict[str, dict[str, list[str]]] = {}
 
     for submodule_path in targets:
         submodule_dir = repo_root / submodule_path
-        if not submodule_dir.exists() or not (submodule_dir / ".git").exists():
-            raise RuntimeError(
-                f"Submodule not initialized: {submodule_path}\n"
-                "Run: git submodule update --init --recursive"
-            )
+        _assert_initialized_submodule(submodule_dir, submodule_path)
 
         for rel_path in _git_ls_files(submodule_dir):
             rel_path = _normalize_path(rel_path)
