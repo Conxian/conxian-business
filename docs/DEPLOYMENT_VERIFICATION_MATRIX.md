@@ -79,6 +79,7 @@ This lane is where packaging changes become **pilot-ready** for mainnet-candidat
 
 **Security**
 
+- Secret scanning and dependency review checks are green.
 - No “testnet defaults” remain in production paths.
 - No new stub, mock, placeholder, or debug-only behavior is introduced in any path that can reach `main`.
 
