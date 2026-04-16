@@ -15,8 +15,11 @@ def repo_root() -> str:
 
 
 def _read_text(path: str) -> str:
-    with open(path, "r", encoding="utf-8", errors="replace") as f:
-        return f.read()
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return f.read()
+    except UnicodeDecodeError as e:
+        raise SystemExit(f"Failed to decode {path} as UTF-8: {e}") from e
 
 
 def _strip_yaml_scalar(value: str) -> str:
@@ -247,6 +250,11 @@ def verify_plan(
 
     deployer = plan.deployer
     network = plan.network
+
+    if network.strip().lower() != "testnet":
+        raise SystemExit(
+            f"Unexpected plan network {network!r}; this verifier is intended for 'testnet'."
+        )
     project_root = _find_clarinet_project_root(plan_path)
 
     failures: list[str] = []
@@ -399,10 +407,12 @@ def main() -> None:
         for r in results:
             if not r.deployed:
                 status = "missing"
+            elif r.source_matches is True:
+                status = "ok"
             elif r.source_matches is False:
                 status = "drift"
             else:
-                status = "ok"
+                status = "unverified"
 
             sender_flag = "ok" if r.sender_matches_deployer else "mismatch"
             meta = []
