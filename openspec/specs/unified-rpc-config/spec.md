@@ -84,6 +84,8 @@ Pack identifiers must be lowercase alphanumeric strings that start with a letter
 
 Pack identifiers must also be no longer than 64 characters.
 
+Custom packs (producer-defined `addOns.<pack>` keys) **MUST** use the same shape as known packs: an `enabled` boolean and an optional `rpc` object (`rpc.host` is required when enabled; `rpc.port` is optional).
+
 | Pack | Config field | Env var | Consumer |
 | :--- | :--- | :--- | :--- |
 | `bisq` | `addOns.bisq.rpc.host` | `BISQ_RPC_HOST` | `conxius-platform` |
