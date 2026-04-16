@@ -223,6 +223,10 @@ def _fetch_contract_meta(
         if e.code == 404:
             return None, None
         raise
+    except HiroRequestError as e:
+        raise HiroRequestError(
+            f"Hiro API request failed for metadata {principal}.{name}: {e}"
+        ) from e
     tx_id = data.get("tx_id")
     block_height = data.get("block_height")
     return (tx_id if isinstance(tx_id, str) else None), (
