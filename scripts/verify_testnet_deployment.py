@@ -33,6 +33,18 @@ def _strip_yaml_scalar(value: str) -> str:
     return value
 
 
+def _find_clarinet_project_root(plan_path: str) -> str:
+    plan_dir = os.path.dirname(os.path.abspath(plan_path))
+    current = plan_dir
+    while True:
+        if os.path.isfile(os.path.join(current, "Clarinet.toml")):
+            return current
+        parent = os.path.dirname(current)
+        if parent == current:
+            return plan_dir
+        current = parent
+
+
 @dataclasses.dataclass(frozen=True)
 class PlanContract:
     name: str
@@ -207,6 +219,7 @@ def verify_plan(
 
     deployer = plan.deployer
     network = plan.network
+    project_root = _find_clarinet_project_root(plan_path)
 
     failures: list[str] = []
     results: list[VerificationResult] = []
@@ -216,7 +229,11 @@ def verify_plan(
         if not local_path:
             failures.append(f"{c.name}: missing path in plan")
             continue
-        abs_local_path = os.path.join(os.path.dirname(plan_path), "..", local_path)
+        abs_local_path = (
+            local_path
+            if os.path.isabs(local_path)
+            else os.path.join(project_root, local_path)
+        )
         abs_local_path = os.path.abspath(abs_local_path)
         if not os.path.isfile(abs_local_path):
             failures.append(f"{c.name}: local contract source missing: {abs_local_path}")
