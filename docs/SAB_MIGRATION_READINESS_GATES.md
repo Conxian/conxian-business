@@ -53,9 +53,7 @@ The evidence can be a spec section, PRD section, or a commit-pinned checklist. T
 
 ## Gate 1: Pilot readiness (sovereign baseline pilot)
 
-This gate is satisfied when at least one correctness-relevant dependency (typically the Nexus derived read model) has a sovereign baseline that can be exercised end-to-end.
-
-Gate 1 is only considered **met** when:
+Gate 1 targets correctness-relevant dependencies (typically the Nexus derived read model) and is considered **met** only when:
 
 - [ ] At least one pilot domain under **Pilot domain readiness gates (CON-335)** reaches its `*-G3` **Go decision** with linked evidence.
 - [ ] For that chosen pilot domain, the **common evidence requirements** and **common exit criteria** below are satisfied.
