@@ -46,7 +46,7 @@ The table below is intentionally compact; details are defined in the lane sectio
 
 **Security**
 
-- Secret scanning and dependency review checks (e.g., GitHub security checks, where enabled) are green.
+- Secret scanning and dependency review checks (e.g., automated repo security checks such as GitHub secret scanning/dependency review, where enabled) are green.
 - No new privileged control-plane assumptions are introduced (keep credentials scoped and capability-based).
 
 **Upgrade**
@@ -79,7 +79,7 @@ This lane is where packaging changes become **pilot-ready** for mainnet-candidat
 
 **Security**
 
-- Secret scanning and dependency review checks (e.g., GitHub security checks, where enabled) are green for the promotion candidate commit.
+- Secret scanning and dependency review checks (e.g., automated repo security checks such as GitHub secret scanning/dependency review, where enabled) are green for the promotion candidate commit.
 - No “testnet defaults” remain in production paths.
 - No new stub, mock, placeholder, or debug-only behavior is introduced in any path that can reach `main`.
 
@@ -96,7 +96,7 @@ This lane is where packaging changes become **pilot-ready** for mainnet-candidat
 **Verification outputs (minimum evidence)**
 
 - CI run link + residue scan or boundary-check output (for example, checks under `scripts/` such as `python3 scripts/verify_contamination_guard.py` or other `python3 scripts/verify_*.py`, where applicable), recorded in the PR description (or linked evidence notes).
-- Candidate smoke test evidence (CI job output link preferred), referenced in the PR description alongside the CI run link. If manual commands are needed, they MUST be sanitized/redacted (no endpoints, credentials, identifiers, or operational procedures) and stored outside git; link that documentation from the PR.
+- Candidate smoke test evidence (CI job output link preferred), referenced in the PR description (or linked evidence notes) alongside the CI run link. If manual commands are needed, they MUST be sanitized/redacted (no endpoints, credentials, identifiers, or operational procedures) and stored outside git; link that documentation from the PR.
 - Artifact digest / checksum and the exact commit SHA the artifact was built from.
 
 ### Lane: `main` (mainnet production)
