@@ -73,7 +73,6 @@ Notes:
 ### 3.3 Add-on packs
 
 Known packs in v1: `bisq`, `rgb`, `bitvm`.
-
 `addOns` keys are extensible but must be stable and deterministic for `.env` projection. Pack identifiers **must** match:
 
 ```
