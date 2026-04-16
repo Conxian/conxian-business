@@ -89,9 +89,9 @@ This gate applies to the Nexus/Glass-Node class of derived read models (currentl
 
 **Success metrics (minimums)**
 
-- **Correctness parity:** key query surfaces match the hosted baseline for an agreed validation window, or any deltas are explicitly documented and accepted.
+- **Correctness parity:** key query surfaces match the hosted baseline for an agreed validation window (validation plan + divergence threshold linked), or any deltas are explicitly documented and accepted.
 - **Checkpoint safety:** no unchecked checkpoint mismatches; mismatch behavior is deterministic (rebuild or safe-halt).
-- **Performance parity:** p95/p99 latency and throughput are within an agreed delta (recorded and linked as evidence) versus the hosted baseline under the same load profile.
+- **Performance parity:** p95/p99 latency and throughput are within an agreed delta versus the hosted baseline under the same load profile (SLOs + acceptable delta recorded and linked).
 - **Rebuildability:** the in-scope dataset can be rebuilt from Stacks L1 without manual patching.
 
 **Readiness gates (evidence required)**
@@ -103,20 +103,20 @@ This gate applies to the Nexus/Glass-Node class of derived read models (currentl
   - [ ] Checkpoint scheme and deterministic rebuild rules are defined.
 
 - **TSQL-G1: Integration-ready (dual-run + read-switchable)**
-  - [ ] Dual-run comparison plan (which queries compare, how often, and what divergence threshold triggers rollback).
+  - [ ] Dual-run comparison plan (which queries compare, how often, and the divergence threshold that triggers rollback; threshold evidence linked).
   - [ ] Agreed deltas/SLO thresholds are recorded in a commit-pinned artifact (SLO doc, benchmark run report, or dashboard snapshot) and linked.
   - [ ] Read-switch mechanism exists (ability to flip reads between baselines without code changes).
   - [ ] Checkpoint mismatch behavior is defined and wired to explicit service behavior (rebuild vs safe-halt).
   - [ ] Snapshot/export format is defined for any institutional egress datasets produced from this read model.
 
 - **TSQL-G2: Operational-ready**
-  - [ ] Backup/restore plan exists with declared RPO/RTO and evidence of at least one restore drill.
-  - [ ] Observability exists for: replication/lag, checkpoint mismatch count, error rate, and p95/p99 latency.
+  - [ ] Backup/restore plan exists with declared RPO/RTO (RPO/RTO values linked) and evidence of at least one restore drill.
+  - [ ] Observability exists for: replication/lag, checkpoint mismatch count, error rate, and p95/p99 latency (dashboards/queries linked).
   - [ ] Operator runbook exists (start/stop, rebuild, safe-halt, rollback, incident triage).
 
 - **TSQL-G3: Go decision (pilot path treated as ready)**
   - [ ] Controlled cutover rehearsal completed (flip reads forward and back) with evidence.
-  - [ ] Validation window completed with no correctness regressions beyond the accepted thresholds.
+  - [ ] Validation window completed with no correctness regressions beyond the accepted thresholds (threshold evidence linked).
 
 **No-go conditions (do not cut over)**
 
@@ -128,7 +128,9 @@ This gate applies to the Nexus/Glass-Node class of derived read models (currentl
 
 - Sustained correctness divergence beyond the agreed threshold.
 - Any evidence of data corruption (e.g., non-deterministic rebuild outputs for the same L1 window).
-- Error rates, lag, or latency exceed declared SLOs for a sustained period (and cannot be mitigated without risking correctness).
+- Error rates, lag, or latency exceed declared and evidence-linked SLOs for a sustained period (and cannot be mitigated without risking correctness).
+
+For this domain, any references to “agreed delta” or “declared SLOs/RPO/RTO” require a durable evidence pointer (runbook, SLO doc, benchmark artifact, or dashboard snapshot) so the gate is evaluable.
 
 Rollback expectation: rollback is primarily a **read flip** back to the prior baseline, followed by rebuild/reconciliation in the sovereign baseline before re-attempting cutover.
 
@@ -138,8 +140,8 @@ This gate applies to "proof/visual-proof" datasets used as evidence in decision 
 
 Canonical constraints to align to:
 
-- [openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/)
-- [openspec/specs/sab-datastore-mapping/spec.md](../openspec/specs/sab-datastore-mapping/spec.md)
+- [Sovereign data migration / institutional egress spec](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/)
+- [SAB datastore mapping spec](../openspec/specs/sab-datastore-mapping/spec.md)
 
 **Success metrics (minimums)**
 
@@ -154,7 +156,7 @@ Canonical constraints to align to:
   - [ ] Dataset definitions exist (schema, canonical ordering, serialization format).
   - [ ] Checkpoint scheme is selected and documented (including how snapshot hashes are computed).
   - [ ] "Not a source of truth" constraints are documented for all consumers (what they may and may not assume).
-  - [ ] Threat model exists (data poisoning, replay, proof invalidity, and ZSE (Zero Secret Egress) constraints, per [DOCUMENTATION_CLASSIFICATION.md](DOCUMENTATION_CLASSIFICATION.md)).
+  - [ ] Threat model exists (data poisoning, replay, proof invalidity, and ZSE (Zero Secret Egress) constraints; see [DOCUMENTATION_CLASSIFICATION.md](DOCUMENTATION_CLASSIFICATION.md)).
 
 - **AN-G1: Integration-ready (end-to-end verification)**
   - [ ] Reproducible pipeline exists from L1 inputs → snapshot → checkpoint → proof/verification artifact.
