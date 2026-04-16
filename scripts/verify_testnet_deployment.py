@@ -45,7 +45,10 @@ def _strip_yaml_scalar(value: str) -> str:
             break
         if end is None:
             return value
-        return value[1:end]
+        inner = value[1:end]
+        if quote == "'":
+            inner = inner.replace("''", "'")
+        return inner
 
     if value.startswith("#"):
         return ""
@@ -159,7 +162,7 @@ def _http_json(url: str) -> dict:
             try:
                 return json.loads(payload)
             except json.JSONDecodeError as e:
-                last_err = e
+                raise HiroRequestError(f"Hiro API returned invalid JSON: {url}") from e
         except urllib.error.HTTPError as e:
             if e.code == 404:
                 raise
