@@ -95,8 +95,8 @@ This lane is where packaging changes become **pilot-ready** for mainnet-candidat
 
 **Verification outputs (minimum evidence)**
 
-- CI run link + residue scan or boundary-check output (e.g. `python3 scripts/verify_contamination_guard.py`, `python3 scripts/verify_bos_production_boundary.py`).
-- Candidate smoke test evidence (commands + “passed” note, or CI job output link).
+- CI run link + residue scan or boundary-check output (e.g. boundary/residue checks under `scripts/` like `python3 scripts/verify_*.py`, where applicable).
+- Candidate smoke test evidence (CI job output link preferred). If manual commands are recorded, they MUST be sanitized/redacted (no endpoints, credentials, identifiers, or operational procedures).
 - Artifact digest / checksum and the exact commit SHA the artifact was built from.
 
 ### Lane: `main` (mainnet production)
