@@ -70,6 +70,7 @@ Gate 1 targets correctness-relevant dependencies (typically the Nexus derived re
 ### Common exit criteria (minimums)
 
 - [ ] Pilot outputs meet the target-state spec and the domain's defined comparison/validation thresholds (dual-run or equivalent) when compared to the hosted baseline (or deltas are explicitly documented and accepted).
+- [ ] Any comparison thresholds, SLOs, RPO/RTOs, or divergence deltas referenced by the pilot have commit-pinned evidence (runbook, SLO doc, benchmark artifact, or dashboard snapshot) linked.
 - [ ] Pilot can be rebuilt from L1 without manual patching.
 - [ ] Pilot roll-forward and rollback are exercised at least once in a controlled environment (including a read-switch rollback where applicable).
 
@@ -127,8 +128,6 @@ This gate applies to the Nexus/Glass-Node class of derived read models (currentl
 - Sustained correctness divergence beyond the agreed threshold.
 - Any evidence of data corruption (e.g., non-deterministic rebuild outputs for the same L1 window).
 - Error rates, lag, or latency exceed declared and evidence-linked SLOs for a sustained period (and cannot be mitigated without risking correctness).
-
-For this domain, any references to “agreed delta” or “declared SLOs/RPO/RTO” require a durable evidence pointer (runbook, SLO doc, benchmark artifact, or dashboard snapshot) so the gate is evaluable.
 
 Rollback expectation: rollback is primarily a **read flip** back to the prior baseline, followed by rebuild/reconciliation in the sovereign baseline before re-attempting cutover.
 
