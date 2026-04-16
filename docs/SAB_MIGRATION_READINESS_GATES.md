@@ -140,7 +140,7 @@ This gate applies to "proof/visual-proof" datasets used as evidence in decision 
 
 Canonical constraints to align to:
 
-- [Sovereign data migration / institutional egress spec](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/)
+- [Sovereign data migration / institutional egress spec](../openspec/changes/sovereign-data-migration-institutional-egress/specs/sovereign-data-migration-institutional-egress/spec.md)
 - [SAB datastore mapping spec](../openspec/specs/sab-datastore-mapping/spec.md)
 
 **Success metrics (minimums)**
