@@ -150,6 +150,7 @@ def _normalize_source(text: str) -> str:
 @dataclasses.dataclass(frozen=True)
 class VerificationResult:
     name: str
+    principal: str
     local_path: str
     expected_sender: str | None
     sender_matches_deployer: bool
@@ -163,6 +164,7 @@ def verify_plan(
     *,
     plan_path: str,
     hiro_base: str,
+    principal_override: str | None,
     strict_expected_sender: bool,
     strict_source_match: bool,
 ) -> tuple[str, str, list[VerificationResult], list[str]]:
@@ -195,18 +197,19 @@ def verify_plan(
             continue
 
         sender_matches = (c.expected_sender == deployer) if c.expected_sender else False
-        if strict_expected_sender and not sender_matches:
+        if strict_expected_sender and c.expected_sender and not sender_matches:
             failures.append(
                 f"{c.name}: expected-sender {c.expected_sender!r} does not match deployer {deployer!r}"
             )
 
-        chain_source = _fetch_contract_source(hiro_base, deployer, c.name)
+        principal = principal_override or c.expected_sender or deployer
+        chain_source = _fetch_contract_source(hiro_base, principal, c.name)
         deployed = chain_source is not None
         tx_id: str | None = None
         block_height: int | None = None
 
         if deployed:
-            tx_id, block_height = _fetch_contract_meta(hiro_base, deployer, c.name)
+            tx_id, block_height = _fetch_contract_meta(hiro_base, principal, c.name)
 
         source_matches: bool | None = None
         if deployed:
@@ -219,6 +222,7 @@ def verify_plan(
         results.append(
             VerificationResult(
                 name=c.name,
+                principal=principal,
                 local_path=abs_local_path,
                 expected_sender=c.expected_sender,
                 sender_matches_deployer=sender_matches,
@@ -230,7 +234,7 @@ def verify_plan(
         )
 
         if not deployed:
-            failures.append(f"{c.name}: missing on-chain contract {deployer}.{c.name}")
+            failures.append(f"{c.name}: missing on-chain contract {principal}.{c.name}")
 
     return network, deployer, results, failures
 
@@ -255,6 +259,13 @@ def main() -> None:
         help="Hiro API base URL (default: https://api.testnet.hiro.so)",
     )
     parser.add_argument(
+        "--principal",
+        default=None,
+        help=(
+            "Override the principal used for on-chain lookups. If omitted, each contract uses its plan 'expected-sender' (falling back to the plan 'deployer')."
+        ),
+    )
+    parser.add_argument(
         "--strict-expected-sender",
         action="store_true",
         help="Fail if any contract-publish expected-sender differs from the plan deployer.",
@@ -274,6 +285,7 @@ def main() -> None:
     network, deployer, results, failures = verify_plan(
         plan_path=os.path.abspath(args.plan),
         hiro_base=args.hiro_base.rstrip("/"),
+        principal_override=args.principal,
         strict_expected_sender=args.strict_expected_sender,
         strict_source_match=args.strict_source_match,
     )
@@ -314,7 +326,7 @@ def main() -> None:
                 meta.append(f"tx={r.tx_id}")
             meta_text = " " + " ".join(meta) if meta else ""
             print(
-                f"- {r.name}: {status} expected-sender={sender_flag}{meta_text} local={r.local_path}"
+                f"- {r.name}: {status} principal={r.principal} expected-sender={sender_flag}{meta_text} local={r.local_path}"
             )
 
         if failures:
