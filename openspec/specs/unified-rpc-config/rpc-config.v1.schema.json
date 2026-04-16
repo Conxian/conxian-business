@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:conxian:rpc-config:v1",
+  "title": "Conxian unified RPC configuration (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "rpcStrategy"],
+  "properties": {
+    "schema": {
+      "const": "conxian.rpc-config.v1"
+    },
+    "rpcStrategy": {
+      "type": "string",
+      "enum": ["Public-Only", "Mixed", "Sovereign-First"]
+    },
+    "bitcoin": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rpcUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "rpcAuth": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["user", "pass"],
+          "properties": {
+            "user": { "type": "string", "minLength": 1 },
+            "pass": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "stacks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "gatewayRpcUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "nodeRpcUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "addOns": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/addOnPack"
+      },
+      "properties": {
+        "bisq": { "$ref": "#/$defs/addOnPack" },
+        "rgb": { "$ref": "#/$defs/addOnPack" },
+        "bitvm": { "$ref": "#/$defs/addOnPack" }
+      }
+    }
+  },
+  "$defs": {
+    "addOnPack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "rpc": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "host": { "type": "string", "minLength": 1 },
+            "port": { "type": "integer", "minimum": 1, "maximum": 65535 }
+          }
+        }
+      }
+    }
+  }
+}
