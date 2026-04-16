@@ -29,6 +29,7 @@ docker-compose up -d db redis
 Start the full stack (builds Nexus + Gateway images locally):
 
 ```bash
+cp docker-compose.env.example .env
 docker-compose up --build
 ```
 
@@ -38,11 +39,17 @@ docker-compose up --build
 - Nexus REST: `http://localhost:3001` (mapped from container port `3000`)
 - Nexus gRPC: `localhost:50051`
 
+All ports are bound to `127.0.0.1` by default.
+
 ## Configuration
 
-The compose file provides safe local defaults for required Gateway secrets (for example `API_TOKEN`, `FIAT_WEBHOOK_SECRET`).
+Gateway secrets (for example `API_TOKEN`, `FIAT_WEBHOOK_SECRET`) are required and must be supplied via environment variables or an `.env` file in the repository root.
 
-For operator installs, override these using environment variables or an `.env` file in the repository root.
+Required endpoints:
+
+- `BITCOIN_RPC_URL` (Gateway)
+- `STACKS_RPC_URL` (Gateway)
+- `STACKS_NODE_RPC_URL` (Nexus)
 
 > Note
-> The Gateway defaults `BITCOIN_RPC_URL` to `https://bitcoin-rpc.publicnode.com` when not set. For production, funds-bearing, or privacy-sensitive workloads, set `BITCOIN_RPC_URL` to a controlled node or vetted provider before running.
+> `BITCOIN_RPC_URL` is required for the compose stack. For production, funds-bearing, or privacy-sensitive workloads, point it to a controlled node or vetted provider before running.

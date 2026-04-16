@@ -21,6 +21,7 @@ docker-compose up -d db redis
 To run the full reference stack (Postgres + Redis + Nexus + Gateway):
 
 ```bash
+cp docker-compose.env.example .env
 docker-compose up --build
 ```
 

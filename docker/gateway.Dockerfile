@@ -3,21 +3,21 @@ FROM rust:1.82-slim AS builder
 
 WORKDIR /workspace
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY conxian-gateway ./conxian-gateway
 
-RUN cargo build --manifest-path conxian-gateway/Cargo.toml --release -p gateway
+RUN cargo build --manifest-path conxian-gateway/Cargo.toml --release --locked -p gateway
 
 # Runtime Stage
 FROM debian:bookworm-slim
 
 WORKDIR /data
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libssl3 \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
