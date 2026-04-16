@@ -65,21 +65,21 @@ def _secret_filename_violation(rel_path: str) -> str | None:
 
     lower = base.lower()
     is_example = any(token in lower for token in ("example", "sample", "template"))
+    label = "Secrets and env files"
 
-    if base == ".env":
-        return "Secrets and env files"
-    if base.startswith(".env.") and not is_example:
-        return "Secrets and env files"
-    if base in {"secrets.json", "id_rsa", "id_ed25519"}:
-        return "Secrets and env files"
-    if base.endswith((".pem", ".key")):
-        return "Secrets and env files"
+    if lower == ".env":
+        return label
+    if lower.startswith(".env.") and not is_example:
+        return label
+    if lower in {"secrets.json", "id_rsa", "id_ed25519", "id_ecdsa"}:
+        return label
+    if lower.endswith((".pem", ".key", ".p12", ".pfx")):
+        return label
 
     return None
 
 
-def verify(targets: list[str]) -> None:
-    repo_root = _repo_root()
+def verify(repo_root: Path, targets: list[str]) -> None:
     known_submodules = set(_read_submodule_paths(repo_root))
 
     unknown = sorted([p for p in targets if p not in known_submodules])
@@ -173,7 +173,7 @@ if __name__ == "__main__":
                 "No submodules selected for scanning (and conxian-nexus is not present in .gitmodules)."
             )
 
-        verify(targets)
+        verify(repo_root, targets)
     except RuntimeError as e:
         print(str(e), file=sys.stderr)
         sys.exit(1)
