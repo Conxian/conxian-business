@@ -18,7 +18,7 @@ Canonical tracker:
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **W0: Inventory + invariants** | Freeze the dependency list and define correctness isolation constraints + evidence gates. | Supabase, Neon, Tableland | High | High | Low | Prevent hidden coupling before any cutovers; make open questions explicit. |
 | **W1: Transactional SQL pilot (Nexus "Glass Node")** | Establish a sovereign PostgreSQL baseline for Nexus derived read models, with dual-run + rollback. | Neon (phase-out path) | High | Medium | High | Treat Neon as a hosted deployment, not a product dependency; remove Neon-specific assumptions. |
-| **W2: Supabase correctness isolation (treasury/oracle state)** | Contain Supabase write-path risk: move correctness paths to derived-only, checkpointed state with explicit ownership. | Supabase (phase-out path) | High | Medium | High | Requires per-service dependency truth and a decision on whether MCP remains the stable abstraction boundary. |
+| **W2: Supabase correctness isolation (treasury/oracle state)** | Contain Supabase write-path risk: move correctness paths to derived-only, checkpointed state with explicit ownership. | Supabase (phase-out path) | High | Medium | High | Requires per-service dependency truth and a decision on whether Model Context Protocol (MCP) remains the stable abstraction boundary. |
 | **W3: Analytics phase-out (proof/visual-proof datasets)** | Replace Supabase-backed analytics with a verifiable, rebuildable derived dataset layer. | Supabase analytics (phase-out path) | High | Medium | High | Depends on checkpoint discipline + a target-state decision for analytics (see `SAB-DS-002`). |
 | **W4: Governance/audit mirrors** | Reduce mirror dependencies; make on-chain audit registries the default discovery mechanism. | Tableland (optional mirror), Fluree/Kwil (candidates) | Medium | High | Medium | Mirrors remain optional; must never become correctness dependencies. |
 | **W5: Ops-plane hosting** | Move dashboards and non-critical control-plane hosting onto sovereign baselines. | Render, Vercel, Firebase | Medium | High | Low/Medium | Keep strictly out of correctness paths; treat as replaceable UX surfaces. |
@@ -51,13 +51,14 @@ Canonical tracker:
 1. Per-service dependency truth must be finished for cutover readiness (especially Supabase write paths): https://linear.app/conxian-labs/issue/CON-337/inventory-current-supabase-and-neon-dependencies-by-service
 2. Pilot readiness evidence needs an explicit cut list and rollback trigger: https://linear.app/conxian-labs/issue/CON-335/define-pilot-readiness-gates-and-evidence-requirements
 3. Analytics target-state is still open (`SAB-DS-002` in `docs/SAB_DATASTORE_DECISION_LOG.md`), so it must not contaminate Wave 1 sequencing.
-4. MCP boundary decision is a real dependency for a clean Supabase bridge replacement (keep stable interface vs redesign); leaving it open blocks Wave 2 planning.
+4. Model Context Protocol (MCP) boundary decision is a real dependency for a clean Supabase bridge replacement (keep stable interface vs redesign); leaving it open blocks Wave 2 planning.
 
 ## Parallelizable work (while Wave 1 executes)
 
 - Finalize dataset IDs + checkpoint scheme usage for any dataset used in decision workflows.
 - Start the “Supabase write-path containment” design (dual-write vs rebuild vs deprecate) without touching production cutovers.
-- Audit which mirrors/UX surfaces are mistakenly treated as evidence sources (so Wave 5 stays low risk).
+- Audit which mirrors are mistakenly treated as evidence sources (so Wave 4 stays low risk).
+- Audit which UX surfaces/dashboards are mistakenly treated as evidence sources (so Wave 5 stays low risk).
 
 ## Recommendation: what to defer from Wave 1
 
