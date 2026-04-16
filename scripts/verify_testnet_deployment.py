@@ -4,6 +4,7 @@ import argparse
 import dataclasses
 import json
 import os
+import re
 import time
 import urllib.error
 import urllib.parse
@@ -38,9 +39,15 @@ def _strip_yaml_scalar(value: str) -> str:
             if quote == "'" and i + 1 < len(value) and value[i + 1] == "'":
                 i += 2
                 continue
-            if quote == '"' and i > 0 and value[i - 1] == "\\":
-                i += 1
-                continue
+            if quote == '"':
+                backslashes = 0
+                j = i - 1
+                while j >= 0 and value[j] == "\\":
+                    backslashes += 1
+                    j -= 1
+                if backslashes % 2 == 1:
+                    i += 1
+                    continue
             end = i
             break
         if end is None:
@@ -58,6 +65,59 @@ def _strip_yaml_scalar(value: str) -> str:
             value = value[: i - 1].rstrip()
             break
     return value
+
+
+def _split_yaml_comment(line: str) -> tuple[str, str]:
+    in_single = False
+    in_double = False
+    double_escaped = False
+
+    i = 0
+    while i < len(line):
+        ch = line[i]
+        if in_single:
+            if ch == "'":
+                if i + 1 < len(line) and line[i + 1] == "'":
+                    i += 2
+                    continue
+                in_single = False
+            i += 1
+            continue
+
+        if in_double:
+            if double_escaped:
+                double_escaped = False
+                i += 1
+                continue
+            if ch == "\\":
+                double_escaped = True
+                i += 1
+                continue
+            if ch == '"':
+                in_double = False
+            i += 1
+            continue
+
+        if ch == "'":
+            in_single = True
+            i += 1
+            continue
+
+        if ch == '"':
+            in_double = True
+            i += 1
+            continue
+
+        if ch == "#" and (i == 0 or line[i - 1].isspace()):
+            return line[:i].rstrip(), line[i + 1 :]
+
+        i += 1
+
+    return line.rstrip(), ""
+
+
+def _escape_yaml_double_quoted(value: str) -> str:
+    return value.replace("\\", "\\\\").replace('"', '\\"')
 
 
 def _find_clarinet_project_root(plan_path: str) -> str:
@@ -86,72 +146,140 @@ class ParsedPlan:
     contracts: list[PlanContract]
 
 
+def _parse_optional_yaml_scalar(value: str) -> str | None:
+    cleaned = _strip_yaml_scalar(value)
+    return cleaned if cleaned else None
+
+
+def _contract_from_current(current: dict[str, str | None]) -> PlanContract | None:
+    name = str(current.get("contract-name") or "").strip()
+    if not name:
+        return None
+    expected_sender = current.get("expected-sender") or None
+    path = current.get("path") or None
+    return PlanContract(name=name, expected_sender=expected_sender, path=path)
+
+
 def parse_deployment_plan(plan_text: str) -> ParsedPlan:
     network: str | None = None
     deployer: str | None = None
     contracts: list[PlanContract] = []
 
     current: dict[str, str | None] | None = None
+    current_indent: int | None = None
 
     for raw_line in plan_text.splitlines():
-        line = raw_line.strip()
+        stripped = raw_line.lstrip()
+        indent = len(raw_line) - len(stripped)
+        line = stripped.strip()
         if not line or line.startswith("#"):
             continue
 
         if line.startswith("network:"):
-            network = _strip_yaml_scalar(line.split(":", 1)[1])
+            network = _parse_optional_yaml_scalar(line.split(":", 1)[1])
             continue
 
         if line.startswith("deployer:"):
-            deployer = _strip_yaml_scalar(line.split(":", 1)[1])
+            deployer = _parse_optional_yaml_scalar(line.split(":", 1)[1])
             continue
 
-        if line.startswith("- contract-publish:"):
-            if current is not None:
-                contracts.append(
-                    PlanContract(
-                        name=str(current.get("contract-name") or "").strip(),
-                        expected_sender=current.get("expected-sender"),
-                        path=current.get("path"),
-                    )
-                )
-            current = {"contract-name": None, "expected-sender": None, "path": None}
+        if line.startswith("-"):
+            if current is not None and current_indent is not None and indent <= current_indent:
+                contract = _contract_from_current(current)
+                if contract is not None:
+                    contracts.append(contract)
+                current = None
+                current_indent = None
+
+            if line.startswith("- contract-publish:"):
+                current = {"contract-name": None, "expected-sender": None, "path": None}
+                current_indent = indent
             continue
 
         if current is None:
             continue
 
         if line.startswith("contract-name:"):
-            current["contract-name"] = _strip_yaml_scalar(line.split(":", 1)[1])
+            current["contract-name"] = _parse_optional_yaml_scalar(line.split(":", 1)[1])
         elif line.startswith("expected-sender:"):
-            current["expected-sender"] = _strip_yaml_scalar(line.split(":", 1)[1])
+            current["expected-sender"] = _parse_optional_yaml_scalar(line.split(":", 1)[1])
         elif line.startswith("path:"):
-            current["path"] = _strip_yaml_scalar(line.split(":", 1)[1])
+            current["path"] = _parse_optional_yaml_scalar(line.split(":", 1)[1])
 
     if current is not None:
-        contracts.append(
-            PlanContract(
-                name=str(current.get("contract-name") or "").strip(),
-                expected_sender=current.get("expected-sender"),
-                path=current.get("path"),
-            )
-        )
+        contract = _contract_from_current(current)
+        if contract is not None:
+            contracts.append(contract)
 
     contracts = [c for c in contracts if c.name]
 
     return ParsedPlan(network=network, deployer=deployer, contracts=contracts)
+
+def normalize_deployment_plan_text(*, plan_text: str, principal: str) -> str:
+    lines = plan_text.splitlines()
+    out: list[str] = []
+
+    block_scalar_start = re.compile(r":\s*[>|][+-]?[0-9]*\s*$")
+    in_block_scalar = False
+    block_scalar_key_indent: int | None = None
+
+    principal_escaped = _escape_yaml_double_quoted(principal)
+
+    for raw_line in lines:
+        stripped = raw_line.lstrip()
+        indent_len = len(raw_line) - len(stripped)
+        content, comment = _split_yaml_comment(stripped)
+        header = content
+
+        if in_block_scalar:
+            if stripped and block_scalar_key_indent is not None and indent_len <= block_scalar_key_indent:
+                in_block_scalar = False
+                block_scalar_key_indent = None
+            else:
+                out.append(raw_line)
+                continue
+
+        if block_scalar_start.search(header):
+            in_block_scalar = True
+            block_scalar_key_indent = indent_len
+            out.append(raw_line)
+            continue
+
+        comment_suffix = ""
+        if comment:
+            comment_suffix = "  #" + comment
+
+        if content.startswith("deployer:"):
+            indent = raw_line[: len(raw_line) - len(stripped)]
+            out.append(f'{indent}deployer: "{principal_escaped}"{comment_suffix}')
+            continue
+
+        if content.startswith("expected-sender:"):
+            indent = raw_line[: len(raw_line) - len(stripped)]
+            out.append(f'{indent}expected-sender: "{principal_escaped}"{comment_suffix}')
+            continue
+
+        out.append(raw_line)
+
+    return "\n".join(out) + "\n"
+
+class HiroRequestError(RuntimeError):
+    pass
+
 
 def _http_json(url: str) -> dict:
     try:
         timeout_secs = float(os.environ.get("HIRO_TIMEOUT_SECS", "30"))
     except ValueError:
         timeout_secs = 30.0
+    if timeout_secs <= 0:
+        timeout_secs = 30.0
     timeout_secs = max(0.1, min(timeout_secs, 120.0))
     try:
         max_attempts = int(os.environ.get("HIRO_MAX_ATTEMPTS", "4"))
     except ValueError:
         max_attempts = 4
-    max_attempts = min(max(1, max_attempts), 10)
+    max_attempts = max(1, min(max_attempts, 10))
 
     last_err: Exception | None = None
     for attempt in range(max_attempts):
@@ -166,9 +294,16 @@ def _http_json(url: str) -> dict:
             with urllib.request.urlopen(req, timeout=timeout_secs) as resp:
                 payload = resp.read().decode("utf-8", "replace")
             try:
-                return json.loads(payload)
+                data = json.loads(payload)
             except json.JSONDecodeError as e:
                 last_err = e
+            else:
+                if not isinstance(data, dict):
+                    raise HiroRequestError(
+                        f"Hiro API returned unexpected JSON type: {type(data).__name__}: {url}"
+                    )
+
+                return data
         except urllib.error.HTTPError as e:
             if e.code == 404:
                 raise
@@ -220,8 +355,14 @@ def _fetch_contract_source(hiro_base: str, principal: str, name: str) -> str | N
             return None
         raise
     source = data.get("source")
+    if source is None:
+        raise HiroRequestError(
+            f"Unexpected Hiro response for {principal}.{name}: missing source"
+        )
     if not isinstance(source, str):
-        return None
+        raise HiroRequestError(
+            f"Unexpected Hiro response for {principal}.{name}: source is {type(source).__name__}"
+        )
     return source
 
 
@@ -250,8 +391,8 @@ def _fetch_contract_meta(
 
 def _normalize_source(text: str) -> str:
     text = text.replace("\r\n", "\n").replace("\r", "\n")
-    text = text.rstrip("\n")
-    return text + "\n"
+    lines = [ln.rstrip() for ln in text.split("\n")]
+    return "\n".join(lines).rstrip() + "\n"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -262,7 +403,7 @@ class VerificationResult:
     expected_sender: str | None
     sender_matches_deployer: bool
     deployed: bool
-    source_lookup_failed: bool
+    lookup_failed: bool
     tx_id: str | None
     block_height: int | None
     source_matches: bool | None
@@ -323,23 +464,39 @@ def verify_plan(
             )
 
         principal = principal_override or c.expected_sender or deployer
+        principal_display = principal or "<missing principal>"
         chain_source: str | None = None
         lookup_failed = False
         try:
+            if not principal:
+                raise HiroRequestError(
+                    f"Cannot determine principal for {c.name} (missing deployer, expected-sender, and principal override)"
+                )
             chain_source = _fetch_contract_source(hiro_base, principal, c.name)
-        except (urllib.error.HTTPError, urllib.error.URLError, json.JSONDecodeError) as e:
+        except (
+            HiroRequestError,
+            urllib.error.HTTPError,
+            urllib.error.URLError,
+            json.JSONDecodeError,
+        ) as e:
             lookup_failed = True
             failures.append(
-                f"{c.name}: Hiro API error querying source for {principal}.{c.name}: {e}"
+                f"{c.name}: Hiro API error querying source for {principal_display}.{c.name}: {e}"
             )
-        deployed = chain_source is not None
+        deployed = False if lookup_failed else (chain_source is not None)
         tx_id: str | None = None
         block_height: int | None = None
 
         if deployed:
             try:
                 tx_id, block_height = _fetch_contract_meta(hiro_base, principal, c.name)
-            except (urllib.error.HTTPError, urllib.error.URLError, json.JSONDecodeError) as e:
+            except (
+                HiroRequestError,
+                urllib.error.HTTPError,
+                urllib.error.URLError,
+                json.JSONDecodeError,
+            ) as e:
+                lookup_failed = True
                 failures.append(
                     f"{c.name}: Hiro API error querying metadata for {principal}.{c.name}: {e}"
                 )
@@ -355,12 +512,12 @@ def verify_plan(
         results.append(
             VerificationResult(
                 name=c.name,
-                principal=principal,
+                principal=principal_display,
                 local_path=abs_local_path,
                 expected_sender=c.expected_sender,
                 sender_matches_deployer=sender_matches,
                 deployed=deployed,
-                source_lookup_failed=lookup_failed,
+                lookup_failed=lookup_failed,
                 tx_id=tx_id,
                 block_height=block_height,
                 source_matches=source_matches,
@@ -386,6 +543,14 @@ def main() -> None:
         "--plan",
         default=default_plan,
         help=f"Path to a Clarinet deployment plan YAML (default: {default_plan})",
+    )
+    parser.add_argument(
+        "--write-normalized-plan",
+        default=None,
+        help=(
+            "Write a normalized copy of the plan with deployer + all expected-sender values set to a single principal, then exit. "
+            "Uses --principal when provided; otherwise uses the plan's deployer."
+        ),
     )
     parser.add_argument(
         "--hiro-base",
@@ -416,8 +581,41 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    plan_path = os.path.abspath(args.plan)
+    if args.write_normalized_plan:
+        plan_text = _read_text(plan_path)
+        parsed = parse_deployment_plan(plan_text)
+        principal = args.principal or parsed.deployer
+        if not principal:
+            raise SystemExit(
+                "Unable to determine principal for normalization; provide --principal or ensure the plan has a deployer field."
+            )
+
+        out_path = os.path.abspath(args.write_normalized_plan)
+        if out_path == plan_path:
+            raise SystemExit(
+                "Refusing to overwrite the input plan in place; pass a different --write-normalized-plan output path."
+            )
+        out_dir = os.path.dirname(out_path)
+        if out_dir:
+            os.makedirs(out_dir, exist_ok=True)
+        normalized = normalize_deployment_plan_text(plan_text=plan_text, principal=principal)
+        with open(out_path, "w", encoding="utf-8", newline="\n") as f:
+            f.write(normalized)
+        if args.json:
+            print(
+                json.dumps(
+                    {"normalized_plan": out_path},
+                    indent=2,
+                    sort_keys=True,
+                )
+            )
+        else:
+            print(out_path)
+        raise SystemExit(0)
+
     network, deployer, results, failures = verify_plan(
-        plan_path=os.path.abspath(args.plan),
+        plan_path=plan_path,
         hiro_base=args.hiro_base.rstrip("/"),
         principal_override=args.principal,
         strict_expected_sender=args.strict_expected_sender,
@@ -425,13 +623,14 @@ def main() -> None:
     )
 
     if args.json:
+        contracts = [dataclasses.asdict(r) for r in results]
         print(
             json.dumps(
                 {
                     "network": network,
                     "deployer": deployer,
                     "plan": os.path.abspath(args.plan),
-                    "contracts": [dataclasses.asdict(r) for r in results],
+                    "contracts": contracts,
                     "failures": failures,
                 },
                 indent=2,
@@ -445,8 +644,8 @@ def main() -> None:
         print(f"contracts_in_plan={len(results)}")
 
         for r in results:
-            if r.source_lookup_failed:
-                status = "unknown"
+            if r.lookup_failed:
+                status = "error"
             elif not r.deployed:
                 status = "missing"
             elif r.source_matches is True:
