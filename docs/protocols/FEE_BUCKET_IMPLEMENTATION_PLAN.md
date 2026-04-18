@@ -84,7 +84,7 @@ Stage B buckets (implementation-ready, with policy parameters):
    - `founders_cut = floor(captured_protocol_fees * 10 / 10000)`
    - `post_cut_captured = captured_protocol_fees - founders_cut`
    - Any rounding remainder stays in protocol custody as part of `post_cut_captured`.
-4. Split `post_cut_captured` using the `cxd-treasury` 6-way basis-point policy.
+3. Split `post_cut_captured` using the `cxd-treasury` 6-way basis-point policy.
 
 Bucket mapping for Stage B:
 
