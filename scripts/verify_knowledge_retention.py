@@ -12,19 +12,30 @@ from typing import Any
 SENSITIVE_ROOTS = ("internal/strategy", "archive")
 MANIFEST_PATH = Path("audit/migration_manifest.json")
 
+DEFAULT_STUB_MARKERS: tuple[str, ...] = (
+    "migrated to linear",
+    "treat this repository as public for boundary purposes",
+    "linear.app/conxian-labs",
+    "intentionally kept as a stub",
+)
+
+CON530_STUB_MARKERS: tuple[str, ...] = (
+    "migrated to the linear virtual office",
+    "treat this repository as public for boundary purposes",
+    "linear.app/conxian-labs",
+    "how to work locally",
+    "intentionally kept as a stub",
+)
+
 STRATEGY_SENSITIVE_STUBS: dict[str, tuple[str, ...]] = {
-    "docs/research/BOS_COMPETITIVE_ANALYSIS_AND_ENHANCEMENT.md": (
-        "migrated to linear",
-        "treat this repository as public for boundary purposes",
-        "linear.app/conxian-labs",
-        "intentionally kept as a stub",
-    ),
-    "docs/STRATEGIC_GROWTH_MODEL_2026.md": (
-        "migrated to linear",
-        "treat this repository as public for boundary purposes",
-        "linear.app/conxian-labs",
-        "intentionally kept as a stub",
-    ),
+    "docs/research/BOS_COMPETITIVE_ANALYSIS_AND_ENHANCEMENT.md": DEFAULT_STUB_MARKERS,
+    "docs/STRATEGIC_GROWTH_MODEL_2026.md": DEFAULT_STUB_MARKERS,
+    "docs/research/AKASH_DEPLOYMENT_SPEC.md": CON530_STUB_MARKERS,
+    "docs/research/NEXUS_ENHANCEMENT_STRATEGY_2026.md": CON530_STUB_MARKERS,
+    "docs/research/BITCOIN_NATIVE_UPGRADE.md": CON530_STUB_MARKERS,
+    "conxian-business/BOS_ENHANCEMENT_PLAN_v2.md": CON530_STUB_MARKERS,
+    "conxian-business/BOS_MULTI_TENANT_ORCHESTRATION.md": CON530_STUB_MARKERS,
+    "docs/CXN_TREASURY_ORACLE_SCHEMA.sql": CON530_STUB_MARKERS,
 }
 
 MAX_STUB_WORDS = 220

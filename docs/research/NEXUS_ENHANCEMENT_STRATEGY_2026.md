@@ -1,37 +1,30 @@
-# Nexus & Gateway Enhancement Strategy (April 2026)
+# Nexus & Gateway Enhancement Strategy 2026 (public-safe stub)
 
-## 1. Competitive Benchmarking
+Treat this repository as public for boundary purposes.
 
-| System | Key Strength | Nexus/Gateway Gap | Enhancement Vector |
-| :--- | :--- | :--- | :--- |
-| **Glassnode** | Deep on-chain analytics & metrics depth. | Higher-level financial abstractions. | Add "Sovereign Yield Index" and "TAM Capture" metrics. |
-| **Oracle Autonomous** | Zero-ops maintenance and self-healing. | Manual reorg handling and sync monitoring. | Implement "Autonomous Sync Repair" and health-checks. |
-| **Lava Network** | Decentralized RPC with incentives. | Reliance on Hiro/Public RPC endpoints. | Implement Multi-RPC Aggregator with latency-based selection. |
-| **Space and Time** | Proof-carrying SQL (ZK-SQL). | relational data is currently verified only by Nexus. | Integrate Tableland/Kwil for decentralized RELATIONAL truth. |
+Sensitive/internal roadmap priorities, partner-specific benchmarks, and implementation sequencing for this strategy have been migrated to the Linear Virtual Office.
 
-## 2. Enhancement Roadmap (Sovereign-First)
+See:
 
-### A. Decentralized RPC Architecture (CON-463)
-- **Problem**: Current systems rely on single RPC providers (Hiro for Stacks, Public nodes for Bitcoin).
-- **Enhancement**: Implement an RPC Provider Pool in `conxian-gateway` with:
-  - Failover logic.
-  - State consistency checks (verify same tip across multiple providers).
-  - Support for decentralized RPC networks (Lava, Pocket).
+- https://linear.app/conxian-labs
+- https://linear.app/conxian-labs/issue/CON-530/replace-sensitive-files-with-safe-examples-and-docs
+- https://linear.app/conxian-labs/issue/CON-256
 
-### B. Sovereign Persistence Layer (CON-69 / CON-337)
-- **Problem**: Transactional state is currently bound to hosted PostgreSQL (Neon).
-- **Enhancement**: Upgrade `KwilAdapter` and `TablelandAdapter` from stubs to functional implementations:
-  - Commit state roots to Tableland for public verifiability.
-  - Use Kwil for decentralized relational state (Job Cards, settlement logs).
+## How to work locally (public-safe)
 
-### C. Decentralized Telemetry (CON-473)
-- **Problem**: System telemetry is centralized.
-- **Enhancement**: Full integration of Nostr for signed, uncensorable event propagation between agents and gateways.
+1. Use sanitized fixtures and synthetic metrics for local analysis.
+2. Keep external provider endpoints as placeholders in local config.
+3. Track design notes in local docs, then move sensitive detail to Linear before merge.
 
-## 3. Implementation Plan
-1. **Gateway**: Implement `RpcAggregator` for Stacks/Bitcoin.
-2. **Nexus**: Finalize `KwilAdapter` for Block/State-Root persistence.
-3. **Common**: Aligned x402 mandates with BitVM2 state roots for trustless settlement.
+### Local-safe planning template
 
----
-© 2026 Conxian-Labs (Pty) Ltd.
+```markdown
+- Capability: RPC failover
+- Current status: prototype
+- Local metric source: fixtures/rpc-health.sample.json
+- Next step: add tests for provider quorum checks
+```
+
+Internal: search Linear Virtual Office for "Nexus & Gateway Enhancement Strategy 2026".
+
+This file is intentionally kept as a stub so existing links continue to resolve.

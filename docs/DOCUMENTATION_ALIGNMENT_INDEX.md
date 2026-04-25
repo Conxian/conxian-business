@@ -36,6 +36,8 @@ These are the “operating-model” documents that explain how BOS components re
 | --- | --- | --- | --- |
 | `conxian-business/SERVICE_LOOP.md` | Canonical | Public-safe | BOS service loop (how client/supplier loops connect). |
 | `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Public-safe stub (canonical in Linear) | Public-safe BOS state machine pointer stub (standardized ZSE stub). |
+| `conxian-business/BOS_ENHANCEMENT_PLAN_v2.md` | Supporting | Public-safe stub (canonical in Linear) | Public-safe pointer stub for BOS enhancement planning; canonical strategic detail is maintained in the Linear Virtual Office under ZSE. |
+| `conxian-business/BOS_MULTI_TENANT_ORCHESTRATION.md` | Supporting | Public-safe stub (canonical in Linear) | Public-safe pointer stub for tenant orchestration guidance; canonical operational details are maintained in the Linear Virtual Office under ZSE. |
 | `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Canonical | Public-safe | ExCo Linear-first intake standard (required fields, triage flow, execution linkbacks) with sensitive details remaining in Linear under ZSE. |
 | `Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md` | Supporting | Public-safe stub (canonical in Linear) | Bottleneck and deployment efficiency metrics (standardized ZSE stub). |
 | `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md` | Supporting | Public-safe stub (canonical in Linear) | Strategy velocity tracking and exit-readiness framing (standardized ZSE stub). |
@@ -87,6 +89,14 @@ OpenSpec is the best place to point issue descriptions when work is “spec-firs
 | --- | --- | --- | --- |
 | `docs/ILDK_README.md` | Canonical | Public-safe | Technical framework for external labs to build specialized Industrial Management modules. |
 | `docs/STRATEGIC_GROWTH_MODEL_2026.md` | Canonical | Public-safe | Strategic comparison of growth models and governance-minimized scaling. |
+
+### Research stubs (migrated under ZSE)
+
+| Document | Role | Visibility | What it’s for |
+| --- | --- | --- | --- |
+| `docs/research/AKASH_DEPLOYMENT_SPEC.md` | Supporting | Public-safe stub (canonical in Linear) | Public-safe pointer stub for Akash deployment context; canonical internal deployment guidance is in the Linear Virtual Office under ZSE. |
+| `docs/research/NEXUS_ENHANCEMENT_STRATEGY_2026.md` | Supporting | Public-safe stub (canonical in Linear) | Public-safe pointer stub for Nexus/Gateway enhancement strategy; canonical internal roadmap detail is in the Linear Virtual Office under ZSE. |
+| `docs/research/BITCOIN_NATIVE_UPGRADE.md` | Supporting | Public-safe stub (canonical in Linear) | Public-safe pointer stub for Bitcoin-native upgrade research; canonical internal analysis is in the Linear Virtual Office under ZSE. |
 
 These are the documents most likely to answer “what are we building?” and “how is it structured?”
 
@@ -149,6 +159,7 @@ These are the documents most likely to answer “what are we building?” and �
 | `docs/TEE_SECURITY_AUDIT.md` | Supporting | Public-safe | TEE security audit notes. |
 | `docs/DASHBOARD_SPEC.md` | Supporting | Public-safe | Audit dashboard spec. |
 | `docs/SOVEREIGN_SHARD_SPEC.md` | Canonical | Public-safe | Sharding spec (Sovereign Shard). |
+| `docs/CXN_TREASURY_ORACLE_SCHEMA.sql` | Supporting | Public-safe stub (canonical in Linear) | Public-safe SQL shape/template for local understanding; canonical treasury/oracle production schema detail is maintained in the Linear Virtual Office under ZSE. |
 | `docs/BUSINESS_COMPLIANCE_ALIGNMENT_2026.md` | Supporting | Internal-only | Strategy/compliance narrative for 2026 regulatory framing. |
 
 ## 6) Governance / repo operating model / runbooks
