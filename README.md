@@ -28,7 +28,7 @@ Releases are tracked in `CHANGELOG.md` and published as SemVer tags (`vX.Y.Z`). 
 
 ## Relation to Conxian stack
 
-The Conxian ecosystem is organized by function to ensure clarity and modularity across the Sovereign Autonomous Business (SAB) stack. See the **[BOS Runtime Ownership Map](./BOS_RUNTIME_OWNERSHIP_MAP.md)** for detailed responsibility boundaries.
+The Conxian ecosystem is organized by function to ensure clarity and modularity across the Sovereign Autonomous Business (SAB) stack. See the **[BOS Runtime Ownership Map](./conxian-business/BOS_RUNTIME_OWNERSHIP_MAP.md)** for detailed responsibility boundaries.
 
 ### 1. Platform & Governance
 - **[`conxian-business/`](./conxian-business)**: **BOS Operations**. Commercial, legal, and platform specifications (ZSE Stubs).
