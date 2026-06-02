@@ -1,11 +1,13 @@
-export type GovernanceActionStatus = "draft" | "pending" | "approved" | "rejected";
-export type ReleaseArtifactStatus = "draft" | "in_review" | "approved" | "published";
+export type GovernanceActionStatus = "draft" | "pending" | "approved" | "rejected" | "changes_requested";
+export type ReleaseArtifactStatus = "draft" | "in_review" | "approved" | "published" | "rejected";
+export type EnvironmentVerificationStatus = "pending" | "verified" | "restricted";
 
 export interface GovernanceAction {
   id: string;
   title: string;
   status: GovernanceActionStatus;
   owner: string;
+  updatedAt: string;
 }
 
 export interface AuditEvent {
@@ -21,6 +23,7 @@ export interface EnvironmentRecord {
   name: string;
   classification: "local" | "staging" | "production" | "restricted";
   owner: string;
+  verificationStatus: EnvironmentVerificationStatus;
 }
 
 export interface IdentityRecord {
@@ -35,6 +38,7 @@ export interface ReleaseArtifact {
   name: string;
   status: ReleaseArtifactStatus;
   owner: string;
+  updatedAt: string;
 }
 
 export interface TreasuryEvent {
@@ -43,4 +47,9 @@ export interface TreasuryEvent {
   amount: string;
   asset: string;
   timestamp: string;
+}
+
+export interface HealthStatus {
+  status: "bootstrap-ready" | "degraded";
+  message: string;
 }
