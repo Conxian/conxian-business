@@ -1,23 +1,30 @@
-import { sampleAuditEvents } from "../../lib/sample-data";
+import { DataTable } from "../../components/data-table";
+import { PageHeader } from "../../components/page-header";
+import { getAuditData } from "../../lib/module-adapters";
+import type { AuditEvent } from "@conxian/schemas";
 
 export default function AuditPage() {
+  const events = getAuditData();
+
   return (
     <main className="page-shell">
-      <section className="hero compact">
-        <p className="eyebrow">Module</p>
-        <h2>Audit</h2>
-        <p className="lede">Review operational evidence and auditable activity across workflows.</p>
-      </section>
+      <PageHeader
+        eyebrow="Module"
+        title="Audit"
+        description="Review operational evidence and auditable activity across workflows."
+      />
 
       <section className="card">
         <h3>Events</h3>
-        <ul>
-          {sampleAuditEvents.map((event) => (
-            <li key={event.id}>
-              {event.category} — {event.summary}
-            </li>
-          ))}
-        </ul>
+        <DataTable<AuditEvent>
+          columns={[
+            { key: "category", header: "Category", render: (item) => item.category },
+            { key: "summary", header: "Summary", render: (item) => item.summary },
+            { key: "actor", header: "Actor", render: (item) => item.actor },
+            { key: "timestamp", header: "Timestamp", render: (item) => item.timestamp },
+          ]}
+          rows={events}
+        />
       </section>
     </main>
   );

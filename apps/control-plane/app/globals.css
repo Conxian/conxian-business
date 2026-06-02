@@ -58,6 +58,31 @@ body {
   margin-bottom: 24px;
 }
 
+.title-row {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.actor-chip {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 180px;
+  padding: 12px;
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  background: rgba(122, 162, 255, 0.08);
+}
+
+.chip-muted {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+}
+
 .eyebrow {
   color: var(--accent);
   text-transform: uppercase;
@@ -114,6 +139,31 @@ body {
   padding: 20px;
 }
 
+.table-wrap {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--panel-border);
+  vertical-align: top;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: rgba(122, 162, 255, 0.08);
+}
+
 h1,
 h2,
 h3,
@@ -139,5 +189,9 @@ code {
   .sidebar {
     border-right: 0;
     border-bottom: 1px solid var(--panel-border);
+  }
+
+  .title-row {
+    flex-direction: column;
   }
 }

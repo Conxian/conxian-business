@@ -53,3 +53,16 @@ export interface HealthStatus {
   status: "bootstrap-ready" | "degraded";
   message: string;
 }
+
+export interface ReleaseApprovalRequest {
+  artifactId: string;
+  requestedBy: string;
+  notes?: string;
+}
+
+export interface GovernanceDecision {
+  actionId: string;
+  decision: "approve" | "reject" | "request_changes";
+  actorId: string;
+  notes?: string;
+}

@@ -1,4 +1,12 @@
-import type { AuditEvent, EnvironmentRecord, GovernanceAction, HealthStatus, ReleaseArtifact } from "@conxian/schemas";
+import type {
+  AuditEvent,
+  EnvironmentRecord,
+  GovernanceAction,
+  GovernanceDecision,
+  HealthStatus,
+  ReleaseApprovalRequest,
+  ReleaseArtifact,
+} from "@conxian/schemas";
 
 export function getControlPlaneHealth(): HealthStatus {
   return {
@@ -11,12 +19,20 @@ export function listReleaseArtifacts(): ReleaseArtifact[] {
   return [];
 }
 
+export function requestReleaseApproval(_input: ReleaseApprovalRequest): { accepted: boolean } {
+  return { accepted: true };
+}
+
 export function listAuditEvents(): AuditEvent[] {
   return [];
 }
 
 export function listGovernanceActions(): GovernanceAction[] {
   return [];
+}
+
+export function submitGovernanceDecision(_input: GovernanceDecision): { accepted: boolean } {
+  return { accepted: true };
 }
 
 export function listEnvironments(): EnvironmentRecord[] {

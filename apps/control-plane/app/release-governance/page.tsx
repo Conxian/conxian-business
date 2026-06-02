@@ -1,23 +1,43 @@
-import { sampleReleaseArtifacts } from "../../lib/sample-data";
+import { DataTable, StatusBadge } from "../../components/data-table";
+import { PageHeader } from "../../components/page-header";
+import { getCurrentActor, canApprove, canOperate } from "../../lib/auth";
+import { getReleaseGovernanceData } from "../../lib/module-adapters";
+import type { ReleaseArtifact } from "@conxian/schemas";
 
 export default function ReleaseGovernancePage() {
+  const actor = getCurrentActor();
+  const artifacts = getReleaseGovernanceData();
+
   return (
     <main className="page-shell">
-      <section className="hero compact">
-        <p className="eyebrow">Module</p>
-        <h2>Release governance</h2>
-        <p className="lede">Track release artifacts, approval state, and promotion readiness.</p>
+      <PageHeader
+        eyebrow="Module"
+        title="Release governance"
+        description="Track release artifacts, approval state, and promotion readiness."
+      />
+
+      <section className="grid">
+        <article className="card">
+          <h3>Capabilities</h3>
+          <ul>
+            <li>Read access: enabled</li>
+            <li>Request approval: {canOperate(actor.role) ? "enabled" : "not allowed"}</li>
+            <li>Approve/reject: {canApprove(actor.role) ? "enabled" : "not allowed"}</li>
+          </ul>
+        </article>
       </section>
 
       <section className="card">
         <h3>Artifacts</h3>
-        <ul>
-          {sampleReleaseArtifacts.map((artifact) => (
-            <li key={artifact.id}>
-              {artifact.name} — {artifact.status} — owner: {artifact.owner}
-            </li>
-          ))}
-        </ul>
+        <DataTable<ReleaseArtifact>
+          columns={[
+            { key: "name", header: "Artifact", render: (item) => item.name },
+            { key: "status", header: "Status", render: (item) => <StatusBadge value={item.status} /> },
+            { key: "owner", header: "Owner", render: (item) => item.owner },
+            { key: "updatedAt", header: "Updated", render: (item) => item.updatedAt },
+          ]}
+          rows={artifacts}
+        />
       </section>
     </main>
   );

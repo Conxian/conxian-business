@@ -1,25 +1,27 @@
 import { OverviewCards } from "../components/overview-cards";
-import { sampleAuditEvents, sampleGovernanceActions, sampleReleaseArtifacts } from "../lib/sample-data";
+import { PageHeader } from "../components/page-header";
+import { getAuditData, getPolicyApprovalData, getReleaseGovernanceData } from "../lib/module-adapters";
 
 export default function HomePage() {
+  const artifacts = getReleaseGovernanceData();
+  const auditEvents = getAuditData();
+  const governanceActions = getPolicyApprovalData();
+
   return (
     <main className="page-shell">
-      <section className="hero">
-        <p className="eyebrow">Private BOS application</p>
-        <h2>Overview</h2>
-        <p className="lede">
-          This app is the internal starting point for governance, audit, release, policy,
-          and environment workflows across the Conxian stack.
-        </p>
-      </section>
+      <PageHeader
+        eyebrow="Private BOS application"
+        title="Overview"
+        description="This app is the internal starting point for governance, audit, release, policy, and environment workflows across the Conxian stack."
+      />
 
       <OverviewCards />
 
       <section className="grid two-up">
         <article className="card">
-          <h3>Seed release artifacts</h3>
+          <h3>Release artifacts</h3>
           <ul>
-            {sampleReleaseArtifacts.map((artifact) => (
+            {artifacts.map((artifact) => (
               <li key={artifact.id}>
                 {artifact.name} — {artifact.status}
               </li>
@@ -28,9 +30,9 @@ export default function HomePage() {
         </article>
 
         <article className="card">
-          <h3>Seed audit events</h3>
+          <h3>Audit events</h3>
           <ul>
-            {sampleAuditEvents.map((event) => (
+            {auditEvents.map((event) => (
               <li key={event.id}>{event.summary}</li>
             ))}
           </ul>
@@ -38,9 +40,9 @@ export default function HomePage() {
       </section>
 
       <section className="card">
-        <h3>Seed policy actions</h3>
+        <h3>Policy actions</h3>
         <ul>
-          {sampleGovernanceActions.map((action) => (
+          {governanceActions.map((action) => (
             <li key={action.id}>
               {action.title} — {action.status}
             </li>
