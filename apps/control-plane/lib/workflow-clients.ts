@@ -1,7 +1,7 @@
 import {
   requestReleaseApprovalV1,
+  submitGovernanceDecisionV1,
   submitReleaseDecisionV1,
-} from "@conxian/client-sdk/src/release-governance";
-import { submitGovernanceDecisionV1 } from "@conxian/client-sdk/src/governance";
+} from "@conxian/client-sdk";
 
 export { requestReleaseApprovalV1, submitReleaseDecisionV1, submitGovernanceDecisionV1 };
