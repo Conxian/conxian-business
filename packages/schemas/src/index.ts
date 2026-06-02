@@ -1,6 +1,8 @@
 export type GovernanceActionStatus = "draft" | "pending" | "approved" | "rejected" | "changes_requested";
 export type ReleaseArtifactStatus = "draft" | "in_review" | "approved" | "published" | "rejected";
 export type EnvironmentVerificationStatus = "pending" | "verified" | "restricted";
+export type AuditEventCategory = "release" | "policy" | "environment" | "governance";
+export type AuditOutcome = "accepted" | "rejected" | "pending";
 
 export interface GovernanceAction {
   id: string;
@@ -12,10 +14,16 @@ export interface GovernanceAction {
 
 export interface AuditEvent {
   id: string;
-  category: "release" | "policy" | "environment" | "governance";
+  category: AuditEventCategory;
   actor: string;
   summary: string;
   timestamp: string;
+}
+
+export interface AuditActionEvent extends AuditEvent {
+  relatedEntityId: string;
+  actionType: string;
+  outcome: AuditOutcome;
 }
 
 export interface EnvironmentRecord {

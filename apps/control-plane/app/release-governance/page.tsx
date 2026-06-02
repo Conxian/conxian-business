@@ -3,6 +3,7 @@ import { PageHeader } from "../../components/page-header";
 import { getCurrentActor, canApprove, canOperate } from "../../lib/auth";
 import { getReleaseGovernanceData } from "../../lib/module-adapters";
 import type { ReleaseArtifact } from "@conxian/schemas";
+import { ReleaseApprovalForm } from "../../components/release-approval-form";
 
 export default function ReleaseGovernancePage() {
   const actor = getCurrentActor();
@@ -25,6 +26,8 @@ export default function ReleaseGovernancePage() {
             <li>Approve/reject: {canApprove(actor.role) ? "enabled" : "not allowed"}</li>
           </ul>
         </article>
+
+        <ReleaseApprovalForm artifacts={artifacts} />
       </section>
 
       <section className="card">

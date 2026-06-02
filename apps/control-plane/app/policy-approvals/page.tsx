@@ -3,6 +3,7 @@ import { PageHeader } from "../../components/page-header";
 import { getCurrentActor, canApprove } from "../../lib/auth";
 import { getPolicyApprovalData } from "../../lib/module-adapters";
 import type { GovernanceAction } from "@conxian/schemas";
+import { GovernanceDecisionForm } from "../../components/governance-decision-form";
 
 export default function PolicyApprovalsPage() {
   const actor = getCurrentActor();
@@ -21,6 +22,8 @@ export default function PolicyApprovalsPage() {
           <h3>Approval gate</h3>
           <p>{canApprove(actor.role) ? "This actor can approve or reject actions." : "This actor can review but not approve actions."}</p>
         </article>
+
+        <GovernanceDecisionForm actions={actions} />
       </section>
 
       <section className="card">
