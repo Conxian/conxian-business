@@ -3,6 +3,7 @@ export type ReleaseArtifactStatus = "draft" | "in_review" | "approved" | "publis
 export type EnvironmentVerificationStatus = "pending" | "verified" | "restricted";
 export type AuditEventCategory = "release" | "policy" | "environment" | "governance";
 export type AuditOutcome = "accepted" | "rejected" | "pending";
+export type WorkflowDecision = "approve" | "reject" | "request_changes";
 
 export interface GovernanceAction {
   id: string;
@@ -68,9 +69,34 @@ export interface ReleaseApprovalRequest {
   notes?: string;
 }
 
-export interface GovernanceDecision {
-  actionId: string;
-  decision: "approve" | "reject" | "request_changes";
+export interface ReleaseDecisionRequest {
+  artifactId: string;
+  decision: WorkflowDecision;
   actorId: string;
   notes?: string;
+}
+
+export interface GovernanceDecision {
+  actionId: string;
+  decision: WorkflowDecision;
+  actorId: string;
+  notes?: string;
+}
+
+export interface WorkflowMutationResponse {
+  accepted: boolean;
+  message: string;
+  auditEventId: string;
+}
+
+export interface ReleaseApprovalResponse extends WorkflowMutationResponse {
+  requestId: string;
+}
+
+export interface ReleaseDecisionResponse extends WorkflowMutationResponse {
+  decisionId: string;
+}
+
+export interface GovernanceDecisionResponse extends WorkflowMutationResponse {
+  decisionId: string;
 }

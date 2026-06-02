@@ -4,6 +4,7 @@ import { getCurrentActor, canApprove, canOperate } from "../../lib/auth";
 import { getReleaseGovernanceData } from "../../lib/module-adapters";
 import type { ReleaseArtifact } from "@conxian/schemas";
 import { ReleaseApprovalForm } from "../../components/release-approval-form";
+import { ReleaseDecisionForm } from "../../components/release-decision-form";
 
 export default function ReleaseGovernancePage() {
   const actor = getCurrentActor();
@@ -28,6 +29,7 @@ export default function ReleaseGovernancePage() {
         </article>
 
         <ReleaseApprovalForm artifacts={artifacts} />
+        <ReleaseDecisionForm artifacts={artifacts} />
       </section>
 
       <section className="card">

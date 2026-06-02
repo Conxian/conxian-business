@@ -1,16 +1,16 @@
 "use client";
 
-import { submitGovernanceDecision } from "@conxian/client-sdk";
-import type { GovernanceAction } from "@conxian/schemas";
+import type { GovernanceAction, WorkflowDecision } from "@conxian/schemas";
 import { useState } from "react";
 import { ActionFeedback, ActionPanel } from "./action-panel";
 import { getCurrentActor } from "../lib/auth";
 import { createAuditActionEvent } from "../lib/audit";
+import { submitGovernanceDecisionV1 } from "../lib/workflow-clients";
 
 export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[] }) {
   const actor = getCurrentActor();
   const [actionId, setActionId] = useState(actions[0]?.id ?? "");
-  const [decision, setDecision] = useState<"approve" | "reject" | "request_changes">("approve");
+  const [decision, setDecision] = useState<WorkflowDecision>("approve");
   const [notes, setNotes] = useState("");
   const [message, setMessage] = useState<string | null>(null);
 
@@ -23,7 +23,7 @@ export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[
         className="stack"
         onSubmit={(event) => {
           event.preventDefault();
-          const result = submitGovernanceDecision({
+          const result = submitGovernanceDecisionV1({
             actionId,
             decision,
             actorId: actor.id,
@@ -39,7 +39,7 @@ export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[
               actionType: "governance_decision",
               outcome: "accepted",
             });
-            setMessage(`Decision accepted. Audit event ${audit.id} created.`);
+            setMessage(`${result.message} Audit event ${audit.id} created.`);
           }
         }}
       >
@@ -56,7 +56,7 @@ export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[
 
         <label>
           Decision
-          <select value={decision} onChange={(event) => setDecision(event.target.value as "approve" | "reject" | "request_changes")}>
+          <select value={decision} onChange={(event) => setDecision(event.target.value as WorkflowDecision)}>
             <option value="approve">Approve</option>
             <option value="reject">Reject</option>
             <option value="request_changes">Request changes</option>

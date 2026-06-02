@@ -1,30 +1,32 @@
 "use client";
 
-import type { ReleaseArtifact } from "@conxian/schemas";
+import type { ReleaseArtifact, WorkflowDecision } from "@conxian/schemas";
 import { useState } from "react";
 import { ActionFeedback, ActionPanel } from "./action-panel";
 import { getCurrentActor } from "../lib/auth";
 import { createAuditActionEvent } from "../lib/audit";
-import { requestReleaseApprovalV1 } from "../lib/workflow-clients";
+import { submitReleaseDecisionV1 } from "../lib/workflow-clients";
 
-export function ReleaseApprovalForm({ artifacts }: { artifacts: ReleaseArtifact[] }) {
+export function ReleaseDecisionForm({ artifacts }: { artifacts: ReleaseArtifact[] }) {
   const actor = getCurrentActor();
   const [artifactId, setArtifactId] = useState(artifacts[0]?.id ?? "");
+  const [decision, setDecision] = useState<WorkflowDecision>("approve");
   const [notes, setNotes] = useState("");
   const [message, setMessage] = useState<string | null>(null);
 
   return (
     <ActionPanel
-      title="Request release approval"
-      description="Bootstrap flow for requesting approval on a release artifact."
+      title="Record release decision"
+      description="Bootstrap decision flow for release-governance actions."
     >
       <form
         className="stack"
         onSubmit={(event) => {
           event.preventDefault();
-          const result = requestReleaseApprovalV1({
+          const result = submitReleaseDecisionV1({
             artifactId,
-            requestedBy: actor.id,
+            decision,
+            actorId: actor.id,
             notes,
           });
 
@@ -32,9 +34,9 @@ export function ReleaseApprovalForm({ artifacts }: { artifacts: ReleaseArtifact[
             const audit = createAuditActionEvent({
               category: "release",
               actor: actor.name,
-              summary: "Release approval requested",
+              summary: `Release decision ${decision}`,
               relatedEntityId: artifactId,
-              actionType: "request_release_approval",
+              actionType: "release_decision",
               outcome: "accepted",
             });
             setMessage(`${result.message} Audit event ${audit.id} created.`);
@@ -53,16 +55,25 @@ export function ReleaseApprovalForm({ artifacts }: { artifacts: ReleaseArtifact[
         </label>
 
         <label>
+          Decision
+          <select value={decision} onChange={(event) => setDecision(event.target.value as WorkflowDecision)}>
+            <option value="approve">Approve</option>
+            <option value="reject">Reject</option>
+            <option value="request_changes">Request changes</option>
+          </select>
+        </label>
+
+        <label>
           Notes
           <textarea
             rows={4}
             value={notes}
             onChange={(event) => setNotes(event.target.value)}
-            placeholder="Add approval context"
+            placeholder="Add release decision notes"
           />
         </label>
 
-        <button type="submit">Request approval</button>
+        <button type="submit">Submit release decision</button>
       </form>
 
       <ActionFeedback message={message} />
