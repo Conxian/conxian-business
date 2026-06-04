@@ -11,12 +11,21 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ### Added
 - **Release Hygiene**: Added missing `## [Unreleased]` sections to submodule changelogs in `conxian-gateway`, `conxian-nexus`, `conxius-wallet`, `conxius-platform`, `Conxian`, and `lib-conxian-core`.
+- **Render Deployment Remediation**: Fixed critical port binding issue in `conxian-ui` to resolve "Unknown --listen endpoint scheme" errors on Render.
+- **Portfolio-wide Nomenclature Alignment**: Executed a comprehensive sweep to replace deprecated terms (`Sovereign` -> `Sovereign`, `Conxius Orbit` -> `Conxius Orbit`, `Conxius Enclave SDK` -> `Conxius Enclave SDK`) across all submodules and documentation.
+- **CI/Build Stabilization**: Resolved `pnpm` dependency conflicts in `apps/control-plane` and installed missing `setuptools` to support submodule build scripts.
+- **Submodule Hygiene**: Standardized `CHANGELOG.md` files with `## [Unreleased]` sections portfolio-wide to ensure release readiness.
+
 - **System Trait Alignment**: Added missing `bond-traits` to the Simnet deployment plan in the `Conxian` repository to stabilize protocol integration tests.
+- **Conxian Unified Theory v2.0:** Integrated the foundational mathematical framework for sovereign enterprise into `docs/CONXIAN_UNIFIED_THEORY_v2.md`.
+- **Sovereign Enterprise Mandate:** Updated `AGENTS.md` and `docs/AGENTS.md` to enforce $V_X$ and $A_S$ alignment across agentic sessions.
 
 ### Changed
-- **Nomenclature Realignment**: Executed a system-wide realignment of public-facing documentation, replacing "Institutional" with "Sovereign" across root README, Gateway PRD, and ecosystem-wide specifications to improve public clarity and align with the sovereignty-first mandate.
+- **BOS Source-of-Truth Restoration**: Restored over 40 missing canonical documents and specification stubs to `conxian-business/` and `docs/` from Git history to repair repository integrity and ensure all documentation references resolve correctly.
+- **Nomenclature Realignment**: Executed a system-wide realignment of public-facing documentation, replacing "Sovereign" with "Sovereign" across root README, Gateway PRD, and ecosystem-wide specifications to improve public clarity and align with the sovereignty-first mandate.
 - **Repository Versioning**: Updated root `README.md` to reflect BOS v1.9.4 alignment.
 - **System Wallet Standardization**: Aligned `SystemWallets` in `conxian-gateway` core with the canonical Sovereign Treasury principal (`SP3FBR2AGK5H9QPNVFJWC7636X22Y620S00000000`).
+- **CON-702 Parent-Control Checkpoint**: Added `docs/architecture/CONXIAN_UI_PARENT_CONTROL_ALIGNMENT_PLAN.md` and aligned role/checklist/portfolio docs so `Conxian_UI` is documented as a supporting/reference consumer surface (no secrets, signing keys, or privileged broadcast authority).
 
 ### Fixed
 - **Testnet Principals Remediation**: Replaced hardcoded testnet principals (`ST...`) with environment-agnostic or Sovereign-aligned principals (`SP...`) in `conxius-wallet`, `conxian-ui`, and `Conxian` mainnet release plans.
@@ -49,10 +58,17 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ### Changed
 - **System-Wide Version Alignment:** Aligned all core module versions and changelogs to v1.9.3 for unified mainnet readiness signaling.
-- **Documentation Sanitization:** Renamed "Institutional" surfaces to "Sovereign" in public READMEs across Gateway, Wallet, and Core SDK to improve public clarity and reduce strategic exposure.
+- **Documentation Sanitization:** Renamed "Sovereign" surfaces to "Sovereign" in public READMEs across Gateway, Wallet, and Core SDK to improve public clarity and reduce strategic exposure.
 
 ### Fixed
 - **Release Hygiene:** Remediated missing `## [Unreleased]` and versioning gaps in submodule changelogs identified by CI.
 - **Repository Hygiene:** Executed portfolio-wide pruning of merged branches in root and submodules.
 
 ## [1.9.2] - 2026-04-14
+
+### Added
+- **BitVM2 Verification Bridge:** Integrated SNARK-based verification for CJCS v2.0 Job Cards in `conxian-gateway` and `lib-conxian-core`.
+- **Sovereign Hook Standard:** Defined the standard for "Sovereign Hooks" in `conxian-business/BOS_PLATFORM_SPEC.md` to align with SAP Clean Core patterns.
+
+### Changed
+- **BOS Governance Baseline:** Hardened the repository governance model in `GOVERNANCE.md` and `CODEOWNERS` to meet Phase 5 production mandates.

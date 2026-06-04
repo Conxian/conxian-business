@@ -92,6 +92,7 @@ OpenSpec is the best place to point issue descriptions when work is “spec-firs
 | --- | --- | --- | --- |
 | `docs/ILDK_README.md` | Canonical | Public-safe | Technical framework for external labs to build specialized Industrial Management modules. |
 | `docs/STRATEGIC_GROWTH_MODEL_2026.md` | Canonical | Public-safe | Strategic comparison of growth models and governance-minimized scaling. |
+| `docs/CONXIAN_UNIFIED_THEORY_v2.md` | Canonical | Public-safe | Foundational mathematical framework for capital, time, and code deployment (v2.0). |
 
 These are the documents most likely to answer “what are we building?” and “how is it structured?”
 
@@ -118,7 +119,7 @@ These are the documents most likely to answer “what are we building?” and �
 | `docs/CONXIAN_PROTOCOL_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for Conxian protocol. |
 | `docs/CONXIAN_GATEWAY_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-gateway. |
 | `docs/CONXIAN_NEXUS_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-nexus. |
-| `docs/STACKSORBIT_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for stacksorbit. |
+| `docs/conxius_orbit_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxius_orbit. |
 | `docs/CONXIAN_UI_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for Conxian_UI. |
 | `docs/GITHUB_GOVERNANCE_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for .github. |
 | `docs/LIB_CONXIAN_CORE_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for lib-conxian-core. |
@@ -130,6 +131,7 @@ These are the documents most likely to answer “what are we building?” and �
 | `docs/WALLET_SIGNER_CONTROL_VERIFICATION_REPORT.md` | Supporting | Public-safe | Wallet and signer control verification report for mainnet launch. |
 | `docs/PUBLIC_VISIBILITY_AUDIT_REPORT.md` | Supporting | Public-safe | Public visibility boundary audit report. |
 | `docs/architecture/BITCOIN_LAYER_ARCHITECTURE_BOUNDARY_NOTE.md` | Canonical | Public-safe | Canonical Bitcoin layer boundary note (capability verbs, phase scope, and repo ownership rules). |
+| `docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md` | Canonical | Public-safe | Protocol-adapter maturity lane taxonomy and default handling (`Research` when unspecified), plus intake schema, promotion criteria, and cross-repo handoffs. |
 | `docs/protocols/SESSION_BROKER_NORMATIVE_SPEC.md` | Canonical | Public-safe | Normative session-broker boundary spec (actors, handshake, TTL semantics, PoP/mTLS binding, replay/idempotency, revocation/attestation checks, fail-closed behavior, errors, and audit requirements). |
 | `conxius-platform/services/lib-conxian-core/docs/PRD.md` | Supporting | Public-safe | Service-local copy; treat `lib-conxian-core/docs/PRD.md` as canonical. |
 | `conxius-wallet/lib-conxian-core/docs/PRD.md` | Supporting | Public-safe | Wallet-local copy; treat `lib-conxian-core/docs/PRD.md` as canonical. |
@@ -169,8 +171,12 @@ See `docs/BOS_BUSINESS_BUILDOUT.md` for repo business purpose, business-unit pla
 | `.github/PULL_REQUEST_TEMPLATE.md` | Supporting | Public-safe | PR checklist and norms. |
 | `docs/CSF_FIRST_OPERATING_SEQUENCE_AND_PROOF_GATES.md` | Canonical | Public-safe | Locks the CSF → economy → gateway operating order and the minimum proof gates that keep launch, economy design, and go-to-market claims aligned. |
 | `docs/BOS_WALLET_CONTROL_MODEL.md` | Canonical | Public-safe | Canonical BOS wallet-control model (bootstrap → SAB custody → DAO-aligned governance). |
+| `docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md` | Canonical | Public-safe | CON-694 alignment baseline for `conxian-business`: scope boundaries, six-domain control mapping, evidence expectations, and rollback/accountability guardrails. |
 | `docs/SAB_MIGRATION_WAVES.md` | Canonical | Public-safe | Canonical SAB migration sequencing (`W0`…`W6`) including reconciliation notes from the legacy 4-wave framing. |
 | `docs/operations/SAB_MIGRATION_WAVES.md` | Supporting | Public-safe | Deprecated non-canonical pointer kept for link continuity; directs readers to `docs/SAB_MIGRATION_WAVES.md`. |
+| `docs/operations/CON-681_PHASE6_PRODUCTION_ROLLOUT_RUNBOOK.md` | Canonical | Public-safe | Canonical CON-681 Phase 6 rollout runbook with staged gates, observability thresholds, rollback triggers/actions, and operator communication templates. |
+| `docs/operations/CON-681_PHASE6_ROLLBACK_DRILL_SIMULATION.md` | Supporting | Public-safe | CON-681 rollback drill simulation artifact (scenario, timeline, observed metrics, RTO/RPO outcome, and corrective actions). |
+| `docs/operations/CON-762_PARTNER_SCORECARD_AND_SHORTLIST.md` | Canonical | Public-safe | Canonical CON-762 partner scorecard model and scenario artifact index (`docs/operations/con-762-partner-scorecard/*`) covering weights, weighted partner scores, first-wave shortlist, and build-vs-partner decisions. |
 | `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md` | Canonical | Public-safe stub (canonical in Linear) | How maintainer payouts are enabled and validated (standardized ZSE stub). |
 | `admin/SECRETS.md` | Canonical | Public-safe stub (canonical in Linear) | Secret registry + pointers to Linear docs (standardized ZSE stub). |
 
