@@ -20,34 +20,71 @@ jobs:
     steps:
       - name: Detect changed dependency manifests and lockfiles
         id: filter
-        uses: dorny/paths-filter@v4
+        uses: actions/github-script@v7
         with:
-          filters: |
-            dependency_files:
-              - '**/package.json'
-              - '**/package-lock.json'
-              - '**/pnpm-lock.yaml'
-              - '**/yarn.lock'
-              - '**/npm-shrinkwrap.json'
-              - '**/Cargo.toml'
-              - '**/Cargo.lock'
-              - '**/requirements.txt'
-              - '**/requirements-*.txt'
-              - '**/pyproject.toml'
-              - '**/poetry.lock'
-              - '**/Pipfile'
-              - '**/Pipfile.lock'
-              - '**/go.mod'
-              - '**/go.sum'
-              - '**/Gemfile'
-              - '**/Gemfile.lock'
-              - '**/composer.json'
-              - '**/composer.lock'
-              - '**/pom.xml'
-              - '**/build.gradle'
-              - '**/build.gradle.kts'
-              - '**/gradle.lockfile'
-              - '.github/dependabot.yml'
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) {
+              core.setOutput('dependency_files', 'false');
+              return;
+            }
+
+            const changedFiles = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              per_page: 100,
+            });
+
+            const dependencyBasenames = new Set([
+              'package.json',
+              'package-lock.json',
+              'pnpm-lock.yaml',
+              'yarn.lock',
+              'npm-shrinkwrap.json',
+              'Cargo.toml',
+              'Cargo.lock',
+              'requirements.txt',
+              'pyproject.toml',
+              'poetry.lock',
+              'Pipfile',
+              'Pipfile.lock',
+              'go.mod',
+              'go.sum',
+              'Gemfile',
+              'Gemfile.lock',
+              'composer.json',
+              'composer.lock',
+              'pom.xml',
+              'build.gradle',
+              'build.gradle.kts',
+              'gradle.lockfile',
+            ]);
+
+            const isDependencyFile = (path) => {
+              if (path === '.github/dependabot.yml') {
+                return true;
+              }
+
+              const segments = path.split('/');
+              const basename = segments[segments.length - 1];
+
+              if (dependencyBasenames.has(basename)) {
+                return true;
+              }
+
+              return /^requirements-[^/]+\.txt$/.test(basename);
+            };
+
+            const matchedPaths = changedFiles
+              .map((file) => file.filename)
+              .filter((path) => isDependencyFile(path));
+
+            core.setOutput('dependency_files', matchedPaths.length > 0 ? 'true' : 'false');
+            core.info(`Dependency-related files changed: ${matchedPaths.length}`);
+            if (matchedPaths.length > 0) {
+              core.info(`Matched paths: ${matchedPaths.join(', ')}`);
+            }
 
   dependency-review:
     name: Run dependency review

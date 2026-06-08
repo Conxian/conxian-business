@@ -18,43 +18,58 @@ jobs:
       contents: read
       pull-requests: read
     outputs:
-      b2b: ${{ (github.event_name == 'push' && steps.filter_push.outputs.b2b) || (github.event_name == 'pull_request' && steps.filter_pr.outputs.b2b) || 'false' }}
+      b2b: ${{ (github.event_name == 'push' && steps.filter_push.outputs.b2b) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.b2b) || 'false' }}
       docs_only: ${{ (github.event_name == 'push' && steps.filter_push.outputs.docs_only) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.docs_only) || 'false' }}
       code_impacting: ${{ (github.event_name == 'push' && steps.filter_push.outputs.code_impacting) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.code_impacting) || 'true' }}
     steps:
-    - name: Detect B2B changes (PR)
-      if: github.event_name == 'pull_request'
-      id: filter_pr
-      uses: dorny/paths-filter@v4
-      with:
-        filters: |
-          b2b:
-            - 'conxian-nexus'
-            - 'conxian-nexus/**'
-            - 'lib-conclave-sdk'
-            - 'lib-conclave-sdk/**'
-            - '.gitmodules'
-
-          code_impacting:
-            - '**'
-            - '!docs/**'
-            - '!**/*.md'
-            - '!**/*.rst'
-            - '!SUMMARY.md'
-            - '!CHANGELOG.md'
-            - '!.github/**/*.md'
-
     - name: Classify PR change scope
       if: github.event_name == 'pull_request'
       id: classify_pr
-      run: |
-        if [ "${{ steps.filter_pr.outputs.code_impacting }}" = "true" ]; then
-          echo "docs_only=false" >> "$GITHUB_OUTPUT"
-          echo "code_impacting=true" >> "$GITHUB_OUTPUT"
-        else
-          echo "docs_only=true" >> "$GITHUB_OUTPUT"
-          echo "code_impacting=false" >> "$GITHUB_OUTPUT"
-        fi
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const pr = context.payload.pull_request;
+          if (!pr) {
+            core.setOutput('b2b', 'false');
+            core.setOutput('docs_only', 'false');
+            core.setOutput('code_impacting', 'true');
+            return;
+          }
+
+          const changedFiles = await github.paginate(github.rest.pulls.listFiles, {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: pr.number,
+            per_page: 100,
+          });
+
+          const paths = changedFiles.map((file) => file.filename);
+
+          const isDocsOnlyPath = (path) => (
+            path.startsWith('docs/') ||
+            path.endsWith('.md') ||
+            path.endsWith('.rst') ||
+            path === 'SUMMARY.md' ||
+            path === 'CHANGELOG.md' ||
+            (path.startsWith('.github/') && path.endsWith('.md'))
+          );
+
+          const codeImpacting = paths.some((path) => !isDocsOnlyPath(path));
+          const docsOnly = !codeImpacting;
+          const b2b = paths.some((path) => (
+            path === 'conxian-nexus' ||
+            path.startsWith('conxian-nexus/') ||
+            path === 'lib-conclave-sdk' ||
+            path.startsWith('lib-conclave-sdk/') ||
+            path === '.gitmodules'
+          ));
+
+          core.setOutput('b2b', b2b ? 'true' : 'false');
+          core.setOutput('docs_only', docsOnly ? 'true' : 'false');
+          core.setOutput('code_impacting', codeImpacting ? 'true' : 'false');
+
+          core.info(`Detected ${paths.length} changed files for PR #${pr.number}.`);
+          core.info(`b2b=${b2b}, docs_only=${docsOnly}, code_impacting=${codeImpacting}`);
 
     - name: Default push classification
       if: github.event_name == 'push'
