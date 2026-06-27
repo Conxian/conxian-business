@@ -12,6 +12,7 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 ### Added
 - **Release Hygiene**: Added missing `## [Unreleased]` sections to submodule changelogs in `conxian-gateway`, `conxian-nexus`, `conxius-wallet`, `conxius-platform`, `Conxian`, and `lib-conxian-core`.
 - **Render Deployment Remediation**: Fixed critical port binding issue in `conxian-ui` to resolve "Unknown --listen endpoint scheme" errors on Render.
+- **CI Pipeline Hardening**: Added `cargo clippy`, `cargo audit`, `--locked` flag, and SHA-pinned Rust toolchain to `gateway-suite` and `b2b-suite` CI jobs, bringing them to parity with `lib-conxian-core-suite`. Clippy warnings are non-fatal initially (to be upgraded to `-D warnings` once codebases are clean).
 - **Submodule Integrity Scripts**: Created `scripts/verify_submodule_integrity.py` and `scripts/verify_contamination_guard.py` to resolve daily Submodule Pin Integrity Audit workflow failures. Scripts validate submodule initialization state and scan for hardcoded testnet principals.
 - **Conxian Unified Theory v2.0:** Integrated the foundational mathematical framework for sovereign enterprise into `docs/CONXIAN_UNIFIED_THEORY_v2.md`.
 - **Sovereign Enterprise Mandate:** Updated `AGENTS.md` and `docs/AGENTS.md` to enforce $V_X$ and $A_S$ alignment across agentic sessions.
@@ -29,6 +30,7 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 - **DEX Logic Correction**: Resolved a result-type mismatch in the `concentrated-liquidity-pool.clar` swap-execution path.
 - **Gemini Scheduled Triage**: Fixed search query from AND logic (`no:label label:"status/needs-triage"`) to OR logic (`no:label,label:"status/needs-triage"`) and added graceful fallback for empty result sets.
 - **Gemini Dispatch Fallthrough**: Added `needs.dispatch.result == 'success'` guard to prevent false-positive failure comments when the dispatch job is skipped (e.g., for forked PRs).
+- **Sprint 3 Completion**: All 6 Sprint 3 issues (#713, #714, #718, #722, #723, #724) verified closed. Updated `docs/UNIFIED_PRODUCTION_READINESS_GAP_REPORT.md` and `docs/REMAINING_UNIVERSAL_SUPPORT_RESEARCH.md` to reflect Sprint 3 completion and resolved research outcomes (issues #735-#738).
 
 ### Security
 - **Mock Pattern Enforcement**: Verified that `mock-integrations` features in `conxian-gateway` and `conxian-nexus` are strictly gated by `compile_error!` for release builds.
