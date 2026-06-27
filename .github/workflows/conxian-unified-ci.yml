@@ -299,18 +299,15 @@ jobs:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
-    - name: Enable corepack
-      run: corepack enable
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
-        node-version: '22'
-        cache: 'pnpm'
-        cache-dependency-path: conxius-wallet/pnpm-lock.yaml
+        node-version: '20'
+    - name: Install pnpm
+      run: npm install -g pnpm@9
     - name: Install & Test
       run: |
         cd conxius-wallet
-        corepack enable
         pnpm install --frozen-lockfile
         pnpm test
 
