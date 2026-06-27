@@ -306,12 +306,13 @@ jobs:
     - name: Install pnpm
       run: npm install -g pnpm@9
     - name: Install & Test
-      # --no-frozen-lockfile: conxius-wallet pnpm-lock.yaml is stale
-      # (conxian-labs-site/package.json updated playwright from ^1.40→^1.60
-      # without regenerating the lockfile). Tracked upstream.
+      # conxius-wallet pnpm-lock.yaml is stale across submodule updates
+      # (conxian-labs-site playwright mismatch). Delete stale lockfile
+      # and regenerate in CI. Upstream fix tracked in conxius-wallet repo.
       run: |
         cd conxius-wallet
-        pnpm install --no-frozen-lockfile
+        rm -f pnpm-lock.yaml
+        CI=false pnpm install
         pnpm test
 
     - name: Upload test artifacts
