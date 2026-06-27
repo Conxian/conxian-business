@@ -14,6 +14,8 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 - **Render Deployment Remediation**: Fixed critical port binding issue in `conxian-ui` to resolve "Unknown --listen endpoint scheme" errors on Render.
 - **CI Pipeline Hardening**: Added `cargo clippy`, `cargo audit`, `--locked` flag, and SHA-pinned Rust toolchain to `gateway-suite` and `b2b-suite` CI jobs, bringing them to parity with `lib-conxian-core-suite`. Clippy warnings are non-fatal initially (to be upgraded to `-D warnings` once codebases are clean).
 - **Submodule Integrity Scripts**: Created `scripts/verify_submodule_integrity.py` and `scripts/verify_contamination_guard.py` to resolve daily Submodule Pin Integrity Audit workflow failures. Scripts validate submodule initialization state and scan for hardcoded testnet principals.
+- **B2C Wallet Suite pnpm Fix**: Added `pnpm/action-setup@v4` before `setup-node` cache resolution to fix "Unable to locate executable file: pnpm" error in CI.
+- **Secret Scan Workflow Fix**: Replaced `gitleaks/gitleaks-action@v2` (requires paid license for org repos) with standalone gitleaks CLI binary download.
 - **Conxian Unified Theory v2.0:** Integrated the foundational mathematical framework for sovereign enterprise into `docs/CONXIAN_UNIFIED_THEORY_v2.md`.
 - **Sovereign Enterprise Mandate:** Updated `AGENTS.md` and `docs/AGENTS.md` to enforce $V_X$ and $A_S$ alignment across agentic sessions.
 
@@ -23,6 +25,7 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 - **System Wallet Standardization**: Aligned `SystemWallets` in `conxian-gateway` core with the canonical Sovereign Treasury principal (`SP3FBR2AGK5H9QPNVFJWC7636X22Y620S00000000`).
 - **CON-702 Parent-Control Checkpoint**: Added `docs/architecture/CONXIAN_UI_PARENT_CONTROL_ALIGNMENT_PLAN.md` and aligned role/checklist/portfolio docs so `Conxian_UI` is documented as a supporting/reference consumer surface (no secrets, signing keys, or privileged broadcast authority).
 - **Dependabot target branch**: Changed all 5 ecosystem update entries from `dev` to `main` to ensure security updates are applied to the production branch directly.
+- **Stale Branch Cleanup**: Deleted `circleci-project-setup`, `fix/diagnostics-and-contamination`, and `repair-main-integrity-18247122129986130953` (unmerged/abandoned). Reset `staged` (fast-forward) and `dev` (force-reset) to `main` to align promotion pipeline lanes and resolve branch drift.
 
 ### Fixed
 - **Testnet Principals Remediation**: Replaced hardcoded testnet principals (`ST...`) with environment-agnostic or Sovereign-aligned principals (`SP...`) in `conxius-wallet`, `conxian-ui`, and `Conxian` mainnet release plans.
@@ -31,6 +34,7 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 - **Gemini Scheduled Triage**: Fixed search query from AND logic (`no:label label:"status/needs-triage"`) to OR logic (`no:label,label:"status/needs-triage"`) and added graceful fallback for empty result sets.
 - **Gemini Dispatch Fallthrough**: Added `needs.dispatch.result == 'success'` guard to prevent false-positive failure comments when the dispatch job is skipped (e.g., for forked PRs).
 - **Sprint 3 Completion**: All 6 Sprint 3 issues (#713, #714, #718, #722, #723, #724) verified closed. Updated `docs/UNIFIED_PRODUCTION_READINESS_GAP_REPORT.md` and `docs/REMAINING_UNIVERSAL_SUPPORT_RESEARCH.md` to reflect Sprint 3 completion and resolved research outcomes (issues #735-#738).
+- **Submodule Pin Fix**: Updated stale `lib-conxian-core` pin from `991bc57a` (no longer exists on remote) to current HEAD `cf809426`. Fixed `scripts/verify_submodule_integrity.py` to skip `update=none` submodules (Conxian) that are intentionally never initialized.
 
 ### Security
 - **Mock Pattern Enforcement**: Verified that `mock-integrations` features in `conxian-gateway` and `conxian-nexus` are strictly gated by `compile_error!` for release builds.
