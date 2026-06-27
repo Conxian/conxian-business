@@ -12,25 +12,23 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 ### Added
 - **Release Hygiene**: Added missing `## [Unreleased]` sections to submodule changelogs in `conxian-gateway`, `conxian-nexus`, `conxius-wallet`, `conxius-platform`, `Conxian`, and `lib-conxian-core`.
 - **Render Deployment Remediation**: Fixed critical port binding issue in `conxian-ui` to resolve "Unknown --listen endpoint scheme" errors on Render.
-- **Portfolio-wide Nomenclature Alignment**: Executed a comprehensive sweep to replace deprecated terms (`Sovereign` -> `Sovereign`, `Conxius Orbit` -> `Conxius Orbit`, `Conxius Enclave SDK` -> `Conxius Enclave SDK`) across all submodules and documentation.
-- **CI/Build Stabilization**: Resolved `pnpm` dependency conflicts in `apps/control-plane` and installed missing `setuptools` to support submodule build scripts.
-- **Submodule Hygiene**: Standardized `CHANGELOG.md` files with `## [Unreleased]` sections portfolio-wide to ensure release readiness.
-
-- **System Trait Alignment**: Added missing `bond-traits` to the Simnet deployment plan in the `Conxian` repository to stabilize protocol integration tests.
+- **Submodule Integrity Scripts**: Created `scripts/verify_submodule_integrity.py` and `scripts/verify_contamination_guard.py` to resolve daily Submodule Pin Integrity Audit workflow failures. Scripts validate submodule initialization state and scan for hardcoded testnet principals.
 - **Conxian Unified Theory v2.0:** Integrated the foundational mathematical framework for sovereign enterprise into `docs/CONXIAN_UNIFIED_THEORY_v2.md`.
 - **Sovereign Enterprise Mandate:** Updated `AGENTS.md` and `docs/AGENTS.md` to enforce $V_X$ and $A_S$ alignment across agentic sessions.
 
 ### Changed
 - **BOS Source-of-Truth Restoration**: Restored over 40 missing canonical documents and specification stubs to `conxian-business/` and `docs/` from Git history to repair repository integrity and ensure all documentation references resolve correctly.
-- **Nomenclature Realignment**: Executed a system-wide realignment of public-facing documentation, replacing "Sovereign" with "Sovereign" across root README, Gateway PRD, and ecosystem-wide specifications to improve public clarity and align with the sovereignty-first mandate.
 - **Repository Versioning**: Updated root `README.md` to reflect BOS v1.9.4 alignment.
 - **System Wallet Standardization**: Aligned `SystemWallets` in `conxian-gateway` core with the canonical Sovereign Treasury principal (`SP3FBR2AGK5H9QPNVFJWC7636X22Y620S00000000`).
 - **CON-702 Parent-Control Checkpoint**: Added `docs/architecture/CONXIAN_UI_PARENT_CONTROL_ALIGNMENT_PLAN.md` and aligned role/checklist/portfolio docs so `Conxian_UI` is documented as a supporting/reference consumer surface (no secrets, signing keys, or privileged broadcast authority).
+- **Dependabot target branch**: Changed all 5 ecosystem update entries from `dev` to `main` to ensure security updates are applied to the production branch directly.
 
 ### Fixed
 - **Testnet Principals Remediation**: Replaced hardcoded testnet principals (`ST...`) with environment-agnostic or Sovereign-aligned principals (`SP...`) in `conxius-wallet`, `conxian-ui`, and `Conxian` mainnet release plans.
 - **Contamination Guard Compliance (CON-371):** Finalized remediation of hardcoded testnet principals in the `Conxian` submodule to satisfy production contamination gates.
 - **DEX Logic Correction**: Resolved a result-type mismatch in the `concentrated-liquidity-pool.clar` swap-execution path.
+- **Gemini Scheduled Triage**: Fixed search query from AND logic (`no:label label:"status/needs-triage"`) to OR logic (`no:label,label:"status/needs-triage"`) and added graceful fallback for empty result sets.
+- **Gemini Dispatch Fallthrough**: Added `needs.dispatch.result == 'success'` guard to prevent false-positive failure comments when the dispatch job is skipped (e.g., for forked PRs).
 
 ### Security
 - **Mock Pattern Enforcement**: Verified that `mock-integrations` features in `conxian-gateway` and `conxian-nexus` are strictly gated by `compile_error!` for release builds.
