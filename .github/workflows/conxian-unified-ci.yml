@@ -299,14 +299,12 @@ jobs:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
-    - uses: pnpm/action-setup@v4
-      with:
-        version: '9'
+    - name: Enable corepack
+      run: corepack enable
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:
-        node-version: '20'
-        # conxius-wallet is pnpm-lockfile-first; keep cache/install aligned to pnpm lockfile.
+        node-version: '22'
         cache: 'pnpm'
         cache-dependency-path: conxius-wallet/pnpm-lock.yaml
     - name: Install & Test
