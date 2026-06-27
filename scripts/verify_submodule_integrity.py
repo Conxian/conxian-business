@@ -66,6 +66,12 @@ def check_submodule_pins(submodules: dict[str, dict[str, str]]) -> list[str]:
             errors.append(f"Submodule '{path}': directory does not exist")
             continue
 
+        # Submodules with update=none are intentionally pinned and never initialized.
+        # They are valid as long as the directory exists (even if empty).
+        if submodules[path].get("update", "") == "none":
+            print(f"  OK  {path}: update=none (intentionally pinned, skip init check)")
+            continue
+
         # Check if the submodule has been initialized (has .git file or directory)
         git_path = REPO_ROOT / ".git" / "modules" / path
         if not git_path.exists():
