@@ -38,10 +38,50 @@ jobs:
           permission-issues: 'write'
           permission-pull-requests: 'write'
 
+      - name: 'Check Gemini auth availability'
+        id: 'auth_gate'
+        env:
+          GEMINI_API_KEY: '${{ secrets.GEMINI_API_KEY }}'
+          USE_VERTEX_AI: '${{ vars.GOOGLE_GENAI_USE_VERTEXAI }}'
+          GOOGLE_CLOUD_PROJECT: '${{ vars.GOOGLE_CLOUD_PROJECT }}'
+          SERVICE_ACCOUNT_EMAIL: '${{ vars.SERVICE_ACCOUNT_EMAIL }}'
+          GCP_WIF_PROVIDER: '${{ vars.GCP_WIF_PROVIDER }}'
+        run: |-
+          has_gemini_api_key='false'
+          if [[ -n "${GEMINI_API_KEY}" ]]; then
+            has_gemini_api_key='true'
+          fi
+
+          use_vertex_ai='false'
+          if [[ "${USE_VERTEX_AI,,}" == 'true' ]]; then
+            use_vertex_ai='true'
+          fi
+
+          has_vertex_auth='false'
+          if [[ "${use_vertex_ai}" == 'true' ]] && [[ -n "${GOOGLE_CLOUD_PROJECT}" ]] && [[ -n "${SERVICE_ACCOUNT_EMAIL}" ]] && [[ -n "${GCP_WIF_PROVIDER}" ]]; then
+            has_vertex_auth='true'
+          fi
+
+          if [[ "${has_gemini_api_key}" == 'true' || "${has_vertex_auth}" == 'true' ]]; then
+            echo 'ready=true' >> "${GITHUB_OUTPUT}"
+          else
+            echo 'ready=false' >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: 'Skip Gemini review (auth not configured)'
+        if: |-
+          ${{ steps.auth_gate.outputs.ready != 'true' }}
+        run: |-
+          echo '::warning::Skipping Gemini review: no GEMINI_API_KEY secret and no complete Vertex AI auth configuration (GOOGLE_GENAI_USE_VERTEXAI=true + GOOGLE_CLOUD_PROJECT + SERVICE_ACCOUNT_EMAIL + GCP_WIF_PROVIDER).'
+
       - name: 'Checkout repository'
+        if: |-
+          ${{ steps.auth_gate.outputs.ready == 'true' }}
         uses: 'actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8' # ratchet:actions/checkout@v6
 
       - name: 'Run Gemini pull request review'
+        if: |-
+          ${{ steps.auth_gate.outputs.ready == 'true' }}
         uses: 'google-github-actions/run-gemini-cli@v0' # ratchet:exclude
         id: 'gemini_pr_review'
         env:
