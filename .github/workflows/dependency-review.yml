@@ -101,7 +101,7 @@ jobs:
       denied_changes: ${{ steps.review.outputs.denied-changes }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Review dependencies
         id: review
