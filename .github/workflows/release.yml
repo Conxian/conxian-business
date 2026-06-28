@@ -1,0 +1,190 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: SemVer tag to release (for example v1.2.3)
+        required: false
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Resolve and validate release tag
+        id: resolve_tag
+        run: |
+          set -euo pipefail
+
+          tag_input="${{ github.event.inputs.tag || '' }}"
+          tag=""
+
+          if [[ "${GITHUB_REF:-}" == refs/tags/* ]]; then
+            tag="${GITHUB_REF#refs/tags/}"
+          elif [[ -n "${tag_input}" ]]; then
+            tag="${tag_input}"
+          else
+            echo "::error::No release tag found. Provide workflow_dispatch input 'tag' (for example v1.2.3), or run from a tag ref."
+            exit 1
+          fi
+
+          if [[ ! "${tag}" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+            echo "::error::Invalid tag '${tag}'. Expected SemVer format vX.Y.Z."
+            exit 1
+          fi
+
+          if ! git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
+            echo "::error::Tag '${tag}' does not exist in this repository."
+            exit 1
+          fi
+
+          version="${tag#v}"
+          tag_commit="$(git rev-list -n 1 "${tag}")"
+
+          {
+            echo "tag=${tag}"
+            echo "version=${version}"
+            echo "tag_commit=${tag_commit}"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Verify tag commit is on main ancestry
+        env:
+          TAG: ${{ steps.resolve_tag.outputs.tag }}
+          TAG_COMMIT: ${{ steps.resolve_tag.outputs.tag_commit }}
+        run: |
+          set -euo pipefail
+
+          git fetch --no-tags origin main
+
+          if ! git merge-base --is-ancestor "${TAG_COMMIT}" origin/main; then
+            echo "::error::Tag '${TAG}' points to commit '${TAG_COMMIT}' that is not an ancestor of origin/main. Releases must be cut from main."
+            exit 1
+          fi
+
+      - name: Validate release hygiene
+        env:
+          VERSION: ${{ steps.resolve_tag.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import os
+          import re
+          import sys
+          from pathlib import Path
+
+          version = os.environ["VERSION"]
+          changelog = Path("CHANGELOG.md").read_text(encoding="utf-8")
+          readme = Path("README.md").read_text(encoding="utf-8")
+
+          errors = []
+
+          if not re.search(r"^##\s*\[Unreleased\]\s*$", changelog, re.MULTILINE):
+            errors.append("CHANGELOG.md is missing required '## [Unreleased]' section.")
+
+          release_heading = re.compile(
+            rf"^##\s*\[{re.escape(version)}\]\s*-\s*\d{{4}}-\d{{2}}-\d{{2}}\s*$",
+            re.MULTILINE,
+          )
+          if not release_heading.search(changelog):
+            errors.append(
+              f"CHANGELOG.md is missing release section '## [{version}] - YYYY-MM-DD'."
+            )
+
+          if not re.search(rf"\(BOS\s+v{re.escape(version)}\)", readme):
+            errors.append(
+              f"README.md BOS marker does not match release version v{version}."
+            )
+
+          if errors:
+            for message in errors:
+              print(f"::error::{message}")
+            sys.exit(1)
+          PY
+
+      - name: Extract release notes from CHANGELOG.md
+        id: release_notes
+        env:
+          VERSION: ${{ steps.resolve_tag.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import os
+          import re
+          import sys
+          from pathlib import Path
+
+          version = os.environ["VERSION"]
+          changelog = Path("CHANGELOG.md").read_text(encoding="utf-8")
+
+          section_match = re.search(
+            rf"^##\s*\[{re.escape(version)}\]\s*-\s*(\d{{4}}-\d{{2}}-\d{{2}})\s*$\n"
+            rf"(?P<body>.*?)(?=^##\s*\[|\Z)",
+            changelog,
+            re.MULTILINE | re.DOTALL,
+          )
+
+          if section_match is None:
+            print(
+              f"::error::Could not locate release notes section for version {version} in CHANGELOG.md."
+            )
+            sys.exit(1)
+
+          release_date = section_match.group(1)
+          body = section_match.group("body").strip()
+
+          if not body:
+            print(f"::error::Release section [{version}] in CHANGELOG.md is empty.")
+            sys.exit(1)
+
+          notes = f"## [{version}] - {release_date}\n\n{body}\n"
+          Path("release-notes.md").write_text(notes, encoding="utf-8")
+
+          github_output = Path(os.environ["GITHUB_OUTPUT"])
+          with github_output.open("a", encoding="utf-8") as output:
+            output.write(f"release_date={release_date}\n")
+          PY
+
+      - name: Create or update GitHub Release
+        env:
+          TAG: ${{ steps.resolve_tag.outputs.tag }}
+          TAG_COMMIT: ${{ steps.resolve_tag.outputs.tag_commit }}
+        run: |
+          set -euo pipefail
+
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            echo "Release '${TAG}' already exists. Updating title and notes."
+            gh release edit "${TAG}" \
+              --title "${TAG}" \
+              --notes-file release-notes.md
+          else
+            echo "Creating release '${TAG}'."
+            gh release create "${TAG}" \
+              --verify-tag \
+              --target "${TAG_COMMIT}" \
+              --title "${TAG}" \
+              --notes-file release-notes.md
+          fi
