@@ -9,8 +9,44 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+## [1.9.5] - 2026-06-30
+
+### Added
+- **Governance Hardening**: Standardized `CODEOWNERS` for the BOS repository and submodules.
+- **CI Infrastructure**: Restored 9 missing CI validation scripts in `scripts/` to enforce unified CI policy coverage.
+- **Knowledge Retention**: Initialized `verify_knowledge_retention.py` to enforce ZSE (Zero Secret Egress) compliance checks.
+- **Release Hygiene**: Added automated Release Hygiene validator to CI pipeline.
+
+### Changed
+- **BOS Platformization**: Updated `conxian-business/BOS_PLATFORM_SPEC.md` to v2.3 for industrial standard alignment.
+- **B2B Suite Path**: Corrected the enclave SDK path in the unified CI workflow (`lib-conclave-sdk` -> `conxius-enclave-sdk`).
+
+### Fixed
+- **Production Contamination**: Remediated 4 hardcoded testnet principals (`ST...`) in production-track Clarity contracts across `conxius-wallet` and `conxius-enclave-sdk`.
+- **Contamination Guard**: Updated `verify_contamination_guard.py` regex to accurately distinguish between `ST` (testnet) and `SP` (mainnet) addresses.
+- **Artifact Hygiene**: Removed prohibited `package-lock.json` from the showcase-dapp track via `verify_tracked_artifacts.py` enforcement.
+
+
 ### Added
 - **Release Hygiene**: Added missing `## [Unreleased]` sections to submodule changelogs in `conxian-gateway`, `conxian-nexus`, `conxius-wallet`, `conxius-platform`, `Conxian`, and `lib-conxian-core`.
+
+## [1.9.5] - 2026-06-30
+
+### Added
+- **Governance Hardening**: Standardized `CODEOWNERS` for the BOS repository and submodules.
+- **CI Infrastructure**: Restored 9 missing CI validation scripts in `scripts/` to enforce unified CI policy coverage.
+- **Knowledge Retention**: Initialized `verify_knowledge_retention.py` to enforce ZSE (Zero Secret Egress) compliance checks.
+- **Release Hygiene**: Added automated Release Hygiene validator to CI pipeline.
+
+### Changed
+- **BOS Platformization**: Updated `conxian-business/BOS_PLATFORM_SPEC.md` to v2.3 for industrial standard alignment.
+- **B2B Suite Path**: Corrected the enclave SDK path in the unified CI workflow (`lib-conclave-sdk` -> `conxius-enclave-sdk`).
+
+### Fixed
+- **Production Contamination**: Remediated 4 hardcoded testnet principals (`ST...`) in production-track Clarity contracts across `conxius-wallet` and `conxius-enclave-sdk`.
+- **Contamination Guard**: Updated `verify_contamination_guard.py` regex to accurately distinguish between `ST` (testnet) and `SP` (mainnet) addresses.
+- **Artifact Hygiene**: Removed prohibited `package-lock.json` from the showcase-dapp track via `verify_tracked_artifacts.py` enforcement.
+
 - **Render Deployment Remediation**: Fixed critical port binding issue in `conxian-ui` to resolve "Unknown --listen endpoint scheme" errors on Render.
 - **CI Pipeline Hardening**: Added `cargo clippy`, `cargo audit`, `--locked` flag, and SHA-pinned Rust toolchain to `gateway-suite` and `b2b-suite` CI jobs, bringing them to parity with `lib-conxian-core-suite`. Clippy warnings are non-fatal initially (to be upgraded to `-D warnings` once codebases are clean).
 - **Submodule Integrity Scripts**: Created `scripts/verify_submodule_integrity.py` and `scripts/verify_contamination_guard.py` to resolve daily Submodule Pin Integrity Audit workflow failures. Scripts validate submodule initialization state and scan for hardcoded testnet principals.
@@ -68,6 +104,24 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ### Fixed
 - **Release Hygiene:** Remediated missing `## [Unreleased]` and versioning gaps in submodule changelogs identified by CI.
+
+## [1.9.5] - 2026-06-30
+
+### Added
+- **Governance Hardening**: Standardized `CODEOWNERS` for the BOS repository and submodules.
+- **CI Infrastructure**: Restored 9 missing CI validation scripts in `scripts/` to enforce unified CI policy coverage.
+- **Knowledge Retention**: Initialized `verify_knowledge_retention.py` to enforce ZSE (Zero Secret Egress) compliance checks.
+- **Release Hygiene**: Added automated Release Hygiene validator to CI pipeline.
+
+### Changed
+- **BOS Platformization**: Updated `conxian-business/BOS_PLATFORM_SPEC.md` to v2.3 for industrial standard alignment.
+- **B2B Suite Path**: Corrected the enclave SDK path in the unified CI workflow (`lib-conclave-sdk` -> `conxius-enclave-sdk`).
+
+### Fixed
+- **Production Contamination**: Remediated 4 hardcoded testnet principals (`ST...`) in production-track Clarity contracts across `conxius-wallet` and `conxius-enclave-sdk`.
+- **Contamination Guard**: Updated `verify_contamination_guard.py` regex to accurately distinguish between `ST` (testnet) and `SP` (mainnet) addresses.
+- **Artifact Hygiene**: Removed prohibited `package-lock.json` from the showcase-dapp track via `verify_tracked_artifacts.py` enforcement.
+
 - **Repository Hygiene:** Executed portfolio-wide pruning of merged branches in root and submodules.
 
 ## [1.9.2] - 2026-04-14

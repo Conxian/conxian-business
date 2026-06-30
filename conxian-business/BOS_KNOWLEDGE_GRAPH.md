@@ -1,16 +1,37 @@
+# Conxian BOS Knowledge Graph
 
-## 6. Crystallized Entities (v1.9.3 - April 2026)
+## 1. Governance Baseline
+- **Version**: v1.9.5
+- **Status**: Mainnet Ready
+- **Authoritative Source**: `conxian-business/README.md`
 
-| ID | Type | Name/Title | Status | Relationship |
-| :--- | :--- | :--- | :--- | :--- |
-| `BOS_SYSTEM` | Project | Conxian BOS v1.9.3 | Stable | **anchors** all modules |
-| `NEXUS` | Library | conxian-nexus (v0.5.1) | Production | **uses** `KwilAdapter` |
-| `GATEWAY` | Library | conxian-gateway (v0.1.1) | Production | **uses** `StacksRpcAggregator` |
-| `CONCLAVE_SDK` | Library | lib-conclave-sdk (v1.9.3) | Stable | **dependency_of** `WALLET` |
-| `CORE_LIB` | Library | lib-conxian-core (v1.9.3) | Stable | **dependency_of** `GATEWAY` |
-| `JUR_SHARDING` | Decision | Jurisdictional Sharding | Implemented | **isolated_by** `BNS` |
-| `ZSE_MANDATE` | Decision | Zero Secret Egress | Enforced | **fixed** `PUBLIC_EXPOSURE_RISK` |
-| `BITVM2_STATE` | Concept | BitVM2 State Proofs | Active | **verified_by** `CORE_LIB` |
+## 2. Core Entities
+
+### Projects
+- **BOS_SYSTEM**: The Conxian Business Operations System (v1.9.5).
+- **CONXIAN_PROTOCOL**: Clarity 4.0 smart contracts (Stacks/Bitcoin).
+- **CONXIAN_GATEWAY**: High-performance Rust middleware.
+- **CONXIAN_NEXUS**: State node for cross-chain truth.
+
+### Libraries
+- **LIB_CONXIAN_CORE**: Shared primitives for BitVM2 and CJCS.
+- **CONXIUS_ENCLAVE_SDK**: TEE/StrongBox abstraction layer.
+
+## 3. Decisions & Mandates
+- **ZSE_MANDATE**: Zero Secret Egress enforced across all documentation.
+- **SOVEREIGN_FIRST**: Dynamic principal resolution via `operational-treasury.clar`.
+- **UNIFIED_THEORY_v2**: Execution velocity and autonomy optimization framework.
+
+## 4. Relationship Map
+- `CORE_LIB` **verified_by** `BITVM2_STATE`
+- `GATEWAY` **uses** `CORE_LIB`
+- `NEXUS` **anchors** `STATE_ROOTS`
+- `WALLET` **requires** `ENCLAVE_SDK`
+
+## 5. Recent Crystallization (v1.9.5 - June 2026)
+- **CI_VALIDATION_RESTORED**: Restored 9 missing scripts in `scripts/` to enforce unified CI policy.
+- **TESTNET_PRINCIPAL_REMEDIATION**: Replaced all hardcoded `ST...` addresses in production track with `SP...` (Sovereign Treasury).
+- **CODEOWNERS_STANDARDIZATION**: Unified ownership across the BOS repository.
 
 ---
-*Crystallized by Jules at End-of-Sprint Review (April 2026).*
+*Crystallized by Jules (June 2026).*

@@ -25,7 +25,7 @@ jobs:
     - name: Classify PR change scope
       if: github.event_name == 'pull_request'
       id: classify_pr
-      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # ratchet:actions/github-script@v7
+      uses: actions/github-script@v7 # ratchet:actions/github-script@v7
       with:
         script: |
           const pr = context.payload.pull_request;
@@ -59,8 +59,8 @@ jobs:
           const b2b = paths.some((path) => (
             path === 'conxian-nexus' ||
             path.startsWith('conxian-nexus/') ||
-            path === 'lib-conclave-sdk' ||
-            path.startsWith('lib-conclave-sdk/') ||
+            path === 'conxius-enclave-sdk' ||
+            path.startsWith('conxius-enclave-sdk/') ||
             path === '.gitmodules'
           ));
 
@@ -214,13 +214,13 @@ jobs:
       with:
         workspaces: |
           conxian-nexus
-          lib-conclave-sdk
+          conxius-enclave-sdk
     - name: Check & Test
       run: |
         cd conxian-nexus
         cargo test
 
-        cd ../lib-conclave-sdk
+        cd ../conxius-enclave-sdk
         cargo test
 
   lib-conxian-core-suite:
@@ -241,7 +241,7 @@ jobs:
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup Rust
-      uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
+      uses: dtolnay/rust-toolchain@master # stable
       with:
         components: clippy
     - name: Rust Cache

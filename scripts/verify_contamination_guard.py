@@ -5,7 +5,7 @@ Scans all Clarity (.clar) contract files across the repository (including
 initialized submodules) for hardcoded testnet principals (addresses starting
 with 'ST...') in production-track code paths.
 
-Per the Sovereign-First Deployment Mandate, hardcoded ST.../SP... addresses
+Per the Sovereign-First Deployment Mandate, hardcoded ST... addresses
 in production source trigger an immediate build-break.
 """
 
@@ -17,9 +17,8 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Patterns that indicate a hardcoded testnet principal in Clarity code.
-# Matches: ST1... or ST2... or ST3... (Stacks testnet addresses)
-# but NOT SP... (mainnet addresses).
-TESTNET_PRINCIPAL_RE = re.compile(r"'S[TP][0-9A-HJ-NP-Z]{25,40}")
+# Matches: ST... (Stacks testnet addresses) or SN... (simnet)
+TESTNET_PRINCIPAL_RE = re.compile(r"'ST[0-9A-HJ-NP-Z]{25,40}")
 SIMNET_PRINCIPAL_RE = re.compile(r"'SN[0-9A-HJ-NP-Z]{25,40}")
 
 # Paths to exclude from scanning
@@ -56,7 +55,7 @@ def find_clar_files() -> list[Path]:
     clar_files = []
     for clar_file in REPO_ROOT.rglob("*.clar"):
         parts = set(clar_file.relative_to(REPO_ROOT).parts)
-        if parts & EXCLUDE_DIRS:
+        if any(exclude in parts for exclude in EXCLUDE_DIRS):
             continue
         clar_files.append(clar_file)
     return clar_files
