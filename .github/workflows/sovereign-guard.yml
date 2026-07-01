@@ -21,7 +21,7 @@ jobs:
           token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
           persist-credentials: false
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Run Contamination Guard
