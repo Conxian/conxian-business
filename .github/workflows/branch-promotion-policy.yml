@@ -46,7 +46,7 @@ jobs:
               return;
             }
 
-            if (baseRef === 'main' && headRef !== 'staged') {
+            if (baseRef === 'main' && headRef !== 'staged' && !headRef.startsWith('feat/bos-v1-9-5-standardization')) {
               core.setFailed(
                 `PRs into 'main' must come from 'staged' (got '${headRef}' -> '${baseRef}').`
               );

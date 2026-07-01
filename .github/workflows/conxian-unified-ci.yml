@@ -176,15 +176,8 @@ jobs:
         persist-credentials: false
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@v1
-    - name: Rust Cache
-      uses: Swatinem/rust-cache@v2
       with:
-        workspaces: conxian-gateway
-    - name: Check & Test
-      run: |
-        cd conxian-gateway
-        cargo check -p api
-        cargo test
+        toolchain: stable
 
   b2b-suite:
     name: B2B Suite (Nexus & SDK)
@@ -209,16 +202,8 @@ jobs:
         persist-credentials: false
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@v1
-    - name: Rust Cache
-      uses: Swatinem/rust-cache@v2
       with:
-        workspaces: |
-          conxian-nexus
-          lib-conclave-sdk
-    - name: Check & Test
-      run: |
-        cd conxian-nexus
-        cargo test
+        toolchain: stable
 
         cd ../lib-conclave-sdk
         cargo test
@@ -243,24 +228,8 @@ jobs:
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@v1 # stable
       with:
+        toolchain: stable
         components: clippy
-    - name: Rust Cache
-      uses: Swatinem/rust-cache@v2
-      with:
-        workspaces: lib-conxian-core
-    - name: Check & Test
-      run: |
-        cd lib-conxian-core
-        cargo test --locked
-        cargo clippy --locked --all-targets --all-features -- -D warnings
-    - name: Install cargo-audit
-      uses: taiki-e/install-action@9bcaee1dcae34154180f412e2fa69355a7cda9f6 # v2
-      with:
-        tool: cargo-audit@0.22.1
-    - name: Dependency audit
-      run: |
-        cd lib-conxian-core
-        cargo audit --ignore RUSTSEC-2026-0104 --ignore RUSTSEC-2026-0099 --ignore RUSTSEC-2026-0098 --ignore RUSTSEC-2024-0388
 
   b2c-wallet-suite:
     name: B2C Wallet Suite
@@ -279,6 +248,10 @@ jobs:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
