@@ -9,7 +9,6 @@ Per the Sovereign-First Deployment Mandate, hardcoded ST... addresses
 in production source trigger an immediate build-break.
 """
 
-import subprocess
 import sys
 import re
 from pathlib import Path

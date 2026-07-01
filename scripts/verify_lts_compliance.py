@@ -2,7 +2,6 @@
 """Validate all package manifests against the LTS version baseline."""
 
 import json
-import os
 import sys
 from pathlib import Path
 
