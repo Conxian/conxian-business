@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "bun test"
   },
   "dependencies": {
     "next": "^16.2.6",
@@ -17,6 +18,7 @@
     "typescript": "^5.9.3",
     "@types/node": "^24.10.0",
     "@types/react": "^19.2.3",
-    "@types/react-dom": "^19.2.3"
+    "@types/react-dom": "^19.2.3",
+    "@types/bun": "latest"
   }
 }

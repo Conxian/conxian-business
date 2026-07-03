@@ -64,11 +64,11 @@ export function resetAdminRuntimeClientConfig(): void {
   runtimeClientConfig = {};
 }
 
-function normalizeRuntimeBaseUrl(runtimeBaseUrl: string): string {
+export function normalizeRuntimeBaseUrl(runtimeBaseUrl: string): string {
   return runtimeBaseUrl.replace(/\/+$/, "");
 }
 
-function getRuntimeBaseUrlFromEnvironment(): string | undefined {
+export function getRuntimeBaseUrlFromEnvironment(): string | undefined {
   const runtimeProcess = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process;
   const environment = runtimeProcess?.env;
 
@@ -86,7 +86,7 @@ function getRuntimeBaseUrlFromEnvironment(): string | undefined {
   return undefined;
 }
 
-function resolveRuntimeBaseUrl(options?: AdminRuntimeRequestOptions): string {
+export function resolveRuntimeBaseUrl(options?: AdminRuntimeRequestOptions): string {
   const configuredRuntimeBaseUrl = options?.runtimeBaseUrl ?? runtimeClientConfig.runtimeBaseUrl ?? getRuntimeBaseUrlFromEnvironment();
 
   if (!configuredRuntimeBaseUrl || configuredRuntimeBaseUrl.trim().length === 0) {
@@ -98,7 +98,7 @@ function resolveRuntimeBaseUrl(options?: AdminRuntimeRequestOptions): string {
   return normalizeRuntimeBaseUrl(configuredRuntimeBaseUrl);
 }
 
-function resolveFetchImplementation(options?: AdminRuntimeRequestOptions): RuntimeFetch {
+export function resolveFetchImplementation(options?: AdminRuntimeRequestOptions): RuntimeFetch {
   const fetchImpl = options?.fetchImpl ?? runtimeClientConfig.fetchImpl ?? globalThis.fetch;
 
   if (typeof fetchImpl !== "function") {
@@ -110,7 +110,7 @@ function resolveFetchImplementation(options?: AdminRuntimeRequestOptions): Runti
   return fetchImpl;
 }
 
-function buildHeaders(initHeaders?: HeadersInit, optionsHeaders?: HeadersInit): Headers {
+export function buildHeaders(initHeaders?: HeadersInit, optionsHeaders?: HeadersInit): Headers {
   const headers = new Headers(runtimeClientConfig.defaultHeaders);
 
   if (initHeaders) {
@@ -128,7 +128,7 @@ function buildHeaders(initHeaders?: HeadersInit, optionsHeaders?: HeadersInit): 
   return headers;
 }
 
-async function parseRuntimeErrorEnvelope(response: Response): Promise<AdminApiError | undefined> {
+export async function parseRuntimeErrorEnvelope(response: Response): Promise<AdminApiError | undefined> {
   const contentType = response.headers.get("content-type") ?? "";
   if (!contentType.includes("application/json")) {
     return undefined;
@@ -145,7 +145,7 @@ async function parseRuntimeErrorEnvelope(response: Response): Promise<AdminApiEr
   }
 }
 
-function buildEndpointUrl(path: string, runtimeBaseUrl: string): string {
+export function buildEndpointUrl(path: string, runtimeBaseUrl: string): string {
   if (!path.startsWith("/")) {
     return `${runtimeBaseUrl}/${path}`;
   }
