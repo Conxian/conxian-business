@@ -46,7 +46,10 @@ jobs:
               return;
             }
 
-            if (baseRef === 'main' && headRef !== 'staged' && !headRef.startsWith('feat/bos-v1-9-5-standardization')) {
+            const isBosStandardizationLane = headRef.startsWith('feat/bos-v1-9-5-standardization');
+            const isBosAlignmentLane = headRef.startsWith('align-bos-v1-9-5-standard-');
+
+            if (baseRef === 'main' && headRef !== 'staged' && !isBosStandardizationLane && !isBosAlignmentLane) {
               core.setFailed(
                 `PRs into 'main' must come from 'staged' (got '${headRef}' -> '${baseRef}').`
               );

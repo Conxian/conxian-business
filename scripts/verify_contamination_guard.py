@@ -2,10 +2,10 @@
 """Production Contamination Guard.
 
 Scans all Clarity (.clar) contract files across the repository (including
-initialized submodules) for hardcoded testnet principals (addresses starting
-with 'ST...') in production-track code paths.
+initialized submodules) for hardcoded principals (addresses starting with
+'ST...', 'SP...', or 'SN...') in production-track code paths.
 
-Per the Sovereign-First Deployment Mandate, hardcoded ST... addresses
+Per the Sovereign-First Deployment Mandate, hardcoded ST.../SP... addresses
 in production source trigger an immediate build-break.
 """
 
@@ -15,9 +15,11 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-# Patterns that indicate a hardcoded testnet principal in Clarity code.
-# Matches: ST... (Stacks testnet addresses) or SN... (simnet)
+# Patterns that indicate a hardcoded principal in Clarity code.
+# Matches: ST... (Stacks testnet addresses), SP... (Stacks mainnet addresses),
+# or SN... (simnet).
 TESTNET_PRINCIPAL_RE = re.compile(r"'ST[0-9A-HJ-NP-Z]{25,40}")
+MAINNET_PRINCIPAL_RE = re.compile(r"'SP[0-9A-HJ-NP-Z]{25,40}")
 SIMNET_PRINCIPAL_RE = re.compile(r"'SN[0-9A-HJ-NP-Z]{25,40}")
 
 # Paths to exclude from scanning
@@ -61,7 +63,7 @@ def find_clar_files() -> list[Path]:
 
 
 def scan_file(file_path: Path) -> list[tuple[int, str, str]]:
-    """Scan a .clar file for hardcoded testnet principals.
+    """Scan a .clar file for hardcoded principals.
 
     Returns list of (line_number, match_text, principal_type).
     """
@@ -73,6 +75,10 @@ def scan_file(file_path: Path) -> list[tuple[int, str, str]]:
             if match:
                 violations.append((i, match.group(), "testnet (ST...)"))
 
+            match = MAINNET_PRINCIPAL_RE.search(line)
+            if match:
+                violations.append((i, match.group(), "mainnet (SP...)"))
+
             match = SIMNET_PRINCIPAL_RE.search(line)
             if match:
                 violations.append((i, match.group(), "simnet (SN...)"))
@@ -83,7 +89,7 @@ def scan_file(file_path: Path) -> list[tuple[int, str, str]]:
 
 def main():
     print("=== Production Contamination Guard ===\n")
-    print("Scanning for hardcoded testnet/simnet principals in .clar files...\n")
+    print("Scanning for hardcoded ST/SP/SN principals in .clar files...\n")
 
     clar_files = find_clar_files()
     print(f"Found {len(clar_files)} .clar file(s)\n")
@@ -108,18 +114,18 @@ def main():
                 prod_violations += 1
 
     if prod_violations > 0:
-        print(f"\n❌ FAIL: {prod_violations} hardcoded testnet/simnet principal(s) "
+        print(f"\n❌ FAIL: {prod_violations} hardcoded principal(s) "
               f"found in production-track .clar files.")
         print("   These must be replaced with dynamic principals sourced from "
               "operational-treasury.clar per the Sovereign-First Deployment Mandate.")
         sys.exit(1)
 
     if total_violations > 0:
-        print(f"\n⚠️  {total_violations} hardcoded testnet/simnet principal(s) found "
+        print(f"\n⚠️  {total_violations} hardcoded principal(s) found "
               f"in non-production-track files only (tests, examples, etc.).")
         print("   Review these before promoting any of these files to production.")
     else:
-        print("✅ No hardcoded testnet/simnet principals found.")
+        print("✅ No hardcoded ST/SP/SN principals found.")
 
     print("\n✅ Production Contamination Guard: PASSED")
     sys.exit(0)
