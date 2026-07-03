@@ -214,6 +214,8 @@ jobs:
         persist-credentials: false
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@v1
+      with:
+        toolchain: stable
     - name: Rust Cache
       uses: Swatinem/rust-cache@v2
       with:
@@ -279,6 +281,7 @@ jobs:
   b2c-wallet-suite:
     name: B2C Wallet Suite
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     needs: [change_detection]
     if: >-
       github.event_name == 'push' ||
@@ -317,7 +320,7 @@ jobs:
       run: |
         cd conxius-wallet
         pnpm install --frozen-lockfile --ignore-workspace
-        pnpm test
+        pnpm test -- --reporter=verbose
 
     - name: Upload test artifacts
       if: always()
