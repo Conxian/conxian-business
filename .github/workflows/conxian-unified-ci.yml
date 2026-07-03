@@ -59,8 +59,8 @@ jobs:
           const b2b = paths.some((path) => (
             path === 'conxian-nexus' ||
             path.startsWith('conxian-nexus/') ||
-            path === 'lib-conclave-sdk' ||
-            path.startsWith('lib-conclave-sdk/') ||
+            path === 'conxius-enclave-sdk' ||
+            path.startsWith('conxius-enclave-sdk/') ||
             path === '.gitmodules'
           ));
 
@@ -96,7 +96,7 @@ jobs:
         git submodule update --init
         git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.11'
     - name: Verify knowledge retention (ZSE)
@@ -178,6 +178,15 @@ jobs:
       uses: dtolnay/rust-toolchain@v1
       with:
         toolchain: stable
+    - name: Rust Cache
+      uses: Swatinem/rust-cache@v2
+      with:
+        workspaces: conxian-gateway
+    - name: Check & Test
+      run: |
+        cd conxian-gateway
+        cargo check -p api
+        cargo test
 
   b2b-suite:
     name: B2B Suite (Nexus & SDK)
@@ -204,8 +213,18 @@ jobs:
       uses: dtolnay/rust-toolchain@v1
       with:
         toolchain: stable
+    - name: Rust Cache
+      uses: Swatinem/rust-cache@v2
+      with:
+        workspaces: |
+          conxian-nexus
+          conxius-enclave-sdk
+    - name: Check & Test
+      run: |
+        cd conxian-nexus
+        cargo test
 
-        cd ../lib-conclave-sdk
+        cd ../conxius-enclave-sdk
         cargo test
 
   lib-conxian-core-suite:
@@ -230,10 +249,28 @@ jobs:
       with:
         toolchain: stable
         components: clippy
+    - name: Rust Cache
+      uses: Swatinem/rust-cache@v2
+      with:
+        workspaces: lib-conxian-core
+    - name: Check & Test
+      run: |
+        cd lib-conxian-core
+        cargo test --locked
+        cargo clippy --locked --all-targets --all-features -- -D warnings
+    - name: Install cargo-audit
+      uses: taiki-e/install-action@9bcaee1dcae34154180f412e2fa69355a7cda9f6 # v2
+      with:
+        tool: cargo-audit@0.22.1
+    - name: Dependency audit
+      run: |
+        cd lib-conxian-core
+        cargo audit --ignore RUSTSEC-2026-0104 --ignore RUSTSEC-2026-0099 --ignore RUSTSEC-2026-0098 --ignore RUSTSEC-2024-0388
 
   b2c-wallet-suite:
     name: B2C Wallet Suite
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     needs: [change_detection]
     if: >-
       github.event_name == 'push' ||
@@ -253,7 +290,7 @@ jobs:
       with:
         version: 9
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: '22'
         # conxius-wallet is pnpm-lockfile-first; keep cache/install aligned to pnpm lockfile.
@@ -264,11 +301,11 @@ jobs:
         cd conxius-wallet
         corepack enable
         pnpm install --frozen-lockfile
-        pnpm test
+        pnpm test -- --run
 
     - name: Upload test artifacts
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: conxius-wallet-test-artifacts
         path: |
@@ -280,7 +317,7 @@ jobs:
 
     - name: Upload coverage
       if: github.event_name == 'push' && hashFiles('conxius-wallet/coverage/**') != ''
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: conxius-wallet-coverage
         path: conxius-wallet/coverage
@@ -301,7 +338,7 @@ jobs:
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.11'
     - name: Run Audit
@@ -330,7 +367,7 @@ jobs:
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.11'
     - name: Install & Simulate
