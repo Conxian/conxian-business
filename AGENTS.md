@@ -2,6 +2,7 @@
 
 ## BOS Operational Standards
 > clarity-version: 4
+> bos-version: 1.9.5
 > epoch: latest
 
 ### Sovereign Enterprise Mandate (Unified Theory v2.0)
