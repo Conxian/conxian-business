@@ -270,6 +270,7 @@ jobs:
   b2c-wallet-suite:
     name: B2C Wallet Suite
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     needs: [change_detection]
     if: >-
       github.event_name == 'push' ||
@@ -300,7 +301,7 @@ jobs:
         cd conxius-wallet
         corepack enable
         pnpm install --frozen-lockfile
-        pnpm test
+        pnpm test -- --run
 
     - name: Upload test artifacts
       if: always()
