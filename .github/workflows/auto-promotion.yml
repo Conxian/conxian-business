@@ -89,9 +89,8 @@ jobs:
           # Get commits in source that are not in target
           git fetch origin "$TARGET" 2>/dev/null || true
           COMMITS=$(git log "origin/${TARGET}..HEAD" --oneline --no-merges 2>/dev/null | head -20)
-          COUNT=$(echo "$COMMITS" | grep -c . || echo "0")
 
-          if [ "$COUNT" -eq 0 ]; then
+          if [ -z "$COMMITS" ]; then
             echo "::notice::No new commits to promote from ${SOURCE} to ${TARGET}."
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
