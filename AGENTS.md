@@ -205,6 +205,7 @@ Hard-coded `ST…` / `SP…` addresses in production source trigger an **immedia
 - **Crystallization**: Every session must conclude with a structured digest summarizing entities (People, Projects, Libraries, Decisions) and relationships.
 - **Typed Knowledge**: Agents must prioritize structured entity extraction over flat prose to enable graph-aware traversal.
 - **Verification**: All claims must be cross-referenced against the existing knowledge graph in `conxian-business/BOS_KNOWLEDGE_GRAPH.md`.
+- **Ecosystem Knowledge Base**: Comprehensive documentation at `docs/ECOSYSTEM_KNOWLEDGE_BASE.md`
 
 ---
 
