@@ -13,6 +13,38 @@ Centralized CI/CD workflows for the Conxian ecosystem. All submodules should use
 | `dependency-review.yml` | Dependency vulnerability review | All |
 | `hygiene.yml` | Code hygiene checks | All |
 
+## Enhancement History (Sprint 2026-07-08)
+
+### Node CI Fixes
+- **Before**: Failed open with `|| echo "No lint script"` pattern
+- **After**: Proper conditional logic that fails when script exists but fails
+- **Implementation**: Check `package.json` for script presence before skipping
+
+```yaml
+# ❌ Wrong - fails open
+- run: pnpm lint || echo "No lint script"
+
+# ✅ Correct - fails properly
+- run: |
+    if pnpm lint 2>/dev/null; then exit 0
+    elif grep -q '"lint"' package.json; then exit 1
+    else echo "No lint script - skipping"
+    fi
+```
+
+### Action SHA Verification
+All action SHAs must be verified before use:
+```bash
+# Verify action SHA exists
+curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+  "https://api.github.com/repos/<owner>/<action>/commits/<sha>" | jq '.sha'
+```
+
+### Submodule Best Practices
+- Always verify submodule commits exist in remote before referencing
+- Use explicit SHA refs, never `HEAD~N` in `.gitmodules`
+- Update submodules before creating PR to avoid CI failures
+
 ## Usage
 
 ### From Rust Repos
