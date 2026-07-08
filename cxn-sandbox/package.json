@@ -16,7 +16,7 @@
     "example:settlement": "tsx examples/payments/bitcoin-settlement.ts",
     "example:lightning": "tsx examples/payments/lightning-payment.ts",
     "example:enclave": "tsx examples/security/enclave-attestation.ts",
-    "example:all": "npm run example:hello-world && npm run example:payment && npm run example:settlement && npm run example:lightning && npm run example:enclave"
+    "example:all": "npm run example:hello-world && npm run example:payment"
   },
   "dependencies": {
     "@conxian/sdk": "workspace:*",
