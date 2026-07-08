@@ -46,7 +46,6 @@ jobs:
   # ============================================
   rust-ci:
     name: Rust CI
-    if: hashFiles('**/Cargo.toml') != ''
     uses: ./.github/workflows/reusable/rust-ci.yml
 
   # ============================================
@@ -54,7 +53,6 @@ jobs:
   # ============================================
   node-ci:
     name: Node.js CI
-    if: hashFiles('**/package.json') != ''
     uses: ./.github/workflows/reusable/node-ci.yml
 
   # ============================================
@@ -62,7 +60,6 @@ jobs:
   # ============================================
   codeql:
     name: CodeQL Analysis
-    if: hashFiles('**/package.json') != ''
     uses: ./.github/workflows/reusable/codeql.yml
     with:
       languages: typescript
