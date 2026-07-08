@@ -9,7 +9,11 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+## [1.9.5] - 2026-07-08
+
 ### Added
+- **System-wide BOS v1.9.5 Standardization**: Aligned organization and repository versions to BOS v1.9.5 across Root, README, CHANGELOG, and AGENTS files to signal unified mainnet readiness.
+
 - **Cross-Issue Boundary & Doctrine Sprint — 6 artifacts delivered**:
   - **#825**: Created `docs/BOUNDARY_DECISION_LOG.md` — systematic boundary register for all public-safe vs internal-only artifacts. Classifies 20+ artifacts across strategy, BOS state, architecture, bounties, and CI/CD.
   - **#830**: Created `docs/TRUST_AND_READINESS_VERIFICATION.md` — evaluator-facing trust audit of 5 flagship repos against implementation truth. Separates implemented, verified, production-ready, and target-state. Defines explicit non-claim boundary.
@@ -37,7 +41,7 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ### Changed
 - **BOS Source-of-Truth Restoration**: Restored over 40 missing canonical documents and specification stubs to `conxian-business/` and `docs/` from Git history to repair repository integrity and ensure all documentation references resolve correctly.
-- **Repository Versioning**: Updated root `README.md` to reflect BOS v1.9.4 alignment.
+- **Repository Versioning**: Updated root `README.md` to reflect BOS v1.9.5 alignment.
 - **System Wallet Standardization**: Aligned `SystemWallets` in `conxian-gateway` core with the canonical Sovereign Treasury principal (`SP3FBR2AGK5H9QPNVFJWC7636X22Y620S00000000`).
 - **CON-702 Parent-Control Checkpoint**: Added `docs/architecture/CONXIAN_UI_PARENT_CONTROL_ALIGNMENT_PLAN.md` and aligned role/checklist/portfolio docs so `Conxian_UI` is documented as a supporting/reference consumer surface (no secrets, signing keys, or privileged broadcast authority).
 - **Dependabot target branch**: Changed all 5 ecosystem update entries from `dev` to `main` to ensure security updates are applied to the production branch directly.
