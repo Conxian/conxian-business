@@ -23,6 +23,28 @@ When approaching any task, analyze through these dimensions:
 ---
 
 ## BOS Operational Standards
+> **Framework**: Multi-Dimensional ITIL5-Aligned Knowledge Architecture
+> **Version**: 1.0 (2026-07-08)
+> **Reference**: `docs/BOS_KNOWLEDGE_FRAMEWORK.md`
+
+---
+
+### Multi-Dimensional Query Lens
+
+When approaching any task, analyze through these dimensions:
+
+| Dimension | Question | Framework Section |
+|-----------|----------|-------------------|
+| **Spatial** | Where in the system? | Repository → Component |
+| **Temporal** | When in the lifecycle? | Phase → Quarter → Decision |
+| **Relational** | Who/what is connected? | Stakeholders → Dependencies |
+| **Logical** | Why was this decided? | Decision Registry |
+| **Security** | What's the risk exposure? | Vulnerability Registry |
+| **Operational** | How does it execute? | CI/CD → Deploy |
+
+---
+
+## BOS Operational Standards
 > clarity-version: 4
 > epoch: latest
 
@@ -247,6 +269,20 @@ DB_PASSWORD: ${DB_PASSWORD:?set}               # 'PASSWORD' in key
 |--------|---------|-------|
 | `GITLEAKS_LICENSE` | Gitleaks v8.24.2 full functionality | Add via GitHub → Settings → Secrets → Actions |
 | `CI_SUBMODULES_PAT` | Cross-repo submodule access | PAT with `repo` scope for `Conxian/*` repos |
+
+### Docker/ZSE Secret Patterns
+```yaml
+# ✅ Correct: Require env var
+POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD required}
+
+# ❌ Wrong: Hardcoded secret (triggers GitGuardian)
+POSTGRES_PASSWORD: conxian_dev
+```
+
+- Use `${VAR:?message}` syntax to require env vars
+- Use `${VAR:-default}` for optional env vars with defaults
+- Add `.env.example` template for developer onboarding
+- `.env` files are gitignored; never commit real secrets
 
 ### GitHub API Usage for Workflows
 ```bash
