@@ -48,6 +48,125 @@ Hard-coded `ST…` / `SP…` addresses in production source trigger an **immedia
 - **Typed Knowledge**: Agents must prioritize structured entity extraction over flat prose to enable graph-aware traversal.
 - **Verification**: All claims must be cross-referenced against the existing knowledge graph in `conxian-business/BOS_KNOWLEDGE_GRAPH.md`.
 
+---
+
+## Conxian Ecosystem Inventory
+
+### Repository Portfolio (Multi-Dimensional Scan 2026-07-08)
+
+| Repo | Purpose | Language | Stack | Key Dependencies |
+|------|---------|----------|-------|------------------|
+| **conxian-business** | Main monorepo, governance, CI/CD hub | Rust + TypeScript | Mixed workspace | 11 submodules |
+| **conxian-gateway** | Institutional API gateway for Bitcoin/Stacks | Rust + TypeScript | Hybrid | Separate workspace root |
+| **conxius-wallet** | Non-custodial sovereign-first mobile wallet | TypeScript | Vite + Capacitor | Stacks, Bitcoin, Wormhole |
+| **conxian-nexus** | "Glass Node" - Tier 1 chain observation/proof layer | Rust | MMR state roots | 🔗 lib-conxian-core |
+| **conxian-ui** | Public interaction/frontend layer | TypeScript | React/Next.js | Public surface |
+| **conxius-platform** | Development & control-plane scaffolding | TypeScript | Platform infra | GitHub Releases |
+| **conxius-orbit** | Deployment tooling & contract rollout | TypeScript + Clarity | Stacks | Deployment ops |
+| **conxian-labs-site** | Conxian-Labs public website | TypeScript | Static/Next.js | Public portfolio |
+| **conxius-enclave-sdk** | Hardware-backed security primitives | Rust | Secure enclave | Root of trust |
+| **lib-conxian-core** | **🔗 SHARED CORE** - protocol primitives | Rust | Foundation | Consumed by all Rust repos |
+| **apps/control-plane** | BOS internal UI - governance/audit | TypeScript | React | @conxian packages |
+| **packages/client-sdk** | Client SDK (@conxian/client-sdk) | TypeScript | SDK | Runtime client |
+| **packages/schemas** | Shared schemas (@conxian/schemas) | TypeScript | Types | Internal types |
+
+### Technology Stack Summary
+
+- **Languages**: Rust, TypeScript, JavaScript, Clarity (Stacks)
+- **Package Managers**: Cargo (Rust), pnpm (Node.js), npm
+- **Blockchain**: Stacks (Clarity), Bitcoin layer integrations
+- **Security**: Gitleaks, Secret scanning, Enclave SDK
+
+### CI/CD Workflows (Main Repo - 19 workflows)
+
+| Workflow | Purpose | Triggers |
+|----------|---------|----------|
+| conxian-unified-ci.yml | Unified CI pipeline | PR, push, schedule |
+| auto-promotion.yml | Branch promotion | workflow_dispatch |
+| auto-sync-submodules.yml | Submodule sync | schedule |
+| gemini-*.yml | AI agent automation | Various |
+| cargo-audit.yml (gateway) | Rust security audit | PR, push |
+| rust-ci.yml | Rust testing | PR, push |
+| node-ci.yml | Node.js testing | PR, push |
+| secret-scan.yml | Gitleaks scan | PR, push |
+| deploy-docs.yml | Documentation deploy | push to main |
+| tag-release.yml | Release tagging | git tags |
+
+### Dependency Graph (Key Links)
+
+```
+lib-conxian-core (🔗 HUB)
+    │
+    ├── conxian-nexus (Rust)
+    ├── conxius-enclave-sdk (Rust)
+    └── conxian-gateway (Rust)
+        │
+        └── conxius-wallet (TypeScript) - API calls
+            │
+            └── apps/control-plane, packages/* (@conxian/*)
+
+showcase-dapp (React/Next.js)
+    └── conxian-gateway (TypeScript API layer)
+```
+
+### Actionable Commands
+
+```bash
+# Run ecosystem scan
+./scripts/ecosystem-scan.sh
+
+# Run CI/CD audit
+./scripts/cicd-audit.sh
+
+# Audit Rust repos
+cd conxian-nexus && cargo audit
+cargo install cargo-audit && cargo audit
+
+# Audit Node.js repos
+cd conxius-wallet && pnpm audit
+cd conxian-gateway && pnpm audit
+
+# Sync all submodules
+git submodule update --init --recursive
+
+# Workspace commands
+pnpm install          # Install all workspace deps
+pnpm -r build         # Build all packages
+pnpm -r test          # Test all packages
+```
+
+### CI/CD Patterns (DRY via Reusable Workflows)
+
+All submodules use reusable workflows from `conxian-business/.github/workflows/reusable/`:
+
+```yaml
+# Standard Rust CI (conxian-nexus, conxius-enclave-sdk, lib-conxian-core)
+jobs:
+  ci:
+    uses: Conxian/conxian-business/.github/workflows/reusable/rust-ci.yml@main
+
+# Standard Node.js CI (conxian-gateway, conxius-wallet, conxian-ui, etc.)
+jobs:
+  ci:
+    uses: Conxian/conxian-business/.github/workflows/reusable/node-ci.yml@main
+
+# CodeQL Security (all TypeScript repos)
+jobs:
+  codeql:
+    uses: Conxian/conxian-business/.github/workflows/reusable/codeql.yml@main
+```
+
+**Key Optimizations Built-in:**
+- ✅ Concurrency control (cancels redundant runs)
+- ✅ Path filtering (skips CI on .md changes)
+- ✅ Automatic caching (Cargo, pnpm)
+- ✅ Secret scanning (Gitleaks + TruffleHog)
+- ✅ Dependency review
+- ✅ CodeQL analysis
+- ✅ Cargo-deny (Rust repos)
+
+See `.github/workflows/reusable/README.md` for full documentation.
+
 ### BitVM2 Integration
 - SNARK proofs verified through `lib-conxian-core`.
 - Bridge validates Bitcoin L1 state against BitVM2 engine per **CJCS v2.0**.

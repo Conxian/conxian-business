@@ -1,0 +1,48 @@
+# Reusable CodeQL Workflow
+# Usage: Call from other workflows with: workflow_call
+# Supports: TypeScript repos - conxian-gateway, conxius-wallet, conxius-platform, etc.
+
+name: Reusable CodeQL
+
+on:
+  workflow_call:
+    inputs:
+      languages:
+        description: 'Languages to analyze (comma-separated)'
+        required: false
+        default: 'typescript'
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4.2.2
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@ea3428cd843e4ad5a41ea20ff9ef9cd7db0d5a63 # v3.28.0
+        with:
+          languages: ${{ inputs.languages }}
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@ea3428cd843e4ad5a41ea20ff9ef9cd7db0d5a63 # v3.28.0
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@ea3428cd843e4ad5a41ea20ff9ef9cd7db0d5a63 # v3.28.0
+        with:
+          category: "/language:${{ inputs.languages }}"
