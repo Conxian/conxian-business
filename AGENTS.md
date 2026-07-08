@@ -606,3 +606,57 @@ git cherry-pick <COMMIT_SHA> && git push origin <BRANCH_NAME>
 1. Commit to `main` first for infrastructure changes (CI configs, workflows)
 2. Cherry-pick fix to PR branch if PR exists
 3. Always use `Co-authored-by: openhands <openhands@all-hands.dev>` in commit message
+
+---
+
+### OpenHands Agent Workflow (Sprint 2026-07-08)
+
+#### PR Review & Merge Protocol
+1. **Review PR Comments**: Check all review comments for blocking issues
+2. **Fix Issues Locally**: 
+   - Use `git cherry-pick --no-commit <SHA>` to apply fixes
+   - Commit with descriptive message referencing issue numbers
+   - Push to PR branch
+3. **Rebase Strategy** (for secret/complex issues):
+   - Use `git rebase --interactive` to squash problematic commits
+   - Test thoroughly after rebase
+4. **Merge via GitHub API**:
+   ```bash
+   # Create PR (use gh CLI to avoid draft issues)
+   gh pr create --base dev --head <branch> --title "..." --draft=false
+   
+   # Merge (after conflicts resolved)
+   curl -X PUT -H "Authorization: Bearer $GITHUB_TOKEN" \
+     -d '{"merge_method": "squash"}' \
+     "https://api.github.com/repos/Conxian/conxian-business/pulls/<NUM>/merge"
+   ```
+
+#### Common Issues & Fixes
+
+| Issue | Root Cause | Fix |
+|-------|------------|-----|
+| Node CI fails open | `|| echo` fallback | Check `package.json` for script existence |
+| Invalid action SHA | Pinned SHA doesn't exist | Update to valid commit from action repo |
+| Submodule conflict | Unchecked out submodules | Use `git checkout origin/dev -- <submodule>` |
+| GitGuardian alert | Secret in commit history | Rebase to exclude bad commit |
+| Merge conflict | Submodule pointer mismatch | Use `-X ours` strategy, then resolve |
+
+#### Submodule Merge Resolution
+```bash
+# When encountering submodule conflicts:
+git checkout origin/dev -- <submodule1> <submodule2> ...
+git add <submodules>
+git commit -m "Merge: resolve submodule conflicts using dev versions"
+```
+
+#### Secret Scanning Best Practices
+- GitGuardian scans entire commit history, not just diff
+- Even remediated secrets trigger alerts
+- Use `git rebase` to exclude problematic commits when necessary
+- Add to allowlist only as last resort
+
+#### Branch Maintenance Checklist
+- [x] Delete stale promotion branches after merge
+- [x] Remove duplicate feature branches (keep most complete)
+- [x] Close superseded PRs
+- [x] Update AGENTS.md with lessons learned
