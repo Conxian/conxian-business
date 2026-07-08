@@ -1,5 +1,163 @@
 # Conxian AGENTS.md
 
+## Repository Rules & Conventions
+> **Last Updated**: 2026-07-08
+> **Version**: 2.0
+
+---
+
+### Branch Model (Trunk-Based Development)
+
+| Branch | Network | Purpose |
+|--------|---------|---------|
+| `main` | **Mainnet-Only** | Production code. NO stubs, mocks, or placeholders. |
+| `staged` | Mainnet Candidate | Pre-production validation. Only branch allowed to merge into `main`. |
+| `dev` | **Testnet-Only** | Development and testnet logic. Default branch. |
+| `feat/*`, `fix/*` | Local | Ephemeral branches. Branch from `dev`, validate locally first. |
+
+**Promotion Path**: `feat/*` → `dev` → `staged` → `main`
+**❌ NEVER**: Direct merge from `dev` to `main`
+
+---
+
+### Zero Secret Egress (ZSE)
+
+| Layer | Rule |
+|-------|------|
+| **Secrets** | Keep sensitive logic & configs in **Linear** or **Supabase** only. |
+| **On-chain** | Expose **State-Proof** primitives only; never raw config. |
+| **Stubs** | Production paths return `err-u501` / `err-u503` and **fail-closed**. |
+| **Git** | Never commit `.env`, private keys, or API tokens. |
+| **Vulnerability Reports** | Email security@conxian-labs.com or use GitHub Security Advisories. |
+
+---
+
+### Pull Request Process
+
+1. **Link to Linear Issue**: Every PR must map to a Linear issue.
+2. **ZSE Compliance**: Maintain Zero Secret Egress standards.
+3. **Smart Contracts**: All Clarity contracts must pass Vitest/Simnet test suite.
+4. **Documentation**: Update docs to match implementation.
+5. **CODEOWNERS**: Identify appropriate reviewers.
+6. **CHANGELOG**: Document user-facing or security-impacting changes.
+7. **Contamination Guard**: Run `scripts/verify_contamination_guard.py` before targeting `main` or `staged`.
+
+---
+
+### Coding Standards
+
+| Language | Standard | Tool |
+|----------|----------|------|
+| **Rust** | rustfmt + clippy | `cargo fmt`, `cargo clippy -- -D warnings` |
+| **TypeScript** | ESLint + Prettier | `pnpm lint`, `pnpm typecheck` |
+| **Clarity** | `cxn-` prefix for all contract components | Use centralized component library from `conxian-ui` |
+| **Python** | PEP 8 | `black`, `ruff` |
+
+---
+
+### Release Process
+
+1. Update `CHANGELOG.md` (move from `[Unreleased]` to `[X.Y.Z] - YYYY-MM-DD`)
+2. Sync version strings (e.g., BOS marker in `README.md`)
+3. Create annotated tag: `git tag -a vX.Y.Z -m "vX.Y.Z" && git push origin vX.Y.Z`
+4. Create GitHub Release via `gh release create`
+
+**Submodule Bumps**: Use explicit SHA or immutable tag refs. NEVER use `git submodule update --remote`.
+
+---
+
+### Security Controls
+
+- **Veto-Quorum v2**: Protocol-level circuit breakers for automated risk management.
+- **ATS Enforcement**: Automated compliance checks for all on-chain settlements.
+- **Hardware Security**: Android StrongBox/Secure Enclave for private key derivation.
+- **Secret Scanning**: Gitleaks + TruffleHog in CI on all PRs.
+- **Contamination Guard**: Blocks non-production patterns in `main`/`staged`.
+
+---
+
+### Governance Model
+
+- **Ownership**: Defined by `CODEOWNERS` (request creation if missing).
+- **Approval**: All changes via PR with `CODEOWNERS` review.
+- **ExCo Intake**: Route ExCo-relevant work in Linear first.
+- **Bounty Workflow**: Only `bounty` issues in `Todo` are claimable.
+
+---
+
+### CI/CD Standards
+
+All submodules use reusable workflows from `conxian-business/.github/workflows/reusable/`:
+
+- ✅ Concurrency control (cancels redundant runs)
+- ✅ Path filtering (skips CI on .md changes)
+- ✅ Automatic caching (Cargo, pnpm)
+- ✅ Secret scanning
+- ✅ Dependency review
+- ✅ CodeQL analysis
+- ✅ Cargo-deny (Rust repos)
+
+See `.github/workflows/reusable/README.md` for full documentation.
+
+---
+
+### Key Files Reference
+
+| File | Purpose |
+|------|---------|
+| `CONTRIBUTING.md` | Contribution guidelines |
+| `GOVERNANCE.md` | SAB governance model |
+| `SECURITY.md` | Security policy & reporting |
+| `RELEASING.md` | Release procedure |
+| `docs/BRANCHING_AND_PROMOTION_POLICY.md` | Branch model & promotion gates |
+| `docs/PROMOTION_CHECKLISTS.md` | Required PR checklists |
+| `CHANGELOG.md` | Release notes (Keep a Changelog format) |
+| `.github/RELEASE_HYGIENE.md` | Required checks for releases |
+
+---
+
+### Submodule Conventions
+
+Each submodule has its own `AGENTS.md` with specific guidance:
+
+| Submodule | Focus |
+|-----------|-------|
+| `conxian-gateway` | Rust API gateway, enterprise compliance |
+| `conxius-wallet` | Mobile wallet, B2B alignment |
+| `conxian-nexus` | "Glass Node" - Tier 1 chain observation |
+| `conxius-enclave-sdk` | TEE/StrongBox hardware security |
+| `lib-conxian-core` | **SHARED CORE** - protocol primitives |
+| `conxian-ui` | **Ivory Foundation** design system |
+| `conxius-platform` | Deployment & control-plane |
+| `conxius-orbit` | Stacks CLI & deployment tooling |
+| `conxian-labs-site` | Public website |
+
+---
+
+### Design System (conxian-ui)
+
+The **Ivory Foundation** design system:
+
+| Element | Value |
+|---------|-------|
+| **Background (60%)** | `#FDFBF7` (Ivory) |
+| **Surface (30%)** | `#FFFFFF` or `#F9F8F6` |
+| **Brand (10%)** | `#333333` or `#1A2623` (Deep Forest Green) |
+| **Accent** | `#C25E00` (Earthy Orange) |
+| **Font** | JetBrains Mono |
+| **Typography** | `tabular-nums` for financial data |
+| **Labels** | `uppercase tracking-widest` |
+
+---
+
+### Contact & Support
+
+- **Security Issues**: security@conxian-labs.com or GitHub Security Advisories
+- **General**: admin@conxian-labs.com
+- **Linear**: Use for ExCo-relevant work and traceability
+
+---
+
 ## BOS Operational Standards
 > **Framework**: Multi-Dimensional ITIL5-Aligned Knowledge Architecture
 > **Version**: 1.0 (2026-07-08)
