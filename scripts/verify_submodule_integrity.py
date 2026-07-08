@@ -19,6 +19,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 # The Conxian repo has its own broken submodule config and is pinned with update=none.
 ALLOWED_UPDATE_POLICIES = {
     "Conxian": "none",  # Known broken internal submodule — must stay pinned
+    "conxian-market": "none",  # Intentionally pinned; skipped during submodule init
 }
 
 
