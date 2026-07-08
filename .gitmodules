@@ -44,4 +44,4 @@
 	path = conxian-market
 	url = https://github.com/Conxian/conxian_market
 	branch = main
-	update = none
+	update = checkout
