@@ -1,4 +1,48 @@
-# Conxian AGENTS.md
+# Conxian AGENTS.md (BOS v1.9.5)
+
+## BOS Operational Standards
+> **Framework**: Multi-Dimensional ITIL5-Aligned Knowledge Architecture
+> **Version**: 1.0 (2026-07-08)
+> **Reference**: `docs/BOS_KNOWLEDGE_FRAMEWORK.md`
+
+---
+
+### Multi-Dimensional Query Lens
+
+When approaching any task, analyze through these dimensions:
+
+| Dimension | Question | Framework Section |
+|-----------|----------|-------------------|
+| **Spatial** | Where in the system? | Repository → Component |
+| **Temporal** | When in the lifecycle? | Phase → Quarter → Decision |
+| **Relational** | Who/what is connected? | Stakeholders → Dependencies |
+| **Logical** | Why was this decided? | Decision Registry |
+| **Security** | What's the risk exposure? | Vulnerability Registry |
+| **Operational** | How does it execute? | CI/CD → Deploy |
+
+---
+
+## BOS Operational Standards
+> **Framework**: Multi-Dimensional ITIL5-Aligned Knowledge Architecture
+> **Version**: 1.0 (2026-07-08)
+> **Reference**: `docs/BOS_KNOWLEDGE_FRAMEWORK.md`
+
+---
+
+### Multi-Dimensional Query Lens
+
+When approaching any task, analyze through these dimensions:
+
+| Dimension | Question | Framework Section |
+|-----------|----------|-------------------|
+| **Spatial** | Where in the system? | Repository → Component |
+| **Temporal** | When in the lifecycle? | Phase → Quarter → Decision |
+| **Relational** | Who/what is connected? | Stakeholders → Dependencies |
+| **Logical** | Why was this decided? | Decision Registry |
+| **Security** | What's the risk exposure? | Vulnerability Registry |
+| **Operational** | How does it execute? | CI/CD → Deploy |
+
+---
 
 ## Repository Rules & Conventions
 > **Last Updated**: 2026-07-08
