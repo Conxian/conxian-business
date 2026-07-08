@@ -1,4 +1,4 @@
-# Conxian: Sovereign Business Operations System (BOS v1.9.5)
+# Conxian: Sovereign Business Operations System (BOS v1.9.4)
 
 [![Conxian Unified CI](https://github.com/Conxian/conxian-business/actions/workflows/conxian-unified-ci.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/conxian-unified-ci.yml)
 [![Deploy Documentation](https://github.com/Conxian/conxian-business/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/deploy-docs.yml)
@@ -58,6 +58,7 @@ The Conxian ecosystem is organized by function to ensure clarity and modularity 
 - **[`conxius-wallet/`](./conxius-wallet)**: **Mobile**. Sovereign hardware-grade mobile vault.
 - **[`conxian-ui/`](./conxian-ui)**: **Web**. Sovereign operator dashboard.
 - **[`conxian-labs-site/`](./conxian-labs-site)**: **Website**. Public ecosystem landing.
+- **[`conxian-market/`](./conxian-market)**: **AI Marketplace**. Agentic commerce and service discovery surface.
 
 ## Quick start / Next action
 

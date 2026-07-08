@@ -70,6 +70,7 @@ Current baseline for key ecosystem repos:
 | `conxian-nexus/` | `primary strategic` | Authoritative state and telemetry node. |
 | `conxius-wallet/` | `primary strategic` | Wallet/signing surface for end users and builders. |
 | `lib-conxian-core/` | `supporting` | Shared primitives and cross-repo models. |
+| `conxian-market/` | `supporting` | AI marketplace and agentic commerce surface for listings and settlement experiences. |
 | `conxius-enclave-sdk/` | `supporting` | Enclave/attestation SDK for higher layers. |
 | `conxius-platform/` | `supporting` | Local stack and developer orchestration. |
 | `conxian-labs-site/` | `reference` | Public narrative and docs distribution surface. |
@@ -119,6 +120,7 @@ Until portfolio hygiene automation is live, reviewers should treat these invaria
 | `conxian-gateway/` | Submodule | **Fusion** (Gateway) | Gateway + compliance | Integration surface; consumes Nexus state; should not be a UI host. |
 | `conxian-nexus/` | Submodule | **Nexus** (State node) | State + telemetry | Must remain the authoritative node/service surface. |
 | `conxian-ui/` | Submodule | Operating function (UI) | UI | Web UI for interacting with the ecosystem; should avoid embedding protocol logic beyond calls. |
+| `conxian-market/` | Submodule | Operating function (Marketplace) | Marketplace catalog + settlement coordination | AI marketplace and agentic commerce surface; should consume published interfaces and not become protocol authority. |
 | `conxian-labs-site/` | Submodule | Operating function (Public web) | Public documentation + marketing | Public site; should not include internal-only strategy material. |
 | `conxius-platform/` | Submodule | Operating function (Platform/DevEx) | Local stack orchestration | Dev stack only; should not become a home for core product logic. |
 | `conxius-orbit/` | Submodule | Operating function (DevOps tooling) | Deployment tooling | Primarily supports CSF protocol deployment. |
@@ -233,6 +235,7 @@ This section intentionally repeats the asset list with additional positioning de
 | `conxian-gateway/` | Fusion integration and compliance | Webhooks, compliance pipelines, aggregation | Being the authoritative state source |
 | `conxian-nexus/` | Authoritative state + telemetry | Block height authority, state services, metrics | UI, treasury automation |
 | `conxian-ui/` | Web interaction surface | Web app UX consuming boundary APIs | Defining protocol logic |
+| `conxian-market/` | AI marketplace and agentic commerce surface | Marketplace discovery, agent listings, settlement UX integrations | Protocol authority, canonical chain-state sourcing |
 | `conxius-platform/` | End-to-end local stack | Dev orchestration, local ops | Shipping product features |
 | `conxius-orbit/` | Protocol deployment tooling | Contract deployment and ops | Wallet features |
 | `conxian-labs-site/` | Public web presence | Marketing, docs surfacing | Internal strategy |

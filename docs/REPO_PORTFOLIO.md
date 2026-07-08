@@ -58,4 +58,5 @@ These repos support the flagship trust surface and are linked from flagship READ
 - [Conxian_UI](https://github.com/Conxian/Conxian_UI) *(planned rename to `Conxian/conxian-ui`)* — Supporting/reference UI surface that consumes approved public outputs; not an authoritative parent control plane.
 - [conxius_orbit](https://github.com/Conxian/conxius_orbit) — Stacks smart-contract deployment tooling.
 - [.github](https://github.com/Conxian/.github) — Org-wide defaults (community health files, templates).
+- [conxian-market](https://github.com/Conxian/conxian_market) — AI Marketplace and Agentic Commerce surface.
 - [conxian-business](https://github.com/Conxian/conxian-business) — Governance + OpenSpec + submodule wiring for the Conxian ecosystem.
