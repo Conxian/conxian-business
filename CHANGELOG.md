@@ -15,7 +15,11 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+## [1.9.5] - 2026-07-08
+
 ### Added
+- **System-wide BOS v1.9.5 Standardization**: Aligned organization and repository versions to BOS v1.9.5 across Root, README, CHANGELOG, and AGENTS files to signal unified mainnet readiness.
+
 - **Cross-Issue Boundary & Doctrine Sprint — 6 artifacts delivered**:
   - **#825**: Created `docs/BOUNDARY_DECISION_LOG.md` — systematic boundary register for all public-safe vs internal-only artifacts. Classifies 20+ artifacts across strategy, BOS state, architecture, bounties, and CI/CD.
   - **#830**: Created `docs/TRUST_AND_READINESS_VERIFICATION.md` — evaluator-facing trust audit of 5 flagship repos against implementation truth. Separates implemented, verified, production-ready, and target-state. Defines explicit non-claim boundary.
