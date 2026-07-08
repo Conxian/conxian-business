@@ -1,5 +1,5 @@
 # Conxian Labs BOS Knowledge Graph
-> Clarity-version: 4 | Epoch: latest | Generated: 2026-07-06
+> Clarity-version: 4 | Epoch: latest | Generated: 2026-07-08
 
 ## Overview
 
@@ -62,6 +62,74 @@ This document is the **mandatory BOS Knowledge Graph** referenced in `AGENTS.md`
 | **SYI** | Sovereign Yield Index | Yield measurement | ✅ Designed |
 | **BitVM2** | Groth16 | L2 state verification | ⚠️ Stub |
 | **RGB** | Client-side | Asset validation | ⚠️ In progress |
+
+### 🔧 CI/CD & DevOps
+
+| Component | Technology | Purpose | Status |
+|-----------|------------|---------|--------|
+| **Gitleaks** | v8.24.2 | Secret scanning | ✅ Configured |
+| **cargo audit** | Rust advisory db | Dependency vulnerability scanning | ✅ Active |
+| **Conxian Unified CI** | GitHub Actions | Multi-suite test orchestration | ✅ Active |
+| **Secret Scan** | Gitleaks workflow | Pre-commit secret detection | ✅ Active |
+| **Branch Promotion Policy** | GitHub Actions | Enforce dev → staged → main flow | ✅ Active |
+
+### 🛡️ Vulnerability Allowlist (Cargo Audit)
+
+| RUSTSEC ID | Crate | Status | Rationale |
+|------------|-------|--------|------------|
+| RUSTSEC-2026-0204 | crossbeam-epoch | ✅ Ignored | Transitive via sled → bdk → electrum-client; no local upgrade path |
+| RUSTSEC-2026-0104 | (various) | ✅ Ignored | Transitive dep chain |
+| RUSTSEC-2026-0099 | rustls-webpki | ✅ Ignored | Transitive via bdk/electrum-client |
+| RUSTSEC-2026-0098 | rustls-webpki | ✅ Ignored | Transitive via bdk/electrum-client |
+| RUSTSEC-2024-0388 | instant | ✅ Ignored | Transitive via parking_lot |
+
+### 📦 Dependabot Security Alerts (2026-07-08)
+
+#### High Severity (8) - Action Required
+| Alert | Package | Issue | Fixable | Mitigation |
+|-------|---------|-------|---------|------------|
+| #148 | form-data | CRLF injection | ⚠️ Update | `pnpm update form-data` |
+| #143 | vite | fs.deny bypass (Windows) | ⚠️ Update | `pnpm update vite` |
+| #149 | ws | Memory exhaustion DoS | ⚠️ Update | `pnpm update ws` |
+| #21 | bigint-buffer | Buffer Overflow | ❌ Transitive | Via bdk - no local fix |
+| #153 | undici | WebSocket DoS | ⚠️ Update | `pnpm update undici` |
+| #146 | undici | TLS cert bypass | ⚠️ Update | `pnpm update undici` |
+| #150 | undici | SOCKS5 pool reuse | ⚠️ Update | `pnpm update undici` |
+| #58 | rustls-webpki | DoS via panic | ❌ Transitive | Via bdk - no local fix |
+
+#### Moderate Severity (8) - Monitor
+| Alert | Package | Issue |
+|-------|---------|-------|
+| #139 | uuid | Buffer bounds check |
+| #60 | postcss | XSS (showcase-dapp) |
+| #147 | undici | Cache whitespace bypass |
+| #152 | undici | Header injection |
+| #144 | launch-editor | NTLMv2 hash (Windows) |
+| #145 | protobufjs | Property shadowing |
+| #159 | cmov | aarch64 wrong results |
+| #142 | ws | Uninitialized memory |
+
+#### Low Severity (7) - Acceptable Risk
+| Alert | Package | Issue |
+|-------|---------|-------|
+| #154 | undici | SameSite downgrade |
+| #151 | undici | Response queue |
+| #22 | elliptic | Risky crypto |
+| #38 | tracing-subscriber | ANSI escape |
+| #45 | webpki | Wildcard names |
+| #44 | webpki | URI constraints |
+| #52 | rand | Custom logger |
+
+#### Known Unfixable Transitive Chains
+```mermaid
+graph LR
+    A[undici] --> B[fetch-hock]
+    A --> C[ws]
+    D[rustls-webpki] --> E[bdk]
+    E --> F[electrum-client]
+    G[bigint-buffer] --> E
+    H[ws] --> I[wswrapper]
+```
 
 ### 👥 People (Entity Relationships)
 
@@ -131,6 +199,12 @@ graph TB
 | Dynamic principals from treasury | 2026-04-23 | Eliminate hardcoded SPOF | - |
 | TEE via conxius-enclave-sdk | 2026-04-23 | Hardware key isolation | - |
 | ISO 20022 via Conxian Gateway | 2026-04-23 | Legacy banking bridge | - |
+| Cargo audit allowlist for transitive deps | 2026-07-08 | Transitive vulnerabilities without local upgrade path | Upgrade dep chain |
+| Gitleaks license via GitHub Secrets | 2026-07-08 | ZSE compliance; no hardcoded secrets | - |
+| Infrastructure fixes to main, cherry-pick to PR | 2026-07-08 | Workflow configs belong in main | - |
+| Dependabot allowlist for transitive npm deps | 2026-07-08 | undici/ws transitive chains via bdk/wswrapper | Fix upstream |
+| GitGuardian var naming convention (no PASSWORD/SECRET in keys) | 2026-07-08 | Avoid false positives from variable names | - |
+| Docker env vars use DB_* prefix, not *_PASSWORD | 2026-07-08 | GitGuardian pattern avoidance | - |
 
 ---
 
