@@ -60,7 +60,15 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Run lint
-        run: pnpm lint || pnpm run lint || echo "No lint script"
+        run: |
+          if pnpm lint 2>/dev/null; then exit 0
+          elif pnpm run lint 2>/dev/null; then exit 0
+          else
+            # Check if package.json has lint script
+            if grep -q '"lint"' package.json 2>/dev/null; then exit 1
+            else echo "No lint script - skipping"
+            fi
+          fi
 
   build:
     name: Build
@@ -96,7 +104,14 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: pnpm build || pnpm -r run build || echo "No build script"
+        run: |
+          if pnpm build 2>/dev/null; then exit 0
+          elif pnpm -r run build 2>/dev/null; then exit 0
+          else
+            if grep -q '"build"' package.json 2>/dev/null; then exit 1
+            else echo "No build script - skipping"
+            fi
+          fi
 
   test:
     name: Test
@@ -132,7 +147,14 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Run tests
-        run: pnpm test || pnpm run test || echo "No test script"
+        run: |
+          if pnpm test 2>/dev/null; then exit 0
+          elif pnpm run test 2>/dev/null; then exit 0
+          else
+            if grep -q '"test"' package.json 2>/dev/null; then exit 1
+            else echo "No test script - skipping"
+            fi
+          fi
 
   typecheck:
     name: TypeScript Check
@@ -168,4 +190,11 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: TypeScript check
-        run: pnpm typecheck || pnpm exec tsc --noEmit || echo "No typecheck script"
+        run: |
+          if pnpm typecheck 2>/dev/null; then exit 0
+          elif pnpm exec tsc --noEmit 2>/dev/null; then exit 0
+          else
+            if grep -qE '"typecheck"|"typescript"' package.json 2>/dev/null; then exit 1
+            else echo "No typecheck script - skipping"
+            fi
+          fi
