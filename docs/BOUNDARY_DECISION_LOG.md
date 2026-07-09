@@ -36,6 +36,8 @@ This document records explicit boundary decisions for every artifact in `conxian
 | `Sovereign-Strategy-Nexus/` | **Public-safe stub** | Canonical strategy tracking and narrative scaffolding in Linear. Git directory is a ZSE stub. | Strategy material must not mix into product repos. Per BOS_PRESERVE_ENHANCE_REPLACE_GAP_MATRIX. |
 | `docs/operations/CON-682_APPROVED_METRIC_SPEC.md` | **Public-safe** | Formula definitions (C_R, O_C, V_X, A_S, N_E) are safe to publish. Actual metric values and dashboards remain in Linear/Supabase. | Formulas are architecture-level; values are commercially sensitive. |
 | `cxn-grid-oracle/` | **Public-safe** | Schema-level oracle surface only. Alpha; not a BOS critical dependency. | Small, public-safe interface contract per BOS_PRESERVE_ENHANCE_REPLACE_GAP_MATRIX. |
+| `Conxian/` | **Public-safe stub** (Read-Only) | Reference smart contracts and on-chain assets. Intentionally pinned. | Smart contracts are treated as stable reference implementations. No active refactoring to prevent DeFi reconstruction overhead. |
+| `conxius-orbit/` | **Public-safe** (Read-Only) | CLI deployment utility for Stacks contracts. | Frozen as a stable reference implementation to avoid recreating custom deployers and runtime CLI wrappers. |
 
 ### BOS State & Orchestration
 

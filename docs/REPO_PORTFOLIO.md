@@ -44,7 +44,7 @@ These repos are the public trust surface.
 
 - [conxius-wallet](https://github.com/Conxian/conxius-wallet) — Sovereign wallet (Android-first, offline-first) for Bitcoin L1 and Bitcoin-adjacent layers.
 - [conxian-gateway](https://github.com/Conxian/conxian-gateway) — “Fusion” gateway aggregating cross-layer state + compliance pipelines.
-- [Conxian](https://github.com/Conxian/Conxian) — Core protocol + on-chain contracts.
+- [Conxian](https://github.com/Conxian/Conxian) — Core protocol + on-chain contracts. *(Maintained as stable Read-Only reference implementation; consumed via Nexus)*
 - [conxian-labs-site](https://github.com/Conxian/conxian-labs-site) — Public Conxian Labs website.
 - [conxius-platform](https://github.com/Conxian/conxius-platform) — Local dev stack to run the ecosystem end-to-end.
 
@@ -56,7 +56,7 @@ These repos support the flagship trust surface and are linked from flagship READ
 - [lib-conclave-sdk](https://github.com/Conxian/lib-conclave-sdk) — Headless enclave + cryptographic state machine SDK.
 - [conxian-nexus](https://github.com/Conxian/conxian-nexus) — API bridge (“Glass Node”) between layers/services.
 - [Conxian_UI](https://github.com/Conxian/Conxian_UI) *(planned rename to `Conxian/conxian-ui`)* — Supporting/reference UI surface that consumes approved public outputs; not an authoritative parent control plane.
-- [conxius_orbit](https://github.com/Conxian/conxius_orbit) — Stacks smart-contract deployment tooling.
+- [conxius_orbit](https://github.com/Conxian/conxius_orbit) — Stacks smart-contract deployment tooling. *(Maintained as stable, read-only deployment-track DevOps reference; no active roadmap features)*
 - [.github](https://github.com/Conxian/.github) — Org-wide defaults (community health files, templates).
 - [conxian-market](https://github.com/Conxian/conxian_market) — AI Marketplace and Agentic Commerce surface.
 - [conxian-business](https://github.com/Conxian/conxian-business) — Governance + OpenSpec + submodule wiring for the Conxian ecosystem.
