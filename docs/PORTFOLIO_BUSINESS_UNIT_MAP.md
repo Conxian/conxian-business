@@ -230,14 +230,14 @@ This section intentionally repeats the asset list with additional positioning de
 
 | Repo / asset | Unique value | In scope | Out of scope |
 | --- | --- | --- | --- |
-| `Conxian/` | Canonical protocol and on-chain assets | Contracts, traits, fee logic, registries | Wallet UX, off-chain integration services |
+| `Conxian/` | Canonical protocol and on-chain assets | Contracts, traits, fee logic, registries *(Maintained Read-Only; consumed via Nexus)* | Wallet UX, off-chain integration services |
 | `conxius-wallet/` | Sovereign custody and signing surface | Key management, offline-first wallet UX | Running the state node, ERP integrations |
 | `conxian-gateway/` | Fusion integration and compliance | Webhooks, compliance pipelines, aggregation | Being the authoritative state source |
 | `conxian-nexus/` | Authoritative state + telemetry | Block height authority, state services, metrics | UI, treasury automation |
 | `conxian-ui/` | Web interaction surface | Web app UX consuming boundary APIs | Defining protocol logic |
 | `conxian-market/` | AI marketplace and agentic commerce surface | Marketplace discovery, agent listings, settlement UX integrations | Protocol authority, canonical chain-state sourcing |
 | `conxius-platform/` | End-to-end local stack | Dev orchestration, local ops | Shipping product features |
-| `conxius-orbit/` | Protocol deployment tooling | Contract deployment and ops | Wallet features |
+| `conxius-orbit/` | Protocol deployment tooling | Contract deployment and ops *(Maintained Read-Only as stable DevOps reference)* | Wallet features |
 | `conxian-labs-site/` | Public web presence | Marketing, docs surfacing | Internal strategy |
 | `conxius-enclave-sdk/` | Enclave/crypto SDK | Attested flows, SDK primitives | Protocol decisions |
 | `lib-conxian-core/` | Shared conventions | Models, shared primitives | Business logic or product UX |
