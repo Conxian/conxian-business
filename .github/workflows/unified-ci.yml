@@ -77,16 +77,16 @@ jobs:
         run: |
           echo "## CI Pipeline Results"
           echo ""
-          
+
           echo "| Job | Status |"
           echo "|-----|--------|"
-          
+
           # Extract job results
           for job in hygiene dependency-review secret-scan rust-ci node-ci codeql; do
             result=$(cat $GITHUB_OUTPUT 2>/dev/null || echo "")
             status="✅ Passed"
             # This is simplified - in production, you'd parse needs context
           done
-          
+
           echo ""
           echo "✅ All checks complete. See individual jobs for details."

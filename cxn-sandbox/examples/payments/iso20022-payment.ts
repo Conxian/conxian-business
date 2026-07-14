@@ -1,4 +1,4 @@
-import { ConxianGateway } from '../../packages/@conxian/sdk/src/index';
+import { ConxianGateway } from '../../packages/@conxian/sdk/src/index.js';
 
 async function main() {
   const gateway = new ConxianGateway({ sandbox: true });

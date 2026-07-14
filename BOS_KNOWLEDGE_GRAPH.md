@@ -1,5 +1,5 @@
 # Conxian Labs BOS Knowledge Graph
-> Clarity-version: 4 | Epoch: latest | Generated: 2026-07-08
+> Clarity-version: 4 | Epoch: latest | Generated: 2026-07-14
 
 ## Overview
 
@@ -32,6 +32,7 @@ This document is the **mandatory BOS Knowledge Graph** referenced in `AGENTS.md`
 | `conxian-ui` | Conxian/Conxian_UI | TypeScript | UI components | ✅ Active |
 | `lib-conxian-core` | Conxian/lib-conxian-core | Rust | Crypto primitives | ✅ Audited |
 | `conxian-labs-site` | Conxian/conxian-labs-site | TypeScript | Marketing site | ✅ Active |
+| `conxian-market` | Conxian/conxian_market | Markdown/TypeScript | Marketplace and agentic commerce | ✅ Active |
 
 ### 🔐 Smart Contracts (Core)
 
@@ -149,7 +150,7 @@ graph TB
     subgraph "Legal Entity"
         CL[Conxian-Labs Pty Ltd]
     end
-    
+
     subgraph "Conxian (Protocol Layer)"
         CNX[Conxian]
         CXD[CXD Token]
@@ -158,32 +159,41 @@ graph TB
         NEXUS[conxian-nexus]
         GATEWAY[conxian-gateway]
     end
-    
+
     subgraph "Conxius (Client Layer)"
         WALLET[conxius-wallet]
         PLATFORM[conxius-platform]
         ORBIT[conxius-orbit]
         ENCLAVE[conxius-enclave-sdk]
     end
-    
+
     subgraph "Core Library"
         CORE[lib-conxian-core]
     end
-    
+
+    subgraph "Operating Functions"
+        MARKET[conxian-market]
+        SITE[conxian-labs-site]
+    end
+
     CL --> CNX
     CL --> WALLET
-    
+    CL --> MARKET
+    CL --> SITE
+
     CNX --> CXD
     CNX --> CXLP
     CNX --> CXVG
-    
+
     CNX --> GATEWAY
     CNX --> NEXUS
-    
+
     GATEWAY --> CORE
     NEXUS --> CORE
     ENCLAVE --> CORE
-    
+    MARKET --> GATEWAY
+    MARKET --> NEXUS
+
     WALLET --> ENCLAVE
     PLATFORM --> ORBIT
 ```
@@ -201,10 +211,10 @@ graph TB
 | ISO 20022 via Conxian Gateway | 2026-04-23 | Legacy banking bridge | - |
 | Cargo audit allowlist for transitive deps | 2026-07-08 | Transitive vulnerabilities without local upgrade path | Upgrade dep chain |
 | Gitleaks license via GitHub Secrets | 2026-07-08 | ZSE compliance; no hardcoded secrets | - |
-| Infrastructure fixes to main, cherry-pick to PR | 2026-07-08 | Workflow configs belong in main | - |
+| Branch and PR promotion flow | 2026-07-14 | Protected branches require review and dev -> staged -> main promotion | - |
 | Dependabot allowlist for transitive npm deps | 2026-07-08 | undici/ws transitive chains via bdk/wswrapper | Fix upstream |
 | GitGuardian var naming convention (no PASSWORD/SECRET in keys) | 2026-07-08 | Avoid false positives from variable names | - |
-| Docker env vars use DB_* prefix, not *_PASSWORD | 2026-07-08 | GitGuardian pattern avoidance | - |
+| Docker credentials use external secret files and DB_* connection inputs | 2026-07-14 | Fail-closed ZSE without inline credentials | - |
 
 ---
 

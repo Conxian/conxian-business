@@ -408,23 +408,23 @@ class SessionTester:
     def __init__(self):
         self.results = []
         self.start_time = datetime.now()
-    
+
     def run_test(self, name: str, command: str, critical: bool = True) -> bool:
         """Run a single test."""
         print(f"\n[TEST] {name}...")
         result = subprocess.run(
             command, shell=True, capture_output=True, text=True
         )
-        
+
         passed = result.returncode == 0
         status = "✅ PASS" if passed else "❌ FAIL"
         print(f"  {status}")
-        
+
         if not passed and result.stdout:
             print(f"  Output: {result.stdout[:200]}")
         if not passed and result.stderr:
             print(f"  Error: {result.stderr[:200]}")
-        
+
         self.results.append({
             "name": name,
             "passed": passed,
@@ -432,54 +432,54 @@ class SessionTester:
             "command": command,
         })
         return passed
-    
+
     def run_suite(self):
         """Run full test suite."""
         print("="*60)
         print("  CONXIAN SESSION TEST SUITE")
         print("="*60)
         print(f"Started: {self.start_time.isoformat()}\n")
-        
+
         # Integration tests
-        self.run_test("Market Integration", 
+        self.run_test("Market Integration",
                       "python3 scripts/verify_market_integration.py")
-        self.run_test("MWP Test Suite", 
+        self.run_test("MWP Test Suite",
                       "python3 scripts/market_bos_mwp_test.py")
-        
+
         # Viability
-        self.run_test("Viability Assessment", 
+        self.run_test("Viability Assessment",
                       "python3 scripts/repo_viability_assessment.py --all",
                       critical=False)
-        
+
         # Integrity
-        self.run_test("Submodule Integrity", 
+        self.run_test("Submodule Integrity",
                       "python3 scripts/verify_submodule_integrity.py")
-        
+
         # Summary
         self.print_summary()
-        
+
         return all(r["passed"] or not r["critical"] for r in self.results)
-    
+
     def print_summary(self):
         """Print test summary."""
         print("\n" + "="*60)
         print("  TEST SUMMARY")
         print("="*60)
-        
+
         passed = sum(1 for r in self.results if r["passed"])
         failed = sum(1 for r in self.results if not r["passed"])
         total = len(self.results)
-        
+
         print(f"\nPassed: {passed}/{total}")
         print(f"Failed: {failed}/{total}")
-        
+
         if failed > 0:
             print("\nFailed Tests:")
             for r in self.results:
                 if not r["passed"]:
                     print(f"  ❌ {r['name']}")
                     print(f"     Command: {r['command']}")
-        
+
         print(f"\nDuration: {datetime.now() - self.start_time}")
 
 if __name__ == "__main__":

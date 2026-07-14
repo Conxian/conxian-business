@@ -1,6 +1,6 @@
 # Conxian BOS Knowledge Framework
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 2.1 | Generated: 2026-07-08
+> Version: 2.4 | Generated: 2026-07-14
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 
@@ -174,7 +174,7 @@ stakeholders:
 vulnerabilities:
   audit-date: "2026-07-08"
   version: "1.0"
-  
+
   summary:
     total: 23
     high: 8
@@ -187,16 +187,16 @@ vulnerabilities:
   rules:
     - IF: "severity == high AND fixable == true"
       THEN: "pnpm update <package> OR add to PR checklist"
-      
+
     - IF: "severity == high AND fixable == false"
       THEN: "Check decision DEC-002; if not covered, add to allowlist"
-      
+
     - IF: "transitive == true AND chain contains 'bdk'"
       THEN: "Monitor bdk upstream; add to DEC-002"
-      
+
     - IF: "severity == moderate"
       THEN: "Add to monitor list; fix in next sprint"
-      
+
     - IF: "severity == low"
       THEN: "Acceptable risk; document in vulnerability section"
 
@@ -312,13 +312,13 @@ codeql-alerts:
       rule: "Clear-text logging of sensitive information"
       file: "tests/hiro-api.test.ts:19"
       action: "Remove sensitive data from logs"
-      
+
     - id: CSQL-H002
       repo: Conxian
       rule: "DOM text reinterpreted as HTML"
       file: "src/.../page.tsx:137"
       action: "Sanitize output with DOMPurify/textContent"
-      
+
     - id: CSQL-H003
       repo: Conxian_UI
       rule: "DOM text reinterpreted as HTML"
@@ -331,22 +331,22 @@ codeql-alerts:
       repo: conxius-wallet
       workflow: "secret-scan.yml"
       action: "Add permissions: {contents: read}"
-      
+
     - id: CSQL-M002
       repo: conxius-wallet
       workflow: "ci.yml"
       action: "Add permissions: {contents: read}"
-      
+
     - id: CSQL-M003
       repo: conxius-wallet
       workflow: "cleanup-artifacts.yml"
       action: "Add permissions: {contents: read}"
-      
+
     - id: CSQL-M004
       repo: .github (Conxian org)
       workflow: "standard-ci.yml"
       action: "Add permissions block"
-      
+
     - id: CSQL-M005
       repo: conxian-nexus
       workflow: "rust.yml"
@@ -378,7 +378,7 @@ decisions:
     decision: "Clarity 4 only"
     rationale: "Security + epoch features required"
     status: active
-    
+
   - id: DEC-002
     date: 2026-07-08
     topic: vulnerability-allowlist
@@ -389,7 +389,7 @@ decisions:
       - rustls-webpki
       - bigint-buffer
       - crossbeam-epoch
-      
+
   - id: DEC-003
     date: 2026-07-08
     topic: gitguardian-patterns
@@ -502,6 +502,13 @@ conxian-business
 
 ```yaml
 changelog:
+  - version: 2.4
+    date: 2026-07-14
+    changes:
+      - "Replaced direct protected-branch pushes with branch and PR promotion guidance"
+      - "Registered conxian-market in the portfolio and dependency relationships"
+      - "Documented external-secret handling for sandbox credentials"
+
   - version: 2.3
     date: 2026-07-08
     changes:
@@ -592,20 +599,20 @@ decisions:
 ```yaml
 upgrade-protocol:
   trigger: "Any modification to knowledge base"
-  
+
   steps:
     1: "Increment version number"
        - major: "Breaking changes to schema"
        - minor: "New entities or sections"
        - patch: "Corrections, typo fixes"
-       
+
     2: "Update changelog"
        - add: "{version, date, changes[]}"
-       
+
     3: "Cross-reference new entities"
        - update: "relations in related entities"
        - add: "tags for discoverability"
-       
+
     4: "Verify machine-readability"
        - check: "YAML syntax valid"
        - check: "IDs unique and sequential"
@@ -683,16 +690,20 @@ Agent Permission:
 ├── Update version + changelog
 ├── Suggest improvements to structure
 ├── Fix errors immediately
-└── Push changes to main + cherry-pick to PR
+├── Work on a feature or maintenance branch
+├── Open or update a pull request for review
+└── Promote through dev -> staged -> main
 
 Session Protocol:
 1. Start: Read BOS_KNOWLEDGE_FRAMEWORK.md
-2. Work: Apply knowledge, update as needed
-3. End: Crystallize new learnings back to framework
-4. Commit: "Co-authored-by: openhands <openhands@all-hands.dev>"
+2. Work: Apply knowledge on the task branch, update as needed
+3. Verify: Run relevant checks and record evidence
+4. End: Crystallize new learnings back to framework
+5. Commit: "Co-authored-by: openhands <openhands@all-hands.dev>"
+6. Publish: Push the branch and open/update a PR; never push directly to protected branches
 ```
 
-**No permission needed** - the framework is designed for autonomous evolution.
+Repository protections, CODEOWNERS, and required reviews still apply to every change.
 
 ---
 
@@ -703,12 +714,15 @@ weekly-update:
   script: "scripts/weekly-security-update.sh"
   schedule: "Every Monday 06:00 UTC"
   actions:
-    - "Fetch all submodules"
-    - "Pull main"
+    - "Fetch remote refs without mutating protected branches"
+    - "Create or update a maintenance branch from dev"
     - "Check Dependabot alerts"
     - "Update CodeQL registry"
     - "Increment version"
-    - "Commit + push"
+    - "Open or update a pull request into dev"
+
+  promotion: "dev -> staged -> main"
+  protected_branches: [main, staged]
 
   run-manually: |
     cd conxian-business
@@ -723,22 +737,22 @@ repo-fixes:
     status: "fixed"
     alert: "CSQL-H001 - Clear-text logging"
     commit: "19a207c"
-    
+
   conxius-wallet:
     status: "fixed"
     alerts: ["CSQL-M001", "CSQL-M002", "CSQL-M003"]
     commit: "pushed"
-    
+
   .github (Conxian org):
     status: "fixed"
     alert: "CSQL-M004 - standard-ci.yml"
     commit: "pushed"
-    
+
   conxian-nexus:
     status: "fixed"
     alert: "CSQL-M005 - rust.yml"
     commit: "pushed"
-    
+
   Conxian_UI:
     status: "pending"
     alert: "CSQL-H003 - DOM XSS"

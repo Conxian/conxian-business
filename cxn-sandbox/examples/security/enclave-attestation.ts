@@ -1,4 +1,4 @@
-import { EnclaveSDK } from '../../packages/@conxian/sdk/src/index';
+import { EnclaveSDK } from '../../packages/@conxian/sdk/src/index.js';
 
 async function main() {
   const enclave = new EnclaveSDK({ mode: 'simulation' });

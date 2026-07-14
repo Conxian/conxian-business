@@ -50,7 +50,7 @@ These repos are the public trust surface.
 
 ### Supporting
 
-These repos support the flagship trust surface and are linked from flagship READMEs (not pinned).
+These repos support the flagship trust surface and are linked from flagship READMEs. Some supporting repos are also pinned as submodules; the committed gitlinks and `.gitmodules` remain authoritative.
 
 - [lib-conxian-core](https://github.com/Conxian/lib-conxian-core) — Shared core models + conventions used across services.
 - [lib-conclave-sdk](https://github.com/Conxian/lib-conclave-sdk) — Headless enclave + cryptographic state machine SDK.

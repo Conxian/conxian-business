@@ -46,22 +46,39 @@ jobs:
               return;
             }
 
-            if (baseRef === 'main' && headRef !== 'staged' && !headRef.startsWith('promotion/')) {
+            const authorizedRoutes = new Map([
+              [
+                'dev->staged',
+                { description: "the direct 'dev' -> 'staged' promotion", requiresMainnetEvidence: false },
+              ],
+              [
+                'promotion/dev-to-staged->staged',
+                { description: "the generated 'promotion/dev-to-staged' -> 'staged' promotion", requiresMainnetEvidence: false },
+              ],
+              [
+                'staged->main',
+                { description: "the direct 'staged' -> 'main' promotion", requiresMainnetEvidence: true },
+              ],
+              [
+                'promotion/staged-to-main->main',
+                { description: "the generated 'promotion/staged-to-main' -> 'main' promotion", requiresMainnetEvidence: true },
+              ],
+            ]);
+
+            const route = authorizedRoutes.get(`${headRef}->${baseRef}`);
+            if ((baseRef === 'main' || baseRef === 'staged') && !route) {
+              const expected =
+                baseRef === 'main'
+                  ? "'staged' or 'promotion/staged-to-main'"
+                  : "'dev' or 'promotion/dev-to-staged'";
               core.setFailed(
-                `PRs into 'main' must come from 'staged' or a 'promotion/*' branch (got '${headRef}' -> '${baseRef}').`
+                `PRs into '${baseRef}' must use an explicit authorized source (${expected}; got '${headRef}' -> '${baseRef}').`
               );
               return;
             }
 
-            if (baseRef === 'staged') {
-              const allowed = headRef === 'dev' || headRef.startsWith('hotfix/') || headRef.startsWith('promotion/');
-
-              if (!allowed) {
-                core.setFailed(
-                  `PRs into 'staged' must come from 'dev', 'hotfix/*', or 'promotion/*' (got '${headRef}' -> '${baseRef}').`
-                );
-                return;
-              }
+            if (route) {
+              core.info(`Authorized route: ${route.description}`);
             }
 
             const body = pr.body ?? '';
@@ -102,7 +119,7 @@ jobs:
               );
             }
 
-            if (baseRef === 'main' && headRef === 'staged') {
+            if (route?.requiresMainnetEvidence) {
               requireBodyPattern(
                 /(^###\s+Mainnet\s+acceptance\s+evidence\s+pack\b)|audit\/mainnet-acceptance\//im,
                 "PRs into 'main' from 'staged' must include a Mainnet Acceptance Evidence Pack under '### Mainnet acceptance evidence pack' (or link to audit/mainnet-acceptance/*) per openspec/specs/mainnet-acceptance-evidence-pack/spec.md."

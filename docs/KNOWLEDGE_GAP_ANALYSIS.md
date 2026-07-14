@@ -58,7 +58,7 @@ Based on research findings from Stacks documentation and DAO frameworks:
 **Required Patterns:**
 ```
 1. Immutable redeploy + migration (auditability-focused)
-2. Modular/registry pattern (upgradeability-focused)  
+2. Modular/registry pattern (upgradeability-focused)
 3. Governance-controlled replacement (decentralization-focused)
 4. Multisig + timelock (operator-controlled)
 ```

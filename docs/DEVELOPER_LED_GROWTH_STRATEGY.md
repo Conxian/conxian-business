@@ -147,14 +147,13 @@
 **The Solution:**
 
 ```bash
-# Option 1: GitHub Codespaces Template
-# URL: github.com/Conxian/cxn-sandbox
+# Canonical in-repo sandbox
+git clone https://github.com/Conxian/conxian-business.git
+cd conxian-business/cxn-sandbox
+pnpm install --frozen-lockfile
 
-# Option 2: Gitpod
-# URL: gitpod.io/#https://github.com/Conxian/cxn-sandbox
-
-# Option 3: Docker One-Liner
-docker run -p 3000:3000 -p 3001:3001 conxian/sandbox:latest
+# Start the local stack when Docker is available
+docker compose up
 ```
 
 **Repository Structure (cxn-sandbox):**
@@ -284,16 +283,11 @@ One-click deployable Conxian project template.
 ## Quick Start
 
 ```bash
-# Option 1: GitHub Codespaces (Recommended)
-# Click "Use this template" → "Open in Codespaces"
-
-# Option 2: Gitpod
-# Open in Gitpod: https://gitpod.io/#https://github.com/Conxian/cxn-starter
-
-# Option 3: Local
-git clone https://github.com/Conxian/cxn-starter
-cd cxn-starter
-npm install && npm run dev
+# Canonical local checkout
+git clone https://github.com/Conxian/conxian-business.git
+cd conxian-business/cxn-sandbox
+pnpm install --frozen-lockfile
+pnpm run dev
 ```
 
 ## What's Included
@@ -312,7 +306,7 @@ npm install && npm run dev
 
 ## Contributing
 
-See [examples/CONTRIBUTING.md](examples/CONTRIBUTING.md)
+See [CONTRIBUTING.md](../CONTRIBUTING.md)
 ```
 
 ### 4.5 P4: Community Contribution Flow (Week 4)
@@ -395,7 +389,7 @@ See [examples/CONTRIBUTING.md](examples/CONTRIBUTING.md)
 
 ```sql
 -- Activation Cohort Query
-SELECT 
+SELECT
   signup_week,
   COUNT(DISTINCT user_id) as total,
   SUM(CASE WHEN first_payment_at IS NOT NULL THEN 1 ELSE 0 END) as activated,
@@ -494,7 +488,7 @@ LIMIT 12;
 
 ### Phase 1: Foundation (Week 1-2)
 
-- [ ] **CREATE** `cxn-sandbox` template repo
+- [ ] **MAINTAIN** the in-repo `cxn-sandbox` developer template
 - [ ] **ADD** `.devcontainer.json` for instant setup
 - [ ] **CREATE** `@conxian/sdk` npm package
 - [ ] **PUBLISH** first SDK version (even beta)
@@ -503,7 +497,7 @@ LIMIT 12;
 
 ### Phase 2: Expansion (Week 3-4)
 
-- [ ] **CREATE** `cxn-starter` template repo
+- [ ] **DOCUMENT** the canonical `cxn-sandbox` checkout flow
 - [ ] **ADD** GitHub Codespaces button to READMEs
 - [ ] **PUBLISH** SDK to npm with docs
 - [ ] **CREATE** "good first issue" labels

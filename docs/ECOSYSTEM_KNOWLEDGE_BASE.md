@@ -85,6 +85,7 @@
 | Repository | Purpose | Language | Architecture |
 |------------|---------|----------|-------------|
 | **conxian-labs-site** | Public website | HTML/CSS/JS | Static |
+| **conxian-market** | Marketplace and agentic commerce surface | Markdown/TypeScript | Orchestration |
 | **showcase-dapp** | UI demo environment | TypeScript | Next.js 16 |
 
 ---
@@ -144,6 +145,16 @@ conxius-wallet
     └── Integrates with: conxian-gateway (API)
 ```
 
+### conxian-market
+
+```
+conxian-market
+├── Marketplace discovery and agent listings
+├── Escrow and settlement coordination
+├── Depends on: conxian-nexus, conxian-gateway, conxius-wallet
+└── Uses: lib-conxian-core for shared compliance and cryptographic primitives
+```
+
 ---
 
 ## Technology Stack Matrix
@@ -159,6 +170,7 @@ conxius-wallet
 | **conxian-ui** | Node 20 | Next.js 15 | Next.js | pnpm | Stacks |
 | **conxius-platform** | - | Docker | Docker Compose | - | - |
 | **conxius-orbit** | Python 3.8+ | - | - | pip | Stacks |
+| **conxian-market** | Node/Docs | - | TypeScript + Markdown | pnpm | Multi-rail |
 
 ---
 
@@ -431,6 +443,7 @@ Submodules (calling reusable workflows)
 ├── conxian-ui             # Node.js CI
 ├── conxius-platform       # Node.js CI
 ├── conxius-orbit          # Node.js CI + Clarity
+├── conxian-market          # Marketplace integration checks
 └── conxian-labs-site      # Node.js CI
 ```
 
