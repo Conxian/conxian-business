@@ -118,7 +118,7 @@ jobs:
           git fetch origin "$TARGET"
           SOURCE_SHA="$(git rev-parse HEAD)"
           TARGET_SHA="$(git rev-parse "origin/${TARGET}")"
-          COMMITS="$(git log "${TARGET_SHA}..${SOURCE_SHA}" --oneline --no-merges | head -20)"
+          COMMITS="$(git log --max-count=20 --oneline --no-merges "${TARGET_SHA}..${SOURCE_SHA}")"
 
           {
             echo "source_sha=${SOURCE_SHA}"
