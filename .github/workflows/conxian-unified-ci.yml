@@ -108,7 +108,7 @@ jobs:
     - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
       with:
         submodules: false
-        token: ${{ secrets.CI_SUBMODULES_PAT }}
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: true
     - name: Require approved token and initialize pinned submodules
       env:
@@ -435,7 +435,7 @@ jobs:
     - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
       with:
         submodules: false
-        token: ${{ secrets.CI_SUBMODULES_PAT }}
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: true
     - name: Setup Python
       uses: actions/setup-python@v6
@@ -460,6 +460,8 @@ jobs:
     name: CI Summary Gate
     runs-on: ubuntu-latest
     if: always()
+    permissions:
+      contents: read
     needs:
       - change_detection
       - repo-hygiene
@@ -471,6 +473,12 @@ jobs:
       - testnet-simulation
       - market-suite
     steps:
+    - name: Checkout repository for summary gate
+      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
+      with:
+        submodules: false
+        token: ${{ github.token }}
+        persist-credentials: false
     - name: Summarize results and enforce repo-content gate
       env:
         CHANGE_DETECTION_RESULT: ${{ needs.change_detection.result }}
