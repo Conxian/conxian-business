@@ -121,6 +121,20 @@ repositories:
     purpose: "Crypto primitives, ZKC, SYI"
     tags: [library, crypto, rust]
     consumers: [REPO-002, REPO-003]
+
+  conxian-market:
+    id: REPO-008
+    type: marketplace
+    owner: Conxian-Labs
+    visibility: public
+    language: Markdown/TypeScript
+    purpose: "AI Labor Exchange, Settlement Core, Builder Network"
+    tags: [marketplace, settlement, ai-labor, escrow]
+    related: [REPO-001, REPO-002, REPO-003, REPO-005, REPO-006, REPO-007]
+    consumers: [REPO-001, REPO-002, REPO-003]
+    status: active
+    revenue_matrix: "80/10/10"  # Builder/Platform/Ecosystem
+    critical_issues: [CON-1427, CON-1425]
 ```
 
 ---
