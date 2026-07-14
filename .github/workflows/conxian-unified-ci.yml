@@ -103,13 +103,27 @@ jobs:
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
-        persist-credentials: false
+        persist-credentials: true
     - name: Ensure submodules are initialized
       run: |
         git submodule sync --recursive
         git submodule update --init
         git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
-        git -c submodule.conxian-market.update=checkout submodule update --init conxian-market
+    - name: Try to initialize optional market submodule
+      id: market-checkout
+      run: |
+        if git -c submodule.conxian-market.update=checkout submodule update --init conxian-market; then
+          echo "available=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "available=false" >> "$GITHUB_OUTPUT"
+          echo "::warning::conxian-market is intentionally pinned but unavailable with the approved CI token; market-specific checks are skipped."
+          {
+            echo "### Market integration checks skipped"
+            echo
+            echo "The pinned \\`conxian-market\\` submodule could not be fetched with the approved CI token. Market-specific checks were skipped rather than treated as passed."
+            echo "Provide the repository-approved \\`CI_SUBMODULES_PAT\\` secret to enable these checks."
+          } >> "$GITHUB_STEP_SUMMARY"
+        fi
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
@@ -171,11 +185,11 @@ jobs:
       run: |
         python3 scripts/verify_contamination_guard.py
     - name: Verify Market BOS Integration
-      if: ${{ hashFiles('scripts/verify_market_integration.py') != '' }}
+      if: ${{ hashFiles('scripts/verify_market_integration.py') != '' && steps.market-checkout.outputs.available == 'true' }}
       run: |
         python3 scripts/verify_market_integration.py
     - name: Run Market MWP Tests
-      if: ${{ hashFiles('scripts/market_bos_mwp_test.py') != '' }}
+      if: ${{ hashFiles('scripts/market_bos_mwp_test.py') != '' && steps.market-checkout.outputs.available == 'true' }}
       run: |
         python3 scripts/market_bos_mwp_test.py
     - name: Enforce BOS PR classification
@@ -430,7 +444,7 @@ jobs:
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
-        persist-credentials: false
+        persist-credentials: true
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
@@ -439,14 +453,31 @@ jobs:
       run: |
         git submodule sync --recursive
         git submodule update --init
-        git -c submodule.conxian-market.update=checkout submodule update --init conxian-market
+    - name: Try to initialize optional market submodule
+      id: market-checkout
+      run: |
+        if git -c submodule.conxian-market.update=checkout submodule update --init conxian-market; then
+          echo "available=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "available=false" >> "$GITHUB_OUTPUT"
+          echo "::warning::conxian-market is intentionally pinned but unavailable with the approved CI token; market-specific checks are skipped."
+          {
+            echo "### Market integration checks skipped"
+            echo
+            echo "The pinned \\`conxian-market\\` submodule could not be fetched with the approved CI token. Market-specific checks were skipped rather than treated as passed."
+            echo "Provide the repository-approved \\`CI_SUBMODULES_PAT\\` secret to enable these checks."
+          } >> "$GITHUB_STEP_SUMMARY"
+        fi
     - name: Verify Market BOS Integration
+      if: steps.market-checkout.outputs.available == 'true'
       run: |
         python3 scripts/verify_market_integration.py
     - name: Run Market MWP Tests
+      if: steps.market-checkout.outputs.available == 'true'
       run: |
         python3 scripts/market_bos_mwp_test.py
     - name: Repository Viability Assessment
+      if: steps.market-checkout.outputs.available == 'true'
       run: |
         python3 scripts/repo_viability_assessment.py --repo conxian-market
 
