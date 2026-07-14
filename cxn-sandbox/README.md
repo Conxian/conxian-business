@@ -22,7 +22,7 @@ Click the button below for instant setup:
 ### Option 3: Docker (One Command)
 
 ```bash
-docker run -p 3000:3000 -p 3001:3001 conxian/sandbox:latest
+docker run -p 3000:3000 -p 3001:3000 conxian/sandbox:latest
 ```
 
 ### Option 4: Local Development

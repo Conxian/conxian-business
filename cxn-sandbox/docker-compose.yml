@@ -39,7 +39,7 @@ services:
       context: ../conxian-nexus
       dockerfile: ../docker/nexus.Dockerfile
     ports:
-      - "3001:3001"
+      - "3001:3000"
     environment:
       DATABASE_URL: ${DB_CONNECTION_URL:?DB_CONNECTION_URL required}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
@@ -63,7 +63,7 @@ services:
     environment:
       DATABASE_URL: ${DB_CONNECTION_URL:?DB_CONNECTION_URL required}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-      NEXUS_URL: http://nexus:3001
+      NEXUS_URL: http://nexus:3000
       BITCOIN_RPC_URL: ${BITCOIN_RPC_URL:-https://bitcoin-testnet.publicnode.com}
       STACKS_NETWORK: testnet
       RUST_LOG: info

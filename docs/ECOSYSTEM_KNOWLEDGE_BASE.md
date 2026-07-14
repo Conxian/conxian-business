@@ -432,7 +432,7 @@ conxian-business (Hub)
 │   ├── secret-scan.yml     # Gitleaks + TruffleHog
 │   ├── dependency-review.yml
 │   └── hygiene.yml
-└── Unified CI (unified-ci.yml)
+└── Unified CI (conxian-unified-ci.yml)
 
 Submodules (calling reusable workflows)
 ├── conxian-gateway        # Node.js CI

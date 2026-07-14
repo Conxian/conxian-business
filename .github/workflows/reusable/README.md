@@ -128,32 +128,10 @@ jobs:
 
 ## Unified CI
 
-The `unified-ci.yml` workflow combines all checks:
-
-```yaml
-name: CI
-
-on:
-  push:
-    branches: [main, staged, dev]
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
-  pull_request:
-    branches: [main, staged, dev]
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  ci:
-    name: CI
-    uses: Conxian/conxian-business/.github/workflows/unified-ci.yml@main
-```
+The root repository's canonical push/PR orchestrator is
+`.github/workflows/conxian-unified-ci.yml`. It coordinates the suites above and
+the repository-specific gates. The reusable workflows remain building blocks
+for individual repositories; they are not the root merge-gate entrypoint.
 
 ## Key Features
 
