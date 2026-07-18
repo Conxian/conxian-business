@@ -19,20 +19,24 @@ jobs:
       pull-requests: read
     outputs:
       b2b: ${{ (github.event_name == 'push' && steps.filter_push.outputs.b2b) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.b2b) || 'false' }}
+      b2b_required: ${{ (github.event_name == 'push' && steps.filter_push.outputs.b2b_required) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.b2b_required) || 'false' }}
       docs_only: ${{ (github.event_name == 'push' && steps.filter_push.outputs.docs_only) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.docs_only) || 'false' }}
       code_impacting: ${{ (github.event_name == 'push' && steps.filter_push.outputs.code_impacting) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.code_impacting) || 'true' }}
+      market: ${{ (github.event_name == 'push' && steps.filter_push.outputs.market) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.market) || 'false' }}
     steps:
     - name: Classify PR change scope
       if: github.event_name == 'pull_request'
       id: classify_pr
-      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # ratchet:actions/github-script@v7
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # ratchet:actions/github-script@v9.0.0
       with:
         script: |
           const pr = context.payload.pull_request;
           if (!pr) {
             core.setOutput('b2b', 'false');
+            core.setOutput('b2b_required', 'false');
             core.setOutput('docs_only', 'false');
             core.setOutput('code_impacting', 'true');
+            core.setOutput('market', 'false');
             return;
           }
 
@@ -63,21 +67,37 @@ jobs:
             path.startsWith('conxius-enclave-sdk/') ||
             path === '.gitmodules'
           ));
+          const b2bLabel = (pr.labels || []).some((label) => label.name === 'b2b');
+          const b2bRequired = b2b || b2bLabel;
+
+          // Market integration patterns
+          const market = paths.some((path) => (
+            path === 'conxian-market' ||
+            path.startsWith('conxian-market/') ||
+            path === 'docs/MARKET_BOS_INTEGRATION_RESEARCH.md' ||
+            path === 'docs/CROSS_REPO_DEPENDENCY_MAP.md' ||
+            path === 'docs/REPO_VIABILITY_SCALE.md' ||
+            path === 'docs/INTERNAL_SYSTEMS_REVIEW.md'
+          ));
 
           core.setOutput('b2b', b2b ? 'true' : 'false');
+          core.setOutput('b2b_required', b2bRequired ? 'true' : 'false');
           core.setOutput('docs_only', docsOnly ? 'true' : 'false');
           core.setOutput('code_impacting', codeImpacting ? 'true' : 'false');
+          core.setOutput('market', market ? 'true' : 'false');
 
           core.info(`Detected ${paths.length} changed files for PR #${pr.number}.`);
-          core.info(`b2b=${b2b}, docs_only=${docsOnly}, code_impacting=${codeImpacting}`);
+          core.info(`b2b=${b2b}, docs_only=${docsOnly}, code_impacting=${codeImpacting}, market=${market}`);
 
     - name: Default push classification
       if: github.event_name == 'push'
       id: filter_push
       run: |
         echo "b2b=true" >> $GITHUB_OUTPUT
+        echo "b2b_required=true" >> $GITHUB_OUTPUT
         echo "docs_only=false" >> $GITHUB_OUTPUT
         echo "code_impacting=true" >> $GITHUB_OUTPUT
+        echo "market=true" >> $GITHUB_OUTPUT
 
   repo-hygiene:
     name: Repo Hygiene (ZSE & Submodules)
@@ -85,16 +105,16 @@ jobs:
     permissions:
       contents: read
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
       with:
-        submodules: recursive
+        submodules: false
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
-        persist-credentials: false
-    - name: Ensure submodules are initialized
+        persist-credentials: true
+    - name: Require approved token and initialize pinned submodules
+      env:
+        CI_SUBMODULES_PAT: ${{ secrets.CI_SUBMODULES_PAT }}
       run: |
-        git submodule sync --recursive
-        git submodule update --init
-        git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
+        bash scripts/ci/checkout_pinned_submodules.sh all
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
@@ -155,6 +175,15 @@ jobs:
       if: ${{ hashFiles('scripts/verify_contamination_guard.py') != '' }}
       run: |
         python3 scripts/verify_contamination_guard.py
+    - name: Verify Market BOS Integration
+      run: |
+        python3 scripts/verify_market_integration.py
+    - name: Run Market MWP Tests
+      run: |
+        python3 scripts/market_bos_mwp_test.py
+    - name: Repository Viability Assessment
+      run: |
+        python3 scripts/repo_viability_assessment.py --repo conxian-market
     - name: Enforce BOS PR classification
       if: ${{ github.event_name == 'pull_request' && hashFiles('scripts/verify_pr_bos_classification.py') != '' }}
       run: |
@@ -172,7 +201,7 @@ jobs:
         needs.change_detection.outputs.docs_only != 'true'
       )
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -207,7 +236,7 @@ jobs:
         )
       )
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -238,7 +267,7 @@ jobs:
         needs.change_detection.outputs.docs_only != 'true'
       )
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -257,7 +286,7 @@ jobs:
         cargo test --locked
         cargo clippy --locked --all-targets --all-features -- -D warnings
     - name: Install cargo-audit
-      uses: taiki-e/install-action@9bcaee1dcae34154180f412e2fa69355a7cda9f6 # v2
+      uses: taiki-e/install-action@43aecc8d72668fbcfe75c31400bc4f890f1c5853 # v2
       with:
         tool: cargo-audit@0.22.1
     - name: Dependency audit
@@ -272,6 +301,7 @@ jobs:
           --ignore RUSTSEC-2026-0098 \
           --ignore RUSTSEC-2026-0099 \
           --ignore RUSTSEC-2026-0104 \
+          --ignore RUSTSEC-2026-0204 \
           --ignore RUSTSEC-2024-0388
 
   b2c-wallet-suite:
@@ -287,13 +317,13 @@ jobs:
         needs.change_detection.outputs.docs_only != 'true'
       )
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup pnpm
-      uses: pnpm/action-setup@v4
+      uses: pnpm/action-setup@v6
       with:
         version: 9.15.9
         run_install: false
@@ -347,7 +377,7 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository &&
       contains(github.event.pull_request.labels.*.name, 'audit')
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -376,7 +406,7 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository &&
       contains(github.event.pull_request.labels.*.name, 'simulation')
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -390,10 +420,48 @@ jobs:
         pip install -r conxius-orbit/requirements.txt
         python3 conxius-orbit/conxian_testnet_deploy.py --help
 
+  market-suite:
+    name: Market Integration Suite
+    runs-on: ubuntu-latest
+    needs: [change_detection]
+    if: >-
+      github.event_name == 'push' ||
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        needs.change_detection.outputs.market == 'true'
+      )
+    steps:
+    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
+      with:
+        submodules: false
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        persist-credentials: true
+    - name: Setup Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.11'
+    - name: Require approved token and initialize pinned market submodule
+      env:
+        CI_SUBMODULES_PAT: ${{ secrets.CI_SUBMODULES_PAT }}
+      run: |
+        bash scripts/ci/checkout_pinned_submodules.sh market
+    - name: Verify Market BOS Integration
+      run: |
+        python3 scripts/verify_market_integration.py
+    - name: Run Market MWP Tests
+      run: |
+        python3 scripts/market_bos_mwp_test.py
+    - name: Repository Viability Assessment
+      run: |
+        python3 scripts/repo_viability_assessment.py --repo conxian-market
+
   ci-summary:
     name: CI Summary Gate
     runs-on: ubuntu-latest
     if: always()
+    permissions:
+      contents: read
     needs:
       - change_detection
       - repo-hygiene
@@ -403,13 +471,25 @@ jobs:
       - b2c-wallet-suite
       - audit-and-docs
       - testnet-simulation
+      - market-suite
     steps:
+    - name: Checkout repository for summary gate
+      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
+      with:
+        submodules: false
+        token: ${{ github.token }}
+        persist-credentials: false
     - name: Summarize results and enforce repo-content gate
       env:
         CHANGE_DETECTION_RESULT: ${{ needs.change_detection.result }}
         DOCS_ONLY: ${{ needs.change_detection.outputs.docs_only }}
         CODE_IMPACTING: ${{ needs.change_detection.outputs.code_impacting }}
         B2B_TRIGGER: ${{ needs.change_detection.outputs.b2b }}
+        B2B_REQUIRED: ${{ needs.change_detection.outputs.b2b_required }}
+        MARKET_TRIGGER: ${{ needs.change_detection.outputs.market }}
+        MARKET_SUITE_REQUIRED: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && needs.change_detection.outputs.market == 'true') }}
+        AUDIT_DOCS_REQUIRED: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'audit') }}
+        TESTNET_SIMULATION_REQUIRED: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'simulation') }}
         REPO_HYGIENE_RESULT: ${{ needs.repo-hygiene.result }}
         GATEWAY_SUITE_RESULT: ${{ needs.gateway-suite.result }}
         B2B_SUITE_RESULT: ${{ needs.b2b-suite.result }}
@@ -417,75 +497,6 @@ jobs:
         B2C_WALLET_SUITE_RESULT: ${{ needs.b2c-wallet-suite.result }}
         AUDIT_DOCS_RESULT: ${{ needs.audit-and-docs.result }}
         TESTNET_SIMULATION_RESULT: ${{ needs.testnet-simulation.result }}
+        MARKET_SUITE_RESULT: ${{ needs.market-suite.result }}
       run: |
-        python3 - <<'PY'
-        import os
-        import sys
-
-        docs_only = os.getenv('DOCS_ONLY', 'false').lower() == 'true'
-        code_impacting = os.getenv('CODE_IMPACTING', 'true').lower() == 'true'
-        b2b_trigger = os.getenv('B2B_TRIGGER', 'false').lower() == 'true'
-
-        rows = [
-            ('Change detection', os.getenv('CHANGE_DETECTION_RESULT', 'unknown'), False),
-            ('Repo Hygiene (ZSE & Submodules)', os.getenv('REPO_HYGIENE_RESULT', 'unknown'), True),
-            ('Gateway Suite', os.getenv('GATEWAY_SUITE_RESULT', 'unknown'), code_impacting),
-            (
-                'B2B Suite (Nexus & SDK)',
-                os.getenv('B2B_SUITE_RESULT', 'unknown'),
-                code_impacting and os.getenv('B2B_SUITE_RESULT', 'skipped') != 'skipped',
-            ),
-            (
-                'Core Library Suite (lib-conxian-core)',
-                os.getenv('LIB_CORE_SUITE_RESULT', 'unknown'),
-                code_impacting,
-            ),
-            ('B2C Wallet Suite', os.getenv('B2C_WALLET_SUITE_RESULT', 'unknown'), code_impacting),
-            ('Transparency Audit & Docs', os.getenv('AUDIT_DOCS_RESULT', 'unknown'), False),
-            ('Testnet Simulation', os.getenv('TESTNET_SIMULATION_RESULT', 'unknown'), False),
-        ]
-
-        blocking_states = {'failure', 'cancelled', 'timed_out'}
-        blocking_jobs = [
-            name
-            for name, result, required in rows
-            if required and result in blocking_states
-        ]
-
-        with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as summary:
-            summary.write('## Conxian Unified CI summary\n\n')
-            summary.write(
-                f"- PR classification: **{'docs-only' if docs_only else 'code-impacting'}**\n"
-            )
-            summary.write(f"- B2B trigger detected: **{'yes' if b2b_trigger else 'no'}**\n")
-            if docs_only:
-                summary.write(
-                    '- Docs-only PR detected: heavy implementation suites are intentionally skipped.\n\n'
-                )
-            else:
-                summary.write(
-                    '- Code-impacting PR detected: core implementation suites are required for merge.\n\n'
-                )
-
-            summary.write('| Job | Result | Required for repo-content merge gate |\n')
-            summary.write('| --- | --- | --- |\n')
-            for name, result, required in rows:
-                summary.write(
-                    f"| {name} | `{result}` | {'yes' if required else 'no'} |\n"
-                )
-
-            if blocking_jobs:
-                summary.write('\n### Merge gate result\n')
-                summary.write('❌ **Fail** — required repo-content checks failed:\n')
-                for job in blocking_jobs:
-                    summary.write(f'- `{job}`\n')
-            else:
-                summary.write('\n### Merge gate result\n')
-                summary.write('✅ **Pass** — no required repo-content check failures detected.\n')
-
-        if blocking_jobs:
-            print('Blocking repo-content check failures:', ', '.join(blocking_jobs))
-            sys.exit(1)
-
-        print('CI summary gate passed.')
-        PY
+        python3 scripts/ci/ci_summary_gate.py

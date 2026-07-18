@@ -1,0 +1,6 @@
+# Local sandbox configuration and credentials
+.env
+.secrets/
+
+# Disposable bootstrap-test logs
+*.log
