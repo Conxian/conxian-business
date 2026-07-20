@@ -7,6 +7,12 @@
 
 ---
 
+> **Historical record — SDK interpretation superseded on 2026-07-20.** This report preserves its dated 2026-06-03 conclusions and remediation history. Any `conxius-enclave-sdk` readiness interpretation in this document—including the historical `READY FOR MAINNET`, `PRODUCTION-READY`, `CODE READY / SPEC DONE`, and GAP-005/GAP-006 closure language—must not be treated as current production-support evidence.
+>
+> The current authority is the immutable [Production Enablement Audit — 2026-07-20](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [Capability and Evidence Matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md), recorded by merged [PR #193](https://github.com/Conxian/conxius-enclave-sdk/pull/193) at merge commit `79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8` against audited baseline `8194aa8ade26a9d5d7ed54b7f80f36796fce585c`.
+>
+> **Current SDK status: Beta / conditional.** Do not enable value-bearing production signing or settlement from the audited tree; the acceptance work remains open across issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202).
+
 ## Table of Contents
 
 1. [Executive Summary](#1-executive-summary)
@@ -26,13 +32,13 @@
 
 Conxian Labs has **10 active sub-repositories** plus the **conxian-business** orchestration repo. After a comprehensive audit across all repos — examining PRDs, BOS Buildout docs, Mainnet Readiness assessments, architecture docs, source code, GitHub issues, and market research — the ecosystem presents a **paradox**:
 
-- **Mainnet Readiness documents** all assert "READY FOR MAINNET" (Wallet v1.6.0, Gateway v0.1.1, Protocol v0.6.2, Enclave SDK v1.6.0)
+- **At the time of this 2026-06-03 report, Mainnet Readiness documents** all asserted "READY FOR MAINNET" (Wallet v1.6.0, Gateway v0.1.1, Protocol v0.6.2, Enclave SDK v1.6.0)
 - **BOS Buildout docs** identify significant P0 gaps across all repos
 - **PRD documents** claim 39/39 requirements COMPLETE for Gateway, REC-006 CLOSED for Protocol
 - **Source code analysis** reveals production-grade implementations (BitVM2 Groth16 verification, ISO 20022 XML generation, TEE enclave attestation, DLC oracle integration)
 - **Market data** confirms strong product-market timing (BTCFi resurgence, PAPSS 2.0 launch, RegTech $234B market)
 
-**Verdict: TECHNICALLY PRODUCTION-READY, OPERATIONALLY GAPPED.** The core technology is real and shipping. The gaps are in operational readiness — release hygiene, submodule integrity, documentation alignment, test coverage, and control-plane orchestration.
+**Historical 2026-06-03 verdict: TECHNICALLY PRODUCTION-READY, OPERATIONALLY GAPPED.** The core technology was assessed as real and shipping at report time. The documented gaps were operational readiness — release hygiene, submodule integrity, documentation alignment, test coverage, and control-plane orchestration. This historical verdict does not supersede the current SDK audit.
 
 ---
 
@@ -78,7 +84,7 @@ Conxian Labs has **10 active sub-repositories** plus the **conxian-business** or
 
 **Verdict: PRODUCTION READY** — Core contracts are real, Clarity 4 complete, gas benchmarks healthy. Stale documentation is the only real gap.
 
-### 3.2 Conxian Gateway (`conxian-gateway/`)
+### 3.2 Conxian Fusion (`conxian-gateway/`)
 
 | Dimension | Assessment |
 |---|---|
@@ -181,7 +187,9 @@ Conxian Labs has **10 active sub-repositories** plus the **conxian-business** or
 
 **Verdict: PRODUCTION CORE** — BitVM2 implementation is real production code. API documentation is the primary gap.
 
-### 3.9 Conxius Enclave SDK (`conxius-enclave-sdk/`)
+### 3.9 `conxius-enclave-sdk/` — historical June assessment
+
+> **Current-status cross-reference (2026-07-20):** The June assessment below is retained for historical traceability. The SDK is currently **Beta / conditional**; API presence, simulated paths, and structural tests do not establish production support. Use the immutable [audit](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [capability matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md) for current interpretation.
 
 | Dimension | Assessment |
 |---|---|
@@ -229,9 +237,9 @@ Conxian Labs has **10 active sub-repositories** plus the **conxian-business** or
 | Gateway | READY FOR MAINNET v0.1.1 | ~90% gaps closed |
 | Protocol | READY FOR MAINNET v0.6.2 | P0: Mainnet release plan (CON-371) |
 | Platform | INCUBATING (Mainnet Ready) | P0: Submodule integrity, orchestration path |
-| Enclave SDK | READY FOR MAINNET v1.6.0 | P0: Mainnet-readiness checklist |
+| Enclave SDK | **Historical:** READY FOR MAINNET v1.6.0 | P0: Mainnet-readiness checklist |
 
-**Resolution: COMPLEMENTARY, NOT CONTRADICTORY.** Mainnet Readiness assesses the **technical state of the code**. BOS Buildout assesses **operational readiness** (CI/CD, release hygiene, documentation, testing). A repo can be technically "Ready for Mainnet" while still having operational gaps. The real gap is that **no repo has both dimensions closed**.
+**Historical resolution (2026-06-03): COMPLEMENTARY, NOT CONTRADICTORY.** Mainnet Readiness assessed the **technical state of the code**. BOS Buildout assessed **operational readiness** (CI/CD, release hygiene, documentation, testing). The July 20 SDK audit is now the current authority and supersedes that interpretation for `conxius-enclave-sdk`.
 
 ### Contradiction 3: Wallet says PRODUCTION but MARKET_FIT/RISK_COMPLIANCE at ORCHESTRATING
 
@@ -243,13 +251,15 @@ Conxian Labs has **10 active sub-repositories** plus the **conxian-business** or
 
 Scoring: 0=Not started, 1=Early, 2=Functional, 3=Production
 
+> The matrix below is a June 3 snapshot. Its `conxius-enclave-sdk` score and verdict are historical records only; they cannot upgrade the current **Beta / conditional** status established by the July 20 audit and capability matrix.
+
 | Repo | Tech | Docs | Tests | Ops | Market | Overall | Verdict |
 |---|---|---|---|---|---|---|---|
 | **conxian-gateway** | 3 | 3 | 2 | 2 | 2 | **2.4** | PRODUCTION READY |
 | **Conxian protocol** | 3 | 2 | 2 | 2 | 2 | **2.2** | PRODUCTION READY |
 | **conxius-wallet** | 3 | 3 | 2 | 2 | 1 | **2.2** | TECH READY / COMMERCIAL PENDING |
 | **lib-conxian-core** | 3 | 1 | 1 | 1 | 1 | **1.4** | CORE READY / DOCS GAPPED |
-| **conxius-enclave-sdk** | 3 | 2 | 1 | 1 | 2 | **1.8** | CODE READY / SPEC DONE |
+| **conxius-enclave-sdk** | 3 | 2 | 1 | 1 | 2 | **1.8** | **Historical:** CODE READY / SPEC DONE; current Beta / conditional |
 | **conxian-nexus** | 2 | 2 | 2 | 1 | 1 | **1.6** | BETA / BITCOIN GAPS |
 | **conxius-orbit** | 2 | 2 | 2 | 2 | 1 | **1.8** | BETA / CLARITY 4 GAP |
 | **conxius-platform** | 1 | 2 | 1 | 1 | 1 | **1.2** | INCUBATING |
@@ -304,8 +314,8 @@ Scoring: 0=Not started, 1=Early, 2=Functional, 3=Production
 | GAP-002 | Test principal contamination | conxius-orbit | 1-2d | None | CON-371 | **CLOSED (Sprint 1)** |
 | GAP-003 | Production branch audit (stubs/placeholders) | conxian-ui | 1-2d | None | CON-405 | **CLOSED (Sprint 1)** |
 | GAP-004 | Submodule integrity repair | conxius-platform | 2-4d | All subrepos | #710 | **CLOSED (Sprint 2)** |
-| GAP-005 | Mainnet-readiness checklist closure | conxius-enclave-sdk | 2-3d | None | — | **CLOSED (Sprint 1)** |
-| GAP-006 | CI release hygiene enforcement | conxius-enclave-sdk | 1-2d | GAP-005 | — | **CLOSED (Sprint 1)** |
+| GAP-005 | Mainnet-readiness checklist closure | conxius-enclave-sdk | 2-3d | None | — | **CLOSED (Sprint 1; historical, superseded for current SDK support)** |
+| GAP-006 | CI release hygiene enforcement | conxius-enclave-sdk | 1-2d | GAP-005 | — | **CLOSED (Sprint 1; historical, superseded for current SDK support)** |
 | GAP-007 | Clarity 4 support in orbit | conxius-orbit | 3-5d | GAP-001 | — | **CLOSED (Sprint 1)** |
 
 ### P1 — High Priority
@@ -313,14 +323,14 @@ Scoring: 0=Not started, 1=Early, 2=Functional, 3=Production
 | ID | Gap | Repo | Effort | Dependencies | Status |
 |---|---|---|---|---|---|---|
 | GAP-008 | Bitcoin coverage (80% -> 95%+) | conxian-nexus | 5-10d | None | ✅ CLOSED (#722) |
-| GAP-009 | Lightning coverage (67% -> 90%+) | conxian-nexus | 5-10d | None | ✅ CLOSED (#723) — active tracker: [CON-780](docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md) |
+| GAP-009 | Lightning coverage (67% -> 90%+) | conxian-nexus | 5-10d | None | ✅ CLOSED (#723) — active tracker: [CON-780](operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md) |
 | GAP-010 | Document public API surface | lib-conxian-core | 2-3d | None | **CLOSED (Sprint 2)** |
 | GAP-011 | Create PRD for missing repos | conxian-ui, conxius-platform, enclave-sdk | 3-5d | None | **CLOSED (Sprint 2)** |
 | GAP-012 | Fix hardcoded dependencies | lib-conxian-core | 1-2d | None | **CLOSED (Sprint 2)**
 | GAP-013 | Control plane admin API contracts | conxius-platform | 5-10d | GAP-004 | ✅ CLOSED (#713, #714) |
 | GAP-014 | Close mock stubs integration tests | lib-conxian-core | 2-3d | None | **CLOSED (Sprint 2)** |
 
-- GAP-009 active tracker: [docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md](docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md)
+- GAP-009 active tracker: [docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md](operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md)
 
 ### P2 — Medium Priority
 
@@ -354,8 +364,8 @@ Scoring: 0=Not started, 1=Early, 2=Functional, 3=Production
 | 1 | Archive STUB_CONTRACTS.md (GAP-015) | Protocol team | None | **CLOSED** | `Conxian/docs/STUB_CONTRACTS.md` refreshed |
 | 2-3 | Mainnet release plan standardization (GAP-001) | Protocol team | None | **CLOSED** | `conxius-orbit/PRD.md` S7 added |
 | 2-3 | Production branch audit conxian-ui (GAP-003) | UI team | None | **CLOSED** | Stubs tracked; release gate added |
-| 3-5 | Mainnet-readiness checklist closure (GAP-005) | Enclave team | None | **CLOSED** | CON-625 formally closed |
-| 3-5 | CI release hygiene enforcement (GAP-006) | Enclave team | GAP-005 | **CLOSED** | Preflight gate + changelog check |
+| 3-5 | Mainnet-readiness checklist closure (GAP-005) | Enclave team | None | **CLOSED — historical June record** | CON-625 formally closed; superseded for current SDK support by the July audit |
+| 3-5 | CI release hygiene enforcement (GAP-006) | Enclave team | GAP-005 | **CLOSED — historical June record** | Preflight gate + changelog check; current release evidence remains conditional |
 | 5 | Clarity 4 support in orbit (GAP-007) | Orbit team | GAP-001 | **CLOSED** | Phase 5 -> "In Progress" |
 
 ### Sprint 2: Documentation & API Surface (Week 2) [COMPLETED 2026-06-03]
@@ -373,7 +383,7 @@ Scoring: 0=Not started, 1=Early, 2=Functional, 3=Production
 | Task | Owner | Dependencies | GitHub Issue | Status |
 |---|---|---|---|---|
 | Bitcoin coverage expansion (GAP-008) | Nexus team | None | [#722](https://github.com/Conxian/conxian-business/issues/722) | ✅ CLOSED |
-| Lightning coverage expansion (GAP-009) | Nexus + Gateway teams | Shared matrix + boundary in [CON-780 tracker](docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md) | [#723](https://github.com/Conxian/conxian-business/issues/723), [conxian-nexus#104](https://github.com/Conxian/conxian-nexus/issues/104), [conxian-gateway#117](https://github.com/Conxian/conxian-gateway/issues/117) | ✅ CLOSED |
+| Lightning coverage expansion (GAP-009) | Nexus + Gateway teams | Shared matrix + boundary in [CON-780 tracker](operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md) | [#723](https://github.com/Conxian/conxian-business/issues/723), [conxian-nexus#104](https://github.com/Conxian/conxian-nexus/issues/104), [conxian-gateway#117](https://github.com/Conxian/conxian-gateway/issues/117) | ✅ CLOSED |
 | Control plane admin API contracts (GAP-013) | Platform team | None (GAP-004 closed) | [#713](https://github.com/Conxian/conxian-business/issues/713), [#714](https://github.com/Conxian/conxian-business/issues/714) | ✅ CLOSED |
 | Cross-link portfolio docs (GAP-020) | Business team | None | [#724](https://github.com/Conxian/conxian-business/issues/724) | ✅ CLOSED |
 | Naming standard (#718) | Business team | None | [#718](https://github.com/Conxian/conxian-business/issues/718) | ✅ CLOSED |
@@ -442,8 +452,8 @@ Sprint 3 issues are all closed. See Sprint 3 table above for details. Remaining 
 | 1 | Archive STUB_CONTRACTS.md (GAP-015) | DONE | `Conxian/docs/STUB_CONTRACTS.md` refreshed |
 | 2-3 | Mainnet release plan (GAP-001) | DONE | `conxius-orbit/PRD.md` S7 added |
 | 2-3 | conxian-ui stub audit (GAP-003) | DONE | Stubs tracked; release gate added |
-| 3-5 | Mainnet checklist closure (GAP-005) | DONE | CON-625 formally closed |
-| 3-5 | CI release hygiene (GAP-006) | DONE | Preflight gate + changelog check |
+| 3-5 | Mainnet checklist closure (GAP-005) | **DONE — historical June record** | CON-625 formally closed; July audit supersedes current SDK interpretation |
+| 3-5 | CI release hygiene (GAP-006) | **DONE — historical June record** | Preflight gate + changelog check; July audit remains current authority |
 | 5 | Clarity 4 in orbit (GAP-007) | DONE | Phase 5 -> "In Progress" |
 | All | Post-implementation analysis | DONE | See Appendix C for full log |
 
@@ -538,9 +548,9 @@ Sprint 3 issues are all closed. See Sprint 3 table above for details. Remaining 
 | GAP-002 fix | `conxius-orbit/verify_address.py` | Replaced direct testnet call with mainnet example comment | Confirm |
 | GAP-003 fix | `conxian-ui/src/lib/contracts/self-launch.ts` | Added tracking reference: `TODO(CON-XXX)` | Confirm |
 | GAP-003 fix | `conxian-ui/RELEASE.md` | Added stub audit and CI checks to release checklist | Confirm |
-| GAP-005 fix | `conxius-enclave-sdk/docs/CON-625_MAINNET_AUDIT.md` | Updated pass status; added 10-area Mainnet Readiness Checklist | Confirm |
-| GAP-006 fix | `conxius-enclave-sdk/.github/workflows/release.yml` | Added `preflight` job with `needs: preflight` dependency | Confirm |
-| GAP-006 fix | `conxius-enclave-sdk/.github/workflows/hygiene.yml` | Added `changelog` job checking CHANGELOG.md freshness | Confirm |
+| GAP-005 fix | `conxius-enclave-sdk/docs/CON-625_MAINNET_AUDIT.md` | Historical June evidence: updated pass status and added 10-area Mainnet Readiness Checklist; superseded for current SDK support by the July audit | Confirm |
+| GAP-006 fix | `conxius-enclave-sdk/.github/workflows/release.yml` | Historical June evidence: added `preflight` job with `needs: preflight` dependency; does not establish current production support | Confirm |
+| GAP-006 fix | `conxius-enclave-sdk/.github/workflows/hygiene.yml` | Historical June evidence: added `changelog` job checking CHANGELOG.md freshness; does not establish current production support | Confirm |
 | GAP-007 fix | `conxius-orbit/PRD.md` | Updated Phase 5 from "Not Started" to "In Progress" | Confirm |
 | GAP-015 fix | `Conxian/docs/STUB_CONTRACTS.md` | Replaced stale Feb 2026 doc (178 stubs) with current-status doc (~5 remaining) | Confirm |
 
@@ -574,7 +584,7 @@ Sprint 3 issues are all closed. See Sprint 3 table above for details. Remaining 
 | ID | Gap | Priority | Sprint |
 |---|---|---|---|
 | GAP-008 | Bitcoin coverage (80% -> 95%+) | P1 | Sprint 3 |
-| GAP-009 | Lightning coverage (67% -> 90%+) | P1 | Sprint 3 (active tracker: [CON-780](docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md)) |
+| GAP-009 | Lightning coverage (67% -> 90%+) | P1 | Sprint 3 (active tracker: [CON-780](operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md)) |
 | GAP-013 | Control plane admin API contracts | P1 | Sprint 3 |
 | GAP-016 | API documentation consolidation | P2 | Sprint 4 |
 | GAP-017 | Developer portal setup | P2 | Sprint 4 |

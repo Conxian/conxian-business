@@ -2,7 +2,7 @@
 
 > **Issue**: [#830](https://github.com/Conxian/conxian-business/issues/830) — Re-verify governance and buyer-trust standards across public repos after docs rollout
 > **Status**: Canonical
-> **Last verified**: 2026-07-03
+> **Last verified**: 2026-07-20
 > **Review cadence**: On every major release, docs rollout, or trust-surface change
 
 ## Purpose
@@ -53,7 +53,7 @@ Every claim in the audit below uses one of these classifications:
 
 **Verdict**: ✅ Trust language matches implementation. Honest about "active development" status. Upgrade to "Beta" label explicit.
 
-### 2.3 Conxian Gateway (`conxian-gateway`)
+### 2.3 Conxian Fusion (`conxian-gateway`)
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
@@ -81,6 +81,20 @@ Every claim in the audit below uses one of these classifications:
 | **Status** | Submodule not initialized | Deployed via GitHub Pages (deploy-docs workflow); CI green | **Beta** | Schedule audit when submodule accessible |
 
 **Verdict**: ⚠️ Cannot verify — submodule not initialized. Deploy-docs CI workflow runs successfully.
+
+---
+
+### 2.6 `conxius-enclave-sdk`
+
+> **Current authority:** [Production Enablement Audit — 2026-07-20](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [Capability and Evidence Matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md), recorded by merged [PR #193](https://github.com/Conxian/conxius-enclave-sdk/pull/193) at merge commit `79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8` against audited baseline `8194aa8ade26a9d5d7ed54b7f80f36796fce585c`.
+
+| Attribute | Claimed | Actual | Classification | Gap? |
+|-----------|---------|--------|---------------|------|
+| **Status** | Earlier readiness records used stronger labels | **Beta / conditional** under the July 20 audit; issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain open | **Beta / conditional** | Yes — current evidence does not support an unqualified production claim |
+| **Interface/code presence** | Signing, attestation, protocol, and WASM surfaces exist | The matrix records API presence, but implementation completeness, integration evidence, independent review, and production support are not established across the surface | **Interface/code presence only** | Yes — presence cannot upgrade upstream evidence |
+| **Value-bearing operations** | No current production enablement claim | The audit explicitly says not to enable value-bearing production signing or settlement from the audited tree | **Not claimed** | Yes — hardware, attestation, protocol, release, and operational gates remain incomplete |
+
+**Verdict**: ⚠️ The SDK is **Beta / conditional**. Build success, API presence, simulated paths, or structural tests are not production-support evidence. The audit is a public repository evidence review, not an independent security certification.
 
 ---
 
@@ -129,6 +143,7 @@ The following are explicitly **not claimed** on any public surface. This section
 | "Bug bounty program" | Bounty workflow exists (BOUNTY_WORKFLOW.md) but payouts are gated on ConxianCSF mainnet + ALEX funding. No payable bounties are currently open. |
 | "Fully decentralized" | The BOS uses on-chain truth for critical state, but some components (Nexus, Gateway) are operated by Conxian-Labs. Community sovereign-node lane is target-state (see THREE_LANE_RUNTIME_DEPLOYMENT_ARCHITECTURE.md). |
 | "Production-ready" for all components | Only Conxius Wallet is classified as Production-ready. Nexus is Beta. Gateway is Beta. ConxianCSF is gated on ALEX funding. |
+| "Value-bearing production signing or settlement from `conxius-enclave-sdk`" | **Not claimed.** The July 20 audit says not to enable these operations from the audited tree while the Beta / conditional acceptance gates remain open. |
 
 ---
 
@@ -154,7 +169,7 @@ The Conxian BOS is a **sovereign-first, non-custodial** financial infrastructure
 - **Proven CI pipeline**: 9/9 green across all suites (B2B, B2C, Core, Gateway, Hygiene)
 - **Zero Secret Egress**: No secrets in Git; contamination guard enforces production principal hygiene
 - **Verifiable state**: Cryptographic MMR proofs and BitVM2 Groth16 verification for cross-chain state
-- **Honest maturity labeling**: Conxius Wallet is Stable/Production-ready; Nexus and Gateway are Beta; ConxianCSF mainnet is gated on ALEX funding
+- **Honest maturity labeling**: Conxius Wallet is Stable/Production-ready; Nexus and Gateway are Beta; `conxius-enclave-sdk` is Beta / conditional with no value-bearing production signing or settlement; ConxianCSF mainnet is gated on ALEX funding
 - **Clear boundary model**: Public-safe architecture docs; internal-only operational detail in Linear per ZSE
 
 **What we do not claim**: third-party audits, production SLAs, full decentralization, or payable bug bounties. See [Section 4](#4-what-is-not-claimed-trust-boundary) for the complete non-claim boundary.
