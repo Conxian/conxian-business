@@ -247,17 +247,17 @@ graph TB
 
 | Field | Record |
 |-------|--------|
-| Linear umbrella | [CON-1506 — production enablement](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) |
-| GitHub umbrella | [conxius-enclave-sdk issue #191](https://github.com/Conxian/conxius-enclave-sdk/issues/191) |
-| Current status | **Implemented Beta / conditional**; production enablement remains blocked for value-bearing use. No unqualified production-readiness claim is authorized. |
-| Review boundary | The merged audit and knowledge synchronization establish the documentation baseline; runtime remediation remains in [issues #195–#202](https://github.com/Conxian/conxius-enclave-sdk/issues/195). |
+| Linear umbrella | [CON-1506 — production enablement](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) (**In Review**) |
+| GitHub umbrella | [conxius-enclave-sdk issue #191](https://github.com/Conxian/conxius-enclave-sdk/issues/191) (**OPEN / REOPENED**) |
+| Current status | **Implemented Beta / conditional**; Linear CON-1506 remains **In Review** and GitHub #191 remains **OPEN / REOPENED**. Production enablement remains blocked for value-bearing use. No unqualified production-readiness claim is authorized. |
+| Review boundary | The merged audit and knowledge synchronization establish the documentation baseline; the production-enablement review remains in progress while runtime remediation remains in [issues #195–#202](https://github.com/Conxian/conxius-enclave-sdk/issues/195). |
 
 ### Typed Entities
 
 | Entity | Type | Role / state | Evidence |
 |--------|------|--------------|----------|
-| `CON-1506` | Linear umbrella issue | In Review; production-enablement review and evidence synchronization are recorded without approving value-bearing production use | [Linear issue](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) |
-| `#191` | GitHub umbrella issue | Open/reopened canonical public umbrella for the enablement review; remains open while [#195–#202](https://github.com/Conxian/conxius-enclave-sdk/issues/195), including final acceptance [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202), remain unresolved | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/191) |
+| `CON-1506` | Linear umbrella issue | Production-enablement review remains **In Review**; evidence synchronization is recorded without approving value-bearing production use | [Linear issue](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) |
+| `#191` | GitHub umbrella issue | **OPEN / REOPENED** canonical public umbrella for the enablement review; remains open while [#195–#202](https://github.com/Conxian/conxius-enclave-sdk/issues/195), including final acceptance [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202), remain unresolved | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/191) |
 | `#193` | Audit documentation pull request | Merged public-safe audit baseline; corrects readiness language to Beta / conditional | [Audit PR](https://github.com/Conxian/conxius-enclave-sdk/pull/193) |
 | `conxius-enclave-sdk` | Canonical technical repository/package identifier; shared runtime | Audited at the recorded source revision; support is capability-specific and remains conditional until the required gates pass | [Audited SDK main SHA](https://github.com/Conxian/conxius-enclave-sdk/commit/8194aa8ade26a9d5d7ed54b7f80f36796fce585c) |
 | `#195–#202` | Production-enablement gate set | Open implementation, evidence, operational, and independent-review follow-ups; [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) is the final acceptance gate | [Child gate backlog](https://github.com/Conxian/conxius-enclave-sdk/issues/195) |
