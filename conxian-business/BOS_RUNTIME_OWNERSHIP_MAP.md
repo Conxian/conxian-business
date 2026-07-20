@@ -15,9 +15,9 @@ This document maps the Conxian Sovereign BOS capabilities to their respective ru
 
 ## 2. Shared Libraries & SDKs
 
-| Capability | Repository | Purpose |
-| :--- | :--- | :--- |
-| **Conxius Enclave SDK** | `lib-conclave-sdk` | Cross-platform agentic primitives (TEE, StrongBox, Musig2). | Stable (v1.9.3) |
+| Capability | Repository | Purpose | Implementation Status |
+| :--- | :--- | :--- | :--- |
+| **`conxius-enclave-sdk`** | `conxius-enclave-sdk` | Cross-platform security primitives (TEE, StrongBox, Musig2). | **Beta / conditional** — [July 20 audit](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md); no value-bearing production signing or settlement |
 | **Sovereign Core** | `lib-conxian-core` | Shared models for BitVM2, CJCS, and gateway engine components. | Stable (v1.9.3) |
 
 ## 3. Interfaces & Platforms
