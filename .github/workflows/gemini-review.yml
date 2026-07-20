@@ -73,7 +73,7 @@ jobs:
 
       - name: 'Run Gemini pull request review'
         if: steps.gemini_auth.outputs.enabled == 'true'
-        uses: 'google-github-actions/run-gemini-cli@v0' # ratchet:exclude
+        uses: 'google-github-actions/run-gemini-cli@f77273f4c914e4bf38440cf36a0369cb64a37489' # ratchet:google-github-actions/run-gemini-cli@v0
         continue-on-error: true
         id: 'gemini_pr_review'
         env:
