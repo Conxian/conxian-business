@@ -189,7 +189,7 @@ The recommended v2.1 upgrades add **quantitative precision** for real-world busi
 
 ### 3.1 Conxian Protocol Contracts
 
-**Location:** [Conxian/contracts/](../Conxian/contracts/)
+**Location:** [Conxian/contracts/](https://github.com/Conxian/Conxian/tree/7e6aa76cc35dfbef3470ddd243356aa67ad17bcc/contracts)
 
 | Category | Count | Examples |
 |:---|---:|:---|
@@ -212,7 +212,7 @@ The recommended v2.1 upgrades add **quantitative precision** for real-world busi
 
 ### 3.2 Conxius Wallet Contracts
 
-**Location:** [conxius-wallet/](../conxius-wallet/)
+**Location:** [conxius-wallet/](https://github.com/Conxian/conxius-wallet/tree/d0532234a2ace9a7bb31ef54b4002f1f66fc481c)
 
 | Contract | Category | Purpose |
 |:---|---|:---|
@@ -244,7 +244,7 @@ All contracts across both projects have been migrated to **Clarity 4**:
 
 ### 4.1 Project Structure
 
-**Workspace Root:** [conxian-gateway/Cargo.toml](../conxian-gateway/Cargo.toml)
+**Workspace Root:** [conxian-gateway/Cargo.toml](https://github.com/Conxian/conxian-gateway/blob/54edf2e639a67092647a2a620081a698569b7319/Cargo.toml)
 
 | Member | Purpose | Rust Files |
 |:---|---|:---:|
@@ -336,10 +336,10 @@ All contracts across both projects have been migrated to **Clarity 4**:
 
 | Component | Status | Documentation |
 |:---|---|:---:|
-| System Graph | ✅ COMPLETE | [SYSTEM_GRAPH.md](../conxius-platform/SYSTEM_GRAPH.md) |
-| Phase 5/6 Risk Register | ✅ COMPLETE | [PHASE_5_6_RISK_REGISTER.md](../conxius-platform/docs/PHASE_5_6_RISK_REGISTER.md) |
+| System Graph | ✅ COMPLETE | [SYSTEM_GRAPH.md](https://github.com/Conxian/conxius-platform/blob/7566d15463b04eefec46cd124d9ef196b7b5383e/docs/architecture/SYSTEM_GRAPH.md) |
+| Phase 5/6 Risk Register | ✅ COMPLETE | [PHASE_5_6_RISK_REGISTER.md](https://github.com/Conxian/conxius-platform/blob/7566d15463b04eefec46cd124d9ef196b7b5383e/docs/PHASE_5_6_RISK_REGISTER.md) |
 | Phase 7 Sovereign Design | 🔄 IN PROGRESS | NixOS control plane migration |
-| WHITEPAPER | ✅ COMPLETE | [WHITEPAPER.md](../conxius-platform/WHITEPAPER.md) |
+| WHITEPAPER | ✅ COMPLETE | [WHITEPAPER.md](https://github.com/Conxian/conxius-platform/blob/7566d15463b04eefec46cd124d9ef196b7b5383e/docs/WHITEPAPER.md) |
 
 ### 7.2 `conxius-orbit`
 
@@ -395,7 +395,7 @@ The **Rust Backend (Nexus + SDK)** row above is a historical aggregate assessmen
 | `cargo build --workspace` | ✅ PASS | Exit code 0, 181+ crates |
 | `cargo test --workspace` | ⚠️ BLOCKED | Disk space exhaustion (56 MB free) — NOT a code issue |
 | `conxian-gateway cargo build` | ⚠️ BLOCKED | Disk space exhaustion — requires 10+ GB |
-| Rust source files (Gateway) | ✅ 32 files statically verified | [Full module tree confirmed](../conxian-gateway) |
+| Rust source files (Gateway) | ✅ 32 files statically verified | [Full module tree confirmed](https://github.com/Conxian/conxian-gateway/tree/54edf2e639a67092647a2a620081a698569b7319) |
 | Clarity 4 contracts | ✅ 199+ entries verified | 100% at clarity-version = 4, zero on v1-3 |
 | Windows setup reproducibility | ✅ Idempotent script verified | setup_windows.ps1 |
 | LLVM MinGW toolchain | ✅ Working | secp256k1-sys links |
