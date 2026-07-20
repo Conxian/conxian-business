@@ -40,11 +40,6 @@ jobs:
           permission-issues: 'write'
           permission-pull-requests: 'write'
 
-      - name: 'Checkout repository'
-        if: |-
-          ${{ env.GEMINI_AUTH_AVAILABLE == 'true' }}
-        uses: 'actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10' # ratchet:actions/checkout@v6
-
       - name: 'Check Gemini auth configuration'
         id: 'gemini_auth'
         env:
@@ -71,9 +66,14 @@ jobs:
             echo "- \\`vars.GOOGLE_GENAI_USE_GCA=true\\`"
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: 'Checkout repository'
+        if: |-
+          ${{ steps.gemini_auth.outputs.enabled == 'true' }}
+        uses: 'actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10' # ratchet:actions/checkout@v6
+
       - name: 'Run Gemini pull request review'
         if: steps.gemini_auth.outputs.enabled == 'true'
-        uses: 'google-github-actions/run-gemini-cli@f77273f4c914e4bf38440cf36a0369cb64a37489' # ratchet:google-github-actions/run-gemini-cli@v0
+        uses: './.github/actions/run-gemini-cli'
         continue-on-error: true
         id: 'gemini_pr_review'
         env:

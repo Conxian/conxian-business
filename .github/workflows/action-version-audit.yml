@@ -4,11 +4,13 @@ on:
   pull_request:
     paths:
       - '.github/workflows/**'
+      - '.github/actions/**'
       - 'scripts/verify_action_versions.py'
   push:
     branches: [main, staged, dev]
     paths:
       - '.github/workflows/**'
+      - '.github/actions/**'
       - 'scripts/verify_action_versions.py'
   schedule:
     - cron: '0 6 * * 1'  # weekly Monday morning
