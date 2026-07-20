@@ -247,9 +247,9 @@ graph TB
 
 | Field | Record |
 |-------|--------|
-| Linear umbrella | [CON-1506 — production enablement](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) — **authenticated/internal reference only; not public evidence**. Private Linear content is not reproduced here. |
+| Linear umbrella | [CON-1506 — production enablement](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) (**In Progress**) |
 | GitHub umbrella | [conxius-enclave-sdk issue #191](https://github.com/Conxian/conxius-enclave-sdk/issues/191) (**OPEN / REOPENED**) |
-| Current status | **Beta / conditional**; the latest mandatory gate recorded in [the failed-gate comment](https://github.com/Conxian/conxius-enclave-sdk/issues/191#issuecomment-5027149779) was **136 passed, 1 failed** because of a nondeterministic future-timestamp attestation test. Implementation is paused pending a fix and a repeatable exact-full-gate pass. GitHub #191 remains **OPEN / REOPENED**; #195–#202 are all open, and final acceptance in #202 cannot be bypassed. Production enablement remains blocked for value-bearing use. No unqualified production-readiness claim is authorized. |
+| Current status | **Implemented Beta / conditional**; live Linear CON-1506 is **In Progress** and GitHub #191 remains **OPEN**; the reopened designation is historical. Production enablement remains blocked for value-bearing use. No unqualified production-readiness claim is authorized. |
 | Review boundary | The dated audit establishes historical documentation evidence; current status is governed by live GitHub #191 and #195–#202 while the failed mandatory gate is remediated. |
 | Historical-status boundary | Older closure/readiness indexes are point-in-time records and are superseded for current status by live GitHub #191 and #195–#202. The 2026-06-03 readiness report is dated and marked internal at [lines 3–6](docs/UNIFIED_PRODUCTION_READINESS_GAP_REPORT.md#L3-L6), records its earlier readiness verdict at [lines 27–35](docs/UNIFIED_PRODUCTION_READINESS_GAP_REPORT.md#L27-L35), and records historical closure indexes at [lines 529–564](docs/UNIFIED_PRODUCTION_READINESS_GAP_REPORT.md#L529-L564). |
 
@@ -257,7 +257,7 @@ graph TB
 
 | Entity | Type | Role / state | Evidence |
 |--------|------|--------------|----------|
-| `CON-1506` | Linear umbrella issue | Authenticated/internal tracking reference only, not public evidence; private Linear content is not reproduced, and no value-bearing production approval is implied | [Linear issue](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) |
+| `CON-1506` | Linear umbrella issue | Production-enablement review is **In Progress**; evidence synchronization is recorded without approving value-bearing production use | [Linear issue](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) |
 | `#191` | GitHub umbrella issue | **OPEN / REOPENED** canonical public umbrella for the enablement review; remains open while [#195–#202](https://github.com/Conxian/conxius-enclave-sdk/issues/195), including final acceptance [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202), remain unresolved | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/191) |
 | `#191 comment 5027149779` | GitHub issue comment / mandatory-gate result | Latest public gate evidence: **136 passed, 1 failed** because of a nondeterministic future-timestamp attestation test; implementation is paused pending remediation and a repeatable exact-full-gate pass | [Failed-gate comment](https://github.com/Conxian/conxius-enclave-sdk/issues/191#issuecomment-5027149779) |
 | `#193` | Audit documentation pull request | Merged public-safe audit baseline; corrects readiness language to Beta / conditional | [Audit PR](https://github.com/Conxian/conxius-enclave-sdk/pull/193) |
