@@ -20,6 +20,8 @@ jobs:
             const pr = context.payload.pull_request;
             const baseRef = pr.base.ref;
             const headRef = pr.head.ref;
+            const isDependabotUpdate =
+              pr.user?.login === 'dependabot[bot]' && headRef.startsWith('dependabot/');
 
             const baseRepoId = pr.base.repo?.id;
             const headRepoId = pr.head.repo?.id;
@@ -46,11 +48,20 @@ jobs:
               return;
             }
 
-            if (baseRef === 'main' && headRef !== 'staged' && !headRef.startsWith('promotion/')) {
+            if (
+              baseRef === 'main' &&
+              headRef !== 'staged' &&
+              !headRef.startsWith('promotion/') &&
+              !isDependabotUpdate
+            ) {
               core.setFailed(
                 `PRs into 'main' must come from 'staged' or a 'promotion/*' branch (got '${headRef}' -> '${baseRef}').`
               );
               return;
+            }
+
+            if (baseRef === 'main' && isDependabotUpdate) {
+              core.info('Allowing an in-repository Dependabot maintenance update into main.');
             }
 
             if (baseRef === 'staged') {
