@@ -60,10 +60,10 @@ jobs:
             echo "### Gemini review skipped"
             echo
             echo "No Gemini auth method is configured for this repository. Configure at least one of:"
-            echo "- \\`secrets.GEMINI_API_KEY\\`"
-            echo "- \\`secrets.GOOGLE_API_KEY\\`"
-            echo "- \\`vars.GOOGLE_GENAI_USE_VERTEXAI=true\\` (with the required GCP settings)"
-            echo "- \\`vars.GOOGLE_GENAI_USE_GCA=true\\`"
+            echo "- \`secrets.GEMINI_API_KEY\`"
+            echo "- \`secrets.GOOGLE_API_KEY\`"
+            echo "- \`vars.GOOGLE_GENAI_USE_VERTEXAI=true\` (with the required GCP settings)"
+            echo "- \`vars.GOOGLE_GENAI_USE_GCA=true\`"
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: 'Checkout repository'
