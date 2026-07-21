@@ -58,14 +58,14 @@ The enclave SDK remains **Beta / conditional**. This remediation does not author
 - [ ] Deployed monitoring, alerting, rollback, and recovery evidence.
 - [ ] Final release and production acceptance gates.
 
-## Focused verification commands
+## Focused SDK verification commands
 
 From the business-repository root:
 
 ```bash
+git submodule update --init conxius-enclave-sdk
 git submodule status conxius-enclave-sdk
 git -C conxius-enclave-sdk rev-parse HEAD
-git diff --check
 
 cd conxius-enclave-sdk
 cargo fmt --package conxius-enclave-sdk -- --check
@@ -76,11 +76,20 @@ if test -f scripts/validate_capability_evidence.py; then
   python3 scripts/validate_capability_evidence.py --check
 fi
 cd ..
+```
+
+## Full-repository hygiene checks
+
+From the business-repository root, initialize all configured submodules before running the repository-wide validator:
+
+```bash
+git diff --check
+git submodule update --init --recursive
 
 python3 scripts/verify_contamination_guard.py
 python3 scripts/verify_submodule_integrity.py
 ```
 
-The literal workspace-wide `cargo fmt --all -- --check` should also be run when all root workspace members are initialized; this repository's SDK CI gate is package-scoped so unrelated formatting drift in the preserved Nexus check cannot mask SDK coverage.
+The literal workspace-wide `cargo fmt --all -- --check` should also be run when all root workspace members are initialized; this repository's SDK CI gate is package-scoped so unrelated formatting drift in the preserved Nexus check cannot mask SDK coverage. `verify_submodule_integrity.py` requires the configured submodules to be initialized, so the recursive initialization command above is a prerequisite for that check.
 
 The root CI job is the acceptance gate for the enclave SDK because the root Makefile's `test-all` intentionally avoids implicit submodule initialization and network-dependent work.

@@ -29,9 +29,9 @@ This matrix covers the 13-repo execution set used for migration gate decisions.
 ### Group C — Shared runtime and operational tooling
 
 7. `lib-conxian-core`
-8. `lib-conclave-sdk`
+8. `conxius-enclave-sdk`
 9. `conxius-platform`
-10. `conxius_orbit`
+10. `conxius-orbit`
 11. `cxn-grid-oracle`
 
 ### Group D — Governance and control plane
@@ -56,15 +56,15 @@ A repo is considered “gate-ready” only when required evidence is attached to
 | Function group | Repo | Compatibility scope (must remain stable) | Required gates | Objective evidence requirements |
 | --- | --- | --- | --- | --- |
 | Protocol core | `Conxian` | Contract traits, event schema, settlement-state transitions | G0, G1, G2, G3, G4 | Versioned ABI/trait manifest; deterministic test vectors; signed rollback drill result for contract-level feature flags |
-| Protocol core | `conxian-nexus` | Checkpoint schema, reconciliation records, state-query contracts for Gateway/UI | G0, G1, G2, G3, G4 | Schema diff report (no unapproved breaking changes); dual-lane checkpoint comparison; replay evidence for indexed state rebuild |
+| Protocol core | `conxian-nexus` | Checkpoint schema, reconciliation records, state-query contracts for gateway service/UI | G0, G1, G2, G3, G4 | Schema diff report (no unapproved breaking changes); dual-lane checkpoint comparison; replay evidence for indexed state rebuild |
 | Protocol core | `conxian-gateway` | Ingress/egress policy APIs, bridge-state gating, idempotency semantics | G0, G1, G2, G3, G4 | API contract test report; policy boundary negative tests; cutover canary and rollback logs |
-| Client surface | `conxius-wallet` | Signing flow compatibility, session/auth assumptions, settlement status handling | G0, G1, G2, G4 | Integration test report against frozen Gateway APIs; signer-boundary conformance checks; release-note acknowledgement of no bypass paths |
+| Client surface | `conxius-wallet` | Signing flow compatibility, session/auth assumptions, settlement status handling | G0, G1, G2, G4 | Integration test report against frozen gateway service APIs; signer-boundary conformance checks; release-note acknowledgement of no bypass paths |
 | Client surface | `conxian-ui` (`Conxian_UI`) | Read-model/API compatibility and state-label semantics | G0, G1, G4 | Snapshot/API contract tests; UI state mapping evidence tied to canonical status codes |
 | Client surface | `conxian-labs-site` | Public status/docs references and migration comms correctness | G0, G4 | Published docs link validation; release-communication checklist sign-off |
-| Shared runtime | `lib-conxian-core` | Shared model/version semantics used by Gateway/Nexus/Wallet | G0, G1, G2 | Semantic-version delta report; downstream compile/test compatibility report across dependents |
-| Shared runtime | `lib-conclave-sdk` | Attestation/session primitives and signer-boundary helper APIs | G0, G1, G2 | Interface freeze tag; attestation boundary test report; compatibility matrix of consumers |
+| Shared runtime | `lib-conxian-core` | Shared model/version semantics used by gateway service/Nexus/Wallet | G0, G1, G2 | Semantic-version delta report; downstream compile/test compatibility report across dependents |
+| Shared runtime | `conxius-enclave-sdk` | Attestation/session primitives and signer-boundary helper APIs | G0, G1, G2 | Interface freeze tag; attestation boundary test report; compatibility matrix of consumers |
 | Shared runtime | `conxius-platform` | Environment orchestration for dual-lane validation and rollback drills | G0, G1, G3 | Reproducible environment manifests; drill execution logs; dependency lockfile integrity evidence |
-| Shared runtime | `conxius_orbit` | Deployment/promote/rollback tooling behavior for contract/service rollout | G0, G2, G3, G4 | Tooling dry-run logs; signed promotion script checksum; rollback rehearsal evidence |
+| Shared runtime | `conxius-orbit` | Contract deployment tooling behavior for contract/service rollout | G0, G2, G3, G4 | Contract deployment tooling dry-run logs; signed promotion script checksum; rollback rehearsal evidence |
 | Shared runtime | `cxn-grid-oracle` | Oracle feed schema and freshness semantics consumed by migration flows | G0, G1, G2 | Feed schema contract tests; freshness/staleness alarm evidence; fail-closed behavior test |
 | Governance | `conxian-business` | Canonical docs, gates, and migration decision records | G0, G4 | Updated canonical docs with gate mapping; review approvals captured in change log |
 | Governance | `.github` | CI policy/workflow enforcement of gate evidence and link integrity | G0, G2, G4 | Required-check configuration evidence; workflow run logs proving gate check enforcement |
@@ -103,7 +103,7 @@ A repo is considered “gate-ready” only when required evidence is attached to
 ### G4 — Promotion readiness checklist
 
 - [ ] SLO/error-budget results captured for promotion window.
-- [ ] Required owner approvals recorded (protocol, gateway, nexus, governance).
+- [ ] Required owner approvals recorded (protocol, gateway service, nexus, governance).
 - [ ] User-facing communication/docs updated and link-checked.
 - [ ] Decision log includes go/no-go rationale and fallback trigger conditions.
 - [ ] Decision log references `docs/operations/CON-681_PHASE6_PRODUCTION_ROLLOUT_RUNBOOK.md` as canonical rollout authority.

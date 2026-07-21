@@ -7,12 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.md](docs/RELEASE_NOTES_AND_CHANGELOG.md).
 
-## [1.9.5] - 2026-07-08
-
-### Added
-- **System-wide BOS v1.9.5 Standardization**: Aligned organization and repository versions to BOS v1.9.5.
-- **Security Remediation**: Fixed RUSTSEC-2026-0204 (crossbeam-epoch).
-
 ## [Unreleased]
 
 ### Added
@@ -21,6 +15,9 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 ## [1.9.5] - 2026-07-08
 
 ### Added
+- **System-wide BOS v1.9.5 Standardization**: Aligned organization and repository versions to BOS v1.9.5.
+- **Security Remediation**: Fixed RUSTSEC-2026-0204 (crossbeam-epoch).
+
 - **System-wide BOS v1.9.5 Standardization**: Aligned organization and repository versions to BOS v1.9.5 across Root, README, CHANGELOG, and AGENTS files to signal unified mainnet readiness.
 
 - **Cross-Issue Boundary & Doctrine Sprint — 6 artifacts delivered**:

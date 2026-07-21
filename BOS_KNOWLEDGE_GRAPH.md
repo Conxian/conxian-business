@@ -208,7 +208,7 @@ graph TB
 | epoch = "latest" mandatory | 2026-04-23 | Always use newest epoch | - |
 | Dynamic principals from treasury | 2026-04-23 | Eliminate hardcoded SPOF | - |
 | TEE via conxius-enclave-sdk | 2026-04-23 | Hardware key isolation | - |
-| ISO 20022 via Conxian Gateway | 2026-04-23 | Legacy banking bridge | - |
+| ISO 20022 via gateway service | 2026-04-23 | Legacy banking bridge | - |
 | Cargo audit allowlist for transitive deps | 2026-07-08 | Transitive vulnerabilities without local upgrade path | Upgrade dep chain |
 | Gitleaks license via GitHub Secrets | 2026-07-08 | ZSE compliance; no hardcoded secrets | - |
 | Branch and PR promotion flow | 2026-07-14 | Protected branches require review and dev -> staged -> main promotion | - |

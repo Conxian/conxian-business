@@ -53,7 +53,7 @@ Every claim in the audit below uses one of these classifications:
 
 **Verdict**: ✅ Trust language matches implementation. Honest about "active development" status. Upgrade to "Beta" label explicit.
 
-### 2.3 Conxian Gateway (`conxian-gateway`)
+### 2.3 Gateway service (`conxian-gateway`)
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
@@ -158,7 +158,7 @@ The Conxian BOS is a **sovereign-first, non-custodial** financial infrastructure
 - **Proven CI pipeline**: 9/9 green across all suites (B2B, B2C, Core, Gateway, Hygiene)
 - **Zero Secret Egress**: No secrets in Git; contamination guard enforces production principal hygiene
 - **Verifiable state**: Cryptographic MMR proofs and BitVM2 Groth16 verification for cross-chain state
-- **Honest maturity labeling**: Conxius Wallet is Stable/Production-ready; Nexus and Gateway are Beta; ConxianCSF mainnet is gated on ALEX funding
+- **Honest maturity labeling**: Conxius Wallet is Stable/Production-ready; Nexus and the gateway service are Beta; ConxianCSF mainnet is gated on ALEX funding
 - **Clear boundary model**: Public-safe architecture docs; internal-only operational detail in Linear per ZSE
 
 **What we do not claim**: third-party audits, production SLAs, full decentralization, or payable bug bounties. See [Section 4](#4-what-is-not-claimed-trust-boundary) for the complete non-claim boundary.
