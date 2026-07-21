@@ -24,6 +24,10 @@ Submodule bump doc-checklist:
 
 Note: in this repo, those artifacts live under the `lib-conclave-sdk/` submodule when it is checked out (for example, via `git submodule update --init lib-conclave-sdk`).
 
+## CON-1518 telemetry addendum — 2026-07-21
+
+The CON-1518 telemetry remediation landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210) at `593af0d9120b612de5b2817866b0528e5c877570`, which this BOS repo pins exactly. The public-safe business-repo authority is [CON-1518 telemetry privacy and operational evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md). It records implementation and operating boundaries only; independent review, service-side retention/deletion evidence, deployed monitoring/recovery evidence, and final production gates remain open. Telemetry does not change the SDK's **Beta / conditional** status or authorize value-bearing production signing or settlement.
+
 ## 1) Business-unit role (supporting shared SDK)
 
 Per the repo portfolio, `lib-conclave-sdk` is a **supporting** repo:
@@ -98,6 +102,7 @@ The SDK repo should keep these docs current (public-safe):
 In this BOS repo, the canonical cross-repo checklist is:
 
 - Mainnet readiness checklist — lib-conclave-sdk: `docs/MAINNET_READINESS_LIB_CONCLAVE_SDK.md`
+- CON-1518 telemetry privacy and operational evidence — [`docs/operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md`](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md)
 
 ### Internal-only operating docs (Linear Virtual Office)
 

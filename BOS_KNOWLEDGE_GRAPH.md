@@ -251,6 +251,38 @@ graph TB
 
 ---
 
+## Dated Digest: CON-1518 Telemetry Privacy & Monitoring (2026-07-21)
+
+### Status
+
+| Field | Record |
+|-------|--------|
+| Linear issue | [CON-1518](https://linear.app/conxian-labs/issue/CON-1518/p1-define-telemetry-privacy-monitoring-and-public-safe-operational) — internal tracking reference; private issue content is not reproduced. |
+| Upstream implementation | [conxius-enclave-sdk PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210), merged at `593af0d9120b612de5b2817866b0528e5c877570`; remediates the implementation scope tracked by [GitHub #201](https://github.com/Conxian/conxius-enclave-sdk/issues/201). |
+| Business-repo integration | Root `conxius-enclave-sdk` gitlink pins exactly `593af0d9120b612de5b2817866b0528e5c877570`; `.gitmodules` branch metadata is `main`. |
+| Public-safe authority | [`docs/operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md`](docs/operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md) records the privacy, delivery, non-gating, monitoring, rollback, and evidence boundary. |
+| Current support boundary | **Beta / conditional**; no value-bearing production signing or settlement claim is authorized. |
+
+### Typed Entities and Relationships
+
+| Entity | Type | Role / state | Relationship |
+|--------|------|--------------|--------------|
+| `CON-1518` | Linear issue | Internal scope and evidence-tracking record | tracks the business-repo integration and public-safe evidence boundary |
+| `GitHub #201` | Upstream issue | Telemetry privacy/operations implementation scope | remediated by upstream PR #210; remaining operational evidence is not implied closed |
+| `PR #210` | Upstream pull request | Merged implementation record at exact SHA `593af0d9120b612de5b2817866b0528e5c877570` | supplies the source/test/runbook implementation consumed by the root gitlink |
+| `conxius-enclave-sdk` | Shared runtime repository | Exact reviewed candidate is pinned by this root repo | consumed by downstream integrations; support remains capability-specific |
+| `CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md` | Public-safe authority | Repository-visible privacy and operations boundary | links the upstream implementation to root CI and acceptance evidence |
+
+### Residual Gates and Boundary
+
+- Independent review of the exact business-repo candidate remains open.
+- Service-side retention/deletion ownership and evidence remain private and are not claimed here.
+- Deployed monitoring, alerting, rollback, and recovery evidence remains open and is not inferred from source tests or runbooks.
+- Final release and production acceptance gates remain open; implementation landing does not equal production enablement.
+- Preserve the **Beta / conditional**, no-value-bearing-production boundary across docs, CI, release notes, and downstream claims.
+
+---
+
 ## Maintenance
 
 **Crystallization Rule:** Every agent session MUST update this document with:

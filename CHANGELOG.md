@@ -15,6 +15,9 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added
+- **CON-1518 Telemetry Privacy & Monitoring:** Pinned `conxius-enclave-sdk` to upstream PR #210 merge `593af0d9120b612de5b2817866b0528e5c877570`, aligned submodule branch metadata to `main`, added the public-safe telemetry evidence authority, and expanded the B2B CI job to verify the pinned SDK with formatting, clippy, all-feature, focused telemetry, and capability-evidence checks. Production acceptance remains Beta / conditional with service-side and deployment evidence gates open.
+
 ## [1.9.5] - 2026-07-08
 
 ### Added

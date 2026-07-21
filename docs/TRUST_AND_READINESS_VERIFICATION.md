@@ -84,6 +84,10 @@ Every claim in the audit below uses one of these classifications:
 
 ---
 
+### 2.6 `conxius-enclave-sdk` — CON-1518 telemetry addendum
+
+**CON-1518 telemetry addendum (2026-07-21):** The privacy and delivery implementation landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210) at `593af0d9120b612de5b2817866b0528e5c877570`, and the business repo now pins that exact SHA. The public-safe [CON-1518 evidence record](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md) documents minimized payloads, HTTPS/config validation, bounded timeout/retry, failure observability, rail non-gating behavior, and operational boundaries. Independent review, service-side retention/deletion evidence, deployed monitoring/recovery evidence, and final production gates remain open; no release-candidate or production-acceptance claim is made.
+
 ## 3) Cross-Cutting Trust Pillars
 
 ### 3.1 Security Posture
@@ -169,3 +173,4 @@ The Conxian BOS is a **sovereign-first, non-custodial** financial infrastructure
 - [Repo Portfolio](REPO_PORTFOLIO.md)
 - [Portfolio Business-Unit Map](PORTFOLIO_BUSINESS_UNIT_MAP.md)
 - [Developer Quickstart](DEVELOPER_QUICKSTART.md)
+- [CON-1518 telemetry privacy and operational evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md)
