@@ -28,7 +28,19 @@ Note: in this repo, those artifacts live under the `conxius-enclave-sdk/` submod
 
 > **Beta / conditional.** The immutable [Production Enablement Audit — 2026-07-20](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [Capability and Evidence Matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md), recorded by merged [PR #193](https://github.com/Conxian/conxius-enclave-sdk/pull/193) at merge commit `79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8` against audited baseline `8194aa8ade26a9d5d7ed54b7f80f36796fce585c`, are the current SDK authority.
 >
-> Do not enable value-bearing production signing or settlement from the audited tree. API presence, compiled code, simulated paths, and structural tests do not establish production support; issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain open.
+> **Active business-repository pin:** [`451202f51a9efed8fde70b7a5567a3e7e16c1db9`](https://github.com/Conxian/conxius-enclave-sdk/commit/451202f51a9efed8fde70b7a5567a3e7e16c1db9) is the safe fail-closed integration pin. It descends from reviewed canonical ancestor [`dd1fc4f14e950a0b6119aeffbcbb4ae8ecce570`](https://github.com/Conxian/conxius-enclave-sdk/commit/dd1fc4f14e950a0b6119aeffbcbb4ae8ecce570) through [`5cd6fd4d486ccb00bd7057051bf5e1eb0abf47c7`](https://github.com/Conxian/conxius-enclave-sdk/commit/5cd6fd4d486ccb00bd7057051bf5e1eb0abf47c7) and the active [`451202f51a9efed8fde70b7a5567a3e7e16c1db9`](https://github.com/Conxian/conxius-enclave-sdk/commit/451202f51a9efed8fde70b7a5567a3e7e16c1db9) fail-closed adapter remediation. Do not regress the business-repository pin to `dd1fc4f`.
+>
+> Do not enable value-bearing production signing or settlement from the audited tree. API presence, compiled code, simulated paths, and structural tests do not establish production support; open gates [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#196](https://github.com/Conxian/conxius-enclave-sdk/issues/196) and [#198](https://github.com/Conxian/conxius-enclave-sdk/issues/198)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain required. [#197](https://github.com/Conxian/conxius-enclave-sdk/issues/197) is closed, but closure does not authorize production support; [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remains final acceptance.
+
+## CON-1513 canonical Bitcoin/Ethereum evidence boundary — 2026-07-22
+
+The active pin provides a narrowly scoped, capability-specific and test-visible cryptographic subset:
+
+- **Bitcoin:** BIP-322 native P2WPKH and P2TR key-path witnesses without annexes; canonical BIP-340/341 Taproot behavior; and canonical BIP-86 path parsing/output-key derivation.
+- **Ethereum:** EIP-191 personal-sign hashing; strict signature, recovery, and address validation; Keccak address derivation; and EIP-55 checksum handling.
+- **Explicitly unsupported/excluded:** P2WSH, Taproot script-path BIP-322 verification, and annex-bearing Taproot verification remain unsupported. EIP-155 transaction serialization and domain APIs remain out of scope.
+
+These are capability-specific integration claims, not a production-support declaration. Focused test evidence is historical where recorded and must not be promoted into a current mandatory acceptance gate; in particular, the historical **136 passed / 1 failed** result is not a current acceptance pass. The SDK remains **Beta / conditional**, fail-closed, non-production, and non-value-bearing until the open gates and final acceptance are complete.
 
 ## CON-1518 telemetry addendum — 2026-07-21
 
