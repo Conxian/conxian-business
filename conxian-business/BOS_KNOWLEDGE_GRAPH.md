@@ -1,24 +1,9 @@
+# Historical nested BOS knowledge graph
 
-## 6. Crystallized Entities (v1.9.3 - April 2026)
+> **Classification:** Deprecated · Archive candidate
+> **Operating label:** Internal only
+> **Maturity / claim state:** Deprecated historical snapshot.
 
-| ID | Type | Name/Title | Status | Relationship |
-| :--- | :--- | :--- | :--- | :--- |
-| `BOS_SYSTEM` | Project | Conxian BOS v1.9.3 | Stable | **anchors** all modules |
-| `NEXUS` | Library | conxian-nexus (v0.5.1) | Production | **uses** `KwilAdapter` |
-| `GATEWAY` | Library | conxian-gateway (v0.1.1) | Production | **uses** `StacksRpcAggregator` |
-| `CONCLAVE_SDK` | Library | lib-conclave-sdk (v1.9.3) | Stable | **dependency_of** `WALLET` |
-| `CORE_LIB` | Library | lib-conxian-core (v1.9.3) | Stable | **dependency_of** `GATEWAY` |
-| `JUR_SHARDING` | Decision | Jurisdictional Sharding | Implemented | **isolated_by** `BNS` |
-| `ZSE_MANDATE` | Decision | Zero Secret Egress | Enforced | **fixed** `PUBLIC_EXPOSURE_RISK` |
-| `BITVM2_STATE` | Concept | BitVM2 State Proofs | Active | **verified_by** `CORE_LIB` |
+This nested graph is retained only for link continuity and historical context. It is superseded by the root [`BOS_KNOWLEDGE_GRAPH.md`](../BOS_KNOWLEDGE_GRAPH.md), the [`DOCTRINE_ALIGNMENT_STANDARD.md`](../docs/DOCTRINE_ALIGNMENT_STANDARD.md), and the [`PORTFOLIO_DOCTRINE_REGISTER.md`](../docs/PORTFOLIO_DOCTRINE_REGISTER.md).
 
-> **Supersession note — 2026-07-20:** The `CONCLAVE_SDK` row above is retained as an April 2026 historical entity record. It is superseded for current SDK maturity: the active entity is `conxius-enclave-sdk`, currently **Beta / conditional**. The immutable [Production Enablement Audit](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [Capability and Evidence Matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md) are the current authority; no value-bearing production signing or settlement is supported from the audited tree.
-
-## 7. Current SDK entity status (2026-07-20)
-
-| ID | Type | Name/Title | Status | Relationship |
-| :--- | :--- | :--- | :--- | :--- |
-| `CONXIUS_ENCLAVE_SDK` | Library | `conxius-enclave-sdk` | Beta / conditional | **dependency_of** `WALLET`; current authority is the July 20 audit at merge commit `79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8` against audited baseline `8194aa8ade26a9d5d7ed54b7f80f36796fce585c` |
-
----
-*Crystallized by Jules at End-of-Sprint Review (April 2026).*
+The former rows used stale repository identities and unqualified maturity labels. Do not use them as current evidence for production, custody, settlement, treasury, yield, or signing claims. Current relationships must use the Conxian protocol/DAO versus Conxius client/access/developer-tooling boundary, and protocol-level contract behavior must not be read as Conxian-Labs custody or discretionary fund control.

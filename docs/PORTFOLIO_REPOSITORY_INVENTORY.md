@@ -1,6 +1,8 @@
 # Portfolio repository inventory (CON-468)
 
-This is the canonical map of all repositories in the Conxian-Labs ecosystem, classified by layer, role, and evaluation standard.
+This is the release-criticality inventory for the repositories listed here, classified by layer, role, and evaluation standard. The complete 16-repository doctrine and disposition map is the [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md).
+
+For the current doctrine dimensions—role, audience, operating label, maturity, claim state, document classification, and contradiction disposition—see the [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md) and [Doctrine Alignment Standard](./DOCTRINE_ALIGNMENT_STANDARD.md). This inventory’s release-criticality field is not a maturity or claim-state label.
 
 ## Layer Taxonomy
 
@@ -9,7 +11,7 @@ This is the canonical map of all repositories in the Conxian-Labs ecosystem, cla
 - **Shared runtime and developer infrastructure**: SDKs, core libraries, and internal orchestration tools.
 - **Governance and operating system**: BOS governance, OpenSpec, and internal EXCO coordination modules.
 
-## Evaluation Standards (Release Criticality)
+## Evaluation Standards (Release Criticality, separate from maturity)
 
 - **P0**: Mainnet release blockers. Must adhere to strict production standards (no stubs, no testnet contamination).
 - **P1**: Important supporting surfaces. Should follow standards; drift is not immediately mainnet-blocking.
@@ -25,15 +27,15 @@ This is the canonical map of all repositories in the Conxian-Labs ecosystem, cla
 | `conxian-gateway` | Decentralization | Fusion Gateway (Rust Engine) | @botshelomokoka | P0 |
 | `conxius-wallet` | User Surface | Sovereign Multi-chain Wallet | @botshelomokoka | P0 |
 | `lib-conxian-core` | Shared Runtime | Shared Cryptographic & State Logic | @botshelomokoka | P0 |
-| `lib-conclave-sdk` | Shared Runtime | TEE & Enclave SDK | @botshelomokoka | P0 |
-| `conxius_orbit` | Shared Runtime | DevOps & Deployment Tooling | @botshelomokoka | P0 |
-| `conxian-ui` | User Surface | Operating Dashboard (Next.js) | @botshelomokoka | P1 |
+| `conxius-enclave-sdk` | Shared Runtime | Enclave and attestation SDK | @botshelomokoka | P0 |
+| `conxius-orbit` | Shared Runtime | Contract deployment and operations tooling | @botshelomokoka | P0 |
+| `conxian_ui` (checkout `conxian-ui`; upstream slug retained) | User Surface | Public web interaction layer | @botshelomokoka | P1 |
 | `conxius-platform` | Shared Runtime | Developer Platform & Orchestration | @conxian/core-devs | P1 |
 | `conxian-labs-site` | User Surface | Public Communication Surface | @botshelomokoka | P2 |
-| `Fiscal-Vault-Oracle` | Governance | EXCO: Treasury & Market Data | @botshelomokoka | P0 |
+| `Fiscal-Vault-Oracle` | Governance | Protocol/reference policy and oracle surface; not company treasury control | @botshelomokoka | P0 |
 | `Nakamoto-Guardian` | Governance | EXCO: Compliance & Security | @botshelomokoka | P0 |
 | `Sovereign-Ops-Orchestrator` | Governance | EXCO: Operations & Service Loop | @botshelomokoka | P0 |
-| `Sovereign-Strategy-Nexus` | Governance | EXCO: Strategic Alignment | @botshelomokoka | P1 |
+| `Sovereign-Strategy-Nexus` | Governance | Public-safe strategy coordination stub; full internal strategy remains in Linear | @botshelomokoka | P1 |
 | `cxn-grid-oracle` | Shared Runtime | Decentralized Data Oracle | @botshelomokoka | P1 |
 | `showcase-dapp` | User Surface | Demo & Integration Showcase | @botshelomokoka | P2 |
 | `.github` | Governance | Org-wide Standards & Workflows | @Conxian/Admins | P0 |

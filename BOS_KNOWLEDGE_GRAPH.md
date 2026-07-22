@@ -7,31 +7,48 @@ This document is the **mandatory BOS Knowledge Graph** referenced in `AGENTS.md`
 
 ---
 
+## Doctrine decision — CON-1530 (2026-07-22)
+
+The current doctrine relationship is:
+
+- **Conxian-Labs (Pty) Ltd** is a non-custodial software and infrastructure builder/operator. It provides routing, orchestration, compliance integration, and verification; it is not a market participant, discretionary fund manager, or user-data extraction business.
+- **Conxian** is the protocol/DAO layer. **Conxius** is the client/access/developer-tooling layer. Internal strategy and operations remain separate in the authorized Linear workspace under ZSE.
+- Protocol contracts and DAO rules may implement escrow, settlement, treasury, or yield behavior. Those are protocol-level state transitions and do not establish Conxian-Labs custody, discretionary fund control, or market operation.
+- Current role, audience, operating label, maturity, claim state, and document classification are governed by [`docs/PORTFOLIO_DOCTRINE_REGISTER.md`](docs/PORTFOLIO_DOCTRINE_REGISTER.md) and [`docs/DOCTRINE_ALIGNMENT_STANDARD.md`](docs/DOCTRINE_ALIGNMENT_STANDARD.md).
+
+| Entity | Relationship | Boundary |
+|--------|--------------|----------|
+| Conxian-Labs (Pty) Ltd | builds/operates | Non-custodial software and infrastructure; no discretionary control over participant funds. |
+| Conxian | defines | Protocol and DAO rules, contract state, verification, and governance interfaces. |
+| Conxius | provides | Client, access, wallet, deployment, platform, and enclave-tooling surfaces. |
+| Internal strategy and operations | remains separate from | Public-safe repository documentation; canonical restricted material is maintained in Linear. |
+
+
 ## Entity Registry
 
 ### 🏢 Organizations
 
 | Entity | Type | Relationships | Source |
 |--------|------|---------------|--------|
-| **Conxian-Labs (Pty) Ltd** | Legal Entity | owns: Conxian, Conxius | AGENTS.md |
-| **Conxian** | Protocol Brand | implements: CXD, CXLP, CXVG | Conxian repo |
-| **Conxius** | Client Brand | provides: Wallet, Platform, Enclave SDK | AGENTS.md |
+| **Conxian-Labs (Pty) Ltd** | Legal Entity | builds/operates non-custodial Conxian and Conxius software; does not custody participant assets | `docs/DOCTRINE_ALIGNMENT_STANDARD.md` |
+| **Conxian** | Protocol/DAO Brand | defines protocol rules, contracts, verification, and governance interfaces | `docs/DOCTRINE_ALIGNMENT_STANDARD.md` |
+| **Conxius** | Client/Access Brand | provides wallet, platform, deployment, and enclave-tooling surfaces | `docs/DOCTRINE_ALIGNMENT_STANDARD.md` |
 
 ### 📦 Repositories (Submodules)
 
-| Entity | GitHub | Language | Focus | Status |
+| Entity | GitHub | Language | Focus | Operating label / maturity and claim state |
 |--------|--------|----------|-------|--------|
-| `conxian-business` | Conxian/conxian-business | Mixed | Business ops, AGENTS.md | ✅ Active |
-| `Conxian` | Conxian/Conxian | Clarity | Smart contracts (221) | ⚠️ 27 issues |
-| `conxian-gateway` | Conxian/conxian-gateway | Rust | ISO 20022 bridge | ✅ Active |
-| `conxian-nexus` | Conxian/conxian-nexus | Clarity/Rust | Settlement layer | ✅ Active |
-| `conxius-wallet` | Conxian/conxius-wallet | TypeScript | Android wallet | ✅ Active |
-| `conxius-platform` | Conxian/conxius-platform | TypeScript | Dev orchestration | ✅ Active |
-| `conxius-orbit` | Conxian/conxius-orbit | TypeScript | Deployment toolkit | ✅ Active |
-| `conxius-enclave-sdk` | Conxian/conxius-enclave-sdk | Rust | TEE abstraction | ✅ Active |
-| `conxian-ui` | Conxian/Conxian_UI | TypeScript | UI components | ✅ Active |
-| `lib-conxian-core` | Conxian/lib-conxian-core | Rust | Crypto primitives | ✅ Audited |
-| `conxian-labs-site` | Conxian/conxian-labs-site | TypeScript | Marketing site | ✅ Active |
+| `conxian-business` | Conxian/conxian-business | Mixed | Governance and specifications | Production intent / Beta; Implemented governance, Target-state proposals |
+| `Conxian` | Conxian/Conxian | Clarity | Protocol contracts | Production intent / Beta; Implemented code, readiness conditional |
+| `conxian-gateway` | Conxian/conxian-gateway | Rust | Routing and compliance middleware | Production intent / Beta; Implemented runtime, verification conditional |
+| `conxian-nexus` | Conxian/conxian-nexus | Clarity/Rust | State and proof node | Production intent / Beta; Implemented code, deployment claims conditional |
+| `conxius-wallet` | Conxian/conxius-wallet | TypeScript | Android client and signing surface | Production intent / Stable; capability-scoped Implemented claims |
+| `conxius-platform` | Conxian/conxius-platform | TypeScript | Local developer orchestration | Reference implementation / Incubating |
+| `conxius-orbit` | Conxian/conxius-orbit | TypeScript | Contract deployment toolkit | Reference implementation / Incubating |
+| `conxius-enclave-sdk` | Conxian/conxius-enclave-sdk | Rust | Enclave and attestation abstraction | Reference implementation / Beta, conditional |
+| `conxian_ui` | `Conxian/Conxian_UI` | TypeScript | Public web interaction surface | Reference implementation / Incubating; interface/code presence |
+| `lib-conxian-core` | Conxian/lib-conxian-core | Rust | Shared cryptographic and state primitives | Production intent / Beta; Implemented code-visible |
+| `conxian-labs-site` | Conxian/conxian-labs-site | TypeScript | Public website and docs surface | Reference implementation / Incubating |
 
 ### 🔐 Smart Contracts (Core)
 
@@ -135,10 +152,10 @@ graph LR
 
 | Role | Entity | Repository Access | Responsibility |
 |------|--------|-------------------|----------------|
-| Founder | - | All repos | Network operator (transitioning) |
-| Protocol Architect | - | All repos | Future role (post-transition) |
-| ZKC Auditor | - | lib-conxian-core | Compliance verification |
-| SYI Strategist | - | conxian-gateway | Yield index design |
+| Governance maintainer | - | Governance baseline | Maintains public-safe policy and repository boundaries; no custody claim |
+| Protocol maintainer | - | Conxian | Maintains protocol/DAO specifications and evidence boundaries |
+| Verification reviewer | - | lib-conxian-core | Reviews proof and compliance evidence; no discretionary fund role |
+| Protocol metric maintainer | - | conxian-gateway | Maintains reference metrics and integrations; no managed-yield claim |
 
 ---
 
@@ -149,7 +166,7 @@ graph TB
     subgraph "Legal Entity"
         CL[Conxian-Labs Pty Ltd]
     end
-    
+
     subgraph "Conxian (Protocol Layer)"
         CNX[Conxian]
         CXD[CXD Token]
@@ -158,32 +175,32 @@ graph TB
         NEXUS[conxian-nexus]
         GATEWAY[conxian-gateway]
     end
-    
+
     subgraph "Conxius (Client Layer)"
         WALLET[conxius-wallet]
         PLATFORM[conxius-platform]
         ORBIT[conxius-orbit]
         ENCLAVE[conxius-enclave-sdk]
     end
-    
+
     subgraph "Core Library"
         CORE[lib-conxian-core]
     end
-    
-    CL --> CNX
-    CL --> WALLET
-    
+
+    CL -.->|builds/operates non-custodial software| CNX
+    CL -.->|builds/operates client software; users retain key control| WALLET
+
     CNX --> CXD
     CNX --> CXLP
     CNX --> CXVG
-    
+
     CNX --> GATEWAY
     CNX --> NEXUS
-    
+
     GATEWAY --> CORE
     NEXUS --> CORE
     ENCLAVE --> CORE
-    
+
     WALLET --> ENCLAVE
     PLATFORM --> ORBIT
 ```
@@ -198,7 +215,8 @@ graph TB
 | epoch = "latest" mandatory | 2026-04-23 | Always use newest epoch | - |
 | Dynamic principals from treasury | 2026-04-23 | Eliminate hardcoded SPOF | - |
 | TEE via conxius-enclave-sdk | 2026-04-23 | Hardware key isolation | - |
-| ISO 20022 via Conxian Gateway | 2026-04-23 | Legacy banking bridge | - |
+| ISO 20022 via conxian-gateway | 2026-04-23 | Legacy banking bridge | - |
+| Doctrine alignment: company is non-custodial infrastructure builder/operator | 2026-07-22 | Separate company role from protocol/DAO and client/access layers; qualify custody, data, market, and protocol-fund language | `docs/DOCTRINE_ALIGNMENT_STANDARD.md` + `docs/PORTFOLIO_DOCTRINE_REGISTER.md` |
 | Cargo audit allowlist for transitive deps | 2026-07-08 | Transitive vulnerabilities without local upgrade path | Upgrade dep chain |
 | Gitleaks license via GitHub Secrets | 2026-07-08 | ZSE compliance; no hardcoded secrets | - |
 | Infrastructure fixes to main, cherry-pick to PR | 2026-07-08 | Workflow configs belong in main | - |
