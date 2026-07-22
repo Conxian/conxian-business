@@ -8,7 +8,7 @@
 
 CON-1518 covers telemetry privacy, delivery semantics, monitoring guidance, disablement, rollback, and public-safe operational evidence for the enclave SDK. The implementation landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210), merged at `593af0d9120b612de5b2817866b0528e5c877570`.
 
-This business repository does not duplicate upstream source or tests. Its exact `conxius-enclave-sdk` gitlink is pinned to `593af0d9120b612de5b2817866b0528e5c877570`; the submodule branch metadata is `main`. The upstream public operating guidance is [TELEMETRY_OPERATIONS.md](https://github.com/Conxian/conxius-enclave-sdk/blob/593af0d9120b612de5b2817866b0528e5c877570/docs/operations/TELEMETRY_OPERATIONS.md).
+This business repository does not duplicate upstream source or tests. Its exact reviewed `conxius-enclave-sdk` gitlink remains pinned to `451202f51a9efed8fde70b7a5567a3e7e16c1db9`; the upstream telemetry implementation is recorded at `593af0d9120b612de5b2817866b0528e5c877570`, and the submodule branch metadata is `main`. The upstream public operating guidance is [TELEMETRY_OPERATIONS.md](https://github.com/Conxian/conxius-enclave-sdk/blob/593af0d9120b612de5b2817866b0528e5c877570/docs/operations/TELEMETRY_OPERATIONS.md).
 
 ## Privacy and minimized payload behavior
 
@@ -50,7 +50,7 @@ The enclave SDK remains **Beta / conditional**. This remediation does not author
 ## Acceptance and evidence checklist
 
 - [x] Upstream implementation merged in PR #210 at `593af0d9120b612de5b2817866b0528e5c877570`.
-- [x] Business repository pins the exact reviewed upstream SHA.
+- [x] Business repository retains the exact reviewed SDK SHA `451202f51a9efed8fde70b7a5567a3e7e16c1db9`.
 - [x] Public-safe upstream operations guidance is linked.
 - [x] Root CI verifies the pin and runs SDK format, clippy, all-feature tests, focused telemetry tests, and capability evidence when present.
 - [ ] Independent review of the exact business-repo candidate.

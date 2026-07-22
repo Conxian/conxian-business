@@ -1,8 +1,8 @@
-# Enclave SDK — BOS business buildout (CON-370)
+# `conxius-enclave-sdk` — BOS business buildout (CON-370)
 
-This document defines the BOS-level business role, governance controls, and documentation separation guidance for the enclave SDK.
+This document defines the BOS-level business role, governance controls, and documentation separation guidance for `conxius-enclave-sdk`.
 
-Canonical SDK docs live in the SDK repo itself (Conxian/conxius-enclave-sdk). If anything in this BOS document conflicts with the SDK repo docs (`README.md`, `GOVERNANCE.md`, `RELEASING.md`, `SECURITY.md`, `CHANGELOG.md`), treat the SDK repo as the source of truth and update this file to match.
+Canonical SDK docs live in the SDK repo itself ([Conxian/conxius-enclave-sdk](https://github.com/Conxian/conxius-enclave-sdk)). If anything in this BOS document conflicts with the SDK repo docs (`README.md`, `GOVERNANCE.md`, `RELEASING.md`, `SECURITY.md`, `CHANGELOG.md`), treat the SDK repo as the source of truth and update this file to match.
 
 Upstream repo: https://github.com/Conxian/conxius-enclave-sdk
 
@@ -14,7 +14,7 @@ Submodule bump doc-checklist:
 
 - Re-verify section 2 (integration surfaces) against the current SDK README and API docs.
 - Re-verify section 3 (ownership + release-process model) against `GOVERNANCE.md`, `CODEOWNERS`, and `RELEASING.md`.
-- Re-verify sections 5–6 (gaps + prioritized list) against `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md` and the SDK repo’s current open issues.
+- Re-verify sections 5–6 (gaps + prioritized list) against the historical `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md` record and the SDK repo’s current open issues.
 
 - SDK README: `conxius-enclave-sdk/README.md`
 - SDK governance: `conxius-enclave-sdk/GOVERNANCE.md`
@@ -24,21 +24,27 @@ Submodule bump doc-checklist:
 
 Note: in this repo, those artifacts live under the `conxius-enclave-sdk/` submodule when it is checked out (for example, via `git submodule update --init conxius-enclave-sdk`).
 
+## Current status — 2026-07-20
+
+> **Beta / conditional.** The immutable [Production Enablement Audit — 2026-07-20](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [Capability and Evidence Matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md), recorded by merged [PR #193](https://github.com/Conxian/conxius-enclave-sdk/pull/193) at merge commit `79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8` against audited baseline `8194aa8ade26a9d5d7ed54b7f80f36796fce585c`, are the current SDK authority.
+>
+> Do not enable value-bearing production signing or settlement from the audited tree. API presence, compiled code, simulated paths, and structural tests do not establish production support; issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain open.
+
 ## CON-1518 telemetry addendum — 2026-07-21
 
-The CON-1518 telemetry remediation landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210) at `593af0d9120b612de5b2817866b0528e5c877570`, which this BOS repo pins exactly. The public-safe business-repo authority is [CON-1518 telemetry privacy and operational evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md). It records implementation and operating boundaries only; independent review, service-side retention/deletion evidence, deployed monitoring/recovery evidence, and final production gates remain open. Telemetry does not change the SDK's **Beta / conditional** status or authorize value-bearing production signing or settlement.
+The CON-1518 telemetry remediation landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210) at `593af0d9120b612de5b2817866b0528e5c877570`. This reviewed PR intentionally retains the exact parent gitlink `451202f51a9efed8fde70b7a5567a3e7e16c1db9`; the public-safe business-repo authority is [CON-1518 telemetry privacy and operational evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md). It records implementation and operating boundaries only; independent review, service-side retention/deletion evidence, deployed monitoring/recovery evidence, and final production gates remain open. Telemetry does not change the SDK’s **Beta / conditional** status or authorize value-bearing production signing or settlement.
 
 ## 1) Business-unit role (supporting shared SDK)
 
 Per the repo portfolio, `conxius-enclave-sdk` is a **supporting** repo:
 
 - Portfolio classification: `Supporting — Headless enclave + cryptographic state machine SDK.`
-  - Source: https://github.com/Conxian/conxian-business/blob/main/docs/REPO_PORTFOLIO.md#ecosystem-repos
+  - Source: [docs/REPO_PORTFOLIO.md](REPO_PORTFOLIO.md#ecosystem-repos)
 
 In BOS terms, the SDK is the shared “security edge” library that downstream business units consume:
 
 - **Conxius (wallet)**: hardware-backed key custody and signing, WASM bindings for client apps.
-- **Gateway service** and **Nexus (state node)**: shared primitives for attested workflows, rails orchestration helpers, and message formats.
+- **Conxian Fusion (gateway service)** and **Nexus (state node)**: shared primitives for attested workflows, rails orchestration helpers, and message formats.
 - **Industrial engine surfaces**: CJCS/ISO20022 encoding helpers when job cards must be signed/attested inside the enclave boundary.
 
 The business obligation of the SDK is to provide a single integration contract so downstream teams don’t re-implement enclave abstractions, attestation, signing formats, or swap/settlement message structures in each product repo.
@@ -84,7 +90,7 @@ Minimum approval expectations:
 | --- | --- | --- |
 | SDK maintainer | All SDK modules + WASM bindings | `conxius-enclave-sdk/CODEOWNERS` |
 | Security/cryptography approver | Enclave boundary, signing, attestation | `conxius-enclave-sdk/CODEOWNERS` + `conxius-enclave-sdk/SECURITY.md` |
-| Downstream integrator representative | Wallet/gateway service/Nexus integration expectations | `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md` + this doc |
+| Downstream integrator representative | Wallet/Conxian Fusion (gateway service)/Nexus integration expectations | `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md` + this doc |
 | Release manager | Tags, changelog discipline, publishing | `conxius-enclave-sdk/RELEASING.md` |
 
 ## 4) Governance + documentation requirements (downstream-operable)
@@ -101,7 +107,7 @@ The SDK repo should keep these docs current (public-safe):
 
 In this BOS repo, the canonical cross-repo checklist is:
 
-- Mainnet readiness checklist — enclave SDK: `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md`
+- Historical mainnet readiness checklist — `conxius-enclave-sdk`: `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md`
 - CON-1518 telemetry privacy and operational evidence — [`docs/operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md`](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md)
 
 ### Internal-only operating docs (Linear Virtual Office)
@@ -131,7 +137,8 @@ Suggested canonical home (public-safe): add an “Audit readiness” section to 
 
 **P0 (release integrity + safety gates)**
 
-- [x] Close the mainnet-readiness checklist items and keep them discoverable: `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md`.
+- [x] **Historical June closure record — superseded:** the earlier mainnet-readiness checklist was marked complete in `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md`.
+- [ ] **Current production-enablement gate:** remains open; use the July 20 audit and capability matrix before treating any SDK capability as production-supported.
 - Enforce release hygiene + supply-chain gates as CI requirements (SemVer tags, changelog discipline, vulnerability scanning).
 - Canonically define “public API” vs “internal module” boundaries in the SDK repo docs and keep the Rust/WASM surfaces aligned.
 

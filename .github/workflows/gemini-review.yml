@@ -40,11 +40,6 @@ jobs:
           permission-issues: 'write'
           permission-pull-requests: 'write'
 
-      - name: 'Checkout repository'
-        if: |-
-          ${{ env.GEMINI_AUTH_AVAILABLE == 'true' }}
-        uses: 'actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10' # ratchet:actions/checkout@v6
-
       - name: 'Check Gemini auth configuration'
         id: 'gemini_auth'
         env:
@@ -65,15 +60,20 @@ jobs:
             echo "### Gemini review skipped"
             echo
             echo "No Gemini auth method is configured for this repository. Configure at least one of:"
-            echo "- \\`secrets.GEMINI_API_KEY\\`"
-            echo "- \\`secrets.GOOGLE_API_KEY\\`"
-            echo "- \\`vars.GOOGLE_GENAI_USE_VERTEXAI=true\\` (with the required GCP settings)"
-            echo "- \\`vars.GOOGLE_GENAI_USE_GCA=true\\`"
+            echo "- \`secrets.GEMINI_API_KEY\`"
+            echo "- \`secrets.GOOGLE_API_KEY\`"
+            echo "- \`vars.GOOGLE_GENAI_USE_VERTEXAI=true\` (with the required GCP settings)"
+            echo "- \`vars.GOOGLE_GENAI_USE_GCA=true\`"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 'Checkout repository'
+        if: |-
+          ${{ steps.gemini_auth.outputs.enabled == 'true' }}
+        uses: 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' # ratchet:actions/checkout@v7.0.1
 
       - name: 'Run Gemini pull request review'
         if: steps.gemini_auth.outputs.enabled == 'true'
-        uses: 'google-github-actions/run-gemini-cli@v0' # ratchet:exclude
+        uses: './.github/actions/run-gemini-cli'
         continue-on-error: true
         id: 'gemini_pr_review'
         env:

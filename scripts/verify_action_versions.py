@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Validate that all `uses:` action references in workflow YAML files point to real versions.
+"""Validate that all `uses:` action references point to real immutable versions.
 
-Queries the GitHub API to confirm each owner/repo[/path]@ref exists. Exits non-zero if any
-reference is invalid, catching issues like `actions/checkout@v6` (doesn't exist).
+Queries the GitHub API to confirm each owner/repo[/path]@ref exists. Workflow files and
+repository-local composite action manifests are scanned. Local composite manifests must
+pin every nested remote action to a full commit SHA. Exits non-zero if any reference is
+invalid or a nested local ref is floating.
 """
 
 from __future__ import annotations
@@ -20,6 +22,7 @@ from typing import TypedDict
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 WORKFLOW_DIR = REPO_ROOT / ".github" / "workflows"
+LOCAL_ACTION_DIR = REPO_ROOT / ".github" / "actions"
 
 EXCLUDE_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"^\./"),  # local composite actions
@@ -29,6 +32,7 @@ EXCLUDE_PATTERNS: tuple[re.Pattern[str], ...] = (
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
 
 CACHE_FILE = REPO_ROOT / ".github" / ".action-version-cache.json"
+FULL_SHA_PATTERN = re.compile(r"[0-9a-fA-F]{40}")
 CACHE_SCHEMA_VERSION = 2
 CACHE_TTL_OK_SECONDS = 7 * 24 * 60 * 60
 
@@ -108,23 +112,39 @@ def _cache_lookup(cache: dict[str, CacheEntry], action_ref: str) -> tuple[bool, 
     return True, "cached-OK"
 
 
-def _extract_uses_refs() -> dict[str, list[str]]:
-    """Parse all workflow YAML files and return {action_ref: [file_path, ...]}."""
-    refs: dict[str, list[str]] = {}
-    if not WORKFLOW_DIR.is_dir():
-        return refs
+def _action_source_files() -> list[tuple[Path, bool]]:
+    """Return workflow and local composite manifests with their SHA policy."""
+    workflow_files = sorted(WORKFLOW_DIR.glob("*.yml")) + sorted(WORKFLOW_DIR.glob("*.yaml"))
+    local_manifests = sorted(LOCAL_ACTION_DIR.rglob("action.yml")) + sorted(
+        LOCAL_ACTION_DIR.rglob("action.yaml")
+    )
+    return [(path, False) for path in workflow_files] + [(path, True) for path in local_manifests]
 
-    for wf in sorted(WORKFLOW_DIR.glob("*.yml")):
-        rel = wf.relative_to(REPO_ROOT).as_posix()
-        content = wf.read_text(encoding="utf-8", errors="replace")
-        for match in re.finditer(r"^\s*uses:\s*(.+?)(?:\s*#.*)?$", content, re.MULTILINE):
+
+def _extract_uses_refs() -> tuple[dict[str, list[str]], list[str]]:
+    """Parse workflow/local action YAML and return refs plus local pin violations."""
+    refs: dict[str, list[str]] = {}
+    policy_errors: list[str] = []
+
+    for source, require_full_sha in _action_source_files():
+        rel = source.relative_to(REPO_ROOT).as_posix()
+        content = source.read_text(encoding="utf-8", errors="replace")
+        for match in re.finditer(
+            r"^\s*(?:-\s+)?uses:\s*(.+?)(?:\s*#.*)?$", content, re.MULTILINE
+        ):
             raw = match.group(1).strip().strip("'\"")
             if any(p.match(raw) for p in EXCLUDE_PATTERNS):
                 continue
             if "@" not in raw:
                 continue
+            if require_full_sha:
+                ref = raw.rsplit("@", 1)[1]
+                if FULL_SHA_PATTERN.fullmatch(ref) is None:
+                    policy_errors.append(
+                        f"{rel}: {raw} — local composite action refs must use a full 40-character commit SHA"
+                    )
             refs.setdefault(raw, []).append(rel)
-    return refs
+    return refs, policy_errors
 
 
 def _parse_action_ref(action_ref: str) -> tuple[str, str, str | None] | None:
@@ -227,12 +247,12 @@ def _check_ref(action_ref: str) -> tuple[bool, str]:
 
 
 def main() -> int:
-    refs = _extract_uses_refs()
-    if not refs:
-        print("No action references found in workflow files.")
+    refs, policy_errors = _extract_uses_refs()
+    if not refs and not policy_errors:
+        print("No action references found in workflow or local composite action files.")
         return 0
 
-    print(f"Checking {len(refs)} unique action reference(s)...\n")
+    print(f"Checking {len(refs)} unique action reference(s) in workflows and local actions...\n")
     cache = _load_cache()
 
     # Keep cache aligned with current workflow refs.
@@ -241,7 +261,9 @@ def main() -> int:
         if stale_ref not in active_refs:
             del cache[stale_ref]
 
-    errors: list[str] = []
+    errors: list[str] = list(policy_errors)
+    for error in policy_errors:
+        print(f"  FAIL  {error}")
     checked = 0
 
     for action_ref, files in sorted(refs.items()):

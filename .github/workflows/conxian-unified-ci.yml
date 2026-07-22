@@ -105,7 +105,7 @@ jobs:
     permissions:
       contents: read
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
         submodules: false
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -116,7 +116,7 @@ jobs:
       run: |
         bash scripts/ci/checkout_pinned_submodules.sh all
     - name: Setup Python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # ratchet:actions/setup-python@v7.0.0
       with:
         python-version: '3.11'
     - name: Install Python dependency for LTS check
@@ -201,17 +201,17 @@ jobs:
         needs.change_detection.outputs.docs_only != 'true'
       )
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup Rust
-      uses: dtolnay/rust-toolchain@v1
+      uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9  # ratchet:dtolnay/rust-toolchain@v1
       with:
         toolchain: stable
     - name: Rust Cache
-      uses: Swatinem/rust-cache@v2
+      uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32  # ratchet:Swatinem/rust-cache@v2
       with:
         workspaces: conxian-gateway
     - name: Check & Test
@@ -236,17 +236,17 @@ jobs:
         )
       )
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup Rust
-      uses: dtolnay/rust-toolchain@v1
+      uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9  # ratchet:dtolnay/rust-toolchain@v1
       with:
         toolchain: stable
     - name: Rust Cache
-      uses: Swatinem/rust-cache@v2
+      uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32  # ratchet:Swatinem/rust-cache@v2
       with:
         workspaces: |
           conxian-nexus
@@ -254,7 +254,7 @@ jobs:
     - name: Verify pinned enclave SDK
       run: |
         test -d conxius-enclave-sdk
-        test "$(git -C conxius-enclave-sdk rev-parse HEAD)" = "593af0d9120b612de5b2817866b0528e5c877570"
+        test "$(git -C conxius-enclave-sdk rev-parse HEAD)" = "451202f51a9efed8fde70b7a5567a3e7e16c1db9"
         git submodule status conxius-enclave-sdk
     - name: Check & Test
       run: |
@@ -284,7 +284,7 @@ jobs:
         needs.change_detection.outputs.docs_only != 'true'
       )
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
@@ -294,7 +294,7 @@ jobs:
       with:
         components: clippy
     - name: Rust Cache
-      uses: Swatinem/rust-cache@v2
+      uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32  # ratchet:Swatinem/rust-cache@v2
       with:
         workspaces: lib-conxian-core
     - name: Check & Test
@@ -303,7 +303,7 @@ jobs:
         cargo test --locked
         cargo clippy --locked --all-targets --all-features -- -D warnings
     - name: Install cargo-audit
-      uses: taiki-e/install-action@43aecc8d72668fbcfe75c31400bc4f890f1c5853 # v2
+      uses: taiki-e/install-action@a6b2e2dcd845ddd7f509ce4f3ed3d922b80cc5d9 # v2
       with:
         tool: cargo-audit@0.22.1
     - name: Dependency audit
@@ -334,20 +334,20 @@ jobs:
         needs.change_detection.outputs.docs_only != 'true'
       )
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup pnpm
-      uses: pnpm/action-setup@v6
+      uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271  # ratchet:pnpm/action-setup@v6
       with:
         version: 9.15.9
         run_install: false
     - name: Setup Node.js
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020  # ratchet:actions/setup-node@v7.0.0
       with:
-        node-version: '20'
+        node-version: '22'
         package-manager-cache: false
         # conxius-wallet is pnpm-lockfile-first; keep cache/install aligned to pnpm lockfile.
         cache: 'pnpm'
@@ -367,7 +367,7 @@ jobs:
 
     - name: Upload test artifacts
       if: always()
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # ratchet:actions/upload-artifact@v7
       with:
         name: conxius-wallet-test-artifacts
         path: |
@@ -379,7 +379,7 @@ jobs:
 
     - name: Upload coverage
       if: github.event_name == 'push' && hashFiles('conxius-wallet/coverage/**') != ''
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # ratchet:actions/upload-artifact@v7
       with:
         name: conxius-wallet-coverage
         path: conxius-wallet/coverage
@@ -394,13 +394,13 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository &&
       contains(github.event.pull_request.labels.*.name, 'audit')
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup Python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # ratchet:actions/setup-python@v7.0.0
       with:
         python-version: '3.11'
     - name: Run Audit
@@ -423,13 +423,13 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository &&
       contains(github.event.pull_request.labels.*.name, 'simulation')
     steps:
-    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # ratchet:actions/checkout@v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
         submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup Python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # ratchet:actions/setup-python@v7.0.0
       with:
         python-version: '3.11'
     - name: Install & Simulate
