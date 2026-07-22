@@ -1,63 +1,77 @@
 # BOS Multi-Tenant Orchestration Guide
-**Model:** Agent-as-a-Service (AaaS)
+
+> **Classification:** Supporting · Public-safe
+> **Operating label:** Reference implementation
+> **Maturity / claim state:** Target-state reference model; code snippets are illustrative, not production evidence.
+> **Doctrine boundary:** This guide covers routing, isolation, and verification. Tenant treasury, yield, escrow, and settlement references are protocol/reference behaviors, not Conxian-Labs custody, discretionary fund control, market operation, or user-data extraction.
+
+**Model:** Agent-as-a-Service (AaaS) reference pattern
 **Alignment:** LangChain Multi-Agent / CrewAI Flow / Open Multi-Agent (TS)
-**Version:** v2.2 (M.A.S. Era)
+**Version:** v2.2 (reference architecture)
 
 ## 1. Orchestration Pattern: Multi-Agent Systems (M.A.S.)
+
 The BaaP model uses a hierarchical **Supervisor-Worker** M.A.S. pattern for multi-tenant isolation and goal decomposition.
 
 ### Supervisor Agent (Strategy Nexus - EXCO)
-- **Role**: High-level goal decomposition, context switching, and task dispatching.
-- **Isolation**: Injects the `TenantID` into every tool call.
-- **Inter-Agent Communication**: Standardized via **MCP Tool Handshakes**.
-- **Decision Logic**: Routes business intents to specialized worker crews based on the dynamic state transition logic in `BOS_STATE_MACHINE.stub.json`.
+
+- **Role:** High-level goal decomposition, context switching, and task dispatching.
+- **Isolation:** Injects the `TenantID` into every tool call.
+- **Inter-Agent Communication:** Standardized via **MCP Tool Handshakes**.
+- **Decision Logic:** Routes business intents to specialized worker crews based on the dynamic state-transition logic in `BOS_STATE_MACHINE.stub.json`.
 
 ### Worker Crews (Specialized EXCO Units)
-- **Fiscal Vault Crew**:
-    - **Agents**: Liquidity Analyst, Payout Executor, Yield Optimizer.
-    - **Goal**: Manage per-tenant treasury with strict 144-block timelocks.
-- **Nakamoto Guardian Crew**:
-    - **Agents**: Policy Auditor, ZK-Proof Verifier, AML/KYC Guardian.
-    - **Goal**: Perform verifiable attestations (BitVM2/ZKML) without PII leakage.
-- **Sovereign Ops Crew**:
-    - **Agents**: ERP Bridge, Industrial Labor Coordinator, Supply Chain Oracle.
-    - **Goal**: Bidirectional sync with SAP/Oracle via OData v4 and MCP.
 
-## 2. Jurisdictional Sharding & Context Isolation
-To prevent cross-tenant data leakage ("The Contamination Risk"), the BOS implements multi-layer sharding:
+- **Fiscal Vault policy crew:**
+  - **Agents:** Liquidity analyst, payout policy, yield policy.
+  - **Goal:** Apply per-tenant or protocol policy constraints, including timelocks; it does not take custody of tenant funds.
+- **Nakamoto Guardian crew:**
+  - **Agents:** Policy auditor, ZK-proof verifier, AML/KYC guardian.
+  - **Goal:** Perform verifiable attestations (BitVM2/ZKML) without unnecessary PII exposure.
+- **Sovereign Ops crew:**
+  - **Agents:** ERP bridge, industrial labor coordinator, supply-chain oracle.
+  - **Goal:** Bidirectional sync with SAP/Oracle via OData v4 and MCP.
 
-### Layer 1: Identity & State Sharding
-- **BNS/DID Isolation**: Each tenant uses a unique Decentralized Identifier (DID) anchored to Bitcoin/Stacks.
-- **Kwil Namespace**: Relational state is logically isolated into tenant-specific schemas.
-- **Tableland RLAC**: Public audit logs use Row-Level Access Control (RLAC) to ensure only authorized agents can read sensitive state roots.
+## 2. Jurisdictional Sharding and Context Isolation
 
-### Layer 2: Execution Isolation (The Handshake)
-All agentic execution must wrap tool calls in a secure `TenantContext`. The supervisor ensures that the worker crew only receives data relevant to their specific `tenant_id`.
+To prevent cross-tenant data leakage (“the contamination risk”), the BOS models multi-layer sharding:
+
+### Layer 1: Identity and State Sharding
+
+- **BNS/DID isolation:** Each tenant uses a unique Decentralized Identifier (DID) anchored to Bitcoin/Stacks.
+- **Kwil namespace:** Relational state is logically isolated into tenant-specific schemas.
+- **Tableland RLAC:** Public audit logs use Row-Level Access Control (RLAC) so authorized agents can read only the state roots within their policy boundary.
+
+### Layer 2: Execution Isolation (the handshake)
+
+All agentic execution must wrap tool calls in a secure `TenantContext`. The supervisor ensures that a worker crew receives only data relevant to its `tenant_id` and documented integration purpose.
 
 ```typescript
-// Example of M.A.S. Handshake via MCP
+// Illustrative M.A.S. handshake via MCP; not a custody or settlement guarantee.
 interface MASHandshake {
   source_agent: string;
   target_agent: string;
   tenant_id: string; // Mandatory for all BaaP operations
   intent_hash: string;
-  payload: any;
+  payload: unknown;
 }
 
 async function performHandshake(handshake: MASHandshake) {
   const guardianResponse = await mcp.callTool("nakamoto_guardian", "verify_policy", {
     tenant_id: handshake.tenant_id,
-    action: handshake.payload.action
+    action: handshake.payload,
   });
 
   if (guardianResponse.approved) {
-    return await mcp.callTool("fiscal_vault", "execute_transaction", handshake.payload);
+    // Protocol/reference policy call; not company-controlled fund execution.
+    return await mcp.callTool("fiscal_vault", "execute_policy_action", handshake.payload);
   }
 }
 ```
 
 ## 3. Sovereign Node (BiaB) Akash SDL Template
-Tenants deploy their own BOS instance using the standard **Sovereign Blueprint**:
+
+Tenants could deploy their own BOS instance using a standard **Sovereign Blueprint**. Secret material is mounted through the approved ZSE mechanism; no credential belongs in this public example.
 
 ```yaml
 ---
@@ -100,10 +114,12 @@ deployment:
       count: 1
 ```
 
-## 4. Transparency & Governance Standard
-- **Verifiable Telemetry**: All M.A.S. internal logs (Kind 26001/26002) are broadcast via Nostr for real-time observability.
-- **MMR State Proofs**: Every business transaction updates a per-tenant Merkle Mountain Range (MMR), ensuring O(log N) inclusion proofs for any historical event.
-- **Sovereign Portability**: Businesses can migrate their entire M.A.S. "Brain" from cloud to local hardware by simply moving their Kwil/Tableland state anchors.
+## 4. Transparency and Governance Standard
+
+- **Verifiable telemetry:** M.A.S. logs are emitted only as permitted by the tenant and data-minimization policy.
+- **MMR state proofs:** A per-tenant Merkle Mountain Range (MMR) can provide inclusion proofs for historical events.
+- **Sovereign portability:** A business can migrate its orchestration state between infrastructure providers when the documented state and key boundaries permit it.
 
 ---
-*Maintained by the Sovereign Orchestrator. Linked to CON-474 and CON-619.*
+
+Maintained as a public reference specification. See the [Doctrine Alignment Standard](../docs/DOCTRINE_ALIGNMENT_STANDARD.md) before promoting any target-state claim.

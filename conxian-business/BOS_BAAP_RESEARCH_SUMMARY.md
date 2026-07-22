@@ -1,25 +1,17 @@
-# BOS BaaP Research Summary v2.3
-**Date:** May 3, 2026
-**Focus:** Industrial Multi-tenancy, Sovereign Middleware, and Agentic SDK Utilization
+# BOS research summary (migrated to authorized Linear workspace)
 
-## 1. Competitive Benchmark (Finalized)
-- **Oracle Autonomous**: BaaP adopts the "Elastic Pool" pattern using Akash Network groups for shared-resource/isolated-state execution.
-- **SAP Clean Core**: BaaP enforces "Sovereign Guardrails" (144-block timelocks) as the standard state machine for all tenants, preventing logic drift.
-- **Salesforce Agentforce**: BaaP utilizes a **M.A.S. (Multi-Agent System)** pattern where Strategy Nexus acts as the Supervisor for per-tenant Worker agents.
+> **Classification:** Public-safe stub
+> **Ownership:** Conxian-Labs (Pty) Ltd
+> **Claim state:** Deprecated as an in-repository research summary
 
-## 2. SDK Viewpoint: Conxius Enclave SDK Utilization
-- **Capabilities Used**: Hardware-grade key isolation (StrongBox), MuSig2 multi-sig, and A2P (Application-to-Person) secure routing.
-- **Enhancements Identified**: Native BIP341 (Taproot) signing is fully active; next phase requires integrating RISC0 ZKML proofs for off-chain compliance attestation.
+**Why this content moved:** The research summary contained internal commercial and product-planning material that does not belong in a public repository. The detailed source was not copied into another Git file.
 
-## 3. Financial & Market Metrics (Unified)
-- **Aggregated TAM**: $5.1T (Across Mobile, DeFi, and ERP sectors).
-- **Primary SAM**: $306B (Addressable Sovereign Capital).
-- **Pricing Model**: Tiered B2B SaaS ($2.5k - $15k/mo) + Usage-based NTT (Network Token Transfer) fees.
+The authorized canonical source is [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) in the Linear workspace. Use that workspace for restricted research and decisions.
 
-## 4. Critical Gap Resolution
-- **Albert (Alpen)**: Identified as the primary ZK-Rollup bridge for high-frequency settlement.
-- **State Redundancy**: Decision made to consolidate all chain-polling into **Conxian Nexus** to reduce system-wide COGS.
-- **ERP Middleware**: "The Engine" WSDL execution is the final bottleneck for legacy treasury integration.
+Public-safe doctrine references:
 
----
-*Maintained by the Sovereign Orchestrator. Linked to CON-474, CON-619, and CON-256.*
+- [Doctrine Alignment Standard](../docs/DOCTRINE_ALIGNMENT_STANDARD.md)
+- [Portfolio Doctrine Register](../docs/PORTFOLIO_DOCTRINE_REGISTER.md)
+- [Documentation Alignment Index](../docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
+
+This file is intentionally kept as a public-safe stub so existing links continue to resolve.

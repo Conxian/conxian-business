@@ -33,7 +33,7 @@ The checklist below remains a dated record of the former readiness review for th
 - [x] Any vendored source or copied third-party code includes clear attribution and license compatibility.
 
 ### 5) Canonical trackers
-- Sovereign Coordination Layer: https://sovereign.conxian.com/issue/CON-171
+- authorized Linear workspace: https://sovereign.conxian.com/issue/CON-171
 - GitHub repo: https://github.com/Conxian/conxius-enclave-sdk
 
 The following tracker links are retained as historical references from the original checklist; they do not override the 2026-07-20 audit or capability matrix.
