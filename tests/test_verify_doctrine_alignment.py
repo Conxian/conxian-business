@@ -41,6 +41,35 @@ class CustodyBoundaryFixturesTest(unittest.TestCase):
             with self.subTest(fixture=fixture):
                 self.assertNotEqual(find_custody_violations(fixture), [])
 
+    def test_prior_sentence_negation_does_not_mask_later_affirmative_claim(self) -> None:
+        rejected = (
+            "Conxian-Labs does not custody participant assets. It holds user funds.",
+            "Conxian-Labs is not a custodian. The company controls user assets.",
+        )
+        for fixture in rejected:
+            with self.subTest(fixture=fixture):
+                self.assertNotEqual(find_custody_violations(fixture), [])
+
+    def test_multi_sentence_qualified_custody_mentions_pass(self) -> None:
+        allowed = (
+            "Conxian-Labs does not custody participant assets. Users retain self-custody. Regulated partners remain responsible for regulated custody.",
+            "Conxian-Labs is not a custodian; protocol contract-held state is governed by DAO governance.\nUsers keep control of their keys.",
+        )
+        for fixture in allowed:
+            with self.subTest(fixture=fixture):
+                self.assertEqual(find_custody_violations(fixture), [])
+
+    def test_sentence_boundaries_preserve_explicit_separators_and_abbreviations(self) -> None:
+        rejected = (
+            "Conxian-Labs does not custody participant assets; It holds user funds.",
+            "Conxian-Labs does not custody participant assets\nIt holds user funds.",
+            "Conxian-Labs does not custody participant assets | It holds user funds.",
+            "Conxian-Labs does not custody participant assets, e.g. users retain self-custody. It holds user funds.",
+        )
+        for fixture in rejected:
+            with self.subTest(fixture=fixture):
+                self.assertNotEqual(find_custody_violations(fixture), [])
+
     def test_explicit_risk_analysis_does_not_exempt_affirmative_claims(self) -> None:
         allowed = (
             "The claim that the company controls protocol funds is a risk.",

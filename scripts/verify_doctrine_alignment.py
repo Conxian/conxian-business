@@ -7,7 +7,6 @@ import re
 import subprocess
 import sys
 import unicodedata
-from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -98,13 +97,6 @@ HISTORICAL_ALIAS_URL_PATHS = {
     "docs/bounties/CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md",
 }
 AGENTS_ALIAS_EXCEPTION = ROOT / "AGENTS.md"
-
-
-@dataclass(frozen=True)
-class LinkReference:
-    source: Path
-    target: str
-    line: int
 
 
 def fail(errors: list[str], message: str) -> None:
@@ -491,8 +483,133 @@ OPERATIONAL_AFFIRMATIVE_PATTERN = re.compile(
 )
 
 
+SENTENCE_CLOSERS = frozenset('"\'”’)]}')
+ABBREVIATIONS = frozenset(
+    {
+        "a.m",
+        "dr",
+        "e.g",
+        "fig",
+        "figs",
+        "i.e",
+        "jr",
+        "mr",
+        "mrs",
+        "ms",
+        "no",
+        "nos",
+        "p.m",
+        "prof",
+        "sr",
+        "st",
+        "u.k",
+        "u.s",
+        "vs",
+    }
+)
+CONTEXTUAL_ABBREVIATIONS = frozenset({"co", "corp", "inc", "ltd", "pty"})
+
+
+def _period_is_sentence_boundary(text: str, index: int) -> bool:
+    """Return whether a period terminates a sentence-like policy clause."""
+
+    if index + 1 < len(text) and text[index + 1] == ".":
+        return False
+    if (
+        index > 0
+        and index + 1 < len(text)
+        and text[index - 1].isdigit()
+        and text[index + 1].isdigit()
+    ):
+        return False
+
+    next_index = index + 1
+    while next_index < len(text) and text[next_index] in SENTENCE_CLOSERS:
+        next_index += 1
+    if next_index < len(text) and not text[next_index].isspace():
+        return False
+
+    token_start = index
+    while token_start > 0 and (
+        text[token_start - 1].isalnum() or text[token_start - 1] == "."
+    ):
+        token_start -= 1
+    token = text[token_start:index].lower()
+    if token in ABBREVIATIONS:
+        return False
+    if token in CONTEXTUAL_ABBREVIATIONS:
+        next_word_start = next_index
+        while next_word_start < len(text) and text[next_word_start].isspace():
+            next_word_start += 1
+        next_word_end = next_word_start
+        while next_word_end < len(text) and text[next_word_end].isalpha():
+            next_word_end += 1
+        next_word = text[next_word_start:next_word_end].lower()
+        if token == "pty" and next_word == "ltd":
+            return False
+        if next_word_start == len(text) or (
+            next_word and text[next_word_start].isupper()
+        ):
+            return True
+        return False
+    if re.fullmatch(r"(?:[a-z]\.)+[a-z]?", token):
+        return False
+    return True
+
+
 def split_policy_clauses(text: str) -> list[str]:
-    return [clause.strip() for clause in re.split(r"[;\n|]", text) if clause.strip()]
+    """Split policy text at explicit separators and sentence boundaries.
+
+    Semicolons, newlines, and pipes remain hard boundaries. Periods are
+    treated as sentence boundaries unless they are part of a decimal, URL,
+    filename, or common abbreviation, so a negation in one sentence cannot
+    qualify a later affirmative custody assertion.
+    """
+
+    clauses: list[str] = []
+    start = 0
+    index = 0
+    while index < len(text):
+        character = text[index]
+        if character in ";\n|":
+            clause = text[start:index].strip()
+            if clause:
+                clauses.append(clause)
+            start = index + 1
+            index += 1
+            continue
+
+        if character not in ".!?":
+            index += 1
+            continue
+        if character == "." and not _period_is_sentence_boundary(text, index):
+            index += 1
+            continue
+
+        end = index + 1
+        while end < len(text) and text[end] in ".!?":
+            end += 1
+        while end < len(text) and text[end] in SENTENCE_CLOSERS:
+            end += 1
+        clause = text[start:end].strip()
+        if clause:
+            clauses.append(clause)
+        start = end
+        index = end
+
+    clause = text[start:].strip()
+    if clause:
+        clauses.append(clause)
+    return clauses
+
+
+def explicit_negation_applies(clause: str, match: re.Match[str]) -> bool:
+    """Allow negation only when its assertion overlaps the custody match."""
+
+    return any(
+        negation.start() < match.end() and match.start() < negation.end()
+        for negation in EXPLICIT_NEGATION.finditer(clause)
+    )
 
 
 def risk_reference_allows(clause: str) -> bool:
@@ -516,9 +633,9 @@ def custody_match_is_allowed(clause: str, match: re.Match[str]) -> bool:
     context_start = max(0, match.start() - 100)
     context_end = min(len(clause), match.end() + 100)
     context = clause[context_start:context_end]
-    if clause.rstrip().endswith("?"):
+    if re.search(r"\?\s*[\"'”’)\]}]*\s*$", clause):
         return True
-    if EXPLICIT_NEGATION.search(context):
+    if explicit_negation_applies(clause, match):
         return True
     # These patterns describe a risk, label, or possible misreading rather
     # than asserting that the company/SAB actually has custody or control.
@@ -528,7 +645,7 @@ def custody_match_is_allowed(clause: str, match: re.Match[str]) -> bool:
         # An explicit affirmative company/SAB verb in the same clause wins
         # over a generic adjective such as "non-custodial".
         if OPERATIONAL_AFFIRMATIVE_PATTERN.search(clause):
-            return bool(EXPLICIT_NEGATION.search(context))
+            return explicit_negation_applies(clause, match)
         return True
     return False
 
