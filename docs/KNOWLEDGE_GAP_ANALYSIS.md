@@ -7,6 +7,8 @@ This document synthesizes findings from the Conxian Labs knowledge base against 
 
 **Critical Finding:** The protocol has fundamental architectural issues that cannot be resolved through documentation alone. These require code-level remediation aligned with Clarity best practices, DAO governance patterns, and the Conxian Unified Theory v2.0.
 
+> **Current-status boundary (2026-07-21):** Parts I–VI preserve the 2026-07-06 historical baseline and original upgrade plan. The BOS graph now exists and the governance inventory has been reconciled in [Part VII](#part-vii-con-1421-governance-stub-reconciliation-2026-07-21); do not read the older “missing” or blanket “16 stubs” statements as current closure or inventory proof.
+
 ---
 
 ## Part I: Knowledge Base Audit
@@ -20,16 +22,16 @@ This document synthesizes findings from the Conxian Labs knowledge base against 
 | **Knowledge Maps** | `conxian-gateway/docs/research/KNOWLEDGE_MAP.md` | ⚠️ Partial | ⚠️ Needs update |
 | **Security Advisory** | `lib-conxian-core/docs/ADVISORY_REPORT_2026_07_06.md` | ✅ Technical | ✅ Current |
 | **GAP_ANALYSIS** | `lib-conxian-core/docs/GAP_ANALYSIS_AND_SCORING.md` | ✅ Scoring | ✅ Current |
-| **BOS_KNOWLEDGE_GRAPH.md** | ❌ Missing | ❌ No existing file | N/A |
+| **BOS_KNOWLEDGE_GRAPH.md** | ✅ Present | ✅ Current CON-1421 reconciliation | `BOS_KNOWLEDGE_GRAPH.md` |
 | **Protocol Upgrade Pattern Guide** | ❌ Missing | ❌ Critical gap | N/A |
 | **DAO Governance Specification** | ❌ Missing | ❌ Critical gap | N/A |
 | **ISO 20022 Integration Spec** | ❌ Missing | ❌ Critical gap | N/A |
 
 ### 1.2 Knowledge Graph Status
 
-The AGENTS.md mandates a BOS Knowledge Graph at `conxian-business/BOS_KNOWLEDGE_GRAPH.md`, but this file does not exist. This is a **Phase 2 failure** per Unified Theory metrics.
+The 2026-07-06 baseline recorded the mandated BOS Knowledge Graph as missing. It is now present at `conxian-business/BOS_KNOWLEDGE_GRAPH.md`; the current structured reconciliation is recorded in the dated digest for CON-1421.
 
-**Required Action:** Create BOS_KNOWLEDGE_GRAPH.md with entity extraction from all submodules.
+**Required Action:** Maintain the graph as the authoritative entity, relationship, decision, and issue-resolution record.
 
 ---
 
@@ -46,7 +48,7 @@ The AGENTS.md mandates a BOS Knowledge Graph at `conxian-business/BOS_KNOWLEDGE_
 | Single deployer key | CRITICAL | Multisig + DAO patterns | ⚠️ Partial |
 | `pausable.clar` zero ACL | CRITICAL | Access control patterns | ❌ Missing |
 | 71 stubs (33%) | HIGH | Contract completion guide | ❌ Missing |
-| 16 governance stubs | MEDIUM | DAO governance spec | ❌ Missing |
+| Historical “16 governance stubs” claim | MEDIUM | Typed governance inventory and decision record | Reconciled in Part VII; broader gap remains open |
 
 ### 2.2 Pattern Library Gaps
 
@@ -154,8 +156,8 @@ On-Chain Commitment:
 
 ## Part IV: DAO Governance Specification Gap
 
-### 4.1 Current State
-No DAO governance specification exists. 16 of 28 governance contracts are stubs.
+### 4.1 Historical baseline and current boundary
+The 2026-07-06 baseline stated that no DAO governance specification existed and repeated the “16 of 28” issue wording. The original issue body names 15 contracts; `proposal-engine-trait.clar` is the likely omitted 16th entry, and six listed entries are partial skeletons rather than blank stubs. The current typed reconciliation and the scoped community-voting decision are recorded in Part VII and `BOS_KNOWLEDGE_GRAPH.md`.
 
 ### 4.2 Required Governance Architecture
 
@@ -215,7 +217,7 @@ Based on research from Stacks SIP process and DAO frameworks:
 
 | Priority | Action | Knowledge Gap Addressed |
 |----------|--------|------------------------|
-| P0 | Create `BOS_KNOWLEDGE_GRAPH.md` | Mandated in AGENTS.md |
+| P0 | Maintain `BOS_KNOWLEDGE_GRAPH.md` | Mandated authoritative entity and decision record; initial creation is complete |
 | P0 | Fix `pausable.clar` access control | CRITICAL security |
 | P1 | Implement real `collect-protocol-fees` | Revenue generation |
 | P1 | Create upgrade mechanism spec | Modular/registry pattern |
@@ -272,6 +274,57 @@ PHASE 3: Ecosystem (Week 4+)
 
 ---
 
+## Part VII: CON-1421 Governance Stub Reconciliation (2026-07-21)
+
+This section supersedes the current-status wording in the 2026-07-06 baseline while preserving that baseline for historical traceability. The authoritative entity, relationship, and decision digest is [BOS_KNOWLEDGE_GRAPH.md](../BOS_KNOWLEDGE_GRAPH.md).
+
+### Inventory correction
+
+- The [CON-1421 Linear issue](https://linear.app/conxian-labs/issue/CON-1421/medium-16-of-28-governance-contracts-are-stubs) and [Conxian #463](https://github.com/Conxian/Conxian/issues/463) body name 15 contracts, not 16.
+- `proposal-engine-trait.clar` is the likely omitted 16th governance-gap entry.
+- Six listed entries are partial skeletons rather than blank stubs. Future reporting must distinguish blank stubs, partial skeletons, implemented-but-under-review contracts, deferred architecture, and intentionally inactive source.
+
+### Scoped remediation and review boundary
+
+- [`community-voting-engine.clar`](https://github.com/Conxian/Conxian/blob/90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1/contracts/governance/community-voting-engine.clar) is implemented in [protocol PR #521](https://github.com/Conxian/Conxian/pull/521) at exact audited head [`90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1`](https://github.com/Conxian/Conxian/commit/90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1).
+- PR #521 is open, clean, mergeable, and currently reports all checks passing. It remains **under review** until merged into `main`; the parent repository pin is therefore **pinned for review**, not deployed or merged.
+- The community-voting path was selected over isolated `upgrade-controller` work because it has no production callers, documented requirements, and a complete self-contained vertical. `upgrade-controller.clar` depends on proposal/timelock plumbing and overlaps the active [Conxian #499](https://github.com/Conxian/Conxian/issues/499) scope.
+
+### Implemented behavior recorded at the audited head
+
+The reviewed community-voting engine provides:
+
+- dynamic `operational-treasury` route checks for the CXVG token and compliance adapter;
+- real SIP-010 CXVG escrow rather than a mock balance update;
+- compliance checks at proposal creation and voting;
+- future start blocks and bounded voting windows;
+- aggregate total-supply snapshots with a safe cap on cumulative escrow;
+- quorum and approval thresholds with strict tie failure;
+- permissionless finalization after the exclusive voting window;
+- historical, one-time stake claims that remain tied to the proposal’s stored token principal;
+- no arbitrary proposal execution or treasury withdrawal in the voting engine; and
+- reputation weighting explicitly deferred until a trustworthy source and rules are independently reviewed.
+
+### Remaining gaps and non-closure
+
+- `upgrade-controller.clar` and `proposal-engine-trait.clar` remain stubs/deferred, and the other governance entries require their own typed status.
+- The existing execution-oriented path remains `proposal-engine → proposal-registry → proposal-executor → timelock`; community voting is a separate non-executing ledger.
+- The clean PR #521 and the parent pin do not fully resolve the broader governance backlog. The historical [#463 umbrella](https://github.com/Conxian/Conxian/issues/463) is not treated as fully resolved by implication.
+- No protocol source or PR #521 changes are made in this parent-repository task; only the parent gitlink and knowledge records are updated.
+
+### Canonical evidence
+
+| Evidence | Link |
+|----------|------|
+| Linear work item | [CON-1421](https://linear.app/conxian-labs/issue/CON-1421/medium-16-of-28-governance-contracts-are-stubs) |
+| Historical umbrella | [Conxian #463](https://github.com/Conxian/Conxian/issues/463) |
+| Active overlap | [Conxian #499](https://github.com/Conxian/Conxian/issues/499) |
+| Implementation PR | [Conxian PR #521](https://github.com/Conxian/Conxian/pull/521) |
+| Exact protocol head | [`90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1`](https://github.com/Conxian/Conxian/commit/90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1) |
+| Parent knowledge graph | [`BOS_KNOWLEDGE_GRAPH.md`](../BOS_KNOWLEDGE_GRAPH.md) |
+
+---
+
 ## Appendix A: Issue → Knowledge Gap Mapping
 
 | GitHub Issue | Root Cause | Required Pattern | Knowledge Doc |
@@ -288,7 +341,7 @@ PHASE 3: Ecosystem (Week 4+)
 
 ## Appendix B: Action Items
 
-- [ ] **CREATE** `BOS_KNOWLEDGE_GRAPH.md` (entity extraction from all repos)
+- [x] **CREATE / MAINTAIN** `BOS_KNOWLEDGE_GRAPH.md` (entity extraction and dated decision digests)
 - [ ] **CREATE** `SECURITY_PATTERNS.md` (access control, multisig, pausable)
 - [ ] **CREATE** `UPGRADE_MECHANISMS.md` (registry pattern, migration)
 - [ ] **CREATE** `DAO_GOVERNANCE_SPEC.md` (voting, timelock, treasury)
