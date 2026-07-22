@@ -1,5 +1,5 @@
 # Conxian Labs BOS Knowledge Graph
-> Clarity-version: 4 | Epoch: latest | Generated: 2026-07-21
+> Clarity-version: 4 | Epoch: latest | Generated: 2026-07-22
 
 ## Overview
 
