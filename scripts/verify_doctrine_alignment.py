@@ -431,7 +431,9 @@ COMPANY_SUBJECT = r"(?:Conxian(?:-Labs)?(?:\s+\(Pty\)\s+Ltd)?|Conxian Labs|the c
 SUBJECT_REFERENCE = rf"(?:{COMPANY_SUBJECT}|it|they)"
 CUSTODY_OBJECT = r"(?:(?<!non-)custod(?:y|ial|ian)|treasur(?:y|ies)|vaults?|funds?|assets?|(?:discretionary\s+)?control\s+(?:over|of)?\s*(?:user|participant|customer|protocol)?\s*(?:funds?|assets?|treasury|vaults?|custody|state))"
 AFFIRMATIVE_VERBS = r"(?:has|have|holds?|takes?|assumes?|provides?|exercises?|controls?|manages?|custodies?|is\s+responsible\s+for|acts?\s+as|is|are|will|can|may|shall)"
-AFFIRMATIVE_OPERATION_VERBS = r"(?:has|have|holds?|takes?|assumes?|provides?|exercises?|custodies?|is\s+responsible\s+for|acts?\s+as|will|can|may|shall)"
+# Restrict bare copular forms to custody terms so explicit allowances such as
+# "is designed ... avoid custodial flows" are not treated as affirmative custody.
+AFFIRMATIVE_OPERATION_VERBS = r"(?:has|have|holds?|takes?|assumes?|provides?|exercises?|custodies?|is\s+responsible\s+for|acts?\s+as|is(?=\s+(?:the\s+)?custod(?:y|ial|ian))|are(?=\s+(?:the\s+)?custod(?:y|ial|ian))|will|can|may|shall)"
 AFFIRMATIVE_CUSTODY_PATTERNS = (
     re.compile(rf"\b{COMPANY_SUBJECT}(?:'s|[- ]controlled|[- ]owned)?\s+{CUSTODY_OBJECT}\b", re.IGNORECASE),
     re.compile(

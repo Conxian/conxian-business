@@ -31,6 +31,7 @@ class CustodyBoundaryFixturesTest(unittest.TestCase):
             "SAB custody is the operating model.",
             "The company is responsible for treasury assets.",
             "Conxian-Labs is the custodian of participant funds.",
+            "Conxian-Labs is non-custodial but is the custodian of participant funds.",
             "Conxian-Labs acts as custodian for user assets.",
             "Conxian-Labs is non-custodial but controls protocol funds.",
             "The company is not simply an integrator; it controls protocol funds.",
