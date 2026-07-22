@@ -7,17 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.md](docs/RELEASE_NOTES_AND_CHANGELOG.md).
 
+## [Unreleased]
+
+### Added
+- **CON-1518 Telemetry Privacy & Monitoring:** Recorded upstream PR #210 merge `593af0d9120b612de5b2817866b0528e5c877570`, retained the exact reviewed `conxius-enclave-sdk` parent pin `451202f51a9efed8fde70b7a5567a3e7e16c1db9`, aligned submodule branch metadata to `main`, added the public-safe telemetry evidence authority, and expanded the B2B CI job to verify the reviewed SDK with formatting, clippy, all-feature, focused telemetry, and capability-evidence checks. Production acceptance remains Beta / conditional with service-side and deployment evidence gates open.
+
 ## [1.9.5] - 2026-07-08
 
 ### Added
 - **System-wide BOS v1.9.5 Standardization**: Aligned organization and repository versions to BOS v1.9.5.
 - **Security Remediation**: Fixed RUSTSEC-2026-0204 (crossbeam-epoch).
 
-## [Unreleased]
-
-## [1.9.5] - 2026-07-08
-
-### Added
 - **System-wide BOS v1.9.5 Standardization**: Aligned organization and repository versions to BOS v1.9.5 across Root, README, CHANGELOG, and AGENTS files to signal unified mainnet readiness.
 
 - **Cross-Issue Boundary & Doctrine Sprint — 6 artifacts delivered**:

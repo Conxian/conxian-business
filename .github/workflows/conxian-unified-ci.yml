@@ -250,10 +250,27 @@ jobs:
       with:
         workspaces: |
           conxian-nexus
+          conxius-enclave-sdk
+    - name: Verify pinned enclave SDK
+      run: |
+        test -d conxius-enclave-sdk
+        test "$(git -C conxius-enclave-sdk rev-parse HEAD)" = "451202f51a9efed8fde70b7a5567a3e7e16c1db9"
+        git submodule status conxius-enclave-sdk
     - name: Check & Test
       run: |
         cd conxian-nexus
         cargo test
+    - name: Check & Test enclave SDK
+      run: |
+        cd conxius-enclave-sdk
+        cargo fmt --package conxius-enclave-sdk -- --check
+        cargo clippy --all-targets --all-features -- -D warnings
+        cargo test --all-features
+        cargo test telemetry --all-features -- --nocapture
+    - name: Validate enclave SDK capability evidence
+      if: ${{ hashFiles('conxius-enclave-sdk/scripts/validate_capability_evidence.py') != '' }}
+      run: |
+        python3 conxius-enclave-sdk/scripts/validate_capability_evidence.py --check
 
   lib-conxian-core-suite:
     name: Core Library Suite (lib-conxian-core)

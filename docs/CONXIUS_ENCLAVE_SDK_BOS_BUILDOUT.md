@@ -30,6 +30,10 @@ Note: in this repo, those artifacts live under the `conxius-enclave-sdk/` submod
 >
 > Do not enable value-bearing production signing or settlement from the audited tree. API presence, compiled code, simulated paths, and structural tests do not establish production support; issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain open.
 
+## CON-1518 telemetry addendum — 2026-07-21
+
+The CON-1518 telemetry remediation landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210) at `593af0d9120b612de5b2817866b0528e5c877570`. This reviewed PR intentionally retains the exact parent gitlink `451202f51a9efed8fde70b7a5567a3e7e16c1db9`; the public-safe business-repo authority is [CON-1518 telemetry privacy and operational evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md). It records implementation and operating boundaries only; independent review, service-side retention/deletion evidence, deployed monitoring/recovery evidence, and final production gates remain open. Telemetry does not change the SDK’s **Beta / conditional** status or authorize value-bearing production signing or settlement.
+
 ## 1) Business-unit role (supporting shared SDK)
 
 Per the repo portfolio, `conxius-enclave-sdk` is a **supporting** repo:
@@ -40,7 +44,7 @@ Per the repo portfolio, `conxius-enclave-sdk` is a **supporting** repo:
 In BOS terms, the SDK is the shared “security edge” library that downstream business units consume:
 
 - **Conxius (wallet)**: hardware-backed key custody and signing, WASM bindings for client apps.
-- **Conxian Fusion** and **Nexus (state node)**: shared primitives for attested workflows, rails orchestration helpers, and message formats.
+- **Conxian Fusion (gateway service)** and **Nexus (state node)**: shared primitives for attested workflows, rails orchestration helpers, and message formats.
 - **Industrial engine surfaces**: CJCS/ISO20022 encoding helpers when job cards must be signed/attested inside the enclave boundary.
 
 The business obligation of the SDK is to provide a single integration contract so downstream teams don’t re-implement enclave abstractions, attestation, signing formats, or swap/settlement message structures in each product repo.
@@ -72,7 +76,7 @@ For stable public SDK operations, ownership needs to be role-based (not person-b
 
 - **SDK maintainer**: owns API design, dependency hygiene, and CI gates.
 - **Security/cryptography approver**: owns enclave boundaries, attestation flows, and “no secret egress” guarantees.
-- **Downstream integrator representative**: ensures wallet/gateway/nexus consumption patterns are supported and documented.
+- **Downstream integrator representative**: ensures wallet, gateway service, and Nexus consumption patterns are supported and documented.
 - **Release manager**: owns versioning discipline, release notes, tags, and publishing (crates.io + npm/WASM if shipped).
 
 Minimum approval expectations:
@@ -86,7 +90,7 @@ Minimum approval expectations:
 | --- | --- | --- |
 | SDK maintainer | All SDK modules + WASM bindings | `conxius-enclave-sdk/CODEOWNERS` |
 | Security/cryptography approver | Enclave boundary, signing, attestation | `conxius-enclave-sdk/CODEOWNERS` + `conxius-enclave-sdk/SECURITY.md` |
-| Downstream integrator representative | Wallet/gateway/nexus integration expectations | `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md` + this doc |
+| Downstream integrator representative | Wallet/Conxian Fusion (gateway service)/Nexus integration expectations | `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md` + this doc |
 | Release manager | Tags, changelog discipline, publishing | `conxius-enclave-sdk/RELEASING.md` |
 
 ## 4) Governance + documentation requirements (downstream-operable)
@@ -104,6 +108,7 @@ The SDK repo should keep these docs current (public-safe):
 In this BOS repo, the canonical cross-repo checklist is:
 
 - Historical mainnet readiness checklist — `conxius-enclave-sdk`: `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md`
+- CON-1518 telemetry privacy and operational evidence — [`docs/operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md`](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md)
 
 ### Internal-only operating docs (Linear Virtual Office)
 
@@ -123,7 +128,7 @@ Gaps to close before treating the SDK as a stable, widely-consumed dependency:
    - Canonical home: `conxius-enclave-sdk/GOVERNANCE.md` and/or `conxius-enclave-sdk/RELEASING.md` (this doc should remain a BOS summary).
 2. **Support intake and severity conventions**: add a clear support channel (GitHub Issues + escalation path) so downstream teams don’t rely on ad-hoc DMs.
 3. **Release automation and provenance**: CI should enforce the full preflight set (fmt, clippy, tests, WASM build, vuln scan) and produce traceable evidence for release artifacts.
-4. **Downstream integration guide**: a short “how to consume” guide for wallet/gateway/nexus (feature flags, target triples, WASM packaging expectations).
+4. **Downstream integration guide**: a short “how to consume” guide for wallet, gateway service, and Nexus (feature flags, target triples, WASM packaging expectations).
 5. **Security audit readiness**: define the minimum audit bar for `1.0.0` (threat model scope + what components must be audited).
 
 Suggested canonical home (public-safe): add an “Audit readiness” section to `conxius-enclave-sdk/SECURITY.md`, and keep any privileged runbooks and vendor engagement detail in Linear.
@@ -139,7 +144,7 @@ Suggested canonical home (public-safe): add an “Audit readiness” section to 
 
 **P1 (downstream operability + anti-drift)**
 
-- Add an integration guide focused on downstream teams (wallet/gateway/nexus) and keep it public-safe.
+- Add an integration guide focused on downstream teams (wallet, gateway service, and Nexus) and keep it public-safe.
 - Add support intake + severity conventions (issue template(s) and a short triage policy).
 - Add compatibility communication conventions (deprecation window policy once `1.0.0` is planned).
 

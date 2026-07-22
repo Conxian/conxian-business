@@ -208,7 +208,7 @@ graph TB
 | epoch = "latest" mandatory | 2026-04-23 | Always use newest epoch | - |
 | Dynamic principals from treasury | 2026-04-23 | Eliminate hardcoded SPOF | - |
 | TEE via conxius-enclave-sdk | 2026-04-23 | Hardware key isolation | - |
-| ISO 20022 via Conxian Gateway | 2026-04-23 | Legacy banking bridge | - |
+| ISO 20022 via gateway service | 2026-04-23 | Legacy banking bridge | - |
 | Cargo audit allowlist for transitive deps | 2026-07-08 | Transitive vulnerabilities without local upgrade path | Upgrade dep chain |
 | Gitleaks license via GitHub Secrets | 2026-07-08 | ZSE compliance; no hardcoded secrets | - |
 | Branch and PR promotion flow | 2026-07-14 | Protected branches require review and dev -> staged -> main promotion | - |
@@ -420,6 +420,38 @@ graph TB
 | Protocol implementation PR | [Conxian PR #521](https://github.com/Conxian/Conxian/pull/521) |
 | Exact protocol commit | [`90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1`](https://github.com/Conxian/Conxian/commit/90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1) |
 | Parent repository | [Conxian/conxian-business](https://github.com/Conxian/conxian-business) |
+
+---
+
+## Dated Digest: CON-1518 Telemetry Privacy & Monitoring (2026-07-21)
+
+### Status
+
+| Field | Record |
+|-------|--------|
+| Linear issue | [CON-1518](https://linear.app/conxian-labs/issue/CON-1518/p1-define-telemetry-privacy-monitoring-and-public-safe-operational) — internal tracking reference; private issue content is not reproduced. |
+| Upstream implementation | [conxius-enclave-sdk PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210), merged at `593af0d9120b612de5b2817866b0528e5c877570`; remediates the implementation scope tracked by [GitHub #201](https://github.com/Conxian/conxius-enclave-sdk/issues/201). |
+| Business-repo integration | Root `conxius-enclave-sdk` gitlink remains pinned exactly `451202f51a9efed8fde70b7a5567a3e7e16c1db9` for this reviewed fail-closed PR; the upstream telemetry implementation is recorded at `593af0d9120b612de5b2817866b0528e5c877570`; `.gitmodules` branch metadata is `main`. |
+| Public-safe authority | [`docs/operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md`](docs/operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md) records the privacy, delivery, non-gating, monitoring, rollback, and evidence boundary. |
+| Current support boundary | **Beta / conditional**; no value-bearing production signing or settlement claim is authorized. |
+
+### Typed Entities and Relationships
+
+| Entity | Type | Role / state | Relationship |
+|--------|------|--------------|--------------|
+| `CON-1518` | Linear issue | Internal scope and evidence-tracking record | tracks the business-repo integration and public-safe evidence boundary |
+| `GitHub #201` | Upstream issue | Telemetry privacy/operations implementation scope | remediated by upstream PR #210; remaining operational evidence is not implied closed |
+| `PR #210` | Upstream pull request | Merged implementation record at exact SHA `593af0d9120b612de5b2817866b0528e5c877570` | provides an upstream implementation candidate; this PR intentionally retains the exact reviewed parent pin |
+| `conxius-enclave-sdk` | Shared runtime repository | Exact reviewed candidate is pinned by this root repo | consumed by downstream integrations; support remains capability-specific |
+| `CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md` | Public-safe authority | Repository-visible privacy and operations boundary | links the upstream implementation to root CI and acceptance evidence |
+
+### Residual Gates and Boundary
+
+- Independent review of the exact business-repo candidate remains open.
+- Service-side retention/deletion ownership and evidence remain private and are not claimed here.
+- Deployed monitoring, alerting, rollback, and recovery evidence remains open and is not inferred from source tests or runbooks.
+- Final release and production acceptance gates remain open; implementation landing does not equal production enablement.
+- Preserve the **Beta / conditional**, no-value-bearing-production boundary across docs, CI, release notes, and downstream claims.
 
 ---
 

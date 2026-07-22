@@ -27,6 +27,10 @@ For `conxius-enclave-sdk`, the current authority is the immutable [Production En
 
 The SDK is **Beta / conditional**. No value-bearing production signing or settlement is supported from the audited tree, and issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain open. This business-repo matrix records claim boundaries; it cannot upgrade upstream evidence or reclassify a capability as production-supported.
 
+### CON-1518 telemetry addendum — 2026-07-21
+
+The telemetry implementation scope landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210) at merge commit `593af0d9120b612de5b2817866b0528e5c877570`. This reviewed PR retains the exact parent gitlink `451202f51a9efed8fde70b7a5567a3e7e16c1db9` and records the public-safe privacy, delivery, monitoring, rollback, and evidence boundary in [CON-1518 telemetry privacy and operational evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md). This closes the upstream implementation scope only; independent review, service-side retention/deletion evidence, deployed monitoring/recovery evidence, and final production gates remain open. The capability remains **Beta / conditional**.
+
 ## Current matrix
 
 | Surface | Claim | Current evidence | Public-safe status | Notes |
@@ -37,6 +41,7 @@ The SDK is **Beta / conditional**. No value-bearing production signing or settle
 | `conxius-enclave-sdk` | Signing and attestation interfaces/code paths are present | Code-visible | Interface/code presence only | Public APIs and implementation paths are visible, but this does not establish hardware-backed production support. See the current audit and capability matrix. |
 | `conxius-enclave-sdk` | Active production attestation is hardware-bound | Code-visible, mixed with software-driver simulation | Not yet safe — Beta / conditional | Depends on hardware-bound drivers, full caller enforcement, and evidence beyond repo-visible software paths. |
 | `conxius-enclave-sdk` | Value-bearing production signing or settlement is supported | July 20 audit and capability matrix explicitly say not to enable it | Not claimed — Beta / conditional | No value-bearing production signing or settlement from the audited tree; unresolved acceptance work remains in issues #195–#202. |
+| `conxius-enclave-sdk` | Telemetry is privacy-minimized and non-gating | Upstream PR #210 at `593af0d9120b612de5b2817866b0528e5c877570`; parent retains exact reviewed gitlink `451202f51a9efed8fde70b7a5567a3e7e16c1db9`; public-safe CON-1518 evidence doc | Implemented upstream, not production evidence | Payload minimization, HTTPS/config validation, bounded delivery, failure observability, and rail non-gating are implemented upstream. Independent review, service-side retention/deletion, deployed monitoring/recovery, and final acceptance remain open. |
 | `conxian-gateway` | Institutional middleware runtime exists | Code-visible, Release-visible | Implemented | Real runtime code and release history exist. |
 | `conxian-gateway` | All critical verification paths are production-enforced | Code-visible with simulated validation references | Not yet safe | Must stay tied to readiness gates and environment-backed verification. |
 | `Conxian` protocol | Material protocol implementation exists | Code-visible | Implemented | Real Clarity and sBTC-related surface exists. |
