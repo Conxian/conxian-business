@@ -11,9 +11,12 @@ This document is the **mandatory BOS Knowledge Graph** referenced in `AGENTS.md`
 
 The current doctrine relationship is:
 
-- **Conxian-Labs (Pty) Ltd** is a non-custodial software and infrastructure builder/operator. It provides routing, orchestration, compliance integration, and verification; it is not a market participant, discretionary fund manager, or user-data extraction business.
+- **Conxian-Labs (Pty) Ltd** is the legal builder/operator company and a non-custodial software and infrastructure builder/operator. It provides routing, orchestration, compliance integration, and verification; it is not a market participant, discretionary fund manager, or user-data extraction business.
 - **Conxian** is the protocol/DAO layer. **Conxius** is the client/access/developer-tooling layer. Internal strategy and operations remain separate in the authorized Linear workspace under ZSE.
+- **CSF / Conxian Finance Protocol**, **Fusion**, and **Nexus** are protocol/infrastructure product domains or legacy operating labels under the Conxian/Conxius crosswalk; they are not standalone legal custodians, fund controllers, or ambiguous business entities.
 - Protocol contracts and DAO rules may implement escrow, settlement, treasury, or yield behavior. Those are protocol-level state transitions and do not establish Conxian-Labs custody, discretionary fund control, or market operation.
+- Dated strategy, research, market-narrative, and planning surfaces are public-safe stubs with their restricted canonical source referenced by CON-1530; removed detail was not copied elsewhere in Git.
+- Current technical artifact identity uses the exact repository slugs `conxian-gateway`, `conxius-enclave-sdk`, `conxius-orbit`, and `conxian_ui`; deprecated display aliases remain only in the narrowly documented normative/URL exceptions.
 - Current role, audience, operating label, maturity, claim state, and document classification are governed by [`docs/PORTFOLIO_DOCTRINE_REGISTER.md`](docs/PORTFOLIO_DOCTRINE_REGISTER.md) and [`docs/DOCTRINE_ALIGNMENT_STANDARD.md`](docs/DOCTRINE_ALIGNMENT_STANDARD.md).
 
 | Entity | Relationship | Boundary |
@@ -21,6 +24,9 @@ The current doctrine relationship is:
 | Conxian-Labs (Pty) Ltd | builds/operates | Non-custodial software and infrastructure; no discretionary control over participant funds. |
 | Conxian | defines | Protocol and DAO rules, contract state, verification, and governance interfaces. |
 | Conxius | provides | Client, access, wallet, deployment, platform, and enclave-tooling surfaces. |
+| CSF / Conxian Finance Protocol | classifies | Protocol/infrastructure product domain under Conxian; not a legal entity or custodian. |
+| Fusion | classifies | Enterprise integration/infrastructure product domain under Conxian; not a legal entity or custodian. |
+| Nexus | classifies | State/proof/telemetry infrastructure product domain under Conxian; not a legal entity or custodian. |
 | Internal strategy and operations | remains separate from | Public-safe repository documentation; canonical restricted material is maintained in Linear. |
 
 
@@ -33,6 +39,14 @@ The current doctrine relationship is:
 | **Conxian-Labs (Pty) Ltd** | Legal Entity | builds/operates non-custodial Conxian and Conxius software; does not custody participant assets | `docs/DOCTRINE_ALIGNMENT_STANDARD.md` |
 | **Conxian** | Protocol/DAO Brand | defines protocol rules, contracts, verification, and governance interfaces | `docs/DOCTRINE_ALIGNMENT_STANDARD.md` |
 | **Conxius** | Client/Access Brand | provides wallet, platform, deployment, and enclave-tooling surfaces | `docs/DOCTRINE_ALIGNMENT_STANDARD.md` |
+
+### 🧭 Product domains and legacy taxonomy
+
+| Domain | Canonical relationship | Boundary |
+|--------|-----------------------|----------|
+| **CSF / Conxian Finance Protocol** | Conxian protocol/infrastructure product domain | Contract, asset, fee, and protocol-state scope; not a standalone legal custodian. |
+| **Fusion** | Conxian enterprise-infrastructure product domain | Gateway and compliance integration scope; not an independent fund or custody authority. |
+| **Nexus** | Conxian state/proof infrastructure product domain | State, synchronization, proof, and telemetry scope; not a standalone legal entity. |
 
 ### 📦 Repositories (Submodules)
 
@@ -155,7 +169,7 @@ graph LR
 | Governance maintainer | - | Governance baseline | Maintains public-safe policy and repository boundaries; no custody claim |
 | Protocol maintainer | - | Conxian | Maintains protocol/DAO specifications and evidence boundaries |
 | Verification reviewer | - | lib-conxian-core | Reviews proof and compliance evidence; no discretionary fund role |
-| Protocol metric maintainer | - | conxian-gateway | Maintains reference metrics and integrations; no managed-yield claim |
+| Protocol metric maintainer | - | `conxian-gateway` | Maintains reference metrics and integrations; no managed-yield claim |
 
 ---
 
@@ -214,9 +228,10 @@ graph TB
 | Clarity 4 only | 2026-04-23 | Security + epoch features | - |
 | epoch = "latest" mandatory | 2026-04-23 | Always use newest epoch | - |
 | Dynamic principals from treasury | 2026-04-23 | Eliminate hardcoded SPOF | - |
-| TEE via conxius-enclave-sdk | 2026-04-23 | Hardware key isolation | - |
-| ISO 20022 via conxian-gateway | 2026-04-23 | Legacy banking bridge | - |
+| TEE via `conxius-enclave-sdk` | 2026-04-23 | Hardware key isolation | - |
+| ISO 20022 via `conxian-gateway` | 2026-04-23 | Legacy banking bridge | - |
 | Doctrine alignment: company is non-custodial infrastructure builder/operator | 2026-07-22 | Separate company role from protocol/DAO and client/access layers; qualify custody, data, market, and protocol-fund language | `docs/DOCTRINE_ALIGNMENT_STANDARD.md` + `docs/PORTFOLIO_DOCTRINE_REGISTER.md` |
+| Canonical taxonomy crosswalk and ZSE stub disposition | 2026-07-22 | Keep Conxian-Labs, Conxian, and Conxius as the canonical company/brand boundaries; classify CSF/Fusion/Nexus as product domains and move dated strategy surfaces to authorized Linear under CON-1530 | `docs/DOCTRINE_ALIGNMENT_STANDARD.md` + `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` |
 | Cargo audit allowlist for transitive deps | 2026-07-08 | Transitive vulnerabilities without local upgrade path | Upgrade dep chain |
 | Gitleaks license via GitHub Secrets | 2026-07-08 | ZSE compliance; no hardcoded secrets | - |
 | Infrastructure fixes to main, cherry-pick to PR | 2026-07-08 | Workflow configs belong in main | - |

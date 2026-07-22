@@ -54,9 +54,9 @@ npm run example:hello-world
 
 ## 📦 What's Included
 
-- **Conxian middleware** - ISO 20022 ↔ Bitcoin bridge
+- **`conxian-gateway`** - ISO 20022 ↔ Bitcoin bridge
 - **Conxian Nexus** - Settlement layer
-- **Conxius enclave abstractions** - TEE primitives
+- **`conxius-enclave-sdk`** - TEE primitives
 - **Redis + PostgreSQL** - Data layer
 - **TypeScript SDK** - `@conxian/sdk`
 - **20+ Examples** - Runnable code samples
@@ -187,7 +187,7 @@ console.log(` MRENCLAVE: ${attestation.mrenclave}`);
                                   │
                                   ▼
 ┌─────────────────────────────────────────────────────────────────────┐
-│                        Conxian middleware                            │
+│                        `conxian-gateway`                            │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐              │
 │  │ ISO 20022    │  │   Compliance │  │   Settlement │              │
 │  │   Parser     │  │   Engine     │  │   Adapter    │              │

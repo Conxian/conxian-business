@@ -29,7 +29,7 @@ Validate that operators can:
 | Role | Owner group | Responsibilities during simulation |
 | --- | --- | --- |
 | Incident commander | Platform operations | Declares incident, approves rollback execution, drives timeline checkpoints |
-| Gateway operator | Conxian middleware on-call | Disables Phase 6 write enablement and verifies ingress recovery |
+| Gateway operator | `conxian-gateway` on-call | Disables Phase 6 write enablement and verifies ingress recovery |
 | Protocol operator | Conxian Protocol on-call | Validates contract safety and confirms violation counter normalization |
 | Nexus operator | Conxian Nexus on-call | Verifies reconciliation state and backlog health |
 | Communications lead | Governance/ops | Sends incident + rollback updates with template messages |

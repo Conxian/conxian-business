@@ -76,7 +76,7 @@ Gateway defaults to the public Bitcoin mainnet RPC endpoint `https://bitcoin-rpc
 > - Traffic to this default endpoint is handled by a third-party public RPC operator and may be logged (including IP addresses and request metadata).
 > - To avoid hitting mainnet in local testing, set `BITCOIN_RPC_URL` explicitly (for example to a testnet or regtest node). If you use the default endpoint, treat all traffic as live mainnet traffic: use disposable keys and small amounts you can afford to lose.
 >
-> See [conxian-gateway/README.md](conxian-gateway/README.md) for full configuration details.
+> See [`conxian-gateway/README.md`](conxian-gateway/README.md) for full configuration details.
 
 ```bash
 cd conxian-gateway

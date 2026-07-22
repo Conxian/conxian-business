@@ -21,7 +21,7 @@ Conxius Wallet is a **flagship** repo and part of the public Conxian trust surfa
 - **End-user distribution**: delivering the mobile product (Android-first) via app store releases and/or signed APK/AAB distribution.
 - **Sovereign self-custody boundary**: local key custody, signing, and “never exfiltrate secrets” guarantees.
 - **Protocol UX + integration surface**: providing user-facing flows for Bitcoin L1 and Bitcoin-adjacent layers while keeping custody and signing local.
-- **Gateway consumption (not duplication)**: consuming Conxian middleware APIs for cross-layer coordination and partner-powered regulated flows, without embedding centralizing operational controls in the wallet.
+- **Gateway consumption (not duplication)**: consuming `conxian-gateway` APIs for cross-layer coordination and partner-powered regulated flows, without embedding centralizing operational controls in the wallet.
 
 In BOS terms: the wallet is where **user intent becomes signed action**, and it is the primary end-user trust surface for the ecosystem.
 

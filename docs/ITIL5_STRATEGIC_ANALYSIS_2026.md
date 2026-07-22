@@ -1,9 +1,17 @@
-# ITIL5 Strategic Analysis 2026
+# ITIL5 strategic analysis snapshot (migrated to authorized Linear workspace)
 
-> **Classification:** Public-safe stub (canonical in Linear)
-> **Operating label:** Internal only
-> **Maturity / claim state:** Deprecated as an in-repo analysis; no current strategy claim is made here.
+> **Classification:** Public-safe stub
+> **Ownership:** Conxian-Labs (Pty) Ltd
+> **Claim state:** Deprecated as an in-repository analysis
 
-The canonical internal strategy and operating analysis is maintained in the authorized Linear workspace under Zero Secret Egress (ZSE): [CON-1530 — doctrine alignment sweep across portfolio docs, whitepapers, READMEs, and strategy boundaries](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and).
+**Why this content moved:** The former analysis was an internal strategy source and this repository is public. Its detailed decision material is not retained in Git and was not copied into another repository file.
 
-This public-safe stub intentionally retains no sensitive strategy text. Do not reconstruct the removed material in Git; use the authorized Linear source for internal decisions.
+The authorized canonical source is [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) in the Linear workspace. Use that workspace for restricted decisions and current planning.
+
+Public-safe doctrine references:
+
+- [Doctrine Alignment Standard](./DOCTRINE_ALIGNMENT_STANDARD.md)
+- [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md)
+- [Documentation Alignment Index](./DOCUMENTATION_ALIGNMENT_INDEX.md)
+
+This file is intentionally kept as a public-safe stub so existing links continue to resolve.

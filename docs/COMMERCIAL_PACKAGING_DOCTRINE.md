@@ -23,14 +23,14 @@ Conxian-Labs offers three primary products, consistent across all packaging tier
 
 | Product | Type | What It Is | Maturity |
 |---------|------|------------|----------|
-| **Conxian middleware** | B2B Infrastructure | ISO 20022 compliance pipe bridging Bitcoin/Stacks with legacy banking. Includes ZKC (Zero-Knowledge Compliance) and SYI (Sovereign Yield Index). | Beta |
+| **`conxian-gateway`** | B2B Infrastructure | ISO 20022 compliance pipe bridging Bitcoin/Stacks with legacy banking. Includes ZKC (Zero-Knowledge Compliance) and SYI (Sovereign Yield Index). | Beta |
 | **Conxius Wallet** | B2C / Enterprise Client | Sovereign Bitcoin command center (Android-first, offline-first). Hardware-enforced key custody via StrongBox/TEE. | Stable (v1.9.2) |
-| **Conxius enclave abstractions** | Developer Tool | Cross-platform Rust/WASM SDK for hardware enclave abstractions. Enables third-party builders to integrate sovereign key management. | Beta |
+| **`conxius-enclave-sdk`** | Developer Tool | Cross-platform Rust/WASM SDK for hardware enclave abstractions. Enables third-party builders to integrate sovereign key management. | Beta |
 
 **Supporting products** (not primary offers, but available to partners):
 - Conxian Nexus: Multi-protocol state verification node (API access)
 - Conxius Platform: Local developer deployment orchestrator
-- Conxius Orbit: Stacks smart contract deployment toolkit
+- `conxius-orbit`: Stacks smart contract deployment toolkit
 
 ---
 

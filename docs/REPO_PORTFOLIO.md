@@ -44,7 +44,7 @@ These repositories provide shared primitives, local orchestration, deployment to
 - [lib-conxian-core](https://github.com/Conxian/lib-conxian-core) — Shared protocol models, serialization, cryptographic, and state primitives.
 - [conxius-enclave-sdk](https://github.com/Conxian/conxius-enclave-sdk) — Enclave, signing, and attestation abstractions.
 - [conxius-platform](https://github.com/Conxian/conxius-platform) — Local stack composition and developer orchestration.
-- [conxius-orbit](https://github.com/Conxian/conxius-orbit) — Stacks contract deployment and operations tooling.
+- [`conxius-orbit`](https://github.com/Conxian/conxius-orbit) — Stacks contract deployment and operations tooling.
 - [.github](https://github.com/Conxian/.github) — Organization governance defaults and templates.
 
 ### Reference surfaces

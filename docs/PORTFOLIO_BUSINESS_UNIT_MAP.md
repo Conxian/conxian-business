@@ -40,18 +40,18 @@ This complements (and should remain consistent with):
 - `docs/REPO_PORTFOLIO.md` (trust-surface view aligned to canonical classification categories)
 - `openspec/changes/remediate-enterprise-sovereignty/specs/enterprise-sovereignty/spec.md` (4-unit consolidation requirement)
 
-## Target business-unit structure
+## Product-domain structure (legacy operating taxonomy)
 
-OpenSpec anchors the ecosystem into four standalone businesses:
+The portfolio uses four useful product-domain labels for operating maps. They are **not** four standalone legal businesses, custodians, or independent entity boundaries. The canonical boundaries remain Conxian-Labs (Pty) Ltd as the legal builder/operator company, Conxian as the protocol and enterprise-infrastructure brand/layer, and Conxius as the client/access/developer-tooling brand/layer.
 
-| Business unit | Market surface | Core obligation |
+| Product domain | Canonical layer | Core obligation |
 | --- | --- | --- |
-| **Conxius** | B2C | User self-custody wallet and signing client (mobile-first) |
-| **CSF (Conxian Finance Protocol)** | Protocol | On-chain contracts, assets, and fee logic |
-| **Fusion** | B2B/B2G integration | Cross-layer gateway + compliance pipelines |
-| **Nexus** | State + telemetry | Authoritative state node/services for the stack |
+| **Conxius** | Client/access/developer tooling | User self-custody wallet, signing client, deployment, platform, and enclave tooling. |
+| **CSF / Conxian Finance Protocol** | Conxian protocol/infrastructure | On-chain contracts, assets, fee logic, and protocol state; legacy product-domain label. |
+| **Fusion** | Conxian enterprise infrastructure | Cross-layer gateway and compliance pipelines; legacy product-domain label. |
+| **Nexus** | Conxian state/proof infrastructure | Authoritative state, proof, and telemetry services; legacy product-domain label. |
 
-Alongside the four units, BOS requires separate operating functions that should not be mixed into product repos (examples: governance/specs, treasury, compliance, ops, strategy, UI/public web, platform/DevEx, DevOps tooling, and showcase surfaces).
+Alongside these domains, BOS requires separate operating functions that should not be mixed into product repos (examples: governance/specs, treasury, compliance, ops, strategy, UI/public web, platform/DevEx, DevOps tooling, and showcase surfaces). Product-domain labels do not independently define custody, treasury, legal, or brand authority.
 
 ## Canonical repository classification standard (issue #639)
 
@@ -67,13 +67,13 @@ Current baseline for key ecosystem repos:
 
 | Repository | Category | Notes |
 | --- | --- | --- |
-| `Conxian/` | `primary strategic` | Protocol and on-chain interfaces; not a company custody authority. |
-| `conxian-gateway/` | `primary strategic` | Integration middleware and compliance boundary. |
-| `conxian-nexus/` | `primary strategic` | Authoritative state and telemetry node. |
-| `conxius-wallet/` | `primary strategic` | Wallet/signing surface for end users and builders who retain self-custody. |
+| `Conxian/` | `primary strategic` | Conxian protocol domain (CSF legacy taxonomy) and on-chain interfaces; not a company custody authority. |
+| `conxian-gateway/` | `primary strategic` | Conxian enterprise-infrastructure domain (Fusion legacy taxonomy); integration middleware and compliance boundary. |
+| `conxian-nexus/` | `primary strategic` | Conxian state/proof infrastructure domain (Nexus legacy taxonomy); authoritative state and telemetry node. |
+| `conxius-wallet/` | `primary strategic` | Conxius client/access surface for end users and builders who retain self-custody. |
 | `lib-conxian-core/` | `supporting` | Shared primitives and cross-repo models. |
-| `conxius-enclave-sdk/` | `supporting` | Enclave/attestation SDK for higher layers. |
-| `conxius-platform/` | `supporting` | Local stack and developer orchestration. |
+| `conxius-enclave-sdk/` | `supporting` | Conxius enclave and attestation tooling for higher layers. |
+| `conxius-platform/` | `supporting` | Conxius local stack and developer orchestration. |
 | `conxian-labs-site/` | `reference` | Public narrative and docs distribution surface. |
 | `Sovereign-Strategy-Nexus/` | `internal strategy` | Internal strategy and M&A operating surface; canonical detail stays in the authorized Linear workspace. |
 | `conxian-business` | `governance baseline` | Portfolio governance and standards source. |
@@ -120,10 +120,10 @@ Until portfolio hygiene automation is live, reviewers should treat these invaria
 | `conxius-wallet/` | Submodule | **Conxius** (Wallet) | Wallet + user self-custody | Mobile client; keys remain user-controlled and no shared backend logic is implied beyond boundary APIs. |
 | `conxian-gateway/` | Submodule | **Fusion** (Gateway) | Gateway + compliance | Integration surface; consumes Nexus state; should not be a UI host. |
 | `conxian-nexus/` | Submodule | **Nexus** (State node) | State + telemetry | Must remain the authoritative node/service surface. |
-| `conxian-ui/` | Submodule | Operating function (UI) | UI | Web UI for interacting with the ecosystem; should avoid embedding protocol logic beyond calls. |
+| `conxian-ui/` (repository slug `conxian_ui`) | Submodule | Conxius client/access surface; operating function (UI) | UI | Web UI for interacting with the ecosystem; should avoid embedding protocol logic beyond calls. |
 | `conxian-labs-site/` | Submodule | Operating function (Public web) | Public documentation + marketing | Public site; should not include internal-only strategy material. |
-| `conxius-platform/` | Submodule | Operating function (Platform/DevEx) | Local stack orchestration | Dev stack only; should not become a home for core product logic. |
-| `conxius-orbit/` | Submodule | Operating function (DevOps tooling) | Deployment tooling | Primarily supports CSF protocol deployment. |
+| `conxius-platform/` | Submodule | Conxius client/access surface; operating function (Platform/DevEx) | Local stack orchestration | Dev stack only; should not become a home for core product logic. |
+| `conxius-orbit/` | Submodule | Conxius developer tooling; operating function (DevOps tooling) | Deployment tooling | Primarily supports the CSF / Conxian Finance Protocol domain. |
 | `conxius-enclave-sdk/` | Submodule | Operating function (Shared SDK) | Shared libraries | Supports services across Fusion/Nexus; should stay dependency-light. |
 | `lib-conxian-core/` | Submodule | Operating function (Shared core) | Shared models + conventions | Shared primitives only; must not contain BU-specific business logic or depend directly on product repos. Layering: sits beneath product repos and shared SDKs; may not depend on them. |
 
@@ -152,10 +152,10 @@ The goal is to keep each repo’s business unit legible to partners/auditors and
 
 ### 1) Business unit boundaries (what must not mix)
 
-1. **CSF / Protocol** (`Conxian/`) must not contain wallet UX, gateway service code, or BOS automation.
-2. **Conxius / Wallet** (`conxius-wallet/`) must not contain server-side Fusion/Nexus logic; it consumes boundary APIs.
-3. **Fusion / Gateway** (`conxian-gateway/`) must not become the authoritative chain state source; it consumes Nexus.
-4. **Nexus / State node** (`conxian-nexus/`) must not become a UI repo; it provides state and telemetry.
+1. **Conxian protocol domain (CSF)** (`Conxian/`) must not contain wallet UX, gateway service code, or BOS automation.
+2. **Conxius client/access layer** (`conxius-wallet/`) must not contain server-side Fusion/Nexus logic; it consumes boundary APIs.
+3. **Conxian enterprise-infrastructure domain (Fusion)** (`conxian-gateway/`) must not become the authoritative chain state source; it consumes Nexus.
+4. **Conxian state/proof infrastructure domain (Nexus)** (`conxian-nexus/`) must not become a UI repo; it provides state and telemetry.
 5. **BOS / Governance** (this repo: `conxian-business`) must not become a dumping ground for product code; it defines specs, governance, and portfolio wiring.
 6. **Operating functions** (strategy/treasury/compliance/ops/admin) must not leak sensitive information into git; internal-only strategy belongs in the authorized Linear workspace.
 
@@ -202,9 +202,9 @@ Published boundary interfaces include:
 
 ## Cross-unit governance + documentation requirements (target state)
 
-These are the minimum cross-unit artifacts needed to operate the portfolio as four businesses plus operating functions. Some may be partially implemented or not yet present.
+These are the minimum cross-unit artifacts needed to operate the portfolio as four product domains plus operating functions. Some may be partially implemented or not yet present.
 
-1. **Business unit charters** (one page each): Conxius, CSF, Fusion, Nexus.
+1. **Product-domain charters** (one page each): Conxius, CSF, Fusion, Nexus. Each charter must repeat that the label is a product domain under the canonical company/brand crosswalk, not a standalone legal entity or custodian.
    - Scope, non-scope, primary KPIs, and “what this unit owns.”
    - Target location: `docs/business-units/` in this repo (one file per unit).
 2. **Portfolio ownership rules**:

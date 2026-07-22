@@ -43,10 +43,25 @@ Notes:
 
 ### Archival candidates
 
-- `docs/LINEAR_TASK_INVENTORY_2026-05-29.md` — date-stamped task snapshot; planning source of truth now lives in active work systems and canonical policy docs.
-- `docs/RESEARCH_FINDINGS_2026-05-29.md` — point-in-time findings snapshot superseded by maintained canonical docs and OpenSpec changes.
-- `docs/BUSINESS_ANALYSIS_2026-05-29.md` — dated analysis snapshot that risks drift against current canonical portfolio/control docs.
+- `docs/LINEAR_TASK_INVENTORY_2026-05-29.md` — public-safe stub; the dated planning snapshot moved to the authorized Linear workspace under CON-1530.
+- `docs/RESEARCH_FINDINGS_2026-05-29.md` — public-safe stub; the dated research snapshot moved to the authorized Linear workspace under CON-1530.
+- `docs/BUSINESS_ANALYSIS_2026-05-29.md` — public-safe stub; the dated analysis moved to the authorized Linear workspace under CON-1530.
+- `docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md` — public-safe stub; the dated narrative moved to the authorized Linear workspace under CON-1530.
+- `conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md` — public-safe stub; the research summary moved to the authorized Linear workspace under CON-1530.
 - `docs/ITIL5_STRATEGIC_ANALYSIS_2026.md` — public-safe stub; the full internal strategy remains in Linear and the former competitive analysis is not retained here.
+
+### CON-1530 public-safe stub dispositions
+
+The following link-preserving stubs are intentionally retained in Git. Their canonical restricted sources are owned by Conxian-Labs (Pty) Ltd in the authorized Linear workspace; no removed detail is copied into another Git file.
+
+| File | Classification | Ownership | Why content moved | Canonical pointer |
+| --- | --- | --- | --- | --- |
+| `docs/BUSINESS_ANALYSIS_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated internal analysis is not a current public doctrine source. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Research detail belongs in the authorized workspace, not public Git. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated positioning material is maintained outside the public repository. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `docs/LINEAR_TASK_INVENTORY_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal work-management detail belongs in active authorized systems. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `docs/RESEARCH_FINDINGS_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated findings are superseded and are not a current public doctrine source. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `docs/ITIL5_STRATEGIC_ANALYSIS_2026.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal strategy remains in the authorized workspace under ZSE. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
 
 ## 1) Repo navigation (start here)
 
@@ -144,13 +159,13 @@ These are the documents most likely to answer “what are we building?” and �
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
-| `conxian-gateway/PRD.md` | Canonical | Public-safe | Gateway PRD (sovereign compliance pipe). |
+| `conxian-gateway/PRD.md` | Canonical | Public-safe | `conxian-gateway` PRD (sovereign compliance pipe). |
 | `conxian-nexus/docs/PRD.md` | Canonical | Public-safe | Nexus PRD (Glass Node). |
 | `lib-conxian-core/docs/PRD.md` | Canonical | Public-safe | Core library PRD (shared models + gateway alignment). |
 | `docs/CONXIUS_ENCLAVE_SDK_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and internal-only vs public-safe separation guidance for the SDK. |
 | `docs/CONXIUS_PLATFORM_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxius-platform. |
 | `docs/CONXIAN_PROTOCOL_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for Conxian protocol. |
-| `docs/CONXIAN_GATEWAY_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-gateway. |
+| `docs/CONXIAN_GATEWAY_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for `conxian-gateway`. |
 | `docs/CONXIAN_NEXUS_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-nexus. |
 | `docs/CONXIUS_ORBIT_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for `conxius-orbit`. |
 | `docs/CONXIAN_UI_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for `conxian_ui` (upstream slug retained). |
@@ -159,7 +174,7 @@ These are the documents most likely to answer “what are we building?” and �
 | `docs/CONXIAN_LABS_SITE_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-labs-site. |
 | `docs/MAINNET_READINESS_CONXIAN_PROTOCOL.md` | Supporting | Public-safe | Mainnet readiness checklist for Conxian protocol. |
 | `docs/MAINNET_READINESS_CONXIUS_WALLET.md` | Supporting | Public-safe | Mainnet readiness checklist for conxius-wallet. |
-| `docs/MAINNET_READINESS_CONXIAN_GATEWAY.md` | Supporting | Public-safe | Mainnet readiness checklist for conxian-gateway. |
+| `docs/MAINNET_READINESS_CONXIAN_GATEWAY.md` | Supporting | Public-safe | Mainnet readiness checklist for `conxian-gateway`. |
 | `docs/MAINNET_READINESS_CONXIUS_PLATFORM.md` | Supporting | Public-safe | Mainnet readiness checklist for conxius-platform. |
 | `docs/WALLET_SIGNER_CONTROL_VERIFICATION_REPORT.md` | Supporting | Public-safe | Wallet and signer control verification report for mainnet launch. |
 | `docs/PUBLIC_VISIBILITY_AUDIT_REPORT.md` | Supporting | Public-safe | Public visibility boundary audit report. |

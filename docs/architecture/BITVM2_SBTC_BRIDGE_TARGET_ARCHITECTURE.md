@@ -29,7 +29,7 @@ ZSE note: this is a public-safe architecture spec. It intentionally excludes key
 
 | Component | Responsibility | Interfaces |
 | --- | --- | --- |
-| **Conxian middleware** | Ingress/egress policy enforcement, intent routing, bridge-state aware execution gating | Gateway APIs, policy hooks, signed-event envelope |
+| **`conxian-gateway`** | Ingress/egress policy enforcement, intent routing, bridge-state aware execution gating | Gateway APIs, policy hooks, signed-event envelope |
 | **Conxian Nexus (Glass Node)** | Deterministic state projection, checkpoint assembly, bridge reconciliation index | Checkpoint feeds, state/event APIs |
 | **Bridge Orchestrator** | Coordinates proof jobs, challenge windows, and settlement finalization state machine | Proof job queue, verifier status bus, rollback controls |
 | **BitVM2 Prover Workers** | Generate claim/proof artifacts from canonical state commitments | Prover job spec, artifact storage (hash-addressed) |

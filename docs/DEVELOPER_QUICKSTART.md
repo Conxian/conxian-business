@@ -89,7 +89,7 @@ conxian-nexus/src/
 | **Rust** | stable (1.82+) | Via [rustup](https://rustup.rs) |
 | **Node.js** | 22.x | LTS |
 | **pnpm** | 9.15.9 | Via `npm install -g pnpm@9.15.9` |
-| **Python** | 3.10+ | For scripts and conxius-orbit |
+| **Python** | 3.10+ | For scripts and `conxius-orbit` |
 | **protoc** | ≥3.x | Protobuf compiler (for tonic/prost) |
 
 ### Quick Install (Linux/macOS)

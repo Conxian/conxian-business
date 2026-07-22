@@ -6,11 +6,17 @@ from __future__ import annotations
 import re
 import subprocess
 import sys
+import unicodedata
+from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import unquote
 
 
 ROOT = Path(__file__).resolve().parents[1]
+CON_1530_URL = (
+    "https://linear.app/conxian-labs/issue/CON-1530/"
+    "doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and"
+)
 
 EXPECTED_REPOSITORIES = (
     "Conxian/.github-private",
@@ -59,6 +65,11 @@ HIGH_RISK_ARTIFACTS = (
     "Conxian/docs/WHITEPAPER.md",
     "Conxian/conxian_market/README.md",
     "docs/ITIL5_STRATEGIC_ANALYSIS_2026.md",
+    "docs/BUSINESS_ANALYSIS_2026-05-29.md",
+    "conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md",
+    "docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md",
+    "docs/LINEAR_TASK_INVENTORY_2026-05-29.md",
+    "docs/RESEARCH_FINDINGS_2026-05-29.md",
     "Top-level READMEs",
     "Company custody, treasury, or signer-control wording",
     "Protocol escrow, settlement, treasury, or yield descriptions",
@@ -70,23 +81,13 @@ CANONICAL_PATHS = {
     "register": ROOT / "docs/PORTFOLIO_DOCTRINE_REGISTER.md",
     "index": ROOT / "docs/DOCUMENTATION_ALIGNMENT_INDEX.md",
 }
-ITIL_STUB_PATH = ROOT / "docs/ITIL5_STRATEGIC_ANALYSIS_2026.md"
-CUSTODY_BOUNDARY_PATHS = (
-    ROOT / "README.md",
-    ROOT / "docs/DOCTRINE_ALIGNMENT_STANDARD.md",
-    ROOT / "docs/PORTFOLIO_DOCTRINE_REGISTER.md",
-    ROOT / "docs/PORTFOLIO_BUSINESS_UNIT_MAP.md",
-    ROOT / "docs/BOS_BUSINESS_BUILDOUT.md",
-    ROOT / "docs/BOS_WALLET_CONTROL_MODEL.md",
-    ROOT / "docs/SAB_DAO_HANDOFF_PROTOCOL.md",
-    ROOT / "docs/PARTNER_OVERVIEW_AND_LAUNCH_FAQ.md",
-    ROOT / "docs/PUBLIC_VISIBILITY_AUDIT_REPORT.md",
-    ROOT / "docs/REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md",
-    ROOT / "docs/SAB_WALLET_ARCHITECTURE_AND_CONTROL_MATRIX.md",
-    ROOT / "docs/WALLET_SIGNER_CONTROL_VERIFICATION_REPORT.md",
-    ROOT / "docs/architecture/BOS_SOVEREIGN_ENTERPRISE_IDENTITY_ARCHITECTURE.md",
-    ROOT / "docs/architecture/BOS_TREASURY_AND_YIELD_INTEGRATION_ARCHITECTURE.md",
+PUBLIC_SAFE_STUB_PATHS = (
+    ROOT / "docs/ITIL5_STRATEGIC_ANALYSIS_2026.md",
+    ROOT / "docs/BUSINESS_ANALYSIS_2026-05-29.md",
     ROOT / "conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md",
+    ROOT / "docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md",
+    ROOT / "docs/LINEAR_TASK_INVENTORY_2026-05-29.md",
+    ROOT / "docs/RESEARCH_FINDINGS_2026-05-29.md",
 )
 PROHIBITED_DISPLAY_ALIASES = (
     "Conxian Gateway",
@@ -96,6 +97,14 @@ PROHIBITED_DISPLAY_ALIASES = (
 HISTORICAL_ALIAS_URL_PATHS = {
     "docs/bounties/CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md",
 }
+AGENTS_ALIAS_EXCEPTION = ROOT / "AGENTS.md"
+
+
+@dataclass(frozen=True)
+class LinkReference:
+    source: Path
+    target: str
+    line: int
 
 
 def fail(errors: list[str], message: str) -> None:
@@ -110,7 +119,7 @@ def strip_code(value: str) -> str:
 
 
 def split_table_row(line: str) -> list[str]:
-    """Split a simple Markdown table row, preserving escaped pipes."""
+    """Split a Markdown table row while preserving escaped pipes."""
 
     content = line.strip()
     if content.startswith("|"):
@@ -133,7 +142,23 @@ def split_table_row(line: str) -> list[str]:
     return cells
 
 
-def parse_table_after_heading(text: str, heading: str) -> tuple[list[str], list[list[str]]]:
+def is_heading(line: str) -> bool:
+    return bool(re.match(r"^\s{0,3}#{1,6}(?:\s|$)", line))
+
+
+def is_table_separator(cells: list[str]) -> bool:
+    return bool(cells) and all(
+        bool(re.fullmatch(r":?-+:?", cell.strip())) for cell in cells
+    )
+
+
+def parse_table_after_heading(
+    text: str,
+    heading: str,
+    expected_headers: list[str] | None = None,
+) -> tuple[list[str], list[list[str]]]:
+    """Parse exactly one table directly owned by a heading."""
+
     lines = text.splitlines()
     heading_index = next(
         (index for index, line in enumerate(lines) if line.strip() == heading),
@@ -142,28 +167,33 @@ def parse_table_after_heading(text: str, heading: str) -> tuple[list[str], list[
     if heading_index is None:
         return [], []
 
-    header_index = next(
-        (
-            index
-            for index in range(heading_index + 1, len(lines))
-            if lines[index].strip().startswith("|")
-        ),
-        None,
-    )
+    header_index: int | None = None
+    for index in range(heading_index + 1, len(lines)):
+        line = lines[index]
+        if is_heading(line):
+            break
+        if not line.strip() or not line.strip().startswith("|"):
+            continue
+        header_index = index
+        break
     if header_index is None or header_index + 1 >= len(lines):
         return [], []
+
     headers = split_table_row(lines[header_index])
     separator = split_table_row(lines[header_index + 1])
-    if not separator or not all(set(cell.replace(":", "").strip()) <= {"-"} for cell in separator):
+    if not is_table_separator(separator) or len(separator) != len(headers):
         return [], []
+    if expected_headers is not None and headers != expected_headers:
+        return headers, []
 
     rows: list[list[str]] = []
-    for line in lines[header_index + 2 :]:
+    for index in range(header_index + 2, len(lines)):
+        line = lines[index]
+        if is_heading(line) or not line.strip():
+            break
         if not line.strip().startswith("|"):
             break
-        row = split_table_row(line)
-        if row:
-            rows.append(row)
+        rows.append(split_table_row(line))
     return headers, rows
 
 
@@ -188,8 +218,185 @@ def tracked_markdown_paths() -> list[Path]:
     return [ROOT / item for item in result.stdout.decode().split("\0") if item]
 
 
+def extract_code_path(cell: str) -> str | None:
+    match = re.search(r"`([^`]+)`", cell)
+    if not match:
+        return None
+    value = match.group(1).strip()
+    if value.startswith(("http://", "https://")):
+        return None
+    return value
+
+
+def indexed_document_classifications(index_text: str) -> dict[str, set[str]]:
+    """Extract visibility/classification markers from index tables and bullets."""
+
+    result: dict[str, set[str]] = {}
+    lines = index_text.splitlines()
+    in_archival_section = False
+    for line in lines:
+        if line.strip() == "### Archival candidates":
+            in_archival_section = True
+            continue
+        if in_archival_section and line.startswith("## "):
+            in_archival_section = False
+        if in_archival_section and line.startswith("-"):
+            path_match = re.search(r"`([^`]+)`", line)
+            if path_match:
+                result.setdefault(path_match.group(1), set()).add("Archive candidate")
+            continue
+        if not line.strip().startswith("|"):
+            continue
+        cells = split_table_row(line)
+        if not cells or cells[0] in {"Document", "README", "---"}:
+            continue
+        path = extract_code_path(cells[0])
+        if not path:
+            continue
+        joined = " | ".join(cells)
+        markers = result.setdefault(path, set())
+        if "Public-safe stub" in joined:
+            markers.add("Public-safe stub")
+        if "Public-safe" in joined:
+            markers.add("Public-safe")
+        if "Internal-only" in joined:
+            markers.add("Internal-only")
+        if "Archive candidate" in joined:
+            markers.add("Archive candidate")
+    return result
+
+
+def path_matches_index_pattern(relative: str, pattern: str) -> bool:
+    pattern = pattern.rstrip("/")
+    if pattern.endswith("/*"):
+        return relative.startswith(pattern[:-1])
+    return relative == pattern
+
+
+def public_safe_markdown_paths(index_text: str) -> tuple[list[Path], int, int]:
+    """Return the public-safe policy scope derived from the alignment index."""
+
+    classifications = indexed_document_classifications(index_text)
+    paths = tracked_markdown_paths()
+    included: list[Path] = []
+    excluded = 0
+    explicit = 0
+    for path in paths:
+        relative = path.relative_to(ROOT).as_posix()
+        matches = [
+            markers
+            for pattern, markers in classifications.items()
+            if path_matches_index_pattern(relative, pattern)
+        ]
+        markers = set().union(*matches) if matches else set()
+        if matches:
+            explicit += 1
+        is_stub = "Public-safe stub" in markers
+        if (
+            ("Internal-only" in markers or "Archive candidate" in markers)
+            and not is_stub
+        ) or "/archive/" in f"/{relative}/":
+            excluded += 1
+            continue
+        included.append(path)
+    return included, excluded, explicit
+
+
+def iter_markdown_links(text: str) -> list[tuple[str, int]]:
+    """Return Markdown link destinations outside fenced code blocks."""
+
+    links: list[tuple[str, int]] = []
+    in_fence = False
+    pattern = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        if re.match(r"^\s*(```|~~~)", line):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        links.extend((match.group(1), line_number) for match in pattern.finditer(line))
+    return links
+
+
+def github_heading_slug(value: str) -> str:
+    """Generate the GitHub-style base slug for a Markdown heading."""
+
+    value = re.sub(r"<[^>]+>", "", value)
+    value = re.sub(r"!?(\[([^\]]+)\])\([^)]*\)", r"\2", value)
+    value = re.sub(r"[`*_~]", "", value)
+    value = unicodedata.normalize("NFKC", value).casefold()
+    kept: list[str] = []
+    for character in value:
+        category = unicodedata.category(character)
+        if category.startswith("P") or category.startswith("S"):
+            kept.append(" ")
+        else:
+            kept.append(character)
+    value = "".join(kept)
+    value = re.sub(r"\s+", "-", value.strip())
+    value = re.sub(r"-+", "-", value)
+    return value.strip("-")
+
+
+def heading_slugs(text: str) -> dict[str, list[int]]:
+    """Return generated GitHub anchors, including duplicate suffixes."""
+
+    counts: dict[str, int] = {}
+    slugs: dict[str, list[int]] = {}
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        match = re.match(r"^\s{0,3}#{1,6}\s+(.+?)\s*#*\s*$", line)
+        if not match:
+            continue
+        base = github_heading_slug(match.group(1))
+        if not base:
+            continue
+        suffix = counts.get(base, 0)
+        slug = base if suffix == 0 else f"{base}-{suffix}"
+        counts[base] = suffix + 1
+        slugs.setdefault(slug, []).append(line_number)
+    return slugs
+
+
+def resolve_local_fragment(path: Path, fragment: str) -> bool:
+    fragment = unquote(fragment).lstrip("#")
+    if not fragment:
+        return True
+    if not path.is_file():
+        return False
+    return fragment.casefold() in {slug.casefold() for slug in heading_slugs(path.read_text(encoding="utf-8"))}
+
+
+def validate_local_links(errors: list[str], documents: dict[str, str]) -> int:
+    checked = 0
+    for name, text in documents.items():
+        source = CANONICAL_PATHS[name]
+        for target_value, line_number in iter_markdown_links(text):
+            target = target_value.strip().strip("<>").split()[0]
+            if not target or target.startswith(("http://", "https://", "mailto:", "//")):
+                continue
+            checked += 1
+            target_path_value, separator, fragment = target.partition("#")
+            target_path_value = unquote(target_path_value)
+            target_path = source if not target_path_value else (source.parent / target_path_value).resolve()
+            try:
+                target_path.relative_to(ROOT)
+            except ValueError:
+                fail(errors, f"canonical {name} link escapes repository at line {line_number}: {target}")
+                continue
+            if not target_path.exists():
+                fail(errors, f"canonical {name} link target does not exist at line {line_number}: {target}")
+                continue
+            if separator and not resolve_local_fragment(target_path, fragment):
+                fail(errors, f"canonical {name} link fragment does not resolve at line {line_number}: {target}")
+    return checked
+
+
 def alias_match_is_allowlisted(text: str, path: Path, start: int, end: int) -> bool:
     relative = path.relative_to(ROOT).as_posix()
+    # AGENTS.md is normative instruction text. Its legacy names are retained
+    # only to identify the prohibited names that the policy itself bans.
+    if path == AGENTS_ALIAS_EXCEPTION:
+        return True
     # A repository filename in a Markdown link destination is not rendered
     # display text, even when the historical filename contains an underscore.
     link_open = text.rfind("](", 0, start)
@@ -210,12 +417,13 @@ def alias_match_is_allowlisted(text: str, path: Path, start: int, end: int) -> b
     return False
 
 
-def scan_public_aliases(errors: list[str]) -> tuple[int, int]:
+def scan_public_aliases(errors: list[str], index_text: str) -> tuple[int, int, int, int]:
     scanned = 0
     allowlisted = 0
-    for path in tracked_markdown_paths():
-        if path.name == "AGENTS.md":
-            continue
+    excluded = 0
+    explicit = 0
+    paths, excluded, explicit = public_safe_markdown_paths(index_text)
+    for path in paths:
         scanned += 1
         text = path.read_text(encoding="utf-8")
         for alias in PROHIBITED_DISPLAY_ALIASES:
@@ -223,132 +431,177 @@ def scan_public_aliases(errors: list[str]) -> tuple[int, int]:
                 if alias_match_is_allowlisted(text, path, match.start(), match.end()):
                     allowlisted += 1
                     continue
-                fail(
-                    errors,
-                    f"prohibited display alias in public Markdown {path.relative_to(ROOT)}: {match.group(0)}",
-                )
-    return scanned, allowlisted
+                fail(errors, f"prohibited display alias in public Markdown {path.relative_to(ROOT)}: {match.group(0)}")
+    return scanned, excluded, explicit, allowlisted
 
 
-def validate_local_links(errors: list[str], documents: dict[str, str]) -> int:
-    checked = 0
-    pattern = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
-    for name, text in documents.items():
-        source = CANONICAL_PATHS[name]
-        for match in pattern.finditer(text):
-            target = match.group(1).strip().strip("<>").split()[0]
-            if not target or target.startswith(("http://", "https://", "mailto:", "//", "#")):
-                continue
-            checked += 1
-            target_path = unquote(target.split("#", 1)[0])
-            if not target_path:
-                continue
-            resolved = (source.parent / target_path).resolve()
-            try:
-                resolved.relative_to(ROOT)
-            except ValueError:
-                fail(errors, f"canonical {name} link escapes repository: {target}")
-                continue
-            if not resolved.exists():
-                fail(errors, f"canonical {name} link target does not exist: {target}")
-    return checked
+COMPANY_SUBJECT = r"(?:Conxian(?:-Labs)?(?:\s+\(Pty\)\s+Ltd)?|Conxian Labs|the company|company|SAB)"
+SUBJECT_REFERENCE = rf"(?:{COMPANY_SUBJECT}|it|they)"
+CUSTODY_OBJECT = r"(?:(?<!non-)custod(?:y|ial|ian)|treasur(?:y|ies)|vaults?|funds?|assets?|(?:discretionary\s+)?control\s+(?:over|of)?\s*(?:user|participant|customer|protocol)?\s*(?:funds?|assets?|treasury|vaults?|custody|state))"
+AFFIRMATIVE_VERBS = r"(?:has|have|holds?|takes?|assumes?|provides?|exercises?|controls?|manages?|custodies?|is\s+responsible\s+for|acts?\s+as|is|are|will|can|may|shall)"
+AFFIRMATIVE_OPERATION_VERBS = r"(?:has|have|holds?|takes?|assumes?|provides?|exercises?|custodies?|is\s+responsible\s+for|acts?\s+as|will|can|may|shall)"
+AFFIRMATIVE_CUSTODY_PATTERNS = (
+    re.compile(rf"\b{COMPANY_SUBJECT}(?:'s|[- ]controlled|[- ]owned)?\s+{CUSTODY_OBJECT}\b", re.IGNORECASE),
+    re.compile(
+        rf"\b{COMPANY_SUBJECT}\b[^.;\n|]*?\b{AFFIRMATIVE_VERBS}\b[^.;\n|]*?\b{CUSTODY_OBJECT}\b",
+        re.IGNORECASE,
+    ),
+)
+PRONOUN_AFFIRMATIVE_CUSTODY_PATTERN = re.compile(
+    rf"\b(?:it|they)\b[^.;\n|]*?\b{AFFIRMATIVE_VERBS}\b[^.;\n|]*?\b{CUSTODY_OBJECT}\b",
+    re.IGNORECASE,
+)
+EXPLICIT_NEGATION = re.compile(
+    rf"(?:\b(?:does not mean|do not mean|doesn't mean|not|no|never|without|does not|do not|did not|will not|would not|cannot|can't|is not|are not)\b[^.;\n|]*\b{SUBJECT_REFERENCE}\b[^.;\n|]*\b{CUSTODY_OBJECT}\b|\b{SUBJECT_REFERENCE}\b[^.;\n|]*\b(?:does not mean|do not mean|doesn't mean|does not|do not|did not|will not|would not|cannot|can't|never|is not|are not|not)\b[^.;\n|]*\b{CUSTODY_OBJECT}\b)",
+    re.IGNORECASE,
+)
+EXPLICIT_ALLOW_PATTERNS = (
+    re.compile(r"\bnon[- ]custodial\b", re.IGNORECASE),
+    re.compile(r"\b(?:avoid|avoidance|prevent|prevents|without|exclude|excludes|reject|rejects)\b[^.;\n|]*\bcustodial\b", re.IGNORECASE),
+    re.compile(r"\buser(?:s)?\s+(?:retain|keep|maintain)\s+(?:control|custody)\b", re.IGNORECASE),
+    re.compile(r"\buser(?:s)?\s+self[- ]custody\b", re.IGNORECASE),
+    re.compile(r"\b(?:contract|protocol|vault)[- ](?:held|defined)\b", re.IGNORECASE),
+    re.compile(r"\bprotocol[- ]level\s+(?:state|accounting|behavior)\b", re.IGNORECASE),
+    re.compile(r"\bDAO\s+governance\b", re.IGNORECASE),
+    re.compile(r"\bregulated[- ]partners?\b[^.;\n|]*\b(?:responsible for|retain|provide)\b[^.;\n|]*\bcustod", re.IGNORECASE),
+)
+RISK_DIRECT_NOUN = r"(?<!non-)(?:custod(?:y|ial|ian)|treasur(?:y|ies)|vaults?|funds?|assets?|control)"
+RISK_VERB_NOUN = r"(?<!non-)(?:custod(?:y|ial|ian)|treasur(?:y|ies)|vaults?|funds?|assets?|controls?)"
+RISK_REFERENCE_PATTERNS = (
+    re.compile(
+        rf"\b(?:risk|claim|wording|implication|boundary|contradiction|analysis)\b[^.;\n|]*\b{SUBJECT_REFERENCE}\b[^.;\n|]*\b{RISK_VERB_NOUN}\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"\b{SUBJECT_REFERENCE}(?:'s)?\s+{RISK_DIRECT_NOUN}\b[^.;\n|]*\b(?:risk|claim|wording|implication|boundary|contradiction)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:could|can|may|might|would)\s+be\s+(?:misread|mistaken|read|interpreted)\s+(?:as|for)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"\b(?:could|can|may|might|would)\s+(?:imply|suggest|establish|be\s+read\s+as)\b[^.;\n|]*\b{SUBJECT_REFERENCE}(?:[- ]controlled)?\b[^.;\n|]*\b{RISK_VERB_NOUN}\b",
+        re.IGNORECASE,
+    ),
+)
+OPERATIONAL_AFFIRMATIVE_PATTERN = re.compile(
+    rf"(?:\b{SUBJECT_REFERENCE}\b[^.;\n|]*?\b{AFFIRMATIVE_OPERATION_VERBS}\b[^.;\n|]*?\b{CUSTODY_OBJECT}\b|\b{SUBJECT_REFERENCE}\b[^.;\n|]*?\b(?:controls?|manages?)\s+(?:user|participant|customer|protocol)?\s*(?:funds?|assets?|treasury|vaults?|custody|state)\b)",
+    re.IGNORECASE,
+)
 
 
-def is_negated_or_qualified(text: str, start: int, end: int) -> bool:
-    sentence_start = max(
-        text.rfind("\n", 0, start),
-        text.rfind(".", 0, start),
-        text.rfind(";", 0, start),
-        text.rfind("|", 0, start),
-        text.rfind("?", 0, start),
-    )
-    sentence_end_candidates = [
-        position
-        for position in (
-            text.find("\n", end),
-            text.find(".", end),
-            text.find(";", end),
-            text.find("|", end),
-            text.find("?", end),
-        )
-        if position != -1
-    ]
-    sentence_end = min(sentence_end_candidates, default=len(text))
-    context = text[sentence_start + 1 : sentence_end + 1]
-    if "?" in context:
+def split_policy_clauses(text: str) -> list[str]:
+    return [clause.strip() for clause in re.split(r"[;\n|]", text) if clause.strip()]
+
+
+def risk_reference_allows(clause: str) -> bool:
+    if not any(pattern.search(clause) for pattern in RISK_REFERENCE_PATTERNS):
+        return False
+    has_affirmative_verb = bool(OPERATIONAL_AFFIRMATIVE_PATTERN.search(clause))
+    if not has_affirmative_verb:
         return True
-    patterns = (
-        r"\b(?:not|no|never|without|non[- ]custodial|user[- ]controlled|protocol[- ]level|contract[- ]held|contract principals?|DAO|regulated partner|target[- ]state|temporary|bounded|outside Git)\b",
-        r"\b(?:does|do|did|will|would)\s+not\b",
-        r"\b(?:can|could|may|might)\s+be\s+(?:misread|mistaken|read|interpreted)\b",
-        r"\b(?:can|could|may|might)\s+(?:imply|suggest|establish)\b",
-        r"\b(?:not|no)\s+(?:a\s+)?(?:claim|authority|custody|control)\b",
-        r"\b(?:risk|contradiction|boundary|wording)\b",
+    # A sentence such as "the claim that the company controls funds is a
+    # risk" or "company controls funds could be misread" is analysis. A
+    # trailing label such as "company controls funds, a risk" is still an
+    # affirmative claim and must not be exempted.
+    return bool(
+        RISK_REFERENCE_PATTERNS[0].search(clause)
+        or RISK_REFERENCE_PATTERNS[2].search(clause)
+        or RISK_REFERENCE_PATTERNS[3].search(clause)
     )
-    return any(re.search(pattern, context, re.IGNORECASE) for pattern in patterns)
 
 
-def scan_custody_boundaries(errors: list[str]) -> int:
-    patterns = (
-        re.compile(r"\b(?:Conxian(?:-Labs)?|company)(?:'s|[- ]controlled|[- ]owned)?\s+(?:custody|custodian|treasury|vaults?|funds?)\b", re.IGNORECASE),
-        re.compile(r"\bSAB(?:'s|[- ]controlled|[- ]owned)?\s+(?:custody|treasury|vaults?|funds?)\b", re.IGNORECASE),
-        re.compile(r"\b(?:Conxian(?:-Labs)?|company|SAB)\s+(?:may|can|will|does)\s+(?:exercise\s+)?(?:discretionary\s+)?(?:custody|control|manage|hold)\b", re.IGNORECASE),
-    )
+def custody_match_is_allowed(clause: str, match: re.Match[str]) -> bool:
+    context_start = max(0, match.start() - 100)
+    context_end = min(len(clause), match.end() + 100)
+    context = clause[context_start:context_end]
+    if clause.rstrip().endswith("?"):
+        return True
+    if EXPLICIT_NEGATION.search(context):
+        return True
+    # These patterns describe a risk, label, or possible misreading rather
+    # than asserting that the company/SAB actually has custody or control.
+    if risk_reference_allows(clause):
+        return True
+    if any(pattern.search(context) for pattern in EXPLICIT_ALLOW_PATTERNS):
+        # An explicit affirmative company/SAB verb in the same clause wins
+        # over a generic adjective such as "non-custodial".
+        if OPERATIONAL_AFFIRMATIVE_PATTERN.search(clause):
+            return bool(EXPLICIT_NEGATION.search(context))
+        return True
+    return False
+
+
+def find_custody_violations(text: str) -> list[str]:
+    violations: list[str] = []
+    previous_clause_named_company = False
+    for clause in split_policy_clauses(text):
+        patterns = AFFIRMATIVE_CUSTODY_PATTERNS
+        if previous_clause_named_company:
+            patterns = (*patterns, PRONOUN_AFFIRMATIVE_CUSTODY_PATTERN)
+        for pattern in patterns:
+            for match in pattern.finditer(clause):
+                if custody_match_is_allowed(clause, match):
+                    continue
+                phrase = match.group(0).strip()
+                if phrase not in violations:
+                    violations.append(phrase)
+        previous_clause_named_company = bool(re.search(rf"\b{COMPANY_SUBJECT}\b", clause, re.IGNORECASE))
+    return violations
+
+
+def scan_custody_boundaries(errors: list[str], index_text: str) -> tuple[int, int, int]:
     checked = 0
-    for path in CUSTODY_BOUNDARY_PATHS:
-        if not path.is_file():
-            continue
+    excluded = 0
+    explicit = 0
+    paths, excluded, explicit = public_safe_markdown_paths(index_text)
+    for path in paths:
         checked += 1
         text = path.read_text(encoding="utf-8")
-        for pattern in patterns:
-            for match in pattern.finditer(text):
-                if is_negated_or_qualified(text, match.start(), match.end()):
-                    continue
-                fail(
-                    errors,
-                    f"unqualified company/SAB custody or control phrase in {path.relative_to(ROOT)}: {match.group(0)}",
-                )
-    return checked
+        for phrase in find_custody_violations(text):
+            fail(errors, f"unqualified company/SAB custody or control phrase in {path.relative_to(ROOT)}: {phrase}")
+    return checked, excluded, explicit
 
 
-def validate_itil_stub(errors: list[str]) -> None:
-    if not ITIL_STUB_PATH.is_file():
-        fail(errors, "missing ITIL public-safe stub")
+SENSITIVE_REPRESENTATIVE_PATTERNS = (
+    re.compile(r"\b(?:TAM|SAM|SOM)\b", re.IGNORECASE),
+    re.compile(r"\bpricing\s+(?:model|tier|point|strategy|doctrine)\b", re.IGNORECASE),
+    re.compile(r"\b(?:revenue forecast|revenue runway|funding round|competitive landscape|market[- ]capture)\b", re.IGNORECASE),
+    re.compile(r"\b(?:allocation|runway|task inventory)\b", re.IGNORECASE),
+)
+
+
+def validate_public_safe_stub(errors: list[str], path: Path) -> None:
+    if not path.is_file():
+        fail(errors, f"missing public-safe strategy stub: {path.relative_to(ROOT)}")
         return
-    text = ITIL_STUB_PATH.read_text(encoding="utf-8")
+    text = path.read_text(encoding="utf-8")
     required = (
-        "# ITIL5 Strategic Analysis 2026",
         "**Classification:** Public-safe stub",
-        "**Operating label:** Internal only",
-        "**Maturity / claim state:** Deprecated",
-        "authorized Linear workspace",
-        "This public-safe stub intentionally retains no sensitive strategy text.",
+        "**Ownership:** Conxian-Labs (Pty) Ltd",
+        "**Why this content moved:**",
+        CON_1530_URL,
+        "DOCTRINE_ALIGNMENT_STANDARD.md",
+        "PORTFOLIO_DOCTRINE_REGISTER.md",
+        "DOCUMENTATION_ALIGNMENT_INDEX.md",
+        "This file is intentionally kept as a public-safe stub",
     )
     for phrase in required:
         if phrase not in text:
-            fail(errors, f"ITIL stub is missing required structure or boundary phrase: {phrase}")
-    representative_strategy = re.compile(
-        r"\b(?:market[- ]capture|competitive strategy|competitive analysis|TAM|SAM|pricing model|revenue forecast|competitor map)\b",
-        re.IGNORECASE,
-    )
-    if representative_strategy.search(text):
-        fail(errors, "ITIL stub contains representative market-capture or competitive-strategy content")
+            fail(errors, f"public-safe stub {path.relative_to(ROOT)} is missing: {phrase}")
+    for pattern in SENSITIVE_REPRESENTATIVE_PATTERNS:
+        if pattern.search(text):
+            fail(errors, f"public-safe stub {path.relative_to(ROOT)} retains representative sensitive strategy content: {pattern.pattern}")
 
 
-def main() -> int:
-    errors: list[str] = []
-    documents: dict[str, str] = {}
-    for name, path in CANONICAL_PATHS.items():
-        if not path.is_file():
-            fail(errors, f"missing canonical document: {path.relative_to(ROOT)}")
-            continue
-        documents[name] = path.read_text(encoding="utf-8")
+def validate_strategy_stubs(errors: list[str]) -> None:
+    for path in PUBLIC_SAFE_STUB_PATHS:
+        validate_public_safe_stub(errors, path)
 
-    standard = documents.get("standard", "")
-    register = documents.get("register", "")
-    index = documents.get("index", "")
 
-    for phrase in (
+def validate_standard(errors: list[str], standard: str) -> None:
+    required_phrases = (
         "non-custodial software and infrastructure builder/operator",
         "not a market participant",
         "not a user-data extraction business",
@@ -367,10 +620,18 @@ def main() -> int:
         "Public-safe stub",
         "Internal-only",
         "Archive candidate",
-    ):
+        "Conxian-Labs (Pty) Ltd",
+        "Conxian",
+        "Conxius",
+        "CSF / Conxian Finance Protocol",
+        "Fusion",
+        "Nexus",
+        "Current technical artifacts use exact repository slugs in backticks",
+        "AGENTS.md is normative instruction text",
+    )
+    for phrase in required_phrases:
         if phrase not in standard:
             fail(errors, f"doctrine standard is missing required phrase: {phrase}")
-
     for anchor in (
         "TRUST_AND_PROOF_MESSAGING.md",
         "CLAIM_EVIDENCE_MATRIX.md",
@@ -381,13 +642,8 @@ def main() -> int:
         if anchor not in standard:
             fail(errors, f"doctrine standard does not link canonical anchor: {anchor}")
 
-    for link in (
-        "DOCTRINE_ALIGNMENT_STANDARD.md",
-        "PORTFOLIO_DOCTRINE_REGISTER.md",
-    ):
-        if link not in index:
-            fail(errors, f"documentation index does not cross-link: {link}")
 
+def validate_register(errors: list[str], register: str) -> tuple[list[str], list[list[str]]]:
     expected_headers = [
         "Repository",
         "One-sentence role",
@@ -399,7 +655,7 @@ def main() -> int:
         "Contradiction / disposition",
         "Exact evidence pointer",
     ]
-    headers, rows = parse_table_after_heading(register, "## Registered repositories")
+    headers, rows = parse_table_after_heading(register, "## Registered repositories", expected_headers)
     if headers != expected_headers:
         fail(errors, f"portfolio register has incorrect structural headers: {headers}")
     if len(rows) != len(EXPECTED_REPOSITORIES):
@@ -424,9 +680,9 @@ def main() -> int:
                 fail(errors, f"invalid claim state for {repository}: {row[5]}")
             if row[5] == CLAIM_NA_EXCEPTION and repository != "Conxian/.github-private":
                 fail(errors, f"N/A claim-state exception is only allowed for Conxian/.github-private: {repository}")
-            for token in classification_tokens(row[6]):
-                if token not in CLASSIFICATION_VALUES:
-                    fail(errors, f"invalid document classification for {repository}: {token}")
+            tokens = classification_tokens(row[6])
+            if not tokens or any(token not in CLASSIFICATION_VALUES for token in tokens):
+                fail(errors, f"invalid document classification for {repository}: {row[6]}")
             if not any(marker in row[7] for marker in DISPOSITION_MARKERS):
                 fail(errors, f"invalid contradiction/disposition for {repository}: {row[7]}")
             if not re.search(r"(?:\.md|README\.md|register|submodule|repository|canonical)", row[8], re.IGNORECASE):
@@ -444,10 +700,6 @@ def main() -> int:
     if CLAIM_NA_EXCEPTION not in register:
         fail(errors, "portfolio register does not document the N/A-no-public-claim exception")
 
-    risk_headers, risk_rows = parse_table_after_heading(
-        register,
-        "## High-risk contradictions and dispositions",
-    )
     expected_risk_headers = [
         "Artifact or surface",
         "Risk / contradiction",
@@ -455,9 +707,14 @@ def main() -> int:
         "Disposition",
         "Exact evidence pointer",
     ]
+    risk_headers, risk_rows = parse_table_after_heading(register, "## High-risk contradictions and dispositions", expected_risk_headers)
     if risk_headers != expected_risk_headers:
         fail(errors, f"high-risk table has incorrect structural headers: {risk_headers}")
+    if len(risk_rows) != len(HIGH_RISK_ARTIFACTS):
+        fail(errors, f"high-risk table must contain exactly {len(HIGH_RISK_ARTIFACTS)} rows; found {len(risk_rows)}")
     risk_artifacts = [strip_code(row[0]) for row in risk_rows if row]
+    if len(set(risk_artifacts)) != len(risk_artifacts):
+        fail(errors, "high-risk table contains duplicate artifact rows")
     if set(risk_artifacts) != set(HIGH_RISK_ARTIFACTS):
         missing = sorted(set(HIGH_RISK_ARTIFACTS) - set(risk_artifacts))
         unexpected = sorted(set(risk_artifacts) - set(HIGH_RISK_ARTIFACTS))
@@ -469,26 +726,50 @@ def main() -> int:
         if len(row) != len(expected_risk_headers):
             fail(errors, f"high-risk row {row_number} has {len(row)} columns; expected {len(expected_risk_headers)}")
             continue
+        if any(not value.strip() for value in row):
+            fail(errors, f"high-risk row {row_number} contains an empty required cell")
         if not any(marker in row[3] for marker in DISPOSITION_MARKERS):
             fail(errors, f"high-risk row {row_number} has no valid disposition: {row[3]}")
-        for token in classification_tokens(row[2]):
-            if token not in CLASSIFICATION_VALUES:
-                fail(errors, f"invalid high-risk document classification: {token}")
+        tokens = classification_tokens(row[2])
+        if not tokens or any(token not in CLASSIFICATION_VALUES for token in tokens):
+            fail(errors, f"invalid high-risk document classification: {row[2]}")
         if not row[4].strip():
             fail(errors, f"high-risk row {row_number} is missing an exact evidence pointer")
-    whitepaper_rows = [row for row in risk_rows if row and "WHITEPAPER.md" in row[0]]
-    if not whitepaper_rows or not any(
-        "Archive candidate" in row[2] and "rewrite" in row[3].lower() for row in whitepaper_rows
-    ):
-        fail(errors, "old whitepaper is not classified as an archive/rewrite candidate")
 
     if "follow-up" not in register.lower() or "not company custody" not in register.lower():
         fail(errors, "portfolio register is missing explicit follow-up and non-company-custody boundaries")
+    for path in (
+        "docs/BUSINESS_ANALYSIS_2026-05-29.md",
+        "conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md",
+        "docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md",
+        "docs/LINEAR_TASK_INVENTORY_2026-05-29.md",
+        "docs/RESEARCH_FINDINGS_2026-05-29.md",
+    ):
+        if path not in register:
+            fail(errors, f"portfolio register does not explicitly disposition sensitive surface: {path}")
+    return repositories, risk_rows
 
-    validate_itil_stub(errors)
+
+def main() -> int:
+    errors: list[str] = []
+    documents: dict[str, str] = {}
+    for name, path in CANONICAL_PATHS.items():
+        if not path.is_file():
+            fail(errors, f"missing canonical document: {path.relative_to(ROOT)}")
+            continue
+        documents[name] = path.read_text(encoding="utf-8")
+
+    standard = documents.get("standard", "")
+    register = documents.get("register", "")
+    index = documents.get("index", "")
+    validate_standard(errors, standard)
+    if "DOCTRINE_ALIGNMENT_STANDARD.md" not in index or "PORTFOLIO_DOCTRINE_REGISTER.md" not in index:
+        fail(errors, "documentation index does not cross-link both doctrine canonical documents")
+    repositories, risk_rows = validate_register(errors, register)
+    validate_strategy_stubs(errors)
     link_count = validate_local_links(errors, documents)
-    markdown_count, allowlisted_alias_count = scan_public_aliases(errors)
-    custody_count = scan_custody_boundaries(errors)
+    alias_count, excluded_count, explicit_count, allowlisted_alias_count = scan_public_aliases(errors, index)
+    custody_count, custody_excluded_count, custody_explicit_count = scan_custody_boundaries(errors, index)
 
     if errors:
         print("Doctrine alignment check: FAILED")
@@ -500,16 +781,10 @@ def main() -> int:
     print(f"- canonical documents loaded: {len(documents)}")
     print(f"- structurally parsed repository rows: {len(repositories)} (expected {len(EXPECTED_REPOSITORIES)})")
     print(f"- high-risk dispositions validated: {len(risk_rows)}")
-    print(f"- local Markdown links checked in canonical docs: {link_count}")
-    print("- ITIL public-safe stub structure and strategy-content exclusion: OK")
-    print(
-        f"- public Markdown display-alias scan: {markdown_count} files; "
-        f"AGENTS.md normative text excluded; non-display link/URL allowlist entries: {allowlisted_alias_count}"
-    )
-    print(
-        f"- company/SAB custody-boundary scan: {custody_count} canonical/public-safe docs; "
-        "protocol escrow, DAO governance, user self-custody, and regulated-partner custody remain permitted"
-    )
+    print(f"- local Markdown links and fragments checked in canonical docs: {link_count}")
+    print(f"- public-safe strategy stubs validated: {len(PUBLIC_SAFE_STUB_PATHS)}")
+    print(f"- public Markdown display-alias scope: {alias_count} files; explicitly indexed: {explicit_count}; excluded internal/archive: {excluded_count}; AGENTS.md normative exception and historical URL allowlist entries: {allowlisted_alias_count}")
+    print(f"- company/SAB custody-boundary scope: {custody_count} files; explicitly indexed: {custody_explicit_count}; excluded internal/archive: {custody_excluded_count}; protocol/contract state, DAO governance, user self-custody, and regulated-partner custody are explicit allowances")
     return 0
 
 

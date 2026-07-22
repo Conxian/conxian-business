@@ -105,7 +105,7 @@ Notes:
 | `conxius-wallet` | Public (required) | Conditional (wallet-grade gates) | 2 | 2 | 3 | 2 | 2 | 3 | 3 |
 | `conxian-gateway` | Public (required) | Conditional (service gates) | 2 | 2 | 2 | 2 | 1 | 3 | 2 |
 | `Conxian` | Public (required) | Conditional (protocol gates) | 2 | 2 | 3 | 3 | 1 | 3 | 3 |
-| `Conxian_UI` | Public | Conditional (UI gates) | 2 | 1 | 2 | 1 | 1 | 2 | 2 |
+| `conxian_ui` | Public | Conditional (UI gates) | 2 | 1 | 2 | 1 | 1 | 2 | 2 |
 | `conxian-labs-site` | Public | Ship (standard web) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
 | `conxius-platform` | Public | Conditional (ops/dev-stack gates) | 1 | 1 | 2 | 2 | 1 | 2 | 2 |
 

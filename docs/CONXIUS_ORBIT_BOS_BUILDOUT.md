@@ -1,4 +1,4 @@
-# conxius-orbit — BOS business buildout (CON-155)
+# `conxius-orbit` — BOS business buildout (CON-155)
 
 This document defines the BOS-level business role, governance controls, and documentation separation guidance for `conxius-orbit`.
 
