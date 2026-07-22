@@ -395,6 +395,7 @@ graph TB
 | `#240` | SDK issue | **OPEN** shared trust/collateral/revocation/replay prerequisite | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/240) |
 | `#241` | SDK issue | **CLOSED** (`state_reason=completed`) Android provider track | Administrative closure is not production qualification evidence; real trusted roots/collateral, server-side verification, real-device/runtime evidence, exact key/operation binding, replay, and independent release acceptance remain required; unsupported production paths stay fail closed. [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/241) |
 | `#242` | SDK issue | **OPEN** AWS Nitro provider track | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/242) |
+| `#444 / CON-1546` | Wallet issue / Linear tracker | **OPEN / TRIAGE** centralized wallet value-operation gate and software/synthetic-success quarantine; **next 86/100 containment candidate; not production support** | [GitHub issue](https://github.com/Conxian/conxius-wallet/issues/444) |
 | `#237` | SDK pull request | **MERGED** independent proof-factor verification at `8f3fa687f4a880c0a12ec1fabc613ecc9e043df4` | [GitHub PR](https://github.com/Conxian/conxius-enclave-sdk/pull/237) |
 | `#239` | SDK pull request | **MERGED** independent proof verification at `0510ecd5096c39eed4b8909f9e48e56697a7bc57` | [GitHub PR](https://github.com/Conxian/conxius-enclave-sdk/pull/239) |
 | `#244` | SDK pull request | **OPEN** canonical six-proof rail convergence at current head `e3b1a69752f3e40f26b373e36ecab440c78419a9`; follow-up review [#4755756667](https://github.com/Conxian/conxius-enclave-sdk/pull/244#pullrequestreview-4755756667) reports no actionable findings after the replay-capacity fix and all reported checks pass | [GitHub PR](https://github.com/Conxian/conxius-enclave-sdk/pull/244) |
@@ -411,6 +412,7 @@ graph TB
 | `#237` | strengthens | authorization proof | Independent proof factors are typed and checked separately. |
 | `#239` | enforces | fail-closed authorization | Independent verification contains missing or invalid proof outcomes. |
 | `#244` | contains | canonical six-proof settlement rail | Selected containment candidate; open and not a hardware qualification. |
+| `#444 / CON-1546` | executes | wallet gate/envelope phase | After canonical rail convergence; no provider qualification claim. |
 | `#195` | governs | value-bearing signing/attestation claims | No production claim is allowed without the full acceptance chain. |
 | `CON-1517` | blocks | runtime/platform claims | Build success does not prove secret-boundary or runtime evidence. |
 | `CON-1519` / `#202` | gates | immutable release and independent acceptance | Exact artifact and capability-by-capability acceptance remain required. |

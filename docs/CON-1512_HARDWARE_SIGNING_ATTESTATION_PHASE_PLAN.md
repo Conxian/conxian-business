@@ -106,7 +106,7 @@ Scores use a transparent 0–5 scale: `0` means no demonstrated fit in this plan
 | Candidate | Safety / containment leverage (30) | Dependency unlock (25) | Evidence readiness (20) | Delivery fit (15) | Fail-closed clarity (10) | Weighted / 100 | Planning state |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | Canonical SDK rail convergence — [PR #244](https://github.com/Conxian/conxius-enclave-sdk/pull/244) | 5 | 5 | 4 | 4 | 5 | **93** | **Selected containment step; open PR, not production support.** |
-| Wallet value-operation gate + provider-neutral envelope | 5 | 5 | 3 | 3 | 5 | **86** | **Next** after the rail is canonical; blocks web/software signer and synthetic-success paths. |
+| Wallet value-operation gate + provider-neutral envelope — [wallet #444 / CON-1546](https://github.com/Conxian/conxius-wallet/issues/444) | 5 | 5 | 3 | 3 | 5 | **86** | **Next** after the rail is canonical; blocks web/software signer and synthetic-success paths. |
 | Provider-neutral trust/replay contracts — [SDK #240](https://github.com/Conxian/conxius-enclave-sdk/issues/240) | 5 | 5 | 2 | 3 | 5 | **82** | Shared prerequisite for all provider tracks. |
 | Runtime/release evidence synchronization — [CON-1517](https://linear.app/conxian-labs/issue/CON-1517/p1-harden-the-wasm-secret-boundary-and-add-runtimeplatform-evidence) and [CON-1519](https://linear.app/conxian-labs/issue/CON-1519/p0-complete-independent-security-review-and-release-acceptance) | 4 | 3 | 2 | 4 | 5 | **69** | Follow-on release and acceptance synchronization; not optional for promotion. |
 
