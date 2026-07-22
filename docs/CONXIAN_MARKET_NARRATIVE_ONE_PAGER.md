@@ -42,7 +42,7 @@ Conxian is a sovereign execution stack that treats the business itself as a stat
 - Nakamoto-aware finality handling (Bitcoin-anchored burn-block height vs Stacks block height)
 - Transparency and audit surfaces for transaction ordering, state roots, and proof reconstruction
 
-**C) Conxian Gateway (Sovereign Compliance Pipe)** ([PRD](../conxian-gateway/PRD.md))
+**C) Conxian middleware (Sovereign Compliance Pipe)** ([PRD](../conxian-gateway/PRD.md))
 
 - Rust middleware that bridges Bitcoin/Stacks state to enterprise-grade APIs
 - Proof-oriented monitoring (health, metrics, traceability) for audit-ready operations

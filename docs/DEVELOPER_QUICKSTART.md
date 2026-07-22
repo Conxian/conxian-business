@@ -250,16 +250,16 @@ All core contracts source dynamic principals from `operational-treasury.clar`. H
 | **On-chain** | Expose state-proof primitives only; never raw config |
 | **Stubs** | Production paths return `err-u501` / `err-u503` and fail-closed |
 
-Production stub audit files (`.stub.json`) are safe for public repos — canonical details are maintained in the Conxian Linear workspace.
+Production stub audit files (`.stub.json`) are safe for public repos — canonical details are maintained in the authorized Linear workspace.
 
 ### Dual-Brand Architecture
 
 | Brand | Layer | Examples |
 |-------|-------|----------|
-| **Conxian** | Sovereign & Protocol (B2B) | Conxian Gateway, Conxian Nexus |
-| **Conxius** | Client & Access (end-user) | Conxius Wallet, Conxius Platform, Conxius Enclave SDK |
+| **Conxian** | Sovereign & Protocol (B2B) | `conxian-gateway` middleware, Conxian Nexus |
+| **Conxius** | Client & Access (end-user) | Conxius Wallet, Conxius Platform, `conxius-enclave-sdk` abstractions |
 
-**Deprecated terms** (CI rejects these): "Conxian Gateway", "Conxius Enclave SDK", "conxius_orbit".
+**Display rule:** use `conxian-gateway`, `conxius-enclave-sdk`, and `conxius-orbit` in documentation; do not introduce legacy display aliases.
 
 ### Unified Theory v2.0
 

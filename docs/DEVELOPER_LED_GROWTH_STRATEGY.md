@@ -298,7 +298,7 @@ npm install && npm run dev
 
 ## What's Included
 
-- ✅ Conxian Gateway (ISO 20022 bridge)
+- ✅ Conxian middleware (ISO 20022 bridge)
 - ✅ Conxian Nexus (settlement layer)
 - ✅ Redis + PostgreSQL
 - ✅ TypeScript SDK

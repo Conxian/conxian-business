@@ -59,7 +59,7 @@ Now we map the actual roadmap for the Conxius Wallet and Conxian Protocol throug
 
 ### Phase 3 Check: The Transition (The Upcoming Bottleneck)
 - **The Test**: Let's say SVN 1.5 is fully live. How is reconciliation handled with enterprise clients?
-- **The Fix ($A_S$ integration)**: This is where the BOS v1.9.1 takes the wheel. If an enterprise connects their SAP system to the Conxian Gateway, the on-chain reconciliation must be 100% automated. If a transaction fails and it requires you to manually patch it, $O_C$ rises, $A_S$ drops, and we fail Phase 3. The smart contracts must have self-healing or automated fallback logic.
+- **The Fix ($A_S$ integration)**: This is where the BOS v1.9.1 takes the wheel. If an enterprise connects their SAP system to the Conxian middleware, the on-chain reconciliation must be 100% automated. If a transaction fails and it requires you to manually patch it, $O_C$ rises, $A_S$ drops, and we fail Phase 3. The smart contracts must have self-healing or automated fallback logic.
 
 ### Phase 4 Check: Sovereign State (The End Game)
 - **The Test**: The system is live, autonomous, and the BME tokenomics are burning/minting perfectly. How do we trigger the exponential growth ($N_E$)?

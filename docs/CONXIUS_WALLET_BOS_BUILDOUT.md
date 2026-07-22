@@ -21,7 +21,7 @@ Conxius Wallet is a **flagship** repo and part of the public Conxian trust surfa
 - **End-user distribution**: delivering the mobile product (Android-first) via app store releases and/or signed APK/AAB distribution.
 - **Sovereign self-custody boundary**: local key custody, signing, and “never exfiltrate secrets” guarantees.
 - **Protocol UX + integration surface**: providing user-facing flows for Bitcoin L1 and Bitcoin-adjacent layers while keeping custody and signing local.
-- **Gateway consumption (not duplication)**: consuming Conxian Gateway APIs for cross-layer coordination and partner-powered regulated flows, without embedding centralizing operational controls in the wallet.
+- **Gateway consumption (not duplication)**: consuming Conxian middleware APIs for cross-layer coordination and partner-powered regulated flows, without embedding centralizing operational controls in the wallet.
 
 In BOS terms: the wallet is where **user intent becomes signed action**, and it is the primary end-user trust surface for the ecosystem.
 
@@ -57,7 +57,7 @@ The wallet already contains a strong starting point for release prep. Use it as 
 
 - Release prep (public-safe only; no store account ops, no signing key custody procedures): [`conxius-wallet/docs/operations/ANDROID_RELEASE_PREP.md`](https://github.com/Conxian/conxius-wallet/blob/ef68ec49891d4a7085e499732b9fa0ce5816c1e2/docs/operations/ANDROID_RELEASE_PREP.md)
 - Device readiness (public-safe only; no production endpoint mapping): [`conxius-wallet/docs/operations/DEVICE_READINESS_REPORT.md`](https://github.com/Conxian/conxius-wallet/blob/ef68ec49891d4a7085e499732b9fa0ce5816c1e2/docs/operations/DEVICE_READINESS_REPORT.md)
-- Internal-only: Play Store operations + signing key custody runbook (Linear Virtual Office)
+- Internal-only: Play Store operations + signing key custody runbook (authorized Linear workspace)
 
 Minimum release controls:
 
@@ -92,7 +92,7 @@ This repo (and the wallet repo) are public. To stay aligned with ZSE:
 - Sanitized risk registry (no partner-only or exploit-adjacent detail).
 - Generalized build instructions that do not embed org identifiers, account names, or secrets.
 
-**Internal-only (migrate to Linear Virtual Office; keep git as a stub that links out)**
+**Internal-only (migrate to authorized Linear workspace; keep git as a stub that links out)**
 
 - Incident response runbooks, escalation trees, and “stop-ship” criteria.
 - App store operational details (accounts, roles, recovery codes, signing key custody/rotation procedures).

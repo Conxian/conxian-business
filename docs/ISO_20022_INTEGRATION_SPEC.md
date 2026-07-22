@@ -1,9 +1,9 @@
-# Conxian Gateway ISO 20022 Integration Specification
-> For: Conxian Gateway | Standard: ISO 20022 MX | Generated: 2026-07-06
+# Conxian middleware ISO 20022 Integration Specification
+> For: Conxian middleware | Standard: ISO 20022 MX | Generated: 2026-07-06
 
 ## Overview
 
-This document specifies the ISO 20022 message integration for the Conxian Gateway, enabling enterprise ISO 20022 payments to settle via Bitcoin L1 and Stacks smart contracts.
+This document specifies the ISO 20022 message integration for the Conxian middleware, enabling enterprise ISO 20022 payments to settle via Bitcoin L1 and Stacks smart contracts.
 
 ---
 
@@ -541,5 +541,5 @@ pub fn create_investigation_msg(
 
 ---
 
-*Generated per Conxian Gateway requirements*
+*Generated per Conxian middleware requirements*
 *Aligns with BIS ISO 20022 and SWIFT CBPR+ standards*

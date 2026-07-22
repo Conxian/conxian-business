@@ -6,7 +6,7 @@ labels: documentation
 assignees: '
 ---
 
-> Note: This repository is public. Do not include confidential strategy, operational, legal, or infrastructure details. For internal-only material, use the Conxian Linear workspace: https://linear.app/conxian-labs
+> Note: This repository is public. Do not include confidential strategy, operational, legal, or infrastructure details. For internal-only material, use the authorized Linear workspace: https://linear.app/conxian-labs
 >
 > ExCo operational requests are Linear-first. If mirrored to GitHub, include the full Linear issue URL.
 

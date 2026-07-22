@@ -9,14 +9,14 @@ Portfolio doctrine is defined centrally in [`DOCTRINE_ALIGNMENT_STANDARD.md`](./
 - **Canonical**: the current “source of truth” for a domain. If two docs disagree, update the non-canonical doc to match the canonical one.
 - **Supporting**: helpful context, audits, reports, briefs, or deep dives that clarify (but don’t define) the system.
 - **Public-safe**: ok to link in public contexts and external conversations.
-- **Public-safe stub (canonical in Sovereign Coordination Layer)**: safe to link publicly; this repo file is a short pointer stub (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)). It must not contain any operational, security, financial, legal, and strategic details beyond the pointer. The full canonical content is maintained in the sovereign coordination layer under ZSE.
-- **Internal-only (canonical in Sovereign Coordination Layer only)**: operational, security, financial, legal, and strategic material whose canonical document must live only in the sovereign coordination layer. If a repo link target must be preserved, use a **Public-safe stub (canonical in Sovereign Coordination Layer)** (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)) so existing links continue to resolve.
+- **Public-safe stub (canonical in authorized Linear workspace)**: safe to link publicly; this repo file is a short pointer stub (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)). It must not contain any operational, security, financial, legal, and strategic details beyond the pointer. The full canonical content is maintained in the authorized Linear workspace under ZSE.
+- **Internal-only (canonical in authorized Linear workspace only)**: operational, security, financial, legal, and strategic material whose canonical document must live only in the authorized Linear workspace. If a repo link target must be preserved, use a **Public-safe stub (canonical in authorized Linear workspace)** (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)) so existing links continue to resolve.
 
 For the separate dimensions of claim state, operating label, maturity, and document classification, follow the [Doctrine Alignment Standard](./DOCTRINE_ALIGNMENT_STANDARD.md) and the [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md).
 
 Notes:
 
-- Treat this repo as public for boundary purposes; hosting visibility may differ by deployment. "Internal-only" material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see sovereign coordination layer issue CON-256).
+- Treat this repo as public for boundary purposes; hosting visibility may differ by deployment. "Internal-only" material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see authorized Linear workspace issue CON-256).
 - OpenSpec change sets typically have 4 layers: `proposal.md` (intent), `design.md` (architecture), `specs/*/spec.md` (requirements), `tasks.md` (execution).
 
 ## GAP-020 cross-link alignment (issue #724)
@@ -60,7 +60,7 @@ Notes:
 | `docs/BRANCH_AND_PROMOTION_STANDARD.md` | Canonical | Public-safe | Canonical `dev`/`staged`/`main` branch roles and promotion workflow. |
 | `docs/PROMOTION_CHECKLISTS.md` | Canonical | Public-safe | Required checklists and evidence for feature -> `dev` -> `staged` -> `main` promotions. |
 | `docs/INTEGRATED_SYSTEM_TESTNET_GATE.md` | Canonical | Public-safe | Full-system public-testnet gate for `dev` before promotion to `staged`/`main`. |
-| `ARCHIVE_MIGRATION.md` | Canonical | Public-safe | ZSE placeholder + pointer to Linear Virtual Office for legacy material. |
+| `ARCHIVE_MIGRATION.md` | Canonical | Public-safe | ZSE placeholder + pointer to authorized Linear workspace for legacy material. |
 
 ## 2) BOS (Business Operations System)
 
@@ -135,7 +135,7 @@ These are the documents most likely to answer “what are we building?” and �
 | --- | --- | --- | --- |
 | `Conxian/PRD.md` | Canonical | Public-safe | Conxian protocol PRD (modules, status, and benchmarks). |
 | `Conxian/docs/ARCHITECTURE.md` | Canonical | Public-safe | Protocol architecture description. |
-| `Conxian/docs/WHITEPAPER.md` | Archive candidate (rewrite required) | Public-safe follow-up | Historical protocol whitepaper surface; not a current doctrine source. Rewrite against `docs/TECHNICAL_WHITEPAPER_OUTLINE.md` and the portfolio doctrine before reclassification. External follow-up; no submodule content was changed here. |
+| `Conxian/docs/WHITEPAPER.md` | Archive candidate (rewrite required) | Public-safe | Historical protocol whitepaper surface; not a current doctrine source. Rewrite against `docs/TECHNICAL_WHITEPAPER_OUTLINE.md` and the portfolio doctrine before reclassification. External follow-up; no submodule content was changed here. |
 | `Conxian/docs/ROADMAP.md` | Canonical | Public-safe | Protocol roadmap and phases. |
 | `Conxian/GOVERNANCE_RECOVERY_REPORT.md` | Supporting | Public-safe | Governance + recovery status report (March 2026). |
 | `Conxian/docs/DOCUMENTATION_STATE.md` | Supporting | Public-safe | Snapshot of protocol doc state. |
@@ -216,7 +216,7 @@ See `docs/BOS_BUSINESS_BUILDOUT.md` for repo business purpose, business-unit pla
 
 ## 7) Known doc gaps / broken references (should not be re-created blindly)
 
-These are referenced by current docs but are not present in the active Git index. Before recreating them from scratch, first check whether they were intentionally migrated to the Linear Virtual Office under ZSE.
+These are referenced by current docs but are not present in the active Git index. Before recreating them from scratch, first check whether they were intentionally migrated to the authorized Linear workspace under ZSE.
 
 - `docs/STRATEGOS_MANDATE.md` (referenced by `audit/strategos-alignment.md`, `Fiscal-Vault-Oracle/SOVEREIGN_RUNWAY.md`).
 - `system_ip_audit.md` (referenced by `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md`).

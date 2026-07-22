@@ -9,7 +9,7 @@ This page defines the **minimum control gates** required for each active flagshi
 
 Canonical tracker:
 
-- Sovereign Coordination Layer: https://sovereign.conxian.com/issue/CON-227/map-repo-readiness-gates-by-control-domain
+- authorized Linear workspace: https://sovereign.conxian.com/issue/CON-227/map-repo-readiness-gates-by-control-domain
 
 ## Current status
 
@@ -120,7 +120,7 @@ Superproject note: `Conxian_UI` is checked out at path `conxian-ui/` (planned re
 | `lib-conxian-core` | Public | Ship (library) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
 | `lib-conclave-sdk` | Public | Conditional (crypto/supply-chain gates) | 1 | 0 | 0 | 0 | 0 | 2 | 2 |
 | `conxian-nexus` | Public | Conditional (service gates) | 1 | 2 | 1 | 1 | 0 | 3 | 2 |
-| `conxius_orbit` | Public | Conditional (deployment tool gates) | 1 | 1 | 3 | 3 | 0 | 3 | 3 |
+| `conxius-orbit` | Public | Conditional (deployment tool gates) | 1 | 1 | 3 | 3 | 0 | 3 | 3 |
 | `.github` | Public | Conditional (org-infra / high-blast-radius, elevated review) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
 | `conxian-business` | Public | Ship (docs/specs) | 1 | 1 | 0 | 0 | 0 | 2 | 1 |
 

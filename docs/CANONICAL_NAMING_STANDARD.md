@@ -70,7 +70,7 @@ Examples:
 - ZSE
 - control domain
 - lifecycle gate
-- sovereign coordination layer
+- authorized Linear workspace
 
 ## Repo role naming rule
 

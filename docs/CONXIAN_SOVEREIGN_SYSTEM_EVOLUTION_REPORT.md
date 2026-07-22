@@ -66,7 +66,7 @@ This report outlines the transition path for the Conxian ecosystem from its "Web
 
 ### Phase 3: Coordination Migration (Q3 2026)
 - **Action**: Replace Linear tasks with Radicle-native issues or a custom Sovereign Ops Dashboard.
-- **ZSE Hardening**: Remove all external links from repo stubs; point to sovereign coordination layer.
+- **ZSE Hardening**: Remove all external links from repo stubs; point to authorized Linear workspace.
 
 ### Phase 4: AI & Identity Alignment (Q4 2026)
 - **Action**: Integrate local LLM inference for the Conxius Wallet (Satoshi Auditor).

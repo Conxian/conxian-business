@@ -32,11 +32,11 @@ All changes land via pull request and must follow the workflow defined in `docs/
 Conxian operates under a Zero Secret Egress (ZSE) mandate.
 
 - Public-safe documentation may live in Git.
-- Strategic, legal, operational, and administrative documents that are internal-only must be stored in the sovereign coordination layer (Kwil/Tableland) and referenced from Git with a pointer.
+- Strategic, legal, operational, and administrative documents that are internal-only must be stored in the authorized Linear workspace (Kwil/Tableland) and referenced from Git with a pointer.
 
 ## Policies
 
-- Repository boundary: Treat this repo as public for ZSE boundary purposes. Internal-only strategy, legal interpretations, operational runbooks, and infrastructure identifiers must live in the sovereign coordination layer.
+- Repository boundary: Treat this repo as public for ZSE boundary purposes. Internal-only strategy, legal interpretations, operational runbooks, and infrastructure identifiers must live in the authorized Linear workspace.
 - Contributing guidelines: [`CONTRIBUTING.md`](./CONTRIBUTING.md)
 - Security policy: [`SECURITY.md`](./SECURITY.md)
 - BOS business buildout and repo operating model: [`docs/BOS_BUSINESS_BUILDOUT.md`](./docs/BOS_BUSINESS_BUILDOUT.md)

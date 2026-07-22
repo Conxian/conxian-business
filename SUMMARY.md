@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [Archive Migration (Linear Virtual Office; ZSE)](ARCHIVE_MIGRATION.md)
+* [Archive Migration (authorized Linear workspace; ZSE)](ARCHIVE_MIGRATION.md)
 * [Conxian: one-page market narrative](docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md)
 * [Documentation Alignment Index](docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
 * [BOS business buildout (this repo)](docs/BOS_BUSINESS_BUILDOUT.md)
@@ -105,7 +105,7 @@
 * [Protocol adapter maturity lanes (CON-715)](docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md)
 * [BitVM2 & sBTC bridge target architecture (CON-464)](docs/architecture/BITVM2_SBTC_BRIDGE_TARGET_ARCHITECTURE.md)
 * [Conxian Nexus](conxian-nexus/docs/PRD.md)
-* [Conxian Gateway](conxian-gateway/PRD.md)
+* [`conxian-gateway` middleware](conxian-gateway/PRD.md)
 * [Sovereign Shard Spec](docs/SOVEREIGN_SHARD_SPEC.md)
 * [TEE Security Audit](docs/TEE_SECURITY_AUDIT.md)
 * [Audit Dashboard Spec](docs/DASHBOARD_SPEC.md)

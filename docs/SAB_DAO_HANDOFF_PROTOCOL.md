@@ -2,30 +2,32 @@
 
 This document defines the staged handoff protocol from personal bootstrap control to the Sovereign Advisory Board (SAB) and finally to the Decentralized Autonomous Organization (DAO).
 
+> **Boundary notice:** This is a protocol and signer-control transition, not a transfer of user or customer assets to Conxian-Labs or the SAB. User keys remain self-custodied, contract principals hold protocol state where applicable, DAO governance controls protocol policy, and regulated partners remain responsible for regulated custody.
+
 For canonical wallet classes and the more granular staged migration protocol, see [`docs/BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md).
 
-Stage mapping note: relative to `docs/BOS_WALLET_CONTROL_MODEL.md`, Stage 1 here ≈ Stage 0 (bootstrap allowed), Stage 2 here ≈ Stage 1–3 (SAB custody establishment + admin surface migration + automation cutover), and Stage 3 here ≈ Stage 4+ (DAO alignment).
+Stage mapping note: relative to `docs/BOS_WALLET_CONTROL_MODEL.md`, Stage 1 here ≈ Stage 0 (bootstrap allowed), Stage 2 here ≈ Stage 1–3 (SAB-approved protocol-control establishment + admin surface migration + automation cutover), and Stage 3 here ≈ Stage 4+ (DAO alignment).
 
 ## Handoff stages
 
 ### Stage 1: Personal bootstrap (Initial Deployment)
 - **Status:** Current (Bootstrap-only).
-- **Custodian:** Developer / Operator personal address.
-- **Authority:** Full administrative control for deployment, initialization, and testnet validation.
+- **Control holder:** Developer / operator personal address for deployment preparation only; this is not user-asset custody.
+- **Authority:** Temporary administrative control for deployment, initialization, and testnet validation.
 - **Risk:** High centralization / single-point-of-failure.
 - **Exit criterion:** Core protocol contracts deployed and verified on testnet; mainnet deployment plan finalized.
 
-### Stage 2: SAB-controlled custody (Operational Launch)
+### Stage 2: SAB-operated protocol controls (Operational Launch)
 - **Status:** Required for Initial Mainnet Release.
-- **Custodian:** SAB-controlled multi-sigs and system-controlled agents.
-- **Authority:** Operational execution, parameter adjustments within defined bounds, and initial fee capture.
+- **Control boundary:** SAB-approved multi-sigs and system signers for protocol and approved operational actions; no company or user-asset custody is implied.
+- **Authority:** Operational execution, parameter adjustments within defined bounds, and protocol-defined fee routing.
 - **Handoff action:** Transfer contract-owner roles to the appropriate SAB multi-sigs and emergency authorities as defined in [`docs/BOS_WALLET_CONTROL_MODEL.md`](./BOS_WALLET_CONTROL_MODEL.md).
-- **Exit criterion:** Protocol fees provably accruing to SAB-owned vaults; payout enablement (if any) follows separate readiness gates.
+- **Exit criterion:** Protocol fees provably accruing to protocol/DAO-defined contract vaults; payout enablement (if any) follows separate readiness gates.
 
 ### Stage 3: DAO-aligned governance (Long-term Decentralization)
 - **Status:** Post-launch maturity.
-- **Custodian:** Community-governed DAO and automated policy engines.
-- **Authority:** Root policy control, treasury rebalancing, and fee rate setting.
+- **Governance boundary:** Community-governed DAO and automated policy engines define protocol policy; this does not make Conxian-Labs a custodian.
+- **Authority:** Root protocol-policy control, contract-defined treasury parameters, and fee-rate setting.
 - **Handoff action:** Transfer root administrative authority to the DAO-controlled executor contract and timelock.
 - **Verification:** Continuous on-chain audit of state updates and policy changes.
 
@@ -43,10 +45,10 @@ Note: contract ownership transfer interfaces vary by contract. Some use a two-st
 | **V-1** | Verify that no bootstrap or personal address remains as a privileged role or recipient in the protocol. | Auditor | Successful `python3 scripts/verify_bos_production_boundary.py` + `python3 scripts/verify_contamination_guard.py` run, plus on-chain owner/admin and recipient confirmation for each core contract. |
 
 ## Rollback authority (Emergency Action)
-During the transition between Stage 2 and Stage 3, a **rollback authority** is maintained by the **Emergency Control** wallet class to revert changes if critical bugs are found. Once Stage 3 is fully achieved, this authority is strictly bounded by the DAO-controlled timelock (default 144 blocks).
+During the transition between Stage 2 and Stage 3, a **rollback control** is maintained by the **Emergency Control** wallet class to revert protocol configuration if critical bugs are found. Once Stage 3 is fully achieved, this authority is strictly bounded by the DAO-controlled timelock (default 144 blocks).
 
 ## DAO policy handoff
-After the custody handoff, the **Policy Handoff** ensures the DAO controls the parameters.
+After the control handoff, the **Policy Handoff** ensures the DAO controls the protocol parameters.
 1. The **SAB** remains the executor of the protocol.
 2. The **DAO** controls the policy (the "What") by setting parameters in the governance layer.
 3. The **Agents** execute the policy (the "How") via the BOS automation loop.

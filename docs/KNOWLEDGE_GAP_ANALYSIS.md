@@ -123,7 +123,7 @@ No comprehensive ISO 20022 integration specification exists in the knowledge bas
 | **Travel Rule** | VASP KYC data sharing | FATF guidance |
 | **Tokenized Settlement** | Wrapped BTC DTI mapping | ISO-24165 |
 
-### 3.3 Knowledge Map for Conxian Gateway
+### 3.3 Knowledge Map for Conxian middleware
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -131,7 +131,7 @@ No comprehensive ISO 20022 integration specification exists in the knowledge bas
 ├─────────────────────────────────────────────────────────────┤
 │  pain.001 (Customer Credit Transfer Init)                    │
 │       ↓                                                     │
-│  [Conxian Gateway: Validation, KYC, FX]                      │
+│  [Conxian middleware: Validation, KYC, FX]                      │
 │       ↓                                                     │
 │  pacs.008 (Financial Institution Credit Transfer)           │
 │       ↓                                                     │

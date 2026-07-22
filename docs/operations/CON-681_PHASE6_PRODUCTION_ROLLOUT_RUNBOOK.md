@@ -48,11 +48,11 @@ Every Phase 6 interface must report and alert on:
 
 | Interface (Phase 6) | Request rate alert | Error rate alert | p95 latency alert | Contract-violation counter alert | Owner |
 | --- | --- | --- | --- | --- | --- |
-| **Conxian Gateway MCP ingress** (`/api/v1/mcp`) | Warn: <70% or >130% of expected 15m baseline for 10m; Critical: <50% for 10m | Warn: >1.5% for 5m; Critical: >3% for 10m | Warn: >300ms for 10m; Critical: >500ms for 10m | Warn: >=1/15m; Critical: >=3/15m | Gateway on-call |
+| **Conxian middleware MCP ingress** (`/api/v1/mcp`) | Warn: <70% or >130% of expected 15m baseline for 10m; Critical: <50% for 10m | Warn: >1.5% for 5m; Critical: >3% for 10m | Warn: >300ms for 10m; Critical: >500ms for 10m | Warn: >=1/15m; Critical: >=3/15m | Gateway on-call |
 | **Gateway -> Protocol contract execution path** | Warn: >120% expected signed-write volume for 10m | Warn: >1% reverted or failed writes for 5m; Critical: >2% for 10m | Warn: >450ms for 10m; Critical: >700ms for 10m | Critical: >=1 high-severity ABI/trait violation in 5m | Protocol on-call |
 | **Gateway -> Nexus state reconciliation API** | Warn: <80% expected reconciliation pulls for 10m | Warn: >1% reconciliation failures for 5m; Critical: >2.5% for 10m | Warn: >400ms for 10m; Critical: >650ms for 10m | Warn: >=1 schema contract violation/15m; Critical: >=2/15m | Nexus on-call |
 | **Conxius Wallet/Conxian UI status-query interface** | Warn: >140% baseline for 10m (traffic surge) | Warn: >2% for 5m; Critical: >4% for 10m | Warn: >350ms for 10m; Critical: >600ms for 10m | Warn: >=1 response contract violation/15m; Critical: >=3/15m | Client surface owner |
-| **Conxius Enclave SDK attestation/session verification interface** | Warn: <75% expected successful attestations for 10m | Warn: >1% attestation/session failures for 5m; Critical: >2% for 10m | Warn: >500ms for 10m; Critical: >800ms for 10m | Critical: >=1 policy-boundary violation in 5m | Enclave on-call |
+| **Conxius enclave abstractions attestation/session verification interface** | Warn: <75% expected successful attestations for 10m | Warn: >1% attestation/session failures for 5m; Critical: >2% for 10m | Warn: >500ms for 10m; Critical: >800ms for 10m | Critical: >=1 policy-boundary violation in 5m | Enclave on-call |
 
 If any critical threshold is reached during `Controlled cohort` or `Broad enablement`, initiate rollback decisioning immediately per Section 4.
 

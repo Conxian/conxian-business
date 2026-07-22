@@ -83,8 +83,8 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 > **Evidence**: [conxian-nexus/src/api/rest.rs], [lib-conxian-core]
 
 #### 2.4 Ecosystem Repository Map
-- Flagship repos: Conxius Wallet, Conxian Gateway, Conxian Core Protocol, Conxian Labs Site, Conxius Platform
-- Supporting repos: Nexus, lib-conxian-core, Conxius Enclave SDK, Conxius Orbit, Conxian UI
+- Flagship repos: Conxius Wallet, Conxian middleware, Conxian Core Protocol, Conxian Labs Site, Conxius Platform
+- Supporting repos: Nexus, lib-conxian-core, Conxius enclave abstractions, Conxius Orbit, Conxian UI
 
 > **Evidence**: [REPO_PORTFOLIO.md]
 
@@ -206,7 +206,7 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 
 ---
 
-### 7) Compliance Layer: Conxian Gateway (2 pages)
+### 7) Compliance Layer: Conxian middleware (2 pages)
 
 #### 7.1 ISO 20022 Integration
 - pacs.008 message wrapping via Nexus ERP Adapter
@@ -257,9 +257,9 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 |-----------|--------|----------|
 | Conxius Wallet | Stable (v1.9.2) | CI green; versioned releases |
 | Conxian Nexus | Beta (v0.4.17) | CI green; stubs removed; oracle active |
-| Conxian Gateway | Beta | CI green; ISO 20022 pipeline active |
+| Conxian middleware | Beta | CI green; ISO 20022 pipeline active |
 | ConxianCSF | Pre-mainnet (Go pending ALEX) | All P0 blockers remediated |
-| Conxius Enclave SDK | Beta | Hardware enclave abstractions |
+| Conxius enclave abstractions | Beta | Hardware enclave abstractions |
 | lib-conxian-core | Beta | Clippy + audit enforced |
 
 > **Evidence**: [TRUST_AND_READINESS_VERIFICATION.md §2]

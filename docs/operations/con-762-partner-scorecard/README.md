@@ -2,7 +2,7 @@
 
 ## Status: Migrated to Linear (ZSE)
 
-All canonical partner scorecard data — baseline dimension scores, weighted partner scores, first-wave recommendations, scenario weight profiles, and build-vs-partner decisions — has been migrated to the Conxian Linear workspace under CON-762.
+All canonical partner scorecard data — baseline dimension scores, weighted partner scores, first-wave recommendations, scenario weight profiles, and build-vs-partner decisions — has been migrated to the authorized Linear workspace under CON-762.
 
 The CSV files in this directory tree are ZSE stubs retained for link continuity.
 

@@ -4,7 +4,7 @@
 
 The **Nakamoto Guardian** is the architectural enforcement layer of the Conxian Business Operations System (BOS).
 
-This repository is public. Detailed operational enforcement rules and internal compliance reporting are maintained in the sovereign coordination layer.
+This repository is public. Detailed operational enforcement rules and internal compliance reporting are maintained in the authorized Linear workspace.
 
 ## Purpose
 
@@ -14,7 +14,7 @@ This repository is public. Detailed operational enforcement rules and internal c
 
 ## Status
 
-active — Public-safe enforcement and audit artifacts live here; detailed enforcement rules and compliance reporting are maintained in the sovereign coordination layer.
+active — Public-safe enforcement and audit artifacts live here; detailed enforcement rules and compliance reporting are maintained in the authorized Linear workspace.
 
 ## Canonical documentation
 

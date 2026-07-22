@@ -26,7 +26,7 @@
 
 Conxian Labs operates at the intersection of three massive secular trends: **(1)** Bitcoin's emergence as a programmable asset layer via L2s (sBTC, Stacks Nakamoto), **(2)** the Creator Economy's explosion to $234-250B+, and **(3)** the sovereign demand for sovereign, non-custodial financial infrastructure.
 
-**The Core Thesis:** Conxian is building the *Sovereign Finance Layer for Bitcoin* — a vertically integrated ecosystem spanning hardware-backed security (Conxius Enclave SDK), middleware compliance pipes (Conxian Gateway), state verification (Conxian Nexus), mobile sovereignty (Conxius Wallet), deployment tooling (conxius_orbit), and smart contract protocols (Conxian core contracts).
+**The Core Thesis:** Conxian is building the *Sovereign Finance Layer for Bitcoin* — a vertically integrated ecosystem spanning hardware-backed security (Conxius enclave abstractions), middleware compliance pipes (Conxian middleware), state verification (Conxian Nexus), mobile sovereignty (Conxius Wallet), deployment tooling (conxius-orbit), and smart contract protocols (Conxian core contracts).
 
 **Verdict: VIABLE — with critical sequencing requirements.** The ecosystem has strong technical fundamentals, a differentiated architecture (hardware-enforced sovereignty vs. software-only competitors), and a dual-brand strategy that addresses both sovereign (Conxian) and retail/developer (Conxius) markets. However, the sprawl of 10+ active sub-projects creates execution risk. Phase 7's sovereign redesign (NixOS control plane, BFF topology, local-first) is the right architectural direction but adds transitional complexity.
 
@@ -81,11 +81,11 @@ Realistic Year 1-2 capture:
 
 | Project | Stage | PMF Score | Evidence |
 |:---|---|:---:|---|
-| **Conxian Gateway** | Late Beta / Production | 7/10 | 39/39 requirements complete; sovereign features (ISO 20022, WIF, BitVM2, CJCS); lacks real enterprise customers |
+| **Conxian middleware** | Late Beta / Production | 7/10 | 39/39 requirements complete; sovereign features (ISO 20022, WIF, BitVM2, CJCS); lacks real enterprise customers |
 | **Conxian Nexus** | Late Beta | 6/10 | MMR persistence, Nakamoto-aware, FSOC sequencer; needs real-world validation beyond simnet |
 | **Conxius Wallet** | Production | 8/10 | 20+ protocol integrations, TEE/StrongBox, native migration in progress; strong UX foundation |
-| **Conxius Enclave SDK** | Beta | 5/10 | Solid Rust/WASM core; still using "Conclave" branding (deprecated); needs market validation |
-| **conxius_orbit** | Beta | 6/10 | Full CLI/TUI feature set; deprecated "conxius_orbit" branding; strong dev UX |
+| **Conxius enclave abstractions** | Beta | 5/10 | Solid Rust/WASM core; still using "Conclave" branding (deprecated); needs market validation |
+| **conxius-orbit** | Beta | 6/10 | Full CLI/TUI feature set; deprecated "conxius-orbit" branding; strong dev UX |
 | **Conxius Platform** | Transitional | 4/10 | In Phase 7 sovereign redesign; current centralized orchestration is anti-pattern |
 | **Conxian UI** | Production | 7/10 | Spec-driven design, micro-frontend ready, Ivory Foundation design system |
 | **lib-conxian-core** | Production | 8/10 | Shared cryptographic primitives, Wasm-ready, the "unified Vault SDK" vision |
@@ -96,7 +96,7 @@ Realistic Year 1-2 capture:
 |:---|---|:---|
 | **No real enterprise customers** | HIGH | Need 3-5 design partners in financial services |
 | **Conxius Wallet Android-only** | MEDIUM | iOS is critical for 60%+ of premium wallet users |
-| **Brand confusion (Conclave/conxius_orbit legacy)** | MEDIUM | Enforce AGENTS.md dual-brand rules consistently |
+| **Brand confusion (Conclave/conxius-orbit legacy)** | MEDIUM | Enforce AGENTS.md dual-brand rules consistently |
 | **Multi-token UX complexity** | HIGH | Token consolidation to 1 token + ERC-1155 NFT/metadata per prior research |
 | **Phase 7 transition in-flight** | MEDIUM | NixOS + BFF migration adds short-term complexity |
 | **No live mainnet TVL** | HIGH | Stacks contracts on testnet; need mainnet deployment |
@@ -125,7 +125,7 @@ The ecosystem follows a **hub-and-spoke-to-sovereign transition**:
                     └────────┬────────┘
                              │ PSBT / Enclave Auth
                     ┌────────▼────────┐
-                    │  Conxian Gateway │ (Middleware Pipe)
+                    │  Conxian middleware │ (Middleware Pipe)
                     │  (Revenue: B2B)  │
                     └────────┬────────┘
                              │
@@ -214,7 +214,7 @@ Examining codebase across 10+ submodules:
 
 5. **Phase 7 Transitional Risk**: The migration from centralized orchestration to NixOS/BFF is architecturally correct but introduces operational complexity and potential instability during transition.
 
-6. **Brand Legacy Issues**: "Conxius Enclave SDK" (vs. Conxius Enclave SDK) and "conxius_orbit" (vs. conxius_orbit) brand remnants create confusion. Deprecated names still appear in code and READMEs.
+6. **Brand Legacy Issues**: "Conxius enclave abstractions" (vs. Conxius enclave abstractions) and "conxius-orbit" (vs. conxius-orbit) brand remnants create confusion. Deprecated names still appear in code and READMEs.
 
 7. **Bitcoin L2 Market Contraction**: 74% TVL drop in Bitcoin L2s from peak ($9.1B → $2.4B outside Babylon). Market timing risk is real.
 
@@ -293,9 +293,9 @@ Examining codebase across 10+ submodules:
 ### 7.1 Primary Moat: Hardware-Backed Sovereignty Stack
 
 The combination of:
-- **Conxius Enclave SDK** (Rust/WASM, TEE/StrongBox)
+- **Conxius enclave abstractions** (Rust/WASM, TEE/StrongBox)
 - **Conxius Wallet** (Android native, biometric + StrongBox)
-- **Conxian Gateway** (TEE attestation verification)
+- **Conxian middleware** (TEE attestation verification)
 
 ...creates a *hardware-enforced trust chain* that software-only competitors cannot replicate without building their own TEE integration. This is a **3-5 year technology moat**.
 
@@ -345,7 +345,7 @@ The vision of lib-conxian-core as the *canonical shared library* compiled to Was
 ### 8.3 Stacks Dependency Risk Score: MEDIUM (5/10)
 
 **Risk:** If Stacks adoption stalls or a critical vulnerability emerges, the Conxian protocol layer (DEX, sBTC vaults, governance) is directly impacted.
-**Mitigation:** Conxian Gateway already supports Rootstock, Liquid, BOB, and other Bitcoin layers. The architecture supports multi-chain fallback, but Stacks remains the primary execution layer.
+**Mitigation:** Conxian middleware already supports Rootstock, Liquid, BOB, and other Bitcoin layers. The architecture supports multi-chain fallback, but Stacks remains the primary execution layer.
 
 ---
 
@@ -474,7 +474,7 @@ The vision of lib-conxian-core as the *canonical shared library* compiled to Was
 
 | Function | Provider | Estimated Cost | Rationale |
 |:---|---|:---:|:---|
-| **Conxian Gateway API** | Oracle Cloud (Free Tier) + Hetzner (for scale) | $0-200/mo | Free tier covers initial load; Hetzner is cheap EU hosting |
+| **Conxian middleware API** | Oracle Cloud (Free Tier) + Hetzner (for scale) | $0-200/mo | Free tier covers initial load; Hetzner is cheap EU hosting |
 | **Conxius Wallet backend** | Oracle Cloud | $0-100/mo | Lightweight; push notifications, sync |
 | **CI/CD / Build Pipelines** | GitHub Actions + self-hosted runner | $0-50/mo | GitHub Actions free for public repos |
 | **Frontend (Conxian UI)** | Vercel / Cloudflare Pages | $0-50/mo | Free tier for static sites |
@@ -484,8 +484,8 @@ The vision of lib-conxian-core as the *canonical shared library* compiled to Was
 
 | Function | Model | Why |
 |:---|---|:---|
-| **conxius_orbit (CLI deployer)** | Open-source, self-hosted | DevOps teams run their own instance |
-| **Conxius Enclave SDK** | Open-source + B2B licensing | Community validates; enterprise pays for support |
+| **conxius-orbit (CLI deployer)** | Open-source, self-hosted | DevOps teams run their own instance |
+| **Conxius enclave abstractions** | Open-source + B2B licensing | Community validates; enterprise pays for support |
 | **Stacks contract devnet** | Anyone can run | Lower barrier to entry for developers |
 | **Telemetry / Nostr** | Nostr relays (community) | Decentralized telemetry per Phase 7 design |
 
@@ -517,9 +517,9 @@ Based on Unified Theory v2:
 
 | Project | Velocity | Rationale | Key Milestones | Resource Allocation |
 |:---|---|:---|:---|---:|
-| **Conxius Enclave SDK** | FAST — Ship immediately | Primary sellable primitive; B2B licensing revenue | ✅ v1.0 launch | 40% |
+| **Conxius enclave abstractions** | FAST — Ship immediately | Primary sellable primitive; B2B licensing revenue | ✅ v1.0 launch | 40% |
 | **Conxius Wallet (Android)** | FAST — Complete native migration | Consumer adoption; drives SDK validation | 🔄 Native migration complete | 25% |
-| **Conxian Gateway** | FAST — Close B2B pipeline | Sovereign revenue; 39/39 req complete | Find 3-5 design partners | 20% |
+| **Conxian middleware** | FAST — Close B2B pipeline | Sovereign revenue; 39/39 req complete | Find 3-5 design partners | 20% |
 
 **Why these three first:**
 - They are the most mature (closest to production)
@@ -532,7 +532,7 @@ Based on Unified Theory v2:
 |:---|---|:---|:---|---:|
 | **Conxian Nexus** | MEDIUM — Stabilize + mainnet | Required for state proofs; currently solid | Mainnet deployment + test suite | 5% (maintenance) |
 | **lib-conxian-core** | MEDIUM — Wasm SDK unification | The "Unified Vault SDK" vision | Wasm compilation complete; SDK docs | 3% (shared) |
-| **conxius_orbit** | MEDIUM — Release + community | Dev tooling; grows ecosystem | v1.0 release + Stacks dev marketing | 3% (maintenance) |
+| **conxius-orbit** | MEDIUM — Release + community | Dev tooling; grows ecosystem | v1.0 release + Stacks dev marketing | 3% (maintenance) |
 
 **Why medium velocity:**
 - These are important but not yet revenue-generating
@@ -583,10 +583,10 @@ Now        3mo        6mo        9mo        12mo       18mo       24mo
 |:---|---:|:---:|:---:|
 | **Enclave SDK** | 10% | **40%** | +30% |
 | **Conxius Wallet** | 20% | **25%** | +5% |
-| **Conxian Gateway** | 15% | **20%** | +5% |
+| **Conxian middleware** | 15% | **20%** | +5% |
 | **Conxian Nexus** | 10% | **5%** | -5% |
 | **lib-conxian-core** | 5% | **3%** | -2% |
-| **conxius_orbit** | 5% | **3%** | -2% |
+| **conxius-orbit** | 5% | **3%** | -2% |
 | **Conxius Platform** | 15% | **2%** | -13% |
 | **Conxian UI** | 10% | **1%** | -9% |
 | **Conxian Labs Site** | 5% | **1%** | -4% |
@@ -639,11 +639,11 @@ Target velocity is **2x current** — achievable through focus reduction and AI 
 
 ### 14.1 Immediate Actions (Next 30 Days)
 
-1. **Restructure to 3-core focus**: Enclave SDK + Conxius Wallet + Conxian Gateway. All other projects enter maintenance/paused mode.
+1. **Restructure to 3-core focus**: Enclave SDK + Conxius Wallet + Conxian middleware. All other projects enter maintenance/paused mode.
 2. **Complete token consolidation spec**: Finalize 1 fungible token + ERC-1155 NFT/metadata architecture.
 3. **Apply for 5 grants simultaneously**: Stacks Foundation, GitHub OSS Fund, Oracle for Startups, AWS Credits, Alpha-Omega.
 4. **Deploy own Stacks + Bitcoin node** on mini-PC hardware ($1,500-2,500 CAPEX).
-5. **Launch Conxius Enclave SDK v1.0** with B2B licensing page and developer docs.
+5. **Launch Conxius enclave abstractions v1.0** with B2B licensing page and developer docs.
 6. **Begin Conxius Wallet iOS port** or identify iOS wallet integration partner.
 7. **Identify 20 target enterprise design partners** in South African financial services and UK/European crypto-friendly institutions.
 
@@ -677,12 +677,12 @@ Target velocity is **2x current** — achievable through focus reduction and AI 
 
 | Project | Brand | Tier | Stage | Revenue Model | Priority |
 |:---|---|:---:|:---:|:---|---:|
-| Conxius Enclave SDK | Conxius | Core | Beta | B2B Licensing | 🔴 NOW |
+| Conxius enclave abstractions | Conxius | Core | Beta | B2B Licensing | 🔴 NOW |
 | Conxius Wallet | Conxius | Core | Production | Premium Subs | 🔴 NOW |
-| Conxian Gateway | Conxian | Core | Late Beta | B2B SaaS | 🔴 NOW |
+| Conxian middleware | Conxian | Core | Late Beta | B2B SaaS | 🔴 NOW |
 | Conxian Nexus | Conxian | Enabler | Beta | Infrastructure | 🟡 SOON |
 | lib-conxian-core | Shared | Enabler | Production | Shared | 🟡 SOON |
-| conxius_orbit | Conxius | Enabler | Beta | OSS + Support | 🟡 SOON |
+| conxius-orbit | Conxius | Enabler | Beta | OSS + Support | 🟡 SOON |
 | Conxius Platform | Conxius | Strategic | Transitional | Internal | 🔵 LATER |
 | Conxian UI | Conxian | Strategic | Production | Internal | 🔵 LATER |
 | Conxian Labs Site | Conxian | Strategic | Production | Marketing | 🔵 LATER |

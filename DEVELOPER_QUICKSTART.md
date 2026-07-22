@@ -65,7 +65,7 @@ cargo sqlx prepare
 cargo run --bin conxian-nexus
 ```
 
-### Conxian Gateway
+### `conxian-gateway` middleware
 Handles sovereign B2B traffic and compliance.
 
 Gateway defaults to the public Bitcoin mainnet RPC endpoint `https://bitcoin-rpc.publicnode.com` whenever `BITCOIN_RPC_URL` is unset. This default is only appropriate for non-production, non-funds-bearing local development and low-traffic open-tier environments (see [environment tier definitions](docs/BOS_BUSINESS_BUILDOUT.md)).

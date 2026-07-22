@@ -42,7 +42,7 @@ This document inventories **every actionable item** from the full conversation h
 
 **Priority: HIGH** — Revenue-generating core (85% resource allocation)
 
-### B1: Conxius Enclave SDK (40% Allocation)
+### B1: Conxius enclave abstractions (40% Allocation)
 
 | # | Issue | Type | Priority | Source | Existing Issue |
 |:---|:---|---|:---:|:---|:---:|
@@ -64,7 +64,7 @@ This document inventories **every actionable item** from the full conversation h
 | B2-05 | **Push notification backend** (for transaction alerts) | FEATURE | MEDIUM | Infra recommendation | — |
 | B2-06 | **Multi-language support** (English, Afrikaans, Zulu, Xhosa — SA market) | FEATURE | LOW | Market fit | — |
 
-### B3: Conxian Gateway (20% Allocation)
+### B3: Conxian middleware (20% Allocation)
 
 | # | Issue | Type | Priority | Source | Existing Issue |
 |:---|:---|---|:---:|:---|:---:|
