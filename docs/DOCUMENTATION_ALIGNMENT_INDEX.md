@@ -162,6 +162,7 @@ These are the documents most likely to answer “what are we building?” and �
 | `conxian-gateway/PRD.md` | Canonical | Public-safe | `conxian-gateway` PRD (sovereign compliance pipe). |
 | `conxian-nexus/docs/PRD.md` | Canonical | Public-safe | Nexus PRD (Glass Node). |
 | `lib-conxian-core/docs/PRD.md` | Canonical | Public-safe | Core library PRD (shared models + gateway alignment). |
+| `docs/CON-1512_HARDWARE_SIGNING_ATTESTATION_PHASE_PLAN.md` | Canonical | Public-safe | Current CON-1512 research, weighted gap map, split-provider decision, dependency graph, and phase/acceptance boundaries for hardware-backed signing and attestation. |
 | `docs/CONXIUS_ENCLAVE_SDK_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and internal-only vs public-safe separation guidance for the SDK. |
 | `docs/CONXIUS_PLATFORM_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxius-platform. |
 | `docs/CONXIAN_PROTOCOL_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for Conxian protocol. |
