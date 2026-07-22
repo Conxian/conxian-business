@@ -1,8 +1,12 @@
-# Mainnet readiness checklist — lib-conclave-sdk (CON-171)
+# Mainnet readiness checklist — enclave SDK (CON-171)
 
-## Status: READY FOR MAINNET (v1.6.0)
+## Status: Beta / conditional — not approved for unqualified production signing or settlement
 
-This checklist tracks the mainnet readiness for the `lib-conclave-sdk` repository.
+This checklist tracks readiness evidence for the `conxius-enclave-sdk` repository. It is a gate record, not an approval for unqualified production use.
+
+The enclave SDK remains **Beta / conditional**. Mainnet progression, production signing, and settlement remain blocked unless the residual review, service-side, deployment, and release gates are separately completed.
+
+The CON-1518 telemetry implementation scope landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210) at merge commit `593af0d9120b612de5b2817866b0528e5c877570`, and this business repo pins that exact SHA. See the public-safe [CON-1518 telemetry privacy and operational evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md) for the minimized payload, transport, bounded delivery, non-gating, monitoring, rollback, and evidence boundaries. This does not close independent review, service-side retention/deletion evidence, deployed monitoring/recovery evidence, or final production acceptance; the SDK remains **Beta / conditional**.
 
 ### 1) Governance + public repo standards
 - [x] README includes `## Purpose`, `## Status`, `## Ownership`, and `## Releases`.
@@ -30,10 +34,11 @@ This checklist tracks the mainnet readiness for the `lib-conclave-sdk` repositor
 
 ### 5) Canonical trackers
 - Sovereign Coordination Layer: https://sovereign.conxian.com/issue/CON-171
-- GitHub repo: https://github.com/Conxian/lib-conclave-sdk
+- GitHub repo: https://github.com/Conxian/conxius-enclave-sdk
 
 ## Related work
 
-- Release hygiene: https://sovereign.conxian.com/issue/CON-214/release-hygiene-lib-conclave-sdk
-- Secret/artifact cleanup: https://sovereign.conxian.com/issue/CON-215/secret-and-artifact-cleanup-lib-conclave-sdk
-- Security hardening: https://sovereign.conxian.com/issue/CON-210/security-hardening-lib-conclave-sdk
+- Telemetry privacy and operations: [CON-1518 evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md)
+- Release hygiene (historical tracker slug): https://sovereign.conxian.com/issue/CON-214/release-hygiene-lib-conclave-sdk
+- Secret/artifact cleanup (historical tracker slug): https://sovereign.conxian.com/issue/CON-215/secret-and-artifact-cleanup-lib-conclave-sdk
+- Security hardening (historical tracker slug): https://sovereign.conxian.com/issue/CON-210/security-hardening-lib-conclave-sdk

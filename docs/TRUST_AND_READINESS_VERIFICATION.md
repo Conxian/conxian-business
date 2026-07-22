@@ -53,7 +53,7 @@ Every claim in the audit below uses one of these classifications:
 
 **Verdict**: ✅ Trust language matches implementation. Honest about "active development" status. Upgrade to "Beta" label explicit.
 
-### 2.3 Conxian Gateway (`conxian-gateway`)
+### 2.3 Gateway service (`conxian-gateway`)
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
@@ -83,6 +83,10 @@ Every claim in the audit below uses one of these classifications:
 **Verdict**: ⚠️ Cannot verify — submodule not initialized. Deploy-docs CI workflow runs successfully.
 
 ---
+
+### 2.6 `conxius-enclave-sdk` — CON-1518 telemetry addendum
+
+**CON-1518 telemetry addendum (2026-07-21):** The privacy and delivery implementation landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210) at `593af0d9120b612de5b2817866b0528e5c877570`, and the business repo now pins that exact SHA. The public-safe [CON-1518 evidence record](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md) documents minimized payloads, HTTPS/config validation, bounded timeout/retry, failure observability, rail non-gating behavior, and operational boundaries. Independent review, service-side retention/deletion evidence, deployed monitoring/recovery evidence, and final production gates remain open; no release-candidate or production-acceptance claim is made.
 
 ## 3) Cross-Cutting Trust Pillars
 
@@ -154,7 +158,7 @@ The Conxian BOS is a **sovereign-first, non-custodial** financial infrastructure
 - **Proven CI pipeline**: 9/9 green across all suites (B2B, B2C, Core, Gateway, Hygiene)
 - **Zero Secret Egress**: No secrets in Git; contamination guard enforces production principal hygiene
 - **Verifiable state**: Cryptographic MMR proofs and BitVM2 Groth16 verification for cross-chain state
-- **Honest maturity labeling**: Conxius Wallet is Stable/Production-ready; Nexus and Gateway are Beta; ConxianCSF mainnet is gated on ALEX funding
+- **Honest maturity labeling**: Conxius Wallet is Stable/Production-ready; Nexus and the gateway service are Beta; ConxianCSF mainnet is gated on ALEX funding
 - **Clear boundary model**: Public-safe architecture docs; internal-only operational detail in Linear per ZSE
 
 **What we do not claim**: third-party audits, production SLAs, full decentralization, or payable bug bounties. See [Section 4](#4-what-is-not-claimed-trust-boundary) for the complete non-claim boundary.
@@ -169,3 +173,4 @@ The Conxian BOS is a **sovereign-first, non-custodial** financial infrastructure
 - [Repo Portfolio](REPO_PORTFOLIO.md)
 - [Portfolio Business-Unit Map](PORTFOLIO_BUSINESS_UNIT_MAP.md)
 - [Developer Quickstart](DEVELOPER_QUICKSTART.md)
+- [CON-1518 telemetry privacy and operational evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md)

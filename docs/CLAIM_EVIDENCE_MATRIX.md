@@ -20,6 +20,10 @@ Provide a reusable decision surface for evaluating whether a technical or produc
 - **Production-enforced**: protected by runtime controls, release policy, and readiness gates.
 - **Externally verified**: independently reviewed or audited.
 
+### CON-1518 telemetry addendum — 2026-07-21
+
+The telemetry implementation scope landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210) at merge commit `593af0d9120b612de5b2817866b0528e5c877570`. The business repo pins that exact SHA and records the public-safe privacy, delivery, monitoring, rollback, and evidence boundary in [CON-1518 telemetry privacy and operational evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md). This closes the upstream implementation scope only; independent review, service-side retention/deletion evidence, deployed monitoring/recovery evidence, and final production gates remain open. The capability remains **Beta / conditional**.
+
 ## Current matrix
 
 | Surface | Claim | Current evidence | Public-safe status | Notes |
@@ -29,6 +33,7 @@ Provide a reusable decision surface for evaluating whether a technical or produc
 | `conxius-wallet` | DLC execution is production-ready | Code-visible, but simulated path inspected | Not yet safe | Simulated flow is now debug-only and fails closed in release builds. |
 | `conxius-enclave-sdk` | Hardware-backed signing architecture exists | Code-visible | Implemented | Real signing code exists. |
 | `conxius-enclave-sdk` | Active production attestation is hardware-bound | Code-visible, mixed with software-driver simulation | Not yet safe | Depends on hardware-bound drivers, not just repo-visible software paths. |
+| `conxius-enclave-sdk` | Telemetry is privacy-minimized and non-gating | Upstream PR #210 at `593af0d9120b612de5b2817866b0528e5c877570`; exact business-repo gitlink; public-safe CON-1518 evidence doc | Implemented, not production evidence | Payload minimization, HTTPS/config validation, bounded delivery, failure observability, and rail non-gating are implemented upstream. Independent review, service-side retention/deletion, deployed monitoring/recovery, and final acceptance remain open. |
 | `conxian-gateway` | Institutional middleware runtime exists | Code-visible, Release-visible | Implemented | Real runtime code and release history exist. |
 | `conxian-gateway` | All critical verification paths are production-enforced | Code-visible with simulated validation references | Not yet safe | Must stay tied to readiness gates and environment-backed verification. |
 | `Conxian` protocol | Material protocol implementation exists | Code-visible | Implemented | Real Clarity and sBTC-related surface exists. |
