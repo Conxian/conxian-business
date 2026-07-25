@@ -10,10 +10,11 @@ from contextlib import contextmanager
 from pathlib import Path
 from unittest import mock
 
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
 VERIFIER_PATH = REPO_ROOT / "scripts" / "verify_knowledge_retention.py"
-SPEC = importlib.util.spec_from_file_location("verify_knowledge_retention", VERIFIER_PATH)
+SPEC = importlib.util.spec_from_file_location(
+    "verify_knowledge_retention", VERIFIER_PATH
+)
 assert SPEC and SPEC.loader
 verifier = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(verifier)
@@ -46,9 +47,11 @@ class KnowledgeRetentionVerifierTests(unittest.TestCase):
         manifest = {
             "CON-306": {
                 "description": "Temporary test migration record",
-                "paths": paths
-                if paths is not None
-                else ["internal/strategy/**", "archive/**"],
+                "paths": (
+                    paths
+                    if paths is not None
+                    else ["internal/strategy/**", "archive/**"]
+                ),
             }
         }
         self._write("audit/migration_manifest.json", json.dumps(manifest))
@@ -69,7 +72,23 @@ class KnowledgeRetentionVerifierTests(unittest.TestCase):
             verifier.verify()
 
     def test_missing_manifest_fails_closed(self) -> None:
-        with self._in_repo(), self.assertRaisesRegex(RuntimeError, "manifest not found"):
+        with self._in_repo(), self.assertRaisesRegex(
+            RuntimeError, "manifest not found"
+        ):
+            verifier.verify()
+
+    def test_invalid_manifest_json_fails_closed(self) -> None:
+        self._write("audit/migration_manifest.json", "not valid JSON")
+
+        with self._in_repo(), self.assertRaisesRegex(RuntimeError, "not valid JSON"):
+            verifier.verify()
+
+    def test_invalid_manifest_top_level_shape_fails_closed(self) -> None:
+        self._write("audit/migration_manifest.json", json.dumps([]))
+
+        with self._in_repo(), self.assertRaisesRegex(
+            RuntimeError, "must be a JSON object"
+        ):
             verifier.verify()
 
     def test_required_coverage_missing_fails(self) -> None:
@@ -83,8 +102,22 @@ class KnowledgeRetentionVerifierTests(unittest.TestCase):
         self._write("archive/placeholder.md", "innocuous test content\n")
         self._git("add", "audit/migration_manifest.json", "archive/placeholder.md")
 
-        with self._in_repo(), self.assertRaisesRegex(RuntimeError, "tracked sensitive paths"):
+        with self._in_repo(), self.assertRaisesRegex(
+            RuntimeError, "tracked sensitive paths"
+        ):
             verifier.verify()
+
+    def test_untracked_not_ignored_sensitive_file_fails_closed(self) -> None:
+        self._write_manifest()
+        self._write("archive/pending/note.md", "innocuous test content\n")
+
+        with self._in_repo(), self.assertRaises(RuntimeError) as raised:
+            verifier.verify()
+
+        message = str(raised.exception)
+        self.assertIn("not ignored by git", message)
+        self.assertIn("archive/pending/note.md", message)
+        self.assertIn("Add these paths to .gitignore (or remove them)", message)
 
     def test_ignored_but_unmanifested_file_fails(self) -> None:
         self._write_manifest()
@@ -97,6 +130,14 @@ class KnowledgeRetentionVerifierTests(unittest.TestCase):
             self._in_repo(),
             self.assertRaisesRegex(RuntimeError, "not covered"),
         ):
+            verifier.verify()
+
+    def test_double_star_covers_nested_sensitive_root_content(self) -> None:
+        self._write_manifest()
+        self._write(".gitignore", "archive/\n")
+        self._write("archive/region/year/record.md", "innocuous test content\n")
+
+        with self._in_repo():
             verifier.verify()
 
 

@@ -125,6 +125,9 @@ jobs:
     - name: Verify knowledge retention (ZSE)
       run: |
         python3 scripts/verify_knowledge_retention.py
+    - name: Run knowledge retention regression suite
+      run: |
+        python3 -m unittest -v tests/test_verify_knowledge_retention.py
     - name: Verify tracked artifacts
       if: ${{ hashFiles('scripts/verify_tracked_artifacts.py') != '' }}
       run: |
