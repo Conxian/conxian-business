@@ -7,7 +7,7 @@ This document synthesizes findings from the Conxian Labs knowledge base against 
 
 **Critical Finding:** The protocol has fundamental architectural issues that cannot be resolved through documentation alone. These require code-level remediation aligned with Clarity best practices, DAO governance patterns, and the Conxian Unified Theory v2.0.
 
-> **Current-status boundary (2026-07-21):** Parts I–VI preserve the 2026-07-06 historical baseline and original upgrade plan. The BOS graph now exists and the governance inventory has been reconciled in [Part VII](#part-vii-con-1421-governance-stub-reconciliation-2026-07-21); do not read the older “missing” or blanket “16 stubs” statements as current closure or inventory proof.
+> **Current-status boundary (2026-07-25):** Parts I–VI preserve the 2026-07-06 historical baseline and original upgrade plan. The BOS graph now exists, the governance inventory has been reconciled in [Part VII](#part-vii-con-1421-governance-stub-reconciliation-2026-07-21), and the revenue-collection state has been reconciled in [Part VIII](#part-viii-con-1542-revenue-automation-handoff-2026-07-25). Do not read older “missing,” blanket “16 stubs,” or wholly absent fee-collection statements as current closure or inventory proof.
 
 ---
 
@@ -41,7 +41,7 @@ The 2026-07-06 baseline recorded the mandated BOS Knowledge Graph as missing. It
 
 | Issue | Severity | Required Knowledge | Current Coverage |
 |-------|----------|-------------------|-----------------|
-| `collect-protocol-fees` no-ops | CRITICAL | Clarity tokenomics patterns | ❌ Missing |
+| Historical `collect-protocol-fees` no-ops | CRITICAL | Clarity tokenomics patterns and deployment evidence | Partially remediated: collector and lending migration merged; actual DEX settlement and live deployment evidence remain unresolved (Part VIII) |
 | `CXLP` mint/burn broken | CRITICAL | SIP-010 trait compliance | ❌ Missing |
 | `CXD` no peg mechanism | CRITICAL | Stablecoin design patterns | ❌ Missing |
 | No upgrade mechanism | CRITICAL | Clarity upgrade patterns | ❌ Missing |
@@ -90,21 +90,11 @@ Based on research findings from Stacks documentation and DAO frameworks:
 **Source Evidence:** CertiK Clarity best practices checklist
 
 #### Gap #3: Fee Collection Patterns
-**Current State:** `collect-protocol-fees` returns `(ok true)` without actual token transfer.
+**Historical State:** The 2026-07-06 baseline found `collect-protocol-fees` paths that returned `(ok true)` without an actual token transfer.
 
-**Required Pattern:**
-```clarity
-;; SECURE: Real fee collection with SIP-010
-(define-public (collect-protocol-fees (token <sip-010-ft-trait>))
-  (let (
-    (fee-amount (unwrap! (get-fee-accumulated token) ERR_NO_FEES))
-  )
-    (asserts! (is-eq tx-sender (var-get fee-collector)) ERR_UNAUTHORIZED)
-    (as-contract (contract-call? token transfer fee-amount tx-sender (var-get treasury) none))
-    (ok fee-amount)
-  )
-)
-```
+**Evidence-accurate State (2026-07-25):** The canonical scheduled collector in [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544) and lending-interest migration in [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556) are merged. Actual DEX settlement remains unresolved. [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) is open at commit [`6d2f66ec5c6927bd05f2d668d03f366532ec46b6`](https://github.com/Conxian/Conxian/commit/6d2f66ec5c6927bd05f2d668d03f366532ec46b6) and intentionally fails closed rather than transferring unsegregated LP/user balances. These source and review artifacts do not establish deployment or live revenue.
+
+**Remaining Pattern Gap:** Define and verify asset-segregated DEX fee custody and settlement in the protocol repository, then produce independent deployment and on-chain realization evidence. Do not infer production realization from merged code, plans, routing, or observation records.
 
 ---
 
@@ -219,7 +209,7 @@ Based on research from Stacks SIP process and DAO frameworks:
 |----------|--------|------------------------|
 | P0 | Maintain `BOS_KNOWLEDGE_GRAPH.md` | Mandated authoritative entity and decision record; initial creation is complete |
 | P0 | Fix `pausable.clar` access control | CRITICAL security |
-| P1 | Implement real `collect-protocol-fees` | Revenue generation |
+| P1 | Complete asset-segregated DEX fee settlement and deployment evidence | Revenue realization; collector and lending migration are already merged |
 | P1 | Create upgrade mechanism spec | Modular/registry pattern |
 | P2 | Create DAO governance spec | 16 stub contracts |
 
@@ -325,11 +315,53 @@ The reviewed community-voting engine provides:
 
 ---
 
+## Part VIII: CON-1542 Revenue Automation Handoff (2026-07-25)
+
+This section supersedes the current-status interpretation of the 2026-07-06 fee-collection baseline while preserving the original defect record. The authoritative typed entity, relationship, status, and decision digest is [BOS_KNOWLEDGE_GRAPH.md](../BOS_KNOWLEDGE_GRAPH.md).
+
+### Ownership boundary
+
+- [`Conxian/Conxian`](https://github.com/Conxian/Conxian) owns protocol economics, Clarity implementation, deployment policy, and fee-bearing behavior.
+- [`Conxian/conxius-platform`](https://github.com/Conxian/conxius-platform) owns observation, routing, and runbook integration; it does not own custody or protocol economics. Merged [platform PR #1197](https://github.com/Conxian/conxius-platform/pull/1197) is observation evidence only.
+- [`Conxian/conxian-business`](https://github.com/Conxian/conxian-business) owns governance, knowledge crystallization, and evidence classification; it does not implement protocol contracts.
+
+### Evidence classification
+
+| Artifact | Status on 2026-07-25 | What it establishes | What it does not establish |
+|----------|----------------------|---------------------|----------------------------|
+| [Protocol PR #544](https://github.com/Conxian/Conxian/pull/544) | **MERGED** | Canonical scheduled protocol fee collector exists in protocol source. | Deployment, on-chain execution, or live revenue. |
+| [Protocol PR #556](https://github.com/Conxian/Conxian/pull/556) | **MERGED** | Lending-interest collection migrated to the canonical collector. | DEX settlement or live lending revenue. |
+| [Protocol PR #572](https://github.com/Conxian/Conxian/pull/572) at [`6d2f66ec5c6927bd05f2d668d03f366532ec46b6`](https://github.com/Conxian/Conxian/commit/6d2f66ec5c6927bd05f2d668d03f366532ec46b6) | **OPEN** | Proposed DEX no-op hardening fails closed when segregated fee custody is unavailable. | Merge, deployment, or actual DEX fee transfer. |
+| Actual DEX settlement | **UNRESOLVED** | No production-realization claim is approved. | Asset-segregated fee custody, transfer, or revenue. |
+| Live deployment and revenue evidence | **UNRESOLVED** | Production status remains unproven. | Deployed collector execution or realized revenue. |
+
+### Decisions and non-goals
+
+- Never infer production realization from code, a deployment plan, routing, or observation evidence.
+- Never transfer from unsegregated DEX balances that may include LP or user assets; unsupported custody paths fail closed.
+- Never apply both legacy and canonical charges to the same fee base.
+- CON-1542 does not approve a founder allocation, beneficiary, custody route, rate, or allocation semantics.
+- This business-repository handoff does not change protocol code, deployment plans, rates, addresses, secrets, or the `Conxian` submodule pin.
+
+### Canonical evidence
+
+| Evidence | Link |
+|----------|------|
+| Linear policy handoff | [CON-1542](https://linear.app/conxian-labs/issue/CON-1542/handoff-own-and-harden-revenue-automation-policy-from-conxius-platform) |
+| Protocol handoff | [Conxian #538](https://github.com/Conxian/Conxian/issues/538) |
+| Historical defect | [Conxian #469](https://github.com/Conxian/Conxian/issues/469) |
+| Canonical collector | [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544) |
+| Lending migration | [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556) |
+| Open fail-closed DEX hardening | [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) |
+| Platform observation boundary | [conxius-platform PR #1197](https://github.com/Conxian/conxius-platform/pull/1197) |
+
+---
+
 ## Appendix A: Issue → Knowledge Gap Mapping
 
 | GitHub Issue | Root Cause | Required Pattern | Knowledge Doc |
 |--------------|------------|------------------|---------------|
-| #469 collect-fees no-ops | Missing transfer call | SIP-010 fee collection | TOKENOMICS_PATTERNS.md |
+| #469 historical collect-fees no-ops | Collector and lending paths merged; DEX settlement and live deployment evidence unresolved | Asset-segregated fee custody, fail-closed settlement, and evidence classification | Part VIII + BOS knowledge graph |
 | #468 CXLP mint/burn | Trait implementation gap | SIP-010 ft-trait | TOKENOMICS_PATTERNS.md |
 | #467 CXD no peg | No price oracle | Pyth/Stacks oracle | ORACLE_INTEGRATION.md |
 | #465 No upgrade | Design gap | Registry pattern | UPGRADE_MECHANISMS.md |
@@ -348,7 +380,7 @@ The reviewed community-voting engine provides:
 - [ ] **CREATE** `TOKENOMICS_PATTERNS.md` (SIP-010, fee collection, stablecoin)
 - [ ] **CREATE** `ISO_20022_INTEGRATION_SPEC.md` (message mapping, OP_RETURN)
 - [ ] **FIX** `pausable.clar` access control (PR to Conxian repo)
-- [ ] **FIX** `collect-protocol-fees` real implementation (PR to Conxian repo)
+- [ ] **COMPLETE** asset-segregated DEX fee settlement and independent live deployment/revenue evidence (collector and lending migration are merged)
 - [ ] **FIX** `CXLP` SIP-010 trait compliance (PR to Conxian repo)
 - [ ] **UPDATE** AGENTS.md with pattern doc references
 
