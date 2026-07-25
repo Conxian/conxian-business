@@ -92,7 +92,7 @@ Based on research findings from Stacks documentation and DAO frameworks:
 #### Gap #3: Fee Collection Patterns
 **Historical State:** The 2026-07-06 baseline found `collect-protocol-fees` paths that returned `(ok true)` without an actual token transfer.
 
-**Evidence-accurate State (2026-07-25):** The canonical scheduled collector in [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544), lending-interest migration in [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556), and fail-closed DEX hardening in merged [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) at landed commit [`daaea0cd6eab33a0f167cf16c09eee227311dcf4`](https://github.com/Conxian/Conxian/commit/daaea0cd6eab33a0f167cf16c09eee227311dcf4) are merged source evidence. PR #572 removes false-success DEX collection when segregated fee custody is unavailable, but actual asset-segregated DEX settlement remains unresolved. These source artifacts do not establish deployment or live revenue.
+**Evidence-accurate State (2026-07-25):** The canonical scheduled collector in [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544), lending-interest migration in [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556), and fail-closed DEX hardening in merged [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) at landed commit [`daaea0cd6eab33a0f167cf16c09eee227311dcf4`](https://github.com/Conxian/Conxian/commit/daaea0cd6eab33a0f167cf16c09eee227311dcf4) are merged source evidence. The 200/150/100-bps implementation in PRs #544/#556 does not by itself ratify that schedule or supersede the separate observed, non-immutable 100-bps governance boundary in Conxian #538 / CON-1542; fee-policy reconciliation remains a governed decision. PR #572 removes false-success DEX collection when segregated fee custody is unavailable, but actual asset-segregated DEX settlement remains unresolved. These source artifacts do not establish deployment or live revenue.
 
 **Remaining Pattern Gap:** Define and verify asset-segregated DEX fee custody and settlement in the protocol repository, then produce independent deployment and on-chain realization evidence. Do not infer production realization from merged code, plans, routing, or observation records.
 
@@ -329,8 +329,8 @@ This section supersedes the current-status interpretation of the 2026-07-06 fee-
 
 | Artifact | Status on 2026-07-25 | What it establishes | What it does not establish |
 |----------|----------------------|---------------------|----------------------------|
-| [Protocol PR #544](https://github.com/Conxian/Conxian/pull/544) | **MERGED** | Canonical scheduled protocol fee collector exists in protocol source. | Deployment, on-chain execution, or live revenue. |
-| [Protocol PR #556](https://github.com/Conxian/Conxian/pull/556) | **MERGED** | Lending-interest collection migrated to the canonical collector. | DEX settlement or live lending revenue. |
+| [Protocol PR #544](https://github.com/Conxian/Conxian/pull/544) | **MERGED** | Canonical scheduled protocol fee collector with a 200/150/100-bps implementation exists in protocol source. | Fee-policy ratification, supersession of the observed 100-bps governance boundary, deployment, on-chain execution, or live revenue. |
+| [Protocol PR #556](https://github.com/Conxian/Conxian/pull/556) | **MERGED** | Lending-interest collection migrated to that scheduled implementation. | Fee-policy ratification, final approval of either schedule, DEX settlement, or live lending revenue. |
 | [Protocol PR #572](https://github.com/Conxian/Conxian/pull/572) at landed commit [`daaea0cd6eab33a0f167cf16c09eee227311dcf4`](https://github.com/Conxian/Conxian/commit/daaea0cd6eab33a0f167cf16c09eee227311dcf4) | **MERGED** | DEX collection fails closed instead of reporting false success when segregated fee custody is unavailable. | Asset-segregated DEX settlement, deployment, or actual DEX fee transfer. |
 | Actual DEX settlement | **UNRESOLVED** | No production-realization claim is approved. | Asset-segregated fee custody, transfer, or revenue. |
 | Live deployment and revenue evidence | **UNRESOLVED** | Production status remains unproven. | Deployed collector execution or realized revenue. |
@@ -340,6 +340,7 @@ This section supersedes the current-status interpretation of the 2026-07-06 fee-
 - Never infer production realization from code, a deployment plan, routing, or observation evidence.
 - Never transfer from unsegregated DEX balances that may include LP or user assets; unsupported custody paths fail closed.
 - Never apply both legacy and canonical charges to the same fee base.
+- Treat fee-policy reconciliation as a separate governed decision: PRs #544/#556 are merged source evidence only, while Conxian #538 / CON-1542 retain the observed 100-bps baseline as a non-immutable governance boundary rather than final policy approval.
 - CON-1542 does not approve a founder allocation, beneficiary, custody route, rate, or allocation semantics.
 - This business-repository handoff does not change protocol code, deployment plans, rates, addresses, or secrets. It advances only the `Conxian` submodule gitlink from `90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1` to the validated landed remediation commit `daaea0cd6eab33a0f167cf16c09eee227311dcf4`.
 
