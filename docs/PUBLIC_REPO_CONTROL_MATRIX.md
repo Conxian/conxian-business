@@ -10,8 +10,8 @@ This matrix covers the 12 public repositories named in [CON-1552](https://linear
 
 Use these sources for the governing definitions and acceptance criteria:
 
-- [`PORTFOLIO_DOCTRINE_REGISTER.md`](https://github.com/Conxian/conxian-business/blob/main/docs/PORTFOLIO_DOCTRINE_REGISTER.md) and [`DOCTRINE_ALIGNMENT_STANDARD.md`](https://github.com/Conxian/conxian-business/blob/main/docs/DOCTRINE_ALIGNMENT_STANDARD.md) — role, audience, claim-state, and public-safe boundaries. These canonical sources currently reside on `main`; the feature branch targets `dev` under the promotion policy.
-- [`PORTFOLIO_BUSINESS_UNIT_MAP.md`](./PORTFOLIO_BUSINESS_UNIT_MAP.md), [`REPO_PORTFOLIO.md`](./REPO_PORTFOLIO.md), and [`PORTFOLIO_REPOSITORY_INVENTORY.md`](./PORTFOLIO_REPOSITORY_INVENTORY.md) — portfolio placement and repository relationships.
+- [`PORTFOLIO_BUSINESS_UNIT_MAP.md`](./PORTFOLIO_BUSINESS_UNIT_MAP.md), [`REPO_PORTFOLIO.md`](./REPO_PORTFOLIO.md), and [`PORTFOLIO_REPOSITORY_INVENTORY.md`](./PORTFOLIO_REPOSITORY_INVENTORY.md) — repository roles, audiences, portfolio placement, and relationships.
+- [`BOUNDARY_DECISION_LOG.md`](./BOUNDARY_DECISION_LOG.md) and [`TRUST_AND_PROOF_MESSAGING.md`](./TRUST_AND_PROOF_MESSAGING.md) — public-safe boundaries and evidence-scoped claim language.
 - [`REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md`](./REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md) — risk-adjusted readiness controls.
 - [`GOVERNANCE_FILES_STANDARDIZATION.md`](./GOVERNANCE_FILES_STANDARDIZATION.md), [`GOVERNANCE.md`](../GOVERNANCE.md), [`RELEASING.md`](../RELEASING.md), and [`BRANCHING_AND_PROMOTION_POLICY.md`](./BRANCHING_AND_PROMOTION_POLICY.md) — governance, release, and promotion expectations.
 
@@ -69,7 +69,7 @@ This proposed target balances protocol, enterprise infrastructure, user access, 
 | P1 | [`Conxian/lib-conxian-core`](https://github.com/Conxian/lib-conxian-core), [`Conxian/conxian-nexus`](https://github.com/Conxian/conxian-nexus), [`Conxian/conxius-wallet`](https://github.com/Conxian/conxius-wallet) | Public version/release mismatches: `0.3.0` versus `v0.2.11`; README `v0.4.19` versus manifest/release `v0.4.22`; `1.9.5` versus `v1.9.2`. | Reconcile the declared version surfaces and add deterministic consistency checks. |
 | P1 | [`Conxian/Conxian`](https://github.com/Conxian/Conxian), [`Conxian/conxian-gateway`](https://github.com/Conxian/conxian-gateway), [`Conxian/.github`](https://github.com/Conxian/.github) | Public badges or copy can read as broader readiness, operational, or capability assurance than the evidence linked from the page establishes. | Add explicit claim-state qualifiers and links to exact readiness/capability evidence; avoid certification language. |
 | P1 | [`Conxian/conxius-enclave-sdk`](https://github.com/Conxian/conxius-enclave-sdk) | The already-disclosed root-manifest/release gap remains visible (`2.0.12` versus `v2.0.11`). | Complete release coordination or revert the declared version before making compatibility or production-support claims. |
-| P2 | [`Conxian/conxian_ui`](https://github.com/Conxian/conxian_ui), [`Conxian/conxian-labs-site`](https://github.com/Conxian/conxian-labs-site) | GitHub descriptions are blank or too weak to communicate scope and audience. | Add compact descriptions aligned with the doctrine register and public-safe boundary. |
+| P2 | [`Conxian/conxian_ui`](https://github.com/Conxian/conxian_ui), [`Conxian/conxian-labs-site`](https://github.com/Conxian/conxian-labs-site) | GitHub descriptions are blank or too weak to communicate scope and audience. | Add compact descriptions aligned with the portfolio maps and public-safe boundary. |
 | P2 | [`Conxian/conxian-gateway`](https://github.com/Conxian/conxian-gateway), [`Conxian/conxius-enclave-sdk`](https://github.com/Conxian/conxius-enclave-sdk), [`Conxian/conxius-orbit`](https://github.com/Conxian/conxius-orbit) | Repository descriptions or README headings use display terminology that conflicts with the current repository-slug nomenclature. This is a presentation finding only; it does not rename repositories or alter historical artifacts. | Use the exact repository slugs in new public copy and correct active presentation surfaces through each repository's normal review path. |
 | P2 | [`Conxian/conxian-labs-site`](https://github.com/Conxian/conxian-labs-site) | A deployment-only no-release exception is reasonable, but must be explicit and evidence-backed; a GitHub release currently exists. | Document the exception criteria, commit/deployment traceability, and rollback evidence; otherwise continue the tagged-release path. |
 
@@ -83,8 +83,11 @@ No private repository content, internal named ownership, organization settings, 
 
 ### Entities
 
+- **Project:** `CON-1552`, the dated public-repository presentation review represented by this matrix.
 - **Repositories:** the 12 linked public repositories in the primary matrix.
-- **Portfolio documents:** [`PORTFOLIO_DOCTRINE_REGISTER.md`](https://github.com/Conxian/conxian-business/blob/main/docs/PORTFOLIO_DOCTRINE_REGISTER.md), [`PORTFOLIO_BUSINESS_UNIT_MAP.md`](./PORTFOLIO_BUSINESS_UNIT_MAP.md), [`REPO_PORTFOLIO.md`](./REPO_PORTFOLIO.md), [`PORTFOLIO_REPOSITORY_INVENTORY.md`](./PORTFOLIO_REPOSITORY_INVENTORY.md), and [`REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md`](./REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md).
+- **Library:** [`Conxian/lib-conxian-core`](https://github.com/Conxian/lib-conxian-core), a shared supporting library within the reviewed public set.
+- **Public ownership boundary:** only observable `CODEOWNERS` and governance-file surfaces; no internal assignments are represented.
+- **Portfolio documents:** [`PORTFOLIO_BUSINESS_UNIT_MAP.md`](./PORTFOLIO_BUSINESS_UNIT_MAP.md), [`REPO_PORTFOLIO.md`](./REPO_PORTFOLIO.md), [`PORTFOLIO_REPOSITORY_INVENTORY.md`](./PORTFOLIO_REPOSITORY_INVENTORY.md), and [`REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md`](./REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md).
 
 ### Decisions
 
@@ -94,5 +97,5 @@ No private repository content, internal named ownership, organization settings, 
 
 ### Relationships
 
-- Repository roles and audiences are derived from the canonical doctrine and portfolio maps; readiness actions route to the control-domain gates rather than creating a new taxonomy.
-- The public repository set is related to the portfolio/document entities already indexed in [`BOS_KNOWLEDGE_GRAPH.md`](../BOS_KNOWLEDGE_GRAPH.md). This digest is a cross-reference only and does not assert new knowledge-graph edges or modify graph claims.
+- Repository roles and audiences defer to the canonical portfolio maps; readiness actions route to the control-domain gates rather than creating a new taxonomy.
+- [`BOS_KNOWLEDGE_GRAPH.md`](../BOS_KNOWLEDGE_GRAPH.md) does not yet provide exact-name coverage for all 12 matrix repositories: `Conxian/.github` and `Conxian/conxian.github.io` are absent, and its `Conxian/Conxian_UI` entry does not match the live `Conxian/conxian_ui` repository name. This digest records those coverage gaps and does not claim completed indexing or add graph edges.
