@@ -8,6 +8,7 @@
 * [Conxian-business parent-control alignment baseline (CON-694)](docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md)
 * [Repo Portfolio (Flagship vs Supporting)](docs/REPO_PORTFOLIO.md)
 * [Portfolio repository and subrepository inventory](docs/PORTFOLIO_REPOSITORY_INVENTORY.md)
+* [Public repository control matrix](docs/PUBLIC_REPO_CONTROL_MATRIX.md)
 * [Governance files standardization (public repos)](docs/GOVERNANCE_FILES_STANDARDIZATION.md)
 * [Portfolio business-unit map and separation of concerns](docs/PORTFOLIO_BUSINESS_UNIT_MAP.md)
 * [Repo Readiness Gates (Control Domains)](docs/REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md)
