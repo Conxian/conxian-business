@@ -480,6 +480,29 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 
 ---
 
+## Dated Digest: CON-1555 Knowledge-Retention Guard Restoration (2026-07-25)
+
+### Entities and Relationships
+
+| Entity | Type | Relationship / state |
+|--------|------|----------------------|
+| `CON-1555` | Security control remediation | Restores the repository's fail-closed knowledge-retention boundary. |
+| `scripts/verify_knowledge_retention.py` | Verifier | Rejects missing or invalid migration evidence, tracked sensitive-root content, and uncovered ignored sensitive paths. |
+| `audit/migration_manifest.json` | Migration evidence | Restored byte-for-byte from the approved pre-deletion revision; contents remain undisclosed. |
+| `conxian-unified-ci.yml` | CI enforcement | Invokes the verifier unconditionally so deleting the verifier or manifest fails the job. |
+| `admin/SECRETS.md` | Public-safe pointer | Directs sensitive records to approved private systems without exposing operational inventory. |
+
+### Decision, Risk, and Evidence
+
+| Dimension | Record |
+|-----------|--------|
+| Decision | Restore the compatible core verifier and exact historical manifest, then remove the workflow's silent-skip condition. |
+| Risk addressed | A deleted verifier previously converted a mandatory Zero Secret Egress control into a successful no-op while normative references remained. |
+| Boundary | Git content is public-safe even while the repository is private; private records and manifest details are not reproduced here. |
+| Evidence | [CON-1555](https://linear.app/conxian-labs/issue/CON-1555/verify-security-boundary-and-secret-prevention-baseline), [synced GitHub issue](https://github.com/Conxian/.github/issues/47), source verifier commit `6143dd8b111a6bbee567e31dfbe8a07c618f8206`, source manifest commit `2122500b1403781fb529cbbb6ca17d7f9d89d21b`, deletion commit `69d21dce204b6a5172c8fb0978c9f579470fc049`. |
+
+---
+
 ## Maintenance
 
 **Crystallization Rule:** Every agent session MUST update this document with:

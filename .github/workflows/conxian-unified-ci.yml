@@ -123,7 +123,6 @@ jobs:
       run: |
         python3 -m pip install --disable-pip-version-check packaging
     - name: Verify knowledge retention (ZSE)
-      if: ${{ hashFiles('scripts/verify_knowledge_retention.py') != '' }}
       run: |
         python3 scripts/verify_knowledge_retention.py
     - name: Verify tracked artifacts
