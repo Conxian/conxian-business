@@ -503,6 +503,84 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 
 ---
 
+## Typed Digest CON-1542 Conxian 538 Revenue Automation Policy Handoff 2026-07-25
+
+### Entities
+
+| Entity | Type | Status | Role / boundary | Canonical evidence |
+|--------|------|--------|-----------------|--------------------|
+| `CON-1542` | Linear governance/knowledge work item | **OBSERVED — IN REVIEW** on 2026-07-25 | Owns the business-policy handoff, evidence classification, and knowledge crystallization. It does not implement contracts or prove deployment. | [Linear issue](https://linear.app/conxian-labs/issue/CON-1542/handoff-own-and-harden-revenue-automation-policy-from-conxius-platform) |
+| `Conxian/Conxian` | Protocol repository | **APPROVED SOURCE OF TRUTH** for protocol behavior | Owns protocol economics, Clarity contracts, deployment policy, and fee-bearing behavior. | [Protocol repository](https://github.com/Conxian/Conxian), [handoff #538](https://github.com/Conxian/Conxian/issues/538) |
+| `Conxian/conxius-platform` | Observation/routing repository | **OBSERVED BOUNDARY** | Owns observation, routing, and runbooks; it is not a custody or protocol-economics authority. | [Platform repository](https://github.com/Conxian/conxius-platform), [merged PR #1197](https://github.com/Conxian/conxius-platform/pull/1197) |
+| `Conxian/conxian-business` | Governance/knowledge repository | **APPROVED CLASSIFICATION BOUNDARY** | Owns governance records, knowledge crystallization, and evidence classification; it does not implement protocol contracts. | [Business repository](https://github.com/Conxian/conxian-business) |
+| Protocol PR #544 | Canonical collector change | **MERGED** on 2026-07-22 | Adds the scheduled protocol fee collector and its protocol-source behavior. | [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544) |
+| Protocol PR #556 | Lending migration change | **MERGED** on 2026-07-23 | Migrates lending-interest collection to the canonical collector. | [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556) |
+| Protocol PR #572 | DEX hardening change | **OPEN** on 2026-07-25 at [`6d2f66ec5c6927bd05f2d668d03f366532ec46b6`](https://github.com/Conxian/Conxian/commit/6d2f66ec5c6927bd05f2d668d03f366532ec46b6) | Proposes fail-closed DEX behavior when segregated fee custody is unavailable; it does not transfer unsegregated LP/user balances. | [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) |
+| Actual DEX fee settlement | Protocol capability | **UNRESOLVED** | Requires asset-segregated custody and a verified transfer path in the protocol repository. | [Conxian #538](https://github.com/Conxian/Conxian/issues/538), [legacy defect #469](https://github.com/Conxian/Conxian/issues/469) |
+| Live deployment and revenue realization | Operational evidence class | **UNRESOLVED** | Requires independent deployment and on-chain execution evidence; code, plans, routing, and observation records are insufficient. | [Conxian #538](https://github.com/Conxian/Conxian/issues/538) |
+| Historical 0.1% founder carve-out | OpenSpec proposal | **PROPOSAL-ONLY / GOVERNANCE-GATED** | Preserved as historical context; CON-1542 does not approve or activate any beneficiary, custody route, rate, or allocation semantics. | [Launch mechanics proposal](openspec/changes/csf-autonomous-launch/specs/launch-mechanics/spec.md) |
+
+### Relationships
+
+| From | Relationship | To | Status / meaning |
+|------|--------------|----|------------------|
+| `CON-1542` | hands protocol-policy ownership to | [`Conxian/Conxian`](https://github.com/Conxian/Conxian) | **APPROVED BOUNDARY:** protocol economics and implementation remain in the protocol repository. |
+| [`Conxian/conxius-platform`](https://github.com/Conxian/conxius-platform) | observes/routes | protocol revenue evidence | **OBSERVED ONLY:** merged [PR #1197](https://github.com/Conxian/conxius-platform/pull/1197) does not create custody, economics, deployment, or realization authority. |
+| [`Conxian/conxian-business`](https://github.com/Conxian/conxian-business) | classifies/governs evidence for | [Conxian #538](https://github.com/Conxian/Conxian/issues/538) | **APPROVED BOUNDARY:** records policy and claim states without implementing contracts. |
+| [Protocol PR #544](https://github.com/Conxian/Conxian/pull/544) | provides | canonical scheduled collector | **MERGED:** source evidence, not deployment evidence. |
+| [Protocol PR #556](https://github.com/Conxian/Conxian/pull/556) | migrates | lending-interest collection | **MERGED:** source evidence, not proof of live lending revenue. |
+| [Protocol PR #572](https://github.com/Conxian/Conxian/pull/572) | hardens | unavailable DEX fee custody | **OPEN:** fails closed instead of transferring unsegregated balances; not merged or deployed. |
+| Actual DEX settlement | remains blocked by | missing segregated fee custody and verified transfer semantics | **UNRESOLVED:** no actual DEX revenue claim. |
+| Deployment/live revenue claim | requires | independent on-chain realization evidence | **UNRESOLVED:** no inference from source, plan, routing, or observation artifacts. |
+| Historical founder carve-out | requires before activation | separate ratified governance | **GOVERNANCE-GATED:** beneficiary, custody, rate, and allocation semantics must all be defined outside CON-1542. |
+
+### Decisions
+
+| Decision | Status | Operational meaning |
+|----------|--------|---------------------|
+| Protocol behavior source of truth is `Conxian/Conxian` | **APPROVED** | Clarity, deployment policy, fee-bearing behavior, and protocol economics are not owned by platform observation or business documentation. |
+| Never infer production realization from code, plans, routing, or observation | **APPROVED** | “Merged,” “planned,” and “observed” remain distinct from “deployed” and “live revenue.” |
+| Never transfer from unsegregated DEX balances | **APPROVED** | Any balance that may contain LP or user assets must not be treated as protocol fees; unsupported custody paths fail closed. |
+| Never apply additive legacy and canonical charges to one fee base | **APPROVED** | Migration must not double-charge the same economic event. |
+| No founder allocation through CON-1542 | **APPROVED** | The historical 0.1% language is proposal-only and cannot activate without separate ratified governance defining beneficiary, custody, rate, and allocation semantics. |
+| Do not pin the parent repository to PR #572 | **APPROVED** | The open DEX hardening commit remains protocol-review evidence only; this digest makes no submodule change. |
+
+### Evidence Classification Rules
+
+| Classification | Meaning in this digest |
+|----------------|------------------------|
+| **OBSERVED** | State checked from the canonical external system; observation alone grants no protocol authority. |
+| **APPROVED** | Governance or ownership boundary adopted by this business-policy handoff. |
+| **MERGED** | Change is present in the target repository's default branch; deployment and execution remain separate claims. |
+| **OPEN** | Change is under review and must not be described as merged, deployed, or live. |
+| **UNRESOLVED** | Required implementation or independent operational evidence is absent. |
+| **PROPOSAL-ONLY / GOVERNANCE-GATED** | Historical design context with no activation authority absent separate ratified governance. |
+
+### Risks and Gates
+
+| Risk / gate | Current implication |
+|-------------|---------------------|
+| DEX asset commingling | No settlement transfer may use balances that are not demonstrably segregated from LP/user assets. |
+| Review-state inflation | PR #572 and commit `6d2f66ec5c6927bd05f2d668d03f366532ec46b6` remain open review evidence only. |
+| Revenue-claim inflation | Merged collectors, plans, and observation records do not establish deployment or live revenue. |
+| Fee-base duplication | Legacy and canonical collection paths must not both charge the same fee base. |
+| Founder allocation ambiguity | No allocation may activate until separate governance ratifies beneficiary, custody, rate, and allocation semantics. |
+
+### Evidence Index
+
+| Evidence | Link | Classified status |
+|----------|------|-------------------|
+| Linear handoff | [CON-1542](https://linear.app/conxian-labs/issue/CON-1542/handoff-own-and-harden-revenue-automation-policy-from-conxius-platform) | **OBSERVED — IN REVIEW** |
+| Protocol handoff | [Conxian #538](https://github.com/Conxian/Conxian/issues/538) | **OBSERVED — OPEN** |
+| Legacy defect | [Conxian #469](https://github.com/Conxian/Conxian/issues/469) | **OBSERVED — CLOSED**, not proof that every settlement/deployment gap is resolved |
+| Canonical collector | [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544) | **MERGED** |
+| Lending migration | [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556) | **MERGED** |
+| DEX fail-closed hardening | [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) | **OPEN** |
+| Exact open DEX hardening commit | [`6d2f66ec5c6927bd05f2d668d03f366532ec46b6`](https://github.com/Conxian/Conxian/commit/6d2f66ec5c6927bd05f2d668d03f366532ec46b6) | **OPEN REVIEW EVIDENCE** |
+| Platform observation boundary | [conxius-platform PR #1197](https://github.com/Conxian/conxius-platform/pull/1197) | **MERGED / OBSERVATION ONLY** |
+
+---
+
 ## Maintenance
 
 **Crystallization Rule:** Every agent session MUST update this document with:
