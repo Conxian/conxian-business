@@ -515,7 +515,7 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 | `Conxian/conxian-business` | Governance/knowledge repository | **APPROVED CLASSIFICATION BOUNDARY** | Owns governance records, knowledge crystallization, and evidence classification; it does not implement protocol contracts. | [Business repository](https://github.com/Conxian/conxian-business) |
 | Protocol PR #544 | Canonical collector change | **MERGED** on 2026-07-22 | Adds the scheduled protocol fee collector and its protocol-source behavior. | [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544) |
 | Protocol PR #556 | Lending migration change | **MERGED** on 2026-07-23 | Migrates lending-interest collection to the canonical collector. | [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556) |
-| Protocol PR #572 | DEX hardening change | **OPEN** on 2026-07-25 at [`6d2f66ec5c6927bd05f2d668d03f366532ec46b6`](https://github.com/Conxian/Conxian/commit/6d2f66ec5c6927bd05f2d668d03f366532ec46b6) | Proposes fail-closed DEX behavior when segregated fee custody is unavailable; it does not transfer unsegregated LP/user balances. | [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) |
+| Protocol PR #572 | DEX hardening change | **MERGED** on 2026-07-25 at landed commit [`daaea0cd6eab33a0f167cf16c09eee227311dcf4`](https://github.com/Conxian/Conxian/commit/daaea0cd6eab33a0f167cf16c09eee227311dcf4) | Removes false-success DEX collection by failing closed when segregated fee custody is unavailable; it does not implement asset-segregated settlement or transfer unsegregated LP/user balances. | [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) |
 | Actual DEX fee settlement | Protocol capability | **UNRESOLVED** | Requires asset-segregated custody and a verified transfer path in the protocol repository. | [Conxian #538](https://github.com/Conxian/Conxian/issues/538), [legacy defect #469](https://github.com/Conxian/Conxian/issues/469) |
 | Live deployment and revenue realization | Operational evidence class | **UNRESOLVED** | Requires independent deployment and on-chain execution evidence; code, plans, routing, and observation records are insufficient. | [Conxian #538](https://github.com/Conxian/Conxian/issues/538) |
 | Historical 0.1% founder carve-out | OpenSpec proposal | **PROPOSAL-ONLY / GOVERNANCE-GATED** | Preserved as historical context; CON-1542 does not approve or activate any beneficiary, custody route, rate, or allocation semantics. | [Launch mechanics proposal](openspec/changes/csf-autonomous-launch/specs/launch-mechanics/spec.md) |
@@ -529,7 +529,7 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 | [`Conxian/conxian-business`](https://github.com/Conxian/conxian-business) | classifies/governs evidence for | [Conxian #538](https://github.com/Conxian/Conxian/issues/538) | **APPROVED BOUNDARY:** records policy and claim states without implementing contracts. |
 | [Protocol PR #544](https://github.com/Conxian/Conxian/pull/544) | provides | canonical scheduled collector | **MERGED:** source evidence, not deployment evidence. |
 | [Protocol PR #556](https://github.com/Conxian/Conxian/pull/556) | migrates | lending-interest collection | **MERGED:** source evidence, not proof of live lending revenue. |
-| [Protocol PR #572](https://github.com/Conxian/Conxian/pull/572) | hardens | unavailable DEX fee custody | **OPEN:** fails closed instead of transferring unsegregated balances; not merged or deployed. |
+| [Protocol PR #572](https://github.com/Conxian/Conxian/pull/572) | hardens | unavailable DEX fee custody | **MERGED:** removes false-success collection by failing closed instead of transferring unsegregated balances; not proof of asset-segregated settlement, deployment, or live revenue. |
 | Actual DEX settlement | remains blocked by | missing segregated fee custody and verified transfer semantics | **UNRESOLVED:** no actual DEX revenue claim. |
 | Deployment/live revenue claim | requires | independent on-chain realization evidence | **UNRESOLVED:** no inference from source, plan, routing, or observation artifacts. |
 | Historical founder carve-out | requires before activation | separate ratified governance | **GOVERNANCE-GATED:** beneficiary, custody, rate, and allocation semantics must all be defined outside CON-1542. |
@@ -543,7 +543,7 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 | Never transfer from unsegregated DEX balances | **APPROVED** | Any balance that may contain LP or user assets must not be treated as protocol fees; unsupported custody paths fail closed. |
 | Never apply additive legacy and canonical charges to one fee base | **APPROVED** | Migration must not double-charge the same economic event. |
 | No founder allocation through CON-1542 | **APPROVED** | The historical 0.1% language is proposal-only and cannot activate without separate ratified governance defining beneficiary, custody, rate, and allocation semantics. |
-| Do not pin the parent repository to PR #572 | **APPROVED** | The open DEX hardening commit remains protocol-review evidence only; this digest makes no submodule change. |
+| Pin the validated PR #572 remediation in the parent repository | **APPROVED** | The landed commit `daaea0cd6eab33a0f167cf16c09eee227311dcf4` is reachable from protocol `origin/main`; the `Conxian` gitlink advances from `90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1` under the validated-remediation pin policy. |
 
 ### Evidence Classification Rules
 
@@ -561,7 +561,7 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 | Risk / gate | Current implication |
 |-------------|---------------------|
 | DEX asset commingling | No settlement transfer may use balances that are not demonstrably segregated from LP/user assets. |
-| Review-state inflation | PR #572 and commit `6d2f66ec5c6927bd05f2d668d03f366532ec46b6` remain open review evidence only. |
+| Merge-state inflation | Merged PR #572 and landed commit `daaea0cd6eab33a0f167cf16c09eee227311dcf4` establish fail-closed source behavior only; asset-segregated DEX settlement, deployment, and live revenue remain unresolved. |
 | Revenue-claim inflation | Merged collectors, plans, and observation records do not establish deployment or live revenue. |
 | Fee-base duplication | Legacy and canonical collection paths must not both charge the same fee base. |
 | Founder allocation ambiguity | No allocation may activate until separate governance ratifies beneficiary, custody, rate, and allocation semantics. |
@@ -575,8 +575,8 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 | Legacy defect | [Conxian #469](https://github.com/Conxian/Conxian/issues/469) | **OBSERVED — CLOSED**, not proof that every settlement/deployment gap is resolved |
 | Canonical collector | [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544) | **MERGED** |
 | Lending migration | [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556) | **MERGED** |
-| DEX fail-closed hardening | [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) | **OPEN** |
-| Exact open DEX hardening commit | [`6d2f66ec5c6927bd05f2d668d03f366532ec46b6`](https://github.com/Conxian/Conxian/commit/6d2f66ec5c6927bd05f2d668d03f366532ec46b6) | **OPEN REVIEW EVIDENCE** |
+| DEX fail-closed hardening | [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) | **MERGED** |
+| Exact landed DEX hardening commit | [`daaea0cd6eab33a0f167cf16c09eee227311dcf4`](https://github.com/Conxian/Conxian/commit/daaea0cd6eab33a0f167cf16c09eee227311dcf4) | **MERGED SOURCE EVIDENCE** |
 | Platform observation boundary | [conxius-platform PR #1197](https://github.com/Conxian/conxius-platform/pull/1197) | **MERGED / OBSERVATION ONLY** |
 
 ---

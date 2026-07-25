@@ -92,7 +92,7 @@ Based on research findings from Stacks documentation and DAO frameworks:
 #### Gap #3: Fee Collection Patterns
 **Historical State:** The 2026-07-06 baseline found `collect-protocol-fees` paths that returned `(ok true)` without an actual token transfer.
 
-**Evidence-accurate State (2026-07-25):** The canonical scheduled collector in [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544) and lending-interest migration in [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556) are merged. Actual DEX settlement remains unresolved. [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) is open at commit [`6d2f66ec5c6927bd05f2d668d03f366532ec46b6`](https://github.com/Conxian/Conxian/commit/6d2f66ec5c6927bd05f2d668d03f366532ec46b6) and intentionally fails closed rather than transferring unsegregated LP/user balances. These source and review artifacts do not establish deployment or live revenue.
+**Evidence-accurate State (2026-07-25):** The canonical scheduled collector in [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544), lending-interest migration in [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556), and fail-closed DEX hardening in merged [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) at landed commit [`daaea0cd6eab33a0f167cf16c09eee227311dcf4`](https://github.com/Conxian/Conxian/commit/daaea0cd6eab33a0f167cf16c09eee227311dcf4) are merged source evidence. PR #572 removes false-success DEX collection when segregated fee custody is unavailable, but actual asset-segregated DEX settlement remains unresolved. These source artifacts do not establish deployment or live revenue.
 
 **Remaining Pattern Gap:** Define and verify asset-segregated DEX fee custody and settlement in the protocol repository, then produce independent deployment and on-chain realization evidence. Do not infer production realization from merged code, plans, routing, or observation records.
 
@@ -331,7 +331,7 @@ This section supersedes the current-status interpretation of the 2026-07-06 fee-
 |----------|----------------------|---------------------|----------------------------|
 | [Protocol PR #544](https://github.com/Conxian/Conxian/pull/544) | **MERGED** | Canonical scheduled protocol fee collector exists in protocol source. | Deployment, on-chain execution, or live revenue. |
 | [Protocol PR #556](https://github.com/Conxian/Conxian/pull/556) | **MERGED** | Lending-interest collection migrated to the canonical collector. | DEX settlement or live lending revenue. |
-| [Protocol PR #572](https://github.com/Conxian/Conxian/pull/572) at [`6d2f66ec5c6927bd05f2d668d03f366532ec46b6`](https://github.com/Conxian/Conxian/commit/6d2f66ec5c6927bd05f2d668d03f366532ec46b6) | **OPEN** | Proposed DEX no-op hardening fails closed when segregated fee custody is unavailable. | Merge, deployment, or actual DEX fee transfer. |
+| [Protocol PR #572](https://github.com/Conxian/Conxian/pull/572) at landed commit [`daaea0cd6eab33a0f167cf16c09eee227311dcf4`](https://github.com/Conxian/Conxian/commit/daaea0cd6eab33a0f167cf16c09eee227311dcf4) | **MERGED** | DEX collection fails closed instead of reporting false success when segregated fee custody is unavailable. | Asset-segregated DEX settlement, deployment, or actual DEX fee transfer. |
 | Actual DEX settlement | **UNRESOLVED** | No production-realization claim is approved. | Asset-segregated fee custody, transfer, or revenue. |
 | Live deployment and revenue evidence | **UNRESOLVED** | Production status remains unproven. | Deployed collector execution or realized revenue. |
 
@@ -341,7 +341,7 @@ This section supersedes the current-status interpretation of the 2026-07-06 fee-
 - Never transfer from unsegregated DEX balances that may include LP or user assets; unsupported custody paths fail closed.
 - Never apply both legacy and canonical charges to the same fee base.
 - CON-1542 does not approve a founder allocation, beneficiary, custody route, rate, or allocation semantics.
-- This business-repository handoff does not change protocol code, deployment plans, rates, addresses, secrets, or the `Conxian` submodule pin.
+- This business-repository handoff does not change protocol code, deployment plans, rates, addresses, or secrets. It advances only the `Conxian` submodule gitlink from `90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1` to the validated landed remediation commit `daaea0cd6eab33a0f167cf16c09eee227311dcf4`.
 
 ### Canonical evidence
 
@@ -352,7 +352,7 @@ This section supersedes the current-status interpretation of the 2026-07-06 fee-
 | Historical defect | [Conxian #469](https://github.com/Conxian/Conxian/issues/469) |
 | Canonical collector | [Conxian PR #544](https://github.com/Conxian/Conxian/pull/544) |
 | Lending migration | [Conxian PR #556](https://github.com/Conxian/Conxian/pull/556) |
-| Open fail-closed DEX hardening | [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) |
+| Merged fail-closed DEX hardening | [Conxian PR #572](https://github.com/Conxian/Conxian/pull/572) |
 | Platform observation boundary | [conxius-platform PR #1197](https://github.com/Conxian/conxius-platform/pull/1197) |
 
 ---
