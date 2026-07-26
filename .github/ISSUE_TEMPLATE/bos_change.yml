@@ -90,11 +90,24 @@ body:
     attributes:
       label: Dependencies and blockers
       description: Link public-safe GitHub issues or use a minimum opaque restricted-record token. Do not describe restricted content.
+  - type: dropdown
+    id: evidence_state
+    attributes:
+      label: Evidence state
+      description: Select the current evidence lifecycle state. This is status metadata, not a substitute for immutable evidence links.
+      options:
+        - Not started
+        - Planned
+        - Evidence available
+        - Blocked
+        - Not applicable
+    validations:
+      required: true
   - type: textarea
     id: evidence
     attributes:
       label: Evidence links
-      description: Add public-safe, immutable or commit-bound links when available. Do not upload restricted evidence.
+      description: Add public-safe, immutable or commit-bound links when available, especially when the state is `Evidence available`. Do not upload restricted evidence.
   - type: dropdown
     id: decision_required
     attributes:

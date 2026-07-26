@@ -83,7 +83,7 @@
 * [Arch Guardian](Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md)
 * [Grid Oracle (Agnostic)](cxn-grid-oracle/README.md)
 * [Ops Engine](Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md)
-  * [ExCo intake (Linear-first) and wiring](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
+  * [Historical ExCo Linear-first intake and wiring](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
 
 ## 🏛️ Ground Truth (OpenSpec)
 

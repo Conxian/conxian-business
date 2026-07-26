@@ -66,7 +66,7 @@ These are the operating-model documents that explain how BOS components relate, 
 | `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` | Canonical | Public-safe | Current GitHub-first BOS coordination model and ZSE boundary. |
 | `conxian-business/SERVICE_LOOP.md` | Canonical | Public-safe | BOS service loop (how client/supplier loops connect). |
 | `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Public-safe stub (canonical in Linear) | Public-safe BOS state machine pointer stub (standardized ZSE stub). |
-| `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Canonical | Public-safe | ExCo Linear-first intake standard (required fields, triage flow, execution linkbacks) with sensitive details remaining in Linear under ZSE. |
+| `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Historical | Public-safe legacy migration material | Superseded Linear-first ExCo intake context retained for controlled migration under [#944](https://github.com/Conxian/conxian-business/issues/944); it is not an active standard. Current public-safe intake follows `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`. |
 | `Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md` | Supporting | Public-safe stub (canonical in Linear) | Bottleneck and deployment efficiency metrics (standardized ZSE stub). |
 | `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md` | Supporting | Public-safe stub (canonical in Linear) | Strategy velocity tracking and exit-readiness framing (standardized ZSE stub). |
 | `Sovereign-Strategy-Nexus/docs/SOVEREIGN_MOI_ALIGNMENT.md` | Canonical | Public-safe stub (canonical in Linear) | “MOI” alignment source for Strategy Nexus narratives (standardized ZSE stub). |
@@ -227,7 +227,7 @@ If an issue is in a planning or execution state, the description should link to 
 | --- | --- | --- |
 | https://linear.app/conxian-labs/issue/CON-343 | `openspec/changes/sovereign-data-migration-sovereign-egress/specs.md`, `openspec/changes/sovereign-data-migration-sovereign-egress/specs/sovereign-data-migration-sovereign-egress/spec.md`, `ARCHIVE_MIGRATION.md` | This issue is spec-first and directly tied to ZSE + migration. |
 | https://linear.app/conxian-labs/issue/CON-158 | `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`, `SUMMARY.md`, `openspec/changes/remediate-enterprise-sovereignty/specs.md` | This is the “alignment” umbrella; it should anchor to the index + baseline OpenSpec. |
-| https://linear.app/conxian-labs/issue/CON-152 | `conxian-business/SERVICE_LOOP.md`, `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` | BOS operating model work should reference the service loop + wiring + state machine. |
+| https://linear.app/conxian-labs/issue/CON-152 | `conxian-business/SERVICE_LOOP.md`, `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` | Historical mapping only. Current public-safe BOS work follows `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`; the wiring file is retained solely as #944 migration evidence. |
 | https://linear.app/conxian-labs/issue/CON-157 | `Conxian/PRD.md`, `conxian-gateway/PRD.md`, `conxian-nexus/docs/PRD.md` | “Business-unit model” extraction should start from PRDs (what exists and how it’s separated). |
 | https://linear.app/conxian-labs/issue/CON-160 | `conxian-gateway/PRD.md`, `lib-conxian-core/docs/PRD.md`, `openspec/changes/remediate-enterprise-sovereignty/specs/enterprise-sovereignty/spec.md` | Settlement ingress touches gateway/core-lib conventions + sovereignty requirements. |
 | https://linear.app/conxian-labs/issue/CON-780 | `docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md`, `docs/architecture/BITCOIN_LAYER_ARCHITECTURE_BOUNDARY_NOTE.md`, `docs/COMPATIBILITY_MATRIX_AND_ACCEPTANCE_GATE_CHECKLIST.md` | GAP-009 Lightning coverage execution should anchor to the active tracker, service/adapter ownership boundary, and shared acceptance-gate criteria. |
@@ -236,14 +236,14 @@ If an issue is in a planning or execution state, the description should link to 
 | https://linear.app/conxian-labs/issue/CON-326 | `openspec/specs/git-management/spec.md`, `CONTRIBUTING.md` | Repo discipline/categorization should cite the OpenSpec git rules + contributing norms. |
 | https://linear.app/conxian-labs/issue/CON-327 | `openspec/specs/git-management/spec.md`, `SECURITY.md`, `.github/*` templates | Governance standardization needs the existing governance/security baselines. |
 
-## 9) Proposed Linear documents to create (durable workspace access)
+## 9) Historical Linear migration proposals
 
-These are the highest-value sources to copy into Linear so day-to-day work stays stable even if the repo has to remove or relocate sensitive material.
+This dated proposal list is retained as migration history. It does not define current intake, status, traceability, or an approved restricted-record system. Current public-safe coordination follows `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`; #944 governs each remaining reference.
 
 1. **BOS Operating Model (canonical)**
    - Source: `conxian-business/SERVICE_LOOP.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` (public-safe pointer; canonical BOS state machine definition is maintained in Linear).
-2. **Execution wiring: Linear ↔ BOS state layer (canonical)**
-   - Source: `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`.
+2. **Execution wiring: Linear ↔ BOS state layer (historical proposal; superseded)**
+   - Historical source: `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`; do not use it as an active intake standard.
 3. **Zero Secret Egress (ZSE) + knowledge retention (canonical)**
    - Source: `ARCHIVE_MIGRATION.md`, `docs/AGENTS.md` (Knowledge retention & hygiene section), `admin/SECRETS.md`.
 4. **OpenSpec: Enterprise Sovereignty baseline (canonical)**
