@@ -164,7 +164,7 @@ GitHub (`Conxian/conxius-platform`) open issues labeled `Bounty`:
 
 ```txt
 #210 Decide which bounties can open before mainnet go-live [Governance, Bounty]
-#197 Release hygiene — conxius_orbit [Release, Bounty, Bounty Open]
+#197 Release hygiene — conxius-orbit [Release, Bounty, Bounty Open]
 #170 Release hygiene — conxian-labs-site [Release, Bounty, Bounty Open]
 #159 Release hygiene — Conxian_UI [Release, Bounty, Bounty Open]
 #152 Release hygiene — .github [Release, Bounty, Bounty Open]
@@ -177,7 +177,7 @@ GitHub (`Conxian/conxius-platform`) open issues labeled `Bounty`:
 GitHub (`Conxian/conxius-platform`) open issues labeled `Bounty Open`:
 
 ```txt
-#197 Release hygiene — conxius_orbit [Release, Bounty, Bounty Open]
+#197 Release hygiene — conxius-orbit [Release, Bounty, Bounty Open]
 #170 Release hygiene — conxian-labs-site [Release, Bounty, Bounty Open]
 #159 Release hygiene — Conxian_UI [Release, Bounty, Bounty Open]
 #152 Release hygiene — .github [Release, Bounty, Bounty Open]
@@ -192,7 +192,7 @@ CON-182 Release hygiene — Conxian [Release, Bounty, Bounty Open]
 CON-186 Release hygiene — Conxian_UI [Release, Bounty, Bounty Open]
 CON-198 Release hygiene — conxian-labs-site [Release, Bounty, Bounty Open]
 CON-218 Release hygiene — lib-conxian-core [Release, Bounty, Bounty Open]
-CON-222 Release hygiene — conxius_orbit [Release, Bounty, Bounty Open]
+CON-222 Release hygiene — conxius-orbit [Release, Bounty, Bounty Open]
 CON-78 CON-75: [BOUNTY] Gateway Edge - Offline-First POS Sync [Bounty, Bounty Open]
 ```
 

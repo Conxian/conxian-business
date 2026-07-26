@@ -1,50 +1,63 @@
 # BOS Platform Specification: Business-as-a-Platform (BaaP)
-**Version:** v2.3 (Industrial Standard Alignment)
-**Status:** IMPLEMENTATION READY
+
+> **Classification:** Supporting · Public-safe
+> **Operating label:** Reference implementation
+> **Maturity / claim state:** Target-state unless a section names `Implemented` or `Verified` evidence.
+> **Doctrine boundary:** This is a public reference architecture. It describes infrastructure and protocol behavior, not Conxian-Labs custody, discretionary fund control, market operation, or user-data extraction.
+
+**Version:** v2.3 (reference architecture)
 
 ## 1. Vision
-The Conxian Sovereign BOS is a **Business-as-a-Platform (BaaP)**. It enables 3rd party businesses to deploy, run, and govern autonomous operations using the Conxian Sovereign stack. This model inherits the efficiency of **Oracle Autonomous** and the extensibility of **SAP Clean Core**, anchored by Bitcoin-native sovereignty.
+
+The Conxian BOS is a **Business-as-a-Platform (BaaP)** reference architecture. It describes how third-party businesses could deploy, run, and govern autonomous operations using Conxian infrastructure. The architecture is anchored to Bitcoin for trust and security; it does not make Conxian-Labs a custodian, fund manager, exchange, or market participant.
 
 ## 2. Multi-Tenancy: Jurisdictional Sharding
-To maintain sovereignty and security across multiple tenants, the BOS implements **Jurisdictional Sharding**:
 
-- **Sovereign Elastic Pools**: Shared compute resources (Akash) with strictly isolated state shards (Kwil).
-- **Namespace Isolation**: Each tenant is assigned a unique namespace (BNS name) for state anchoring.
-- **M.A.S. Context Isolation**: Strategy Nexus (EXCO) uses a Supervisor-Worker M.A.S. pattern for per-tenant session isolation, ensuring zero data leakage.
-- **Resource Governance**: Tenants define their own "Sovereign Guardrails" (144-block timelocks, multi-sig thresholds) independent of the Conxian parent.
+To maintain sovereignty and security across multiple tenants, the BOS models **Jurisdictional Sharding**:
+
+- **Sovereign Elastic Pools:** Shared compute resources (Akash) with isolated state shards (Kwil).
+- **Namespace Isolation:** Each tenant is assigned a unique namespace (BNS name) for state anchoring.
+- **M.A.S. Context Isolation:** Strategy Nexus (EXCO) uses a Supervisor-Worker M.A.S. pattern for per-tenant session isolation, with zero-data-leakage as the target control.
+- **Resource Governance:** Tenants define their own policy guardrails (for example, timelocks and multi-signature thresholds) independently of the Conxian-Labs software vendor.
 
 ## 3. Sovereign Node Architecture (BiaB)
-A "Sovereign Node" is a containerized "Business-in-a-Box" (BiaB) deployment instantiated from a declarative **BOS Blueprint**:
-- **Strategy Nexus (EXCO)**: Core intelligence and M.A.S. supervisor.
-- **Fiscal Vault (Finance)**: Secure treasury and yield management.
-- **Nakamoto Guardian (Compliance)**: Automated compliance and ZKML policy enforcement.
-- **Sovereign Ops (ERP)**: Labor coordination and industrial ERP bridge (SAP/Oracle).
+
+A “Sovereign Node” is a containerized “Business-in-a-Box” (BiaB) deployment instantiated from a declarative **BOS Blueprint**:
+
+- **Strategy Nexus (EXCO):** Reference intelligence and M.A.S. supervisor.
+- **Fiscal Vault (protocol/reference policy):** Contract- or tenant-defined treasury and yield constraints; not company custody or discretionary fund management.
+- **Nakamoto Guardian (compliance):** Automated compliance and ZKML policy verification.
+- **Sovereign Ops (ERP):** Labor coordination and industrial ERP integration.
 
 ### Deployment Stack
-- **Compute**: Akash Network (Managed via SDL).
-- **Storage**: Kwil (Relational) + Tableland (State Roots).
-- **Identity**: DID (Decentralized Identifier) anchored to Bitcoin/Stacks.
-- **Interface**: Model Context Protocol (MCP) v1.0.
-- **Telemetry**: Nostr (Kind 26001-26003).
 
-## 4. SDK Viewpoint: Conxius Enclave SDK
-The **Conxius Enclave SDK** is the industrial primitive for BaaP. It provides:
-- **Hardware Enclave Abstraction**: Native support for StrongBox/TEE.
-- **Sovereign Handshake**: Non-custodial signing for cross-chain swaps and A2P (Application-to-Person) verification.
-- **B2B Identity**: Cryptographic identity for sovereign partners and automated billing.
+- **Compute:** Akash Network (managed via SDL).
+- **Storage:** Kwil (relational) + Tableland (state roots).
+- **Identity:** DID anchored to Bitcoin/Stacks.
+- **Interface:** Model Context Protocol (MCP) v1.0.
+- **Telemetry:** Nostr (Kind 26001–26003), subject to data minimization.
 
-## 5. Market Positioning (SAM/TAM)
-| Segment | TAM (2026) | SAM | Target |
-| :--- | :--- | :--- | :--- |
-| Mobile Wallets | $3.6T | $150B | $5B |
-| Bitcoin DeFi | $1.4T | $150B | $2.5B |
-| ERP Integration | $20B | $5B | $1B |
+## 4. SDK Viewpoint: `conxius-enclave-sdk`
 
-## 6. Enhancements & Roadmap
-- **Consolidated State**: Moving all chain-polling from Gateway to Nexus to reduce COGS.
-- **Alpen (Albert) Integration**: Full ZK-Rollup support for high-frequency settlement.
-- **B2Network Support**: Native ZK-Rollup integration for B2B fintech paths.
-- **South American Expansion**: Targeted rBTC (Rootstock) retail onboarding.
+The `conxius-enclave-sdk` is a shared enclave and signing-abstraction reference component for BaaP integrations. Its interfaces do not, by themselves, establish hardware-backed production support or value-bearing settlement support.
+
+- **Hardware enclave abstraction:** Native interfaces for StrongBox/TEE integrations.
+- **Sovereign handshake:** Non-custodial signing interfaces for user- or tenant-authorized actions.
+- **B2B identity:** Cryptographic identity primitives for sovereign partners and automated billing integrations.
+
+## 5. Adoption context
+
+This specification makes no market-share, revenue, competitive-capture, or asset-management claim. Commercial strategy and market analysis belong in the authorized Linear workspace. Public documentation should describe the technical boundary and its evidence, not a promise to operate or capture a market.
+
+## 6. Enhancements and roadmap
+
+The following remain **Target-state** architecture topics until their implementation and verification evidence is linked:
+
+- Consolidated state: moving chain-polling responsibilities from middleware to the state/proof layer where validated.
+- Alpen/Albert integration for ZK-rollup research and high-frequency protocol settlement.
+- B2Network support for B2B integration paths.
+- Regional onboarding experiments that preserve the non-custodial client and protocol boundaries.
 
 ---
-*Maintained by the Sovereign Orchestrator. Linked to CON-474, CON-619, and CON-256.*
+
+Maintained as a public reference specification. Linked implementation and governance decisions must follow the [Doctrine Alignment Standard](../docs/DOCTRINE_ALIGNMENT_STANDARD.md).

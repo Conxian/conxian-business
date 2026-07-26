@@ -1,6 +1,6 @@
 # Spec: CON-383 Full BOS Buildout — Stub Removal, Production Implementation & Verification
 
-**Sovereign Coordination Layer:** [CON-383](https://sovereign.conxian.com/issue/CON-383/remove-bos-state-machine-stub-from-production-path)
+**authorized Linear workspace:** [CON-383](https://sovereign.conxian.com/issue/CON-383/remove-bos-state-machine-stub-from-production-path)
 **Related:** CON-385, CON-392, CON-394, CON-396
 **Scope:** `conxian-business` (primary), `conxian-nexus` (stubs), devcontainer
 

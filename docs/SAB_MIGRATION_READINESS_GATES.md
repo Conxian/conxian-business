@@ -4,7 +4,7 @@ This document defines first-pass readiness gates and cutover criteria for the SA
 
 Canonical tracker:
 
-- Sovereign Coordination Layer: https://sovereign.conxian.com/issue/CON-329/create-sab-migration-control-plane-and-dependency-inventory
+- authorized Linear workspace: https://sovereign.conxian.com/issue/CON-329/create-sab-migration-control-plane-and-dependency-inventory
 
 This gate is intentionally framed around evidence and invariants, not "progress updates".
 

@@ -13,7 +13,7 @@ This document defines the canonical commercial packaging doctrine for Conxian-La
 - Gateway, Wallet, and SDK remain the primary offer structure
 - Pricing, buyer journeys, and packaging logic do not drift from implementation truth
 
-**ZSE note**: This document defines the public-safe offer architecture, customer journey model, and packaging logic. Actual pricing tiers, revenue projections, and partner-specific commercial terms are maintained in the Conxian Linear workspace. See [BOUNDARY_DECISION_LOG.md](BOUNDARY_DECISION_LOG.md).
+**ZSE note**: This document defines the public-safe offer architecture, customer journey model, and packaging logic. Actual pricing tiers, revenue projections, and partner-specific commercial terms are maintained in the authorized Linear workspace. See [BOUNDARY_DECISION_LOG.md](BOUNDARY_DECISION_LOG.md).
 
 ---
 
@@ -23,14 +23,14 @@ Conxian-Labs offers three primary products, consistent across all packaging tier
 
 | Product | Type | What It Is | Maturity |
 |---------|------|------------|----------|
-| **Conxian Gateway** | B2B Infrastructure | ISO 20022 compliance pipe bridging Bitcoin/Stacks with legacy banking. Includes ZKC (Zero-Knowledge Compliance) and SYI (Sovereign Yield Index). | Beta |
+| **`conxian-gateway`** | B2B Infrastructure | ISO 20022 compliance pipe bridging Bitcoin/Stacks with legacy banking. Includes ZKC (Zero-Knowledge Compliance) and SYI (Sovereign Yield Index). | Beta |
 | **Conxius Wallet** | B2C / Enterprise Client | Sovereign Bitcoin command center (Android-first, offline-first). Hardware-enforced key custody via StrongBox/TEE. | Stable (v1.9.2) |
-| **Conxius Enclave SDK** | Developer Tool | Cross-platform Rust/WASM SDK for hardware enclave abstractions. Enables third-party builders to integrate sovereign key management. | Beta |
+| **`conxius-enclave-sdk`** | Developer Tool | Cross-platform Rust/WASM SDK for hardware enclave abstractions. Enables third-party builders to integrate sovereign key management. | Beta |
 
 **Supporting products** (not primary offers, but available to partners):
 - Conxian Nexus: Multi-protocol state verification node (API access)
 - Conxius Platform: Local developer deployment orchestrator
-- Conxius Orbit: Stacks smart contract deployment toolkit
+- `conxius-orbit`: Stacks smart contract deployment toolkit
 
 ---
 

@@ -6,7 +6,7 @@ labels: documentation
 assignees: ''
 ---
 
-> GitHub is authoritative for new BOS work. Do not include credentials, private endpoints, signer data, raw configuration, privileged legal advice, or restricted runbooks. Use sanitized status and an approved restricted-store pointer only.
+> GitHub is authoritative for new BOS work. Do not include credentials, private endpoints, signer data, raw configuration, privileged legal advice, or restricted runbooks. Keep restricted material in an authorized restricted system and use sanitized status plus an approved pointer only.
 
 ### Target Document
 *Which document or section requires updating? (e.g., `ALIGNMENT.md`, `02_strategy/ROADMAP.md`)*

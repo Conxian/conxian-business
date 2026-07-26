@@ -7,7 +7,7 @@
 
 ## Purpose
 
-This document records explicit boundary decisions for every artifact in `conxian-business` that could blur the line between **public-safe** (OK to expose in a public repo) and **internal-only** (must remain in the Conxian Linear workspace per Zero Secret Egress mandate).
+This document records explicit boundary decisions for every artifact in `conxian-business` that could blur the line between **public-safe** (OK to expose in a public repo) and **internal-only** (must remain in the authorized Linear workspace per Zero Secret Egress mandate).
 
 ## Classification Framework
 

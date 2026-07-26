@@ -4,7 +4,7 @@ This is the single canonical gate artifact for deciding **Go / Conditional Go / 
 
 Canonical trackers:
 
-- Sovereign Coordination Layer: https://sovereign.conxian.com/issue/CON-129/csf-mainnet-readiness-gate
+- authorized Linear workspace: https://sovereign.conxian.com/issue/CON-129/csf-mainnet-readiness-gate
 - GitHub (synced thread): https://github.com/Conxian/conxius-platform/issues/101
 
 Related operating order + cross-domain proof gates:

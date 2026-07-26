@@ -1,5 +1,7 @@
 # Repo portfolio (flagship vs supporting)
 
+For new BOS intake, coordination, decisions, and sanitized evidence rules, use the canonical [GitHub-native BOS workspace](./GITHUB_NATIVE_BOS_WORKSPACE.md).
+
 This page defines the Conxian public repo map for external evaluation and internal consistency.
 
 For release governance (what can ship, what must stay private, and what requires additional controls), see:

@@ -1,52 +1,49 @@
-# Conxian Business
+# `conxian-business`
 
-> Releases are tracked in [`CHANGELOG.md`](../CHANGELOG.md) and published as SemVer tags.
+> **Classification:** Canonical · Public-safe
+> **Role:** Governance and specification repository for the Conxian Business Operations System (BOS).
+> **Audience:** Contributors, integrators, auditors, and partners.
+> **Operating label:** Production intent.
+> **Maturity / claim state:** Beta; governance and specification artifacts are **Implemented**, while architecture proposals remain **Target-state**.
 
-**Conxian Business** defines the core service loop and state machine transitions of the Sovereign Autonomous Business (SAB), now evolving into a **Business-as-a-Platform (BaaP)** ecosystem.
+This directory contains the public-safe BOS governance surface: OpenSpec references, architecture notes, service-loop descriptions, templates, and link-preserving stubs. It is not a production service, custody system, discretionary treasury, or market-operation console.
 
-This repository is private (as of April 8, 2026). Internal BOS state-machine configuration, multi-tenant templates, and compliance reports are maintained in the sovereign coordination layer.
+## Scope
 
-## Purpose
+- Define and explain BOS governance, ownership boundaries, and specification workflows.
+- Describe infrastructure routing, orchestration, compliance integration, verification, and tenant-isolation patterns.
+- Keep public documentation aligned with evidence and with the separation between Conxian protocol/DAO components and Conxius client/access/developer tooling.
+- Preserve safe pointers when detailed strategy, legal, security, financial, or operational material belongs in the authorized Linear workspace under Zero Secret Egress (ZSE).
 
-- **Service Loop Orchestration**: Managing the relationship between the BOS as a Client (Intelligence/Yield) and the BOS as a Supplier (Governance/Settlement).
-- **Multi-Tenant Platforming**: Providing standardized templates and MCP interfaces for 3rd-party businesses to adopt the Conxian Sovereign BOS model.
-- **Compliance Monitoring**: Compliance reporting and enforcement workflows (internal details live in Linear).
-- **Transparency Custody**: Managing the Python-based transparency custodian for verifiable operations.
-- **Business Logic Layer**: Handling Commercial & Legal integrity for R200M–R2B+ exit readiness.
+## Non-scope
 
-## Status
+- Holding, managing, or exercising discretionary control over user or customer assets.
+- Operating a market, proprietary trading strategy, investment fund, or managed-yield service.
+- Extracting, reselling, or monetizing raw user data.
+- Serving as the canonical store for internal strategy, privileged operations, credentials, or custody procedures.
 
-Stable — This module documents BOS-level service-loop expectations and public-safe operational boundaries; detailed state-machine configuration and compliance reports live in the sovereign coordination layer.
+Protocol contracts and DAO rules may implement escrow, settlement, treasury, or yield behavior. In these documents those terms mean contract-, participant-, or governance-level state transitions; they do not mean Conxian-Labs custody, discretionary fund control, or market operation.
 
-## Canonical documentation
+## Canonical doctrine and evidence
 
-- [Repo portfolio](../docs/REPO_PORTFOLIO.md)
-- [Portfolio business-unit map](../docs/PORTFOLIO_BUSINESS_UNIT_MAP.md)
-- [Documentation alignment index](../docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
+- [Doctrine Alignment Standard](../docs/DOCTRINE_ALIGNMENT_STANDARD.md)
+- [Portfolio Doctrine Register](../docs/PORTFOLIO_DOCTRINE_REGISTER.md)
+- [Documentation Alignment Index](../docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
+- [Portfolio Business-Unit Map](../docs/PORTFOLIO_BUSINESS_UNIT_MAP.md)
+- [Repo Portfolio](../docs/REPO_PORTFOLIO.md)
+- [Trust & Proof Messaging](../docs/TRUST_AND_PROOF_MESSAGING.md)
+- [Claim vs Evidence Matrix](../docs/CLAIM_EVIDENCE_MATRIX.md)
+- [Boundary Decision Log](../docs/BOUNDARY_DECISION_LOG.md)
+- [OpenSpec](../openspec/README.md)
 
-## Key Components & Platform Standards
+## Related specifications
 
-- **[Unified Theory of Sovereign Enterprise](../docs/CONXIAN_UNIFIED_THEORY_v2.md)**: Mathematical framework for minimizing founder tax ($O_C$) while maximizing autonomy ($A_S$).
+- [BOS Runtime Ownership Map](./BOS_RUNTIME_OWNERSHIP_MAP.md)
+- [BOS Platform Specification](./BOS_PLATFORM_SPEC.md)
+- [Service Loop](./SERVICE_LOOP.md)
+- [Multi-Tenant Orchestration Guide](./BOS_MULTI_TENANT_ORCHESTRATION.md)
+- [BOS state-machine public-safe stub](./BOS_STATE_MACHINE.stub.json)
 
-- **[Sovereign Runtime Ownership Map](./BOS_RUNTIME_OWNERSHIP_MAP.md)**: Canonical mapping of BOS capabilities to production repositories.
-- **[Conxian Unified Theory (v2)](../docs/CONXIAN_UNIFIED_THEORY_v2.md)**: Foundational framework for capital, time, and code deployment.
-- **[Multi-Tenant Orchestration Guide](./BOS_MULTI_TENANT_ORCHESTRATION.md)**: Multi-Agent System (M.A.S.) patterns and jurisdictional sharding logic.
-- **[BOS Platform Specification](./BOS_PLATFORM_SPEC.md)**: v2.2 Industrial Standard for Business-as-a-Platform (BaaP).
-- **[BOS Enhancement Plan](./BOS_ENHANCEMENT_PLAN_v2.md)**: Roadmap for BitVM2, ZKML, and ERP integration.
-- **[BOS State Machine](./BOS_STATE_MACHINE.stub.json)**: Morgan Stanley CALM Standard state transitions (ZSE Stub).
-- **[Provisioning Template](./BOS_PROVISIONING_TEMPLATE.yaml)**: Declarative BiaB deployment manifest (v2.2).
-- **[Tenant Manifest Example](./BOS_TENANT_MANIFEST_EXAMPLE.yaml)**: Configuration example for multi-agent jurisdictional sharding.
+## Governance and security
 
-## Business Logic Skills (Skills 07-09)
-
-The office environment is equipped with specific skills to manage commercial integrity:
-
-- **cxn-duality-orchestrator**: Manages the Client/Supplier service loop duality and multi-business context isolation.
-- **cxn-ip-auditor**: Audits code and directives for IP ownership compliance.
-- **cxn-calm-validator**: Enforces CALM schema standards for state machine updates.
-
-## Governance
-
-This module is part of the Conxian Sovereign Autonomous Business (SAB).
-
-See [`GOVERNANCE.md`](../GOVERNANCE.md) for CONTRIBUTING, SECURITY, and LICENSE.
+Repository contribution, licensing, and security expectations are defined in [`GOVERNANCE.md`](../GOVERNANCE.md), [`CONTRIBUTING.md`](../CONTRIBUTING.md), [`SECURITY.md`](../SECURITY.md), and [`.github/CODEOWNERS`](../.github/CODEOWNERS). Do not place sensitive operational or strategy material in public-safe documentation.

@@ -4,7 +4,7 @@ This repository is public.
 
 Do not add operational, security, financial, legal, or strategic details to this repository file beyond this pointer stub.
 
-The canonical content for treasury execution and runway metrics is maintained in the Conxian Linear workspace to comply with our Zero Secret Egress (ZSE) mandate and to protect sensitive operational, security, financial, legal, or strategic details.
+The canonical content for treasury execution and runway metrics is maintained in the authorized Linear workspace to comply with our Zero Secret Egress (ZSE) mandate and to protect sensitive operational, security, financial, legal, or strategic details.
 
 See:
 
