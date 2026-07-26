@@ -48,27 +48,6 @@ jobs:
               return;
             }
 
-            const authorizedRoutes = new Map([
-              [
-                'dev->staged',
-                { description: "the direct 'dev' -> 'staged' promotion", requiresMainnetEvidence: false },
-              ],
-              [
-                'promotion/dev-to-staged->staged',
-                { description: "the generated 'promotion/dev-to-staged' -> 'staged' promotion", requiresMainnetEvidence: false },
-              ],
-              [
-                'staged->main',
-                { description: "the direct 'staged' -> 'main' promotion", requiresMainnetEvidence: true },
-              ],
-              [
-                'promotion/staged-to-main->main',
-                { description: "the generated 'promotion/staged-to-main' -> 'main' promotion", requiresMainnetEvidence: true },
-              ],
-            ]);
-
-            const route = authorizedRoutes.get(`${headRef}->${baseRef}`);
-
             if (
               baseRef === 'main' &&
               headRef !== 'staged' &&
@@ -94,14 +73,6 @@ jobs:
                 );
                 return;
               }
-            }
-
-            if (baseRef === 'main' && isDependabotUpdate) {
-              core.info('Allowing an in-repository Dependabot maintenance update into main.');
-            }
-
-            if (route) {
-              core.info(`Authorized route: ${route.description}`);
             }
 
             const body = pr.body ?? '';
@@ -142,7 +113,7 @@ jobs:
               );
             }
 
-            if (route?.requiresMainnetEvidence) {
+            if (baseRef === 'main' && headRef === 'staged') {
               requireBodyPattern(
                 /(^###\s+Mainnet\s+acceptance\s+evidence\s+pack\b)|audit\/mainnet-acceptance\//im,
                 "PRs into 'main' from 'staged' must include a Mainnet Acceptance Evidence Pack under '### Mainnet acceptance evidence pack' (or link to audit/mainnet-acceptance/*) per openspec/specs/mainnet-acceptance-evidence-pack/spec.md."

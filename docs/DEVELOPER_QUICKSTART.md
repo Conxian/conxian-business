@@ -344,12 +344,9 @@ git checkout -b feat/your-feature-name
 ### 4. Commit
 
 ```bash
-# Commit submodule changes first on a feature branch
+# Commit submodule changes first
 cd conxian-nexus
-git switch -c feat/your-change
-git add . && git commit -m "feat: your change"
-git push --set-upstream origin feat/your-change
-# Open a PR in the submodule and merge it through its protected-branch policy.
+git add . && git commit -m "feat: your change" && git push origin HEAD:main
 cd ..
 
 # Then update the submodule pin
@@ -360,8 +357,7 @@ git commit -m "chore: bump conxian-nexus submodule for your-feature"
 ### 5. Push & Monitor
 
 ```bash
-git push --set-upstream origin feat/your-feature-name
-# Open a PR from the feature branch into dev.
+git push origin HEAD:dev --force
 ```
 
 Watch CI at `https://github.com/Conxian/conxian-business/actions`. All suites must pass.
@@ -372,7 +368,7 @@ Apply the `review` label to trigger automated PR review via OpenHands. The revie
 
 ### Submodule Change Checklist
 
-- [ ] Changes committed and merged through the submodule's PR workflow
+- [ ] Changes committed and pushed to submodule's `main` branch
 - [ ] Submodule pin updated in `conxian-business`
 - [ ] All CI suites green
 - [ ] Contamination guard passes (`verify_contamination_guard.py`)

@@ -8,9 +8,9 @@
     "dev": "docker-compose up",
     "dev:gateway": "docker-compose up gateway",
     "dev:all": "docker-compose up",
-    "build": "pnpm --filter @conxian/sdk build && tsc -p tsconfig.json",
+    "build": "tsc",
     "clean": "docker-compose down -v",
-
+    
     "example:hello-world": "tsx examples/quickstart/01-hello-world.ts",
     "example:payment": "tsx examples/payments/iso20022-payment.ts",
     "example:settlement": "tsx examples/payments/bitcoin-settlement.ts",
