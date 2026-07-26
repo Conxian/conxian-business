@@ -111,24 +111,29 @@ class BosProductionBoundaryVerifierTests(unittest.TestCase):
 
         self.assert_passes()
 
-    def test_top_level_verifier_stub_reference_is_exempt(self) -> None:
+    def test_boundary_validator_stub_reference_is_exempt(self) -> None:
         self._write(
-            "scripts/verify_fixture.py", f'PATH = "candidate{STUB_SUFFIX}"\n'
+            "scripts/verify_bos_production_boundary.py",
+            f'PATH = "candidate{STUB_SUFFIX}"\n',
         )
-        self._track("scripts/verify_fixture.py")
+        self._track("scripts/verify_bos_production_boundary.py")
 
         self.assert_passes()
 
-    def test_non_entrypoint_verifier_reference_fails(self) -> None:
+    def test_other_top_level_verifier_stub_reference_fails(self) -> None:
+        self._write("scripts/verify_runtime.py", f'PATH = "candidate{STUB_SUFFIX}"\n')
+        self._track("scripts/verify_runtime.py")
+
+        self.assert_fails_with(f"Production/CI code must not reference {STUB_SUFFIX}")
+
+    def test_nested_verifier_reference_fails(self) -> None:
         self._write(
             "scripts/helpers/verify_fixture.py",
             f'PATH = "candidate{STUB_SUFFIX}"\n',
         )
         self._track("scripts/helpers/verify_fixture.py")
 
-        self.assert_fails_with(
-            f"Production/CI code must not reference {STUB_SUFFIX}"
-        )
+        self.assert_fails_with(f"Production/CI code must not reference {STUB_SUFFIX}")
 
     def test_top_level_typescript_active_testnet_defaults_fail(self) -> None:
         testnet_principal = "S" + "T" + ("A" * 20)
@@ -161,16 +166,32 @@ class BosProductionBoundaryVerifierTests(unittest.TestCase):
         self.assertEqual(status, 1, output.getvalue())
         self.assertIn("Failed to enumerate tracked files via git", output.getvalue())
 
-    def test_declared_submodule_contents_are_excluded(self) -> None:
+    def test_gitmodules_declaration_does_not_exclude_normal_tracked_directory(
+        self,
+    ) -> None:
         self._write(
             ".gitmodules",
-            '[submodule "component"]\n'
-            "\tpath = vendor/component\n"
+            '[submodule "scripts"]\n'
+            "\tpath = scripts\n"
             "\turl = https://example.invalid/component.git\n",
         )
-        fixture = "vendor/component/candidate" + STUB_SUFFIX
-        self._write(fixture, "{}\n")
+        fixture = "scripts/runtime.py"
+        self._write(fixture, f'PATH = "candidate{STUB_SUFFIX}"\n')
         self._track(".gitmodules", fixture)
+
+        self.assert_fails_with(
+            f"Production/CI code must not reference {STUB_SUFFIX}: {fixture}"
+        )
+
+    def test_real_gitlink_path_is_excluded(self) -> None:
+        gitlink_path = "vendor/component"
+        self._write(gitlink_path, f'PATH = "candidate{STUB_SUFFIX}"\n')
+        self._git(
+            "update-index",
+            "--add",
+            "--cacheinfo",
+            f"160000,{'1' * 40},{gitlink_path}",
+        )
 
         self.assert_passes()
 

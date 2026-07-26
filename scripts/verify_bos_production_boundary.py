@@ -8,31 +8,12 @@ import os
 import re
 import subprocess
 import sys
-from pathlib import PurePosixPath
+
+BOUNDARY_VALIDATOR_PATH = "scripts/verify_bos_production_boundary.py"
 
 
 def repo_root() -> str:
     return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-
-
-def read_submodule_paths(root: str) -> list[str]:
-    gitmodules_path = os.path.join(root, ".gitmodules")
-    if not os.path.exists(gitmodules_path):
-        return []
-
-    path_re = re.compile(r"^path\s*=\s*(.+)$")
-    paths: list[str] = []
-    with open(gitmodules_path, "r", encoding="utf-8") as f:
-        for raw_line in f:
-            line = raw_line.strip()
-            match = path_re.match(line)
-            if not match:
-                continue
-
-            candidate = match.group(1).strip()
-            if candidate:
-                paths.append(candidate)
-    return paths
 
 
 def is_in_dir(rel_path: str, rel_dir: str) -> bool:
@@ -49,15 +30,14 @@ def normalize_rel_path(rel_path: str) -> str:
     return rel_path
 
 
-def is_top_level_verifier_entrypoint(rel_path: str) -> bool:
-    path = PurePosixPath(normalize_rel_path(rel_path))
-    return path.parent == PurePosixPath("scripts") and path.name.startswith("verify_")
+def is_boundary_validator(rel_path: str) -> bool:
+    return normalize_rel_path(rel_path) == BOUNDARY_VALIDATOR_PATH
 
 
-def git_ls_files(root: str) -> list[str]:
+def git_index_entries(root: str) -> list[tuple[str, str]]:
     try:
         out = subprocess.check_output(
-            ["git", "-C", root, "ls-files", "-z"],
+            ["git", "-C", root, "ls-files", "--stage", "-z"],
             stderr=subprocess.STDOUT,
         )
     except (subprocess.CalledProcessError, FileNotFoundError) as exc:
@@ -65,26 +45,38 @@ def git_ls_files(root: str) -> list[str]:
             f"Failed to enumerate tracked files via git in {root}: {exc}"
         ) from exc
 
-    parts = [p for p in out.split(b"\x00") if p]
-    return [os.fsdecode(p) for p in parts]
+    entries: list[tuple[str, str]] = []
+    for raw_entry in (entry for entry in out.split(b"\x00") if entry):
+        metadata, separator, raw_path = raw_entry.partition(b"\t")
+        fields = metadata.split()
+        if not separator or len(fields) != 3:
+            raise RuntimeError("Failed to parse tracked Git index entries")
+        mode = os.fsdecode(fields[0])
+        entries.append((mode, os.fsdecode(raw_path)))
+    return entries
 
 
 def read_text(root: str, rel_path: str) -> str:
     full_path = os.path.join(root, rel_path)
     with open(full_path, "r", encoding="utf-8", errors="replace") as f:
         return f.read()
+
+
 def main() -> int:
     root = repo_root()
-    this_script_rel = normalize_rel_path(os.path.relpath(os.path.abspath(__file__), root))
-    submodules = set(read_submodule_paths(root))
-    excluded_dirs = {".idx"} | submodules
-
-    excluded_paths = {p.rstrip("/") for p in excluded_dirs if p.rstrip("/")}
+    this_script_rel = normalize_rel_path(
+        os.path.relpath(os.path.abspath(__file__), root)
+    )
     try:
+        index_entries = git_index_entries(root)
+        submodules = {path for mode, path in index_entries if mode == "160000"}
+        excluded_dirs = {".idx"} | submodules
+        excluded_paths = {p.rstrip("/") for p in excluded_dirs if p.rstrip("/")}
         repo_files = [
-            p
-            for p in git_ls_files(root)
-            if not any(is_in_dir(p, ex) for ex in excluded_paths)
+            path
+            for _, path in index_entries
+            if path not in submodules
+            and not any(is_in_dir(path, ex) for ex in excluded_paths)
         ]
     except RuntimeError as exc:
         print(str(exc), file=sys.stderr)
@@ -123,14 +115,11 @@ def main() -> int:
             continue
         text = read_text(root, rel_path)
         for needle in forbidden_substrings:
-            # Verifier entrypoints may reference stub artifacts to enforce hygiene rules,
-            # but should still be checked for all other forbidden references.
-            if needle == ".stub.json" and is_top_level_verifier_entrypoint(rel_path):
+            # The boundary validator must name the stub suffix to enforce this policy,
+            # but it should still be checked for every other forbidden reference.
+            if needle == ".stub.json" and is_boundary_validator(rel_path):
                 continue
-            if (
-                needle == "conxian-business/.generated/"
-                and rel_path == this_script_rel
-            ):
+            if needle == "conxian-business/.generated/" and rel_path == this_script_rel:
                 continue
             if needle in text:
                 errors.append(
