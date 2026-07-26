@@ -39,7 +39,9 @@ Reference: [`docs/bounties/BOUNTY_WORKFLOW.md`](./docs/bounties/BOUNTY_WORKFLOW.
 - If the maturity lane is missing at intake, record and proceed with the required default: `Research`.
 - Link portfolio governance in `conxian-business` to implementation work in the owning repository; do not duplicate authority.
 - Historical Linear links may be retained as dated archive/provenance evidence only. Do not create a new Linear item for canonical work.
-- Do not paste credentials, private endpoints, signer data, raw configuration, privileged legal advice, or restricted runbooks into GitHub. Use sanitized status and approved restricted-store pointers only.
+- **Classification stop rule:** if the request may contain restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational details, stop before posting. Follow the approved restricted process and include only an opaque restricted-record token in GitHub when necessary.
+- Historical migration issue [#944](https://github.com/Conxian/conxian-business/issues/944) inventories legacy workspace references; it does not create active intake authority. Do not mechanically rewrite historical stubs.
+- Read both the [GitHub-native BOS workspace](./docs/GITHUB_NATIVE_BOS_WORKSPACE.md) and the [GitHub-First BOS Operating Model](./docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md).
 
 ## Pull Request Process
 

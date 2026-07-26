@@ -7,6 +7,10 @@ assignees: ''
 ---
 
 > GitHub is authoritative for new BOS work. Do not include credentials, private endpoints, signer data, raw configuration, privileged legal advice, financial details, or restricted runbooks. Keep restricted material in an authorized restricted system and use sanitized status plus an approved pointer only.
+>
+> Private repository visibility does not authorize restricted data. Stop before posting restricted strategy, legal, financial, security, identity, custody, recovery, or privileged operational details; use only an opaque approved reference token when necessary.
+>
+> Read the [GitHub-First BOS Operating Model](../../docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md) and the [GitHub-native BOS workspace](../../docs/GITHUB_NATIVE_BOS_WORKSPACE.md).
 
 ## Executive Summary
 

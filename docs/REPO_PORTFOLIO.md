@@ -58,7 +58,7 @@ These repos support the flagship trust surface and are linked from flagship READ
 - [lib-conclave-sdk](https://github.com/Conxian/lib-conclave-sdk) — Headless enclave + cryptographic state machine SDK.
 - [conxian-nexus](https://github.com/Conxian/conxian-nexus) — API bridge (“Glass Node”) between layers/services.
 - [Conxian_UI](https://github.com/Conxian/Conxian_UI) *(planned rename to `Conxian/conxian-ui`)* — Supporting/reference UI surface that consumes approved public outputs; not an authoritative parent control plane.
-- [conxius_orbit](https://github.com/Conxian/conxius_orbit) — Stacks smart-contract deployment tooling. *(Maintained as stable, read-only deployment-track DevOps reference; no active roadmap features)*
+- [`conxius-orbit`](https://github.com/Conxian/conxius-orbit) — Stacks smart-contract deployment tooling. *(Maintained as stable, read-only deployment-track DevOps reference; no active roadmap features)*
 - [.github](https://github.com/Conxian/.github) — Org-wide defaults (community health files, templates).
 - [conxian-market](https://github.com/Conxian/conxian_market) — AI Marketplace and Agentic Commerce surface.
 - [conxian-business](https://github.com/Conxian/conxian-business) — Governance + OpenSpec + submodule wiring for the Conxian ecosystem.

@@ -23,7 +23,7 @@ Define and version Conxian's Business Operations System (BOS) as an auditable, p
 
 ## Status
 
-Active. This repository is private (as of April 8, 2026) and is the GitHub-native authority for new BOS portfolio policy, business governance, decision status, coordination, and sanitized evidence. Owning repositories remain authoritative for implementation and repository-local acceptance.
+Active. This repository is private (as of April 8, 2026), but private visibility does not authorize restricted data. It is the GitHub-native authority for new public-safe BOS portfolio policy, business governance, decision status, coordination, and sanitized evidence. Owning repositories remain authoritative for implementation and repository-local acceptance.
 
 This status framing is being kept aligned during the `conxius-platform` documentation transition.
 
