@@ -50,12 +50,14 @@ REQUIRED_CONTENT: dict[str, tuple[str, ...]] = {
 }
 
 ACTIVE_INTAKE_FILES: tuple[str, ...] = (
+    "AGENTS.md",
     "CONTRIBUTING.md",
     "GOVERNANCE.md",
     "docs/BOS_BUSINESS_BUILDOUT.md",
     "Sovereign-Ops-Orchestrator/LINEAR_WIRING.md",
     ".github/RELEASE_HYGIENE.md",
     ".github/PULL_REQUEST_TEMPLATE.md",
+    ".github/workflows/weekly-viability-report.yml",
 )
 
 LINEAR_CONTEXT_FILES: tuple[str, ...] = (
@@ -117,7 +119,7 @@ ACTIVE_LINEAR_MANDATE_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
         "imperative Linear intake directive",
         re.compile(
             r"\b(?:create|open|track)\s+(?:(?:all|new|current|active|a|an|the)\s+)?"
-            r"linear\s+(?:issue|item|ticket|record)\b",
+            r"linear\s+(?:issues?|items?|tickets?|records?)\b",
             re.IGNORECASE,
         ),
     ),
@@ -133,6 +135,14 @@ ACTIVE_LINEAR_MANDATE_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
         re.compile(
             r"\blinear\b\s+(?:is|remains)\s+(?:the\s+)?"
             r"(?:required|mandatory|canonical|authoritative|source\s+of\s+truth)\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "sensitive records routed to Linear",
+        re.compile(
+            r"\b(?:keep|store|route|record|maintain)\b.{0,100}"
+            r"\b(?:sensitive|restricted|protected)\b.{0,100}\blinear\b",
             re.IGNORECASE,
         ),
     ),

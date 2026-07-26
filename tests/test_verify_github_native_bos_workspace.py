@@ -81,6 +81,13 @@ class GitHubNativeBosWorkspaceVerifierTests(unittest.TestCase):
         self.assertEqual(status, 0, output)
         self.assertIn("GitHub-native BOS workspace verification: OK", output)
 
+    def test_active_source_scope_includes_policy_and_workflow(self) -> None:
+        self.assertIn("AGENTS.md", verifier.ACTIVE_INTAKE_FILES)
+        self.assertIn(
+            ".github/workflows/weekly-viability-report.yml",
+            verifier.ACTIVE_INTAKE_FILES,
+        )
+
     def test_missing_canonical_policy_fails_closed(self) -> None:
         (self.repo / "docs/GITHUB_NATIVE_BOS_WORKSPACE.md").unlink()
         status, output = self._run()
@@ -124,6 +131,28 @@ class GitHubNativeBosWorkspaceVerifierTests(unittest.TestCase):
                 self.assertIn(
                     "CONTRIBUTING.md:1: active intake requires Linear", output
                 )
+
+    def test_agents_sensitive_record_linear_routing_fails(self) -> None:
+        self._write(
+            "AGENTS.md",
+            "Keep sensitive logic and protected configs in Linear only.\n",
+        )
+        status, output = self._run()
+        self.assertEqual(status, 1, output)
+        self.assertIn("AGENTS.md:1: active intake requires Linear", output)
+
+    def test_weekly_workflow_plural_linear_issues_mandate_fails(self) -> None:
+        self._write(
+            ".github/workflows/weekly-viability-report.yml",
+            "steps:\n  - run: Create Linear issues to track remediation\n",
+        )
+        status, output = self._run()
+        self.assertEqual(status, 1, output)
+        self.assertIn(
+            ".github/workflows/weekly-viability-report.yml:2: active intake "
+            "requires Linear",
+            output,
+        )
 
     def test_issue_templates_reject_all_linear_references(self) -> None:
         variants = (

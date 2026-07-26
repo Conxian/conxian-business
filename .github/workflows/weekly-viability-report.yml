@@ -158,7 +158,7 @@ jobs:
             ### Recommended Actions
 
             1. Review the specific blockers for each repository
-            2. Create Linear issues to track remediation
+            2. Create or update the canonical GitHub issue in each owning repository to track remediation
             3. Schedule dedicated sprints to address critical gaps
 
             See full report at: viability-report.md
