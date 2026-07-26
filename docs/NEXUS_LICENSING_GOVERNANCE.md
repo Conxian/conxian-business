@@ -20,6 +20,8 @@ This document establishes authority, RACI, evidence, and blocker boundaries for 
 | [`.github` #60](https://github.com/Conxian/.github/issues/60) | Portfolio licensing standards, matrix, metadata/notice policy, and shared CI controls after authorized decisions exist. |
 | [Business #933](https://github.com/Conxian/conxian-business/issues/933) | Gate 1 impact only. Licensing activity does not satisfy Gate 1. |
 
+The current Linear-first blocker wording in `.github` #60 is legacy and must be migrated to Business #942 before the tracker is fully aligned with the GitHub-native BOS policy. Issue #60 remains the implementation tracker for portfolio standards, the licensing matrix, metadata/notice policy, and shared CI controls; it is not decision authority.
+
 ## Authority and RACI
 
 `A` = accountable decision authority, `R` = responsible executor, `C` = consulted, `I` = informed.

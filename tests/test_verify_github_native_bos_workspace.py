@@ -37,7 +37,18 @@ class GitHubNativeBosWorkspaceVerifierTests(unittest.TestCase):
         for relative_path, fragments in verifier.REQUIRED_CONTENT.items():
             self._write(relative_path, "\n".join(fragments) + "\n")
 
-        safe_text = "GitHub is authoritative. Historical Linear archive provenance only.\n"
+        for (
+            relative_path,
+            authority_text,
+        ) in verifier.REQUIRED_ISSUE_FORM_AUTHORITY.items():
+            path = self.repo / relative_path
+            existing = path.read_text(encoding="utf-8") if path.exists() else ""
+            if authority_text.casefold() not in existing.casefold():
+                self._write(relative_path, existing + authority_text + "\n")
+
+        safe_text = (
+            "GitHub is authoritative. Historical Linear archive provenance only.\n"
+        )
         for relative_path in set(verifier.ACTIVE_INTAKE_FILES) | set(
             verifier.LINEAR_CONTEXT_FILES
         ):
@@ -51,7 +62,9 @@ class GitHubNativeBosWorkspaceVerifierTests(unittest.TestCase):
             "## Archived Linear migration proposals\n"
             "Do not create these as new canonical Linear documents.\n",
         )
-        self._write(".github/ISSUE_TEMPLATE/config.yml", "blank_issues_enabled: false\n")
+        self._write(
+            ".github/ISSUE_TEMPLATE/config.yml", "blank_issues_enabled: false\n"
+        )
 
     def _run(self) -> tuple[int, str]:
         output = io.StringIO()
@@ -88,7 +101,29 @@ class GitHubNativeBosWorkspaceVerifierTests(unittest.TestCase):
         )
         status, output = self._run()
         self.assertEqual(status, 1, output)
-        self.assertIn("active intake still requires Linear authority", output)
+        self.assertIn("active intake requires Linear", output)
+
+    def test_active_linear_mandate_variants_fail(self) -> None:
+        variants = (
+            "All new BOS work must use Linear for coordination.",
+            "Linear ticket required.",
+            "Route work through Linear.",
+            "Linear is required for new work.",
+            "Linear must be used for new work coordination.",
+            "Current intake shall use Linear for coordination.",
+            "Linear is mandatory for coordination.",
+            "Linear is canonical for new intake.",
+            "Linear is authoritative for current coordination.",
+            "Linear is the source of truth for new work.",
+        )
+        for variant in variants:
+            with self.subTest(variant=variant):
+                self._write("CONTRIBUTING.md", variant + "\n")
+                status, output = self._run()
+                self.assertEqual(status, 1, output)
+                self.assertIn(
+                    "CONTRIBUTING.md:1: active intake requires Linear", output
+                )
 
     def test_issue_form_directing_new_linear_work_fails(self) -> None:
         self._write(
@@ -97,13 +132,51 @@ class GitHubNativeBosWorkspaceVerifierTests(unittest.TestCase):
         )
         status, output = self._run()
         self.assertEqual(status, 1, output)
-        self.assertIn("issue intake must not direct users to new Linear work", output)
+        self.assertIn(
+            ".github/ISSUE_TEMPLATE/extra.yml:2: active intake requires Linear",
+            output,
+        )
+
+    def test_exact_historical_marker_bypass_fails(self) -> None:
+        self._write(
+            "README.md",
+            "All new BOS work must use Linear for coordination. Historical context retained.\n",
+        )
+        status, output = self._run()
+        self.assertEqual(status, 1, output)
+        self.assertIn("README.md:1: active Linear mandate", output)
+
+    def test_adjacent_archive_line_does_not_exempt_current_mandate(self) -> None:
+        self._write(
+            "README.md",
+            "Historical Linear records are archived provenance only.\n"
+            "Linear ticket required for current BOS intake.\n",
+        )
+        status, output = self._run()
+        self.assertEqual(status, 1, output)
+        self.assertIn("README.md:2: active Linear mandate", output)
+
+    def test_explicitly_historical_linear_url_passes(self) -> None:
+        self._write(
+            "README.md",
+            "Historical provenance only: https://linear.app/example/issue/OLD-1 "
+            "is archived and non-authoritative.\n",
+        )
+        status, output = self._run()
+        self.assertEqual(status, 0, output)
+
+    def test_missing_github_authority_in_required_issue_form_fails(self) -> None:
+        path = ".github/ISSUE_TEMPLATE/governance_legal_decision.yml"
+        self._write(path, "name: Governance decision\n")
+        status, output = self._run()
+        self.assertEqual(status, 1, output)
+        self.assertIn(f"{path}: missing required GitHub-authority language", output)
 
     def test_unqualified_linear_reference_fails(self) -> None:
         self._write("README.md", "Use Linear for coordination.\n")
         status, output = self._run()
         self.assertEqual(status, 1, output)
-        self.assertIn("must be explicitly historical/archive/migration context", output)
+        self.assertIn("same sentence or field", output)
 
 
 if __name__ == "__main__":

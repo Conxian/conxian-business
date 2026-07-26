@@ -125,3 +125,7 @@ When records conflict, use this order:
 5. Historical/archive Linear records and other dated snapshots.
 
 Higher precedence does not expand an artifact's authority. Business policy cannot prove implementation; implementation cannot invent legal or portfolio decisions; planning state cannot prove acceptance.
+
+## Validator scope
+
+`scripts/verify_github_native_bos_workspace.py` is a fail-closed minimum canonical-surface guard. It checks the named active intake and policy files plus all active issue templates/forms, but it does not claim to classify every historical document in the repository. Pull-request review remains required for historical or otherwise out-of-scope documentation.

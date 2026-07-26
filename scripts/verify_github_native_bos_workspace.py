@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Fail closed when GitHub-native BOS authority or intake controls regress."""
+"""Enforce a minimum canonical surface for GitHub-native BOS authority.
+
+The guard is intentionally bounded to active intake/templates and named policy
+surfaces. It fails closed on those surfaces; review is still required for
+historical documents outside this minimum scope.
+"""
 
 from __future__ import annotations
 
@@ -33,6 +38,7 @@ REQUIRED_CONTENT: dict[str, tuple[str, ...]] = {
         "Acceptance criteria and evidence",
     ),
     ".github/ISSUE_TEMPLATE/governance_legal_decision.yml": (
+        "GitHub Issues and pull requests are authoritative for new BOS work",
         "Owning repository",
         "Accountable governance owner role",
         "Decision authority",
@@ -50,10 +56,6 @@ ACTIVE_INTAKE_FILES: tuple[str, ...] = (
     "Sovereign-Ops-Orchestrator/LINEAR_WIRING.md",
     ".github/RELEASE_HYGIENE.md",
     ".github/PULL_REQUEST_TEMPLATE.md",
-    ".github/ISSUE_TEMPLATE/doc_update.md",
-    ".github/ISSUE_TEMPLATE/strategy_proposal.md",
-    ".github/ISSUE_TEMPLATE/bos_work_intake.yml",
-    ".github/ISSUE_TEMPLATE/governance_legal_decision.yml",
 )
 
 LINEAR_CONTEXT_FILES: tuple[str, ...] = (
@@ -66,7 +68,7 @@ LINEAR_CONTEXT_FILES: tuple[str, ...] = (
     "Sovereign-Ops-Orchestrator/LINEAR_WIRING.md",
 )
 
-LINEAR_CONTEXT_MARKERS: tuple[str, ...] = (
+HISTORICAL_CONTEXT_MARKERS: tuple[str, ...] = (
     "archive",
     "archived",
     "historical",
@@ -76,18 +78,80 @@ LINEAR_CONTEXT_MARKERS: tuple[str, ...] = (
     "provenance",
 )
 
-BANNED_ACTIVE_PATTERNS: tuple[re.Pattern[str], ...] = (
-    re.compile(r"linear[- ]first", re.IGNORECASE),
-    re.compile(r"(?:must|required to|ensure|every pull request must)\s+.{0,50}linear issue", re.IGNORECASE),
-    re.compile(r"(?:create|open|route)\s+(?:a|an|the|new)\s+linear (?:issue|item|ticket)", re.IGNORECASE),
-    re.compile(r"linear\s+(?:is|remains)\s+(?:the\s+)?canonical", re.IGNORECASE),
+ACTIVE_LINEAR_MANDATE_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
+    ("Linear-first policy", re.compile(r"\blinear[- ]first\b", re.IGNORECASE)),
+    (
+        "new/current work is required to use Linear",
+        re.compile(
+            r"\b(?:all\s+)?(?:new|current|active)\b.{0,80}"
+            r"\b(?:must|shall)\s+(?!not\b).{0,80}\blinear\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "mandatory Linear ticket or record",
+        re.compile(
+            r"\blinear\b.{0,50}\b(?:ticket|issue|item|record)?\s*"
+            r"(?:is\s+)?(?:required|mandatory)\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "mandatory use of Linear",
+        re.compile(
+            r"\b(?:must|shall)\s+(?!not\b).{0,50}"
+            r"\b(?:use|create|open|route|track|coordinat(?:e|ed)|record(?:ed)?)\b"
+            r".{0,40}\blinear\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "Linear mandated for active work",
+        re.compile(
+            r"\blinear\b.{0,40}\b(?:must|shall)\s+(?!not\b).{0,60}"
+            r"\b(?:use|used|route|routed|track|tracked|coordinat(?:e|ed)|govern)\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "imperative Linear intake directive",
+        re.compile(
+            r"\b(?:create|open|track)\s+(?:(?:all|new|current|active|a|an|the)\s+)?"
+            r"linear\s+(?:issue|item|ticket|record)\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "work routed through Linear",
+        re.compile(
+            r"\broute\s+(?:(?:all|new|current|active)\s+)?work\s+through\s+linear\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "Linear declared current authority",
+        re.compile(
+            r"\blinear\b\s+(?:is|remains)\s+(?:the\s+)?"
+            r"(?:required|mandatory|canonical|authoritative|source\s+of\s+truth)\b",
+            re.IGNORECASE,
+        ),
+    ),
 )
 
-FORBIDDEN_FORM_TERMS: tuple[str, ...] = (
-    "linear.app/",
-    "create a linear",
-    "open a linear",
-    "linear-first",
+REQUIRED_ISSUE_FORM_AUTHORITY: dict[str, str] = {
+    ".github/ISSUE_TEMPLATE/bos_work_intake.yml": (
+        "GitHub Issues and pull requests are authoritative for new BOS work"
+    ),
+    ".github/ISSUE_TEMPLATE/governance_legal_decision.yml": (
+        "GitHub Issues and pull requests are authoritative for new BOS work"
+    ),
+}
+
+ISSUE_TEMPLATE_SUFFIXES: frozenset[str] = frozenset({".md", ".yml", ".yaml"})
+
+NON_AUTHORITY_LINEAR_PATTERNS: tuple[re.Pattern[str], ...] = (
+    re.compile(r"\b(?:do\s+not|never)\b.{0,120}\blinear\b", re.IGNORECASE),
+    re.compile(r"\blinear\b.{0,120}\b(?:must|shall)\s+not\b", re.IGNORECASE),
 )
 
 
@@ -119,36 +183,81 @@ def _check_required_content(root: Path, errors: list[str]) -> None:
                 )
 
 
+def _linear_units(text: str) -> list[tuple[int, str]]:
+    """Return sentence- or line-sized units containing a Linear reference."""
+    units: list[tuple[int, str]] = []
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        if "linear" not in line.casefold():
+            continue
+        sentences = re.split(r"(?<=[.!?])\s+", line.strip())
+        units.extend(
+            (line_number, sentence.strip())
+            for sentence in sentences
+            if "linear" in sentence.casefold()
+        )
+    return units
+
+
+def _active_mandate_reason(unit: str) -> str | None:
+    if _is_explicit_linear_non_authority(unit):
+        return None
+    for reason, pattern in ACTIVE_LINEAR_MANDATE_PATTERNS:
+        if pattern.search(unit):
+            return reason
+    return None
+
+
+def _is_explicit_linear_non_authority(unit: str) -> bool:
+    return any(pattern.search(unit) for pattern in NON_AUTHORITY_LINEAR_PATTERNS)
+
+
+def _check_active_linear_mandates(
+    relative_path: str, text: str, errors: list[str]
+) -> None:
+    for line_number, unit in _linear_units(text):
+        reason = _active_mandate_reason(unit)
+        if reason is None:
+            continue
+        excerpt = " ".join(unit.split())
+        errors.append(
+            f"{relative_path}:{line_number}: active intake requires Linear "
+            f"({reason}): {excerpt!r}"
+        )
+
+
 def _check_active_intake(root: Path, errors: list[str]) -> None:
     for relative_path in ACTIVE_INTAKE_FILES:
         text = _read(root, relative_path, errors)
         if text is None:
             continue
-        for pattern in BANNED_ACTIVE_PATTERNS:
-            match = pattern.search(text)
-            if match:
-                excerpt = " ".join(match.group(0).split())
-                errors.append(
-                    f"{relative_path}: active intake still requires Linear authority: {excerpt!r}"
-                )
+        _check_active_linear_mandates(relative_path, text, errors)
 
     issue_template_dir = root / ".github" / "ISSUE_TEMPLATE"
     if not issue_template_dir.is_dir():
         errors.append("Missing issue-template directory: .github/ISSUE_TEMPLATE")
         return
-    for path in sorted(issue_template_dir.iterdir()):
-        if not path.is_file() or path.name == "config.yml":
+    for path in sorted(issue_template_dir.rglob("*")):
+        if (
+            not path.is_file()
+            or path.name == "config.yml"
+            or path.suffix.casefold() not in ISSUE_TEMPLATE_SUFFIXES
+        ):
             continue
+        relative_path = path.relative_to(root).as_posix()
         try:
-            text = path.read_text(encoding="utf-8").casefold()
+            text = path.read_text(encoding="utf-8")
         except OSError as exc:
-            errors.append(f"Cannot read {path.relative_to(root)}: {exc}")
+            errors.append(f"Cannot read {relative_path}: {exc}")
             continue
-        for forbidden in FORBIDDEN_FORM_TERMS:
-            if forbidden in text:
-                errors.append(
-                    f"{path.relative_to(root)}: issue intake must not direct users to new Linear work ({forbidden!r})"
-                )
+        _check_active_linear_mandates(relative_path, text, errors)
+
+    for relative_path, authority_text in REQUIRED_ISSUE_FORM_AUTHORITY.items():
+        text = _read(root, relative_path, errors)
+        if text is not None and authority_text.casefold() not in text.casefold():
+            errors.append(
+                f"{relative_path}: missing required GitHub-authority language: "
+                f"{authority_text!r}"
+            )
 
 
 def _check_linear_context(root: Path, errors: list[str]) -> None:
@@ -156,16 +265,22 @@ def _check_linear_context(root: Path, errors: list[str]) -> None:
         text = _read(root, relative_path, errors)
         if text is None:
             continue
-        lines = text.splitlines()
-        for index, line in enumerate(lines):
-            if "linear" not in line.casefold():
-                continue
-            start = max(0, index - 2)
-            end = min(len(lines), index + 3)
-            context = " ".join(lines[start:end]).casefold()
-            if not any(marker in context for marker in LINEAR_CONTEXT_MARKERS):
+        for line_number, unit in _linear_units(text):
+            reason = _active_mandate_reason(unit)
+            if reason is not None:
+                excerpt = " ".join(unit.split())
                 errors.append(
-                    f"{relative_path}:{index + 1}: Linear reference must be explicitly historical/archive/migration context"
+                    f"{relative_path}:{line_number}: active Linear mandate cannot be "
+                    f"treated as historical ({reason}): {excerpt!r}"
+                )
+                continue
+            if _is_explicit_linear_non_authority(unit):
+                continue
+            context = unit.casefold()
+            if not any(marker in context for marker in HISTORICAL_CONTEXT_MARKERS):
+                errors.append(
+                    f"{relative_path}:{line_number}: Linear reference must be explicitly "
+                    "historical/archive/migration context in the same sentence or field"
                 )
 
     registry = _read(root, "docs/DOCUMENTATION_ALIGNMENT_INDEX.md", errors)
