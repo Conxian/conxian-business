@@ -73,6 +73,7 @@ This document is the **mandatory BOS Knowledge Graph** referenced in `AGENTS.md`
 | **Conxian Unified CI** | GitHub Actions | Multi-suite test orchestration | ✅ Active |
 | **Secret Scan** | Gitleaks workflow | Pre-commit secret detection | ✅ Active |
 | **Branch Promotion Policy** | GitHub Actions | Enforce dev → staged → main flow | ✅ Active |
+| **GitHub-First BOS Operating Model** | GitHub Issues, PRs, Project, docs | Public-safe work coordination and evidence | 🟡 Proposed baseline (#943) |
 
 ### 🛡️ Vulnerability Allowlist (Cargo Audit)
 
@@ -217,6 +218,7 @@ graph TB
 | Docker credentials use external secret files and DB_* connection inputs | 2026-07-14 | Fail-closed ZSE without inline credentials | - |
 | Docker env vars use DB_* prefix, not *_PASSWORD | 2026-07-08 | GitGuardian pattern avoidance | - |
 | Community governance remediation scope | 2026-07-21 | Prefer the self-contained, non-executing community-voting ledger in protocol PR #521 over isolated `upgrade-controller` work; keep the broader governance gap open until proposal/timelock plumbing and the overlapping #499 scope are resolved. | Protocol PR #521 merge and broader governance decision |
+| GitHub-first public-safe BOS baseline | 2026-07-26 | Make GitHub canonical for public-safe intake, delivery, sanitized decisions, and immutable evidence while restricted records remain outside Git; implementation does not imply formal approval. | Formal approval or a superseding issue-linked PR; #943 |
 
 ---
 
@@ -228,6 +230,7 @@ graph TB
 | Mathematical Framework | `lib-conxian-core/docs/CONXIAN_UNIFIED_THEORY_v2.md` | 2026-04-23 |
 | Security Audit | `lib-conxian-core/docs/ADVISORY_REPORT_2026_07_06.md` | 2026-07-06 |
 | Knowledge Gaps | `docs/KNOWLEDGE_GAP_ANALYSIS.md` | 2026-07-21 |
+| GitHub-First BOS Operating Model | `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` | 2026-07-26 |
 | Gateway Research | `conxian-gateway/docs/research/KNOWLEDGE_MAP.md` | 2026-04-23 |
 | ISO 20022 Patterns | External: BIS d218, ISO white paper | 2025 |
 | Clarity Patterns | External: Stacks Cookbook, CertiK | 2026 |
@@ -644,6 +647,29 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 | Platform observation boundary | [conxius-platform PR #1197](https://github.com/Conxian/conxius-platform/pull/1197) | **MERGED / OBSERVATION ONLY** |
 
 ---
+
+## Dated Digest: GitHub-First BOS Baseline (2026-07-26)
+
+### Typed entities and relationships
+
+| Entity | Type | Relationship |
+| --- | --- | --- |
+| `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` | Proposed canonical policy | governs public-safe BOS coordination in GitHub |
+| GitHub Issues | Work record | owned by the repository responsible for delivery |
+| Pull requests | Change and review record | link to owning-repository issues and commit-bound validation |
+| `BOS Control Plane` Project | Proposed portfolio index | tracked by `Conxian/.github#61`; creation admin-blocked |
+| Approved non-Git restricted-record system | Restricted record authority | holds protected records; GitHub receives opaque tokens only when needed |
+| `conxian-business` | Portfolio coordinator | coordinates licensing policy/status but does not license other repositories |
+| Owning repository | Delivery authority | retains implementation, license artifacts, validation, release, and rollback responsibility |
+
+### Decisions, dependencies, and gates
+
+- **Decision status:** proposed implementation baseline under `conxian-business#943`; formal approval is not inferred.
+- **Migration dependency:** `conxian-business#944` classifies the dated 102-file / 293-reference Linear-first inventory without bulk replacement.
+- **Branch gate:** `conxian-business#945` must reconcile the documented promotion flow with the observed default branch; this baseline selects neither model.
+- **Project gate:** `Conxian/.github#61` requires authorized organization administration before the Project can be created.
+- **Licensing boundary:** `Conxian/.github#60` and `Conxian/conxian-nexus#174` remain the implementation trackers; only an authorized legal rights-holder can approve terms.
+- **Rollback invariant:** workflow rollback must never restore restricted content to GitHub.
 
 ## Maintenance
 

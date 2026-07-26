@@ -6,11 +6,11 @@ labels: enhancement, business
 assignees: ''
 ---
 
-> Note: This repository is public. Do not include confidential strategy, financial targets, operational runbooks, legal interpretations, or infrastructure identifiers.
+> Use this template only for public-safe proposals. Private repository visibility does not authorize restricted data.
 >
-> For internal proposals, use the Conxian Linear workspace instead: https://linear.app/conxian-labs
+> Stop before posting restricted strategy, legal, financial, security, identity, custody, recovery, or privileged operational details. Follow the approved restricted process and use only an opaque reference token here when necessary.
 >
-> ExCo operational requests are Linear-first. If mirrored to GitHub, include the full Linear issue URL.
+> Read the [GitHub-First BOS Operating Model](../../docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md).
 
 ## Executive Summary
 
@@ -28,7 +28,7 @@ components?*
 
 ## Resource Allocation & Dependencies
 
-*What resources (capital, engineering hours, legal review, partnerships) are required?*
+*List only public-safe delivery dependencies and accountable repositories. Do not include protected financial, legal, partner, or staffing details.*
 
 ## Risks & Mitigations
 

@@ -7,12 +7,12 @@ This page is a practical index of the documentation already present in this repo
 - **Canonical**: the current “source of truth” for a domain. If two docs disagree, update the non-canonical doc to match the canonical one.
 - **Supporting**: helpful context, audits, reports, briefs, or deep dives that clarify (but don’t define) the system.
 - **Public-safe**: ok to link in public contexts and external conversations.
-- **Public-safe stub (canonical in Sovereign Coordination Layer)**: safe to link publicly; this repo file is a short pointer stub (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)). It must not contain any operational, security, financial, legal, and strategic details beyond the pointer. The full canonical content is maintained in the sovereign coordination layer under ZSE.
-- **Internal-only (canonical in Sovereign Coordination Layer only)**: operational, security, financial, legal, and strategic material whose canonical document must live only in the sovereign coordination layer. If a repo link target must be preserved, use a **Public-safe stub (canonical in Sovereign Coordination Layer)** (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)) so existing links continue to resolve.
+- **Public-safe stub (canonical in an approved non-Git restricted-record system)**: safe to link publicly; this repo file is a short pointer stub (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)). It must not contain restricted operational, security, financial, legal, identity, custody, recovery, or strategic details beyond a minimum opaque token.
+- **Restricted (canonical in an approved non-Git restricted-record system only)**: protected operational, security, financial, legal, identity, custody, recovery, and strategic material whose canonical record must not live in GitHub. If a repo link target must be preserved, use a public-safe ZSE stub with only the minimum opaque token.
 
 Notes:
 
-- Treat this repo as public for boundary purposes. (This GitHub repository is private as of April 8, 2026.) "Internal-only" material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see sovereign coordination layer issue CON-256).
+- Treat this repo as public for boundary purposes. (This GitHub repository is private as of April 8, 2026.) Restricted material must not be stored here; preserve necessary link targets with public-safe ZSE stubs and minimum opaque tokens.
 - OpenSpec change sets typically have 4 layers: `proposal.md` (intent), `design.md` (architecture), `specs/*/spec.md` (requirements), `tasks.md` (execution).
 
 ## GAP-020 cross-link alignment (issue #724)
@@ -49,6 +49,7 @@ Notes:
 | `SUMMARY.md` | Canonical | Public-safe | GitBook table of contents (used for docs navigation; Pages publishing is allowlisted). |
 | `docs/README.md` | Supporting | Public-safe | “Docs hub” landing page. |
 | `docs/BOS_BUSINESS_BUILDOUT.md` | Canonical | Public-safe | Repo business purpose, business-unit placement, governance + ownership model, and public/internal split. |
+| `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` | Canonical | Public-safe | GitHub-first public-safe intake, Project, ownership, evidence, licensing, migration, change-control, and restricted-record boundary. |
 | `docs/PRIVATE_REPO_REPO_CHECK_WORKFLOW.md` | Canonical | Public-safe | Repo-check workflow for private repositories (boundary, secrets, hygiene, governance, release maturity). |
 | `docs/PUBLIC_REPO_CONTROL_MATRIX.md` | Canonical | Public-safe | Dated public-presentation control snapshot for 12 repositories: metadata, release discoverability, public ownership surfaces, clarification actions, and recommended organization pins. It does not redefine doctrine or certify readiness. |
 | `docs/BRANCH_AND_PROMOTION_STANDARD.md` | Canonical | Public-safe | Canonical `dev`/`staged`/`main` branch roles and promotion workflow. |
@@ -58,10 +59,11 @@ Notes:
 
 ## 2) BOS (Business Operations System)
 
-These are the “operating-model” documents that explain how BOS components relate, how execution is intended to be wired into Linear, and what gets measured.
+These are the operating-model documents that explain how BOS components relate, how public-safe execution is coordinated through GitHub, and what gets measured. Legacy Linear-first references remain subject to the controlled migration in [#944](https://github.com/Conxian/conxian-business/issues/944).
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
+| `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` | Canonical | Public-safe | Current GitHub-first BOS coordination model and ZSE boundary. |
 | `conxian-business/SERVICE_LOOP.md` | Canonical | Public-safe | BOS service loop (how client/supplier loops connect). |
 | `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Public-safe stub (canonical in Linear) | Public-safe BOS state machine pointer stub (standardized ZSE stub). |
 | `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Canonical | Public-safe | ExCo Linear-first intake standard (required fields, triage flow, execution linkbacks) with sensitive details remaining in Linear under ZSE. |
