@@ -20,8 +20,6 @@ jobs:
             const pr = context.payload.pull_request;
             const baseRef = pr.base.ref;
             const headRef = pr.head.ref;
-            const isDependabotUpdate =
-              pr.user?.login === 'dependabot[bot]' && headRef.startsWith('dependabot/');
 
             const baseRepoId = pr.base.repo?.id;
             const headRepoId = pr.head.repo?.id;
@@ -68,36 +66,15 @@ jobs:
             ]);
 
             const route = authorizedRoutes.get(`${headRef}->${baseRef}`);
-
-            if (
-              baseRef === 'main' &&
-              headRef !== 'staged' &&
-              !headRef.startsWith('promotion/') &&
-              !isDependabotUpdate
-            ) {
+            if ((baseRef === 'main' || baseRef === 'staged') && !route) {
+              const expected =
+                baseRef === 'main'
+                  ? "'staged' or 'promotion/staged-to-main'"
+                  : "'dev' or 'promotion/dev-to-staged'";
               core.setFailed(
-                `PRs into 'main' must come from 'staged' or a 'promotion/*' branch (got '${headRef}' -> '${baseRef}').`
+                `PRs into '${baseRef}' must use an explicit authorized source (${expected}; got '${headRef}' -> '${baseRef}').`
               );
               return;
-            }
-
-            if (baseRef === 'main' && isDependabotUpdate) {
-              core.info('Allowing an in-repository Dependabot maintenance update into main.');
-            }
-
-            if (baseRef === 'staged') {
-              const allowed = headRef === 'dev' || headRef.startsWith('hotfix/') || headRef.startsWith('promotion/');
-
-              if (!allowed) {
-                core.setFailed(
-                  `PRs into 'staged' must come from 'dev', 'hotfix/*', or 'promotion/*' (got '${headRef}' -> '${baseRef}').`
-                );
-                return;
-              }
-            }
-
-            if (baseRef === 'main' && isDependabotUpdate) {
-              core.info('Allowing an in-repository Dependabot maintenance update into main.');
             }
 
             if (route) {
