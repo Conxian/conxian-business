@@ -1,7 +1,5 @@
 # Portfolio business-unit map and separation of concerns
 
-New public-safe BOS governance and coordination follow the [GitHub-native BOS workspace](./GITHUB_NATIVE_BOS_WORKSPACE.md). Restricted operational or strategy records remain in authorized restricted systems and are represented here only by sanitized pointers.
-
 > Verification: expected to be enforced by P0 portfolio hygiene automation (see the prioritized build/repair list). Until then, keep the repo’s submodule gitlinks, `.gitmodules`, and the portfolio docs (`docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`, `docs/REPO_PORTFOLIO.md`) consistent on the pinned submodule set and their canonical classifications (`primary strategic`, `supporting`, `reference`, `internal strategy`, `governance baseline`) in every PR (see “Source-of-truth rule” below).
 
 This document is the portfolio-level map that assigns every repo/subrepo (submodule) and BOS asset to a **business unit** or **operating function**, and defines the separation-of-concerns boundaries needed for business development and business unit management.

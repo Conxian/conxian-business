@@ -70,25 +70,22 @@ The following link-preserving stubs are intentionally retained in Git. Their can
 | `README.md` | Canonical | Public-safe | Repository entrypoint and overall orientation. |
 | `SUMMARY.md` | Canonical | Public-safe | GitBook table of contents (used for docs navigation; Pages publishing is allowlisted). |
 | `docs/README.md` | Supporting | Public-safe | “Docs hub” landing page. |
-| `docs/GITHUB_NATIVE_BOS_WORKSPACE.md` | Canonical | Public-safe | GitHub-native authority, intake, Project v2 schema, evidence, migration, ZSE, and source-of-truth rules for all new BOS work. |
-| `docs/NEXUS_LICENSING_GOVERNANCE.md` | Canonical | Public-safe | Nexus licensing authority/RACI map, verified blockers, evidence flow, and explicit non-claims without choosing license terms. |
 | `docs/BOS_BUSINESS_BUILDOUT.md` | Canonical | Public-safe | Repo business purpose, business-unit placement, governance + ownership model, and public/internal split. |
 | `docs/PRIVATE_REPO_REPO_CHECK_WORKFLOW.md` | Canonical | Public-safe | Repo-check workflow for private repositories (boundary, secrets, hygiene, governance, release maturity). |
-| `docs/PUBLIC_REPO_CONTROL_MATRIX.md` | Canonical | Public-safe | Dated public-presentation control snapshot for 12 repositories: metadata, release discoverability, public ownership surfaces, clarification actions, and recommended organization pins. It does not redefine doctrine or certify readiness. |
 | `docs/BRANCH_AND_PROMOTION_STANDARD.md` | Canonical | Public-safe | Canonical `dev`/`staged`/`main` branch roles and promotion workflow. |
 | `docs/PROMOTION_CHECKLISTS.md` | Canonical | Public-safe | Required checklists and evidence for feature -> `dev` -> `staged` -> `main` promotions. |
 | `docs/INTEGRATED_SYSTEM_TESTNET_GATE.md` | Canonical | Public-safe | Full-system public-testnet gate for `dev` before promotion to `staged`/`main`. |
-| `ARCHIVE_MIGRATION.md` | Canonical | Public-safe | ZSE placeholder and historical/archive migration pointer for legacy material. |
+| `ARCHIVE_MIGRATION.md` | Canonical | Public-safe | ZSE placeholder + pointer to authorized Linear workspace for legacy material. |
 
 ## 2) BOS (Business Operations System)
 
-These are the operating-model documents that explain how BOS components relate, how public-safe GitHub-native execution is coordinated, and what gets measured. Historical migration issue [#944](https://github.com/Conxian/conxian-business/issues/944) inventories legacy workspace references without creating active intake authority; do not mechanically rewrite historical stubs.
+These are the “operating-model” documents that explain how BOS components relate, how execution is intended to be wired into Linear, and what gets measured.
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
-| `conxian-business/SERVICE_LOOP.md` | Canonical | Public-safe | BOS service loop (how client/supplier loops connect). |
-| `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Public-safe historical stub | Legacy state-machine pointer retained for archive/migration compatibility; not active intake authority. |
-| `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Historical | Public-safe legacy migration material | Superseded ExCo intake context retained for controlled migration under [#944](https://github.com/Conxian/conxian-business/issues/944); it is not an active standard. Current public-safe intake follows `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` and authority rules in `docs/GITHUB_NATIVE_BOS_WORKSPACE.md`. |
+| `conxian-business/SERVICE_LOOP.md` | Supporting | Public-safe | BOS reference loop for client/protocol intent, routing, and verification. |
+| `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Public-safe stub (canonical in Linear) | Public-safe BOS state machine pointer stub (standardized ZSE stub). |
+| `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Canonical | Public-safe | ExCo Linear-first intake standard (required fields, triage flow, execution linkbacks) with sensitive details remaining in Linear under ZSE. |
 | `Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md` | Supporting | Public-safe stub (canonical in Linear) | Bottleneck and deployment efficiency metrics (standardized ZSE stub). |
 | `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md` | Supporting | Public-safe stub (canonical in Linear) | Strategy coordination pointer; full internal content remains in Linear (standardized ZSE stub). |
 | `Sovereign-Strategy-Nexus/docs/SOVEREIGN_MOI_ALIGNMENT.md` | Canonical | Public-safe stub (canonical in Linear) | “MOI” alignment source for Strategy Nexus narratives (standardized ZSE stub). |
@@ -172,7 +169,7 @@ These are the documents most likely to answer “what are we building?” and �
 | `docs/CONXIAN_GATEWAY_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for `conxian-gateway`. |
 | `docs/CONXIAN_NEXUS_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-nexus. |
 | `docs/CONXIUS_ORBIT_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for `conxius-orbit`. |
-| `docs/CONXIAN_UI_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for Conxian_UI. |
+| `docs/CONXIAN_UI_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for `conxian_ui` (upstream slug retained). |
 | `docs/GITHUB_GOVERNANCE_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for .github. |
 | `docs/LIB_CONXIAN_CORE_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for lib-conxian-core. |
 | `docs/CONXIAN_LABS_SITE_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-labs-site. |
@@ -221,12 +218,8 @@ See `docs/BOS_BUSINESS_BUILDOUT.md` for repo business purpose, business-unit pla
 | `CONTRIBUTING.md` | Canonical | Public-safe | Contribution expectations and workflow. |
 | `SECURITY.md` | Canonical | Public-safe | Security policy and reporting. |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Supporting | Public-safe | PR checklist and norms. |
-| `.github/ISSUE_TEMPLATE/bos_work_intake.yml` | Canonical | Public-safe | Structured GitHub-native BOS work intake. |
-| `.github/ISSUE_TEMPLATE/governance_legal_decision.yml` | Canonical | Public-safe | Structured governance/legal decision request with explicit authority and ZSE fields. |
-| `docs/GITHUB_NATIVE_BOS_WORKSPACE.md` | Canonical | Public-safe | New-work authority, Project v2 planning schema, evidence, migration, and source-of-truth precedence. |
-| `docs/NEXUS_LICENSING_GOVERNANCE.md` | Canonical | Public-safe | Nexus licensing governance and implementation authority split. |
 | `docs/CSF_FIRST_OPERATING_SEQUENCE_AND_PROOF_GATES.md` | Canonical | Public-safe | Locks the CSF → economy → gateway operating order and the minimum proof gates that keep launch, economy design, and go-to-market claims aligned. |
-| `docs/BOS_WALLET_CONTROL_MODEL.md` | Canonical | Public-safe | Canonical BOS wallet-control model (bootstrap stewardship → DAO-aligned governance; users and regulated partners retain their respective custody responsibilities). |
+| `docs/BOS_WALLET_CONTROL_MODEL.md` | Canonical | Public-safe | Canonical BOS signer and protocol/user control model; custody language must be read as an explicit boundary record, not as a claim that Conxian-Labs holds user assets. |
 | `docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md` | Canonical | Public-safe | CON-694 alignment baseline for `conxian-business`: scope boundaries, six-domain control mapping, evidence expectations, and rollback/accountability guardrails. |
 | `docs/SAB_MIGRATION_WAVES.md` | Canonical | Public-safe | Canonical SAB migration sequencing (`W0`…`W6`) including reconciliation notes from the legacy 4-wave framing. |
 | `docs/operations/SAB_MIGRATION_WAVES.md` | Supporting | Public-safe | Deprecated non-canonical pointer kept for link continuity; directs readers to `docs/SAB_MIGRATION_WAVES.md`. |
@@ -246,15 +239,15 @@ These are referenced by current docs but are not present in the active Git index
 - `RENDER_BOS_PAYLOAD.md` (referenced by `audit/nomenclature-alignment.md`).
 - `Sovereign-Strategy-Nexus/SARB_MANDATE.md` (referenced by `audit/strategos-alignment.md`).
 
-## 8) Historical Linear issue-linking provenance
+## 8) Issue-linking recommendations (current CON issues)
 
-The table below is a dated archive of pre-2026-07-26 Linear linkage recommendations. It is historical/migration context only. Do not create or update Linear items from this table; active work must use authoritative GitHub issues and pull requests.
+If an issue is in a planning or execution state, the description should link to the doc(s) below so the “why/spec” stays stable even as implementation details change.
 
 | Issue | Add links to | Why |
 | --- | --- | --- |
 | https://linear.app/conxian-labs/issue/CON-343 | `openspec/changes/sovereign-data-migration-sovereign-egress/specs.md`, `openspec/changes/sovereign-data-migration-sovereign-egress/specs/sovereign-data-migration-sovereign-egress/spec.md`, `ARCHIVE_MIGRATION.md` | This issue is spec-first and directly tied to ZSE + migration. |
 | https://linear.app/conxian-labs/issue/CON-158 | `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`, `SUMMARY.md`, `openspec/changes/remediate-enterprise-sovereignty/specs.md` | This is the “alignment” umbrella; it should anchor to the index + baseline OpenSpec. |
-| https://linear.app/conxian-labs/issue/CON-152 | `conxian-business/SERVICE_LOOP.md`, `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` | Historical mapping only. Current public-safe BOS work follows `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`; the wiring file is retained solely as #944 migration evidence. |
+| https://linear.app/conxian-labs/issue/CON-152 | `conxian-business/SERVICE_LOOP.md`, `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` | BOS operating model work should reference the service loop + wiring + state machine. |
 | https://linear.app/conxian-labs/issue/CON-157 | `Conxian/PRD.md`, `conxian-gateway/PRD.md`, `conxian-nexus/docs/PRD.md` | “Business-unit model” extraction should start from PRDs (what exists and how it’s separated). |
 | https://linear.app/conxian-labs/issue/CON-160 | `conxian-gateway/PRD.md`, `lib-conxian-core/docs/PRD.md`, `openspec/changes/remediate-enterprise-sovereignty/specs/enterprise-sovereignty/spec.md` | Settlement ingress touches gateway/core-lib conventions + sovereignty requirements. |
 | https://linear.app/conxian-labs/issue/CON-780 | `docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md`, `docs/architecture/BITCOIN_LAYER_ARCHITECTURE_BOUNDARY_NOTE.md`, `docs/COMPATIBILITY_MATRIX_AND_ACCEPTANCE_GATE_CHECKLIST.md` | GAP-009 Lightning coverage execution should anchor to the active tracker, service/adapter ownership boundary, and shared acceptance-gate criteria. |
@@ -263,14 +256,14 @@ The table below is a dated archive of pre-2026-07-26 Linear linkage recommendati
 | https://linear.app/conxian-labs/issue/CON-326 | `openspec/specs/git-management/spec.md`, `CONTRIBUTING.md` | Repo discipline/categorization should cite the OpenSpec git rules + contributing norms. |
 | https://linear.app/conxian-labs/issue/CON-327 | `openspec/specs/git-management/spec.md`, `SECURITY.md`, `.github/*` templates | Governance standardization needs the existing governance/security baselines. |
 
-## 9) Archived Linear migration proposals
+## 9) Proposed Linear documents to create (durable workspace access)
 
-This dated proposal list is retained as migration history. Do not create these as new canonical Linear documents. It does not define current intake, status, traceability, or an approved restricted-record system. Current public-safe coordination follows `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`; #944 governs each remaining reference.
+These are the highest-value sources to copy into Linear so day-to-day work stays stable even if the repo has to remove or relocate sensitive material.
 
 1. **BOS Operating Model (canonical)**
    - Source: `conxian-business/SERVICE_LOOP.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` (public-safe pointer; canonical BOS state machine definition is maintained in Linear).
-2. **Execution wiring: Linear ↔ BOS state layer (historical proposal; superseded)**
-   - Historical source: `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`; do not use it as an active intake standard.
+2. **Execution wiring: Linear ↔ BOS state layer (canonical)**
+   - Source: `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`.
 3. **Zero Secret Egress (ZSE) + knowledge retention (canonical)**
    - Source: `ARCHIVE_MIGRATION.md`, `docs/AGENTS.md` (Knowledge retention & hygiene section), `admin/SECRETS.md`.
 4. **OpenSpec: Enterprise Sovereignty baseline (canonical)**

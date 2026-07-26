@@ -172,11 +172,11 @@ States:
   )
     ;; Validation
     (asserts! (>= voter-balance min-balance) ERR_INSUFFICIENT_BALANCE)
-    (asserts! (or
+    (asserts! (or 
       (is-some (index-of TIER2_TYPES proposal_type))
       (is-some (index-of TIER3_TYPES proposal_type))
     ) ERR_INVALID_PROPOSAL_TYPE)
-
+    
     ;; Create proposal
     (map-set proposals proposal-id {
       proposal_type: proposal_type,
@@ -193,7 +193,7 @@ States:
       actions: actions,
       discussion_url: discussion_url
     })
-
+    
     (var-set proposal-count proposal-id)
     (ok proposal-id)
   )
@@ -255,7 +255,7 @@ States:
     (asserts! (is-eq (get status proposal) "voting") ERR_NOT_VOTING)
     (asserts! (< stacks-block-height (get voting_ends proposal)) ERR_VOTING_ENDED)
     (asserts! (> voter-balance u0) ERR_NO_VOTING_POWER)
-
+    
     ;; Update or create vote
     (if (is-some current-vote)
       (let ((existing (unwrap! current-vote ERR_VOTE_EXISTS)))
@@ -274,7 +274,7 @@ States:
         { for: support, weight: voter-balance, timestamp: stacks-block-height }
       )
     )
-
+    
     ;; Update proposal totals
     (map-set proposals proposal_id
       (merge proposal {
@@ -282,7 +282,7 @@ States:
         votes_against: (if (not support) (+ (get votes_against proposal) voter-balance) (get votes_against proposal))
       })
     )
-
+    
     (ok true)
   )
 )
@@ -295,20 +295,20 @@ States:
 (define-public (vote-with-timelock (proposal_id uint) (support bool) (lock-duration uint))
   (let ((voter-balance (get-voting-power tx-sender)))
     (asserts! (<= lock-duration MAX_LOCK_DURATION) ERR_INVALID_LOCK)
-
+    
     ;; Calculate gated weight (50% unlocked immediately, 50% locked)
     (let ((immediate-weight (/ voter-balance u2))
           (gated-weight (/ voter-balance u2)))
-
+      
       ;; Cast immediate vote
       (try! (internal-vote proposal_id support immediate-weight))
-
+      
       ;; Create timelocked vote
-      (map-set timelocked-votes
+      (map-set timelocked-votes 
         { proposal_id: proposal_id, voter: tx-sender, unlock-height: (+ stacks-block-height lock-duration) }
         { support: support, weight: gated-weight }
       )
-
+      
       (ok true)
     )
   )
@@ -330,7 +330,7 @@ States:
     ;; Validation
     (asserts! (is-eq (get status proposal) "voting") ERR_NOT_VOTING)
     (asserts! (>= stacks-block-height (get voting_ends proposal)) ERR_VOTING_ACTIVE)
-    (asserts!
+    (asserts! 
       (>= (get votes_for proposal) (get-quorum-threshold (get proposal_type proposal)))
       ERR_NO_QUORUM
     )
@@ -338,7 +338,7 @@ States:
       (< (get votes_against proposal) (/ (get votes_for proposal) u2)) ;; < 50% veto
       ERR_VETOED
     )
-
+    
     ;; Update to queued
     (map-set proposals proposal_id
       (merge proposal {
@@ -346,7 +346,7 @@ States:
         timelock_ends: (+ stacks-block-height timelock-duration)
       })
     )
-
+    
     (ok true)
   )
 )
@@ -362,28 +362,28 @@ States:
   )
     ;; Validation
     (asserts! (is-eq (get status proposal) "queued") ERR_NOT_QUEUED)
-    (asserts!
+    (asserts! 
       (>= stacks-block-height (get timelock_ends proposal))
       ERR_TIMELOCK_ACTIVE
     )
-
+    
     ;; Process timelocked votes
     (try! (process-timelocked-votes proposal_id))
-
+    
     ;; Final quorum check after timelocked votes
     (asserts!
       (>= (get votes_for proposal) (get-quorum-threshold (get proposal_type proposal)))
       ERR_NO_QUORUM
     )
-
+    
     ;; Execute actions
     (try! (execute-actions (get actions proposal) tx-sender))
-
+    
     ;; Update status
     (map-set proposals proposal_id
       (merge proposal { status: "executed" })
     )
-
+    
     (ok true)
   )
 )
@@ -433,12 +433,12 @@ States:
   )
     ;; Validation
     (asserts! (<= amount MAX_SINGLE_PROPOSAL) ERR_AMOUNT_TOO_LARGE)
-    (asserts!
+    (asserts! 
       (<= (+ monthly-spent amount) MAX_MONTHLY_TREASURY)
       ERR_MONTHLY_LIMIT_EXCEEDED
     )
     (asserts! (not (is-eq recipient tx-sender)) ERR_SELF_TRANSFER)
-
+    
     ;; Create proposal
     (map-set proposals proposal-id {
       proposal_type: PROPOSAL_TYPE_TREASURY,
@@ -460,7 +460,7 @@ States:
       ),
       discussion_url: none
     })
-
+    
     (var-set proposal-count proposal-id)
     (ok proposal-id)
   )
@@ -488,20 +488,20 @@ States:
     (caller-role (get-role tx-sender))
   )
     ;; Validation: Must be guardian or admin
-    (asserts!
+    (asserts! 
       (or (is-eq caller-role ROLE_GUARDIAN) (is-eq caller-role ROLE_ADMIN))
       ERR_UNAUTHORIZED
     )
-
+    
     ;; Set pause
     (var-set paused true)
-
+    
     ;; Log emergency
-    (map-set emergency-pause
+    (map-set emergency-pause 
       { activator: tx-sender, reason: reason }
       stacks-block-height
     )
-
+    
     ;; Emit event
     (print {
       event: "emergency-pause",
@@ -509,7 +509,7 @@ States:
       reason: reason,
       block: stacks-block-height
     })
-
+    
     (ok true)
   )
 )
@@ -521,7 +521,7 @@ States:
   )
     (asserts! (is-eq (get proposal_type proposal) PROPOSAL_TYPE_EMERGENCY) ERR_NOT_EMERGENCY)
     (asserts! (is-eq (get status proposal) "executed") ERR_NOT_EXECUTED)
-
+    
     (var-set paused false)
     (ok true)
   )
@@ -546,28 +546,28 @@ States:
     (asserts! (> amount u0) ERR_ZERO_AMOUNT)
     (asserts! (>= duration min-duration) ERR_LOCK_TOO_SHORT)
     (asserts! (<= duration max-duration) ERR_LOCK_TOO_LONG)
-    (asserts!
+    (asserts! 
       (or (is-none existing-lock) (< (get unlock_time existing-lock) stacks-block-height))
       ERR_EXISTING_LOCK
     )
-
+    
     ;; Transfer CXVG to voting contract
     (try! (contract-call? .cxvg transfer amount tx-sender (as-contract tx-sender) none))
-
+    
     ;; Create lock
     (map-set ve_balances tx-sender {
       balance: amount,
       unlock_time: end-time,
       last_update: stacks-block-height
     })
-
+    
     (print {
       event: "create-lock",
       user: tx-sender,
       amount: amount,
       unlock_time: end-time
     })
-
+    
     (ok end-time)
   )
 )
@@ -579,17 +579,17 @@ States:
 (define-public (increase-amount (amount uint))
   (let ((existing-lock (unwrap! (map-get? ve_balances tx-sender) ERR_NO_LOCK)))
     (asserts! (> amount u0) ERR_ZERO_AMOUNT)
-
+    
     ;; Transfer additional CXVG
     (try! (contract-call? .cxvg transfer amount tx-sender (as-contract tx-sender) none))
-
+    
     ;; Update lock
     (map-set ve_balances tx-sender
       (merge existing-lock {
         balance: (+ (get balance existing-lock) amount)
       })
     )
-
+    
     (ok true)
   )
 )
@@ -600,11 +600,11 @@ States:
     (new-end (+ (get unlock_time existing-lock) additional-duration))
   )
     (asserts! (<= new-end (+ stacks-block-height MAX_LOCK_DURATION)) ERR_LOCK_TOO_LONG)
-
+    
     (map-set ve_balances tx-sender
       (merge existing-lock { unlock_time: new-end })
     )
-
+    
     (ok true)
   )
 )
