@@ -6,11 +6,7 @@ labels: enhancement, business
 assignees: ''
 ---
 
-> Note: This repository is public. Do not include confidential strategy, financial targets, operational runbooks, legal interpretations, or infrastructure identifiers.
->
-> For internal proposals, use the Conxian Linear workspace instead: https://linear.app/conxian-labs
->
-> ExCo operational requests are Linear-first. If mirrored to GitHub, include the full Linear issue URL.
+> GitHub is authoritative for new BOS work. Do not include credentials, private endpoints, signer data, raw configuration, privileged legal advice, financial details, or restricted runbooks. Use sanitized status and an approved restricted-store pointer only.
 
 ## Executive Summary
 

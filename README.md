@@ -11,6 +11,8 @@ See the [repo portfolio](docs/REPO_PORTFOLIO.md#ecosystem-repos) for the flagshi
 
 ## Canonical documentation
 
+- [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](./docs/GITHUB_NATIVE_BOS_WORKSPACE.md)
+- [`docs/NEXUS_LICENSING_GOVERNANCE.md`](./docs/NEXUS_LICENSING_GOVERNANCE.md)
 - [`docs/REPO_PORTFOLIO.md`](./docs/REPO_PORTFOLIO.md)
 - [`docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`](./docs/PORTFOLIO_BUSINESS_UNIT_MAP.md)
 - [`docs/DOCUMENTATION_ALIGNMENT_INDEX.md`](./docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
@@ -21,11 +23,11 @@ Define and version Conxian's Business Operations System (BOS) as an auditable, p
 
 ## Status
 
-Active. This repository is private (as of April 8, 2026) and is the canonical in-repo source for BOS-level specifications and how the broader Conxian stack fits together.
+Active. This repository is private (as of April 8, 2026) and is the GitHub-native authority for new BOS portfolio policy, business governance, decision status, coordination, and sanitized evidence. Owning repositories remain authoritative for implementation and repository-local acceptance.
 
 This status framing is being kept aligned during the `conxius-platform` documentation transition.
 
-Documentation here follows public-safe boundary rules; internal-only strategy and operational details remain in the sovereign coordination layer under ZSE.
+GitHub Issues and pull requests are authoritative for all new BOS work. Historical Linear links remain archive/provenance records only. Documentation here follows public-safe boundary rules; restricted strategy, legal, security, and operational details remain in approved restricted stores under ZSE.
 
 Release and SemVer tagging follows the process in `RELEASING.md` (`vX.Y.Z`), with history tracked in `CHANGELOG.md`.
 

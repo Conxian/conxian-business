@@ -645,6 +645,61 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 
 ---
 
+## Dated Digest: GitHub-native BOS Workspace and Nexus Licensing Governance (2026-07-26)
+
+### Decision
+
+Owner direction dated 2026-07-26 establishes GitHub Issues and pull requests as authoritative for all new BOS work. Linear records remain immutable historical/archive provenance only; no new canonical Linear item or mirrored authority is required.
+
+### Typed entities
+
+| Entity | Type | Status / role | Canonical evidence |
+| --- | --- | --- | --- |
+| `Conxian/conxian-business` | Governance repository | Portfolio policy, business governance, decision status, coordination, and sanitized evidence authority | [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](docs/GITHUB_NATIVE_BOS_WORKSPACE.md), [Business #942](https://github.com/Conxian/conxian-business/issues/942) |
+| `BOS — Portfolio Operations` | GitHub organization Project v2 | Intended planning view; creation is blocked on organization-admin action and the Project is not a separate authority | [Business #942](https://github.com/Conxian/conxian-business/issues/942) |
+| Owning repositories | Implementation authorities | Own implementation, repository-local acceptance, tests, and exact-SHA technical evidence | [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](docs/GITHUB_NATIVE_BOS_WORKSPACE.md) |
+| `Conxian/conxian-nexus` | Owning repository | Owns Nexus license implementation and repository-local acceptance | [Nexus #174](https://github.com/Conxian/conxian-nexus/issues/174) |
+| Nexus PR #173 | Technical guardrail artifact | Adds technical controls only; does not select first-party license terms or configure enterprise policy | [Nexus PR #173](https://github.com/Conxian/conxian-nexus/pull/173) |
+| `.github` #60 | Portfolio standards tracker | Owns portfolio licensing matrix/standards implementation after authorized decisions | [`.github` #60](https://github.com/Conxian/.github/issues/60) |
+| Business #933 | Gate 1 tracker | Records Gate 1 impact only; licensing work does not satisfy Gate 1 | [Business #933](https://github.com/Conxian/conxian-business/issues/933) |
+| Approved restricted store | Information-control boundary | Holds credentials, private endpoints, signer data, raw config, privileged legal advice, and restricted runbooks | [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](docs/GITHUB_NATIVE_BOS_WORKSPACE.md) |
+
+### Relationships
+
+| From | Relationship | To | Meaning |
+| --- | --- | --- | --- |
+| `conxian-business` | governs and indexes sanitized evidence for | portfolio work | It does not implement repository-local behavior. |
+| Owning repository | implements and accepts | repository-local change | It cannot invent portfolio or legal decisions. |
+| `BOS — Portfolio Operations` | presents planning state for | authoritative issues and PRs | Project fields do not prove legal approval, acceptance, release, or deployment. |
+| Business #942 | governs | Nexus #174 and PR #173 | Business authority and Nexus execution remain separate and linked. |
+| Authorized licensor/counsel | decides | Nexus first-party license terms | Repository access does not imply this authority. |
+| GitHub organization administrator | configures | Project v2 and enterprise/organization licensing policy | Admin configuration must not weaken repository rulesets or scans. |
+| Business #933 | evaluates | Gate 1 impact | License remediation cannot independently close the gate. |
+
+### Verified blockers and dependencies
+
+- Nexus root `LICENSE` is an incomplete six-line Business Source License 1.1 placeholder.
+- First-party Cargo license metadata is absent.
+- Ruleset `19543903` includes external `license_compliance_scanning`; the external policy remains an admin dependency.
+- No authorized decision is recorded for licensor/rightsholder, Additional Use Grant, Change Date, Change License, package identifier, exceptions, relicensing, or release authorization.
+- A Conxian organization administrator must create **`BOS — Portfolio Operations`** and grant minimum necessary permissions.
+
+### Explicit non-claims
+
+This digest does not choose license terms, declare package metadata, change a license file, approve relicensing, assert legal approval, satisfy Gate 1, or authorize release, deployment, production, or mainnet activity.
+
+### Canonical artifacts
+
+- [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](docs/GITHUB_NATIVE_BOS_WORKSPACE.md)
+- [`docs/NEXUS_LICENSING_GOVERNANCE.md`](docs/NEXUS_LICENSING_GOVERNANCE.md)
+- [Business #942](https://github.com/Conxian/conxian-business/issues/942)
+- [Nexus #174](https://github.com/Conxian/conxian-nexus/issues/174)
+- [Nexus PR #173](https://github.com/Conxian/conxian-nexus/pull/173)
+- [`.github` #60](https://github.com/Conxian/.github/issues/60)
+- [Business #933](https://github.com/Conxian/conxian-business/issues/933)
+
+---
+
 ## Maintenance
 
 **Crystallization Rule:** Every agent session MUST update this document with:

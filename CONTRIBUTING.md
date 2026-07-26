@@ -32,17 +32,18 @@ Feature branches should validate locally first, then land in `dev` via pull requ
 
 Reference: [`docs/bounties/BOUNTY_WORKFLOW.md`](./docs/bounties/BOUNTY_WORKFLOW.md).
 
-## ExCo intake (Linear-first)
+## BOS intake (GitHub-native)
 
-- For ExCo-relevant newly discovered work, create/route the item in Linear first using the [ExCo intake standard](./Sovereign-Ops-Orchestrator/LINEAR_WIRING.md).
+- For new BOS work, create or route the authoritative GitHub issue in `conxian-business` or the owning repository using the [GitHub-native BOS workspace](./docs/GITHUB_NATIVE_BOS_WORKSPACE.md).
 - For protocol-adapter or emerging-rail intake, include the maturity lane fields defined in [Protocol Adapter Maturity Lanes](./docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md).
 - If the maturity lane is missing at intake, record and proceed with the required default: `Research`.
-- If work is mirrored to GitHub, include the full Linear issue URL in the issue/PR body for traceability.
-- Keep sensitive strategic, financial, legal, security, and detailed operational content in Linear only (ZSE).
+- Link portfolio governance in `conxian-business` to implementation work in the owning repository; do not duplicate authority.
+- Historical Linear links may be retained as dated archive/provenance evidence only. Do not create a new Linear item for canonical work.
+- Do not paste credentials, private endpoints, signer data, raw configuration, privileged legal advice, or restricted runbooks into GitHub. Use sanitized status and approved restricted-store pointers only.
 
 ## Pull Request Process
 
-1.  Ensure all code changes map to an existing Linear issue.
+1.  Ensure the change maps to an authoritative GitHub issue or pull request in the governing or owning repository.
 2.  Maintain Zero Secret Egress (ZSE) compliance.
 3.  All Clarity smart contracts must pass the Vitest/Simnet test suite.
 4.  Documentation must be updated to match implementation.

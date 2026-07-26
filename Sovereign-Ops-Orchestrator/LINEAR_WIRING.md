@@ -1,16 +1,14 @@
-# ExCo Sovereign-first intake and wiring (public-safe)
+# Deprecated Linear wiring compatibility stub
 
-This repository is public. ExCo-relevant newly discovered work is **Sovereign-first**.
+**Status:** Archived compatibility pointer as of 2026-07-26.
 
-Detailed strategic, financial, legal, security, and deep operational runbook content remains canonical in the sovereign coordination layer under Zero Secret Egress (ZSE).
+GitHub Issues and pull requests are authoritative for all new BOS work. Follow [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](../docs/GITHUB_NATIVE_BOS_WORKSPACE.md) and the repository issue forms. Do not create a new Linear issue or mirror canonical authority into Linear.
 
-Traceability:
+Existing Linear URLs may be retained only as immutable historical/archive provenance. This filename remains to preserve old links; it is not an active intake standard.
 
-- Canonical coordination layer (see docs/SOVEREIGN_COORDINATION_LAYER.md)
+## Historical compatibility fields
 
-## Minimum required intake fields
-
-Every ExCo intake issue in Linear must include:
+When interpreting an archived Linear intake record, the historical fields were:
 
 1. **Operating lens**
 2. **Owner** (single accountable owner)
@@ -19,9 +17,9 @@ Every ExCo intake issue in Linear must include:
 5. **Outcome + acceptance signal**
 6. **Source links**
 
-## Protocol-adapter intake extension (required for emerging rails)
+## GitHub-native successor
 
-When intake touches protocol-adapter execution (including emerging rails), include the lane extension fields from
+New work uses the BOS work intake or governance/legal decision request issue form. Protocol-adapter work also includes the lane extension fields from
 [`docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md`](../docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md):
 
 1. **Maturity lane** (`Build-now`, `Pilot`, `Partner`, `Research`)
@@ -33,15 +31,6 @@ When intake touches protocol-adapter execution (including emerging rails), inclu
 7. **Risk register**
 8. **Promotion blockers**
 
-## Intake flow (concise)
-
-1. **Discover**: capture the originating signal and links.
-2. **Create/route issue (Linear-first)**: open or route the issue in Linear with all required fields.
-3. **Triage**: confirm owner, urgency, and execution surface.
-4. **Execution linkbacks**: link implementation artifacts (PRs/issues/docs) back to the Linear issue, and include the Linear URL in mirrored public-safe GitHub items.
-
 ## ZSE boundary
 
-Sensitive strategic, financial, legal, security, and detailed operational material stays in the sovereign coordination layer only.
-
-Public GitHub artifacts must remain sanitized/public-safe and should point back to the canonical coordination layer issue.
+Private GitHub is not a secret store. Credentials, private endpoints, signer data, raw configuration, privileged legal advice, and restricted runbooks stay in approved restricted stores. GitHub contains sanitized status and approved pointers only.

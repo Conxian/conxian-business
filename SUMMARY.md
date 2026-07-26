@@ -4,6 +4,8 @@
 * [Archive Migration (Linear Virtual Office; ZSE)](ARCHIVE_MIGRATION.md)
 * [Conxian: one-page market narrative](docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md)
 * [Documentation Alignment Index](docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
+* [GitHub-native BOS workspace](docs/GITHUB_NATIVE_BOS_WORKSPACE.md)
+* [Nexus licensing governance](docs/NEXUS_LICENSING_GOVERNANCE.md)
 * [BOS business buildout (this repo)](docs/BOS_BUSINESS_BUILDOUT.md)
 * [Conxian-business parent-control alignment baseline (CON-694)](docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md)
 * [Repo Portfolio (Flagship vs Supporting)](docs/REPO_PORTFOLIO.md)
@@ -82,7 +84,7 @@
 * [Arch Guardian](Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md)
 * [Grid Oracle (Agnostic)](cxn-grid-oracle/README.md)
 * [Ops Engine](Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md)
-  * [ExCo intake (Linear-first) and wiring](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
+  * [Deprecated Linear wiring compatibility stub](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
 
 ## 🏛️ Ground Truth (OpenSpec)
 
