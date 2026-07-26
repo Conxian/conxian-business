@@ -1,0 +1,99 @@
+name: BOS change
+description: Propose a public-safe BOS governance, policy, specification, or workflow change.
+title: "[BOS]: "
+labels:
+  - Governance
+  - bos
+body:
+  - type: markdown
+    attributes:
+      value: |
+        GitHub is canonical for public-safe BOS work only. **Stop now** if the request includes restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational details. Follow the approved restricted process; do not paste protected content or access details here. See `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`.
+  - type: checkboxes
+    id: classification
+    attributes:
+      label: Public-safe classification
+      options:
+        - label: I confirm this issue and its attachments are public-safe and contain no restricted details.
+          required: true
+  - type: input
+    id: owning_repository
+    attributes:
+      label: Owning repository
+      description: Enter the canonical `owner/repository` responsible for delivery.
+      placeholder: Conxian/conxian-business
+    validations:
+      required: true
+  - type: dropdown
+    id: control_domain
+    attributes:
+      label: Control domain
+      options:
+        - Governance and ownership
+        - Security and privacy
+        - Compliance and licensing
+        - Architecture and specifications
+        - Delivery and release
+        - Documentation and knowledge
+        - Portfolio coordination
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 — urgent control or blocker
+        - P1 — high priority
+        - P2 — planned
+        - P3 — backlog
+    validations:
+      required: true
+  - type: dropdown
+    id: target_lane
+    attributes:
+      label: Target lane
+      options:
+        - Research
+        - Development
+        - Staged validation
+        - Mainnet / production consideration
+        - Policy or documentation only
+        - Not yet determined
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Public-safe outcome
+      description: Describe the desired outcome without restricted rationale or records.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance criteria
+      description: Provide objective, public-safe completion criteria.
+      placeholder: "- [ ] Criterion"
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and blockers
+      description: Link public-safe GitHub issues or use a minimum opaque restricted-record token. Do not describe restricted content.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence links
+      description: Add public-safe, immutable or commit-bound links when available. Do not upload restricted evidence.
+  - type: dropdown
+    id: decision_required
+    attributes:
+      label: Decision required
+      options:
+        - "No"
+        - "Yes — public-safe decision"
+        - "Yes — restricted decision referenced by opaque token only"
+    validations:
+      required: true

@@ -6,9 +6,11 @@ labels: documentation
 assignees: '
 ---
 
-> Note: This repository is public. Do not include confidential strategy, operational, legal, or infrastructure details. For internal-only material, use the Conxian Linear workspace: https://linear.app/conxian-labs
+> GitHub is canonical for public-safe documentation work. Private repository visibility does not authorize restricted data.
 >
-> ExCo operational requests are Linear-first. If mirrored to GitHub, include the full Linear issue URL.
+> Stop before posting restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational details. Follow the approved restricted process and use only an opaque reference token here when necessary.
+>
+> Read the [GitHub-First BOS Operating Model](../../docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md).
 
 ### Target Document
 *Which document or section requires updating? (e.g., `ALIGNMENT.md`, `02_strategy/ROADMAP.md`)*
