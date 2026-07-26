@@ -92,11 +92,24 @@ body:
       description: Link public-safe issues, pull requests, or releases. Use only an opaque restricted-record token if necessary.
     validations:
       required: true
+  - type: dropdown
+    id: evidence_state
+    attributes:
+      label: Evidence state
+      description: Select the current evidence lifecycle state. This is status metadata, not a substitute for the required evidence plan or immutable links below.
+      options:
+        - Not started
+        - Planned
+        - Evidence available
+        - Blocked
+        - Not applicable
+    validations:
+      required: true
   - type: textarea
     id: evidence
     attributes:
       label: Evidence plan or immutable links
-      description: Identify expected commit-bound evidence or add existing public-safe permalinks. Do not paste restricted records.
+      description: Identify expected commit-bound evidence or add existing public-safe permalinks. When the state is `Evidence available`, include the immutable links. Do not paste restricted records.
     validations:
       required: true
   - type: checkboxes

@@ -46,17 +46,18 @@ When approaching any task, analyze through these dimensions:
 
 | Layer | Rule |
 |-------|------|
-| **Secrets** | Keep sensitive logic & configs in **Linear** or **Supabase** only. |
+| **Restricted records** | Keep legal, financial, security, identity, custody, recovery, strategy, privileged operational records, sensitive logic, and protected configuration outside Git in an approved non-Git restricted-record system. |
 | **On-chain** | Expose **State-Proof** primitives only; never raw config. |
 | **Stubs** | Production paths return `err-u501` / `err-u503` and **fail-closed**. |
 | **Git** | Never commit `.env`, private keys, or API tokens. |
+| **Restricted references** | When necessary, GitHub may carry only a non-descriptive `sha256(<64-lowercase-hex>)` commitment. |
 | **Vulnerability Reports** | Email security@conxian-labs.com or use GitHub Security Advisories. |
 
 ---
 
 ### Pull Request Process
 
-1. **Link to Linear Issue**: Every PR must map to a Linear issue.
+1. **Link to GitHub Issue**: Public-safe work must map to the canonical GitHub issue in the owning repository. A portfolio issue may coordinate but does not replace that tracker.
 2. **ZSE Compliance**: Maintain Zero Secret Egress standards.
 3. **Smart Contracts**: All Clarity contracts must pass Vitest/Simnet test suite.
 4. **Documentation**: Update docs to match implementation.
@@ -102,7 +103,7 @@ When approaching any task, analyze through these dimensions:
 
 - **Ownership**: Defined by `CODEOWNERS` (request creation if missing).
 - **Approval**: All changes via PR with `CODEOWNERS` review.
-- **ExCo Intake**: Route ExCo-relevant work in Linear first.
+- **BOS / ExCo Intake**: GitHub is canonical for public-safe intake, status, traceability, sanitized decisions, and immutable evidence. Stop before posting restricted records and use the approved non-Git restricted process.
 - **Bounty Workflow**: Only `bounty` issues in `Todo` are claimable.
 
 ---
@@ -177,7 +178,7 @@ The **Ivory Foundation** design system:
 
 - **Security Issues**: security@conxian-labs.com or GitHub Security Advisories
 - **General**: admin@conxian-labs.com
-- **Linear**: Use for ExCo-relevant work and traceability
+- **BOS coordination**: Use the owning repository's GitHub issue for public-safe intake and traceability; follow the approved restricted process for protected records.
 
 ---
 

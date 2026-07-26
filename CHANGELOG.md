@@ -13,6 +13,9 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 - Added the proposed GitHub-first, public-safe BOS operating model and issue forms, with an explicit Zero Secret Egress boundary and owning-repository responsibility rules.
 - **CON-1518 Telemetry Privacy & Monitoring:** Recorded upstream PR #210 merge `593af0d9120b612de5b2817866b0528e5c877570`, retained the exact reviewed `conxius-enclave-sdk` parent pin `451202f51a9efed8fde70b7a5567a3e7e16c1db9`, aligned submodule branch metadata to `main`, added the public-safe telemetry evidence authority, and expanded the B2B CI job to verify the reviewed SDK with formatting, clippy, all-feature, focused telemetry, and capability-evidence checks. Production acceptance remains Beta / conditional with service-side and deployment evidence gates open.
 
+### Changed
+- Remediated PR #947 review findings by making the former Linear-first wiring document explicitly historical under #944, aligning active governance surfaces with GitHub-first public-safe intake, and requiring a deterministic `evidence_state` in both BOS issue forms without weakening immutable-link or ZSE boundaries.
+
 ## [1.9.5] - 2026-07-08
 
 ### Added

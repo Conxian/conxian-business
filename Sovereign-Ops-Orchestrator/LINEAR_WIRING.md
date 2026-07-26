@@ -1,16 +1,21 @@
-# ExCo Sovereign-first intake and wiring (public-safe)
+# Historical ExCo Linear-first intake and wiring
 
-This repository is public. ExCo-relevant newly discovered work is **Sovereign-first**.
+> **Status:** Legacy migration material; not an active intake standard
+> **Superseded by:** [`docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`](../docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md)
+> **Migration tracking:** [conxian-business#944](https://github.com/Conxian/conxian-business/issues/944)
 
-Detailed strategic, financial, legal, security, and deep operational runbook content remains canonical in the sovereign coordination layer under Zero Secret Egress (ZSE).
+This file preserves public-safe historical context for the former Linear-first ExCo workflow. It must not be used to route new work, require a Linear issue, or establish an external system as canonical.
 
-Traceability:
+## Current rule
 
-- Canonical coordination layer (see docs/SOVEREIGN_COORDINATION_LAYER.md)
+- GitHub is canonical for public-safe BOS intake, status, pull-request traceability, sanitized decisions, and immutable evidence links.
+- Create public-safe work in the owning repository and link implementation pull requests to that GitHub issue.
+- Restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational records remain outside Git in an approved non-Git restricted-record system.
+- When a restricted record must be acknowledged publicly, use only a non-descriptive `sha256(<64-lowercase-hex>)` commitment. Do not include a system name, location, access path, or sensitive metadata.
 
-## Minimum required intake fields
+## Preserved historical model
 
-Every ExCo intake issue in Linear must include:
+Before the GitHub-first baseline, ExCo intake was expected to originate in Linear and public-safe GitHub artifacts were treated as mirrors. The former intake captured:
 
 1. **Operating lens**
 2. **Owner** (single accountable owner)
@@ -19,29 +24,18 @@ Every ExCo intake issue in Linear must include:
 5. **Outcome + acceptance signal**
 6. **Source links**
 
-## Protocol-adapter intake extension (required for emerging rails)
+Protocol-adapter intake also captured the maturity lane fields defined in
+[`docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md`](../docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md), including lane, rail scope, adapter interface, owner, cadence, risks, and promotion blockers.
 
-When intake touches protocol-adapter execution (including emerging rails), include the lane extension fields from
-[`docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md`](../docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md):
+The historical flow was:
 
-1. **Maturity lane** (`Build-now`, `Pilot`, `Partner`, `Research`)
-2. **Default handling note** (if lane was omitted at creation, record that it defaulted to `Research`)
-3. **Rail scope**
-4. **Target adapter interface**
-5. **Owner** (single accountable owner)
-6. **Review cadence**
-7. **Risk register**
-8. **Promotion blockers**
+1. discover the signal;
+2. create or route a Linear issue;
+3. triage ownership and urgency; and
+4. link GitHub implementation artifacts back to that issue.
 
-## Intake flow (concise)
+These steps are retained only as evidence of past state. They are superseded for current public-safe work and must not be copied into active guidance.
 
-1. **Discover**: capture the originating signal and links.
-2. **Create/route issue (Linear-first)**: open or route the issue in Linear with all required fields.
-3. **Triage**: confirm owner, urgency, and execution surface.
-4. **Execution linkbacks**: link implementation artifacts (PRs/issues/docs) back to the Linear issue, and include the Linear URL in mirrored public-safe GitHub items.
+## Migration boundary
 
-## ZSE boundary
-
-Sensitive strategic, financial, legal, security, and detailed operational material stays in the sovereign coordination layer only.
-
-Public GitHub artifacts must remain sanitized/public-safe and should point back to the canonical coordination layer issue.
+Issue #944 owns the classification-led migration of remaining Linear references. Do not mechanically replace protected pointers, copy restricted content into GitHub, or infer an unapproved restricted-record system. Historical references may remain only when clearly labelled as historical.

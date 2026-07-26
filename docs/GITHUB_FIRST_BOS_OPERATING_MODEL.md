@@ -54,6 +54,16 @@ Every active BOS issue must identify:
 
 Project field values may carry this metadata once the Project exists. Until then, issue-form fields, labels, links, and checklists are the public-safe record.
 
+The required `evidence_state` vocabulary is deterministic across the BOS issue forms and the target Project schema:
+
+- `Not started` — evidence work has not begun;
+- `Planned` — evidence work is scoped or scheduled but no qualifying evidence is available;
+- `Evidence available` — qualifying public-safe immutable or commit-bound links exist and must be recorded where the form requires or provides an evidence field;
+- `Blocked` — evidence cannot currently be produced; record the public-safe blocker without exposing restricted detail; and
+- `Not applicable` — the issue has no evidence-producing outcome; explain this in the issue scope or acceptance criteria when it is not self-evident.
+
+Evidence state is lifecycle metadata, not evidence itself. Selecting `Evidence available` does not replace immutable links. The cross-repository delivery form continues to require an evidence plan or links; the BOS change form requires links when evidence exists but permits them to remain empty before evidence is available.
+
 ## Cross-repository ownership and evidence
 
 The repository that owns a deliverable retains its issue, implementation, validation, release, license artifacts, and rollback responsibility. A portfolio issue may coordinate multiple owning-repository issues, but must link to them rather than duplicate their full content.

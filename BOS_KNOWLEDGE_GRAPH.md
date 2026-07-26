@@ -219,6 +219,7 @@ graph TB
 | Docker env vars use DB_* prefix, not *_PASSWORD | 2026-07-08 | GitGuardian pattern avoidance | - |
 | Community governance remediation scope | 2026-07-21 | Prefer the self-contained, non-executing community-voting ledger in protocol PR #521 over isolated `upgrade-controller` work; keep the broader governance gap open until proposal/timelock plumbing and the overlapping #499 scope are resolved. | Protocol PR #521 merge and broader governance decision |
 | GitHub-first public-safe BOS baseline | 2026-07-26 | Make GitHub canonical for public-safe intake, delivery, sanitized decisions, and immutable evidence while restricted records remain outside Git; implementation does not imply formal approval. | Formal approval or a superseding issue-linked PR; #943 |
+| PR #947 review remediation | 2026-07-26 | Treat `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` as historical migration material under #944, remove active mandatory Linear mapping from current governance surfaces, and require deterministic evidence state in both BOS issue forms. | Superseding issue-linked governance change |
 
 ---
 
@@ -666,6 +667,8 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 
 - **Decision status:** proposed implementation baseline under `conxian-business#943`; formal approval is not inferred.
 - **Migration dependency:** `conxian-business#944` classifies the dated 102-file / 293-reference Linear-first inventory without bulk replacement.
+- **Legacy wiring relationship:** `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` is historical migration evidence only; `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` owns current public-safe intake guidance.
+- **Evidence-state contract:** both BOS issue forms require one of `Not started`, `Planned`, `Evidence available`, `Blocked`, or `Not applicable`; immutable links remain a separate evidence record.
 - **Branch gate:** `conxian-business#945` must reconcile the documented promotion flow with the observed default branch; this baseline selects neither model.
 - **Project gate:** `Conxian/.github#61` requires authorized organization administration before the Project can be created.
 - **Licensing boundary:** `Conxian/.github#60` and `Conxian/conxian-nexus#174` remain the implementation trackers; only an authorized legal rights-holder can approve terms.

@@ -24,7 +24,7 @@ active — Public-safe orchestration and wiring artifacts live here; detailed ru
 ## Key Components
 
 - **[Deployment efficiency](./DEPLOYMENT_EFFICIENCY.md)**
-- **[ExCo Sovereign-first intake and wiring](./LINEAR_WIRING.md)**
+- **[Historical ExCo Linear-first intake and wiring](./LINEAR_WIRING.md)** — legacy migration context only; current public-safe intake follows the GitHub-first operating model.
 
 ## Governance
 
