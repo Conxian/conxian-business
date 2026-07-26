@@ -4,10 +4,14 @@
 * [Archive Migration (authorized Linear workspace; ZSE)](ARCHIVE_MIGRATION.md)
 * [Conxian: one-page market narrative](docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md)
 * [Documentation Alignment Index](docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
+* [GitHub-native BOS workspace](docs/GITHUB_NATIVE_BOS_WORKSPACE.md)
+* [GitHub-First BOS Operating Model](docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md)
+* [Nexus licensing governance](docs/NEXUS_LICENSING_GOVERNANCE.md)
 * [BOS business buildout (this repo)](docs/BOS_BUSINESS_BUILDOUT.md)
 * [Conxian-business parent-control alignment baseline (CON-694)](docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md)
 * [Repo Portfolio (Flagship vs Supporting)](docs/REPO_PORTFOLIO.md)
 * [Portfolio repository and subrepository inventory](docs/PORTFOLIO_REPOSITORY_INVENTORY.md)
+* [Public repository control matrix](docs/PUBLIC_REPO_CONTROL_MATRIX.md)
 * [Governance files standardization (public repos)](docs/GOVERNANCE_FILES_STANDARDIZATION.md)
 * [Portfolio business-unit map and separation of concerns](docs/PORTFOLIO_BUSINESS_UNIT_MAP.md)
 * [Repo Readiness Gates (Control Domains)](docs/REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md)
@@ -81,7 +85,7 @@
 * [Arch Guardian](Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md)
 * [Grid Oracle (Agnostic)](cxn-grid-oracle/README.md)
 * [Ops Engine](Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md)
-  * [ExCo intake (Linear-first) and wiring](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
+  * [Historical ExCo intake and wiring migration record](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
 
 ## 🏛️ Ground Truth (OpenSpec)
 

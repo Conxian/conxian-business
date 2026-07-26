@@ -52,3 +52,5 @@ After the control handoff, the **Policy Handoff** ensures the DAO controls the p
 1. The **SAB** remains the executor of the protocol.
 2. The **DAO** controls the policy (the "What") by setting parameters in the governance layer.
 3. The **Agents** execute the policy (the "How") via the BOS automation loop.
+
+Revenue-policy evidence and ownership boundaries are indexed in the [CON-1542 typed digest](../BOS_KNOWLEDGE_GRAPH.md#typed-digest-con-1542-conxian-538-revenue-automation-policy-handoff-2026-07-25). That digest does not authorize a founder allocation or treat source, plan, routing, or observation artifacts as proof of deployment or live revenue.

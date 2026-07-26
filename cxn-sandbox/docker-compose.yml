@@ -7,7 +7,9 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-conxian}
       POSTGRES_USER: ${POSTGRES_USER:-conxian}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD required}
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_credential
+    secrets:
+      - db_credential
     ports:
       - "5432:5432"
     volumes:
@@ -37,9 +39,9 @@ services:
       context: ../conxian-nexus
       dockerfile: ../docker/nexus.Dockerfile
     ports:
-      - "3001:3001"
+      - "3001:3000"
     environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:-conxian}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-conxian}
+      DATABASE_URL: ${DB_CONNECTION_URL:?DB_CONNECTION_URL required}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       STACKS_NETWORK: testnet
       RUST_LOG: info
@@ -59,9 +61,9 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:-conxian}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-conxian}
+      DATABASE_URL: ${DB_CONNECTION_URL:?DB_CONNECTION_URL required}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-      NEXUS_URL: http://nexus:3001
+      NEXUS_URL: http://nexus:3000
       BITCOIN_RPC_URL: ${BITCOIN_RPC_URL:-https://bitcoin-testnet.publicnode.com}
       STACKS_NETWORK: testnet
       RUST_LOG: info
@@ -80,3 +82,7 @@ services:
 volumes:
   postgres_data:
   redis_data:
+
+secrets:
+  db_credential:
+    file: ${DB_CREDENTIAL_FILE:?DB_CREDENTIAL_FILE required}

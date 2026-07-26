@@ -1,5 +1,7 @@
 # Historical nested BOS knowledge graph
 
+> New public-safe BOS governance is GitHub-native and follows [`../docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](../docs/GITHUB_NATIVE_BOS_WORKSPACE.md). Restricted records may be referenced through sanitized pointers but do not replace GitHub Issues and pull requests as the authority for new work.
+
 > **Classification:** Deprecated · Archive candidate
 > **Operating label:** Internal only
 > **Maturity / claim state:** Deprecated historical snapshot.

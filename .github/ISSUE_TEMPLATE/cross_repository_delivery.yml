@@ -1,0 +1,121 @@
+name: Cross-repository delivery
+description: Coordinate a public-safe deliverable spanning multiple Conxian repositories.
+title: "[CROSS-REPO]: "
+labels:
+  - Governance
+  - bos
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue coordinates public-safe delivery; each owning repository retains its canonical implementation issue and pull request. **Stop now** if restricted details would be required. Use the approved restricted process and include only a minimum opaque token when necessary. See `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`.
+  - type: checkboxes
+    id: classification
+    attributes:
+      label: Public-safe classification
+      options:
+        - label: I confirm this issue and its attachments are public-safe and contain no restricted details.
+          required: true
+  - type: input
+    id: lead_repository
+    attributes:
+      label: Lead owning repository
+      description: Enter the `owner/repository` accountable for coordinating this deliverable.
+      placeholder: Conxian/conxian-business
+    validations:
+      required: true
+  - type: input
+    id: accountable_role
+    attributes:
+      label: Accountable role or repository owner
+      description: Name a role or repository owner only. Do not invent approval or add restricted personal detail.
+      placeholder: Repository maintainer for Conxian/conxian-business
+    validations:
+      required: true
+  - type: textarea
+    id: participating_repositories
+    attributes:
+      label: Participating repositories and canonical issues
+      description: List repository names and public-safe GitHub issue URLs. Do not duplicate restricted issue content.
+    validations:
+      required: true
+  - type: dropdown
+    id: control_domain
+    attributes:
+      label: Primary control domain
+      options:
+        - Governance and ownership
+        - Security and privacy
+        - Compliance and licensing
+        - Architecture and specifications
+        - Delivery and release
+        - Documentation and knowledge
+        - Portfolio coordination
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 — urgent control or blocker
+        - P1 — high priority
+        - P2 — planned
+        - P3 — backlog
+    validations:
+      required: true
+  - type: dropdown
+    id: target_lane
+    attributes:
+      label: Target lane
+      options:
+        - Research
+        - Development
+        - Staged validation
+        - Mainnet / production consideration
+        - Policy or documentation only
+        - Mixed — identify per repository in acceptance criteria
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Cross-repository acceptance criteria
+      description: State objective public-safe criteria and identify which repository owns each result.
+      placeholder: "- [ ] Conxian/repository: criterion"
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependency links
+      description: Link public-safe issues, pull requests, or releases. Use only an opaque restricted-record token if necessary.
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence_state
+    attributes:
+      label: Evidence state
+      description: Select the current evidence lifecycle state. This is status metadata, not a substitute for the required evidence plan or immutable links below.
+      options:
+        - Not started
+        - Planned
+        - Evidence available
+        - Blocked
+        - Not applicable
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence plan or immutable links
+      description: Identify expected commit-bound evidence or add existing public-safe permalinks. When the state is `Evidence available`, include the immutable links. Do not paste restricted records.
+    validations:
+      required: true
+  - type: checkboxes
+    id: ownership_acknowledgement
+    attributes:
+      label: Ownership acknowledgement
+      options:
+        - label: I understand this coordination issue does not replace owning-repository issues, approvals, licenses, validation, or rollback responsibility.
+          required: true

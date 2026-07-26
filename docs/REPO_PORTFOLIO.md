@@ -1,5 +1,7 @@
 # Repo portfolio trust-surface view
 
+For new BOS intake, coordination, decisions, and sanitized evidence rules, use the canonical [GitHub-native BOS workspace](./GITHUB_NATIVE_BOS_WORKSPACE.md).
+
 This page is an explanatory view of the Conxian-Labs repository portfolio for public evaluation and internal consistency. It does not replace the central [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md) or the [Portfolio Business-Unit Map](./PORTFOLIO_BUSINESS_UNIT_MAP.md).
 
 For the doctrine that applies across every surface, see:

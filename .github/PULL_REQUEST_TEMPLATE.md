@@ -2,6 +2,7 @@
 Provide a concise but comprehensive summary of the changes in this Pull Request. Explain **why** this change is necessary and **what** it accomplishes.
 
 ### Strategic Alignment
+- [ ] This PR links the authoritative GitHub issue or governing pull request and follows [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](../docs/GITHUB_NATIVE_BOS_WORKSPACE.md).
 - [ ] This PR aligns with the BOS operating model docs ([SERVICE_LOOP.md](https://github.com/Conxian/conxian-business/blob/main/conxian-business/SERVICE_LOOP.md), [openspec/](https://github.com/Conxian/conxian-business/tree/main/openspec/)).
 - [ ] If this introduces new documentation or files, `SUMMARY.md` has been updated accordingly.
 - [ ] Security and Compliance considerations have been reviewed (refer to [SECURITY.md](https://github.com/Conxian/conxian-business/blob/main/SECURITY.md) and [CSF_MAINNET_READINESS_GATE.md](https://github.com/Conxian/conxian-business/blob/main/docs/CSF_MAINNET_READINESS_GATE.md) where applicable).
@@ -16,6 +17,7 @@ Provide a concise but comprehensive summary of the changes in this Pull Request.
 
 ### Checklist
 - [ ] I have performed a self-review of my own work.
+- [ ] I confirmed this PR contains no credentials, private endpoints, signer data, raw configuration, privileged legal advice, or restricted runbook content.
 - [ ] I targeted the correct base branch (`dev`, `staged`, or `main`) per [`docs/BRANCHING_AND_PROMOTION_POLICY.md`](../docs/BRANCHING_AND_PROMOTION_POLICY.md).
 - [ ] If label-gated suites apply, I have applied (or requested a maintainer to apply) the correct PR label(s) so the relevant CI suites run (see [`RELEASE_HYGIENE.md`](./RELEASE_HYGIENE.md)).
 - [ ] I have verified that all automated checks (if any) pass successfully.

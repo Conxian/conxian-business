@@ -11,6 +11,8 @@ See the [repo portfolio](docs/REPO_PORTFOLIO.md#ecosystem-repos) for the portfol
 
 ## Canonical documentation
 
+- [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](./docs/GITHUB_NATIVE_BOS_WORKSPACE.md)
+- [`docs/NEXUS_LICENSING_GOVERNANCE.md`](./docs/NEXUS_LICENSING_GOVERNANCE.md)
 - [`docs/REPO_PORTFOLIO.md`](./docs/REPO_PORTFOLIO.md)
 - [`docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`](./docs/PORTFOLIO_BUSINESS_UNIT_MAP.md)
 - [`docs/DOCTRINE_ALIGNMENT_STANDARD.md`](./docs/DOCTRINE_ALIGNMENT_STANDARD.md)
@@ -23,11 +25,11 @@ Define and version Conxian's Business Operations System (BOS) as an auditable, p
 
 ## Status
 
-**Beta.** Governance and specification artifacts are **Implemented**; architecture and deployment proposals remain **Target-state** until named evidence exists. Hosting visibility may differ by deployment, but this repository is treated as public-safe for documentation-boundary purposes.
+**Beta.** Governance and specification artifacts are implemented; architecture and deployment proposals remain target-state until named evidence exists. Hosting visibility may differ by deployment, but this repository is treated as public-safe for documentation-boundary purposes. It is the GitHub-native authority for new public-safe BOS portfolio policy, business governance, decision status, coordination, and sanitized evidence. Owning repositories remain authoritative for implementation and repository-local acceptance.
 
 This status framing is being kept aligned during the `conxius-platform` documentation transition.
 
-Documentation here follows public-safe boundary rules; internal-only strategy, legal, security, financial, and operational details remain in the authorized Linear workspace under ZSE.
+GitHub Issues and pull requests are authoritative for all new BOS work. Historical Linear links remain archive/provenance records only. Documentation here follows public-safe boundary rules; restricted strategy, legal, security, and operational details remain in approved restricted stores under ZSE.
 
 Release and SemVer tagging follows the process in `RELEASING.md` (`vX.Y.Z`), with history tracked in `CHANGELOG.md`.
 
@@ -60,6 +62,7 @@ The Conxian ecosystem is organized by function to ensure clarity and modularity 
 - **[`conxius-wallet/`](./conxius-wallet)**: **Mobile**. User-controlled, hardware-backed mobile client.
 - **[`conxian-ui/`](./conxian-ui)**: **Web**. `conxian_ui` public interaction surface (upstream slug retained).
 - **[`conxian-labs-site/`](./conxian-labs-site)**: **Website**. Public ecosystem landing.
+- **[`conxian-market/`](./conxian-market)**: **AI Marketplace**. Agentic commerce and service discovery surface.
 
 ## Quick start / Next action
 
@@ -97,7 +100,7 @@ This repository follows Zero Secret Egress (ZSE) boundary discipline. See [Repos
 
 ## Repository visibility and public/private boundary
 
-Treat this repository as public-safe for boundary purposes. Detailed strategy, legal interpretations, operational runbooks, infrastructure identifiers, and any secret inventory are maintained in the authorized Linear workspace (not in git), in compliance with our Zero Secret Egress (ZSE) mandate.
+Treat this repository as public-safe for boundary purposes. Detailed strategy, legal interpretations, operational runbooks, infrastructure identifiers, and any secret inventory are maintained in an approved non-Git restricted-record system, in compliance with our Zero Secret Egress (ZSE) mandate.
 
 Detailed strategy and roadmap content must not be duplicated in this README; see `docs/BOS_BUSINESS_BUILDOUT.md` for the public vs internal documentation rules.
 

@@ -1,0 +1,81 @@
+name: BOS work intake
+description: Create authoritative new BOS governance, coordination, or evidence work.
+title: "[BOS]: "
+labels:
+  - bos
+body:
+  - type: markdown
+    attributes:
+      value: |
+        GitHub Issues and pull requests are authoritative for new BOS work. Private GitHub is not a secret store. Do not paste credentials, private endpoints, signer data, raw configuration, privileged legal advice, or restricted runbooks.
+  - type: input
+    id: owning_repository
+    attributes:
+      label: Owning repository
+      description: Use the canonical owner/repository name for implementation, or Conxian/conxian-business for governance-only work.
+      placeholder: Conxian/example-repository
+    validations:
+      required: true
+  - type: input
+    id: accountable_role
+    attributes:
+      label: Accountable role
+      description: Name the accountable role. Do not include credentials or restricted identity records.
+      placeholder: Repository maintainer
+    validations:
+      required: true
+  - type: dropdown
+    id: workstream
+    attributes:
+      label: Workstream / control domain
+      options:
+        - Governance
+        - Security
+        - Quality
+        - Service management
+        - Resilience
+        - Privacy
+        - Partner governance
+        - Release
+        - Documentation / evidence
+    validations:
+      required: true
+  - type: dropdown
+    id: classification
+    attributes:
+      label: Information classification
+      description: Restricted content must stay outside GitHub; provide only sanitized status and an approved pointer.
+      options:
+        - Public-safe
+        - Internal sanitized
+        - Restricted pointer only
+    validations:
+      required: true
+  - type: checkboxes
+    id: zse_confirmation
+    attributes:
+      label: Zero Secret Egress confirmation
+      options:
+        - label: I confirm this issue contains no credentials, private endpoints, signer data, raw configuration, privileged legal advice, or restricted runbooks.
+          required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome and scope
+      description: State the public-safe outcome, repository boundary, and what is out of scope.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and linked authority
+      description: Link governing business issues, owning-repository issues/PRs, admin dependencies, or approved restricted-store pointers.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria and evidence
+      description: Define objective acceptance and the durable, preferably exact-SHA, evidence expected.
+    validations:
+      required: true

@@ -22,7 +22,7 @@ Click the button below for instant setup:
 ### Option 3: Docker (One Command)
 
 ```bash
-docker run -p 3000:3000 -p 3001:3001 conxian/sandbox:latest
+docker run -p 3000:3000 -p 3001:3000 conxian/sandbox:latest
 ```
 
 ### Option 4: Local Development
@@ -81,7 +81,7 @@ console.log(`Network: ${status.network}`);
 ### 2. ISO 20022 Payment
 
 ```typescript
-import { ConxianGateway, types } from '@conxian/sdk';
+import { ConxianGateway } from '@conxian/sdk';
 
 const gateway = new ConxianGateway({ sandbox: true });
 
@@ -242,7 +242,7 @@ MIT - See [LICENSE](LICENSE)
 
 <p align="center">
   <strong>Built with 💜 by Conxian Labs</strong><br>
-  <a href="https://conxian-labs.com">conxian-labs.com</a> · 
-  <a href="https://docs.conxian-labs.com">Docs</a> · 
+  <a href="https://conxian-labs.com">conxian-labs.com</a> ·
+  <a href="https://docs.conxian-labs.com">Docs</a> ·
   <a href="https://discord.gg/conxian">Discord</a>
 </p>
