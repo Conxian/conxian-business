@@ -2,27 +2,17 @@
 
 ## ADDED Requirements
 
-### Requirement: Founder's Cut Fee Logic
-The protocol MUST implement a hardcoded 0.1% Founder’s Cut **as a carve-out from captured protocol fees** (not an additive user fee).
+### Proposal: Founder's Cut Fee Logic (Governance-Gated; Not Approved)
+The historical launch proposal described a hardcoded 0.1% Founder’s Cut as a carve-out from captured protocol fees rather than an additive user fee. This text is preserved as proposal context only: it is not an executable, approved, or deployment-ready requirement.
 
-For the purposes of this requirement, **captured protocol fees** MUST mean the protocol-retained portion of each transaction’s fee after applying any third-party distributions (e.g. referral splits).
+The historical proposal defined **captured protocol fees** as the protocol-retained portion of a transaction fee after third-party distributions and described integer arithmetic equivalent to `founders_cut = captured / 1000`, with the remainder retained in the protocol treasury/vault. Those terms do not authorize an allocation or transfer.
 
-All Founder’s Cut computations MUST be performed using integer math in the smallest unit of the transaction’s fee asset. For the purposes of this requirement, `/` MUST denote integer division and `%` MUST denote modulo.
+CON-1542 MUST NOT activate, implement, configure, or represent this proposal as approved. Activation requires separate ratified governance that explicitly defines the beneficiary, custody route, rate, and allocation semantics, together with protocol implementation and deployment evidence. This handoff does not invent or approve an alternative fee schedule.
 
-The protocol MUST compute Founder’s Cut in the following order:
-
-- `captured = captured_protocol_fees`
-- `founders_cut = captured / 1000`
-- `remainder = captured % 1000`
-- `post_cut_captured = captured - founders_cut`
-
-Internal protocol allocations (reserve/ops/incentives) MUST be computed from `post_cut_captured`.
-
-The rounding remainder for the Founder’s Cut computation MUST equal `remainder` and MUST remain in the protocol treasury/vault balance of the transaction’s fee asset (as part of `post_cut_captured`) and MUST NOT be included in the transfer to the designated founder vault.
-#### Scenario: Fee Redirection
-- **Given** a successful swap or lending event
-- **When** processing the transaction
-- **Then** the protocol MUST allocate a 0.1% Founder’s Cut from the protocol’s captured fee amount and route it to the designated founder vault.
+#### Scenario: CON-1542 preserves the governance gate
+- **Given** the historical 0.1% Founder’s Cut proposal
+- **When** CON-1542 classifies revenue-policy ownership and evidence
+- **Then** no founder allocation or transfer is activated, and the proposal remains blocked pending separate ratified governance
 
 ### Requirement: ALEX AMM Integration
 The backend MUST utilize the ALEX Lab SDK for liquidity provisioning.
