@@ -122,7 +122,7 @@ In this BOS repo, the canonical cross-repo checklist is:
 - Historical mainnet readiness checklist — `conxius-enclave-sdk`: `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md`
 - CON-1518 telemetry privacy and operational evidence — [`docs/operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md`](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md)
 
-### Internal-only operating docs (Linear Virtual Office)
+### Internal-only operating docs (authorized Linear workspace)
 
 Keep privileged operational material out of Git, even for an SDK:
 

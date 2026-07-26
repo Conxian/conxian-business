@@ -9,18 +9,22 @@ Portfolio doctrine is defined centrally in [`DOCTRINE_ALIGNMENT_STANDARD.md`](./
 - **Canonical**: the current “source of truth” for a domain. If two docs disagree, update the non-canonical doc to match the canonical one.
 - **Supporting**: helpful context, audits, reports, briefs, or deep dives that clarify (but don’t define) the system.
 - **Public-safe**: ok to link in public contexts and external conversations.
-- **Public-safe stub (canonical in Sovereign Coordination Layer)**: safe to link publicly; this repo file is a short pointer stub (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)). It must not contain any operational, security, financial, legal, and strategic details beyond the pointer. The full canonical content is maintained in the sovereign coordination layer under ZSE.
-- **Internal-only (canonical in Sovereign Coordination Layer only)**: operational, security, financial, legal, and strategic material whose canonical document must live only in the sovereign coordination layer. If a repo link target must be preserved, use a **Public-safe stub (canonical in Sovereign Coordination Layer)** (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)) so existing links continue to resolve.
+- **Public-safe stub (canonical in authorized Linear workspace)**: safe to link publicly; this repo file is a short pointer stub (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)). It must not contain any operational, security, financial, legal, and strategic details beyond the pointer. The full canonical content is maintained in the authorized Linear workspace under ZSE.
+- **Internal-only (canonical in authorized Linear workspace only)**: operational, security, financial, legal, and strategic material whose canonical document must live only in the authorized Linear workspace. If a repo link target must be preserved, use a **Public-safe stub (canonical in authorized Linear workspace)** (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)) so existing links continue to resolve.
+
+For the separate dimensions of claim state, operating label, maturity, and document classification, follow the [Doctrine Alignment Standard](./DOCTRINE_ALIGNMENT_STANDARD.md) and the [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md).
 
 Notes:
 
-- Treat this repo as public for boundary purposes. (This GitHub repository is private as of April 8, 2026.) "Internal-only" material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see sovereign coordination layer issue CON-256).
+- Treat this repo as public for boundary purposes; hosting visibility may differ by deployment. "Internal-only" material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see authorized Linear workspace issue CON-256).
 - OpenSpec change sets typically have 4 layers: `proposal.md` (intent), `design.md` (architecture), `specs/*/spec.md` (requirements), `tasks.md` (execution).
 
 ## GAP-020 cross-link alignment (issue #724)
 
 ### Canonical documentation set
 
+- `docs/DOCTRINE_ALIGNMENT_STANDARD.md`
+- `docs/PORTFOLIO_DOCTRINE_REGISTER.md`
 - `docs/REPO_PORTFOLIO.md`
 - `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`
 - `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`
@@ -39,9 +43,25 @@ Notes:
 
 ### Archival candidates
 
-- `docs/LINEAR_TASK_INVENTORY_2026-05-29.md` — date-stamped task snapshot; planning source of truth now lives in active work systems and canonical policy docs.
-- `docs/RESEARCH_FINDINGS_2026-05-29.md` — point-in-time findings snapshot superseded by maintained canonical docs and OpenSpec changes.
-- `docs/BUSINESS_ANALYSIS_2026-05-29.md` — dated analysis snapshot that risks drift against current canonical portfolio/control docs.
+- `docs/LINEAR_TASK_INVENTORY_2026-05-29.md` — public-safe stub; the dated planning snapshot moved to the authorized Linear workspace under CON-1530.
+- `docs/RESEARCH_FINDINGS_2026-05-29.md` — public-safe stub; the dated research snapshot moved to the authorized Linear workspace under CON-1530.
+- `docs/BUSINESS_ANALYSIS_2026-05-29.md` — public-safe stub; the dated analysis moved to the authorized Linear workspace under CON-1530.
+- `docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md` — public-safe stub; the dated narrative moved to the authorized Linear workspace under CON-1530.
+- `conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md` — public-safe stub; the research summary moved to the authorized Linear workspace under CON-1530.
+- `docs/ITIL5_STRATEGIC_ANALYSIS_2026.md` — public-safe stub; the full internal strategy remains in Linear and the former competitive analysis is not retained here.
+
+### CON-1530 public-safe stub dispositions
+
+The following link-preserving stubs are intentionally retained in Git. Their canonical restricted sources are owned by Conxian-Labs (Pty) Ltd in the authorized Linear workspace; no removed detail is copied into another Git file.
+
+| File | Classification | Ownership | Why content moved | Canonical pointer |
+| --- | --- | --- | --- | --- |
+| `docs/BUSINESS_ANALYSIS_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated internal analysis is not a current public doctrine source. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Research detail belongs in the authorized workspace, not public Git. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated positioning material is maintained outside the public repository. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `docs/LINEAR_TASK_INVENTORY_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal work-management detail belongs in active authorized systems. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `docs/RESEARCH_FINDINGS_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated findings are superseded and are not a current public doctrine source. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `docs/ITIL5_STRATEGIC_ANALYSIS_2026.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal strategy remains in the authorized workspace under ZSE. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
 
 ## 1) Repo navigation (start here)
 
@@ -70,13 +90,13 @@ These are the operating-model documents that explain how BOS components relate, 
 | `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Public-safe historical stub | Legacy state-machine pointer retained for archive/migration compatibility; not active intake authority. |
 | `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Historical | Public-safe legacy migration material | Superseded ExCo intake context retained for controlled migration under [#944](https://github.com/Conxian/conxian-business/issues/944); it is not an active standard. Current public-safe intake follows `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` and authority rules in `docs/GITHUB_NATIVE_BOS_WORKSPACE.md`. |
 | `Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md` | Supporting | Public-safe stub (canonical in Linear) | Bottleneck and deployment efficiency metrics (standardized ZSE stub). |
-| `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md` | Supporting | Public-safe stub (canonical in Linear) | Strategy velocity tracking and exit-readiness framing (standardized ZSE stub). |
+| `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md` | Supporting | Public-safe stub (canonical in Linear) | Strategy coordination pointer; full internal content remains in Linear (standardized ZSE stub). |
 | `Sovereign-Strategy-Nexus/docs/SOVEREIGN_MOI_ALIGNMENT.md` | Canonical | Public-safe stub (canonical in Linear) | “MOI” alignment source for Strategy Nexus narratives (standardized ZSE stub). |
 | `Sovereign-Strategy-Nexus/docs/ZK_DATA_ROOM_SCHEMA.md` | Canonical | Public-safe stub (canonical in Linear) | ZK data room schema (standardized ZSE stub). |
 | `Sovereign-Strategy-Nexus/docs/SOVEREIGN_PITCH_DECK_NARRATIVE.md` | Supporting | Public-safe stub (canonical in Linear) | Pitch narrative scaffolding (standardized ZSE stub). |
-| `Fiscal-Vault-Oracle/SOVEREIGN_RUNWAY.md` | Canonical | Public-safe stub (canonical in Linear) | Treasury runway and yield execution constraints (standardized ZSE stub). |
+| `Fiscal-Vault-Oracle/SOVEREIGN_RUNWAY.md` | Canonical | Public-safe stub (canonical in Linear) | Protocol/reference policy and oracle constraints (standardized ZSE stub). |
 | `Fiscal-Vault-Oracle/LSEG_MCP_AUDIT.md` | Supporting | Public-safe stub (canonical in Linear) | LSEG MCP audit context for treasury/oracle integrity (standardized ZSE stub). |
-| `docs/architecture/BOS_TREASURY_AND_YIELD_INTEGRATION_ARCHITECTURE.md` | Canonical | Public-safe | Treasury/yield integration boundary: intent-based ops, oracle publishing, reconciliation, and failure handling (no dashboard-to-contract coupling). |
+| `docs/architecture/BOS_TREASURY_AND_YIELD_INTEGRATION_ARCHITECTURE.md` | Canonical | Public-safe | Protocol/tenant treasury and yield integration boundary: intent-based operations, oracle publishing, reconciliation, and failure handling (no dashboard-to-contract coupling). |
 | `docs/architecture/BOS_SOVEREIGN_ENTERPRISE_IDENTITY_ARCHITECTURE.md` | Canonical | Public-safe | Enterprise identity + ERP session brokering architecture: hardware-backed keys, attestation, short-lived PoP-bound sessions, and recovery. |
 | `docs/protocols/BOS_SELF_EXECUTING_CONTRACT_TRIGGER_V1.md` | Canonical | Public-safe | Verified CLM webhook → queued pending on-chain action with 144-block timelock → multisig finalization, with replay protection, cancellation semantics, monitoring, and audit traceability. |
 | `docs/architecture/THREE_LANE_RUNTIME_DEPLOYMENT_ARCHITECTURE.md` | Canonical | Public-safe | Canonical runtime deployment model across community sovereign-node, business-managed, and enterprise/private-cloud lanes (controls, upgrade paths, and trust assumptions). |
@@ -133,7 +153,7 @@ These are the documents most likely to answer “what are we building?” and �
 | --- | --- | --- | --- |
 | `Conxian/PRD.md` | Canonical | Public-safe | Conxian protocol PRD (modules, status, and benchmarks). |
 | `Conxian/docs/ARCHITECTURE.md` | Canonical | Public-safe | Protocol architecture description. |
-| `Conxian/docs/WHITEPAPER.md` | Canonical | Public-safe | Protocol whitepaper narrative and model. |
+| `Conxian/docs/WHITEPAPER.md` | Archive candidate (rewrite required) | Public-safe | Historical protocol whitepaper surface; not a current doctrine source. Rewrite against `docs/TECHNICAL_WHITEPAPER_OUTLINE.md` and the portfolio doctrine before reclassification. External follow-up; no submodule content was changed here. |
 | `Conxian/docs/ROADMAP.md` | Canonical | Public-safe | Protocol roadmap and phases. |
 | `Conxian/GOVERNANCE_RECOVERY_REPORT.md` | Supporting | Public-safe | Governance + recovery status report (March 2026). |
 | `Conxian/docs/DOCUMENTATION_STATE.md` | Supporting | Public-safe | Snapshot of protocol doc state. |
@@ -142,13 +162,14 @@ These are the documents most likely to answer “what are we building?” and �
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
-| `conxian-gateway/PRD.md` | Canonical | Public-safe | Gateway PRD (sovereign compliance pipe). |
+| `conxian-gateway/PRD.md` | Canonical | Public-safe | `conxian-gateway` PRD (sovereign compliance pipe). |
 | `conxian-nexus/docs/PRD.md` | Canonical | Public-safe | Nexus PRD (Glass Node). |
 | `lib-conxian-core/docs/PRD.md` | Canonical | Public-safe | Core library PRD (shared models + gateway alignment). |
+| `docs/CON-1512_HARDWARE_SIGNING_ATTESTATION_PHASE_PLAN.md` | Canonical | Public-safe | Current CON-1512 research, weighted gap map, split-provider decision, dependency graph, and phase/acceptance boundaries for hardware-backed signing and attestation. |
 | `docs/CONXIUS_ENCLAVE_SDK_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and internal-only vs public-safe separation guidance for the SDK. |
 | `docs/CONXIUS_PLATFORM_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxius-platform. |
 | `docs/CONXIAN_PROTOCOL_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for Conxian protocol. |
-| `docs/CONXIAN_GATEWAY_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-gateway. |
+| `docs/CONXIAN_GATEWAY_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for `conxian-gateway`. |
 | `docs/CONXIAN_NEXUS_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-nexus. |
 | `docs/CONXIUS_ORBIT_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for `conxius-orbit`. |
 | `docs/CONXIAN_UI_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for Conxian_UI. |
@@ -157,7 +178,7 @@ These are the documents most likely to answer “what are we building?” and �
 | `docs/CONXIAN_LABS_SITE_BOS_BUILDOUT.md` | Supporting | Public-safe | BOS-level business role, governance controls, and documentation separation guidance for conxian-labs-site. |
 | `docs/MAINNET_READINESS_CONXIAN_PROTOCOL.md` | Supporting | Public-safe | Mainnet readiness checklist for Conxian protocol. |
 | `docs/MAINNET_READINESS_CONXIUS_WALLET.md` | Supporting | Public-safe | Mainnet readiness checklist for conxius-wallet. |
-| `docs/MAINNET_READINESS_CONXIAN_GATEWAY.md` | Supporting | Public-safe | Mainnet readiness checklist for conxian-gateway. |
+| `docs/MAINNET_READINESS_CONXIAN_GATEWAY.md` | Supporting | Public-safe | Mainnet readiness checklist for `conxian-gateway`. |
 | `docs/MAINNET_READINESS_CONXIUS_PLATFORM.md` | Supporting | Public-safe | Mainnet readiness checklist for conxius-platform. |
 | `docs/WALLET_SIGNER_CONTROL_VERIFICATION_REPORT.md` | Supporting | Public-safe | Wallet and signer control verification report for mainnet launch. |
 | `docs/PUBLIC_VISIBILITY_AUDIT_REPORT.md` | Supporting | Public-safe | Public visibility boundary audit report. |
@@ -218,7 +239,7 @@ See `docs/BOS_BUSINESS_BUILDOUT.md` for repo business purpose, business-unit pla
 
 ## 7) Known doc gaps / broken references (should not be re-created blindly)
 
-These are referenced by current docs but are not present in the active Git index. Before recreating them from scratch, first check whether they were intentionally migrated to the Linear Virtual Office under ZSE.
+These are referenced by current docs but are not present in the active Git index. Before recreating them from scratch, first check whether they were intentionally migrated to the authorized Linear workspace under ZSE.
 
 - `docs/STRATEGOS_MANDATE.md` (referenced by `audit/strategos-alignment.md`, `Fiscal-Vault-Oracle/SOVEREIGN_RUNWAY.md`).
 - `system_ip_audit.md` (referenced by `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md`).
@@ -275,8 +296,10 @@ These documents were created during the 2026-07-03 cross-issue boundary and doct
 | --- | --- | --- | --- |
 | `docs/DEVELOPER_QUICKSTART.md` | Canonical | Public-safe | Ecosystem architecture, submodule map, build/test commands for all 4 suites, CI/CD pipeline, promotion workflow, and contribution guide. |
 | `docs/BOUNDARY_DECISION_LOG.md` | Canonical | Public-safe | Systematic boundary register classifying 20+ artifacts (strategy, BOS state, architecture, bounties, CI/CD) as public-safe, public-safe stub, or internal-only. |
-| `docs/TRUST_AND_READINESS_VERIFICATION.md` | Canonical | Public-safe | Evaluator-facing trust audit of 5 flagship repos against implementation truth. Separates implemented, verified, production-ready, and target-state. Defines explicit non-claim boundary. |
+| `docs/TRUST_AND_READINESS_VERIFICATION.md` | Canonical | Public-safe | Evaluator-facing trust audit against implementation truth. Separates `Implemented`, `Verified`, `Target-state`, and `Deprecated` claim states from maturity and defines an explicit non-claim boundary. |
 | `docs/TRUST_AND_PROOF_MESSAGING.md` | Canonical | Public-safe | Standard framework for trust signals on public surfaces (security posture, governance, repo maturity, release discipline, audience fit, portfolio boundaries). |
+| `docs/DOCTRINE_ALIGNMENT_STANDARD.md` | Canonical | Public-safe | Short doctrine source for company role, brand boundaries, custody/data boundaries, infrastructure posture, Bitcoin anchor, claim states, operating labels, classifications, and contradiction resolution. |
+| `docs/PORTFOLIO_DOCTRINE_REGISTER.md` | Canonical | Public-safe | Central register for the 16-repository portfolio: role, audience, operating label, maturity/claim state, document classification, evidence, and unresolved contradiction disposition. |
 | `docs/OPERATING_LANE_BOUNDARIES.md` | Canonical | Public-safe | Explicit lane boundaries for Packaging (doctrine), GTM (execution), and Operations (coordination). Includes escalation paths, anti-patterns, and cross-lane operating loop. |
 | `docs/operations/WEEKLY_GROWTH_DRIVER_REVIEW.md` | Canonical | Public-safe | Weekly GTM metrics review template covering qualified conversations, demos, pilots, proofs, and responsiveness. Cross-references BOS operational metrics (CON-682). |
 | `docs/TECHNICAL_WHITEPAPER_OUTLINE.md` | Canonical | Public-safe | 10-section flagship whitepaper outline with evidence references: system architecture, BOS state machine, security model, protocol layer, execution layer, compliance layer, client layer. |
@@ -287,4 +310,5 @@ These documents were created during the 2026-07-03 cross-issue boundary and doct
 - `BOUNDARY_DECISION_LOG.md` ← `TRUST_AND_READINESS_VERIFICATION.md` ← `TRUST_AND_PROOF_MESSAGING.md`
 - `OPERATING_LANE_BOUNDARIES.md` ← `WEEKLY_GROWTH_DRIVER_REVIEW.md` ← `COMMERCIAL_PACKAGING_DOCTRINE.md`
 - `TECHNICAL_WHITEPAPER_OUTLINE.md` ← `DEVELOPER_QUICKSTART.md` ← `CONXIAN_UNIFIED_THEORY_v2.md`
-- All documents cross-reference `REPO_PORTFOLIO.md` and `PORTFOLIO_BUSINESS_UNIT_MAP.md`
+- `PORTFOLIO_DOCTRINE_REGISTER.md` → `REPO_PORTFOLIO.md` → `PORTFOLIO_BUSINESS_UNIT_MAP.md`
+- All documents cross-reference the central doctrine/register where portfolio role, maturity, claim state, or classification is relevant.

@@ -81,6 +81,10 @@ jobs:
               return;
             }
 
+            if (baseRef === 'main' && isDependabotUpdate) {
+              core.info('Allowing an in-repository Dependabot maintenance update into main.');
+            }
+
             if (baseRef === 'staged') {
               const allowed = headRef === 'dev' || headRef.startsWith('hotfix/') || headRef.startsWith('promotion/');
 
