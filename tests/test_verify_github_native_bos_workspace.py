@@ -83,6 +83,7 @@ class GitHubNativeBosWorkspaceVerifierTests(unittest.TestCase):
 
     def test_active_source_scope_includes_policy_and_workflow(self) -> None:
         self.assertIn("AGENTS.md", verifier.ACTIVE_INTAKE_FILES)
+        self.assertIn("docs/AGENTS.md", verifier.ACTIVE_INTAKE_FILES)
         self.assertIn(
             ".github/workflows/weekly-viability-report.yml",
             verifier.ACTIVE_INTAKE_FILES,
@@ -140,6 +141,16 @@ class GitHubNativeBosWorkspaceVerifierTests(unittest.TestCase):
         status, output = self._run()
         self.assertEqual(status, 1, output)
         self.assertIn("AGENTS.md:1: active intake requires Linear", output)
+
+    def test_nested_agents_linear_virtual_office_migration_fails(self) -> None:
+        self._write(
+            "docs/AGENTS.md",
+            "Before ignoring sensitive paths, all contained knowledge must be "
+            "migrated to the Linear Virtual Office.\n",
+        )
+        status, output = self._run()
+        self.assertEqual(status, 1, output)
+        self.assertIn("docs/AGENTS.md:1: active intake requires Linear", output)
 
     def test_weekly_workflow_plural_linear_issues_mandate_fails(self) -> None:
         self._write(
