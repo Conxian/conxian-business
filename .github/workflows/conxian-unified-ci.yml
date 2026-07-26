@@ -268,7 +268,7 @@ jobs:
     - name: Verify pinned enclave SDK
       run: |
         test -d conxius-enclave-sdk
-        test "$(git -C conxius-enclave-sdk rev-parse HEAD)" = "451202f51a9efed8fde70b7a5567a3e7e16c1db9"
+        test "$(git -C conxius-enclave-sdk rev-parse HEAD)" = "3af2cb83988582073f726bebfffe21093a5e3b65"
         git submodule status conxius-enclave-sdk
     - name: Check & Test
       run: |
