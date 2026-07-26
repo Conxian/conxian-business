@@ -1,14 +1,22 @@
-# Deprecated Linear wiring compatibility stub
+# Historical ExCo intake and wiring migration record
 
-**Status:** Archived compatibility pointer as of 2026-07-26.
+> **Status:** Legacy migration material; not an active intake standard
+> **Superseded by:** [`docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`](../docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md)
+> **Authority details:** [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](../docs/GITHUB_NATIVE_BOS_WORKSPACE.md)
+> **Migration tracking:** [conxian-business#944](https://github.com/Conxian/conxian-business/issues/944)
 
-GitHub Issues and pull requests are authoritative for all new BOS work. Follow [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](../docs/GITHUB_NATIVE_BOS_WORKSPACE.md) and the repository issue forms. Do not create a new Linear issue or mirror canonical authority into Linear.
+This file preserves public-safe historical context for the former ExCo workflow. It must not be used to route new work, require a new external issue, or establish an external system as canonical.
 
-Existing Linear URLs may be retained only as immutable historical/archive provenance. This filename remains to preserve old links; it is not an active intake standard.
+## Current rule
 
-## Historical compatibility fields
+- GitHub is canonical for public-safe BOS intake, status, pull-request traceability, sanitized decisions, and immutable evidence links.
+- Create public-safe work in the owning repository and link implementation pull requests to that GitHub issue.
+- Restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational records remain outside Git in an approved non-Git restricted-record system.
+- When a restricted record must be acknowledged publicly, use only a non-descriptive `sha256(<64-lowercase-hex>)` commitment. Do not include a system name, location, access path, or sensitive metadata.
 
-When interpreting an archived Linear intake record, the historical fields were:
+## Preserved historical model
+
+Historical record: before the GitHub-first baseline, ExCo intake originated in Linear and public-safe GitHub artifacts were treated as mirrors. The former intake captured:
 
 1. **Operating lens**
 2. **Owner** (single accountable owner)
@@ -17,20 +25,18 @@ When interpreting an archived Linear intake record, the historical fields were:
 5. **Outcome + acceptance signal**
 6. **Source links**
 
-## GitHub-native successor
+Protocol-adapter intake also captured the maturity lane fields defined in
+[`docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md`](../docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md), including lane, rail scope, adapter interface, owner, cadence, risks, and promotion blockers.
 
-New work uses the BOS work intake or governance/legal decision request issue form. Protocol-adapter work also includes the lane extension fields from
-[`docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md`](../docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md):
+The historical flow was:
 
-1. **Maturity lane** (`Build-now`, `Pilot`, `Partner`, `Research`)
-2. **Default handling note** (if lane was omitted at creation, record that it defaulted to `Research`)
-3. **Rail scope**
-4. **Target adapter interface**
-5. **Owner** (single accountable owner)
-6. **Review cadence**
-7. **Risk register**
-8. **Promotion blockers**
+1. discover the signal;
+2. create or route a historical Linear issue (archived behavior);
+3. triage ownership and urgency; and
+4. link GitHub implementation artifacts back to that issue.
 
-## ZSE boundary
+These steps are retained only as evidence of past state. They are superseded for current public-safe work and must not be copied into active guidance.
 
-Private GitHub is not a secret store. Credentials, private endpoints, signer data, raw configuration, privileged legal advice, and restricted runbooks stay in approved restricted stores. GitHub contains sanitized status and approved pointers only.
+## Migration boundary
+
+Issue #944 owns the classification-led migration of remaining Linear references. Do not mechanically replace protected pointers, copy restricted content into GitHub, or infer an unapproved restricted-record system. Historical references may remain only when clearly labelled as historical.

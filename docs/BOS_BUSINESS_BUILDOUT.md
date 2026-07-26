@@ -30,7 +30,7 @@ If the repo’s flagship/supporting placement changes in `docs/REPO_PORTFOLIO.md
 
 ## Public/private split recommendation (ZSE)
 
-Treat this repository as public for boundary purposes. (This GitHub repository is private as of April 8, 2026.) The split below defines what may be stored in GitHub versus an approved restricted store.
+Treat this repository as public for boundary purposes. (This GitHub repository is private as of April 8, 2026.) The split below defines what may be stored in Git and what must remain in an approved non-Git restricted-record system.
 
 ### Public-safe (keep in Git)
 
@@ -39,7 +39,7 @@ Treat this repository as public for boundary purposes. (This GitHub repository i
 - Public product documentation and external-facing architecture/PRD material that has been scrubbed of privileged implementation details, secret formats, and exploit-enabling diagrams.
 - Non-sensitive audits and public trust messaging.
 
-### Restricted (approved restricted store; sanitized pointer from GitHub)
+### Restricted (store in an approved non-Git restricted-record system)
 
 - **Strategic:** valuation framing, M\&A narratives, competitive positioning, partnership negotiation details, and time-bound roadmap milestones.
 - **Legal:** contracts, entity structuring, jurisdiction-specific filings, and anything that increases legal exposure if copied out of context.
@@ -49,9 +49,7 @@ Treat this repository as public for boundary purposes. (This GitHub repository i
 ### ZSE guardrails (repo rules)
 
 1. Never commit secrets (values) or credential material.
-2. If a document must be referenced but is restricted, keep only:
-   - a short public-safe summary, and
-   - an approved restricted-store pointer that does not expose restricted content.
+2. If a restricted record must be acknowledged in GitHub, use only a non-descriptive `sha256(<64-lowercase-hex>)` commitment. Do not include a system name, location, access path, or sensitive metadata.
 3. Treat “internal-only” as the default for:
    - strategy and treasury narratives
    - monetization and fee/royalty specifics
@@ -65,20 +63,20 @@ Treat this repository as public for boundary purposes. (This GitHub repository i
 | --- | --- | --- |
 | `README.md` | Role line + purpose + pointers to canonical docs. Avoid internal strategy and operational detail. | Repo code owners (`CODEOWNERS`). |
 | `docs/REPO_PORTFOLIO.md` | Canonical placement of this repo in the org trust surface. | Repo code owners. |
-| `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` | Canonical map of what docs exist, authority, classification, and archive/migration context. | Repo code owners. |
+| `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` | Canonical map of what docs exist, what is current, and what requires controlled migration. | Repo code owners. |
 | `GOVERNANCE.md` | Governance model, ownership, and approval rules (high-level; no sensitive ops). | Repo code owners. |
 | `CODEOWNERS` | Review + ownership routing. | Repo code owners. |
-| `CONTRIBUTING.md` | GitHub-native contribution workflow and authority-linking expectations. | Repo code owners. |
+| `CONTRIBUTING.md` | GitHub-native public-safe contribution workflow, authority-linking expectations, and restricted-record stop rules. | Repo code owners. |
 | `SECURITY.md` | Security policy and private reporting process. | Repo code owners. |
 | `ARCHIVE_MIGRATION.md` | ZSE-safe pointer for legacy/removed material. | Repo code owners. |
 | `CHANGELOG.md` | Public, versioned changes to BOS/OpenSpec policies and externally visible behavior. | Repo code owners. |
 
-### Minimum restricted set (approved restricted store)
+### Minimum restricted set
 
-Maintain these outside GitHub in an approved restricted store, referenced by sanitized pointer as needed:
+Maintain these only in an approved non-Git restricted-record system. GitHub may contain a non-descriptive commitment when necessary:
 
-- Detailed BOS operating model semantics (privileged service-loop + state-machine runbooks; Git keeps only public-safe summaries and pointers).
-- Restricted execution wiring, credentials, private endpoints, and privileged automation details.
+- Detailed BOS operating model semantics (privileged service-loop + state-machine runbooks; Git keeps only public-safe summaries and, when necessary, non-descriptive commitments).
+- Privileged execution wiring between the state layer and repository automation.
 - ZSE / knowledge retention policy and migration manifests.
 - Secret management spec (procedural, privileged access).
 - Strategy/legal/ops/admin material that cannot be safely versioned in public Git.
@@ -86,19 +84,19 @@ Maintain these outside GitHub in an approved restricted store, referenced by san
 ## Governance, ownership, and approval workflow (repo expectations)
 
 1. All changes land via pull request.
-2. Every pull request must link to an authoritative GitHub issue or governing pull request.
+2. Every pull request for public-safe work must link to the authoritative GitHub issue in the governing or owning repository.
 3. `CODEOWNERS` review is required for any change.
 4. Any change that redefines BOS boundaries, OpenSpec requirements, or the doc-classification policy must:
    - update `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` where relevant, and
    - include a `CHANGELOG.md` entry when it changes externally visible behavior or expectations.
-5. Any restricted material referenced from GitHub must use a sanitized approved restricted-store pointer. Historical Linear URLs are archive/provenance only, not active authority.
+5. Restricted records must not be linked descriptively from Git. Use only a non-descriptive `sha256(<64-lowercase-hex>)` commitment when necessary.
 
 ## Prioritized build/repair list
 
 1. Keep `README.md` aligned with the “supporting repo” role line and remove internal strategy/ops detail from the public entrypoint.
 2. Keep `GOVERNANCE.md` as an explicit ownership + approval model tied to `CODEOWNERS` (not just a stub).
 3. Treat `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` as the canonical “doc registry” and keep it updated whenever docs are added, moved, or reclassified.
-4. Move restricted documents that materially increase operational exposure to an approved restricted store, leaving only ZSE-safe summaries and approved pointers.
+4. Migrate restricted documents that materially increase operational exposure to an approved non-Git restricted-record system, leaving no descriptive pointer in Git; use an opaque commitment only when necessary.
 
 ## 3. Branching and Promotion Policy (CON-381, CON-389)
 

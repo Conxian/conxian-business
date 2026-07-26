@@ -5,7 +5,7 @@ This repository uses GitHub Actions workflows in `.github/workflows/` as the sou
 The goals:
 
 - Keep `main` always mergeable and safe to deploy.
-- Ensure every merge has clear GitHub issue/PR provenance.
+- Ensure every merge has clear public-safe provenance through the governing or owning-repository GitHub issue and pull request.
 - Make releases and changelogs easy to audit.
 
 ## Branch and promotion standard
@@ -119,7 +119,7 @@ Notes:
 - No direct commits to `main`. Use a PR.
 - Use the correct base branch (`dev`, `staged`, or `main`) based on the branch and promotion standard.
 - One PR = one focused change (keep it reviewable).
-- PRs should map to an authoritative GitHub issue or governing pull request (include it in the PR description).
+- PRs should map to the authoritative public-safe GitHub issue in the governing or owning repository (include it in the PR description).
 - Follow `CODEOWNERS` for review routing.
 - Validate locally before requesting review (CI is the gate, not the first signal).
 - Before merge:

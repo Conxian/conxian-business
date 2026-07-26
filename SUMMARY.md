@@ -85,7 +85,7 @@
 * [Arch Guardian](Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md)
 * [Grid Oracle (Agnostic)](cxn-grid-oracle/README.md)
 * [Ops Engine](Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md)
-  * [Deprecated Linear wiring compatibility stub](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
+  * [Historical ExCo intake and wiring migration record](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
 
 ## 🏛️ Ground Truth (OpenSpec)
 
