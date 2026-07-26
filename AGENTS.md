@@ -199,7 +199,7 @@ Hard-coded `ST…` / `SP…` addresses in production source trigger an **immedia
 ### Zero Secret Egress (ZSE) Compliance
 | Layer | Rule |
 |---|---|
-| Restricted records | Keep sensitive logic and protected configuration outside Git in an approved non-Git restricted-record system; use approved secret-management controls for credentials and key material. |
+| Restricted records | Keep legal, financial, security, identity, custody, recovery, strategy, privileged operational records, sensitive logic, and sensitive configuration outside Git in an approved non-Git restricted-record system; use approved secret-management controls for credentials and key material. When necessary, GitHub may contain only a non-descriptive `sha256(<64-lowercase-hex>)` commitment; system selection and approval are out of scope. |
 | On-chain | Expose **State-Proof** primitives only; never raw config. |
 | Stubs | Production paths return `err-u501` / `err-u503` and **fail-closed**. |
 
