@@ -366,6 +366,69 @@ This focused digest uses the existing `conxius-enclave-sdk` entity and downstrea
 
 ---
 
+## Dated Amendment: CON-1506 SDK Containment Evidence (2026-07-26)
+
+### Status and historical-state reconciliation
+
+| Field | Record |
+|-------|--------|
+| Linear umbrella | [CON-1506 — production enablement](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) is the umbrella reference. This public-safe amendment does not change or comment on its workflow state. |
+| Historical reconciliation | The July 22 CON-1512 snapshot above correctly recorded SDK [PR #244](https://github.com/Conxian/conxius-enclave-sdk/pull/244) as open at that observation time. Live GitHub metadata now records it as **MERGED** at **2026-07-22 15:55:09 UTC**, merge commit [`4292dcd8a6ceb1301e7f2085a95cce544527cdb0`](https://github.com/Conxian/conxius-enclave-sdk/commit/4292dcd8a6ceb1301e7f2085a95cce544527cdb0). The dated snapshot is preserved rather than silently rewritten. |
+| Merged containment artifact | SDK [PR #254](https://github.com/Conxian/conxius-enclave-sdk/pull/254) is **MERGED** at **2026-07-26 13:43:59 UTC**, with merge commit [`f61c68021009d658c47a12ab3f2f4e79cd2f7dbc`](https://github.com/Conxian/conxius-enclave-sdk/commit/f61c68021009d658c47a12ab3f2f4e79cd2f7dbc) from reviewed head [`3d26ba07a25c29aa99f53b34c43bdb33c809d534`](https://github.com/Conxian/conxius-enclave-sdk/commit/3d26ba07a25c29aa99f53b34c43bdb33c809d534). Live merge metadata reports **24 of 24 checks successful**, with no pending or failed checks. |
+| Bounded evidence | PR #254 adds adversarial public-surface tests and a test-only WASM simulator proving that valid-looking CCTP/Iris inputs, ERC-7579 account execution and module-provenance inputs, and conflicting or quarantined asset metadata remain typed fail closed. They cannot produce execution/burn payloads, assert unsupported provenance, replace canonical metadata, or enter/change rail selection. |
+| Non-promotion boundary | The merge does **not** establish Circle/Iris support, ERC-7579 execution or provenance support, arbitrary asset support, WASM value operations, provider qualification, roots or revocation, durable distributed replay, protocol-key custody, an immutable release artifact, independent acceptance, Gate 4 or Gate 5 completion, or production authorization. Containment is not enablement. |
+| Live remaining gates | SDK issues [#198](https://github.com/Conxian/conxius-enclave-sdk/issues/198), [#200](https://github.com/Conxian/conxius-enclave-sdk/issues/200), [#240](https://github.com/Conxian/conxius-enclave-sdk/issues/240), and [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain **OPEN**. Business [Gate #890](https://github.com/Conxian/conxian-business/issues/890) remains **OPEN / BLOCKED — Gate 0** and is unchanged by this amendment. SDK [PR #255](https://github.com/Conxian/conxius-enclave-sdk/pull/255) remains **OPEN** live work and is not accepted evidence. |
+
+### Structured knowledge digest
+
+#### People
+
+| Person / agent | Platform-verifiable role | Acceptance boundary |
+|----------------|--------------------------|---------------------|
+| Botshelo Mokoka (`botshelomokoka`) | GitHub approver of SDK PR #254 on 2026-07-26 | Ordinary code approval is not independent security or release acceptance. |
+| Charlie / `CharlieCreates` | GitHub App author of SDK PR #254 | Authorship is not independent security or release acceptance. |
+
+#### Projects
+
+| Project / tracker | Type | State in this amendment |
+|-------------------|------|-------------------------|
+| [CON-1506](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) | Linear umbrella | Reference only; no workflow-state change or comment. |
+| [Business #890](https://github.com/Conxian/conxian-business/issues/890) | Downstream business gate | **OPEN / BLOCKED — Gate 0**; not advanced. |
+| [SDK #198](https://github.com/Conxian/conxius-enclave-sdk/issues/198) | Fail-closed protocol-surface gate | **OPEN**; PR #254 supplies bounded negative evidence, not completion. |
+| [SDK #200](https://github.com/Conxian/conxius-enclave-sdk/issues/200) | WASM/runtime evidence gate | **OPEN**; test-only WASM rejection evidence is not value-operation or runtime qualification. |
+| [SDK #240](https://github.com/Conxian/conxius-enclave-sdk/issues/240) | Roots, revocation, and distributed-replay gate | **OPEN** and unsatisfied by PR #254. |
+| [SDK #202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) | Independent security/release acceptance gate | **OPEN** and unsatisfied by authorship, approval, merge, or green CI. |
+
+#### Libraries and artifacts
+
+| Library / artifact | Typed record | Evidence boundary |
+|--------------------|--------------|-------------------|
+| [`Conxian/conxius-enclave-sdk`](https://github.com/Conxian/conxius-enclave-sdk) | Canonical SDK repository identifier | Repository identity only; no universal capability or readiness claim. |
+| [SDK PR #254](https://github.com/Conxian/conxius-enclave-sdk/pull/254) | Merged containment evidence | Adversarial public-surface and test-only WASM rejection evidence only. |
+| [`f61c68021009d658c47a12ab3f2f4e79cd2f7dbc`](https://github.com/Conxian/conxius-enclave-sdk/commit/f61c68021009d658c47a12ab3f2f4e79cd2f7dbc) | PR #254 merge commit | Merged graph-evidence identity; not an immutable release artifact. |
+| [`3d26ba07a25c29aa99f53b34c43bdb33c809d534`](https://github.com/Conxian/conxius-enclave-sdk/commit/3d26ba07a25c29aa99f53b34c43bdb33c809d534) | PR #254 reviewed head | Review identity; not independent release acceptance. |
+| [SDK PR #255](https://github.com/Conxian/conxius-enclave-sdk/pull/255) | Open durable-replay follow-up | Live/unaccepted work; it cannot be promoted into accepted evidence while open. |
+
+#### Decisions
+
+| Decision | Operational meaning |
+|----------|---------------------|
+| Containment is not enablement | Typed rejection and routing containment prevent unsupported inputs from entering rails; they do not add provider or protocol support. |
+| Record merged graph evidence after revalidation | PR #254 is recorded only after its merge identity, reviewed head, approval, and all-green check rollup were revalidated. |
+| Preserve dated snapshots | PR #244's later merge is reconciled in this amendment; the July 22 open-state observation remains historical truth for its date. |
+| Keep Gate #890 unchanged | Documentation evidence does not advance a business gate, production-readiness state, or execution authorization. |
+
+#### Relationships
+
+| From | Relationship | To | Boundary / meaning |
+|------|--------------|----|--------------------|
+| SDK `#254` | provides bounded containment evidence toward | SDK `#198` | Valid-looking CCTP/Iris, ERC-7579, and asset-metadata inputs remain typed fail closed; issue #198 remains open. |
+| SDK `#254` | provides test-only WASM rejection evidence toward | SDK `#200` | The simulator proves rejection behavior only; it does not enable WASM value operations or complete runtime qualification. |
+| SDK `#254` | does not satisfy | SDK `#240` | No roots, collateral, revocation, or durable distributed replay evidence is established. |
+| SDK `#254` | does not satisfy | SDK `#202` | Merge approval, authorship, and 24 green checks are not independent security or release acceptance. |
+| SDK `#254` | does not advance | Business `#890` | Gate #890 remains blocked at Gate 0; no Gate 4/5 or production authorization claim is created. |
+| SDK `#255` | remains separate open work from | accepted graph evidence | Open work is not accepted evidence and does not change the #240, #202, or #890 boundaries. |
+
 ## Dated Digest: CON-1421 Governance Stub Reconciliation (2026-07-21)
 
 ### Status
