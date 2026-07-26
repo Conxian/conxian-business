@@ -11,6 +11,8 @@ GitHub is the canonical coordination surface for **public-safe** BOS work intake
 
 Do not place restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational records in Git repositories, GitHub Issues, pull requests, Projects, Actions logs, releases, advisories, attachments, or comments. Those records remain in an **approved non-Git restricted-record system**. GitHub may contain only the minimum opaque reference token needed to prove that a restricted record exists; it must not reveal protected content, access details, or sensitive metadata.
 
+The approved opaque restricted-record token is a non-descriptive SHA-256 commitment in `sha256(<64-lowercase-hex>)` form, consistent with the boundary log's `sha256(hex)` rule. The commitment must not encode a record name, system name, location, access path, person, or other descriptive metadata. Any alternate token or commitment format requires separately approved governance before use. This document does not create a token or hash for any real restricted record.
+
 If classification is uncertain, stop before posting. Ask an accountable maintainer to classify the material through an approved channel, then continue with a sanitized issue or opaque token only.
 
 ## Sources of truth
@@ -73,7 +75,7 @@ The dated audit found 102 tracked files and 293 Linear-first references. This ba
 | `historical` | Retain only when the reference is evidence of past state; label the surrounding text clearly as historical. |
 | `retire` | Remove an obsolete active instruction or pointer with no replacement required. |
 | `GitHub mapping` | Replace active public-safe intake, delivery, or status instructions with the canonical GitHub issue, pull request, Project, or repository-document link. |
-| `restricted-record token` | Replace a protected pointer with a minimum opaque token that identifies an approved restricted record without copying its content or access details. |
+| `restricted-record token` | Replace a protected pointer with the approved non-descriptive `sha256(<64-lowercase-hex>)` commitment without copying content, access details, or descriptive metadata. |
 | `rewrite` | Rewrite the surrounding guidance so it states the current GitHub-first workflow and ZSE boundary accurately. |
 
 Migration must not copy restricted content into GitHub, infer a restricted system name, or transform a protected record into a descriptive public summary. Inventory, exceptions, and validation belong to #944.

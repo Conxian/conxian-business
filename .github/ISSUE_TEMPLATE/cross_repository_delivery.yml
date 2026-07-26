@@ -24,6 +24,14 @@ body:
       placeholder: Conxian/conxian-business
     validations:
       required: true
+  - type: input
+    id: accountable_role
+    attributes:
+      label: Accountable role or repository owner
+      description: Name a role or repository owner only. Do not invent approval or add restricted personal detail.
+      placeholder: Repository maintainer for Conxian/conxian-business
+    validations:
+      required: true
   - type: textarea
     id: participating_repositories
     attributes:
