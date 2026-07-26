@@ -23,7 +23,7 @@ This matrix covers the 13-repo execution set used for migration gate decisions.
 ### Group B — Client and product surfaces
 
 4. `conxius-wallet`
-5. `conxian-ui` (upstream repo: `Conxian_UI`)
+5. `conxian_ui` (checkout path: `conxian-ui`; upstream repo identifier: `Conxian_UI`)
 6. `conxian-labs-site`
 
 ### Group C — Shared runtime and operational tooling
@@ -59,12 +59,12 @@ A repo is considered “gate-ready” only when required evidence is attached to
 | Protocol core | `conxian-nexus` | Checkpoint schema, reconciliation records, state-query contracts for gateway service/UI | G0, G1, G2, G3, G4 | Schema diff report (no unapproved breaking changes); dual-lane checkpoint comparison; replay evidence for indexed state rebuild |
 | Protocol core | `conxian-gateway` | Ingress/egress policy APIs, bridge-state gating, idempotency semantics | G0, G1, G2, G3, G4 | API contract test report; policy boundary negative tests; cutover canary and rollback logs |
 | Client surface | `conxius-wallet` | Signing flow compatibility, session/auth assumptions, settlement status handling | G0, G1, G2, G4 | Integration test report against frozen gateway service APIs; signer-boundary conformance checks; release-note acknowledgement of no bypass paths |
-| Client surface | `conxian-ui` (`Conxian_UI`) | Read-model/API compatibility and state-label semantics | G0, G1, G4 | Snapshot/API contract tests; UI state mapping evidence tied to canonical status codes |
+| Client surface | `conxian_ui` (checkout `conxian-ui`; upstream `Conxian_UI`) | Read-model/API compatibility and state-label semantics | G0, G1, G4 | Snapshot/API contract tests; UI state mapping evidence tied to canonical status codes |
 | Client surface | `conxian-labs-site` | Public status/docs references and migration comms correctness | G0, G4 | Published docs link validation; release-communication checklist sign-off |
 | Shared runtime | `lib-conxian-core` | Shared model/version semantics used by gateway service/Nexus/Wallet | G0, G1, G2 | Semantic-version delta report; downstream compile/test compatibility report across dependents |
 | Shared runtime | `conxius-enclave-sdk` | Attestation/session primitives and signer-boundary helper APIs | G0, G1, G2 | Interface freeze tag; attestation boundary test report; compatibility matrix of consumers |
 | Shared runtime | `conxius-platform` | Environment orchestration for dual-lane validation and rollback drills | G0, G1, G3 | Reproducible environment manifests; drill execution logs; dependency lockfile integrity evidence |
-| Shared runtime | `conxius-orbit` | Contract deployment tooling behavior for contract/service rollout | G0, G2, G3, G4 | Contract deployment tooling dry-run logs; signed promotion script checksum; rollback rehearsal evidence |
+| Shared runtime | `conxius-orbit` | Deployment/promote/rollback tooling behavior for contract/service rollout | G0, G2, G3, G4 | Tooling dry-run logs; signed promotion script checksum; rollback rehearsal evidence |
 | Shared runtime | `cxn-grid-oracle` | Oracle feed schema and freshness semantics consumed by migration flows | G0, G1, G2 | Feed schema contract tests; freshness/staleness alarm evidence; fail-closed behavior test |
 | Governance | `conxian-business` | Canonical docs, gates, and migration decision records | G0, G4 | Updated canonical docs with gate mapping; review approvals captured in change log |
 | Governance | `.github` | CI policy/workflow enforcement of gate evidence and link integrity | G0, G2, G4 | Required-check configuration evidence; workflow run logs proving gate check enforcement |

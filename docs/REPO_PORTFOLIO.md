@@ -1,64 +1,78 @@
-# Repo portfolio (flagship vs supporting)
+# Repo portfolio trust-surface view
 
 For new BOS intake, coordination, decisions, and sanitized evidence rules, use the canonical [GitHub-native BOS workspace](./GITHUB_NATIVE_BOS_WORKSPACE.md).
 
-This page defines the Conxian public repo map for external evaluation and internal consistency.
+This page is an explanatory view of the Conxian-Labs repository portfolio for public evaluation and internal consistency. It does not replace the central [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md) or the [Portfolio Business-Unit Map](./PORTFOLIO_BUSINESS_UNIT_MAP.md).
 
-For release governance (what can ship, what must stay private, and what requires additional controls), see:
+For the doctrine that applies across every surface, see:
 
-- [Repo Readiness Gates (Control Domains)](./REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md)
+- [Doctrine Alignment Standard](./DOCTRINE_ALIGNMENT_STANDARD.md)
+- [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md)
+- [Trust & Proof Messaging](./TRUST_AND_PROOF_MESSAGING.md)
+- [Repo Readiness Gates](./REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md)
 
-For the portfolio-level business-unit/operating-function mapping (and separation-of-concerns rules), see [Portfolio business-unit map and separation of concerns](./PORTFOLIO_BUSINESS_UNIT_MAP.md).
+## Source-of-truth boundaries
 
-- Repos governed via this BOS repo are pinned as submodule gitlinks (the specific submodule commit IDs recorded in this repo’s git tree, with paths/URLs configured in `.gitmodules`).
+- Repos governed through this BOS repository are pinned as submodule gitlinks; paths and URLs are configured in `.gitmodules`.
 - Every pinned submodule must be mapped in `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`.
-- Supporting repos that are not pinned as submodule gitlinks may be listed here for context, but they are not governed by this BOS repo’s hygiene invariants unless and until they are added as submodules and mapped in `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`.
-- This file is an explanatory trust-surface view; see the “Source-of-truth rule” section in `docs/PORTFOLIO_BUSINESS_UNIT_MAP.md` for the canonical invariants and validation rules.
+- Repositories listed for context but not pinned are not governed by this repository’s submodule hygiene invariants unless they are added and mapped.
+- The doctrine register is authoritative for role, audience, operating label, maturity, claim state, document classification, and contradiction disposition. This file only provides navigation and short role lines.
 
-## Required README canonical links
+## Standard role line
 
-Portfolio-entry/sub-repo READMEs should include a `Canonical documentation` block that links to:
+Use one conservative role line in a repository description and the top of its README. Choose the repository’s operating label from the doctrine register; do not use the role line to imply custody, market operation, or readiness.
 
+- Primary strategic: `Primary strategic — <one-line protocol, infrastructure, or client purpose>`
+- Supporting: `Supporting — <one-line shared, governance, or developer purpose>`
+- Reference: `Reference — <one-line public surface or demonstrator purpose>`
+- Governance baseline: `Governance baseline — <one-line specification and boundary purpose>`
+- Internal only: `Internal only — <one-line restricted coordination purpose>`
+
+## Ecosystem repos
+
+### Primary strategic
+
+These are protocol, infrastructure, and client surfaces with primary architectural responsibility. Their maturity and claim state remain evidence-scoped in the doctrine register.
+
+- [Conxian](https://github.com/Conxian/Conxian) — Protocol and on-chain contract layer.
+- [conxian-gateway](https://github.com/Conxian/conxian-gateway) — Institutional routing, aggregation, and compliance middleware.
+- [conxian-nexus](https://github.com/Conxian/conxian-nexus) — State, proof, synchronization, and telemetry node.
+- [conxius-wallet](https://github.com/Conxian/conxius-wallet) — Android-first, offline-first self-custody client and signing surface.
+
+### Supporting
+
+These repositories provide shared primitives, local orchestration, deployment tooling, organization defaults, or governance support.
+
+- [lib-conxian-core](https://github.com/Conxian/lib-conxian-core) — Shared protocol models, serialization, cryptographic, and state primitives.
+- [conxius-enclave-sdk](https://github.com/Conxian/conxius-enclave-sdk) — Enclave, signing, and attestation abstractions.
+- [conxius-platform](https://github.com/Conxian/conxius-platform) — Local stack composition and developer orchestration.
+- [`conxius-orbit`](https://github.com/Conxian/conxius-orbit) — Stacks contract deployment and operations tooling.
+- [.github](https://github.com/Conxian/.github) — Organization governance defaults and templates.
+
+### Reference surfaces
+
+- [`conxian_ui`](https://github.com/Conxian/Conxian_UI) — Public web interaction surface; upstream GitHub slug is retained, while display text is normalized.
+- [conxian-labs-site](https://github.com/Conxian/conxian-labs-site) — Public website and documentation distribution surface.
+- [demo-repository](https://github.com/Conxian/demo-repository) — Organization demonstration surface.
+- [conxian.github.io](https://github.com/Conxian/conxian.github.io) — Public documentation/site hub.
+- [conxian_market](https://github.com/Conxian/conxian_market) — Research/experimental marketplace surface pending external doctrine alignment.
+
+### Governance baseline
+
+- [conxian-business](https://github.com/Conxian/conxian-business) — Governance, OpenSpec, portfolio wiring, and public-safe trust surface.
+
+### Internal coordination
+
+- `.github-private` — Restricted ecosystem registry; not a public evidence surface.
+
+## README canonical links
+
+Portfolio-entry READMEs should link to:
+
+- `../docs/DOCTRINE_ALIGNMENT_STANDARD.md`
+- `../docs/PORTFOLIO_DOCTRINE_REGISTER.md`
 - `../docs/REPO_PORTFOLIO.md`
 - `../docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`
 - `../docs/DOCUMENTATION_ALIGNMENT_INDEX.md`
 
-If a README lives at a different depth, keep the same targets and adjust the relative path accordingly.
-
-## Standard role line (GitHub description + README top section)
-
-Use the same single **role line** in both the GitHub repo description (plain text; keep it concise—aim for ~160 chars) and the README “top section” (right below the opening paragraph). You may add a separate README-only line below it (for example, a link to this repo portfolio). The 1-line purposes should match the descriptions in the [Ecosystem repos](#ecosystem-repos) section.
-
-- Flagship:
-  - `Flagship — <1-line purpose>`
-- Supporting:
-  - `Supporting — <1-line purpose>`
-
-> Maintainers: Prefer linking back to this file from flagship READMEs:
-> <https://github.com/Conxian/conxian-business/blob/main/docs/REPO_PORTFOLIO.md#ecosystem-repos>
-> Only copy the `## Ecosystem repos` section verbatim when you need a fully self-contained README, and keep that copy in sync whenever this section changes.
-
-## Ecosystem repos
-
-### Flagship
-
-These repos are the public trust surface.
-
-- [conxius-wallet](https://github.com/Conxian/conxius-wallet) — Sovereign wallet (Android-first, offline-first) for Bitcoin L1 and Bitcoin-adjacent layers.
-- [conxian-gateway](https://github.com/Conxian/conxian-gateway) — “Fusion” gateway aggregating cross-layer state + compliance pipelines.
-- [Conxian](https://github.com/Conxian/Conxian) — Core protocol + on-chain contracts. *(Maintained as stable Read-Only reference implementation; consumed via Nexus)*
-- [conxian-labs-site](https://github.com/Conxian/conxian-labs-site) — Public Conxian Labs website.
-- [conxius-platform](https://github.com/Conxian/conxius-platform) — Local dev stack to run the ecosystem end-to-end.
-
-### Supporting
-
-These repos support the flagship trust surface and are linked from flagship READMEs. Some supporting repos are also pinned as submodules; the committed gitlinks and `.gitmodules` remain authoritative.
-
-- [lib-conxian-core](https://github.com/Conxian/lib-conxian-core) — Shared core models + conventions used across services.
-- [lib-conclave-sdk](https://github.com/Conxian/lib-conclave-sdk) — Headless enclave + cryptographic state machine SDK.
-- [conxian-nexus](https://github.com/Conxian/conxian-nexus) — API bridge (“Glass Node”) between layers/services.
-- [Conxian_UI](https://github.com/Conxian/Conxian_UI) *(planned rename to `Conxian/conxian-ui`)* — Supporting/reference UI surface that consumes approved public outputs; not an authoritative parent control plane.
-- [`conxius-orbit`](https://github.com/Conxian/conxius-orbit) — Stacks smart-contract deployment tooling. *(Maintained as stable, read-only deployment-track DevOps reference; no active roadmap features)*
-- [.github](https://github.com/Conxian/.github) — Org-wide defaults (community health files, templates).
-- [conxian-market](https://github.com/Conxian/conxian_market) — AI Marketplace and Agentic Commerce surface.
-- [conxian-business](https://github.com/Conxian/conxian-business) — Governance + OpenSpec + submodule wiring for the Conxian ecosystem.
+If a README lives at a different depth, keep the same targets and adjust the relative paths. Use [Claim vs Evidence Matrix](./CLAIM_EVIDENCE_MATRIX.md) for claim wording and [Trust & Proof Messaging](./TRUST_AND_PROOF_MESSAGING.md) for public proof expectations.
