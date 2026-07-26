@@ -10,20 +10,6 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 ## [Unreleased]
 
 ### Added
-- **GitHub-native BOS workspace (#942):** Established GitHub Issues and pull requests as authority for all new BOS work, added the portfolio operating model and Nexus licensing governance/RACI policy without selecting license terms, introduced structured BOS and governance/legal issue forms, and added a fail-closed validator with regression coverage in Unified CI. Historical Linear references remain archive/provenance only, and restricted material remains outside GitHub under ZSE.
-- **CON-1518 Telemetry Privacy & Monitoring:** Recorded upstream PR #210 merge `593af0d9120b612de5b2817866b0528e5c877570`, retained the exact reviewed `conxius-enclave-sdk` parent pin `451202f51a9efed8fde70b7a5567a3e7e16c1db9`, aligned submodule branch metadata to `main`, added the public-safe telemetry evidence authority, and expanded the B2B CI job to verify the reviewed SDK with formatting, clippy, all-feature, focused telemetry, and capability-evidence checks. Production acceptance remains Beta / conditional with service-side and deployment evidence gates open.
-
-### Changed
-- Remediated PR #947 review findings by making the former Linear-first wiring document explicitly historical under #944, aligning active governance surfaces with GitHub-first public-safe intake, and requiring a deterministic `evidence_state` in both BOS issue forms without weakening immutable-link or ZSE boundaries.
-
-## [1.9.5] - 2026-07-08
-
-### Added
-- **System-wide BOS v1.9.5 Standardization**: Aligned organization and repository versions to BOS v1.9.5.
-- **Security Remediation**: Fixed RUSTSEC-2026-0204 (crossbeam-epoch).
-
-- **System-wide BOS v1.9.5 Standardization**: Aligned organization and repository versions to BOS v1.9.5 across Root, README, CHANGELOG, and AGENTS files to signal unified mainnet readiness.
-
 - **Cross-Issue Boundary & Doctrine Sprint — 6 artifacts delivered**:
   - **#825**: Created `docs/BOUNDARY_DECISION_LOG.md` — systematic boundary register for all public-safe vs internal-only artifacts. Classifies 20+ artifacts across strategy, BOS state, architecture, bounties, and CI/CD.
   - **#830**: Created `docs/TRUST_AND_READINESS_VERIFICATION.md` — evaluator-facing trust audit of 5 flagship repos against implementation truth. Separates implemented, verified, production-ready, and target-state. Defines explicit non-claim boundary.
@@ -51,7 +37,7 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ### Changed
 - **BOS Source-of-Truth Restoration**: Restored over 40 missing canonical documents and specification stubs to `conxian-business/` and `docs/` from Git history to repair repository integrity and ensure all documentation references resolve correctly.
-- **Repository Versioning**: Updated root `README.md` to reflect BOS v1.9.5 alignment.
+- **Repository Versioning**: Updated root `README.md` to reflect BOS v1.9.4 alignment.
 - **System Wallet Standardization**: Aligned `SystemWallets` in `conxian-gateway` core with the canonical Sovereign Treasury principal (`SP3FBR2AGK5H9QPNVFJWC7636X22Y620S00000000`).
 - **CON-702 Parent-Control Checkpoint**: Added `docs/architecture/CONXIAN_UI_PARENT_CONTROL_ALIGNMENT_PLAN.md` and aligned role/checklist/portfolio docs so `Conxian_UI` is documented as a supporting/reference consumer surface (no secrets, signing keys, or privileged broadcast authority).
 - **Dependabot target branch**: Changed all 5 ecosystem update entries from `dev` to `main` to ensure security updates are applied to the production branch directly.

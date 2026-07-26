@@ -8,10 +8,6 @@
 
 The checklist below remains a dated record of the former readiness review for the `conxius-enclave-sdk` repository.
 
-## CON-1518 telemetry addendum — 2026-07-21
-
-The CON-1518 telemetry implementation scope landed upstream in [PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210) at merge commit `593af0d9120b612de5b2817866b0528e5c877570`. This reviewed PR intentionally retains the exact parent gitlink `451202f51a9efed8fde70b7a5567a3e7e16c1db9`. See the public-safe [CON-1518 telemetry privacy and operational evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md) for the minimized payload, transport, bounded delivery, non-gating, monitoring, rollback, and evidence boundaries. This does not close independent review, service-side retention/deletion evidence, deployed monitoring/recovery evidence, or final production acceptance; the SDK remains **Beta / conditional**.
-
 ### 1) Governance + public repo standards
 - [x] README includes `## Purpose`, `## Status`, `## Ownership`, and `## Releases`.
 - [x] `SECURITY.md` includes a stable reporting path (and avoids private operational detail).
@@ -37,14 +33,13 @@ The CON-1518 telemetry implementation scope landed upstream in [PR #210](https:/
 - [x] Any vendored source or copied third-party code includes clear attribution and license compatibility.
 
 ### 5) Canonical trackers
-- Sovereign Coordination Layer: https://sovereign.conxian.com/issue/CON-171
+- authorized Linear workspace: https://sovereign.conxian.com/issue/CON-171
 - GitHub repo: https://github.com/Conxian/conxius-enclave-sdk
 
 The following tracker links are retained as historical references from the original checklist; they do not override the 2026-07-20 audit or capability matrix.
 
 ## Related work
 
-- Telemetry privacy and operations: [CON-1518 evidence](operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md)
-- Release hygiene (historical tracker slug): https://sovereign.conxian.com/issue/CON-214/release-hygiene-lib-conclave-sdk
-- Secret/artifact cleanup (historical tracker slug): https://sovereign.conxian.com/issue/CON-215/secret-and-artifact-cleanup-lib-conclave-sdk
-- Security hardening (historical tracker slug): https://sovereign.conxian.com/issue/CON-210/security-hardening-lib-conclave-sdk
+- Release hygiene: https://sovereign.conxian.com/issue/CON-214/release-hygiene-lib-conclave-sdk
+- Secret/artifact cleanup: https://sovereign.conxian.com/issue/CON-215/secret-and-artifact-cleanup-lib-conclave-sdk
+- Security hardening: https://sovereign.conxian.com/issue/CON-210/security-hardening-lib-conclave-sdk

@@ -52,13 +52,13 @@ This document provides battle-tested security patterns for Clarity smart contrac
 (define-constant ROLE_OPERATOR u2)
 (define-constant ROLE_GUARDIAN u3)
 
-(define-map role-holders
+(define-map role-holders 
   { role: uint, principal: principal }
   { active: bool }
 )
 
-(define-map admin-roles
-  principal
+(define-map admin-roles 
+  principal 
   uint
 )
 
@@ -118,7 +118,7 @@ This document provides battle-tested security patterns for Clarity smart contrac
   (let ((tx (unwrap! (map-get? pending-txs tx-id) ERR_NOT_FOUND)))
     (asserts! (has-role tx-sender ROLE_OPERATOR) ERR_UNAUTHORIZED)
     (asserts! (not (is-signer tx tx-sender)) ERR_ALREADY_SIGNED)
-    (map-set pending-txs tx-id
+    (map-set pending-txs tx-id 
       (merge tx { signers: (unwrap! (as-max-len? (append (get signers tx) tx-sender) u5) ERR_TOO_MANY_SIGNERS) })
     )
     (try! (check-execution tx-id))
@@ -170,12 +170,12 @@ This document provides battle-tested security patterns for Clarity smart contrac
   )
     (asserts! (> fee-amount u0) ERR_NO_FEES)
     (asserts! (is-eq tx-sender (var-get fee-collector)) ERR_UNAUTHORIZED)
-
+    
     ;; Real transfer to treasury
-    (try! (as-contract
+    (try! (as-contract 
       (contract-call? token transfer fee-amount tx-sender treasury-addr none)
     ))
-
+    
     (map-set fee-balances (contract-of token) u0)
     (ok fee-amount)
   )
@@ -204,7 +204,7 @@ This document provides battle-tested security patterns for Clarity smart contrac
 (define-constant ERR_ZERO_AMOUNT (err u1002))
 
 (define-map lp-supply uint)
-(define-map lp-balances
+(define-map lp-balances 
   { token: principal, owner: principal }
   uint
 )
@@ -270,7 +270,7 @@ This document provides battle-tested security patterns for Clarity smart contrac
 (define-data-var registry-owner principal tx-sender)
 
 ;; Initialize default implementation
-(map-set implementations
+(map-set implementations 
   { name: "core", version: u1 }
   .core-v1
 )
@@ -329,7 +329,7 @@ This document provides battle-tested security patterns for Clarity smart contrac
   (let ((checkpoint (unwrap! (map-get? migration-checkpoint MIGRATION_KEY) ERR_NOT_FOUND)))
     (asserts! (not (get completed checkpoint)) ERR_ALREADY_MIGRATED)
     (asserts! (is-eq state-hash (get state-hash checkpoint)) ERR_STATE_MISMATCH)
-    (map-set migration-checkpoint MIGRATION_KEY
+    (map-set migration-checkpoint MIGRATION_KEY 
       (merge checkpoint { completed: true })
     )
     (ok true)
@@ -367,7 +367,7 @@ This document provides battle-tested security patterns for Clarity smart contrac
 
 (define-data-var proposal-count uint u0)
 
-(define-public (create-proposal
+(define-public (create-proposal 
   (title (string-ascii 64))
   (description (string-utf8 256))
   (executor principal)
@@ -397,7 +397,7 @@ This document provides battle-tested security patterns for Clarity smart contrac
     (asserts! (is-eq (get status proposal) "active") ERR_NOT_ACTIVE)
     (map-set current-votes tx-sender { for: for, weight: weight })
     (map-set votes proposal-id current-votes)
-    (map-set proposals proposal-id
+    (map-set proposals proposal-id 
       (merge proposal {
         votes-for: (if for (+ (get votes-for proposal) weight) (get votes-for proposal)),
         votes-against: (if (not for) (+ (get votes-against proposal) weight) (get votes-against proposal))
@@ -434,7 +434,7 @@ This document provides battle-tested security patterns for Clarity smart contrac
 (define-constant DAILY_LIMIT u500000000000  ;; 5M STX daily
 
 (define-map daily-withdrawals uint uint)
-(define-map withdrawal-approvals
+(define-map withdrawal-approvals 
   { tx-id: uint, approver: principal }
   bool
 )

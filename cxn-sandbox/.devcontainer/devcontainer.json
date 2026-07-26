@@ -43,5 +43,7 @@
         "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
-  }
+  },
+  "onCreateCommand": "bash .devcontainer/oncreate.sh",
+  "initializeCommand": "bash .devcontainer/prebuild.sh"
 }

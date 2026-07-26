@@ -5,7 +5,7 @@ This repository uses GitHub Actions workflows in `.github/workflows/` as the sou
 The goals:
 
 - Keep `main` always mergeable and safe to deploy.
-- Ensure every merge has clear public-safe provenance through the governing or owning-repository GitHub issue and pull request.
+- Ensure every merge has clear provenance (Linear issue + PR).
 - Make releases and changelogs easy to audit.
 
 ## Branch and promotion standard
@@ -34,7 +34,6 @@ These workflows run on every pull request targeting `dev`, `staged`, or `main`. 
 - Unified CI (see [`conxian-unified-ci.yml`](./workflows/conxian-unified-ci.yml))
   - Repo hygiene:
     - ZSE knowledge retention via `scripts/verify_knowledge_retention.py`.
-    - GitHub-native BOS authority and intake policy via `scripts/verify_github_native_bos_workspace.py`.
     - Tracked artifact scanning via `scripts/verify_tracked_artifacts.py`.
       - False positives can be allowlisted via `.github/artifact-scan-allowlist.txt` (case-sensitive; paths are normalized to forward slashes with no leading `./`):
         - Plain (non-glob) patterns (no glob metacharacters such as `*`, `?`, or bracket expressions like `[a-z]`):
@@ -119,7 +118,7 @@ Notes:
 - No direct commits to `main`. Use a PR.
 - Use the correct base branch (`dev`, `staged`, or `main`) based on the branch and promotion standard.
 - One PR = one focused change (keep it reviewable).
-- PRs should map to the authoritative public-safe GitHub issue in the governing or owning repository (include it in the PR description).
+- PRs should map to a Linear issue (include it in the PR description).
 - Follow `CODEOWNERS` for review routing.
 - Validate locally before requesting review (CI is the gate, not the first signal).
 - Before merge:

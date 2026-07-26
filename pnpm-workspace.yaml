@@ -6,7 +6,6 @@ packages:
   - "conxius-platform"
   - "conxian-labs-site"
   - "conxius-orbit"
-  - "conxian-market"
 
 overrides:
   protobufjs: ^7.5.8
