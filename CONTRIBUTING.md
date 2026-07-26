@@ -11,10 +11,9 @@ Most implementation work happens in the individual service repositories (often p
 ## Getting Started
 
 1.  Review the [OpenSpec](./openspec/) directory for technical specifications.
-2.  Review the [GitHub-First BOS Operating Model](./docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md) and classify the work as public-safe before posting.
-3.  Review the [**Branching and Promotion Policy**](./docs/BRANCHING_AND_PROMOTION_POLICY.md) for required branch workflows.
-4.  Explore the [Nomenclature Alignment](./audit/nomenclature-alignment.md) for branding and naming standards.
-5.  Check the [Sovereign-Ops-Orchestrator](./Sovereign-Ops-Orchestrator) for open bounties.
+2.  Review the [**Branching and Promotion Policy**](./docs/BRANCHING_AND_PROMOTION_POLICY.md) for required branch workflows.
+3.  Explore the [Nomenclature Alignment](./audit/nomenclature-alignment.md) for branding and naming standards.
+4.  Check the [Sovereign-Ops-Orchestrator](./Sovereign-Ops-Orchestrator) for open bounties.
 
 ## Branching and Promotion
 
@@ -33,22 +32,24 @@ Feature branches should validate locally first, then land in `dev` via pull requ
 
 Reference: [`docs/bounties/BOUNTY_WORKFLOW.md`](./docs/bounties/BOUNTY_WORKFLOW.md).
 
-## BOS intake (GitHub-first, public-safe)
+## BOS intake (GitHub-native)
 
-- Create public-safe work in the owning repository using a GitHub issue. Use `conxian-business` for portfolio coordination, not as a substitute for an owning-repository tracker.
+- For new BOS work, create or route the authoritative GitHub issue in `conxian-business` or the owning repository using the [GitHub-native BOS workspace](./docs/GITHUB_NATIVE_BOS_WORKSPACE.md).
 - For protocol-adapter or emerging-rail intake, include the maturity lane fields defined in [Protocol Adapter Maturity Lanes](./docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md).
 - If the maturity lane is missing at intake, record and proceed with the required default: `Research`.
-- Link pull requests to the canonical GitHub issue and use immutable evidence links for completed validation.
-- **Classification stop rule:** if the request may contain restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational details, stop before posting. Use the approved restricted process and include only an opaque restricted-record token in GitHub when necessary.
-- The controlled migration of legacy Linear-first references is tracked in [#944](https://github.com/Conxian/conxian-business/issues/944); do not mechanically rewrite historical stubs.
+- Link portfolio governance in `conxian-business` to implementation work in the owning repository; do not duplicate authority.
+- Historical Linear links may be retained as dated archive/provenance evidence only. Do not create a new Linear item for canonical work.
+- **Classification stop rule:** if the request may contain restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational details, stop before posting. Follow the approved restricted process and include only an opaque restricted-record token in GitHub when necessary.
+- Historical migration issue [#944](https://github.com/Conxian/conxian-business/issues/944) inventories legacy workspace references; it does not create active intake authority. Do not mechanically rewrite historical stubs.
+- Read both the [GitHub-native BOS workspace](./docs/GITHUB_NATIVE_BOS_WORKSPACE.md) and the [GitHub-First BOS Operating Model](./docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md).
 
 ## Pull Request Process
 
-1.  Ensure changes map to an existing GitHub issue in the owning repository.
+1.  Ensure the change maps to an authoritative GitHub issue or pull request in the governing or owning repository.
 2.  Maintain Zero Secret Egress (ZSE) compliance.
 3.  All Clarity smart contracts must pass the Vitest/Simnet test suite.
 4.  Documentation must be updated to match implementation.
-5.  Review [`.github/CODEOWNERS`](./.github/CODEOWNERS) to identify the appropriate reviewers for your changes.
+5.  Review the [**CODEOWNERS**](./CODEOWNERS) file to identify the appropriate reviewers for your changes.
 6.  Review [`.github/RELEASE_HYGIENE.md`](./.github/RELEASE_HYGIENE.md) for required checks and label-gated CI suites.
 7.  If your change affects user-facing behavior, public APIs, or the security posture, ensure it's documented in [**CHANGELOG.md**](./CHANGELOG.md) (see [docs/RELEASE_NOTES_AND_CHANGELOG.md](./docs/RELEASE_NOTES_AND_CHANGELOG.md) for format).
 

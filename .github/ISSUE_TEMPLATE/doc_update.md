@@ -3,14 +3,14 @@ name: Documentation Update
 about: Suggest an update to the business, strategic, or technical documentation.
 title: "[DOC]: "
 labels: documentation
-assignees: '
+assignees: ''
 ---
 
-> GitHub is canonical for public-safe documentation work. Private repository visibility does not authorize restricted data.
+> GitHub is authoritative for new BOS work. Do not include credentials, private endpoints, signer data, raw configuration, privileged legal advice, or restricted runbooks. Keep restricted material in an authorized restricted system and use sanitized status plus an approved pointer only.
 >
-> Stop before posting restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational details. Follow the approved restricted process and use only an opaque reference token here when necessary.
+> Private repository visibility does not authorize restricted data. Stop before posting restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational details; use only an opaque approved reference token when necessary.
 >
-> Read the [GitHub-First BOS Operating Model](../../docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md).
+> Read the [GitHub-First BOS Operating Model](../../docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md) and the [GitHub-native BOS workspace](../../docs/GITHUB_NATIVE_BOS_WORKSPACE.md).
 
 ### Target Document
 *Which document or section requires updating? (e.g., `ALIGNMENT.md`, `02_strategy/ROADMAP.md`)*

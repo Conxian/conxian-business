@@ -18,7 +18,7 @@ It standardizes:
 
 This standard applies to all change streams that touch cross-repo interfaces, runtime behavior, release promotion, or production operations.
 
-Sensitive operational details remain in Linear under Zero Secret Egress (ZSE) policy.
+GitHub Issues and pull requests are authoritative for new lifecycle work under [`GITHUB_NATIVE_BOS_WORKSPACE.md`](./GITHUB_NATIVE_BOS_WORKSPACE.md). Restricted operational details remain in approved restricted stores under Zero Secret Egress (ZSE); historical Linear references are archive/provenance only.
 
 ## 2) Source alignment
 
@@ -31,6 +31,7 @@ This model aligns to the following standards and records.
 - [`docs/architecture/REPO_BOUNDARY_DECISION_RECORD.md`](./architecture/REPO_BOUNDARY_DECISION_RECORD.md)
 - [`docs/CROSS_UNIT_CHANGE_CONTROL.md`](./CROSS_UNIT_CHANGE_CONTROL.md)
 - [`docs/BRANCH_AND_PROMOTION_STANDARD.md`](./BRANCH_AND_PROMOTION_STANDARD.md)
+- [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](./GITHUB_NATIVE_BOS_WORKSPACE.md)
 
 ### Cross-repo references (authoritative in owning repo)
 

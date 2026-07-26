@@ -7,7 +7,7 @@ This page is a concise, external-facing overview of Conxian for partners, evalua
 **What Conxian is:** Conxian is a Bitcoin-native operating stack that combines:
 
 - **Non-custodial end-user interfaces** (e.g., Conxian’s Conxius Wallet)
-- **Sovereign / B2B middleware** (Conxian Gateway)
+- **Sovereign / B2B middleware** (`conxian-gateway`)
 - **Open specifications** ([OpenSpec](../openspec/README.md)) and auditable system components
 
 **What Conxian is not:** Conxian is not a custodian, bank, exchange, or a KYC provider. Any regulated flows (fiat on-ramps, KYC/AML, chargebacks, etc.) are intentionally delegated to regulated partners.
@@ -35,7 +35,7 @@ Typical partner integration paths include:
 
 3. **Sovereign / treasury interfaces (B2B)**
    - Partner provides enterprise APIs, custody, compliance tooling, or reporting.
-   - Conxian Gateway can act as the middleware layer for integrations and state monitoring.
+   - `conxian-gateway` can act as the middleware layer for integrations and state monitoring.
 
 ### What we typically need from partners (for evaluation)
 

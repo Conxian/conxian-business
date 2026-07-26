@@ -55,7 +55,7 @@ Non-goals:
 ### Components (execution plane)
 
 - **BOS Orchestrator**: evaluates policy, builds requests, and routes to signer boundaries.
-- **Signer boundaries**: SAB custody and authority signers (out of scope here; see `docs/BOS_WALLET_CONTROL_MODEL.md`).
+- **Signer boundaries**: SAB-approved authority signers (out of scope here; see `docs/BOS_WALLET_CONTROL_MODEL.md`).
 
 ## 4) Identity primitives
 

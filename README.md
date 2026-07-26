@@ -3,9 +3,7 @@
 [![Conxian Unified CI](https://github.com/Conxian/conxian-business/actions/workflows/conxian-unified-ci.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/conxian-unified-ci.yml)
 [![Deploy Documentation](https://github.com/Conxian/conxian-business/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/deploy-docs.yml)
 
-This repository is the GitHub-first, public-safe **Business Operations System (BOS) workspace** for Conxian governance, portfolio coordination, specifications, delivery traceability, and evidence.
-
-GitHub is canonical only for public-safe work. Private repository visibility does not authorize restricted data: do not store restricted legal, financial, security, identity, custody, recovery, strategy, or privileged operational records in GitHub. See the [GitHub-First BOS Operating Model](./docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md).
+This repository is the programmatic **State Machine** for Conxian operations. We have evolved from a system that runs on infrastructure to a system that **is** infrastructure—living directly on Bitcoin.
 
 Supporting — Governance + OpenSpec + submodule wiring for the Conxian ecosystem.
 
@@ -13,10 +11,11 @@ See the [repo portfolio](docs/REPO_PORTFOLIO.md#ecosystem-repos) for the flagshi
 
 ## Canonical documentation
 
+- [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](./docs/GITHUB_NATIVE_BOS_WORKSPACE.md)
+- [`docs/NEXUS_LICENSING_GOVERNANCE.md`](./docs/NEXUS_LICENSING_GOVERNANCE.md)
 - [`docs/REPO_PORTFOLIO.md`](./docs/REPO_PORTFOLIO.md)
 - [`docs/PORTFOLIO_BUSINESS_UNIT_MAP.md`](./docs/PORTFOLIO_BUSINESS_UNIT_MAP.md)
 - [`docs/DOCUMENTATION_ALIGNMENT_INDEX.md`](./docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
-- [`docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`](./docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md)
 
 ## Purpose
 
@@ -24,11 +23,11 @@ Define and version Conxian's Business Operations System (BOS) as an auditable, p
 
 ## Status
 
-Active. This repository is private (as of April 8, 2026), but remains public-safe by policy and is the canonical GitHub workspace for BOS-level specifications and portfolio coordination.
+Active. This repository is private (as of April 8, 2026), but private visibility does not authorize restricted data. It is the GitHub-native authority for new public-safe BOS portfolio policy, business governance, decision status, coordination, and sanitized evidence. Owning repositories remain authoritative for implementation and repository-local acceptance.
 
 This status framing is being kept aligned during the `conxius-platform` documentation transition.
 
-Documentation here follows public-safe boundary rules; restricted records remain in an approved non-Git restricted-record system under ZSE.
+GitHub Issues and pull requests are authoritative for all new BOS work. Historical Linear links remain archive/provenance records only. Documentation here follows public-safe boundary rules; restricted strategy, legal, security, and operational details remain in approved restricted stores under ZSE.
 
 Release and SemVer tagging follows the process in `RELEASING.md` (`vX.Y.Z`), with history tracked in `CHANGELOG.md`.
 
@@ -99,7 +98,7 @@ This repository follows Zero Secret Egress (ZSE) boundary discipline. See [Repos
 
 ## Repository visibility and public/private boundary
 
-Treat this repository as private in hosting visibility, but public-safe for boundary purposes. Detailed strategy, legal interpretations, operational runbooks, infrastructure identifiers, and any secret inventory remain in an approved non-Git restricted-record system, in compliance with our Zero Secret Egress (ZSE) mandate.
+Treat this repository as private in hosting visibility, but public-safe for boundary purposes. Detailed strategy, legal interpretations, operational runbooks, infrastructure identifiers, and any secret inventory are maintained in the sovereign coordination layer (not in git), in compliance with our Zero Secret Egress (ZSE) mandate.
 
 Detailed strategy and roadmap content must not be duplicated in this README; see `docs/BOS_BUSINESS_BUILDOUT.md` for the public vs internal documentation rules.
 

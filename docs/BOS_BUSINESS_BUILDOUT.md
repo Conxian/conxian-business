@@ -66,7 +66,7 @@ Treat this repository as public for boundary purposes. (This GitHub repository i
 | `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` | Canonical map of what docs exist, what is current, and what requires controlled migration. | Repo code owners. |
 | `GOVERNANCE.md` | Governance model, ownership, and approval rules (high-level; no sensitive ops). | Repo code owners. |
 | `CODEOWNERS` | Review + ownership routing. | Repo code owners. |
-| `CONTRIBUTING.md` | GitHub-first public-safe contribution workflow and restricted-record stop rules. | Repo code owners. |
+| `CONTRIBUTING.md` | GitHub-native public-safe contribution workflow, authority-linking expectations, and restricted-record stop rules. | Repo code owners. |
 | `SECURITY.md` | Security policy and private reporting process. | Repo code owners. |
 | `ARCHIVE_MIGRATION.md` | ZSE-safe pointer for legacy/removed material. | Repo code owners. |
 | `CHANGELOG.md` | Public, versioned changes to BOS/OpenSpec policies and externally visible behavior. | Repo code owners. |
@@ -84,7 +84,7 @@ Maintain these only in an approved non-Git restricted-record system. GitHub may 
 ## Governance, ownership, and approval workflow (repo expectations)
 
 1. All changes land via pull request.
-2. Every pull request for public-safe work must link to the canonical GitHub issue in the owning repository.
+2. Every pull request for public-safe work must link to the authoritative GitHub issue in the governing or owning repository.
 3. `CODEOWNERS` review is required for any change.
 4. Any change that redefines BOS boundaries, OpenSpec requirements, or the doc-classification policy must:
    - update `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` where relevant, and

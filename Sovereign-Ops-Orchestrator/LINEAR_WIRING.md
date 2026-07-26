@@ -1,10 +1,11 @@
-# Historical ExCo Linear-first intake and wiring
+# Historical ExCo intake and wiring migration record
 
 > **Status:** Legacy migration material; not an active intake standard
 > **Superseded by:** [`docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`](../docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md)
+> **Authority details:** [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](../docs/GITHUB_NATIVE_BOS_WORKSPACE.md)
 > **Migration tracking:** [conxian-business#944](https://github.com/Conxian/conxian-business/issues/944)
 
-This file preserves public-safe historical context for the former Linear-first ExCo workflow. It must not be used to route new work, require a Linear issue, or establish an external system as canonical.
+This file preserves public-safe historical context for the former ExCo workflow. It must not be used to route new work, require a new external issue, or establish an external system as canonical.
 
 ## Current rule
 
@@ -15,7 +16,7 @@ This file preserves public-safe historical context for the former Linear-first E
 
 ## Preserved historical model
 
-Before the GitHub-first baseline, ExCo intake was expected to originate in Linear and public-safe GitHub artifacts were treated as mirrors. The former intake captured:
+Historical record: before the GitHub-first baseline, ExCo intake originated in Linear and public-safe GitHub artifacts were treated as mirrors. The former intake captured:
 
 1. **Operating lens**
 2. **Owner** (single accountable owner)
@@ -30,7 +31,7 @@ Protocol-adapter intake also captured the maturity lane fields defined in
 The historical flow was:
 
 1. discover the signal;
-2. create or route a Linear issue;
+2. create or route a historical Linear issue (archived behavior);
 3. triage ownership and urgency; and
 4. link GitHub implementation artifacts back to that issue.
 

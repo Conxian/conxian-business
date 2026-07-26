@@ -44,6 +44,10 @@ CHECKS: tuple[Check, ...] = (
         (sys.executable, str(SCRIPT_DIR / "verify_bos_production_boundary.py")),
     ),
     Check(
+        "GitHub-native BOS workspace",
+        (sys.executable, str(SCRIPT_DIR / "verify_github_native_bos_workspace.py")),
+    ),
+    Check(
         "Submodule integrity",
         (sys.executable, str(SCRIPT_DIR / "verify_submodule_integrity.py")),
     ),

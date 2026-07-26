@@ -16,10 +16,10 @@
 | Asset | Location | TTFV Impact | Status |
 |-------|----------|-------------|--------|
 | **DEVELOPER_QUICKSTART.md** | Root | Medium | ⚠️ Outdated, multi-repo |
-| **conxius-enclave-sdk** | Submodule | Low | ⚠️ No releases |
+| **`conxius-enclave-sdk`** | Submodule | Low | ⚠️ No releases |
 | **conxius-platform** | Submodule | Medium | ✅ Good scaffolding |
-| **conxius-orbit** | Submodule | High | ✅ CLI deployment tool |
-| **conxian-gateway** | Submodule | Medium | ⚠️ Needs examples |
+| `conxius-orbit` | Submodule | High | ✅ CLI deployment tool |
+| **`conxian-gateway`** | Submodule | Medium | ⚠️ Needs examples |
 | **conxian-nexus** | Submodule | Medium | ✅ API documented |
 | **docker-compose.yml** | Root | High | ⚠️ Complex setup |
 | **Clarinet integration** | Conxian | High | ✅ Stacks native |
@@ -292,7 +292,7 @@ pnpm run dev
 
 ## What's Included
 
-- ✅ Conxian Gateway (ISO 20022 bridge)
+- ✅ `conxian-gateway` (ISO 20022 bridge)
 - ✅ Conxian Nexus (settlement layer)
 - ✅ Redis + PostgreSQL
 - ✅ TypeScript SDK

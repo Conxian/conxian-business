@@ -2,7 +2,7 @@
 
 Historical documents and remediation artifacts that previously lived under `archive/` were removed from the active Git index to comply with the **Zero Secret Egress (ZSE)** mandate.
 
-For the migrated legacy material, refer to the **Linear Virtual Office**:
+For the migrated legacy material, refer to the **authorized Linear workspace**:
 
 - https://linear.app/conxian-labs
 

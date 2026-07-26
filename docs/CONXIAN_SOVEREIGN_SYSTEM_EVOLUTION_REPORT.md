@@ -66,7 +66,7 @@ This report outlines the transition path for the Conxian ecosystem from its "Web
 
 ### Phase 3: Coordination Migration (Q3 2026)
 - **Action**: Replace Linear tasks with Radicle-native issues or a custom Sovereign Ops Dashboard.
-- **ZSE Hardening**: Remove all external links from repo stubs; point to sovereign coordination layer.
+- **ZSE Hardening**: Remove all external links from repo stubs; point to authorized Linear workspace.
 
 ### Phase 4: AI & Identity Alignment (Q4 2026)
 - **Action**: Integrate local LLM inference for the Conxius Wallet (Satoshi Auditor).
@@ -81,9 +81,9 @@ This report outlines the transition path for the Conxian ecosystem from its "Web
 
 ### 6.2. Specific Repo Guidance
 - **conxian-nexus**: Prioritize the "Fail-Closed" Kwil migration. Ensure the MMR state can be rebuilt solely from L1 events.
-- **conxian-gateway**: Implement the x402x payment handler to allow Bitcoin-native machine-to-machine commerce.
+- **`conxian-gateway`**: Implement the x402x payment handler to allow Bitcoin-native machine-to-machine commerce.
 - **conxius-wallet**: Decouple the "Satoshi Auditor" from Google GenAI; provide an option for local model execution or Nostr-based AI requests.
-- **conxian-ui**: Remove Render-specific build scripts; transition to a standard Vite/Next.js static export for IPFS/Akash hosting.
+- **`conxian_ui`**: Remove Render-specific build scripts; transition to a standard Vite/Next.js static export for IPFS/Akash hosting.
 
 ---
 🛡️ **THE FUTURE IS SOVEREIGN. THE STACK IS BITCOIN.**
@@ -100,7 +100,7 @@ This report outlines the transition path for the Conxian ecosystem from its "Web
 - **Status**: Mainnet Pending.
 - **Advice**: Finalize the cutover to `KwilAdapter` for all transactional state. Implement a "Self-Healing" mode where the node automatically reconciles against on-chain checkpoints every 144 blocks.
 
-#### [conxian-gateway](../conxian-gateway)
+#### [`conxian-gateway`](../conxian-gateway)
 - **Status**: Mainnet Pending.
 - **Advice**: Transition from Google Cloud Run to Akash Network. Add support for x402x micro-payments to enable machine-to-machine coordination.
 

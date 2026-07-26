@@ -8,7 +8,7 @@ Current status note (updated April 8, 2026): `conxian-business` is now private i
 
 ### 1) Boundary Classification
 - **Intentional Public (at audit time)**: All flagship repos (`Conxian`, `conxius-wallet`, `conxian-gateway`, `conxian-nexus`) and supporting documentation/SDKs (`conxian-business`, `lib-conxian-core`, `lib-conclave-sdk`) were confirmed for public visibility at the time of this audit.
-- **Strategic Separation**: Sensitive operational logic, treasury specifics, and internal-only runbooks have been migrated to the Linear Virtual Office (ZSE compliance).
+- **Strategic Separation**: Sensitive operational logic, treasury specifics, and internal-only runbooks have been migrated to the authorized Linear workspace (ZSE compliance).
 
 ### 2) Sanitization & Hygiene
 - **Repository Descriptions**: Standardized across the portfolio to match the Role Lines defined in `docs/REPO_PORTFOLIO.md`.

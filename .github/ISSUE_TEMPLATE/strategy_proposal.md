@@ -6,11 +6,11 @@ labels: enhancement, business
 assignees: ''
 ---
 
-> Use this template only for public-safe proposals. Private repository visibility does not authorize restricted data.
+> GitHub is authoritative for new BOS work. Do not include credentials, private endpoints, signer data, raw configuration, privileged legal advice, financial details, or restricted runbooks. Keep restricted material in an authorized restricted system and use sanitized status plus an approved pointer only.
 >
-> Stop before posting restricted strategy, legal, financial, security, identity, custody, recovery, or privileged operational details. Follow the approved restricted process and use only an opaque reference token here when necessary.
+> Private repository visibility does not authorize restricted data. Stop before posting restricted strategy, legal, financial, security, identity, custody, recovery, or privileged operational details; use only an opaque approved reference token when necessary.
 >
-> Read the [GitHub-First BOS Operating Model](../../docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md).
+> Read the [GitHub-First BOS Operating Model](../../docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md) and the [GitHub-native BOS workspace](../../docs/GITHUB_NATIVE_BOS_WORKSPACE.md).
 
 ## Executive Summary
 
@@ -28,7 +28,7 @@ components?*
 
 ## Resource Allocation & Dependencies
 
-*List only public-safe delivery dependencies and accountable repositories. Do not include protected financial, legal, partner, or staffing details.*
+*What resources (capital, engineering hours, legal review, partnerships) are required?*
 
 ## Risks & Mitigations
 

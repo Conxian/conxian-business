@@ -1,0 +1,91 @@
+name: Governance / legal decision request
+description: Request an authorized, sanitized governance or legal decision without posting privileged material.
+title: "[DECISION]: "
+labels:
+  - governance
+body:
+  - type: markdown
+    attributes:
+      value: |
+        GitHub Issues and pull requests are authoritative for new BOS work. This form records decision scope, authority, and sanitized outcomes. It is not legal advice and does not grant authority. Keep privileged advice and restricted material in an approved restricted store.
+  - type: input
+    id: owning_repository
+    attributes:
+      label: Owning repository
+      placeholder: Conxian/example-repository
+    validations:
+      required: true
+  - type: input
+    id: accountable_role
+    attributes:
+      label: Accountable governance owner role
+      placeholder: Business governance owner
+    validations:
+      required: true
+  - type: input
+    id: decision_authority
+    attributes:
+      label: Decision authority
+      description: Identify the role authorized to decide. Do not infer authority from repository access.
+      placeholder: Authorized licensor / counsel / organization administrator
+    validations:
+      required: true
+  - type: dropdown
+    id: workstream
+    attributes:
+      label: Workstream / control domain
+      options:
+        - Business governance
+        - Legal / licensing
+        - GitHub organization administration
+        - Security
+        - Privacy
+        - Release governance
+        - Other portfolio policy
+    validations:
+      required: true
+  - type: dropdown
+    id: classification
+    attributes:
+      label: Information classification
+      options:
+        - Public-safe
+        - Internal sanitized
+        - Restricted pointer only
+    validations:
+      required: true
+  - type: checkboxes
+    id: zse_confirmation
+    attributes:
+      label: Zero Secret Egress confirmation
+      options:
+        - label: I confirm this request excludes credentials, private endpoints, signer data, raw configuration, privileged legal advice, contracts, and restricted runbooks.
+          required: true
+  - type: textarea
+    id: decision_requested
+    attributes:
+      label: Decision requested
+      description: State the decision questions and allowed options without supplying privileged rationale.
+    validations:
+      required: true
+  - type: textarea
+    id: non_claims
+    attributes:
+      label: Explicit non-claims
+      description: State what this request does not approve, implement, release, deploy, or prove.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and linked artifacts
+      description: Link governing issues, implementation trackers, admin dependencies, and approved restricted-store pointers.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Decision acceptance and evidence
+      description: Define the authorized decision record, accountable approver role, date, and sanitized evidence required.
+    validations:
+      required: true

@@ -2,7 +2,7 @@
 
 This repository is public.
 
-The canonical content for ZK data room schemas and proof structures is maintained in the Conxian Linear workspace to comply with our Zero Secret Egress (ZSE) mandate and to protect sensitive strategy, legal, or operational details.
+The canonical content for ZK data room schemas and proof structures is maintained in the authorized Linear workspace to comply with our Zero Secret Egress (ZSE) mandate and to protect sensitive strategy, legal, or operational details.
 
 See:
 
