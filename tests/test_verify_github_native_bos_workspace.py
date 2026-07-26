@@ -125,15 +125,36 @@ class GitHubNativeBosWorkspaceVerifierTests(unittest.TestCase):
                     "CONTRIBUTING.md:1: active intake requires Linear", output
                 )
 
-    def test_issue_form_directing_new_linear_work_fails(self) -> None:
+    def test_issue_templates_reject_all_linear_references(self) -> None:
+        variants = (
+            "description: |\n  Linear ticket\n  required\n",
+            "description: |\n  Route work through\n  Linear\n",
+            "description: |\n  All new BOS work must use\n  Linear for coordination.\n",
+        )
+        for variant in variants:
+            with self.subTest(variant=variant):
+                self._write(
+                    ".github/ISSUE_TEMPLATE/extra.yml", "name: Extra\n" + variant
+                )
+                status, output = self._run()
+                self.assertEqual(status, 1, output)
+                self.assertIn(
+                    ".github/ISSUE_TEMPLATE/extra.yml:",
+                    output,
+                )
+                self.assertIn("must not reference Linear", output)
+
+    def test_issue_template_config_rejects_linear_reference(self) -> None:
         self._write(
-            ".github/ISSUE_TEMPLATE/extra.yml",
-            "name: Extra\ndescription: Create a Linear issue first\n",
+            ".github/ISSUE_TEMPLATE/config.yml",
+            "blank_issues_enabled: false\ncontact_links:\n"
+            "  - name: Historical Linear archive\n",
         )
         status, output = self._run()
         self.assertEqual(status, 1, output)
         self.assertIn(
-            ".github/ISSUE_TEMPLATE/extra.yml:2: active intake requires Linear",
+            ".github/ISSUE_TEMPLATE/config.yml:3: active issue templates must not "
+            "reference Linear",
             output,
         )
 
@@ -141,6 +162,16 @@ class GitHubNativeBosWorkspaceVerifierTests(unittest.TestCase):
         self._write(
             "README.md",
             "All new BOS work must use Linear for coordination. Historical context retained.\n",
+        )
+        status, output = self._run()
+        self.assertEqual(status, 1, output)
+        self.assertIn("README.md:1: active Linear mandate", output)
+
+    def test_wrapped_current_mandate_precedes_later_archive_marker(self) -> None:
+        self._write(
+            "README.md",
+            "All new BOS work must use\n"
+            "Linear for coordination. Historical archive context retained.\n",
         )
         status, output = self._run()
         self.assertEqual(status, 1, output)

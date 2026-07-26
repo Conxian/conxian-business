@@ -128,4 +128,4 @@ Higher precedence does not expand an artifact's authority. Business policy canno
 
 ## Validator scope
 
-`scripts/verify_github_native_bos_workspace.py` is a fail-closed minimum canonical-surface guard. It checks the named active intake and policy files plus all active issue templates/forms, but it does not claim to classify every historical document in the repository. Pull-request review remains required for historical or otherwise out-of-scope documentation.
+`scripts/verify_github_native_bos_workspace.py` is a fail-closed minimum canonical-surface guard. It checks the named active intake and policy files plus all active issue templates/forms. Active files under `.github/ISSUE_TEMPLATE/` must contain no Linear reference; historical provenance belongs in governance or archive documentation instead. The guard does not claim to classify every historical document in the repository. Pull-request review remains required for historical or otherwise out-of-scope documentation.

@@ -198,12 +198,44 @@ def _linear_units(text: str) -> list[tuple[int, str]]:
     return units
 
 
+def _normalized_markdown_units(text: str) -> list[tuple[int, int, str]]:
+    """Return normalized paragraph/list-item units with their source line span."""
+    units: list[tuple[int, int, str]] = []
+    buffered: list[str] = []
+    start_line = 0
+    end_line = 0
+    list_item_pattern = re.compile(r"^\s*(?:[-*+]\s+|\d+[.)]\s+)")
+
+    def flush() -> None:
+        nonlocal buffered, start_line, end_line
+        if buffered:
+            units.append((start_line, end_line, " ".join(" ".join(buffered).split())))
+        buffered = []
+        start_line = 0
+        end_line = 0
+
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        stripped = line.strip()
+        if not stripped:
+            flush()
+            continue
+        if buffered and list_item_pattern.match(line):
+            flush()
+        if not buffered:
+            start_line = line_number
+        buffered.append(stripped)
+        end_line = line_number
+    flush()
+    return units
+
+
 def _active_mandate_reason(unit: str) -> str | None:
-    if _is_explicit_linear_non_authority(unit):
-        return None
-    for reason, pattern in ACTIVE_LINEAR_MANDATE_PATTERNS:
-        if pattern.search(unit):
-            return reason
+    for sentence in re.split(r"(?<=[.!?])\s+", unit):
+        if _is_explicit_linear_non_authority(sentence):
+            continue
+        for reason, pattern in ACTIVE_LINEAR_MANDATE_PATTERNS:
+            if pattern.search(sentence):
+                return reason
     return None
 
 
@@ -237,11 +269,7 @@ def _check_active_intake(root: Path, errors: list[str]) -> None:
         errors.append("Missing issue-template directory: .github/ISSUE_TEMPLATE")
         return
     for path in sorted(issue_template_dir.rglob("*")):
-        if (
-            not path.is_file()
-            or path.name == "config.yml"
-            or path.suffix.casefold() not in ISSUE_TEMPLATE_SUFFIXES
-        ):
+        if not path.is_file() or path.suffix.casefold() not in ISSUE_TEMPLATE_SUFFIXES:
             continue
         relative_path = path.relative_to(root).as_posix()
         try:
@@ -249,7 +277,14 @@ def _check_active_intake(root: Path, errors: list[str]) -> None:
         except OSError as exc:
             errors.append(f"Cannot read {relative_path}: {exc}")
             continue
-        _check_active_linear_mandates(relative_path, text, errors)
+        for line_number, line in enumerate(text.splitlines(), start=1):
+            if "linear" not in line.casefold():
+                continue
+            excerpt = " ".join(line.split())
+            errors.append(
+                f"{relative_path}:{line_number}: active issue templates must not "
+                f"reference Linear: {excerpt!r}"
+            )
 
     for relative_path, authority_text in REQUIRED_ISSUE_FORM_AUTHORITY.items():
         text = _read(root, relative_path, errors)
@@ -265,14 +300,37 @@ def _check_linear_context(root: Path, errors: list[str]) -> None:
         text = _read(root, relative_path, errors)
         if text is None:
             continue
+        precise_active_lines: set[int] = set()
         for line_number, unit in _linear_units(text):
             reason = _active_mandate_reason(unit)
-            if reason is not None:
-                excerpt = " ".join(unit.split())
-                errors.append(
-                    f"{relative_path}:{line_number}: active Linear mandate cannot be "
-                    f"treated as historical ({reason}): {excerpt!r}"
-                )
+            if reason is None:
+                continue
+            precise_active_lines.add(line_number)
+            excerpt = " ".join(unit.split())
+            errors.append(
+                f"{relative_path}:{line_number}: active Linear mandate cannot be "
+                f"treated as historical ({reason}): {excerpt!r}"
+            )
+
+        active_spans: list[tuple[int, int]] = []
+        for start_line, end_line, unit in _normalized_markdown_units(text):
+            if "linear" not in unit.casefold():
+                continue
+            reason = _active_mandate_reason(unit)
+            if reason is None or any(
+                start_line <= line_number <= end_line
+                for line_number in precise_active_lines
+            ):
+                continue
+            active_spans.append((start_line, end_line))
+            errors.append(
+                f"{relative_path}:{start_line}: active Linear mandate cannot be "
+                f"treated as historical ({reason}): {unit!r}"
+            )
+        for line_number, unit in _linear_units(text):
+            if line_number in precise_active_lines or any(
+                start <= line_number <= end for start, end in active_spans
+            ):
                 continue
             if _is_explicit_linear_non_authority(unit):
                 continue
