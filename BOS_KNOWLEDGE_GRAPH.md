@@ -564,7 +564,7 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442 do
 |-------|--------|
 | Linear issue | [CON-1518](https://linear.app/conxian-labs/issue/CON-1518/p1-define-telemetry-privacy-monitoring-and-public-safe-operational) — internal tracking reference; private issue content is not reproduced. |
 | Upstream implementation | [conxius-enclave-sdk PR #210](https://github.com/Conxian/conxius-enclave-sdk/pull/210), merged at `593af0d9120b612de5b2817866b0528e5c877570`; remediates the implementation scope tracked by [GitHub #201](https://github.com/Conxian/conxius-enclave-sdk/issues/201). |
-| Business-repo integration | Root `conxius-enclave-sdk` gitlink remains pinned exactly `451202f51a9efed8fde70b7a5567a3e7e16c1db9` for this reviewed fail-closed PR; the upstream telemetry implementation is recorded at `593af0d9120b612de5b2817866b0528e5c877570`; `.gitmodules` branch metadata is `main`. |
+| Business-repo integration | The immutable `dev` candidate selected by [business PR #939](https://github.com/Conxian/conxian-business/pull/939) is `3af2cb83988582073f726bebfffe21093a5e3b65`. It descends from the older reviewed fail-closed ancestor `451202f51a9efed8fde70b7a5567a3e7e16c1db9`; the upstream telemetry implementation remains recorded at `593af0d9120b612de5b2817866b0528e5c877570`, and `.gitmodules` branch metadata is `main`. Selection on `dev` does not establish release or production acceptance. |
 | Public-safe authority | [`docs/operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md`](docs/operations/CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md) records the privacy, delivery, non-gating, monitoring, rollback, and evidence boundary. |
 | Current support boundary | **Beta / conditional**; no value-bearing production signing or settlement claim is authorized. |
 
@@ -574,8 +574,8 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442 do
 |--------|------|--------------|--------------|
 | `CON-1518` | Linear issue | Internal scope and evidence-tracking record | tracks the business-repo integration and public-safe evidence boundary |
 | `GitHub #201` | Upstream issue | Telemetry privacy/operations implementation scope | remediated by upstream PR #210; remaining operational evidence is not implied closed |
-| `PR #210` | Upstream pull request | Merged implementation record at exact SHA `593af0d9120b612de5b2817866b0528e5c877570` | provides an upstream implementation candidate; this PR intentionally retains the exact reviewed parent pin |
-| `conxius-enclave-sdk` | Shared runtime repository | Exact reviewed candidate is pinned by this root repo | consumed by downstream integrations; support remains capability-specific |
+| `PR #210` | Upstream pull request | Merged implementation record at exact SHA `593af0d9120b612de5b2817866b0528e5c877570` | provides an upstream telemetry implementation record whose parent retained the older reviewed `451202f` gitlink |
+| `conxius-enclave-sdk` | Shared runtime repository | `dev` selects immutable candidate `3af2cb8`, descended from reviewed fail-closed ancestor `451202f` | consumed by downstream integrations; support remains capability-specific and release/production acceptance remains unproven |
 | `CON-1518_TELEMETRY_PRIVACY_EVIDENCE.md` | Public-safe authority | Repository-visible privacy and operations boundary | links the upstream implementation to root CI and acceptance evidence |
 
 ### Residual Gates and Boundary
