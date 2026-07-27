@@ -100,6 +100,8 @@ class RegistryValidator:
         self.repo_root = self._find_repo_root(self.registry_path)
         self.errors: list[str] = []
         self.artifact_paths: set[str] = set()
+        self.namespace_uri_pattern: re.Pattern[str] | None = None
+        self.namespace_owner_pattern: re.Pattern[str] | None = None
 
     @staticmethod
     def _find_repo_root(registry_path: Path) -> Path:
@@ -169,6 +171,40 @@ class RegistryValidator:
             self.error(location, "top-level additionalProperties must be false")
         if set(schema.get("required", [])) != {"$schema", "schemaVersion", "sources"}:
             self.error(location, "required fields do not match the registry contract")
+        self._load_namespace_patterns(schema)
+
+    def _load_namespace_patterns(self, schema: dict[str, Any]) -> None:
+        location = "schema.$defs.source.allOf"
+        rules = schema.get("$defs", {}).get("source", {}).get("allOf", [])
+        if not isinstance(rules, list):
+            self.error(location, "must define selected/adopted namespace constraints")
+            return
+        for rule in rules:
+            if not isinstance(rule, dict):
+                continue
+            states = (
+                rule.get("if", {})
+                .get("properties", {})
+                .get("state", {})
+                .get("enum")
+            )
+            if states != ["selected", "adopted"]:
+                continue
+            namespace = (
+                rule.get("then", {})
+                .get("properties", {})
+                .get("extensionNamespace", {})
+                .get("properties", {})
+            )
+            uri_pattern = namespace.get("uri", {}).get("pattern")
+            owner_pattern = namespace.get("owner", {}).get("pattern")
+            try:
+                self.namespace_uri_pattern = re.compile(uri_pattern)
+                self.namespace_owner_pattern = re.compile(owner_pattern)
+            except (TypeError, re.error) as exc:
+                self.error(location, f"must contain valid namespace patterns: {exc}")
+            return
+        self.error(location, "must define selected/adopted namespace constraints")
 
     def _validate_registry(self, registry: Any) -> None:
         if not isinstance(registry, dict):
@@ -351,10 +387,12 @@ class RegistryValidator:
         owner = self._string(value.get("owner"), f"{location}.owner")
         if uri is None or owner is None:
             return False
-        host = (urlsplit(uri).hostname or "").lower()
-        host_owned = host == "conxian.io" or host.endswith(".conxian.io") or host == "conxian.com" or host.endswith(".conxian.com")
-        owner_owned = "conxian" in owner.lower()
-        if not host_owned or not owner_owned:
+        if self.namespace_uri_pattern is None or self.namespace_owner_pattern is None:
+            self.error(location, "cannot validate ownership without schema namespace patterns")
+            return False
+        uri_owned = self.namespace_uri_pattern.search(uri) is not None
+        owner_owned = self.namespace_owner_pattern.search(owner) is not None
+        if not uri_owned or not owner_owned:
             self.error(location, "must use a Conxian-owned HTTPS namespace and identify Conxian as owner")
             return False
         return True

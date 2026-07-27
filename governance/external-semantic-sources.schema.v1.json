@@ -137,7 +137,7 @@
               "extensionNamespace": {
                 "properties": {
                   "uri": {
-                    "pattern": "^https://(?:[^/]+\\.)?(?:conxian\\.io|conxian\\.com)/"
+                    "pattern": "^https://(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)?(?:conxian\\.io|conxian\\.com)/[^/?#]+"
                   },
                   "owner": { "pattern": "Conxian" }
                 }

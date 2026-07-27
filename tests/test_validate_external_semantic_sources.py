@@ -1,6 +1,7 @@
 import copy
 import hashlib
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -211,6 +212,58 @@ class SemanticSourceRegistryTest(unittest.TestCase):
             "owner": "Upstream Foundation",
         }
         self.assert_invalid(self.registry([source]), "Conxian-owned HTTPS namespace")
+
+    def test_selected_adopted_namespace_schema_validator_parity(self):
+        schema = json.loads(
+            Path("governance/external-semantic-sources.schema.v1.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        selected_rule = next(
+            rule
+            for rule in schema["$defs"]["source"]["allOf"]
+            if rule.get("if", {}).get("properties", {}).get("state", {}).get("enum")
+            == ["selected", "adopted"]
+        )
+        namespace_properties = selected_rule["then"]["properties"][
+            "extensionNamespace"
+        ]["properties"]
+        uri_pattern = re.compile(namespace_properties["uri"]["pattern"])
+        owner_pattern = re.compile(namespace_properties["owner"]["pattern"])
+
+        cases = (
+            ("https://conxian.com/semantic", "Conxian", True),
+            ("https://schema.conxian.io/semantic/source/", "Conxian-Labs (Pty) Ltd", True),
+            ("https://conxian.com", "Conxian", False),
+            ("https://conxian.com/", "Conxian", False),
+            ("https://conxian.com/semantic", "conxian-labs", False),
+            ("https://example.org/semantic", "Conxian-Labs (Pty) Ltd", False),
+            (123, "Conxian-Labs (Pty) Ltd", False),
+            ("https://conxian.io/semantic", ["Conxian"], False),
+        )
+        for state, disposition in (
+            ("selected", "approved-for-selection"),
+            ("adopted", "approved-for-adoption"),
+        ):
+            for uri, owner, expected in cases:
+                with self.subTest(state=state, uri=uri, owner=owner):
+                    schema_accepts = (
+                        isinstance(uri, str)
+                        and uri.startswith("https://")
+                        and uri_pattern.search(uri) is not None
+                        and isinstance(owner, str)
+                        and bool(owner)
+                        and owner_pattern.search(owner) is not None
+                    )
+                    self.assertEqual(expected, schema_accepts)
+
+                    source = self.adopted_source()
+                    source["state"] = state
+                    source["review"]["disposition"] = disposition
+                    source["extensionNamespace"] = {"uri": uri, "owner": owner}
+                    self.write(self.registry([source]))
+                    validator_accepts = validate_registry(self.registry_path) == []
+                    self.assertEqual(schema_accepts, validator_accepts)
 
     def test_prohibited_supported_claim_fails(self):
         claims = [
