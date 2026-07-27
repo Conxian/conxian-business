@@ -218,6 +218,10 @@ See `docs/BOS_BUSINESS_BUILDOUT.md` for repo business purpose, business-unit pla
 | `CONTRIBUTING.md` | Canonical | Public-safe | Contribution expectations and workflow. |
 | `SECURITY.md` | Canonical | Public-safe | Security policy and reporting. |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Supporting | Public-safe | PR checklist and norms. |
+| `docs/governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md` | Canonical | Public-safe | Fail-closed lifecycle, immutable-evidence, notice/import, namespace, transformation, SBOM-handoff, offline, review, and unsupported-claim policy for external semantic sources. |
+| `governance/external-semantic-sources.schema.v1.json` | Canonical | Public-safe | Versioned machine-readable registry contract; unknown fields and values are closed by policy and validator. |
+| `governance/external-semantic-sources.json` | Canonical | Public-safe | Generic external semantic-source registry, intentionally initialized with `sources: []`; presence is not adoption or gate evidence. |
+| `docs/governance/FIBO_PROVENANCE_RESEARCH_NOTE.md` | Supporting | Public-safe | Commit-addressed primary-source and observed archive-byte provenance research; records no FIBO/OMG corpus or adoption decision. |
 | `docs/CSF_FIRST_OPERATING_SEQUENCE_AND_PROOF_GATES.md` | Canonical | Public-safe | Locks the CSF → economy → gateway operating order and the minimum proof gates that keep launch, economy design, and go-to-market claims aligned. |
 | `docs/BOS_WALLET_CONTROL_MODEL.md` | Canonical | Public-safe | Canonical BOS signer and protocol/user control model; custody language must be read as an explicit boundary record, not as a claim that Conxian-Labs holds user assets. |
 | `docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md` | Canonical | Public-safe | CON-694 alignment baseline for `conxian-business`: scope boundaries, six-domain control mapping, evidence expectations, and rollback/accountability guardrails. |

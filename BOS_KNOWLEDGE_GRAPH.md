@@ -550,6 +550,82 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442 do
 
 ---
 
+## Dated Digest: External Semantic-Source Intake Control (2026-07-27)
+
+### Status and boundary
+
+| Field | Record |
+|---|---|
+| Parent research tracker | [Business #940](https://github.com/Conxian/conxian-business/issues/940) records public-safe FIBO provenance research and the scored decision to implement a generic intake control before source-specific evaluation. |
+| Implementation control | [Business #955](https://github.com/Conxian/conxian-business/issues/955) defines the empty registry, policy/schema, fail-closed validator, tests, CI, and graph acceptance boundary. |
+| Initial registry state | [`governance/external-semantic-sources.json`](governance/external-semantic-sources.json) is version `1.0.0` with `sources: []`; it contains no FIBO/OMG source record, URL, ontology, archive, or corpus content. |
+| Claim state | Control infrastructure only. Registry presence or validation is not adoption, legal advice, endorsement, certification, partnership, compliance/authority/attestation evidence, candidate acceptance, release approval, or BOS Gate 0–6 advancement. |
+
+### Typed entities
+
+| Entity | Type | Role / state | Evidence |
+|---|---|---|---|
+| External semantic-source intake policy | Governance policy | Defines controlled lifecycle states, immutable evidence, selection/import closure, notice review, namespace ownership, transformation provenance, review references, SBOM handoff, offline failure, and claim boundaries. | [`docs/governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md`](docs/governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md) |
+| External semantic-source schema v1 | JSON Schema | Versioned closed contract for generic source records; schema drift and unknown fields fail closed. | [`governance/external-semantic-sources.schema.v1.json`](governance/external-semantic-sources.schema.v1.json) |
+| External semantic-source registry | Governance registry | Canonical registry initialized exactly empty apart from schema/version metadata. | [`governance/external-semantic-sources.json`](governance/external-semantic-sources.json) |
+| External semantic-source validator | CI control / Python tool | Standard-library-only, deterministic, offline validation of pins, hashes, dates, URLs, states, dispositions, evidence paths/digests, closure, notices, namespaces, transformations, SBOM handoff, duplicates, and claims. | [`scripts/validate_external_semantic_sources.py`](scripts/validate_external_semantic_sources.py) |
+| External semantic-source validator tests | Test suite | Negative and positive fixtures for empty, research-only, and fully evidenced adopted states without vendoring an external corpus. | [`tests/test_validate_external_semantic_sources.py`](tests/test_validate_external_semantic_sources.py) |
+| Semantic-source CI control | GitHub Actions control | Runs registry validation and unit tests unconditionally in `repo-hygiene`; there is no source-presence or `hashFiles` bypass for this control. | [`.github/workflows/conxian-unified-ci.yml`](.github/workflows/conxian-unified-ci.yml) |
+| Immutable evidence bundle | Evidence type | Full commit/archive identity, local hashed artifacts, selected/imported file closure, notices, namespace, transformations, review reference, claims, and SBOM handoff. | [Policy](docs/governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md) |
+| Review authority reference | Traceability token | Links a closed disposition to its authoritative record without copying restricted advice into public Git. It is not itself approval beyond the enumerated disposition. | [Policy](docs/governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md) |
+| FIBO provenance research note | Research record | Re-verifies the candidate tag/commit, commit-addressed primary sources, release metadata (`immutable: false`, `target_commitish: master`, zero assets), observed GitHub archive-byte hash, non-deterministic aggregate-root statement, notice gaps, and candidate score; records no adoption. | [`docs/governance/FIBO_PROVENANCE_RESEARCH_NOTE.md`](docs/governance/FIBO_PROVENANCE_RESEARCH_NOTE.md) |
+
+### Relationships
+
+| From | Relationship | To | Boundary / meaning |
+|---|---|---|---|
+| [Business #940](https://github.com/Conxian/conxian-business/issues/940) | selects for implementation | [Business #955](https://github.com/Conxian/conxian-business/issues/955) | Generic fail-closed intake scored above source-specific lint, SBOM adaptation, or corpus vendoring. |
+| External semantic-source intake policy | governs | schema, registry, validator, review reference, and CI control | Policy meaning is authoritative; machine artifacts enforce its public-safe subset. |
+| Schema v1 | constrains | registry records | Version and field vocabulary are closed; registry/schema mismatch fails. |
+| Validator | verifies offline | registry and immutable evidence bundle | No URL retrieval, RDF parsing, inference, or third-party Python dependency occurs. |
+| Selected/adopted source record | requires | selected-file and import closure | Every selected and transitively imported file must be enumerated and uniquely mapped. |
+| Selected/adopted source record | requires | root and per-file notice disposition | Root-license evidence does not substitute for selected-file/import notice closure. |
+| Selected/adopted source record | requires | Conxian-owned extension namespace | Upstream and third-party namespaces cannot be represented as locally controlled. |
+| Selected/adopted source record | requires | transformation provenance and SBOM handoff | A `none` transformation disposition still needs evidence; SBOM handoff is a pre-component boundary, not release approval. |
+| Registry presence | does not establish | adoption or BOS Gate progress | Only a complete state/disposition/evidence record can express controlled adoption, and even that is not legal, compliance, authority, attestation, candidate, release, or Gate evidence. |
+| FIBO provenance research note | informs but does not populate | external semantic-source registry | Research remains outside the empty canonical registry until a future bounded intake passes the full policy. |
+
+### Decision rationale
+
+| Decision | Operational meaning |
+|---|---|
+| Keep the initial registry empty | Establish the reusable control without adding, fetching, parsing, endorsing, selecting, or adopting FIBO, OMG, or another corpus. |
+| Pin immutable identities | Full lowercase commit SHAs and lowercase SHA-256 digests replace tags, branches, short refs, and moving evidence. |
+| Verify local artifacts by digest | Evidence is reviewable offline and fails if absent, relocated, duplicated, traversing, or modified. |
+| Separate root license from notice closure | A repository license cannot by itself close exact selected-file, import, or third-party notice obligations. |
+| Require local namespace ownership | Conxian extensions must remain distinguishable from upstream vocabulary and authority. |
+| Put negative claims in `claims.notSupported` | Mandatory unsupported statements are allowed and required; the validator prohibits positive claims in `claims.supported` without falsely rejecting the negative boundary list. |
+| Defer source-specific profile work | Generic intake precedes any future narrow domain-profile evaluation, including a possible LEI-oriented profile; no such profile is approved or selected, and no candidate is treated as accepted before evidence controls exist. |
+
+### Risks and gates
+
+| Risk / gate | Current implication |
+|---|---|
+| Legal and notice review | Exact-source license/notice/trademark disposition remains future restricted work; no legal conclusion is stored here. |
+| Archive-byte stability | The FIBO archive digest is an observed GitHub-generated byte hash, not an upstream signed checksum or publisher attestation. |
+| Release/tag metadata | The observed GitHub release reports `immutable: false`, targets moving branch `master`, and has zero assets, so it is not immutable artifact or checksum authority. |
+| RDF and network behavior | No parser, import resolver, ontology transformation, or runtime network behavior is authorized or introduced. |
+| Gate and release status | #940/#955 and these files do not modify #890, candidate acceptance, release approval, or any BOS Gate 0–6 state. |
+
+### Evidence index
+
+| Evidence | Link |
+|---|---|
+| Parent research tracker | [Business #940](https://github.com/Conxian/conxian-business/issues/940) |
+| Implementation control | [Business #955](https://github.com/Conxian/conxian-business/issues/955) |
+| Intake policy | [`docs/governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md`](docs/governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md) |
+| Research note | [`docs/governance/FIBO_PROVENANCE_RESEARCH_NOTE.md`](docs/governance/FIBO_PROVENANCE_RESEARCH_NOTE.md) |
+| Registry and schema | [`governance/external-semantic-sources.json`](governance/external-semantic-sources.json), [`governance/external-semantic-sources.schema.v1.json`](governance/external-semantic-sources.schema.v1.json) |
+| Validator and tests | [`scripts/validate_external_semantic_sources.py`](scripts/validate_external_semantic_sources.py), [`tests/test_validate_external_semantic_sources.py`](tests/test_validate_external_semantic_sources.py) |
+| Unconditional CI wiring | [`.github/workflows/conxian-unified-ci.yml`](.github/workflows/conxian-unified-ci.yml) |
+
+---
+
 ## Maintenance
 
 **Crystallization Rule:** Every agent session MUST update this document with:
