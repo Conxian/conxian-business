@@ -16,6 +16,8 @@
 * [Branching and promotion policy](docs/BRANCHING_AND_PROMOTION_POLICY.md)
 * [Branch and promotion standard (dev/staged/main)](docs/BRANCH_AND_PROMOTION_STANDARD.md)
 * [Promotion checklists (feature -> dev -> staged -> main)](docs/PROMOTION_CHECKLISTS.md)
+* [External semantic-source intake policy](docs/governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md)
+* [FIBO provenance research note (no adoption)](docs/governance/FIBO_PROVENANCE_RESEARCH_NOTE.md)
 * [Deployment verification matrix (runtime lanes)](docs/DEPLOYMENT_VERIFICATION_MATRIX.md)
 * [Integrated system testnet gate (dev)](docs/INTEGRATED_SYSTEM_TESTNET_GATE.md)
 * [Mainnet acceptance evidence pack (staged -> main)](openspec/specs/mainnet-acceptance-evidence-pack/spec.md)
