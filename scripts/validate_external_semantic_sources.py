@@ -218,26 +218,24 @@ class RegistryValidator:
         if repository_url and commit_sha and repository_url.rstrip("/").endswith(f"/{commit_sha}"):
             self.error(f"{location}.repositoryUrl", "must identify the repository, not duplicate the archive identity")
 
-        state = source.get("state")
-        if state not in STATES:
-            self.error(f"{location}.state", f"must be one of {sorted(STATES)}")
+        state = self._enum_string(source.get("state"), STATES, f"{location}.state")
 
         review = source.get("review")
         disposition: str | None = None
         if isinstance(review, dict):
             self._exact_keys(review, {"disposition", "reference"}, f"{location}.review")
-            disposition_value = review.get("disposition")
-            if disposition_value not in DISPOSITIONS:
-                self.error(f"{location}.review.disposition", f"must be one of {sorted(DISPOSITIONS)}")
-            else:
-                disposition = disposition_value
+            disposition = self._enum_string(
+                review.get("disposition"),
+                DISPOSITIONS,
+                f"{location}.review.disposition",
+            )
             reference = self._string(review.get("reference"), f"{location}.review.reference")
             if reference is not None and not self._valid_review_reference(reference):
                 self.error(f"{location}.review.reference", "must be an HTTPS URL or a stable issue/decision token")
         else:
             self.error(f"{location}.review", "must be an object")
 
-        if state in STATE_DISPOSITIONS and disposition not in STATE_DISPOSITIONS[state]:
+        if state is not None and disposition is not None and disposition not in STATE_DISPOSITIONS[state]:
             self.error(
                 f"{location}.review.disposition",
                 f"{disposition!r} is not valid for state {state!r}",
@@ -283,9 +281,11 @@ class RegistryValidator:
             self.error(location, "must be an object")
             return set()
         self._exact_keys(value, {"status", "imports", "evidence"}, location)
-        status = value.get("status")
-        if status not in IMPORT_STATUSES:
-            self.error(f"{location}.status", f"must be one of {sorted(IMPORT_STATUSES)}")
+        status = self._enum_string(
+            value.get("status"),
+            IMPORT_STATUSES,
+            f"{location}.status",
+        )
         imports = value.get("imports")
         import_files: set[str] = set()
         seen: set[tuple[str, str]] = set()
@@ -365,9 +365,11 @@ class RegistryValidator:
             self.error(location, "must be an object")
             return False
         self._exact_keys(value, {"status", "rationale", "records", "evidence"}, location)
-        status = value.get("status")
-        if status not in TRANSFORMATION_STATUSES:
-            self.error(f"{location}.status", f"must be one of {sorted(TRANSFORMATION_STATUSES)}")
+        status = self._enum_string(
+            value.get("status"),
+            TRANSFORMATION_STATUSES,
+            f"{location}.status",
+        )
         rationale = self._string(value.get("rationale"), f"{location}.rationale")
         records = value.get("records")
         if not isinstance(records, list):
@@ -404,9 +406,11 @@ class RegistryValidator:
             self.error(location, "must be an object")
             return False
         self._exact_keys(value, {"status", "evidence"}, location)
-        status = value.get("status")
-        if status not in SBOM_STATUSES:
-            self.error(f"{location}.status", f"must be one of {sorted(SBOM_STATUSES)}")
+        status = self._enum_string(
+            value.get("status"),
+            SBOM_STATUSES,
+            f"{location}.status",
+        )
         evidence = value.get("evidence")
         if evidence is not None:
             self._artifact(evidence, source_id, f"{location}.evidence")
@@ -453,7 +457,18 @@ class RegistryValidator:
             self.error(f"{location}.path", f"duplicate evidence artifact {path_value!r}")
         self.artifact_paths.add(path_value)
 
-        disk_path = (self.repo_root / Path(*path.parts)).resolve()
+        unresolved_path = self.repo_root / Path(*path.parts)
+        current = self.repo_root
+        for part in path.parts:
+            current /= part
+            if current.is_symlink():
+                self.error(
+                    f"{location}.path",
+                    f"must not use symlink indirection (component {current.relative_to(self.repo_root).as_posix()!r})",
+                )
+                return
+
+        disk_path = unresolved_path.resolve()
         try:
             disk_path.relative_to(self.repo_root)
         except ValueError:
@@ -482,6 +497,15 @@ class RegistryValidator:
             return None
         if value != value.strip():
             self.error(location, "must not contain leading or trailing whitespace")
+            return None
+        return value
+
+    def _enum_string(self, value: Any, allowed: set[str], location: str) -> str | None:
+        if not isinstance(value, str):
+            self.error(location, f"must be a string and one of {sorted(allowed)}")
+            return None
+        if value not in allowed:
+            self.error(location, f"must be one of {sorted(allowed)}")
             return None
         return value
 
@@ -586,7 +610,15 @@ class RegistryValidator:
 def validate_registry(registry_path: Path) -> list[str]:
     """Return deterministic validation errors for ``registry_path``."""
 
-    return RegistryValidator(registry_path).validate()
+    validator = RegistryValidator(registry_path)
+    try:
+        return validator.validate()
+    except Exception as exc:  # fail closed on unexpected validator defects
+        validator.error(
+            "validator",
+            f"unexpected internal validation failure ({type(exc).__name__}); validation failed closed",
+        )
+        return validator.errors
 
 
 def build_parser() -> argparse.ArgumentParser:

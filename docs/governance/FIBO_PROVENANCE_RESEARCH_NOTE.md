@@ -23,8 +23,11 @@ Primary references:
 - Commit-addressed README: <https://github.com/edmcouncil/fibo/blob/f59157fe156e3d91b1c045222d0a7dc06b7d78a2/README.md>
 - Commit-addressed aggregate source: <https://github.com/edmcouncil/fibo/blob/f59157fe156e3d91b1c045222d0a7dc06b7d78a2/AboutFIBOProd.rdf>
 - Commit-addressed GitHub codeload archive: <https://codeload.github.com/edmcouncil/fibo/tar.gz/f59157fe156e3d91b1c045222d0a7dc06b7d78a2>
+- Release metadata API: <https://api.github.com/repos/edmcouncil/fibo/releases/tags/master_2026Q2>
 
 The commit-addressed GitHub codeload response was downloaded to a temporary directory, measured as `64,579,466` bytes, and observed with SHA-256 `c6c0c5102a47d2a281b8b2430fd201687f8cc8fad067740770c73094cae9a66d`. The temporary files were removed after verification. This digest is an **observed hash of GitHub-generated archive bytes**, not an upstream signed checksum, publisher attestation, release approval, or reproducible-build claim.
+
+The release metadata API was reverified on 2026-07-27. It reported `immutable: false`, `target_commitish: master`, and zero release assets for `master_2026Q2`. The release/tag record is therefore a moving-platform metadata observation, not immutable artifact or checksum authority; only the full commit identity is suitable as the candidate source pin, and any archive digest remains separately observed evidence.
 
 The root `LICENSE` at the pinned commit contains the MIT license and a notice for Enterprise Data Management Council. That root-license observation does not close the notice obligations for a selected file set or its direct and transitive imports. Per-file notices and any third-party terms must be reviewed against the exact selected/imported files.
 
@@ -44,7 +47,7 @@ Score formula from [#940](https://github.com/Conxian/conxian-business/issues/940
 | FIBO-specific lint | `3 / 3 / 3 / 4` | 2.75 | Rejected for now as premature specialization. |
 | Direct corpus vendoring | `3 / 2 / 1 / 5` | 1.75 | Rejected while evidence and disposition remain incomplete. |
 
-Generic intake precedes any LEI-oriented profile evaluation because identity, notice, import-closure, namespace, transformation, review, SBOM-handoff, offline, and unsupported-claim controls apply to every external semantic source. Implementing those controls first avoids treating a domain profile as accepted before the reusable evidence boundary exists.
+Generic intake precedes any future narrow domain-profile evaluation, including a possible LEI-oriented profile, because identity, notice, import-closure, namespace, transformation, review, SBOM-handoff, offline, and unsupported-claim controls apply to every external semantic source. No LEI-oriented or other domain profile is approved or selected by this research. Implementing those controls first avoids treating a possible future profile as accepted before the reusable evidence boundary exists.
 
 ## Reproduction commands
 

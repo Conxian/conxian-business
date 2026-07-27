@@ -4,9 +4,13 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from scripts.validate_external_semantic_sources import (
     MANDATORY_NOT_SUPPORTED,
+    RegistryValidator,
+    STATE_DISPOSITIONS,
+    main,
     validate_registry,
 )
 
@@ -263,6 +267,145 @@ class SemanticSourceRegistryTest(unittest.TestCase):
         source["state"] = "unknown"
         source["review"]["disposition"] = "rubber-stamped"
         self.assert_invalid(self.registry([source]), "must be one of")
+
+    def test_enum_boundaries_reject_non_strings_without_crashing(self):
+        boundaries = (
+            (("state",), "state"),
+            (("review", "disposition"), "review.disposition"),
+            (("importClosure", "status"), "importClosure.status"),
+            (("transformations", "status"), "transformations.status"),
+            (("sbomHandoff", "status"), "sbomHandoff.status"),
+        )
+        for key_path, fragment in boundaries:
+            for malformed in ([], {}, None, True, False):
+                with self.subTest(boundary=key_path, malformed=malformed):
+                    source = self.research_source()
+                    target = source
+                    for key in key_path[:-1]:
+                        target = target[key]
+                    target[key_path[-1]] = malformed
+                    self.assert_invalid(self.registry([source]), fragment)
+
+    def test_cli_returns_nonzero_for_malformed_enum(self):
+        source = self.research_source()
+        source["state"] = []
+        self.write(self.registry([source]))
+        self.assertEqual(1, main([str(self.registry_path)]))
+
+    def test_enum_boundaries_reject_unknown_strings(self):
+        boundaries = (
+            (("state",), "state"),
+            (("review", "disposition"), "review.disposition"),
+            (("importClosure", "status"), "importClosure.status"),
+            (("transformations", "status"), "transformations.status"),
+            (("sbomHandoff", "status"), "sbomHandoff.status"),
+        )
+        for key_path, fragment in boundaries:
+            with self.subTest(boundary=key_path):
+                source = self.research_source()
+                target = source
+                for key in key_path[:-1]:
+                    target = target[key]
+                target[key_path[-1]] = "unknown-status"
+                self.assert_invalid(self.registry([source]), fragment)
+
+    def test_every_lifecycle_disposition_mapping(self):
+        valid_pairs = {
+            "research-only": ("pending", "approved-for-research"),
+            "candidate": ("pending", "approved-for-research"),
+            "selected": ("approved-for-selection",),
+            "adopted": ("approved-for-adoption",),
+            "rejected": ("rejected",),
+            "retired": ("retired",),
+        }
+        all_dispositions = {
+            "pending",
+            "approved-for-research",
+            "approved-for-selection",
+            "approved-for-adoption",
+            "rejected",
+            "retired",
+        }
+        for state, allowed in valid_pairs.items():
+            for disposition in all_dispositions:
+                with self.subTest(state=state, disposition=disposition):
+                    source = (
+                        self.adopted_source()
+                        if state in {"selected", "adopted"}
+                        else self.research_source()
+                    )
+                    source["state"] = state
+                    source["review"]["disposition"] = disposition
+                    if disposition in allowed:
+                        self.assert_valid(self.registry([source]))
+                    else:
+                        self.assert_invalid(self.registry([source]), "is not valid for state")
+
+    def test_schema_lifecycle_disposition_mapping_matches_validator(self):
+        schema = json.loads(
+            Path("governance/external-semantic-sources.schema.v1.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        observed = {}
+        for rule in schema["$defs"]["source"]["allOf"]:
+            state_rule = rule.get("if", {}).get("properties", {}).get("state", {})
+            state = state_rule.get("const")
+            if state not in STATE_DISPOSITIONS:
+                continue
+            disposition_rule = rule["then"]["properties"]["review"]["properties"][
+                "disposition"
+            ]
+            allowed = disposition_rule.get("enum")
+            if allowed is None:
+                allowed = [disposition_rule["const"]]
+            observed[state] = set(allowed)
+
+        self.assertEqual(STATE_DISPOSITIONS, observed)
+
+    def test_internal_leaf_symlink_evidence_fails(self):
+        source = self.adopted_source()
+        evidence_path = self.root / source["importClosure"]["evidence"]["path"]
+        target = evidence_path.with_name("import-closure-target.json")
+        evidence_path.rename(target)
+        evidence_path.symlink_to(target.name)
+        self.assert_invalid(self.registry([source]), "must not use symlink indirection")
+
+    def test_internal_parent_symlink_evidence_fails(self):
+        source = self.adopted_source()
+        source_dir = self.root / "governance/evidence/external-semantic-sources/fully-evidenced-source"
+        target_dir = source_dir.with_name("fully-evidenced-source-target")
+        source_dir.rename(target_dir)
+        source_dir.symlink_to(target_dir.name, target_is_directory=True)
+        self.assert_invalid(self.registry([source]), "must not use symlink indirection")
+
+    def test_escaping_symlink_evidence_fails(self):
+        source = self.adopted_source()
+        evidence_path = self.root / source["importClosure"]["evidence"]["path"]
+        outside = self.root.parent / f"{self.root.name}-outside-evidence.json"
+        outside.write_bytes(b"closed import graph\n")
+        self.addCleanup(outside.unlink, missing_ok=True)
+        evidence_path.unlink()
+        evidence_path.symlink_to(outside)
+        self.assert_invalid(self.registry([source]), "must not use symlink indirection")
+
+    def test_unexpected_internal_error_fails_closed_and_preserves_errors(self):
+        self.write(self.registry())
+
+        def fail_after_useful_error(validator, registry):
+            validator.error("registry.sources", "useful validation message")
+            raise TypeError("simulated defect")
+
+        with mock.patch.object(
+            RegistryValidator,
+            "_validate_registry",
+            autospec=True,
+            side_effect=fail_after_useful_error,
+        ):
+            errors = validate_registry(self.registry_path)
+
+        self.assertTrue(any("useful validation message" in error for error in errors))
+        self.assertTrue(any("validation failed closed" in error for error in errors))
 
     def test_schema_registry_mismatch_fails(self):
         registry = self.registry()

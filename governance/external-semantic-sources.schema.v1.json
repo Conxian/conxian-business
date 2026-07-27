@@ -159,6 +159,51 @@
         },
         {
           "if": {
+            "properties": { "state": { "const": "research-only" } },
+            "required": ["state"]
+          },
+          "then": {
+            "properties": {
+              "review": {
+                "properties": {
+                  "disposition": { "enum": ["pending", "approved-for-research"] }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "state": { "const": "candidate" } },
+            "required": ["state"]
+          },
+          "then": {
+            "properties": {
+              "review": {
+                "properties": {
+                  "disposition": { "enum": ["pending", "approved-for-research"] }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "state": { "const": "selected" } },
+            "required": ["state"]
+          },
+          "then": {
+            "properties": {
+              "review": {
+                "properties": {
+                  "disposition": { "const": "approved-for-selection" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
             "properties": { "state": { "const": "adopted" } },
             "required": ["state"]
           },
@@ -167,6 +212,36 @@
               "review": {
                 "properties": {
                   "disposition": { "const": "approved-for-adoption" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "state": { "const": "rejected" } },
+            "required": ["state"]
+          },
+          "then": {
+            "properties": {
+              "review": {
+                "properties": {
+                  "disposition": { "const": "rejected" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "state": { "const": "retired" } },
+            "required": ["state"]
+          },
+          "then": {
+            "properties": {
+              "review": {
+                "properties": {
+                  "disposition": { "const": "retired" }
                 }
               }
             }
