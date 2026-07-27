@@ -42,6 +42,8 @@ For `selected` or `adopted` records, closure requires all of the following:
 7. An SBOM handoff marked `handoff-ready` with immutable evidence. This is a precondition boundary for a future SBOM component, not an SBOM component or release approval by itself.
 8. Explicit supported and not-supported claim sets. The mandatory unsupported boundaries must remain present.
 
+The canonical namespace base is the documented `conxian.com` domain, including syntactically valid lowercase subdomains under that domain. A selected or adopted namespace must use HTTPS with the exact owner value `Conxian`, no credentials or explicit port, and at least one safe non-empty path segment. Queries, fragments, whitespace/control characters, backslashes, raw Unicode or mixed-case hosts, dot segments, lookalike domains, and trailing suffixes outside the permitted URI are rejected. No additional domain is inferred as Conxian-owned by this policy.
+
 ## Claims and review authority
 
 Supported claims must stay factual and evidence-bounded, such as an observed immutable identity or a closed import manifest. Positive claims involving adoption-by-presence, legal advice, compliance, endorsement, certification, partnership, authority, attestation, candidate acceptance, release approval, or BOS Gate advancement are prohibited.

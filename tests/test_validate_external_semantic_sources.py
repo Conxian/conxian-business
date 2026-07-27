@@ -8,6 +8,7 @@ from pathlib import Path
 from unittest import mock
 
 from scripts.validate_external_semantic_sources import (
+    CANONICAL_NAMESPACE_OWNER,
     MANDATORY_NOT_SUPPORTED,
     RegistryValidator,
     STATE_DISPOSITIONS,
@@ -31,6 +32,7 @@ class SemanticSourceRegistryTest(unittest.TestCase):
             encoding="utf-8",
         )
         self.registry_path = self.root / "governance/external-semantic-sources.json"
+        self.schema_path = self.root / "governance/external-semantic-sources.schema.v1.json"
 
     def tearDown(self) -> None:
         self.temp_dir.cleanup()
@@ -67,8 +69,8 @@ class SemanticSourceRegistryTest(unittest.TestCase):
                 "files": [],
             },
             "extensionNamespace": {
-                "uri": f"https://schema.conxian.io/semantic/{source_id}/",
-                "owner": "Conxian-Labs (Pty) Ltd",
+                "uri": f"https://schema.conxian.com/semantic/{source_id}/",
+                "owner": CANONICAL_NAMESPACE_OWNER,
             },
             "transformations": {
                 "status": "not-evaluated",
@@ -137,8 +139,8 @@ class SemanticSourceRegistryTest(unittest.TestCase):
                 ],
             },
             "extensionNamespace": {
-                "uri": f"https://schema.conxian.io/semantic/{source_id}/",
-                "owner": "Conxian-Labs (Pty) Ltd",
+                "uri": f"https://schema.conxian.com/semantic/{source_id}/",
+                "owner": CANONICAL_NAMESPACE_OWNER,
             },
             "transformations": {
                 "status": "none",
@@ -163,6 +165,33 @@ class SemanticSourceRegistryTest(unittest.TestCase):
             json.dumps(registry, indent=2) + "\n",
             encoding="utf-8",
         )
+
+    def load_schema(self):
+        return json.loads(self.schema_path.read_text(encoding="utf-8"))
+
+    def write_schema(self, schema):
+        self.schema_path.write_text(
+            json.dumps(schema, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+    def restore_schema(self):
+        self.schema_path.write_text(
+            Path("governance/external-semantic-sources.schema.v1.json").read_text(
+                encoding="utf-8"
+            ),
+            encoding="utf-8",
+        )
+
+    @staticmethod
+    def selected_adopted_namespace_properties(schema):
+        selected_rule = next(
+            rule
+            for rule in schema["$defs"]["source"]["allOf"]
+            if rule.get("if", {}).get("properties", {}).get("state", {}).get("enum")
+            == ["selected", "adopted"]
+        )
+        return selected_rule["then"]["properties"]["extensionNamespace"]["properties"]
 
     def assert_valid(self, registry):
         self.write(registry)
@@ -214,32 +243,38 @@ class SemanticSourceRegistryTest(unittest.TestCase):
         self.assert_invalid(self.registry([source]), "Conxian-owned HTTPS namespace")
 
     def test_selected_adopted_namespace_schema_validator_parity(self):
-        schema = json.loads(
-            Path("governance/external-semantic-sources.schema.v1.json").read_text(
-                encoding="utf-8"
-            )
-        )
-        selected_rule = next(
-            rule
-            for rule in schema["$defs"]["source"]["allOf"]
-            if rule.get("if", {}).get("properties", {}).get("state", {}).get("enum")
-            == ["selected", "adopted"]
-        )
-        namespace_properties = selected_rule["then"]["properties"][
-            "extensionNamespace"
-        ]["properties"]
+        schema = self.load_schema()
+        namespace_properties = self.selected_adopted_namespace_properties(schema)
         uri_pattern = re.compile(namespace_properties["uri"]["pattern"])
-        owner_pattern = re.compile(namespace_properties["owner"]["pattern"])
+        owner_const = namespace_properties["owner"]["const"]
 
         cases = (
             ("https://conxian.com/semantic", "Conxian", True),
-            ("https://schema.conxian.io/semantic/source/", "Conxian-Labs (Pty) Ltd", True),
+            ("https://schema.conxian.com/semantic/source", "Conxian", True),
+            ("https://schema.conxian.com/semantic/source/", "Conxian", True),
             ("https://conxian.com", "Conxian", False),
             ("https://conxian.com/", "Conxian", False),
-            ("https://conxian.com/semantic", "conxian-labs", False),
-            ("https://example.org/semantic", "Conxian-Labs (Pty) Ltd", False),
-            (123, "Conxian-Labs (Pty) Ltd", False),
-            ("https://conxian.io/semantic", ["Conxian"], False),
+            ("https://conxian.com/semantic?x=1", "Conxian", False),
+            ("https://conxian.com/semantic#frag", "Conxian", False),
+            ("https://user@conxian.com/semantic", "Conxian", False),
+            ("https://conxian.com:443/semantic", "Conxian", False),
+            ("https://example.org/semantic", "Conxian", False),
+            ("https://notconxian.com/semantic", "Conxian", False),
+            ("https://conxian.com.evil.test/semantic", "Conxian", False),
+            ("https://conxian.com/semantic.evil?allowed=no", "Conxian", False),
+            ("https://cönxian.com/semantic", "Conxian", False),
+            ("https://Conxian.com/semantic", "Conxian", False),
+            ("https://conxian.com/semantic path", "Conxian", False),
+            ("https://conxian.com/semantic\n", "Conxian", False),
+            ("https://conxian.com/semantic\x00", "Conxian", False),
+            ("https://conxian.com/semantic\\child", "Conxian", False),
+            ("https://conxian.com/./semantic", "Conxian", False),
+            ("https://conxian.com/semantic/../child", "Conxian", False),
+            ("not a uri", "Conxian", False),
+            (123, "Conxian", False),
+            ("https://conxian.com/semantic", "conxian", False),
+            ("https://conxian.com/semantic", "NotConxianOwner", False),
+            ("https://conxian.com/semantic", ["Conxian"], False),
         )
         for state, disposition in (
             ("selected", "approved-for-selection"),
@@ -249,11 +284,9 @@ class SemanticSourceRegistryTest(unittest.TestCase):
                 with self.subTest(state=state, uri=uri, owner=owner):
                     schema_accepts = (
                         isinstance(uri, str)
-                        and uri.startswith("https://")
-                        and uri_pattern.search(uri) is not None
+                        and uri_pattern.fullmatch(uri) is not None
                         and isinstance(owner, str)
-                        and bool(owner)
-                        and owner_pattern.search(owner) is not None
+                        and owner == owner_const
                     )
                     self.assertEqual(expected, schema_accepts)
 
@@ -264,6 +297,55 @@ class SemanticSourceRegistryTest(unittest.TestCase):
                     self.write(self.registry([source]))
                     validator_accepts = validate_registry(self.registry_path) == []
                     self.assertEqual(schema_accepts, validator_accepts)
+
+    def test_namespace_schema_contract_fails_closed(self):
+        mutations = (
+            (
+                "missing selected/adopted rule",
+                lambda schema: schema["$defs"]["source"]["allOf"].pop(0),
+            ),
+            (
+                "missing URI pattern",
+                lambda schema: self.selected_adopted_namespace_properties(schema)["uri"].pop(
+                    "pattern"
+                ),
+            ),
+            (
+                "malformed URI pattern",
+                lambda schema: self.selected_adopted_namespace_properties(schema)["uri"].update(
+                    pattern="["
+                ),
+            ),
+            (
+                "unanchored URI pattern",
+                lambda schema: self.selected_adopted_namespace_properties(schema)["uri"].update(
+                    pattern="https://conxian\\.com/semantic"
+                ),
+            ),
+            (
+                "missing owner const",
+                lambda schema: self.selected_adopted_namespace_properties(schema)["owner"].pop(
+                    "const"
+                ),
+            ),
+            (
+                "non-string owner const",
+                lambda schema: self.selected_adopted_namespace_properties(schema)["owner"].update(
+                    const=["Conxian"]
+                ),
+            ),
+        )
+        for label, mutate in mutations:
+            with self.subTest(label=label):
+                schema = self.load_schema()
+                mutate(schema)
+                self.write_schema(schema)
+                self.write(self.registry())
+                self.assertTrue(
+                    validate_registry(self.registry_path),
+                    f"expected fail-closed schema error for {label}",
+                )
+                self.restore_schema()
 
     def test_prohibited_supported_claim_fails(self):
         claims = [

@@ -17,6 +17,9 @@ from urllib.parse import urlsplit
 SCHEMA_FILENAME = "external-semantic-sources.schema.v1.json"
 SCHEMA_VERSION = "1.0.0"
 EVIDENCE_PREFIX = PurePosixPath("governance/evidence/external-semantic-sources")
+CANONICAL_NAMESPACE_OWNER = "Conxian"
+CANONICAL_NAMESPACE_DOMAIN = "conxian.com"
+SAFE_NAMESPACE_SEGMENT = re.compile(r"[A-Za-z0-9._~-]+")
 
 STATES = {
     "research-only",
@@ -101,7 +104,7 @@ class RegistryValidator:
         self.errors: list[str] = []
         self.artifact_paths: set[str] = set()
         self.namespace_uri_pattern: re.Pattern[str] | None = None
-        self.namespace_owner_pattern: re.Pattern[str] | None = None
+        self.namespace_owner_const: str | None = None
 
     @staticmethod
     def _find_repo_root(registry_path: Path) -> Path:
@@ -196,13 +199,31 @@ class RegistryValidator:
                 .get("extensionNamespace", {})
                 .get("properties", {})
             )
-            uri_pattern = namespace.get("uri", {}).get("pattern")
-            owner_pattern = namespace.get("owner", {}).get("pattern")
+            uri_rule = namespace.get("uri")
+            owner_rule = namespace.get("owner")
+            if not isinstance(uri_rule, dict) or not isinstance(owner_rule, dict):
+                self.error(location, "must contain URI and owner namespace rules")
+                return
+            uri_pattern = uri_rule.get("pattern")
+            owner_const = owner_rule.get("const")
+            if not isinstance(uri_pattern, str) or not uri_pattern:
+                self.error(location, "must contain a non-empty namespace URI pattern")
+                return
+            if not uri_pattern.startswith("^") or not uri_pattern.endswith("$"):
+                self.error(location, "namespace URI pattern must be anchored at both ends")
+                return
+            if owner_const != CANONICAL_NAMESPACE_OWNER:
+                self.error(
+                    location,
+                    f"namespace owner const must equal {CANONICAL_NAMESPACE_OWNER!r}",
+                )
+                return
             try:
                 self.namespace_uri_pattern = re.compile(uri_pattern)
-                self.namespace_owner_pattern = re.compile(owner_pattern)
-            except (TypeError, re.error) as exc:
-                self.error(location, f"must contain valid namespace patterns: {exc}")
+            except re.error as exc:
+                self.error(location, f"must contain a valid namespace URI regex: {exc}")
+                return
+            self.namespace_owner_const = owner_const
             return
         self.error(location, "must define selected/adopted namespace constraints")
 
@@ -387,13 +408,82 @@ class RegistryValidator:
         owner = self._string(value.get("owner"), f"{location}.owner")
         if uri is None or owner is None:
             return False
-        if self.namespace_uri_pattern is None or self.namespace_owner_pattern is None:
-            self.error(location, "cannot validate ownership without schema namespace patterns")
+        if self.namespace_uri_pattern is None or self.namespace_owner_const is None:
+            self.error(location, "cannot validate ownership without closed schema namespace rules")
             return False
-        uri_owned = self.namespace_uri_pattern.search(uri) is not None
-        owner_owned = self.namespace_owner_pattern.search(owner) is not None
+        uri_owned = self.namespace_uri_pattern.fullmatch(uri) is not None
+        if uri_owned:
+            uri_owned = self._structurally_valid_namespace_uri(uri, f"{location}.uri")
+        owner_owned = owner == self.namespace_owner_const
         if not uri_owned or not owner_owned:
-            self.error(location, "must use a Conxian-owned HTTPS namespace and identify Conxian as owner")
+            self.error(
+                location,
+                "must use the canonical Conxian-owned HTTPS namespace and exact owner 'Conxian'",
+            )
+            return False
+        return True
+
+    def _structurally_valid_namespace_uri(self, uri: str, location: str) -> bool:
+        if any(ord(char) <= 0x20 or ord(char) == 0x7F for char in uri):
+            self.error(location, "must not contain whitespace or control characters")
+            return False
+        if "\\" in uri:
+            self.error(location, "must not contain backslashes")
+            return False
+        try:
+            parsed = urlsplit(uri)
+            port = parsed.port
+        except ValueError:
+            self.error(location, "must be a structurally valid namespace URI")
+            return False
+        hostname = parsed.hostname
+        if (
+            parsed.scheme != "https"
+            or parsed.username is not None
+            or parsed.password is not None
+            or port is not None
+            or parsed.query
+            or parsed.fragment
+            or not hostname
+            or parsed.netloc != hostname
+        ):
+            self.error(
+                location,
+                "must use HTTPS without credentials, port, query, or fragment",
+            )
+            return False
+        try:
+            hostname.encode("ascii")
+        except UnicodeEncodeError:
+            self.error(location, "host must be lowercase ASCII")
+            return False
+        if hostname != hostname.lower() or not (
+            hostname == CANONICAL_NAMESPACE_DOMAIN
+            or hostname.endswith(f".{CANONICAL_NAMESPACE_DOMAIN}")
+        ):
+            self.error(
+                location,
+                f"host must be {CANONICAL_NAMESPACE_DOMAIN!r} or its lowercase subdomain",
+            )
+            return False
+        path_segments = parsed.path.split("/")
+        if not parsed.path.startswith("/") or path_segments[0] != "":
+            self.error(location, "must contain an absolute namespace path")
+            return False
+        if path_segments[-1] == "":
+            path_segments = path_segments[:-1]
+        path_segments = path_segments[1:]
+        if not path_segments:
+            self.error(location, "must contain at least one non-empty path segment")
+            return False
+        if any(
+            segment in {".", ".."} or SAFE_NAMESPACE_SEGMENT.fullmatch(segment) is None
+            for segment in path_segments
+        ):
+            self.error(
+                location,
+                "path segments must be non-empty safe ASCII segments without dot traversal",
+            )
             return False
         return True
 
