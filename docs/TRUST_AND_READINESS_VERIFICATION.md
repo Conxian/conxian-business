@@ -2,7 +2,7 @@
 
 > **Issue**: [#830](https://github.com/Conxian/conxian-business/issues/830) — Re-verify governance and buyer-trust standards across public repos after docs rollout
 > **Status**: Canonical
-> **Last verified**: 2026-07-20
+> **Last verified**: 2026-07-28 (public trust wording and hosted-Actions blocker; component evidence remains dated where stated)
 > **Review cadence**: On every major release, docs rollout, or trust-surface change
 
 ## Purpose
@@ -33,7 +33,7 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | "Production (v1.9.2)" | v1.9.2 is current release tag; CI passing (B2C Wallet Suite green) | **Production-ready** | Minor: "Production" should be "Stable" per trust taxonomy |
+| **Status** | "Production (v1.9.2)" | v1.9.2 is current release tag; versioned release and historical B2C Wallet Suite evidence exist, but current hosted Actions are blocked before steps and not re-verified as of 2026-07-28 | **Production-ready** | Minor: "Production" should be "Stable" per trust taxonomy |
 | **Scope** | "Wallet app code, signer UX, reference client flows." | Correct. No protocol logic or infrastructure duplicated. | **Implemented** | None |
 | **Security** | "CXN Guardian" badge | SECURITY.md exists; StrongBox/TEE boundary documented | **Verified** | None |
 | **Governance** | "Maintained by Conxian-Labs as public infrastructure" | CODEOWNERS and CONTRIBUTING.md present | **Implemented** | None |
@@ -45,7 +45,7 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | "Active development (v0.4.17). Production intent exists." | v0.4.17; all CON-383 stubs removed; oracle flipped to real; CI 9/9 green | **Beta** (approaching Stable) | Status is honest. Should add explicit Beta label. |
+| **Status** | "Active development (v0.4.17). Production intent exists." | v0.4.17; all CON-383 stubs removed; oracle flipped to real; historical CI evidence exists, but current hosted Actions are blocked before steps and not re-verified as of 2026-07-28 | **Beta** (approaching Stable) | Status is honest. Should add explicit Beta label. |
 | **Scope** | "Glass Node implementation, multi-chain state normalization, verifiable service interfaces" | Correct. 8 protocol adapters, MMR proofs, REST + gRPC APIs | **Implemented** | None |
 | **Security** | SECURITY.md present | Real cryptographic signatures via lib-conxian-core; bitVM2 Groth16 verification; ZSE compliant | **Verified** | None |
 | **Governance** | "Maintained by Conxian-Labs as public infrastructure" | CODEOWNERS, CONTRIBUTING.md, CHANGELOG.md present | **Implemented** | None |
@@ -57,11 +57,11 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | README not accessible (submodule not initialized in workspace) | CI: Gateway Suite green; cargo check + cargo test pass | **Beta** | README needs trust section audit when submodule initialized |
+| **Status** | README not accessible (submodule not initialized in workspace) | Historical Gateway Suite and local `cargo check` / `cargo test` evidence exists; current hosted Actions are blocked before steps and not re-verified as of 2026-07-28 | **Beta** | README needs trust section audit when submodule initialized |
 | **Scope** | ISO 20022 compliance pipe; cross-layer state aggregation | Implemented per CI coverage | **Implemented** | None known |
 | **Security** | — | ZSE compliant; contamination guard enforced | **Verified** | None known |
 
-**Verdict**: ⚠️ Cannot fully verify — submodule not initialized in current workspace. CI evidence suggests Beta status. Schedule full audit when submodule accessible.
+**Verdict**: ⚠️ Cannot fully verify — submodule not initialized in current workspace. Historical CI evidence supports the Beta classification, but current hosted checks do not re-verify it. Schedule full audit when submodule accessible.
 
 ### 2.4 Conxian Core Protocol (`Conxian`)
 
@@ -70,7 +70,7 @@ Every claim in the audit below uses one of these classifications:
 | **Status** | Pinned submodule (update=none); mainnet deployment plan exists | CSF mainnet readiness gate: "Go (pending ALEX funding)"; 16 Clarity contracts with clarity-version=4 | **Production-ready** (gated) | Pending ALEX funding verification |
 | **Scope** | Core protocol + on-chain contracts; sovereign treasury | Correct. Contracts use dynamic principals via operational-treasury.clar | **Implemented** | None |
 | **Security** | CON-61 (admin centralization), CON-371 (ST→SP) remediated | ZSE + Contamination Guard active; all P0 blockers closed | **Verified** | None |
-| **Governance** | CON-389 branch/promotion standard enforced | Promotion pipeline: dev→staged→main | **Implemented** | None |
+| **Governance** | CON-389 branch/promotion policy is checked in | Exact route policy is implemented in Git; live default-branch/protection state is not administrator-verified in this record | **Implemented** | Administrator verification remains required |
 
 **Verdict**: ✅ Trust language backed by gate evidence. Mainnet readiness: Conditional Go. Explicit about ALEX funding gate.
 
@@ -78,9 +78,9 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | Submodule not initialized | Deployed via GitHub Pages (deploy-docs workflow); CI green | **Beta** | Schedule audit when submodule accessible |
+| **Status** | Submodule not initialized | GitHub Pages deployment and historical deploy-docs workflow evidence exist; current hosted Actions are blocked before steps and not re-verified as of 2026-07-28 | **Beta** | Schedule audit when submodule accessible |
 
-**Verdict**: ⚠️ Cannot verify — submodule not initialized. Deploy-docs CI workflow runs successfully.
+**Verdict**: ⚠️ Cannot verify — submodule not initialized. Historical deploy-docs workflow evidence exists, but current hosted execution is blocked and not re-verified.
 
 ---
 
@@ -107,7 +107,7 @@ Every claim in the audit below uses one of these classifications:
 | Vulnerability reporting | `SECURITY.md` in conxius-wallet, conxian-nexus | **Implemented** |
 | Secret hygiene | ZSE enforced; contamination guard blocks testnet principals in production .clar files | **Verified** |
 | Dependency scanning | Dependabot active on all submodules; `cargo audit` runs in CI | **Implemented** |
-| Automated checks | Conxian Unified CI: 9/9 jobs (B2B, B2C, Core, Gateway, Hygiene, Summary) | **Verified** |
+| Automated checks | Historical workflow evidence exists; as of 2026-07-28 hosted Actions are blocked before steps by the account billing/spend state | **Blocked / not re-verified** |
 | Code review ownership | `CODEOWNERS` present in all active repos | **Implemented** |
 | Third-party audit | **Not claimed**. No public audit report exists. | **N/A — not claimed** |
 
@@ -127,7 +127,7 @@ Every claim in the audit below uses one of these classifications:
 | Versioning | Semantic versioning adopted; tags on releases | **Implemented** |
 | Release notes | `CHANGELOG.md` maintained per Keep a Changelog | **Verified** |
 | Breaking changes | Documented in changelog; controlled via promotion pipeline | **Implemented** |
-| Promotion pipeline | dev → staged → main enforced by CI and branch-protection rules | **Verified** |
+| Promotion pipeline | Exact `dev` -> `staged` -> `main` policy is checked in; live required-check and protection settings are not administrator-verified here | **Implemented; live state unverified** |
 
 ---
 
@@ -166,7 +166,7 @@ The following are explicitly **not claimed** on any public surface. This section
 
 The Conxian BOS is a **sovereign-first, non-custodial** financial infrastructure system with:
 
-- **Proven CI pipeline**: 9/9 green across all suites (B2B, B2C, Core, Gateway, Hygiene)
+- **CI evidence boundary**: Historical successful pipeline evidence exists, but as of 2026-07-28 current hosted Actions are blocked before steps by the account billing/spend state and are not re-verified
 - **Zero Secret Egress**: No secrets in Git; contamination guard enforces production principal hygiene
 - **Verifiable state**: Cryptographic MMR proofs and BitVM2 Groth16 verification for cross-chain state
 - **Honest maturity labeling**: Conxius Wallet is Stable/Production-ready; Nexus and Gateway are Beta; `conxius-enclave-sdk` is Beta / conditional with no value-bearing production signing or settlement; ConxianCSF mainnet is gated on ALEX funding

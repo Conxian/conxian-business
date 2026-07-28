@@ -18,11 +18,13 @@ Most implementation work happens in the individual service repositories (often p
 ## Branching and Promotion
 
 All contributors must adhere to the [**Branching and Promotion Policy**](./docs/BRANCHING_AND_PROMOTION_POLICY.md):
-- `main`: Mainnet-only production code. No stubs, mocks, or placeholders.
-- `staged`: Mainnet candidate validation and promotion to `main`.
-- `dev`: Default development and testnet-oriented logic.
+- `main`: GitHub default and production branch.
+- `dev`: Non-production integration branch; never the GitHub default.
+- `staged`: Candidate branch between integration and production.
 
-Feature branches should validate locally first, then land in `dev` via pull request.
+Allowed ordinary work branches should validate locally first, then land in `dev`
+via pull request. Promotions use only the exact direct or generated routes in
+[`docs/BRANCH_AND_PROMOTION_STANDARD.md`](./docs/BRANCH_AND_PROMOTION_STANDARD.md).
 
 ## Bounty workflow
 

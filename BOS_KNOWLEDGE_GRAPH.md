@@ -698,6 +698,46 @@ URL, hardware result, or acceptance state is inferred by this digest.
 
 ---
 
+## Dated Digest: CON-1571 Governance Bootstrap (2026-07-28)
+
+### Decision and incident boundary
+
+| Field | Public-safe record |
+|---|---|
+| Authority | [CON-1571](https://linear.app/conxian-labs/issue/CON-1571/bosp1-reconcile-default-branch-promotion-policy-and-branch-protections) and [Business #945](https://github.com/Conxian/conxian-business/issues/945) govern branch-policy reconciliation. |
+| Canonical hierarchy | `main` remains the GitHub default and production branch; `dev` is the non-production integration branch; `staged` is the candidate branch. |
+| Route decision | Normal work targets `dev`; only `dev` or an exact immutable dev candidate targets `staged`; only `staged` or an exact immutable staged candidate targets `main`. |
+| Split-lineage incident | Full-history inspection found split roots between `main` and `dev`/`staged`. This bootstrap authorizes no merge, reset, bulk cherry-pick, pin rewrite, or long-lived branch-ref mutation. |
+| Prior merge | [PR #970](https://github.com/Conxian/conxian-business/pull/970) is already merged in `main` at `f6e7331c3e2eb6e35ed42e47b9e4c88aafbc7bc2`; it is evidence already present, not branch reconciliation and not a transplant source. |
+| Enforcement boundary | The proposed workflow uses `pull_request_target`, read-only permissions, and trusted default-branch policy code only. Checked-in workflows, validator code, tests, and docs define reviewable policy. Live default-branch, ruleset, required-check, review, force-push, and deletion settings remain separate administrator-owned state and are not claimed verified. |
+| Hosted Actions state | On 2026-07-28 hosted Actions are blocked before workflow steps by the account billing/spend state. That blocker is neither a code failure nor test success. |
+
+### Typed entities and relationships
+
+| Entity | Type | Relationship / state |
+|---|---|---|
+| `main` | Long-lived branch | GitHub default + production; current bootstrap base is exact commit `f6e7331c3e2eb6e35ed42e47b9e4c88aafbc7bc2`. |
+| `dev` | Long-lived branch | Non-production integration; normal work lands here before promotion. |
+| `staged` | Long-lived branch | Candidate lane; receives only `dev` or exact `promotion/dev-to-staged-<source-sha>` candidates. |
+| Exact staged candidate | Immutable promotion ref | `promotion/staged-to-main-<source-sha>` may target `main` only with same-repository SHA/body evidence and a complete Mainnet Acceptance Evidence Pack. |
+| Branch Promotion Policy workflow | Checked-in CI control | On merge, `pull_request_target` shallow-checks out trusted default-branch code and delegates exact route/evidence decisions to that copy of `scripts/branch_promotion_policy.py` under the stable check name `Enforce branch promotion rules`; it never executes PR-controlled code. |
+| Auto-Promotion workflow | Candidate publisher | Creates source-SHA-suffixed refs, records source/target/window evidence, detects exact existing PRs, avoids bare force, and fails closed to a manual-PR fallback. |
+| Promotion controls verifier | Static evidence tool | Rejects contradictory default-branch language and reports inaccessible live administration as `UNVERIFIED/BLOCKED`, never passing. |
+| Finite bootstrap exception | One-PR governance control | Keyed only to CON-1571 draft PR #971, its exact head, `main` base, and same repository; near-matches are rejected. PR #971 is manually owner-reviewed and cannot self-prove the new trusted workflow because the live PR uses the older workflow from `main`; operational proof requires a later sentinel PR. |
+
+### Evidence and non-claims
+
+| Evidence | Meaning |
+|---|---|
+| `openspec/specs/git-management/spec.md` | Normative hierarchy, route matrix, immutable evidence, finite bootstrap, and administration boundary. |
+| `docs/BRANCH_AND_PROMOTION_STANDARD.md` | Concise operational source. |
+| `scripts/tests/test_branch_promotion_policy.py` | Focused route, fork, malformed candidate, evidence mismatch, and exact-bootstrap tests. |
+| Local validation recorded on the draft PR | Changed-code evidence only; it does not prove hosted Actions execution or administrator settings. |
+| [`docs/CON_1571_BRANCH_RECONCILIATION_LEDGER.md`](docs/CON_1571_BRANCH_RECONCILIATION_LEDGER.md) | Public-safe archive-tag evidence, historical logical-unit dispositions, rollout/abort gates, and typed reconciliation digest. |
+| Future branch reconstruction | Separate controlled work after review; this bootstrap neither performs nor approves it. |
+
+---
+
 ## Maintenance
 
 **Crystallization Rule:** Every agent session MUST update this document with:
