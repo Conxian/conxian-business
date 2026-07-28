@@ -128,11 +128,13 @@ def main() -> int:
 
     # 4) Avoid hard-coded testnet defaults in operational scripts.
     testnet_network_literal = re.compile(
-        r"(?:networkFromName\(\s*['\"]testnet['\"]\s*\)|new\s+StacksTestnet\s*\()"
+        r"(?:networkFromName\(\s*(?P<quote>['\"`])testnet(?P=quote)\s*\)"
+        r"|new\s+StacksTestnet\s*\()"
     )
-    # Matches testnet principals like "ST..." or "ST....contract-name" (case-insensitive).
+    # Matches static testnet principal literals like "ST..." or `SN....contract-name`.
     testnet_principal_literal = re.compile(
-        r"['\"](?:ST|SN)[0-9A-Z]{20,}(?:\.[a-zA-Z0-9-]{1,128})?['\"]",
+        r"(?P<quote>['\"`])(?:ST|SN)[0-9A-Z]{20,}"
+        r"(?:\.[a-zA-Z0-9-]{1,128})?(?P=quote)",
         re.IGNORECASE,
     )
     for rel_path in repo_files:
