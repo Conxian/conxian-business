@@ -633,6 +633,7 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 | Field | Record |
 |---|---|
 | Public-safe authority | [Business #943](https://github.com/Conxian/conxian-business/issues/943) and [`docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`](docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md) own the reusable lifecycle, scoring rubric, phase artifacts, evidence vocabulary, and refresh rules. |
+| Dated evidence ledger | [`docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`](docs/BOS_RESEARCH_CANDIDATE_LEDGER.md) and [`docs/bos_research_candidate_ledger.json`](docs/bos_research_candidate_ledger.json) record the bounded 2026-07-28 candidate set, scores, gap classes, dispositions, provenance, uncertainty, and non-claims. This is not an exhaustive ecosystem audit. |
 | Dependent governance | [Business #944](https://github.com/Conxian/conxian-business/issues/944) owns classified migration; [Business #945](https://github.com/Conxian/conxian-business/issues/945) owns branch/promotion reconciliation; [Conxian/.github #61](https://github.com/Conxian/.github/issues/61) owns organization Project authorization, name, and schema. |
 | Restricted-record boundary | GitHub stores only minimum-necessary public-safe coordination and sanitized evidence. The approved non-Git successor and accountable owner remain explicit human-owned blockers and are not inferred. |
 | Ownership rule | Implementation and acceptance live in each owning repository. `conxian-business` stores portfolio links, comparable scores, decisions, evidence state, and non-claims only. |
@@ -653,32 +654,47 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 | Repository PRs `#237/#244/#249` | Implementation evidence | **MERGED** on 2026-07-22 | Bounded implementation presence; not a fresh umbrella candidate or production-acceptance claim. |
 | Wallet PRs `#451/#452/#455` | Consumer implementation evidence | **MERGED** on 2026-07-25/26 | Bounded enforcement artifacts; not real-device/provider proof or independent acceptance. |
 | Nexus `#178` | Independent candidate | **OPEN**, scored **69/100** | Separate narrow CI remediation in `conxian-nexus`; not part of #943 implementation. |
+| BOS candidate ledger | Evidence artifact | Dated bounded scan; deterministically validated | Records two separate decisions: #943 remains selected authority at 84/100; Core #227 is selected next technical candidate at the scored maximum of 88/100. |
+| Core `#227 → draft PR #229` | Technical candidate and implementation artifact | Selected at **88/100**; non-release draft at head `7a5c83795f473971161c80a117dd35150a4362ca` | Owner-repository draft removes the unused BDK Electrum path from `Cargo.toml`/`Cargo.lock`; release, signing, publication, downstream repin, administration, and acceptance remain human gates. |
+| Unscored refinement gaps | Gap set | Tracker required before scoring unless an existing lower-scope owner exists | Residual advisories, historical CI/rustfmt gaps, and unmaintained-dependency research leads do not masquerade as scored candidates or create duplicate umbrellas. |
 
 ### Relationships and decisions
 
 | From | Relationship | To | Boundary / decision |
 |---|---|---|---|
 | `#943` | governs | `inventory → gap map → score → selected initiative → implementation/evidence → review → next-cycle refresh` | One reusable public-safe cycle; no second generic research index. |
+| `#943` | governs | BOS candidate ledger | The operating model remains lifecycle/rubric authority; the ledger is the dated evidence record. |
+| BOS candidate ledger | selects without transferring ownership | Core `#227 → draft PR #229` | Core is the next technical candidate at 88/100; #943 remains the separate selected authority at 84/100. |
+| BOS candidate ledger | links | existing owner trackers and unscored gaps | Owner issues remain canonical; unowned gaps require a tracker before scoring. |
 | `#943` | precedes | `#944`, `#945`, `.github#61` | Authority/boundary alignment comes before classified migration and Project/branch governance. |
 | `#940` | selected | `#955`, implemented by PR `#956` | Existing semantic-source cycle is linked, not duplicated; its hosted-check failures remain explicit. |
 | `#240` | blocks | `#241`, `#242` | Shared trust/collateral/revocation/replay requirements precede provider qualification. |
 | `#241`, `#242` | flow to | `#202` | Provider work still requires exact independent release acceptance. |
 | Wallet `#444` | consumes | accepted attestation evidence | Consumer enforcement cannot substitute for upstream qualification/acceptance. |
 | Nexus `#178` | remains independent from | Business `#943` | Lower-scored narrow remediation proceeds in its owning repository. |
-| Research-cycle score | prioritizes but does not establish | assurance, severity, funding, release, or production readiness | Initial comparable result: #943 84, attestation chain 82, Nexus #178 69. |
+| Research-cycle score | prioritizes but does not establish | assurance, severity, funding, release, or production readiness | Original dated result remains #943 84, attestation chain 82, Nexus #178 69; expanded ledger selects Core #227 as the next technical candidate at 88 without rewriting the original history. |
 
 ### Phase sequence and unresolved decisions
 
 1. Authority alignment under #943.
 2. Classified migration under #944.
 3. Branch and organization Project governance under #945 and `.github#61`.
-4. Candidate execution in owning repositories.
-5. Evidence review and dated refresh.
+4. Dated bounded candidate ledger, then candidate execution in owning repositories.
+5. Evidence review and dated ledger/graph refresh.
 
 Two blockers remain human-owned: approval of the non-Git restricted-record
 successor with its accountable owner, and organization Project authorization,
 name, and field/schema decisions. No private record, person, approval, Project
 URL, hardware result, or acceptance state is inferred by this digest.
+
+### Ledger evidence links
+
+| Evidence | Link |
+|---|---|
+| Human-readable ledger | [`docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`](docs/BOS_RESEARCH_CANDIDATE_LEDGER.md) |
+| Machine-readable ledger | [`docs/bos_research_candidate_ledger.json`](docs/bos_research_candidate_ledger.json) |
+| Validator and focused tests | [`scripts/verify_bos_research_candidate_ledger.py`](scripts/verify_bos_research_candidate_ledger.py), [`scripts/tests/test_verify_bos_research_candidate_ledger.py`](scripts/tests/test_verify_bos_research_candidate_ledger.py) |
+| Selected Core artifact | [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), [draft PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [formal review](https://github.com/Conxian/lib-conxian-core/pull/229#pullrequestreview-4795322131) |
 
 ---
 

@@ -72,6 +72,7 @@ The following link-preserving stubs are intentionally retained in Git. Their can
 | `docs/README.md` | Supporting | Public-safe | “Docs hub” landing page. |
 | `docs/BOS_BUSINESS_BUILDOUT.md` | Canonical | Public-safe | Repo business purpose, business-unit placement, governance + ownership model, and public/internal split. |
 | `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` | Canonical | Public-safe | Public-safe BOS research-cycle authority: lifecycle, scoring rubric, phase evidence, ownership boundaries, blockers, and refresh rules under [#943](https://github.com/Conxian/conxian-business/issues/943). |
+| `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md` | Supporting | Public-safe | Human-readable 2026-07-28 bounded candidate ledger, linked to its machine-readable companion and deterministic validator; not an exhaustive ecosystem audit. |
 | `docs/PRIVATE_REPO_REPO_CHECK_WORKFLOW.md` | Canonical | Public-safe | Repo-check workflow for private repositories (boundary, secrets, hygiene, governance, release maturity). |
 | `docs/BRANCH_AND_PROMOTION_STANDARD.md` | Canonical | Public-safe | Canonical `dev`/`staged`/`main` branch roles and promotion workflow. |
 | `docs/PROMOTION_CHECKLISTS.md` | Canonical | Public-safe | Required checklists and evidence for feature -> `dev` -> `staged` -> `main` promotions. |
@@ -110,14 +111,19 @@ These are the “operating-model” documents that explain how BOS components re
 [`GITHUB_FIRST_BOS_OPERATING_MODEL.md`](./GITHUB_FIRST_BOS_OPERATING_MODEL.md)
 is canonical for the public-safe lifecycle and reusable score rubric. It links
 to owning records rather than reproducing their implementation or restricted
-content:
+content. [`BOS_RESEARCH_CANDIDATE_LEDGER.md`](./BOS_RESEARCH_CANDIDATE_LEDGER.md)
+and [`bos_research_candidate_ledger.json`](./bos_research_candidate_ledger.json)
+hold the dated bounded inventory, per-dimension provenance, score history, gap
+classes, two-layer selection, uncertainty, and non-claims:
 
 | Ownership area | Canonical records | Index boundary |
 |---|---|---|
+| Lifecycle/rubric authority and dated candidate evidence | [Business #943](https://github.com/Conxian/conxian-business/issues/943), [`GITHUB_FIRST_BOS_OPERATING_MODEL.md`](./GITHUB_FIRST_BOS_OPERATING_MODEL.md), [`BOS_RESEARCH_CANDIDATE_LEDGER.md`](./BOS_RESEARCH_CANDIDATE_LEDGER.md) | The operating model governs the cycle/rubric; the ledger records the bounded scan. Existing owner trackers remain canonical for implementation and acceptance. |
 | Authority, migration, and branch governance | [Business #943](https://github.com/Conxian/conxian-business/issues/943), [#944](https://github.com/Conxian/conxian-business/issues/944), [#945](https://github.com/Conxian/conxian-business/issues/945), [Conxian/.github #61](https://github.com/Conxian/.github/issues/61) | Public-safe coordination only; Project authorization/name/schema and restricted-record successor remain human-owned. |
 | Semantic-source cycle | [Business #940](https://github.com/Conxian/conxian-business/issues/940), [merged PR #956](https://github.com/Conxian/conxian-business/pull/956) | Existing bounded implementation; preserve its historical check state and non-adoption/non-acceptance boundary. |
 | Attestation and independent acceptance | [Repository #240](https://github.com/Conxian/conxius-enclave-sdk/issues/240), [#241](https://github.com/Conxian/conxius-enclave-sdk/issues/241), [#242](https://github.com/Conxian/conxius-enclave-sdk/issues/242), [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) | Implementation and acceptance stay in the owning repository; this index does not duplicate its threat model or phase plan. |
 | Wallet consumer boundary | [Wallet #444](https://github.com/Conxian/conxius-wallet/issues/444) | Consumer enforcement remains wallet-owned and does not imply upstream acceptance. |
+| Selected next technical candidate | [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), [draft PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [formal review](https://github.com/Conxian/lib-conxian-core/pull/229#pullrequestreview-4795322131) | Selected at 88/100 without displacing #943 authority; release, signing, publication, downstream repin, administration, and acceptance remain owner gates. |
 | Independent Nexus remediation | [Nexus #178](https://github.com/Conxian/conxian-nexus/issues/178) | Separate narrow CI item, not part of the selected #943 implementation. |
 
 Existing historical classifications elsewhere in this index remain unchanged.

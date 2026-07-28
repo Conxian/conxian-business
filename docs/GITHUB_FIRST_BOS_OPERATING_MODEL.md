@@ -94,8 +94,10 @@ The current sequence is:
 1. Authority alignment — [Business #943](https://github.com/Conxian/conxian-business/issues/943).
 2. Classified migration — [Business #944](https://github.com/Conxian/conxian-business/issues/944).
 3. Branch and Project governance — [Business #945](https://github.com/Conxian/conxian-business/issues/945) and [organization tracker #61](https://github.com/Conxian/.github/issues/61).
-4. Candidate execution in each owning repository.
-5. Evidence review and the next-cycle refresh in #943 and the knowledge graph.
+4. Dated bounded candidate ledger, followed by candidate execution in each
+   owning repository.
+5. Evidence review and the next-cycle refresh in #943, the ledger, and the
+   knowledge graph.
 
 ## Initial scorecard — 2026-07-28
 
@@ -122,6 +124,35 @@ The current sequence is:
   fresh umbrella candidates. Merge or hosted-check state does not establish
   provider qualification, real-device/hardware proof, production support,
   independent acceptance, or release authorization.
+
+## Dated bounded evidence ledger
+
+The human-readable [`BOS_RESEARCH_CANDIDATE_LEDGER.md`](BOS_RESEARCH_CANDIDATE_LEDGER.md)
+and machine-readable [`bos_research_candidate_ledger.json`](bos_research_candidate_ledger.json)
+record the bounded 2026-07-28 scan. This operating model remains the lifecycle
+and rubric authority; the ledger is the dated inventory, score, disposition,
+gap, selection, and provenance record. It is not an exhaustive ecosystem audit,
+and existing owner issues remain canonical.
+
+Candidate inclusion requires a public-safe owner or owner-needed boundary, a
+specific gap, linked evidence, a disposition, a next gate, uncertainty, and an
+explicit non-claim. Comparable candidates also require all six rubric scores,
+per-dimension rationale and provenance, and arithmetic totals. Exclude or keep
+unscored any duplicate umbrella, restricted-record detail, unsupported owner or
+acceptance inference, or refinement lead without a canonical tracker.
+
+Gap classes describe the work boundary, not severity. The ledger uses separate
+fields for **selected authority** and **selected next technical candidate**:
+[Business #943](https://github.com/Conxian/conxian-business/issues/943) remains
+the authority, while [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227)
+is the next technical candidate. Neither selection substitutes for owner review,
+release, acceptance, environment evidence, or production proof.
+
+Run `python3 scripts/verify_bos_research_candidate_ledger.py` and
+`python3 -m unittest -v scripts/tests/test_verify_bos_research_candidate_ledger.py`
+for deterministic validation. Refreshes preserve this dated score history,
+change scores only after linked facts change, retain per-dimension provenance
+and uncertainty, and add no semantic change when the evidence state is unchanged.
 
 ## Blockers and idempotent updates
 
@@ -154,8 +185,10 @@ change.
 | `conxius-enclave-sdk` repository | Library/repository | Attestation prerequisite, provider, and acceptance ownership | #240 blocks #241/#242; all flow to #202; merged #237/#244/#249 are bounded evidence. |
 | `conxius-wallet` repository | Client/repository | Consumer enforcement boundary | #444 consumes accepted evidence; merged #451/#452/#455 do not establish production acceptance. |
 | `conxian-nexus` repository | Library/repository | Independent CI remediation owner | #178 remains separate from the #943 authority implementation. |
+| BOS candidate ledger | Evidence artifact | Bounded 2026-07-28 scan with deterministic validation | Preserves #943 as selected authority and records Core #227 as the next technical candidate without transferring owner responsibility. |
+| `lib-conxian-core` repository | Library/repository | Selected technical owner | #227 owns the candidate; draft PR #229 is bounded implementation evidence, not release or acceptance. |
 | External semantic-source control | Decision/control | Completed bounded implementation with non-clean hosted-check history | #940 selected #955; PR #956 merged, without implying clean checks or adoption/acceptance. |
-| Research-cycle selection | Decision | #943 selected at 84/100 | Attestation chain retained under existing owners at 82/100; Nexus #178 retained independently at 69/100. |
+| Research-cycle selection | Decision | #943 remains selected authority at 84/100; Core #227 selected next technical candidate at 88/100 | Original attestation 82 and Nexus #178 69 scores remain preserved; expanded candidates and unscored gaps live in the dated ledger. |
 | Restricted-record successor | Decision dependency | Human-owned and unresolved | Must be approved outside Git/GitHub with an accountable owner before restricted-record migration can advance. |
 
 This crystallization is a compact navigation record. The structural portfolio
