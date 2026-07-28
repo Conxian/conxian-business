@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 
 from scripts.branch_promotion_policy import (
+    BOOTSTRAP_EXCEPTION,
     BootstrapException,
     PullRequestContext,
     validate_pull_request,
@@ -161,6 +162,17 @@ class BranchPromotionPolicyTests(unittest.TestCase):
         for candidate in near_matches:
             with self.subTest(candidate=candidate):
                 self.assertRejected(candidate, exception)
+
+    def test_configured_bootstrap_exception_is_pr_971_only(self) -> None:
+        self.assertEqual(971, BOOTSTRAP_EXCEPTION.pr_number)
+        exact = context(
+            "promotion/con-1571-governance-bootstrap", "main", "", number=971
+        )
+        self.assertAccepted(exact, BOOTSTRAP_EXCEPTION)
+        self.assertRejected(
+            context("promotion/con-1571-governance-bootstrap", "main", "", number=970),
+            BOOTSTRAP_EXCEPTION,
+        )
 
 
 if __name__ == "__main__":

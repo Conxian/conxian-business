@@ -42,9 +42,9 @@ class BootstrapException:
     base_ref: str = "main"
 
 
-# Stage two replaces 0 with the draft PR number. The branch and base are fixed,
-# so the exception cannot authorize another PR, route, or reusable actor bypass.
-BOOTSTRAP_EXCEPTION = BootstrapException(pr_number=0)
+# Finite bootstrap for draft PR #971 only. The PR number, branch, base, and
+# same-repository requirement prevent reuse by another PR or route.
+BOOTSTRAP_EXCEPTION = BootstrapException(pr_number=971)
 
 
 @dataclass(frozen=True)
