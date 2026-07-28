@@ -40,8 +40,17 @@ The recorded values must match the pull request refs and SHAs.
 ## Enforcement boundary
 
 `.github/workflows/branch-promotion-policy.yml` and
-`scripts/branch_promotion_policy.py` are checked-in controls. They define a
-stable check surface, but they do not prove live GitHub administration.
+`scripts/branch_promotion_policy.py` are checked-in controls. The workflow uses
+`pull_request_target`, explicit read-only permissions, and a shallow checkout of
+the repository default branch. It executes only that trusted policy script
+against `GITHUB_EVENT_PATH`; it never checks out or executes PR head/merge code
+and never interpolates PR-controlled title, body, head SHA, or head ref into a
+shell command.
+
+PR #971 is a manually owner-reviewed bootstrap, not secure self-validation. The
+live PR continues to use the older workflow from `main` until this change is
+merged. Only a later sentinel PR can prove the new trusted default-branch
+workflow operationally.
 
 Default-branch selection, branch protections/rulesets, required checks,
 approval counts, deletion rules, and force-push rules are administrator-owned

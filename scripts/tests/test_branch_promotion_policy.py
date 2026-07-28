@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import re
 import unittest
+from pathlib import Path
 
 from scripts.branch_promotion_policy import (
     BOOTSTRAP_EXCEPTION,
@@ -13,6 +15,8 @@ from scripts.branch_promotion_policy import (
 REPO = "Conxian/conxian-business"
 SOURCE_SHA = "a" * 40
 TARGET_SHA = "b" * 40
+ROOT = Path(__file__).resolve().parents[2]
+WORKFLOW_PATH = ROOT / ".github/workflows/branch-promotion-policy.yml"
 
 FEATURE_BODY = """<!-- PROMOTION:FEATURE->DEV -->
 ### Feature -> dev promotion checklist
@@ -173,6 +177,45 @@ class BranchPromotionPolicyTests(unittest.TestCase):
             context("promotion/con-1571-governance-bootstrap", "main", "", number=970),
             BOOTSTRAP_EXCEPTION,
         )
+
+
+class BranchPromotionWorkflowTrustBoundaryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.workflow = WORKFLOW_PATH.read_text(encoding="utf-8")
+
+    def test_uses_pull_request_target_not_pull_request(self) -> None:
+        self.assertIn("pull_request_target:", self.workflow)
+        self.assertIsNone(re.search(r"^\s+pull_request:\s*$", self.workflow, re.MULTILINE))
+
+    def test_retains_explicit_read_only_permissions(self) -> None:
+        self.assertRegex(self.workflow, r"(?m)^permissions:\n  contents: read\n  pull-requests: read$")
+
+    def test_checks_out_only_the_default_branch_shallowly(self) -> None:
+        self.assertIn("ref: ${{ github.event.repository.default_branch }}", self.workflow)
+        self.assertIn("fetch-depth: 1", self.workflow)
+        self.assertIn("persist-credentials: false", self.workflow)
+        for forbidden in (
+            "merge_commit_sha",
+            "github.event.pull_request.head.sha",
+            "github.event.pull_request.head.ref",
+            "github.head_ref",
+        ):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, self.workflow)
+
+    def test_does_not_interpolate_pr_controlled_data_into_commands(self) -> None:
+        self.assertNotIn("${{ github.event.pull_request", self.workflow)
+        self.assertEqual(
+            ['python3 scripts/branch_promotion_policy.py --event-path "$GITHUB_EVENT_PATH"'],
+            re.findall(r"^\s+run:\s*(.+)$", self.workflow, re.MULTILINE),
+        )
+
+    def test_enforcement_uses_no_pr_controlled_code(self) -> None:
+        uses = re.findall(r"^\s+uses:\s*(\S+)", self.workflow, re.MULTILINE)
+        self.assertEqual(1, len(uses))
+        self.assertTrue(uses[0].startswith("actions/checkout@"))
+        self.assertNotIn("path:", self.workflow)
 
 
 if __name__ == "__main__":

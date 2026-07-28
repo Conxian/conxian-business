@@ -29,6 +29,19 @@ ordered `dev` -> `staged` -> `main`.
 Generated routes are immutable snapshots. Their bodies record the exact source
 SHA, target-base SHA, and `<target-base-sha>..<source-sha>` commit window.
 
+## Trusted enforcement execution
+
+The branch-policy workflow runs on `pull_request_target` with read-only
+permissions. It shallow-checks out the repository default branch and runs only
+that trusted copy of `scripts/branch_promotion_policy.py` against the event JSON.
+It does not check out/import/execute a PR head or merge commit, and it does not
+interpolate PR-controlled title/body/head fields into shell commands.
+
+Draft PR #971 is the finite, manually owner-reviewed bootstrap for this design.
+It cannot securely self-prove the new workflow because GitHub evaluates the live
+PR with the older workflow on `main`. Operational proof requires a later
+sentinel PR after the trusted workflow is merged.
+
 ## Merge evidence
 
 - Use the route checklist in `docs/PROMOTION_CHECKLISTS.md`.

@@ -1,7 +1,7 @@
 name: Branch Promotion Policy
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, reopened, synchronize, edited, ready_for_review, converted_to_draft]
     branches: [main, staged, dev]
 
@@ -17,10 +17,11 @@ jobs:
       - name: Checkout policy implementation
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
         with:
-          # Pull-request events run the policy from the proposed merge commit so
-          # this finite bootstrap can validate the policy it introduces.
-          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          # The enforcement implementation always comes from trusted
+          # default-branch code. Never check out the PR head or merge commit.
+          ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 1
+          persist-credentials: false
 
       - name: Enforce exact route and evidence matrix
         env:

@@ -709,7 +709,7 @@ URL, hardware result, or acceptance state is inferred by this digest.
 | Route decision | Normal work targets `dev`; only `dev` or an exact immutable dev candidate targets `staged`; only `staged` or an exact immutable staged candidate targets `main`. |
 | Split-lineage incident | Full-history inspection found split roots between `main` and `dev`/`staged`. This bootstrap authorizes no merge, reset, bulk cherry-pick, pin rewrite, or long-lived branch-ref mutation. |
 | Prior merge | [PR #970](https://github.com/Conxian/conxian-business/pull/970) is already merged in `main` at `f6e7331c3e2eb6e35ed42e47b9e4c88aafbc7bc2`; it is evidence already present, not branch reconciliation and not a transplant source. |
-| Enforcement boundary | Checked-in workflows, validator code, tests, and docs define reviewable policy. Live default-branch, ruleset, required-check, review, force-push, and deletion settings remain separate administrator-owned state and are not claimed verified. |
+| Enforcement boundary | The proposed workflow uses `pull_request_target`, read-only permissions, and trusted default-branch policy code only. Checked-in workflows, validator code, tests, and docs define reviewable policy. Live default-branch, ruleset, required-check, review, force-push, and deletion settings remain separate administrator-owned state and are not claimed verified. |
 | Hosted Actions state | On 2026-07-28 hosted Actions are blocked before workflow steps by the account billing/spend state. That blocker is neither a code failure nor test success. |
 
 ### Typed entities and relationships
@@ -720,10 +720,10 @@ URL, hardware result, or acceptance state is inferred by this digest.
 | `dev` | Long-lived branch | Non-production integration; normal work lands here before promotion. |
 | `staged` | Long-lived branch | Candidate lane; receives only `dev` or exact `promotion/dev-to-staged-<source-sha>` candidates. |
 | Exact staged candidate | Immutable promotion ref | `promotion/staged-to-main-<source-sha>` may target `main` only with same-repository SHA/body evidence and a complete Mainnet Acceptance Evidence Pack. |
-| Branch Promotion Policy workflow | Checked-in CI control | Delegates exact route/evidence decisions to `scripts/branch_promotion_policy.py` under the stable check name `Enforce branch promotion rules`. |
+| Branch Promotion Policy workflow | Checked-in CI control | On merge, `pull_request_target` shallow-checks out trusted default-branch code and delegates exact route/evidence decisions to that copy of `scripts/branch_promotion_policy.py` under the stable check name `Enforce branch promotion rules`; it never executes PR-controlled code. |
 | Auto-Promotion workflow | Candidate publisher | Creates source-SHA-suffixed refs, records source/target/window evidence, detects exact existing PRs, avoids bare force, and fails closed to a manual-PR fallback. |
 | Promotion controls verifier | Static evidence tool | Rejects contradictory default-branch language and reports inaccessible live administration as `UNVERIFIED/BLOCKED`, never passing. |
-| Finite bootstrap exception | One-PR governance control | Keyed only to the CON-1571 draft PR number, exact head, `main` base, and same repository; near-matches are rejected. |
+| Finite bootstrap exception | One-PR governance control | Keyed only to CON-1571 draft PR #971, its exact head, `main` base, and same repository; near-matches are rejected. PR #971 is manually owner-reviewed and cannot self-prove the new trusted workflow because the live PR uses the older workflow from `main`; operational proof requires a later sentinel PR. |
 
 ### Evidence and non-claims
 

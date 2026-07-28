@@ -23,6 +23,14 @@ CANONICAL_DOCS = (
     ROOT / ".github/PULL_REQUEST_TEMPLATE.md",
     ROOT / ".github/RELEASE_HYGIENE.md",
 )
+POLICY_WORKFLOW = ROOT / ".github/workflows/branch-promotion-policy.yml"
+TRUSTED_POLICY_REF = "ref: ${{ github.event.repository.default_branch }}"
+FORBIDDEN_POLICY_REFS = (
+    "merge_commit_sha",
+    "github.event.pull_request.head.sha",
+    "github.event.pull_request.head.ref",
+    "github.head_ref",
+)
 
 
 def _run(*args: str) -> subprocess.CompletedProcess[str]:
@@ -58,8 +66,14 @@ def verify_static(*, allow_unkeyed_bootstrap: bool) -> list[str]:
         if phrase not in standard:
             errors.append(f"operational standard is missing required phrase: {phrase}")
 
-    workflow = (ROOT / ".github/workflows/branch-promotion-policy.yml").read_text(encoding="utf-8")
+    workflow = POLICY_WORKFLOW.read_text(encoding="utf-8")
     for token in (
+        "pull_request_target:",
+        "contents: read",
+        "pull-requests: read",
+        TRUSTED_POLICY_REF,
+        "fetch-depth: 1",
+        "persist-credentials: false",
         "scripts/branch_promotion_policy.py",
         "opened, reopened, synchronize, edited, ready_for_review, converted_to_draft",
         "Enforce branch promotion rules",
@@ -68,6 +82,25 @@ def verify_static(*, allow_unkeyed_bootstrap: bool) -> list[str]:
             errors.append(f"branch policy workflow is missing: {token}")
     if "startsWith('promotion/')" in workflow or "promotion/*" in workflow:
         errors.append("branch policy workflow contains a broad promotion wildcard")
+    if re.search(r"^\s+pull_request:\s*$", workflow, re.MULTILINE):
+        errors.append("branch policy workflow uses pull_request instead of pull_request_target")
+    for token in FORBIDDEN_POLICY_REFS:
+        if token in workflow:
+            errors.append(f"branch policy workflow references PR-controlled checkout data: {token}")
+    if "${{ github.event.pull_request" in workflow:
+        errors.append("branch policy workflow interpolates pull-request data into workflow commands")
+
+    run_commands = re.findall(r"^\s+run:\s*(.+)$", workflow, re.MULTILINE)
+    trusted_command = 'python3 scripts/branch_promotion_policy.py --event-path "$GITHUB_EVENT_PATH"'
+    if run_commands != [trusted_command]:
+        errors.append(
+            "branch policy workflow must execute only the trusted default-branch policy "
+            "against GITHUB_EVENT_PATH"
+        )
+
+    action_uses = re.findall(r"^\s+uses:\s*(\S+)", workflow, re.MULTILINE)
+    if len(action_uses) != 1 or not action_uses[0].startswith("actions/checkout@"):
+        errors.append("branch policy workflow may use only the pinned checkout action")
 
     auto = (ROOT / ".github/workflows/auto-promotion.yml").read_text(encoding="utf-8")
     for token in (

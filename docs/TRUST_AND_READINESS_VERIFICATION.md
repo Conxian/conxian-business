@@ -2,7 +2,7 @@
 
 > **Issue**: [#830](https://github.com/Conxian/conxian-business/issues/830) — Re-verify governance and buyer-trust standards across public repos after docs rollout
 > **Status**: Canonical
-> **Last verified**: 2026-07-20
+> **Last verified**: 2026-07-28 (public trust wording and hosted-Actions blocker; component evidence remains dated where stated)
 > **Review cadence**: On every major release, docs rollout, or trust-surface change
 
 ## Purpose
@@ -45,7 +45,7 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | "Active development (v0.4.17). Production intent exists." | v0.4.17; all CON-383 stubs removed; oracle flipped to real; CI 9/9 green | **Beta** (approaching Stable) | Status is honest. Should add explicit Beta label. |
+| **Status** | "Active development (v0.4.17). Production intent exists." | v0.4.17; all CON-383 stubs removed; oracle flipped to real; historical CI evidence exists, but current hosted Actions are blocked before steps and not re-verified as of 2026-07-28 | **Beta** (approaching Stable) | Status is honest. Should add explicit Beta label. |
 | **Scope** | "Glass Node implementation, multi-chain state normalization, verifiable service interfaces" | Correct. 8 protocol adapters, MMR proofs, REST + gRPC APIs | **Implemented** | None |
 | **Security** | SECURITY.md present | Real cryptographic signatures via lib-conxian-core; bitVM2 Groth16 verification; ZSE compliant | **Verified** | None |
 | **Governance** | "Maintained by Conxian-Labs as public infrastructure" | CODEOWNERS, CONTRIBUTING.md, CHANGELOG.md present | **Implemented** | None |
@@ -166,7 +166,7 @@ The following are explicitly **not claimed** on any public surface. This section
 
 The Conxian BOS is a **sovereign-first, non-custodial** financial infrastructure system with:
 
-- **Proven CI pipeline**: 9/9 green across all suites (B2B, B2C, Core, Gateway, Hygiene)
+- **CI evidence boundary**: Historical successful pipeline evidence exists, but as of 2026-07-28 current hosted Actions are blocked before steps by the account billing/spend state and are not re-verified
 - **Zero Secret Egress**: No secrets in Git; contamination guard enforces production principal hygiene
 - **Verifiable state**: Cryptographic MMR proofs and BitVM2 Groth16 verification for cross-chain state
 - **Honest maturity labeling**: Conxius Wallet is Stable/Production-ready; Nexus and Gateway are Beta; `conxius-enclave-sdk` is Beta / conditional with no value-bearing production signing or settlement; ConxianCSF mainnet is gated on ALEX funding

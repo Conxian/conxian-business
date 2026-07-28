@@ -87,6 +87,25 @@ bootstrap exception only when it is keyed to one pull request number, the exact
 repository. It MUST reject every near-match and MUST NOT authorize another pull
 request after that numbered pull request closes or merges.
 
+PR #971 is a manually owner-reviewed bootstrap. It MUST NOT be described as
+self-validating: until it merges, the live pull request is evaluated by the
+older workflow already present on the default branch. The trusted enforcement
+design introduced here can be operationally proven only after merge, through a
+later sentinel pull request that exercises the default-branch workflow.
+
+### Requirement: Trusted branch-policy execution
+
+The branch-promotion enforcement workflow MUST run on `pull_request_target`
+with explicit read-only permissions. It MUST shallow-check out
+`${{ github.event.repository.default_branch }}` and execute only the policy
+script from that trusted checkout against `GITHUB_EVENT_PATH`.
+
+The enforcement job MUST NOT check out, import, or execute a pull request head,
+pull request merge commit, or other pull-request-controlled file. Pull request
+title, body, head SHA, and head ref MUST NOT be interpolated into a shell
+command. Policy decisions MAY parse those fields only as untrusted data from
+the event JSON.
+
 ### Requirement: Checked-in policy versus live administration
 
 Tracked workflows and validators define the policy Git can review. GitHub
