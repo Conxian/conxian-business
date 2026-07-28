@@ -733,6 +733,7 @@ URL, hardware result, or acceptance state is inferred by this digest.
 | `docs/BRANCH_AND_PROMOTION_STANDARD.md` | Concise operational source. |
 | `scripts/tests/test_branch_promotion_policy.py` | Focused route, fork, malformed candidate, evidence mismatch, and exact-bootstrap tests. |
 | Local validation recorded on the draft PR | Changed-code evidence only; it does not prove hosted Actions execution or administrator settings. |
+| [`docs/CON_1571_BRANCH_RECONCILIATION_LEDGER.md`](docs/CON_1571_BRANCH_RECONCILIATION_LEDGER.md) | Public-safe archive-tag evidence, historical logical-unit dispositions, rollout/abort gates, and typed reconciliation digest. |
 | Future branch reconstruction | Separate controlled work after review; this bootstrap neither performs nor approves it. |
 
 ---
