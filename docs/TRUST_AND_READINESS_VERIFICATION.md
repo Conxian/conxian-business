@@ -70,7 +70,7 @@ Every claim in the audit below uses one of these classifications:
 | **Status** | Pinned submodule (update=none); mainnet deployment plan exists | CSF mainnet readiness gate: "Go (pending ALEX funding)"; 16 Clarity contracts with clarity-version=4 | **Production-ready** (gated) | Pending ALEX funding verification |
 | **Scope** | Core protocol + on-chain contracts; sovereign treasury | Correct. Contracts use dynamic principals via operational-treasury.clar | **Implemented** | None |
 | **Security** | CON-61 (admin centralization), CON-371 (ST→SP) remediated | ZSE + Contamination Guard active; all P0 blockers closed | **Verified** | None |
-| **Governance** | CON-389 branch/promotion standard enforced | Promotion pipeline: dev→staged→main | **Implemented** | None |
+| **Governance** | CON-389 branch/promotion policy is checked in | Exact route policy is implemented in Git; live default-branch/protection state is not administrator-verified in this record | **Implemented** | Administrator verification remains required |
 
 **Verdict**: ✅ Trust language backed by gate evidence. Mainnet readiness: Conditional Go. Explicit about ALEX funding gate.
 
@@ -107,7 +107,7 @@ Every claim in the audit below uses one of these classifications:
 | Vulnerability reporting | `SECURITY.md` in conxius-wallet, conxian-nexus | **Implemented** |
 | Secret hygiene | ZSE enforced; contamination guard blocks testnet principals in production .clar files | **Verified** |
 | Dependency scanning | Dependabot active on all submodules; `cargo audit` runs in CI | **Implemented** |
-| Automated checks | Conxian Unified CI: 9/9 jobs (B2B, B2C, Core, Gateway, Hygiene, Summary) | **Verified** |
+| Automated checks | Historical workflow evidence exists; as of 2026-07-28 hosted Actions are blocked before steps by the account billing/spend state | **Blocked / not re-verified** |
 | Code review ownership | `CODEOWNERS` present in all active repos | **Implemented** |
 | Third-party audit | **Not claimed**. No public audit report exists. | **N/A — not claimed** |
 
@@ -127,7 +127,7 @@ Every claim in the audit below uses one of these classifications:
 | Versioning | Semantic versioning adopted; tags on releases | **Implemented** |
 | Release notes | `CHANGELOG.md` maintained per Keep a Changelog | **Verified** |
 | Breaking changes | Documented in changelog; controlled via promotion pipeline | **Implemented** |
-| Promotion pipeline | dev → staged → main enforced by CI and branch-protection rules | **Verified** |
+| Promotion pipeline | Exact `dev` -> `staged` -> `main` policy is checked in; live required-check and protection settings are not administrator-verified here | **Implemented; live state unverified** |
 
 ---
 

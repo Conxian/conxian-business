@@ -2,118 +2,109 @@
 
 ## Purpose
 
-Define the minimum git and submodule management capabilities needed to operate the Conxian workspace (status visibility, clean working trees, and safe synchronization).
-
-This spec also defines the canonical branch and promotion model used across the Conxian portfolio.
+Define the normative Git branch hierarchy, promotion routes, evidence, ownership,
+and safe synchronization requirements for the Conxian workspace.
 
 ## Requirements
 
-### Requirement: Canonical environment branches
+### Requirement: Canonical branch hierarchy
 
-The workspace MUST use the following branch roles consistently across all business units.
+The repository MUST use these roles without ambiguity:
 
-- `main`: mainnet-only production code.
-- `staged`: mainnet candidate validation.
-- `dev`: testnet-only and non-production validation.
+- `main` is the GitHub default branch and the production branch.
+- `dev` is the non-production integration branch. It MUST NOT be configured or
+  described as the GitHub default branch.
+- `staged` is the candidate branch between integration and production.
 
-#### Scenario: Selecting a base branch for a change
+Normal feature, fix, documentation, chore, hotfix, and dependency-update work
+MUST target `dev` first. Fork pull requests MAY target `dev` under the same
+ordinary-work checklist requirements.
 
-- **WHEN** a contributor opens a pull request
-- **THEN** the base branch MUST reflect the change’s intended deployment target:
-  - `dev` for testnet/non-production work
-  - `staged` for mainnet-candidate validation
-  - `main` only for mainnet production releases
+#### Scenario: Selecting a base for ordinary work
 
-### Requirement: Promotion constraints
+- **WHEN** a contributor opens ordinary work from an allowed work branch
+- **THEN** the pull request targets `dev`
+- **AND** includes the Feature -> dev checklist
 
-The workspace MUST enforce an ordered promotion path.
+### Requirement: Exact promotion route matrix
 
-- Promotion to `main` MUST happen only from `staged`.
-- Promotion to `staged` MUST happen only from `dev` (or `hotfix/*`).
-- Promotion to `staged` or `main` MUST originate from a branch in this repository (not a fork).
-- Direct promotion from `dev` to `main` MUST NOT be permitted.
+The repository MUST enforce only these routes:
 
-#### Scenario: Promoting a release to mainnet
+| Target | Accepted source |
+|---|---|
+| `dev` | ordinary `feat/*`, `feature/*`, `fix/*`, `docs/*`, `chore/*`, `hotfix/*`, or `dependabot/*` work branch, including a fork |
+| `staged` | in-repository `dev`, or `promotion/dev-to-staged-<source-sha>` |
+| `main` | in-repository `staged`, or `promotion/staged-to-main-<source-sha>` |
 
-- **WHEN** a mainnet release is ready to ship
-- **THEN** it is promoted by merging `staged` into `main`
-- **AND** the merge is blocked unless required CI checks and required approvals are satisfied
+`<source-sha>` MUST be the full lowercase 40-character source commit SHA.
+Broad `promotion/*` matching MUST NOT authorize a route. Direct `dev` ->
+`main`, Dependabot -> `main`, forked promotions, malformed candidates, merges,
+resets, bulk cherry-picks, and bypasses based only on actor identity MUST be
+rejected.
 
-See [Requirement: Mainnet acceptance evidence for `staged` -> `main`](#mainnet-acceptance-evidence-staged-to-main) below.
-
-#### Scenario: Attempting to promote directly into main from a non-staged branch
-
-- **WHEN** a pull request targets `main`
-- **AND** its source branch is not `staged`
-- **THEN** the promotion MUST be rejected
-
-#### Scenario: Attempting to promote directly into staged from a non-dev, non-hotfix branch
+#### Scenario: Promoting integration to candidate
 
 - **WHEN** a pull request targets `staged`
-- **AND** its source branch is not `dev`
-- **AND** its source branch does not match `hotfix/*`
-- **THEN** the promotion MUST be rejected
+- **THEN** its source is exactly `dev` or an exact generated dev candidate
+- **AND** the source repository is this repository
+- **AND** the Dev -> staged checklist is present
 
-<a id="mainnet-acceptance-evidence-staged-to-main" name="mainnet-acceptance-evidence-staged-to-main">&#8203;</a> <!-- Explicit anchor for cross-spec links; zero-width space helps preservation across renderers -->
+#### Scenario: Promoting candidate to production
 
-### Requirement: Mainnet acceptance evidence for `staged` -> `main`
+- **WHEN** a pull request targets `main`
+- **THEN** its source is exactly `staged` or an exact generated staged candidate
+- **AND** the source repository is this repository
+- **AND** the Mainnet Acceptance Evidence Pack is complete
 
-Any `staged` -> `main` promotion MUST include a Mainnet Acceptance Evidence Pack that satisfies all requirements defined in the canonical spec at [openspec/specs/mainnet-acceptance-evidence-pack/spec.md](../mainnet-acceptance-evidence-pack/spec.md).
+### Requirement: Immutable generated candidates
+
+Automation-generated candidates MUST use the exact source SHA in the branch
+name and MUST record these values in the pull request body:
+
+- `Promotion source SHA`
+- `Promotion target-base SHA`
+- `Promotion commit window` as `<target-base-sha>..<source-sha>`
+
+The candidate branch suffix, pull request head SHA, recorded source SHA, target
+base SHA, and commit window MUST agree. Candidate publication MUST NOT rewrite
+an existing ref with a bare force push. Re-running automation for the same lane
+and source SHA MUST find the same candidate pull request idempotently.
+
+If automation cannot create the pull request, it MUST fail closed and report a
+manual-PR fallback that preserves the immutable candidate ref and evidence.
+
+### Requirement: Mainnet acceptance evidence
+
+Both direct and generated routes into `main` MUST include a Mainnet Acceptance
+Evidence Pack satisfying
+[`openspec/specs/mainnet-acceptance-evidence-pack/spec.md`](../mainnet-acceptance-evidence-pack/spec.md).
+
+### Requirement: Finite governance bootstrap
+
+A governance change that introduces this exact enforcement MAY use one finite
+bootstrap exception only when it is keyed to one pull request number, the exact
+`promotion/con-1571-governance-bootstrap` head, the `main` base, and this
+repository. It MUST reject every near-match and MUST NOT authorize another pull
+request after that numbered pull request closes or merges.
+
+### Requirement: Checked-in policy versus live administration
+
+Tracked workflows and validators define the policy Git can review. GitHub
+default-branch, ruleset, required-check, review, deletion, and force-push
+settings are separate administrator-controlled state. Documentation and static
+validation MUST describe inaccessible live settings as unverified or blocked,
+never as passing or enforced.
 
 ### Requirement: Ownership and business-unit boundaries
 
-The workspace MUST keep business-unit boundaries explicit and enforceable.
+- `CODEOWNERS` MUST express review ownership.
+- Governance and release-policy changes under `openspec/`, `.github/`, `docs/`,
+  or `scripts/` MUST receive the owners' review required by live repository
+  administration.
 
-- Business-unit (and operating-function) ownership MUST be expressed via `CODEOWNERS`.
-- Governance and release-policy changes MUST require approval from the repo owners defined in `CODEOWNERS`.
+### Requirement: Safe repository and submodule synchronization
 
-#### Scenario: Changing a business-unit scoped directory
-
-- **WHEN** a pull request modifies a directory that maps to a business unit or operating function
-- **THEN** GitHub MUST request review from the matching `CODEOWNERS` entries
-
-#### Scenario: Changing governance or release policy
-
-- **WHEN** a pull request modifies `openspec/`, `.github/`, `docs/`, or `scripts/`
-- **THEN** GitHub MUST request review from the repo owners defined in `CODEOWNERS`
-
-### Requirement: Git status review for all repositories
-
-The system MUST be able to query and aggregate the git status of the root repository and all associated submodules.
-
-#### Scenario: Checking git status
-
-- **WHEN** the git status command is executed across the workspace
-- **THEN** it reports uncommitted changes, unmerged paths, and detached HEAD states for all submodules
-- **THEN** it aggregates this information into a consolidated view
-
-### Requirement: Git repository management
-
-The system MUST provide a mechanism to resolve conflicts, commit changes, and synchronize all submodules.
-
-#### Scenario: Managing repositories
-
-- **WHEN** uncommitted changes or conflicts are detected
-- **THEN** appropriate git commands are proposed or executed to resolve them
-- **THEN** the workspace is brought to a clean and synchronized state
-
-### Requirement: Safe synchronization preconditions
-
-The system MUST refuse to update or synchronize submodules when the root repo or any submodule has uncommitted changes or unmerged paths.
-
-#### Scenario: Preventing sync on dirty workspaces
-
-- **WHEN** a workspace sync is requested
-- **AND** any repo/submodule is not clean
-- **THEN** the operation is aborted
-- **AND** the system reports the specific repos/submodules blocking the sync
-
-### Requirement: Submodule definition integrity
-
-The system MUST detect and report missing or inconsistent submodule definitions (for example, gitlinks present in the index without a corresponding `.gitmodules` entry).
-
-#### Scenario: Validating submodule definitions
-
-- **WHEN** a workspace audit or sync is initiated
-- **THEN** the system validates that all submodules in the index have valid `.gitmodules` entries
-- **AND** it reports missing mappings as a blocking error
+Repository tooling MUST report dirty trees, unmerged paths, detached submodule
+heads, and missing/inconsistent gitlink definitions. Synchronization MUST stop
+when the root or a submodule is dirty or when a gitlink lacks a valid
+`.gitmodules` mapping.

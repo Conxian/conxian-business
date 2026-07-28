@@ -58,7 +58,7 @@ This repo pins the following dependency SHAs via submodules:
 ### Supporting
 
 - [x] Production deployment readiness audit: CON-133 (VERIFIED)
-- [x] Branch and promotion standard: CON-389 (ENFORCED)
+- [x] Branch and promotion standard: CON-389 (CHECKED IN; live GitHub protection state not administrator-verified)
 - [x] Contamination Guard implementation: CON-391 (ACTIVE)
 
 ### Missing dependency references (must be reconciled)
@@ -78,7 +78,7 @@ This repo pins the following dependency SHAs via submodules:
 ### 2) Test readiness
 
 - [x] Unit / integration / contract / smoke tests pass on release candidates.
-- [x] No known failing CI checks remain on deployment branches.
+- [ ] Hosted CI re-verification pending: as of 2026-07-28 Actions are blocked before steps by the account billing/spend state; this is neither a code failure nor test success.
 
 ### 3) Security and config readiness
 
