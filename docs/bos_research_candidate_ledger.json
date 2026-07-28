@@ -1,0 +1,401 @@
+{
+  "schemaVersion": "1.0.0",
+  "ledgerDate": "2026-07-28",
+  "exhaustiveEcosystemAudit": false,
+  "authorityIssue": "https://github.com/Conxian/conxian-business/issues/943",
+  "authorityPullRequest": "https://github.com/Conxian/conxian-business/pull/970",
+  "rubric": [
+    {"id": "governance-risk-leverage", "label": "Governance/risk leverage", "cap": 25},
+    {"id": "portfolio-reuse-repeatability", "label": "Portfolio reuse/repeatability", "cap": 20},
+    {"id": "evidence-execution-readiness", "label": "Evidence/execution readiness", "cap": 15},
+    {"id": "dependency-unblocking-value", "label": "Dependency-unblocking value", "cap": 15},
+    {"id": "scope-containment-non-duplication", "label": "Scope containment/non-duplication", "cap": 15},
+    {"id": "autonomous-progress-without-owner-decision", "label": "Autonomous progress without owner decision", "cap": 10}
+  ],
+  "selection": {
+    "selectedAuthorityId": "conxian-business#943",
+    "selectedTechnicalCandidateId": "lib-conxian-core#227"
+  },
+  "selectedTechnicalArtifact": {
+    "candidateId": "lib-conxian-core#227",
+    "tracker": "https://github.com/Conxian/lib-conxian-core/issues/227",
+    "draftPullRequest": "https://github.com/Conxian/lib-conxian-core/pull/229",
+    "comparisonBase": "candidate-base/v0.2.5",
+    "comparisonBaseCommit": "de05ca4a1de5d8edf65f58747dc74ab8fba3fc4d",
+    "headCommit": "7a5c83795f473971161c80a117dd35150a4362ca",
+    "formalReview": "https://github.com/Conxian/lib-conxian-core/pull/229#pullrequestreview-4795322131",
+    "changeBoundary": "Non-release draft changing only Cargo.toml and Cargo.lock to remove the unused BDK Electrum path.",
+    "localEvidence": "Workspace check passed; 17 tests passed; clippy passed; exact tree/lock absence checks passed. cargo fmt --check exposed pre-existing v0.2.5 drift in unchanged files. cargo-audit 0.22.2 confirmed the removed-path advisories RUSTSEC-2026-0098, RUSTSEC-2026-0099, and RUSTSEC-2026-0104 absent.",
+    "hostedEvidence": "GitGuardian passed. Hosted Dependency Review failed before dependency analysis because historical workflow action references are mutable/tag-pinned; this is ci-infrastructure evidence, not a dependency finding. The head commit is unsigned.",
+    "nonClaim": "The draft does not establish release approval, signing, publication, Nexus repin or acceptance, license/admin resolution, production readiness, or removal of every Rustls path. RUSTSEC-2026-0104 explicitly does not affect rustls-webpki 0.101.7 and is not used as an affected-version basis."
+  },
+  "candidates": [
+    {
+      "id": "lib-conxian-core#227",
+      "title": "Remove the unused BDK Electrum dependency path",
+      "ownerRepository": "Conxian/lib-conxian-core",
+      "trackers": ["https://github.com/Conxian/lib-conxian-core/issues/227"],
+      "sourceLinks": [
+        "https://github.com/Conxian/lib-conxian-core/issues/227",
+        "https://github.com/Conxian/lib-conxian-core/pull/229",
+        "https://github.com/Conxian/lib-conxian-core/pull/229#pullrequestreview-4795322131",
+        "https://github.com/bitcoindevkit/bdk/blob/f71bc34f32603b887d19d244878442c1895a41ea/Cargo.toml",
+        "https://github.com/rust-lang/cargo/blob/0158e40d8638a7de292b7242b1533caaf48cbe5f/doc/book/src/reference/features.md",
+        "https://github.com/RustSec/advisory-db/blob/0bfde9d6a469ae503f8a6147c2dd552856cd5999/crates/rustls-webpki/RUSTSEC-2026-0098.md",
+        "https://github.com/RustSec/advisory-db/blob/0bfde9d6a469ae503f8a6147c2dd552856cd5999/crates/rustls-webpki/RUSTSEC-2026-0099.md",
+        "https://github.com/RustSec/advisory-db/blob/0bfde9d6a469ae503f8a6147c2dd552856cd5999/crates/rustls-webpki/RUSTSEC-2026-0104.md"
+      ],
+      "gapClasses": ["dependency-security", "implementation", "ci-infrastructure", "evidence"],
+      "disposition": "selected-technical",
+      "nextGate": "A human maintainer decides whether to sign, release, publish, and coordinate any Nexus repin after resolving or accepting the remaining evidence and administration gates.",
+      "uncertainty": "The draft is compared with v0.2.5 rather than current main, and newly exposed residual advisories require separate tracker decisions before scoring.",
+      "nonClaim": "This selection is not a release, production-readiness, all-Rustls-removal, Nexus-acceptance, license-resolution, or independent-acceptance claim.",
+      "scored": true,
+      "scores": [
+        {"dimensionId": "governance-risk-leverage", "score": 23, "rationale": "Removes an unused dependency path tied to public advisory and review evidence while preserving maintainer release gates.", "provenance": ["https://github.com/Conxian/lib-conxian-core/issues/227", "https://github.com/Conxian/lib-conxian-core/pull/229#pullrequestreview-4795322131"]},
+        {"dimensionId": "portfolio-reuse-repeatability", "score": 16, "rationale": "Core dependency hygiene can benefit downstream consumers, but acceptance and repinning remain repository-specific.", "provenance": ["https://github.com/Conxian/lib-conxian-core/issues/227", "https://github.com/bitcoindevkit/bdk/blob/f71bc34f32603b887d19d244878442c1895a41ea/Cargo.toml"]},
+        {"dimensionId": "evidence-execution-readiness", "score": 13, "rationale": "A reviewed draft and deterministic local checks exist; hosted dependency analysis did not execute.", "provenance": ["https://github.com/Conxian/lib-conxian-core/pull/229", "https://github.com/Conxian/lib-conxian-core/pull/229#pullrequestreview-4795322131"]},
+        {"dimensionId": "dependency-unblocking-value", "score": 15, "rationale": "The bounded removal directly clears an unused Electrum feature path from the v0.2 candidate lock graph.", "provenance": ["https://github.com/Conxian/lib-conxian-core/pull/229", "https://github.com/rust-lang/cargo/blob/0158e40d8638a7de292b7242b1533caaf48cbe5f/doc/book/src/reference/features.md"]},
+        {"dimensionId": "scope-containment-non-duplication", "score": 15, "rationale": "The draft changes only the manifest and lockfile under the existing Core owner tracker.", "provenance": ["https://github.com/Conxian/lib-conxian-core/issues/227", "https://github.com/Conxian/lib-conxian-core/pull/229"]},
+        {"dimensionId": "autonomous-progress-without-owner-decision", "score": 6, "rationale": "Technical evidence can progress independently, but signing, release, publication, and downstream acceptance are human gates.", "provenance": ["https://github.com/Conxian/lib-conxian-core/pull/229#pullrequestreview-4795322131"]}
+      ],
+      "total": 88
+    },
+    {
+      "id": "conxian-nexus#169/pr#172",
+      "title": "Nexus dependency remediation under the existing owner",
+      "ownerRepository": "Conxian/conxian-nexus",
+      "trackers": ["https://github.com/Conxian/conxian-nexus/issues/169", "https://github.com/Conxian/conxian-nexus/pull/172"],
+      "sourceLinks": ["https://github.com/Conxian/conxian-nexus/issues/169", "https://github.com/Conxian/conxian-nexus/pull/172"],
+      "gapClasses": ["dependency-security", "implementation", "evidence"],
+      "disposition": "retained-under-owner",
+      "nextGate": "The Nexus owner completes review and records exact acceptance evidence in issue #169 and PR #172.",
+      "uncertainty": "The bounded scan did not independently re-execute the owner repository workflow or acceptance path.",
+      "nonClaim": "The score does not transfer ownership to Business or establish merge, release, or production acceptance.",
+      "scored": true,
+      "scores": [
+        {"dimensionId": "governance-risk-leverage", "score": 24, "rationale": "The owner tracker addresses a high-leverage dependency control with an implementation artifact.", "provenance": ["https://github.com/Conxian/conxian-nexus/issues/169"]},
+        {"dimensionId": "portfolio-reuse-repeatability", "score": 17, "rationale": "Nexus remediation patterns can inform shared Rust dependency handling without becoming a portfolio umbrella.", "provenance": ["https://github.com/Conxian/conxian-nexus/pull/172"]},
+        {"dimensionId": "evidence-execution-readiness", "score": 13, "rationale": "An owner issue and pull request provide a concrete review surface.", "provenance": ["https://github.com/Conxian/conxian-nexus/issues/169", "https://github.com/Conxian/conxian-nexus/pull/172"]},
+        {"dimensionId": "dependency-unblocking-value", "score": 15, "rationale": "The work directly addresses a dependency path in an upstream portfolio component.", "provenance": ["https://github.com/Conxian/conxian-nexus/issues/169"]},
+        {"dimensionId": "scope-containment-non-duplication", "score": 14, "rationale": "Work is bounded by the existing Nexus owner records and needs no duplicate tracker.", "provenance": ["https://github.com/Conxian/conxian-nexus/issues/169", "https://github.com/Conxian/conxian-nexus/pull/172"]},
+        {"dimensionId": "autonomous-progress-without-owner-decision", "score": 3, "rationale": "Review and acceptance remain owner decisions despite an available implementation artifact.", "provenance": ["https://github.com/Conxian/conxian-nexus/pull/172"]}
+      ],
+      "total": 86
+    },
+    {
+      "id": "conxian-business#943",
+      "title": "GitHub-first BOS research-cycle authority",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": ["https://github.com/Conxian/conxian-business/issues/943", "https://github.com/Conxian/conxian-business/pull/970"],
+      "sourceLinks": ["https://github.com/Conxian/conxian-business/issues/943", "https://github.com/Conxian/conxian-business/pull/970"],
+      "gapClasses": ["governance", "owner-tracker", "evidence"],
+      "disposition": "selected-authority",
+      "nextGate": "Preserve #943 as cycle authority while technical work proceeds in selected and retained owning repositories.",
+      "uncertainty": "Restricted-record successor and organization Project decisions remain human-owned, and hosted execution for PR #970 is unavailable.",
+      "nonClaim": "Authority selection does not complete #943, authorize restricted-record migration, resolve the branch model, or accept any technical candidate.",
+      "scored": true,
+      "scores": [
+        {"dimensionId": "governance-risk-leverage", "score": 23, "rationale": "Creates a public-safe authority boundary while leaving restricted decisions with accountable humans.", "provenance": ["https://github.com/Conxian/conxian-business/issues/943"]},
+        {"dimensionId": "portfolio-reuse-repeatability", "score": 20, "rationale": "The lifecycle and rubric are designed for repeatable portfolio research cycles.", "provenance": ["https://github.com/Conxian/conxian-business/pull/970"]},
+        {"dimensionId": "evidence-execution-readiness", "score": 11, "rationale": "Authority artifacts exist, but hosted Actions did not execute and human governance gates remain.", "provenance": ["https://github.com/Conxian/conxian-business/pull/970"]},
+        {"dimensionId": "dependency-unblocking-value", "score": 13, "rationale": "The authority model unblocks consistent candidate selection without replacing owner trackers.", "provenance": ["https://github.com/Conxian/conxian-business/issues/943"]},
+        {"dimensionId": "scope-containment-non-duplication", "score": 14, "rationale": "The cycle links existing owners and explicitly avoids duplicate umbrellas.", "provenance": ["https://github.com/Conxian/conxian-business/issues/943", "https://github.com/Conxian/conxian-business/pull/970"]},
+        {"dimensionId": "autonomous-progress-without-owner-decision", "score": 3, "rationale": "Public-safe documentation can progress, but migration, Project, and branch governance require owners.", "provenance": ["https://github.com/Conxian/conxian-business/issues/943"]}
+      ],
+      "total": 84
+    },
+    {
+      "id": "android-first-attestation-owner-chain",
+      "title": "Android-first attestation existing owner chain",
+      "ownerRepository": "Conxian/conxius-enclave-sdk",
+      "trackers": [
+        "https://github.com/Conxian/conxius-enclave-sdk/issues/240",
+        "https://github.com/Conxian/conxius-enclave-sdk/issues/241",
+        "https://github.com/Conxian/conxius-enclave-sdk/issues/242",
+        "https://github.com/Conxian/conxius-enclave-sdk/issues/202",
+        "https://github.com/Conxian/conxius-wallet/issues/444"
+      ],
+      "sourceLinks": [
+        "https://github.com/Conxian/conxius-enclave-sdk/issues/240",
+        "https://github.com/Conxian/conxius-enclave-sdk/issues/241",
+        "https://github.com/Conxian/conxius-enclave-sdk/issues/242",
+        "https://github.com/Conxian/conxius-enclave-sdk/issues/202",
+        "https://github.com/Conxian/conxius-wallet/issues/444"
+      ],
+      "gapClasses": ["governance", "evidence", "implementation"],
+      "disposition": "retained-under-owner",
+      "nextGate": "Continue provider evidence and independent acceptance through #240 to #241/#242 to #202, with wallet #444 consuming accepted evidence.",
+      "uncertainty": "The bounded scan did not infer provider, device, hardware, release, or independent acceptance outcomes.",
+      "nonClaim": "Existing merged artifacts and owner trackers do not establish provider qualification, real-device proof, production support, or independent acceptance.",
+      "scored": true,
+      "scores": [
+        {"dimensionId": "governance-risk-leverage", "score": 23, "rationale": "The chain covers high-risk attestation prerequisites and acceptance boundaries.", "provenance": ["https://github.com/Conxian/conxius-enclave-sdk/issues/240", "https://github.com/Conxian/conxius-enclave-sdk/issues/202"]},
+        {"dimensionId": "portfolio-reuse-repeatability", "score": 19, "rationale": "Accepted attestation evidence can serve multiple clients while remaining owner-controlled.", "provenance": ["https://github.com/Conxian/conxius-enclave-sdk/issues/241", "https://github.com/Conxian/conxius-enclave-sdk/issues/242"]},
+        {"dimensionId": "evidence-execution-readiness", "score": 11, "rationale": "Owner trackers and bounded implementation exist, but exact device and acceptance evidence remains open.", "provenance": ["https://github.com/Conxian/conxius-enclave-sdk/issues/202"]},
+        {"dimensionId": "dependency-unblocking-value", "score": 14, "rationale": "The chain gates downstream wallet enforcement and other attestation consumers.", "provenance": ["https://github.com/Conxian/conxius-wallet/issues/444"]},
+        {"dimensionId": "scope-containment-non-duplication", "score": 11, "rationale": "The work is already decomposed across prerequisite, provider, acceptance, and consumer trackers.", "provenance": ["https://github.com/Conxian/conxius-enclave-sdk/issues/240", "https://github.com/Conxian/conxius-wallet/issues/444"]},
+        {"dimensionId": "autonomous-progress-without-owner-decision", "score": 4, "rationale": "Evidence gathering can continue, but qualification and acceptance require accountable owners.", "provenance": ["https://github.com/Conxian/conxius-enclave-sdk/issues/202"]}
+      ],
+      "total": 82
+    },
+    {
+      "id": "conxius-platform#854",
+      "title": "Platform owner-admin evidence gap",
+      "ownerRepository": "Conxian/conxius-platform",
+      "trackers": ["https://github.com/Conxian/conxius-platform/issues/854"],
+      "sourceLinks": ["https://github.com/Conxian/conxius-platform/issues/854"],
+      "gapClasses": ["governance", "licensing-admin", "evidence"],
+      "disposition": "retained-deferred-owner-admin-evidence",
+      "nextGate": "The owning maintainers provide the required administration and evidence decision in issue #854.",
+      "uncertainty": "The scan observed the public tracker but did not infer restricted administration state or approval.",
+      "nonClaim": "The score does not establish license resolution, authorization, implementation readiness, or release approval.",
+      "scored": true,
+      "scores": [
+        {"dimensionId": "governance-risk-leverage", "score": 24, "rationale": "The tracker represents a high-leverage owner/admin control boundary.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/854"]},
+        {"dimensionId": "portfolio-reuse-repeatability", "score": 20, "rationale": "A resolved administration pattern could apply broadly across portfolio maintenance.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/854"]},
+        {"dimensionId": "evidence-execution-readiness", "score": 4, "rationale": "Public evidence is limited and an owner decision is still required.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/854"]},
+        {"dimensionId": "dependency-unblocking-value", "score": 15, "rationale": "Owner/admin resolution can unblock dependent maintenance and release work.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/854"]},
+        {"dimensionId": "scope-containment-non-duplication", "score": 14, "rationale": "The canonical owner issue contains the scope without a new umbrella.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/854"]},
+        {"dimensionId": "autonomous-progress-without-owner-decision", "score": 1, "rationale": "The decisive administration evidence cannot be supplied by autonomous research.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/854"]}
+      ],
+      "total": 78
+    },
+    {
+      "id": "conxius-platform#1082",
+      "title": "Platform workflow and script re-baseline",
+      "ownerRepository": "Conxian/conxius-platform",
+      "trackers": ["https://github.com/Conxian/conxius-platform/issues/1082"],
+      "sourceLinks": ["https://github.com/Conxian/conxius-platform/issues/1082"],
+      "gapClasses": ["workflow-drift", "evidence", "implementation"],
+      "disposition": "retained-under-owner",
+      "nextGate": "Re-baseline the exact current workflow and script paths before changing or accepting the issue scope.",
+      "uncertainty": "The issue snapshot is partly stale relative to the repository, so path-level facts require fresh owner-repository verification.",
+      "nonClaim": "The score does not assert that every issue statement remains current or that a remediation is ready to merge.",
+      "scored": true,
+      "scores": [
+        {"dimensionId": "governance-risk-leverage", "score": 18, "rationale": "Workflow accuracy affects governance, but the stale snapshot reduces certainty.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/1082"]},
+        {"dimensionId": "portfolio-reuse-repeatability", "score": 18, "rationale": "A deterministic re-baseline method can be reused across repository workflow drift.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/1082"]},
+        {"dimensionId": "evidence-execution-readiness", "score": 7, "rationale": "An owner tracker exists, but exact workflow and script evidence must be refreshed.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/1082"]},
+        {"dimensionId": "dependency-unblocking-value", "score": 12, "rationale": "Correct workflow baselines can unblock reliable maintenance and validation.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/1082"]},
+        {"dimensionId": "scope-containment-non-duplication", "score": 14, "rationale": "Re-baselining stays within the existing issue and owning repository.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/1082"]},
+        {"dimensionId": "autonomous-progress-without-owner-decision", "score": 7, "rationale": "Repository inspection can progress substantially before an owner chooses a final remediation.", "provenance": ["https://github.com/Conxian/conxius-platform/issues/1082"]}
+      ],
+      "total": 76
+    },
+    {
+      "id": "conxian-nexus#178",
+      "title": "Independent narrow Nexus CI remediation",
+      "ownerRepository": "Conxian/conxian-nexus",
+      "trackers": ["https://github.com/Conxian/conxian-nexus/issues/178"],
+      "sourceLinks": ["https://github.com/Conxian/conxian-nexus/issues/178"],
+      "gapClasses": ["ci-infrastructure", "implementation"],
+      "disposition": "independent-narrow-remediation",
+      "nextGate": "Proceed independently in the Nexus owner repository and record exact CI evidence in issue #178.",
+      "uncertainty": "No broader portfolio acceptance or release effect was inferred from the narrow remediation scope.",
+      "nonClaim": "Independent execution does not make this part of the #943 implementation or establish production readiness.",
+      "scored": true,
+      "scores": [
+        {"dimensionId": "governance-risk-leverage", "score": 14, "rationale": "The item improves CI control but has a narrower governance effect.", "provenance": ["https://github.com/Conxian/conxian-nexus/issues/178"]},
+        {"dimensionId": "portfolio-reuse-repeatability", "score": 7, "rationale": "The remediation is primarily repository-specific.", "provenance": ["https://github.com/Conxian/conxian-nexus/issues/178"]},
+        {"dimensionId": "evidence-execution-readiness", "score": 15, "rationale": "The issue is bounded and directly executable.", "provenance": ["https://github.com/Conxian/conxian-nexus/issues/178"]},
+        {"dimensionId": "dependency-unblocking-value", "score": 8, "rationale": "CI repair unblocks local verification with limited cross-portfolio impact.", "provenance": ["https://github.com/Conxian/conxian-nexus/issues/178"]},
+        {"dimensionId": "scope-containment-non-duplication", "score": 15, "rationale": "The narrow owner issue is fully contained and non-duplicative.", "provenance": ["https://github.com/Conxian/conxian-nexus/issues/178"]},
+        {"dimensionId": "autonomous-progress-without-owner-decision", "score": 10, "rationale": "The remediation can proceed without a new portfolio decision.", "provenance": ["https://github.com/Conxian/conxian-nexus/issues/178"]}
+      ],
+      "total": 69
+    },
+    {
+      "id": "conxian-gateway#228",
+      "title": "Gateway owner remediation",
+      "ownerRepository": "Conxian/conxian-gateway",
+      "trackers": ["https://github.com/Conxian/conxian-gateway/issues/228"],
+      "sourceLinks": ["https://github.com/Conxian/conxian-gateway/issues/228"],
+      "gapClasses": ["dependency-security", "implementation", "evidence"],
+      "disposition": "retained-under-owner",
+      "nextGate": "The owning repository verifies the current dependency path and records bounded remediation evidence in issue #228.",
+      "uncertainty": "The scan did not independently reproduce the complete owner-repository dependency and runtime context.",
+      "nonClaim": "The score does not establish exploitability, remediation completion, release approval, or production acceptance.",
+      "scored": true,
+      "scores": [
+        {"dimensionId": "governance-risk-leverage", "score": 18, "rationale": "The owner issue concerns dependency control with meaningful but bounded risk leverage.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/228"]},
+        {"dimensionId": "portfolio-reuse-repeatability", "score": 11, "rationale": "The result may inform shared dependency practice but is mainly gateway-owned.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/228"]},
+        {"dimensionId": "evidence-execution-readiness", "score": 7, "rationale": "A tracker exists, but exact current reproduction evidence remains required.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/228"]},
+        {"dimensionId": "dependency-unblocking-value", "score": 10, "rationale": "Resolution can unblock owner-repository dependency validation.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/228"]},
+        {"dimensionId": "scope-containment-non-duplication", "score": 14, "rationale": "The work remains under its canonical owner issue.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/228"]},
+        {"dimensionId": "autonomous-progress-without-owner-decision", "score": 5, "rationale": "Research and reproduction can progress, while final remediation and release remain owner decisions.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/228"]}
+      ],
+      "total": 65
+    },
+    {
+      "id": "conxian-gateway#189",
+      "title": "Gateway research-only dependency path",
+      "ownerRepository": "Conxian/conxian-gateway",
+      "trackers": ["https://github.com/Conxian/conxian-gateway/issues/189"],
+      "sourceLinks": ["https://github.com/Conxian/conxian-gateway/issues/189"],
+      "gapClasses": ["dependency-security", "maintenance", "evidence"],
+      "disposition": "research-only-deferred",
+      "nextGate": "Retain as research until the owner records current reachability, impact, and a bounded implementation gate.",
+      "uncertainty": "Available public evidence is insufficient to establish current reachability or execution readiness.",
+      "nonClaim": "The research score is not a vulnerability severity, exploitability finding, remediation authorization, or release claim.",
+      "scored": true,
+      "scores": [
+        {"dimensionId": "governance-risk-leverage", "score": 17, "rationale": "The path has governance relevance but remains evidence-limited research.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/189"]},
+        {"dimensionId": "portfolio-reuse-repeatability", "score": 13, "rationale": "The research method may generalize across dependency paths.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/189"]},
+        {"dimensionId": "evidence-execution-readiness", "score": 2, "rationale": "Current reachability and a bounded implementation artifact are not established.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/189"]},
+        {"dimensionId": "dependency-unblocking-value", "score": 9, "rationale": "A future bounded finding could unblock owner decisions, but current evidence is preliminary.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/189"]},
+        {"dimensionId": "scope-containment-non-duplication", "score": 14, "rationale": "The existing issue is the correct research owner and no new umbrella is needed.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/189"]},
+        {"dimensionId": "autonomous-progress-without-owner-decision", "score": 5, "rationale": "Public research can continue, but remediation selection requires owner evidence and decision.", "provenance": ["https://github.com/Conxian/conxian-gateway/issues/189"]}
+      ],
+      "total": 60
+    }
+  ],
+  "unscoredGaps": [
+    {
+      "id": "core-nexus-rustsec-2026-0204",
+      "title": "Core/Nexus residual RUSTSEC-2026-0204 crossbeam-epoch path",
+      "ownerRepository": "Conxian/lib-conxian-core and Conxian/conxian-nexus",
+      "trackers": [],
+      "sourceLinks": ["https://rustsec.org/advisories/RUSTSEC-2026-0204.html", "https://github.com/Conxian/lib-conxian-core/pull/229"],
+      "gapClasses": ["dependency-security", "owner-tracker"],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Create or identify a canonical owner tracker, then reproduce and review the tested lock-only path against the patched version at or above 0.9.20.",
+      "uncertainty": "Observed in the v0.2 candidate and current Core main; no canonical open tracker was identified in this bounded scan.",
+      "nonClaim": "Presence in a lock graph does not establish runtime reachability, exploitability, severity for Conxian, or remediation acceptance.",
+      "scored": false
+    },
+    {
+      "id": "core-rustsec-2026-0185",
+      "title": "Core v0.2 candidate RUSTSEC-2026-0185 quinn-proto path",
+      "ownerRepository": "Conxian/lib-conxian-core",
+      "trackers": [],
+      "sourceLinks": ["https://rustsec.org/advisories/RUSTSEC-2026-0185.html", "https://github.com/Conxian/lib-conxian-core/pull/229"],
+      "gapClasses": ["dependency-security", "owner-tracker"],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Create or identify a canonical tracker and test a bounded path to quinn-proto 0.11.15 or later.",
+      "uncertainty": "Observed in the v0.2 candidate only; current reachability and compatibility were not established.",
+      "nonClaim": "The advisory observation is not an exploitability, release-blocking, or accepted-remediation claim.",
+      "scored": false
+    },
+    {
+      "id": "core-rustsec-2026-0190",
+      "title": "Core v0.2 candidate RUSTSEC-2026-0190 anyhow path",
+      "ownerRepository": "Conxian/lib-conxian-core",
+      "trackers": [],
+      "sourceLinks": ["https://rustsec.org/advisories/RUSTSEC-2026-0190.html", "https://github.com/Conxian/lib-conxian-core/pull/229"],
+      "gapClasses": ["dependency-security", "owner-tracker"],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Create or identify a canonical tracker and test a bounded path to anyhow 1.0.103 or later.",
+      "uncertainty": "Observed in the v0.2 candidate only; compatibility and runtime impact were not established.",
+      "nonClaim": "The advisory observation is not an exploitability, release-blocking, or accepted-remediation claim.",
+      "scored": false
+    },
+    {
+      "id": "core-v0.2-dependency-review-sha-pin",
+      "title": "Historical v0.2 Dependency Review action SHA-pin gap",
+      "ownerRepository": "Conxian/lib-conxian-core",
+      "trackers": [],
+      "sourceLinks": ["https://github.com/Conxian/lib-conxian-core/pull/229"],
+      "gapClasses": ["ci-infrastructure", "workflow-drift", "owner-tracker"],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Create or identify an owner tracker and replace mutable/tag-pinned historical action references with reviewed immutable references before relying on hosted Dependency Review.",
+      "uncertainty": "Hosted dependency analysis did not begin, so no dependency conclusion can be drawn from the failed check.",
+      "nonClaim": "The failed workflow is ci-infrastructure evidence, not a dependency finding or code failure.",
+      "scored": false
+    },
+    {
+      "id": "core-v0.2-rustfmt-drift",
+      "title": "Historical v0.2 rustfmt drift in unchanged files",
+      "ownerRepository": "Conxian/lib-conxian-core",
+      "trackers": [],
+      "sourceLinks": ["https://github.com/Conxian/lib-conxian-core/pull/229"],
+      "gapClasses": ["formatting-hygiene", "owner-tracker"],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Create or identify an owner tracker and choose a bounded formatting baseline that does not misattribute unchanged-file drift to PR #229.",
+      "uncertainty": "The drift is pre-existing on the v0.2.5 comparison base; no broader formatting scope was inferred.",
+      "nonClaim": "cargo fmt --check output does not invalidate the manifest/lock-only change or establish release readiness.",
+      "scored": false
+    },
+    {
+      "id": "unmaintained-async-std-research",
+      "title": "Unmaintained async-std dependency research path",
+      "ownerRepository": "Cross-repository owner to be identified",
+      "trackers": [],
+      "sourceLinks": ["https://rustsec.org/advisories/RUSTSEC-2025-0052.html"],
+      "gapClasses": ["maintenance", "owner-tracker"],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Identify the canonical consuming owner and a bounded reachability/migration tracker before scoring.",
+      "uncertainty": "The bounded scan recorded a research path, not a complete consumer inventory.",
+      "nonClaim": "This entry is not an exhaustive dependency audit or a mandate to replace a dependency without owner analysis.",
+      "scored": false
+    },
+    {
+      "id": "unmaintained-arkworks-derivative-research",
+      "title": "Unmaintained Arkworks/derivative dependency research path",
+      "ownerRepository": "Cross-repository owner to be identified",
+      "trackers": [],
+      "sourceLinks": ["https://rustsec.org/advisories/RUSTSEC-2024-0388.html"],
+      "gapClasses": ["maintenance", "owner-tracker"],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Identify exact consumers, canonical owners, and current maintained alternatives before scoring.",
+      "uncertainty": "The grouped path is a refinement lead and may contain distinct ownership boundaries.",
+      "nonClaim": "The grouping does not establish reachability, severity, a migration design, or portfolio-wide impact.",
+      "scored": false
+    },
+    {
+      "id": "unmaintained-bdk-sled-fxhash-instant-research",
+      "title": "Unmaintained BDK/sled/fxhash/instant dependency research paths",
+      "ownerRepository": "Cross-repository owner to be identified",
+      "trackers": [],
+      "sourceLinks": ["https://github.com/bitcoindevkit/bdk/blob/f71bc34f32603b887d19d244878442c1895a41ea/Cargo.toml"],
+      "gapClasses": ["maintenance", "dependency-security", "owner-tracker"],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Separate exact dependency paths by consuming owner and create or identify canonical trackers before scoring.",
+      "uncertainty": "Cargo feature unification and consumer feature choices may change which transitive paths are present.",
+      "nonClaim": "The research grouping is not proof that every named crate is active, reachable, or removable in every consumer.",
+      "scored": false
+    },
+    {
+      "id": "unmaintained-aluvm-rgb-paste-research",
+      "title": "Unmaintained ALuVM/RGB/paste dependency research paths",
+      "ownerRepository": "Cross-repository owner to be identified",
+      "trackers": [],
+      "sourceLinks": ["https://rustsec.org/advisories/"],
+      "gapClasses": ["maintenance", "owner-tracker"],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Identify exact consumers and advisories, split owner-specific paths, and establish canonical trackers before scoring.",
+      "uncertainty": "This is a bounded research lead with no complete reachability or owner map.",
+      "nonClaim": "The grouping does not establish current use, exploitability, remediation feasibility, or release impact.",
+      "scored": false
+    },
+    {
+      "id": "bounded-lower-scope-owner-trackers",
+      "title": "Existing lower-scope owner trackers observed in the bounded scan",
+      "ownerRepository": "Existing repository owners",
+      "trackers": [
+        "https://github.com/Conxian/conxian.github.io/issues/3",
+        "https://github.com/Conxian/conxian-labs-site/issues/59",
+        "https://github.com/Conxian/conxian-labs-site/issues/60",
+        "https://github.com/Conxian/conxius-orbit/issues/278",
+        "https://github.com/Conxian/conxius-orbit/issues/279",
+        "https://github.com/Conxian/conxian_ui/issues/161",
+        "https://github.com/Conxian/conxian_market/issues/9"
+      ],
+      "sourceLinks": [
+        "https://github.com/Conxian/conxian.github.io/issues/3",
+        "https://github.com/Conxian/conxian-labs-site/issues/59",
+        "https://github.com/Conxian/conxian-labs-site/issues/60",
+        "https://github.com/Conxian/conxius-orbit/issues/278",
+        "https://github.com/Conxian/conxius-orbit/issues/279",
+        "https://github.com/Conxian/conxian_ui/issues/161",
+        "https://github.com/Conxian/conxian_market/issues/9"
+      ],
+      "gapClasses": ["owner-tracker", "implementation"],
+      "disposition": "retained-existing-owner",
+      "nextGate": "Retain each item under its current repository owner and score only if a later bounded cycle selects it for comparison.",
+      "uncertainty": "The scan recorded only minimum-necessary public tracker existence and did not reproduce restricted-repository or implementation details.",
+      "nonClaim": "Observation does not create a portfolio umbrella, reprioritize the owner backlog, or establish implementation, readiness, or acceptance.",
+      "scored": false
+    }
+  ]
+}

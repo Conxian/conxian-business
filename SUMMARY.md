@@ -53,6 +53,8 @@
 
 ## 🤖 Business Operations System (BOS)
 
+* [GitHub-first BOS operating model and research cycle](docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md)
+* [BOS research candidate ledger — 2026-07-28](docs/BOS_RESEARCH_CANDIDATE_LEDGER.md)
 * [BOS wallet control model](docs/BOS_WALLET_CONTROL_MODEL.md)
 * [BOS self-executing contract trigger (CON-440)](docs/protocols/BOS_SELF_EXECUTING_CONTRACT_TRIGGER_V1.md)
 * [Conxius Wallet BOS buildout](docs/CONXIUS_WALLET_BOS_BUILDOUT.md)
