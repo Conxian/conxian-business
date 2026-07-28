@@ -99,11 +99,11 @@ The current sequence is:
 
 ## Initial scorecard — 2026-07-28
 
-| Candidate | Score | Selection rationale and ownership boundary |
-|---|---:|---|
-| [Business #943](https://github.com/Conxian/conxian-business/issues/943) | **84/100** | Selected authority work: high governance/reuse leverage, bounded docs/coordination scope, and progress possible without guessing the two human-owned blockers. |
-| Android-first attestation conformance chain | **82/100** | Valuable but already owned by [conxius-enclave-sdk #240](https://github.com/Conxian/conxius-enclave-sdk/issues/240) → [#241](https://github.com/Conxian/conxius-enclave-sdk/issues/241) / [#242](https://github.com/Conxian/conxius-enclave-sdk/issues/242) → [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202), with [conxius-wallet #444](https://github.com/Conxian/conxius-wallet/issues/444) as a consumer boundary. Selecting a second umbrella would duplicate ownership. |
-| [conxian-nexus #178](https://github.com/Conxian/conxian-nexus/issues/178) | **69/100** | Separate, narrow CI remediation with lower portfolio leverage; remains independently executable in its owning repository. |
+| Candidate | Governance/risk leverage | Portfolio reuse/repeatability | Evidence/execution readiness | Dependency-unblocking value | Scope containment/non-duplication | Autonomous progress without owner decision | Total | Concise rationale and ownership boundary |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| [Business #943](https://github.com/Conxian/conxian-business/issues/943) | 23 | 20 | 11 | 13 | 14 | 3 | **84/100** | High governance and portfolio reuse: the public-safe authority cycle is bounded and evidence-ready, but final restricted-record and Project decisions remain human-owned. |
+| Android-first attestation existing chain | 23 | 19 | 11 | 14 | 11 | 4 | **82/100** | High risk and dependency leverage, but already owned by [conxius-enclave-sdk #240](https://github.com/Conxian/conxius-enclave-sdk/issues/240) → [#241](https://github.com/Conxian/conxius-enclave-sdk/issues/241) / [#242](https://github.com/Conxian/conxius-enclave-sdk/issues/242) → [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202), with [conxius-wallet #444](https://github.com/Conxian/conxius-wallet/issues/444) as consumer; no new umbrella is created. |
+| [conxian-nexus #178](https://github.com/Conxian/conxian-nexus/issues/178) | 14 | 7 | 15 | 8 | 15 | 10 | **69/100** | Fully bounded and independently executable CI remediation, with strong readiness/autonomy but lower governance, reuse, and cross-portfolio unblocking leverage. |
 
 ### Current-state corrections and non-claims
 
