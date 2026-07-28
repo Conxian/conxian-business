@@ -4,7 +4,7 @@
 > **Issue**: [#827](https://github.com/Conxian/conxian-business/issues/827)
 > **Status**: Outline (draft)
 > **Version**: 1.0-draft
-> **Last updated**: 2026-07-03
+> **Last updated**: 2026-07-28
 
 ---
 
@@ -255,9 +255,9 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 
 | Component | Status | Evidence |
 |-----------|--------|----------|
-| Conxius Wallet | Stable (v1.9.2) | CI green; versioned releases |
-| Conxian Nexus | Beta (v0.4.17) | CI green; stubs removed; oracle active |
-| `conxian-gateway` | Beta | CI green; ISO 20022 pipeline active |
+| Conxius Wallet | Stable (v1.9.2) | Versioned releases; historical CI evidence exists; current hosted re-verification blocked as of 2026-07-28 |
+| Conxian Nexus | Beta (v0.4.17) | Stubs removed; oracle active; historical CI evidence exists; current hosted re-verification blocked as of 2026-07-28 |
+| `conxian-gateway` | Beta | ISO 20022 pipeline active; historical CI evidence exists; current hosted re-verification blocked as of 2026-07-28 |
 | ConxianCSF | Pre-mainnet (Go pending ALEX) | All P0 blockers remediated |
 | `conxius-enclave-sdk` | Beta | Hardware enclave abstractions |
 | lib-conxian-core | Beta | Clippy + audit enforced |
@@ -265,7 +265,7 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 > **Evidence**: [TRUST_AND_READINESS_VERIFICATION.md §2]
 
 #### 9.2 CI/CD Pipeline
-- Conxian Unified CI: 9/9 jobs
+- Conxian Unified CI: historical 9/9 pipeline evidence exists; as of 2026-07-28, current GitHub-hosted Actions are blocked before job steps by the account billing/spend state and are not re-verified
 - Suites: B2B (Nexus), B2C (Wallet), Core Library, Gateway, Repo Hygiene, Summary Gate
 - Promotion pipeline: dev → staged → main with automated verification
 

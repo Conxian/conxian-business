@@ -2,7 +2,7 @@
 
 > **Issue**: [#829](https://github.com/Conxian/conxian-business/issues/829) — Maintain canonical packaging, customer journey, and pricing doctrine set
 > **Status**: Canonical scaffold (pricing details in Linear per ZSE)
-> **Last updated**: 2026-07-03
+> **Last updated**: 2026-07-28
 > **Owner**: Packaging lane (per [OPERATING_LANE_BOUNDARIES.md](OPERATING_LANE_BOUNDARIES.md))
 
 ## Purpose
@@ -134,7 +134,7 @@ The following is the canonical one-pager structure for external use (investors, 
 
 **Who it's for**: Banks, fintechs, governments, and developers who need Bitcoin-native infrastructure without surrendering sovereignty.
 
-**Status**: Active. CI 9/9 green. Conxius Wallet v1.9.2 (Stable). ConxianCSF pre-mainnet.
+**Status**: Active. Historical 9/9 pipeline evidence exists; as of 2026-07-28, current GitHub-hosted Actions are blocked before job steps by the account billing/spend state and are not re-verified. Conxius Wallet v1.9.2 (Stable). ConxianCSF pre-mainnet.
 
 **Contact**: [commercial@conxian-labs.com]
 ```

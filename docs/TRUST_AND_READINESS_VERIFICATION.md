@@ -33,7 +33,7 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | "Production (v1.9.2)" | v1.9.2 is current release tag; CI passing (B2C Wallet Suite green) | **Production-ready** | Minor: "Production" should be "Stable" per trust taxonomy |
+| **Status** | "Production (v1.9.2)" | v1.9.2 is current release tag; versioned release and historical B2C Wallet Suite evidence exist, but current hosted Actions are blocked before steps and not re-verified as of 2026-07-28 | **Production-ready** | Minor: "Production" should be "Stable" per trust taxonomy |
 | **Scope** | "Wallet app code, signer UX, reference client flows." | Correct. No protocol logic or infrastructure duplicated. | **Implemented** | None |
 | **Security** | "CXN Guardian" badge | SECURITY.md exists; StrongBox/TEE boundary documented | **Verified** | None |
 | **Governance** | "Maintained by Conxian-Labs as public infrastructure" | CODEOWNERS and CONTRIBUTING.md present | **Implemented** | None |
@@ -57,11 +57,11 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | README not accessible (submodule not initialized in workspace) | CI: Gateway Suite green; cargo check + cargo test pass | **Beta** | README needs trust section audit when submodule initialized |
+| **Status** | README not accessible (submodule not initialized in workspace) | Historical Gateway Suite and local `cargo check` / `cargo test` evidence exists; current hosted Actions are blocked before steps and not re-verified as of 2026-07-28 | **Beta** | README needs trust section audit when submodule initialized |
 | **Scope** | ISO 20022 compliance pipe; cross-layer state aggregation | Implemented per CI coverage | **Implemented** | None known |
 | **Security** | — | ZSE compliant; contamination guard enforced | **Verified** | None known |
 
-**Verdict**: ⚠️ Cannot fully verify — submodule not initialized in current workspace. CI evidence suggests Beta status. Schedule full audit when submodule accessible.
+**Verdict**: ⚠️ Cannot fully verify — submodule not initialized in current workspace. Historical CI evidence supports the Beta classification, but current hosted checks do not re-verify it. Schedule full audit when submodule accessible.
 
 ### 2.4 Conxian Core Protocol (`Conxian`)
 
@@ -78,9 +78,9 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | Submodule not initialized | Deployed via GitHub Pages (deploy-docs workflow); CI green | **Beta** | Schedule audit when submodule accessible |
+| **Status** | Submodule not initialized | GitHub Pages deployment and historical deploy-docs workflow evidence exist; current hosted Actions are blocked before steps and not re-verified as of 2026-07-28 | **Beta** | Schedule audit when submodule accessible |
 
-**Verdict**: ⚠️ Cannot verify — submodule not initialized. Deploy-docs CI workflow runs successfully.
+**Verdict**: ⚠️ Cannot verify — submodule not initialized. Historical deploy-docs workflow evidence exists, but current hosted execution is blocked and not re-verified.
 
 ---
 
