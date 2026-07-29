@@ -310,29 +310,51 @@ def validate_ledger(path: Path = DEFAULT_LEDGER) -> list[str]:
             selection.get("selectedTechnicalCandidateId") if isinstance(selection, dict) else None
         ):
             errors.append("selectedTechnicalArtifact.candidateId: must match the technical selection")
-        for field in ("tracker", "draftPullRequest", "formalReview"):
+        for field in ("tracker", "decisionIssue", "downstreamEvidence"):
             if not _is_https_url(artifact.get(field)):
                 errors.append(f"selectedTechnicalArtifact.{field}: must be an HTTPS URL")
+        _require_urls(
+            artifact.get("pullRequests"),
+            "selectedTechnicalArtifact.pullRequests",
+            errors,
+        )
         for field in ("comparisonBaseCommit", "headCommit"):
             value = artifact.get(field)
             if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{40}", value):
                 errors.append(f"selectedTechnicalArtifact.{field}: must be a full commit SHA")
-        for field in ("changeBoundary", "localEvidence", "hostedEvidence", "nonClaim"):
+        for field in (
+            "changeBoundary",
+            "localEvidence",
+            "hostedEvidence",
+            "immediateDecision",
+            "strategicDecision",
+            "proofBoundary",
+            "scopeBoundary",
+            "releaseGates",
+            "nonClaim",
+        ):
             _require_text(artifact.get(field), f"selectedTechnicalArtifact.{field}", errors)
-        if artifact.get("comparisonBaseCommit") != "de05ca4a1de5d8edf65f58747dc74ab8fba3fc4d":
-            errors.append("selectedTechnicalArtifact: comparison base commit must be preserved")
-        if artifact.get("headCommit") != "7a5c83795f473971161c80a117dd35150a4362ca":
-            errors.append("selectedTechnicalArtifact: reviewed head commit must be preserved")
-        hosted = artifact.get("hostedEvidence", "")
-        non_claim = artifact.get("nonClaim", "")
-        if "ci-infrastructure" not in hosted or "not a dependency finding" not in hosted:
-            errors.append(
-                "selectedTechnicalArtifact.hostedEvidence: must preserve the CI-infrastructure classification"
-            )
-        if "does not affect rustls-webpki 0.101.7" not in non_claim:
-            errors.append(
-                "selectedTechnicalArtifact.nonClaim: must preserve the RUSTSEC-2026-0104 correction"
-            )
+        if artifact.get("comparisonBaseCommit") != "60eee84d3279dc73c02376bf2fe8abbfda5a88ce":
+            errors.append("selectedTechnicalArtifact: merged PR #229 base commit must be current")
+        if artifact.get("headCommit") != "7edcae397383bd99a9b7a97703d6cab1507a7657":
+            errors.append("selectedTechnicalArtifact: PR #231 head commit must be current")
+        if artifact.get("pullRequests") != [
+            "https://github.com/Conxian/lib-conxian-core/pull/229",
+            "https://github.com/Conxian/lib-conxian-core/pull/231",
+        ]:
+            errors.append("selectedTechnicalArtifact.pullRequests: must preserve PR #229/#231 order")
+        immediate = artifact.get("immediateDecision", "")
+        strategic = artifact.get("strategicDecision", "")
+        proof = artifact.get("proofBoundary", "")
+        scope = artifact.get("scopeBoundary", "")
+        if "default-features = false" not in immediate or "no networking or persistence" not in immediate:
+            errors.append("selectedTechnicalArtifact.immediateDecision: must preserve the std-only Core boundary")
+        if "transport-neutral" not in strategic or "outside Core" not in strategic:
+            errors.append("selectedTechnicalArtifact.strategicDecision: must preserve the backend boundary")
+        if "TLS authenticates transport" not in proof or "chain-proof validation" not in proof:
+            errors.append("selectedTechnicalArtifact.proofBoundary: must preserve transport/proof semantics")
+        if "does not establish production-complete universal blockchain support" not in scope:
+            errors.append("selectedTechnicalArtifact.scopeBoundary: must preserve the universal-support non-claim")
 
     return errors
 

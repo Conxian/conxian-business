@@ -103,12 +103,14 @@ class BosResearchCandidateLedgerTest(unittest.TestCase):
         gap["trackers"] = ["https://github.com/Conxian/lib-conxian-core/issues/999999"]
         self.assert_invalid(invalid, "must be empty until a canonical tracker exists")
 
-    def test_core_correction_and_ci_classification_are_preserved(self) -> None:
+    def test_core_artifact_and_architecture_boundaries_are_preserved(self) -> None:
         invalid = copy.deepcopy(self.data)
-        invalid["selectedTechnicalArtifact"]["hostedEvidence"] = "Dependency review failed."
-        invalid["selectedTechnicalArtifact"]["nonClaim"] = "No release is claimed."
-        self.assert_invalid(invalid, "CI-infrastructure classification")
-        self.assert_invalid(invalid, "RUSTSEC-2026-0104 correction")
+        invalid["selectedTechnicalArtifact"]["headCommit"] = "0" * 40
+        invalid["selectedTechnicalArtifact"]["immediateDecision"] = "Use BDK."
+        invalid["selectedTechnicalArtifact"]["proofBoundary"] = "TLS is sufficient."
+        self.assert_invalid(invalid, "PR #231 head commit")
+        self.assert_invalid(invalid, "std-only Core boundary")
+        self.assert_invalid(invalid, "transport/proof semantics")
 
 
 if __name__ == "__main__":

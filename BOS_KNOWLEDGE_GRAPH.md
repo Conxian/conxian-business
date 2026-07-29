@@ -238,6 +238,7 @@ graph TB
 | Dependabot allowlist for transitive npm deps | 2026-07-08 | undici/ws transitive chains via bdk/wswrapper | Fix upstream |
 | GitGuardian var naming convention (no PASSWORD/SECRET in keys) | 2026-07-08 | Avoid false positives from variable names | - |
 | Docker env vars use DB_* prefix, not *_PASSWORD | 2026-07-08 | GitGuardian pattern avoidance | - |
+| CON-1573 Core boundary: BDK std-only now; transport-neutral capability/provenance contracts strategically | 2026-07-29 | Keep networking and persistence drivers outside Core, preserve offline/non-custodial behavior and existing multi-chain protocol/adapter surfaces, and separate transport authentication from chain-proof verification | [CON-1573](https://linear.app/conxian-labs/issue/CON-1573/security-provide-a-v02-compatible-core-candidate-without-legacy), [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), [PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [PR #231](https://github.com/Conxian/lib-conxian-core/pull/231) |
 | Community governance remediation scope | 2026-07-21 | Prefer the self-contained, non-executing community-voting ledger in protocol PR #521 over isolated `upgrade-controller` work; keep the broader governance gap open until proposal/timelock plumbing and the overlapping #499 scope are resolved. | Protocol PR #521 merge and broader governance decision |
 
 ---
@@ -655,7 +656,7 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 | Wallet PRs `#451/#452/#455` | Consumer implementation evidence | **MERGED** on 2026-07-25/26 | Bounded enforcement artifacts; not real-device/provider proof or independent acceptance. |
 | Nexus `#178` | Independent candidate | **OPEN**, scored **69/100** | Separate narrow CI remediation in `conxian-nexus`; not part of #943 implementation. |
 | BOS candidate ledger | Evidence artifact | Dated bounded scan; deterministically validated | Records two separate decisions: #943 remains selected authority at 84/100; Core #227 is selected next technical candidate at the scored maximum of 88/100. |
-| Core `#227 → draft PR #229` | Technical candidate and implementation artifact | Selected at **88/100**; non-release draft at head `7a5c83795f473971161c80a117dd35150a4362ca` | Owner-repository draft removes the unused BDK Electrum path from `Cargo.toml`/`Cargo.lock`; release, signing, publication, downstream repin, administration, and acceptance remain human gates. |
+| Core `#227 → PR #229 → PR #231` | Technical candidate and implementation artifacts | Selected at **88/100**; PR #229 is merged to `candidate-base/v0.2.5` at `60eee84d3279dc73c02376bf2fe8abbfda5a88ce`; follow-up PR #231 is ready for review at `7edcae397383bd99a9b7a97703d6cab1507a7657` | PR #229 removed the unused legacy BDK Electrum path. PR #231 narrows BDK to `default-features = false, features = ["std"]`; final release, immutable downstream repin, administration, and acceptance remain owner gates. |
 | Unscored refinement gaps | Gap set | Tracker required before scoring unless an existing lower-scope owner exists | Residual advisories, historical CI/rustfmt gaps, and unmaintained-dependency research leads do not masquerade as scored candidates or create duplicate umbrellas. |
 
 ### Relationships and decisions
@@ -664,7 +665,7 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 |---|---|---|---|
 | `#943` | governs | `inventory → gap map → score → selected initiative → implementation/evidence → review → next-cycle refresh` | One reusable public-safe cycle; no second generic research index. |
 | `#943` | governs | BOS candidate ledger | The operating model remains lifecycle/rubric authority; the ledger is the dated evidence record. |
-| BOS candidate ledger | selects without transferring ownership | Core `#227 → draft PR #229` | Core is the next technical candidate at 88/100; #943 remains the separate selected authority at 84/100. |
+| BOS candidate ledger | selects without transferring ownership | Core `#227 → PR #229 → PR #231` | Core remains the next technical candidate at 88/100; #943 remains the separate selected authority at 84/100. PR #229 is merged evidence and PR #231 is the current review artifact. |
 | BOS candidate ledger | links | existing owner trackers and unscored gaps | Owner issues remain canonical; unowned gaps require a tracker before scoring. |
 | `#943` | precedes | `#944`, `#945`, `.github#61` | Authority/boundary alignment comes before classified migration and Project/branch governance. |
 | `#940` | selected | `#955`, implemented by PR `#956` | Existing semantic-source cycle is linked, not duplicated; its hosted-check failures remain explicit. |
@@ -694,7 +695,56 @@ URL, hardware result, or acceptance state is inferred by this digest.
 | Human-readable ledger | [`docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`](docs/BOS_RESEARCH_CANDIDATE_LEDGER.md) |
 | Machine-readable ledger | [`docs/bos_research_candidate_ledger.json`](docs/bos_research_candidate_ledger.json) |
 | Validator and focused tests | [`scripts/verify_bos_research_candidate_ledger.py`](scripts/verify_bos_research_candidate_ledger.py), [`scripts/tests/test_verify_bos_research_candidate_ledger.py`](scripts/tests/test_verify_bos_research_candidate_ledger.py) |
-| Selected Core artifact | [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), [draft PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [formal review](https://github.com/Conxian/lib-conxian-core/pull/229#pullrequestreview-4795322131) |
+| Selected Core artifact | [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), [merged PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [review-ready PR #231](https://github.com/Conxian/lib-conxian-core/pull/231) |
+
+---
+
+## Dated Digest: CON-1573 Core Transport and Persistence Boundary (2026-07-29)
+
+### Decision and scope boundary
+
+| Field | Public-safe record |
+|---|---|
+| Authority | [CON-1573](https://linear.app/conxian-labs/issue/CON-1573/security-provide-a-v02-compatible-core-candidate-without-legacy) and [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227) own the maintenance decision and implementation evidence. |
+| Immediate v0.2 maintenance decision | Core uses BDK with `default-features = false, features = ["std"]`; networking and persistence drivers are not enabled in Core. |
+| Strategic decision | Core defines transport-neutral capability and provenance contracts. Opt-in Electrum, Esplora, RPC, light-client, and indexer backends belong in Gateway/backend or other owning adapter layers outside Core. |
+| Verification boundary | TLS authenticates a transport endpoint; chain-proof validation establishes state. Remote observations must not be labeled verified unless the applicable proof policy succeeds. |
+| Product boundary | The decision preserves offline and non-custodial behavior plus existing multi-chain protocol/adapter surfaces. It is not a claim of production-complete “universal blockchain support.” |
+
+### Typed entities and relationships
+
+| Entity | Type | Relationship / state |
+|---|---|---|
+| `lib-conxian-core` | Core library | Owns transport-neutral types, capability/provenance contracts, proof-policy boundaries, and BDK std-only integration; it does not own network or persistence drivers. |
+| BDK | Library dependency | Supplies std-capable Bitcoin primitives to Core with default features disabled; legacy Electrum TLS and unused Sled/crossbeam-epoch paths are absent from the PR #231 candidate graph. |
+| `conxian-nexus` | Downstream state/proof consumer | Nexus PR #177 was evaluated against an equivalent std-only Core overlay; Nexus has no direct BDK dependency and did not re-enable BDK features. Exact validation against the final immutable Core SHA remains required. |
+| Gateway/backend layer | Opt-in adapter boundary | Owns transport-specific Electrum, Esplora, RPC, light-client, or indexer implementations and their operational policy rather than moving those drivers into Core. |
+| Core PR #229 | Merged implementation evidence | Merged to `candidate-base/v0.2.5` at `60eee84d3279dc73c02376bf2fe8abbfda5a88ce`; earlier draft/head references are stale. |
+| Core PR #231 | Current implementation artifact | Ready for review at `7edcae397383bd99a9b7a97703d6cab1507a7657`, based on `60eee84d3279dc73c02376bf2fe8abbfda5a88ce`; changes only `Cargo.toml` and `Cargo.lock`. |
+
+### Validation evidence and release gates
+
+- Exact PR #231 candidate check, 17 tests, clippy, documentation, and package
+  validation pass. Exact dependency checks show the legacy Electrum TLS path and
+  unused Sled/crossbeam-epoch path absent.
+- `cargo fmt --check` still reports historical unrelated drift; that drift is
+  not attributed to the manifest/lock-only PR #231 change.
+- Residual audit findings remain separate owner-tracked work and are not
+  represented as resolved by the BDK feature-boundary change.
+- Release approval and a final immutable Core commit remain owner gates. Nexus
+  must repin to that exact SHA and repeat downstream validation before any
+  acceptance or release claim.
+
+### Evidence index
+
+| Evidence | Link |
+|---|---|
+| Architecture/maintenance authority | [CON-1573](https://linear.app/conxian-labs/issue/CON-1573/security-provide-a-v02-compatible-core-candidate-without-legacy) |
+| Core owner tracker | [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227) |
+| Merged predecessor | [Core PR #229](https://github.com/Conxian/lib-conxian-core/pull/229) |
+| Current review artifact | [Core PR #231](https://github.com/Conxian/lib-conxian-core/pull/231) |
+| Downstream exact-head evaluation | [Nexus PR #177](https://github.com/Conxian/conxian-nexus/pull/177) |
+| Structured evidence registry | [`docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`](docs/BOS_RESEARCH_CANDIDATE_LEDGER.md), [`docs/bos_research_candidate_ledger.json`](docs/bos_research_candidate_ledger.json) |
 
 ---
 
