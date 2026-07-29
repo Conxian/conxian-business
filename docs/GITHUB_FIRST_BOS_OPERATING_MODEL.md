@@ -186,7 +186,7 @@ change.
 | `conxius-wallet` repository | Client/repository | Consumer enforcement boundary | #444 consumes accepted evidence; merged #451/#452/#455 do not establish production acceptance. |
 | `conxian-nexus` repository | Library/repository | Independent CI remediation owner | #178 remains separate from the #943 authority implementation. |
 | BOS candidate ledger | Evidence artifact | Bounded 2026-07-28 scan with deterministic validation | Preserves #943 as selected authority and records Core #227 as the next technical candidate without transferring owner responsibility. |
-| `lib-conxian-core` repository | Library/repository | Selected technical owner | #227 owns the candidate; draft PR #229 is bounded implementation evidence, not release or acceptance. |
+| `lib-conxian-core` repository | Library/repository | Selected technical owner | #227 owns the candidate; PR #229 is merged predecessor evidence and review-ready PR #231 is the current bounded implementation artifact, not release or acceptance. |
 | External semantic-source control | Decision/control | Completed bounded implementation with non-clean hosted-check history | #940 selected #955; PR #956 merged, without implying clean checks or adoption/acceptance. |
 | Research-cycle selection | Decision | #943 remains selected authority at 84/100; Core #227 selected next technical candidate at 88/100 | Original attestation 82 and Nexus #178 69 scores remain preserved; expanded candidates and unscored gaps live in the dated ledger. |
 | Restricted-record successor | Decision dependency | Human-owned and unresolved | Must be approved outside Git/GitHub with an accountable owner before restricted-record migration can advance. |

@@ -1,4 +1,4 @@
-# BOS research candidate ledger — 2026-07-28
+# BOS research candidate ledger — 2026-07-28 (artifact refresh 2026-07-29)
 
 | Metadata | Value |
 |---|---|
@@ -9,6 +9,7 @@
 | Machine-readable record | [`bos_research_candidate_ledger.json`](bos_research_candidate_ledger.json) |
 | Deterministic verification | `python3 scripts/verify_bos_research_candidate_ledger.py` |
 | Observed date | 2026-07-28 |
+| Artifact refresh | 2026-07-29 — CON-1573 decision and Core PR #229/#231 evidence |
 
 This ledger is a dated, bounded scan, **not an exhaustive ecosystem audit**.
 Existing owner issues remain canonical for implementation, review, acceptance,
@@ -22,8 +23,10 @@ Two different selections are preserved:
 - **Selected authority:** [Business #943](https://github.com/Conxian/conxian-business/issues/943)
   remains the public-safe lifecycle and rubric authority at **84/100**.
 - **Selected next technical candidate:** [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227)
-  is the highest scored technical candidate at **88/100**, represented by
-  non-release draft [Core PR #229](https://github.com/Conxian/lib-conxian-core/pull/229).
+  remains the highest scored technical candidate at **88/100**. Its predecessor
+  [Core PR #229](https://github.com/Conxian/lib-conxian-core/pull/229) is merged;
+  the current implementation artifact is review-ready
+  [Core PR #231](https://github.com/Conxian/lib-conxian-core/pull/231).
 
 Selecting a technical candidate does not complete #943 or transfer technical
 ownership to `conxian-business`.
@@ -41,7 +44,7 @@ technical selection.
 
 | Candidate and owner | Score vector | Gap classes | Disposition and next gate | Uncertainty and explicit non-claim |
 |---|---:|---|---|---|
-| [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), `Conxian/lib-conxian-core`; [draft PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [formal review](https://github.com/Conxian/lib-conxian-core/pull/229#pullrequestreview-4795322131) | **23+16+13+15+15+6 = 88** | dependency-security; implementation; ci-infrastructure; evidence | **Selected technical.** Maintainers decide signing, release, publication, and any Nexus repin after remaining evidence/admin gates. | Compared with v0.2.5 rather than current main; residual advisories need separate owner trackers. No release, production-readiness, all-Rustls-removal, Nexus-acceptance, license-resolution, or independent-acceptance claim. |
+| [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), `Conxian/lib-conxian-core`; [merged PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [review-ready PR #231](https://github.com/Conxian/lib-conxian-core/pull/231) | **23+16+13+15+15+6 = 88** | dependency-security; implementation; ci-infrastructure; evidence | **Selected technical.** Maintainers decide final release and coordinate exact immutable Nexus repin/validation after review and remaining evidence/admin gates. | The score is preserved from the dated cycle. Residual advisories remain separate. No release, production-readiness, universal-chain-support, Nexus-acceptance, license-resolution, or independent-acceptance claim. |
 | [Nexus #169](https://github.com/Conxian/conxian-nexus/issues/169), `Conxian/conxian-nexus`; [PR #172](https://github.com/Conxian/conxian-nexus/pull/172) | **24+17+13+15+14+3 = 86** | dependency-security; implementation; evidence | Retained under owner. Nexus completes review and acceptance evidence in its existing records. | This scan did not re-execute the owner workflow. No ownership transfer, merge, release, or production-acceptance claim. |
 | [Business #943](https://github.com/Conxian/conxian-business/issues/943), `Conxian/conxian-business`; [PR #970](https://github.com/Conxian/conxian-business/pull/970) | **23+20+11+13+14+3 = 84** | governance; owner-tracker; evidence | **Selected authority.** Preserve the cycle authority while technical work stays in owner repositories. | Restricted-record, Project, branch, and hosted-execution gates remain unresolved. No #943 completion, migration authorization, branch-model resolution, or technical acceptance claim. |
 | Android-first attestation chain, `Conxian/conxius-enclave-sdk`; [#240](https://github.com/Conxian/conxius-enclave-sdk/issues/240) → [#241](https://github.com/Conxian/conxius-enclave-sdk/issues/241)/[#242](https://github.com/Conxian/conxius-enclave-sdk/issues/242) → [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202), wallet [#444](https://github.com/Conxian/conxius-wallet/issues/444) | **23+19+11+14+11+4 = 82** | governance; evidence; implementation | Retained under existing owners; provider evidence flows to independent acceptance and then the wallet consumer. | No provider, device, hardware, release, production-support, or independent-acceptance outcome is inferred. |
@@ -55,30 +58,48 @@ The original #943/attestation/#178 dated scores remain preserved in the
 operating model. This expanded ledger adds candidates and records the later
 two-layer selection without rewriting that history.
 
-## Selected Core implementation artifact
+## Selected Core implementation artifact — refreshed 2026-07-29
 
-[Core PR #229](https://github.com/Conxian/lib-conxian-core/pull/229) is a
-non-release draft against comparison base `candidate-base/v0.2.5` at
-`de05ca4a1de5d8edf65f58747dc74ab8fba3fc4d`; its recorded head is
-`7a5c83795f473971161c80a117dd35150a4362ca`. It changes only `Cargo.toml` and
-`Cargo.lock` and removes the unused BDK Electrum path.
+[Core PR #229](https://github.com/Conxian/lib-conxian-core/pull/229) is merged
+to `candidate-base/v0.2.5` at
+`60eee84d3279dc73c02376bf2fe8abbfda5a88ce`; prior references describing it as
+a draft at head `7a5c83795f473971161c80a117dd35150a4362ca` are stale. Follow-up
+[Core PR #231](https://github.com/Conxian/lib-conxian-core/pull/231) is ready for
+review at `7edcae397383bd99a9b7a97703d6cab1507a7657`, based on the merged PR #229
+commit. PR #231 changes only `Cargo.toml` and `Cargo.lock` to configure BDK with
+`default-features = false, features = ["std"]`.
 
 Evidence recorded by the bounded review:
 
-- Local workspace check passed; 17 tests passed; clippy passed; exact tree and
-  lock absence checks passed.
-- `cargo fmt --check` exposed pre-existing v0.2.5 formatting drift in unchanged
-  files. It is not attributed to the manifest/lock-only draft.
-- `cargo-audit 0.22.2` confirmed removed-path `RUSTSEC-2026-0098`,
-  `RUSTSEC-2026-0099`, and `RUSTSEC-2026-0104` absent.
-- Primary-source correction: `RUSTSEC-2026-0104` explicitly does **not** affect
-  `rustls-webpki 0.101.7`; it is not cited as an affected-version basis.
-- GitGuardian passed. Hosted Dependency Review failed before dependency
-  analysis because historical workflow action references are mutable/tag-pinned.
-  That result is classified as `ci-infrastructure`, not a dependency finding.
-- The head commit is unsigned. Release version, signing, publication, Nexus
-  repin/acceptance, license/admin resolution, and production acceptance remain
-  human-maintainer gates.
+- Exact candidate check, 17 tests, clippy, documentation, and package validation
+  pass for PR #231.
+- Exact dependency checks show the legacy Electrum TLS path and unused
+  Sled/crossbeam-epoch path absent.
+- `cargo fmt --check` exposes historical unrelated drift; it is not attributed
+  to the manifest/lock-only PR #231 change.
+- Residual audit findings are separate work and are not claimed resolved by the
+  BDK feature-boundary change.
+- Nexus PR #177 was evaluated at its exact head against an equivalent std-only
+  Core overlay. Nexus has no direct BDK dependency and did not re-enable BDK
+  features; a final immutable Core SHA still requires exact repin validation.
+
+## CON-1573 architecture decision
+
+- **Immediate v0.2 maintenance:** Core uses BDK std-only and enables no
+  networking or persistence drivers.
+- **Strategic boundary:** Core owns transport-neutral capability and provenance
+  contracts. Electrum, Esplora, RPC, light-client, and indexer backends are
+  opt-in implementations outside Core in Gateway/backend or other owning
+  adapter layers.
+- **Verification rule:** TLS authenticates transport; chain-proof validation
+  establishes state. Remote observations are not labeled verified unless the
+  applicable proof policy succeeds.
+- **Scope:** This preserves offline/non-custodial behavior and existing
+  multi-chain protocol/adapter surfaces. It does not establish production-
+  complete “universal blockchain support.”
+- **Release gates:** PR #231 review, final immutable Core SHA, exact Nexus repin
+  and downstream validation, release approval, and separate residual-audit
+  disposition remain outstanding.
 
 Primary dependency evidence includes the pinned
 [BDK v0.30.2 manifest](https://github.com/bitcoindevkit/bdk/blob/f71bc34f32603b887d19d244878442c1895a41ea/Cargo.toml),
