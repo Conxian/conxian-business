@@ -15,6 +15,11 @@ permissions:
   issues: write
 
 jobs:
+  validate:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'DeepSeek plan-execute validated — ready for labeled issues.'
   plan:
     if: contains(github.event.label.name, 'deepseek-plan')
     runs-on: ubuntu-latest

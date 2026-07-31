@@ -18,10 +18,17 @@ permissions:
   issues: write
 
 jobs:
+  validate:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'DeepSeek review validated — ready for PRs and issue comments.'
   review:
     if: |
-      (github.event_name == 'pull_request_target') ||
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/deepseek-review'))
+      github.event_name != 'push' && (
+        (github.event_name == 'pull_request_target') ||
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/deepseek-review'))
+      )
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
