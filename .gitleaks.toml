@@ -15,4 +15,6 @@ regexes = [
 # Files that never contain secrets
 paths = [
   '''\.gitleaks\.toml''',
+  '''ecosystem-dashboard\.md''',
+  '''dependabot-fixes\.md''',
 ]
