@@ -1,0 +1,54 @@
+name: DeepSeek Triage
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: DeepSeek issue triage
+        uses: ./.github/actions/run-deepseek
+        with:
+          deepseek_api_key: '${{ secrets.DEEPSEEK_API_KEY }}'
+          model: '${{ vars.DEEPSEEK_MODEL || "deepseek-chat" }}'
+          temperature: '0.2'
+          max_tokens: '2048'
+          system_prompt: |
+            You are the Conxian protocol issue triage bot. Classify new issues with:
+            - **Priority**: P0 (critical), P1 (high), P2 (medium), P3 (low)
+            - **Category**: bug, feature, security, docs, governance, ci-cd, research
+            - **Affected component**: contracts/gateway/nexus/wallet/platform/ui/core/sdk
+            - **Recommended assignee label**: (suggest area expertise needed)
+            - **Related issues**: (reference known related issue numbers)
+            Be concise. Do NOT attempt to solve the issue.
+          prompt: |
+            Triage this new Conxian issue:
+
+            Title: ${{ github.event.issue.title }}
+
+            Description:
+            ${{ github.event.issue.body }}
+
+            Repository: ${{ github.repository }}
+
+      - name: Post triage comment
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
+        with:
+          script: |
+            const response = `${{ steps.deepseek_call.outputs.response }}`;
+            if (!response || response.startsWith('ERROR:')) return;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: `## 🤖 DeepSeek Triage\n\n${response}\n\n---\n*Auto-triaged by DeepSeek (${{ vars.DEEPSEEK_MODEL || 'deepseek-chat' }})*`
+            });

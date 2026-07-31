@@ -230,3 +230,48 @@ cd ../conxian-nexus && cargo update webpki-roots
 | `conxius-platform` | `gemini-3.6-flash` ✅ | Same key |
 
 **Action required**: Top up prepaid credits at https://ai.studio/projects to unblock Gemini workflows.
+
+
+---
+
+## 9. DeepSeek Integration — Dual-Model Architecture (session 46)
+
+### Architecture: DeepSeek (code) + Gemini (vision)
+
+| Task | Model | Provider | Cost/M tokens |
+|------|-------|----------|---------------|
+| Code review | `deepseek-chat` (V3) | DeepSeek | ~$0.27 input / $1.10 output |
+| Issue triage | `deepseek-chat` (V3) | DeepSeek | ~$0.27 input |
+| Implementation planning | `deepseek-reasoner` (R1) | DeepSeek | ~$0.55 input / $2.19 output |
+| Vision/multimodal | `gemini-3.6-flash` | Google AI | ~$0.60 input (1M ctx) |
+| Scheduled bulk triage | `gemini-3.5-flash-lite` | Google AI | ~$0.20 input |
+| Image generation | `imagen-4.0` | Google AI | Per-image pricing |
+
+### DeepSeek Workflows (3 new)
+| Workflow | Trigger | Model | Action |
+|----------|---------|-------|--------|
+| `deepseek-review.yml` | PR open/sync + `/deepseek-review` comment | `deepseek-chat` | Posts inline code review |
+| `deepseek-triage.yml` | Issue opened | `deepseek-chat` | Auto-classifies priority/category/component |
+| `deepseek-plan-execute.yml` | Label `deepseek-plan` added | `deepseek-reasoner` (R1) | Generates implementation plan with file paths |
+
+### Configuration
+| Variable | Value | Set On |
+|----------|-------|--------|
+| `vars.DEEPSEEK_MODEL` | `deepseek-chat` | 6 repos ✅ |
+| `vars.DEEPSEEK_REASONER_MODEL` | `deepseek-reasoner` | 6 repos ✅ |
+| `secrets.DEEPSEEK_API_KEY` | **NEEDED** | Add to each repo |
+
+### Gemini Workflows (6 retained)
+| Workflow | Role | Model |
+|----------|------|-------|
+| `gemini-triage.yml` | Scheduled issue triage | `vars.GEMINI_MODEL` |
+| `gemini-review.yml` | PR review with vision | `vars.GEMINI_MODEL` |
+| `gemini-plan-execute.yml` | Complex planning | `vars.GEMINI_MODEL` |
+| `gemini-dispatch.yml` | Comment-triggered dispatch | `vars.GEMINI_MODEL` |
+| `gemini-invoke.yml` | Manual invocation | `vars.GEMINI_MODEL` |
+| `gemini-scheduled-triage.yml` | Cron triage | `vars.GEMINI_MODEL` |
+
+### Action Required
+1. **Add `DEEPSEEK_API_KEY`** secret to each repo (get from https://platform.deepseek.com/api_keys)
+2. All variables already set across 6 repos
+3. DeepSeek workflows will auto-activate once the secret exists

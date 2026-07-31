@@ -1,0 +1,129 @@
+# Conxian DeepSeek Action
+# Uses DeepSeek's OpenAI-compatible API for code review, triage, and planning.
+# DeepSeek Chat (V3): ~$0.27/M input tokens — 40x cheaper than Gemini Pro
+# DeepSeek Reasoner (R1): Best-in-class for complex code reasoning
+name: 'Run DeepSeek'
+author: 'Conxian Labs'
+description: |
+  Invoke DeepSeek models via OpenAI-compatible API from a GitHub Action.
+  Use for code review, issue triage, and plan-execute tasks where
+  DeepSeek outperforms Gemini at substantially lower cost.
+
+inputs:
+  deepseek_api_key:
+    description: 'DeepSeek API key (platform.deepseek.com)'
+    required: true
+  model:
+    description: 'Model: deepseek-chat (V3), deepseek-reasoner (R1)'
+    required: false
+    default: 'deepseek-chat'
+  prompt:
+    description: 'System + user prompt for DeepSeek'
+    required: true
+  max_tokens:
+    description: 'Max tokens in response'
+    required: false
+    default: '4096'
+  temperature:
+    description: 'Temperature (0-2). Use 0 for deterministic code review.'
+    required: false
+    default: '0.3'
+  system_prompt:
+    description: 'Optional system prompt override'
+    required: false
+    default: ''
+
+outputs:
+  response:
+    description: 'DeepSeek response text'
+    value: ${{ steps.deepseek_call.outputs.response }}
+  finish_reason:
+    description: 'Why generation stopped'
+    value: ${{ steps.deepseek_call.outputs.finish_reason }}
+  usage_tokens:
+    description: 'Token usage (JSON)'
+    value: ${{ steps.deepseek_call.outputs.usage }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 'DeepSeek API call'
+      id: deepseek_call
+      shell: 'bash'
+      run: |
+        set -euo pipefail
+
+        # Build messages array
+        MESSAGES=""
+        if [ -n "$SYSTEM_PROMPT" ]; then
+          ESCAPED_SYSTEM=$(echo "$SYSTEM_PROMPT" | jq -Rs '.')
+          MESSAGES="[{\"role\":\"system\",\"content\":$ESCAPED_SYSTEM},{\"role\":\"user\",\"content\":$(echo "$PROMPT" | jq -Rs '.')}]"
+        else
+          MESSAGES="[{\"role\":\"user\",\"content\":$(echo "$PROMPT" | jq -Rs '.')}]"
+        fi
+
+        RESPONSE=$(curl -s https://api.deepseek.com/chat/completions \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $DEEPSEEK_API_KEY" \
+          -d "$(jq -n \
+            --arg model "$MODEL" \
+            --argjson messages "$MESSAGES" \
+            --argjson max_tokens "$MAX_TOKENS" \
+            --argjson temperature "$TEMPERATURE" \
+            '{model: $model, messages: $messages, max_tokens: $max_tokens, temperature: $temperature}')" 2>&1)
+
+        HTTP_CODE=$(echo "$RESPONSE" | jq -r '.error // empty' 2>/dev/null)
+
+        if echo "$RESPONSE" | jq -e '.error' >/dev/null 2>&1; then
+          ERROR_MSG=$(echo "$RESPONSE" | jq -r '.error.message // "Unknown error"')
+          echo "::error title=DeepSeek API Error::${ERROR_MSG}"
+          echo "response=ERROR: ${ERROR_MSG}" >> "$GITHUB_OUTPUT"
+          echo "finish_reason=api_error" >> "$GITHUB_OUTPUT"
+          echo "usage={}" >> "$GITHUB_OUTPUT"
+          exit 1
+        fi
+
+        CONTENT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content // ""')
+        FINISH=$(echo "$RESPONSE" | jq -r '.choices[0].finish_reason // "unknown"')
+        USAGE=$(echo "$RESPONSE" | jq -c '.usage // {}')
+
+        # Write multi-line outputs
+        {
+          echo "response<<DEEPSEEK_EOF"
+          echo "$CONTENT"
+          echo "DEEPSEEK_EOF"
+        } >> "$GITHUB_OUTPUT"
+
+        echo "finish_reason=$FINISH" >> "$GITHUB_OUTPUT"
+
+        {
+          echo "usage<<DEEPSEEK_USAGE_EOF"
+          echo "$USAGE"
+          echo "DEEPSEEK_USAGE_EOF"
+        } >> "$GITHUB_OUTPUT"
+
+        # Job summary
+        if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+          {
+            echo "### DeepSeek ($MODEL) — ${FINISH}"
+            echo
+            echo "**Tokens**: $(echo "$USAGE" | jq -r '"\(.total_tokens // 0) total (\(.prompt_tokens // 0) prompt + \(.completion_tokens // 0) completion)"')"
+            echo
+            echo "<details><summary>Response</summary>"
+            echo
+            echo "$CONTENT"
+            echo
+            echo "</details>"
+          } >> "$GITHUB_STEP_SUMMARY"
+        fi
+      env:
+        DEEPSEEK_API_KEY: '${{ inputs.deepseek_api_key }}'
+        MODEL: '${{ inputs.model }}'
+        PROMPT: '${{ inputs.prompt }}'
+        SYSTEM_PROMPT: '${{ inputs.system_prompt }}'
+        MAX_TOKENS: '${{ inputs.max_tokens }}'
+        TEMPERATURE: '${{ inputs.temperature }}'
+
+branding:
+  icon: 'cpu'
+  color: 'purple'
