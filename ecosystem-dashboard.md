@@ -30,22 +30,22 @@
 ## 2. Priority Breakdown — Open Issues
 
 ### P0 (Critical)
-| Issue | Repo | Title |
-|-------|------|-------|
-| #480 | Conxian | Developer Sandbox: TTFV < 15 minutes |
-| #943 | conxian-business | Establish GitHub-first operating model |
+| Issue | Repo | Title | Code Location | Status |
+|-------|------|-------|---------------|--------|
+| #480 | Conxian | Developer Sandbox: TTFV < 15 minutes | `cxn-sandbox/` uses old `@conxian/sdk` + `ConxianGateway`. Live SDK is `@conxian/client-sdk` at `packages/client-sdk/`. Sandbox inside gateway at `conxian-gateway/examples/developer-sandbox/` uses correct SDK. | Sandbox uses stale mock SDK. Gateway sandbox is current. |
+| #943 | conxian-business | Establish GitHub-first operating model | Meta: BOS governance restructure | BLOCKED by Linear capacity |
 
 ### P1 (High)
-| Issue | Repo | Title |
-|-------|------|-------|
-| #532 | Conxian | Partnership security, legal, and commercialization launch gate |
-| #530 | Conxian | Partnership gateway, Stacks.js SDK, event indexing |
-| #529 | Conxian | Partner usage ledger and atomic split settlement |
-| #527 | Conxian | Partnership fee policy, legal model, asset scope |
-| #515 | Conxian | Enforce Main Branch Merge Gates, Reconcile CODEOWNERS |
-| #496 | Conxian | Partnership Fee Contracts |
-| #488 | Conxian | 2% Protocol Fee Collection |
-| #944 | conxian-business | Retire Linear-first references, publish migration map |
+| Issue | Repo | Title | Code Location |
+|-------|------|-------|---------------|
+| #532 | Conxian | Partnership security, legal, and commercialization launch gate | Meta: needs legal/compliance sign-off |
+| #530 | Conxian | Partnership gateway, Stacks.js SDK, event indexing | `contracts/partners/` (if exists) or new contract work |
+| #529 | Conxian | Partner usage ledger and atomic split settlement | `contracts/treasury/revenue-distributor.clar`, `contracts/agents/fiscal-orchestrator.clar` |
+| #527 | Conxian | Partnership fee policy, legal model, asset scope | Meta: business decision precedes code |
+| #515 | Conxian | Enforce Main Branch Merge Gates, Reconcile CODEOWNERS | `.github/CODEOWNERS`, branch protection rules, `scripts/branch_promotion_policy.py` |
+| #496 | Conxian | Partnership Fee Contracts | Fee collection: `contracts/treasury/` path; related to #488, #529 |
+| #488 | Conxian | 2% Protocol Fee Collection | `contracts/treasury/revenue-distributor.clar`, `contracts/treasury/allocation-policy.clar` |
+| #944 | conxian-business | Retire Linear-first references, publish migration map | Meta: BOS governance |
 
 ### P2
 | Issue | Repo | Title |
@@ -54,15 +54,23 @@
 | #500 | Conxian | Production oracle config + DEX wiring |
 
 ### BOS Governance Gates (#890 → #932–#938)
-| Gate | Status | Title |
-|------|--------|-------|
-| #932 Gate 0 | BLOCKED | Re-baseline and accountable ownership |
-| #933 Gate 1 | NOT MET | Reproducible candidate, pins, validators, green CI |
-| #934 Gate 2 | NOT MET | Safe authority-transfer semantics |
-| #935 Gate 3 | NOT MET | Testnet rehearsal, readback, failure drills |
-| #936 Gate 4 | BLOCKED | Hardware-backed signing/attestation |
-| #937 Gate 5 | BLOCKED | Independent security/release acceptance |
-| #938 Gate 6 | NOT AUTHORIZED | Mainnet handoff and post-state readback |
+
+**Root cause:** No approved restricted Linear tracker exists (Linear `USAGE_LIMIT_EXCEEDED` on `activeIssueCount`). Without an internal system-of-record, no gate can formally advance. GitHub issue hierarchy (#932–#938) serves as public-safe coordination mirrors only.
+
+**Gate 0 blockers:** Linear capacity, accountable role assignment, accepted immutable baseline.
+**Gate 1 blockers:** Divergent SHAs between main/dev/staged; two required business validators absent; GitHub Actions blocked by billing/spending limit (runs don't execute); no candidate-wide green CI.
+**Gates 4-5 blockers:** Hardware-backed signing/attestation depends on enclave-sdk issues #195, #200, #202.
+**Gate 6:** Not authorized until all prior gates clear.
+
+| Gate | Status | Title | Actual Blocker |
+|------|--------|-------|----------------|
+| #932 Gate 0 | BLOCKED | Re-baseline and accountable ownership | Linear capacity + accountable roles unassigned |
+| #933 Gate 1 | NOT MET | Reproducible candidate, pins, validators, green CI | SHA divergence + Actions billing block + 2 validators absent |
+| #934 Gate 2 | NOT MET | Safe authority-transfer semantics | Depends on Gate 0+1 |
+| #935 Gate 3 | NOT MET | Testnet rehearsal, readback, failure drills | Depends on Gate 0-2 |
+| #936 Gate 4 | BLOCKED | Hardware-backed signing/attestation | Depends on enclave-sdk #195, #200, #202 |
+| #937 Gate 5 | BLOCKED | Independent security/release acceptance | Depends on Gate 4 |
+| #938 Gate 6 | NOT AUTHORIZED | Mainnet handoff and post-state readback | All prior gates |
 
 ---
 
