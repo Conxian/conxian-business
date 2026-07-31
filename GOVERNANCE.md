@@ -17,11 +17,14 @@ Canonical parent-control alignment guidance for this repo (scope boundaries, con
 
 All repositories in the Conxian portfolio must adhere to the [**Branching and Promotion Policy**](./docs/BRANCHING_AND_PROMOTION_POLICY.md).
 
-- **`main` branch**: Reserved for mainnet-only production code. No stubs, mocks, or placeholders.
-- **`staged` branch**: Reserved for mainnet candidate validation and promotion to `main`.
-- **`dev` branch**: Default branch for development and testnet-oriented logic.
+- **`main` branch**: GitHub default and production branch.
+- **`dev` branch**: Non-production integration branch; never the GitHub default.
+- **`staged` branch**: Candidate branch between integration and production.
 
-Feature branches should validate locally first, then land in `dev` via pull request.
+Ordinary work should validate locally first, then land in `dev` via pull
+request. Only the exact direct and generated routes in
+[`docs/BRANCH_AND_PROMOTION_STANDARD.md`](./docs/BRANCH_AND_PROMOTION_STANDARD.md)
+may promote into `staged` or `main`.
 
 ## Approval model
 
@@ -32,11 +35,11 @@ All changes land via pull request and must follow the workflow defined in `docs/
 Conxian operates under a Zero Secret Egress (ZSE) mandate.
 
 - Public-safe documentation may live in Git.
-- Strategic, legal, operational, and administrative documents that are internal-only must be stored in the sovereign coordination layer (Kwil/Tableland) and referenced from Git with a pointer.
+- Strategic, legal, operational, and administrative documents that are internal-only must be stored in the authorized Linear workspace (Kwil/Tableland) and referenced from Git with a pointer.
 
 ## Policies
 
-- Repository boundary: Treat this repo as public for ZSE boundary purposes. Internal-only strategy, legal interpretations, operational runbooks, and infrastructure identifiers must live in the sovereign coordination layer.
+- Repository boundary: Treat this repo as public for ZSE boundary purposes. Internal-only strategy, legal interpretations, operational runbooks, and infrastructure identifiers must live in the authorized Linear workspace.
 - Contributing guidelines: [`CONTRIBUTING.md`](./CONTRIBUTING.md)
 - Security policy: [`SECURITY.md`](./SECURITY.md)
 - BOS business buildout and repo operating model: [`docs/BOS_BUSINESS_BUILDOUT.md`](./docs/BOS_BUSINESS_BUILDOUT.md)

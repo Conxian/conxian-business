@@ -19,7 +19,7 @@ Per the repo portfolio, `conxius-platform` is an **operating function** repo:
 ## 3) Separating Operations from Administrative Controls
 
 - **Platform Operations**: Docker configurations, environment templates, and CLI orchestration helpers (Git).
-- **Administrative Controls**: Access management policies, deployment secrets, and sensitive infrastructure mapping (Linear Virtual Office).
+- **Administrative Controls**: Access management policies, deployment secrets, and sensitive infrastructure mapping (authorized Linear workspace).
 
 ## 4) Business Logic and Documentation Gaps
 

@@ -1,9 +1,9 @@
-# Conxian Gateway ISO 20022 Integration Specification
-> For: Conxian Gateway | Standard: ISO 20022 MX | Generated: 2026-07-06
+# `conxian-gateway` ISO 20022 Integration Specification
+> For: `conxian-gateway` | Standard: ISO 20022 MX | Generated: 2026-07-06
 
 ## Overview
 
-This document specifies the ISO 20022 message integration for the Conxian Gateway, enabling enterprise ISO 20022 payments to settle via Bitcoin L1 and Stacks smart contracts.
+This document specifies the ISO 20022 message integration for the `conxian-gateway`, enabling enterprise ISO 20022 payments to settle via Bitcoin L1 and Stacks smart contracts.
 
 ---
 
@@ -152,22 +152,22 @@ impl OpReturnCommitment {
             "lei_b": lei_b,
             "ts": chrono::Utc::now().to_rfc3339(),
         });
-
+        
         let json = payload.to_string();
         let mut hasher = Sha256::new();
         hasher.update(json.as_bytes());
         let hash = hasher.finalize();
-
+        
         let mut data = vec![0x01, 0x01]; // version + hash_type
         data.extend_from_slice(&hash);
-
+        
         OpReturnCommitment {
             version: 0x01,
             hash_type: 0x01,
             payload: data,
         }
     }
-
+    
     pub fn to_script(&self) -> Script {
         let mut script = Script::new();
         script.push_opcode(opcodes::OP_RETURN);
@@ -193,10 +193,10 @@ impl BtcNativeAdapter {
     pub async fn settle(&self, payment: &CanonicalPayment) -> Result<SettlementProof> {
         // 1. Create Bitcoin address for beneficiary
         let btc_address = self.derive_address(&payment.beneficiary)?;
-
+        
         // 2. Create PSBT
         let mut psbt = self.create_psbt(&btc_address, &payment.amount_sats)?;
-
+        
         // 3. Add OP_RETURN commitment
         let commitment = OpReturnCommitment::new(
             &payment.message_id,
@@ -205,11 +205,11 @@ impl BtcNativeAdapter {
             &payment.beneficiary.lei,
         );
         psbt.add_op_return(&commitment.to_script());
-
+        
         // 4. Sign and broadcast
         let signed = self.sign_psbt(&mut psbt)?;
         let txid = self.broadcast(&signed).await?;
-
+        
         Ok(SettlementProof {
             txid,
             confirmations: 0,
@@ -235,17 +235,17 @@ impl LightningAdapter {
             &payment.payment_purpose,
             3600, // 1 hour expiry
         )?;
-
+        
         // 2. Generate preimage and hash
         let preimage = invoice.preimage();
         let hash = invoice.payment_hash();
-
+        
         // 3. Hold hash for atomic settlement
         self.hold_hash(hash, &payment.message_id).await?;
-
+        
         // 4. Wait for payment and settle
         let settled = self.await_payment(hash).await?;
-
+        
         Ok(SettlementProof {
             txid: settled.txid(),
             confirmations: 0,
@@ -268,25 +268,25 @@ impl WrappedBtcAdapter {
     pub async fn settle(&self, payment: &CanonicalPayment) -> Result<SettlementProof> {
         // 1. Validate DTI (Digital Token Identifier)
         let dti = self.dti_provider.get_dti("WBTC").await?;
-
+        
         // 2. Lock BTC and mint wrapped token
         let mint_result = self.bridge.peg_in(
             &payment.btc_address,
             &payment.amount_sats,
             &payment.commitment_hash,
         ).await?;
-
+        
         // 3. Transfer wrapped token on Stacks
         let transfer = self.stacks_transfer(
             &payment.beneficiary.stacks_address,
             &mint_result.wrapped_amount,
             &dti,
         ).await?;
-
+        
         Ok(SettlementProof {
             txid: transfer.txid,
             confirmations: 6, // Stacks finality
-            on_chain_ref: format!("SP:{}.{}:{}",
+            on_chain_ref: format!("SP:{}.{}:{}", 
                 payment.beneficiary.stacks_address,
                 dti,
                 transfer.token_id
@@ -341,7 +341,7 @@ impl TravelRuleData {
             beneficiary_lei: msg.cdtr_agt.fin_instn_id.othr.id.clone(),
         }
     }
-
+    
     pub fn to_zkp(&self) -> TravelRuleZKProof {
         // Generate zero-knowledge proof for compliance without revealing raw data
         TravelRuleZKProof {
@@ -541,5 +541,5 @@ pub fn create_investigation_msg(
 
 ---
 
-*Generated per Conxian Gateway requirements*
+*Generated per `conxian-gateway` requirements*
 *Aligns with BIS ISO 20022 and SWIFT CBPR+ standards*

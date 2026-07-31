@@ -1,8 +1,12 @@
-# Mainnet readiness checklist — lib-conclave-sdk (CON-171)
+# Historical mainnet readiness checklist — `conxius-enclave-sdk` (CON-171)
 
-## Status: READY FOR MAINNET (v1.6.0)
+> **Historical record — superseded on 2026-07-20.** This checklist preserves an earlier self-assessment. Its `READY FOR MAINNET (v1.6.0)` label is historical and must not be used as current production-support evidence.
+>
+> The current authority for `conxius-enclave-sdk` is the immutable [Production Enablement Audit — 2026-07-20](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [Capability and Evidence Matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md), recorded by merged [PR #193](https://github.com/Conxian/conxius-enclave-sdk/pull/193) at merge commit `79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8` against audited baseline `8194aa8ade26a9d5d7ed54b7f80f36796fce585c`.
+>
+> **Current status: Beta / conditional.** Do not enable value-bearing production signing or settlement from the audited tree. The listed acceptance work remains open across issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202).
 
-This checklist tracks the mainnet readiness for the `lib-conclave-sdk` repository.
+The checklist below remains a dated record of the former readiness review for the `conxius-enclave-sdk` repository.
 
 ### 1) Governance + public repo standards
 - [x] README includes `## Purpose`, `## Status`, `## Ownership`, and `## Releases`.
@@ -29,8 +33,10 @@ This checklist tracks the mainnet readiness for the `lib-conclave-sdk` repositor
 - [x] Any vendored source or copied third-party code includes clear attribution and license compatibility.
 
 ### 5) Canonical trackers
-- Sovereign Coordination Layer: https://sovereign.conxian.com/issue/CON-171
-- GitHub repo: https://github.com/Conxian/lib-conclave-sdk
+- authorized Linear workspace: https://sovereign.conxian.com/issue/CON-171
+- GitHub repo: https://github.com/Conxian/conxius-enclave-sdk
+
+The following tracker links are retained as historical references from the original checklist; they do not override the 2026-07-20 audit or capability matrix.
 
 ## Related work
 

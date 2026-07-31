@@ -2,7 +2,7 @@
 
 This repository is intended to be public-safe.
 
-The canonical CON-762 partner scorecard content — including baseline dimension scores, scenario weight profiles, weighted partner scores, first-wave recommendations, and the build-vs-partner decision matrix — is maintained in the Conxian Linear workspace to comply with our Zero Secret Egress (ZSE) mandate and to protect commercially sensitive procurement strategy.
+The canonical CON-762 partner scorecard content — including baseline dimension scores, scenario weight profiles, weighted partner scores, first-wave recommendations, and the build-vs-partner decision matrix — is maintained in the authorized Linear workspace to comply with our Zero Secret Egress (ZSE) mandate and to protect commercially sensitive procurement strategy.
 
 See:
 

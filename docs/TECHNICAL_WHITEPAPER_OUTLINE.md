@@ -4,7 +4,7 @@
 > **Issue**: [#827](https://github.com/Conxian/conxian-business/issues/827)
 > **Status**: Outline (draft)
 > **Version**: 1.0-draft
-> **Last updated**: 2026-07-03
+> **Last updated**: 2026-07-28
 
 ---
 
@@ -64,7 +64,7 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 - **Protocol Plane**: Clarity smart contracts (CSF), sovereign treasury, fiscal vault oracle
 - **Execution Plane**: Nexus multi-protocol engine (Bitcoin, EVM, Cosmos, Stacks, Lightning, RGB)
 - **Compliance Plane**: Gateway ISO 20022 pipeline, ZKC (Zero-Knowledge Compliance)
-- **Client Plane**: Conxius Wallet (StrongBox/TEE), Conxian UI (dashboard)
+- **Client Plane**: Conxius Wallet (StrongBox/TEE), `conxian_ui` (dashboard)
 
 > **Evidence**: [THREE_LANE_RUNTIME_DEPLOYMENT_ARCHITECTURE.md §3]
 
@@ -83,8 +83,8 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 > **Evidence**: [conxian-nexus/src/api/rest.rs], [lib-conxian-core]
 
 #### 2.4 Ecosystem Repository Map
-- Flagship repos: Conxius Wallet, Conxian Gateway, Conxian Core Protocol, Conxian Labs Site, Conxius Platform
-- Supporting repos: Nexus, lib-conxian-core, Conxius Enclave SDK, Conxius Orbit, Conxian UI
+- Flagship repos: Conxius Wallet, `conxian-gateway`, Conxian Core Protocol, Conxian Labs Site, Conxius Platform
+- Supporting repos: Nexus, lib-conxian-core, `conxius-enclave-sdk`, `conxius-orbit`, `conxian_ui`
 
 > **Evidence**: [REPO_PORTFOLIO.md]
 
@@ -156,7 +156,7 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 - Core contracts: bridge-nft, yield-optimizer, payment-forge, jurisdictional-sharding
 - Dynamic principals via operational-treasury.clar
 
-> **Evidence**: [Conxian/], [conxius-orbit/rebuild_toml.py]
+> **Evidence**: [`Conxian/`], [`conxius-orbit/rebuild_toml.py`]
 
 #### 5.2 Oracle System
 - PPP (Purchasing Power Parity) tracking across fiat corridors
@@ -206,14 +206,14 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 
 ---
 
-### 7) Compliance Layer: Conxian Gateway (2 pages)
+### 7) Compliance Layer: `conxian-gateway` (2 pages)
 
 #### 7.1 ISO 20022 Integration
 - pacs.008 message wrapping via Nexus ERP Adapter
 - HMAC-SHA256 attestation for OData/ERP translation
 - Zero-Knowledge Compliance (ZKC): prove compliance without exposing raw data
 
-> **Evidence**: [conxian-nexus/src/api/erp.rs], [conxian-gateway/]
+> **Evidence**: [`conxian-nexus/src/api/erp.rs`], [`conxian-gateway/`]
 
 #### 7.2 Cross-Border Settlement
 - x402 settlement pipeline
@@ -255,17 +255,17 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 
 | Component | Status | Evidence |
 |-----------|--------|----------|
-| Conxius Wallet | Stable (v1.9.2) | CI green; versioned releases |
-| Conxian Nexus | Beta (v0.4.17) | CI green; stubs removed; oracle active |
-| Conxian Gateway | Beta | CI green; ISO 20022 pipeline active |
+| Conxius Wallet | Stable (v1.9.2) | Versioned releases; historical CI evidence exists; current hosted re-verification blocked as of 2026-07-28 |
+| Conxian Nexus | Beta (v0.4.17) | Stubs removed; oracle active; historical CI evidence exists; current hosted re-verification blocked as of 2026-07-28 |
+| `conxian-gateway` | Beta | ISO 20022 pipeline active; historical CI evidence exists; current hosted re-verification blocked as of 2026-07-28 |
 | ConxianCSF | Pre-mainnet (Go pending ALEX) | All P0 blockers remediated |
-| Conxius Enclave SDK | Beta | Hardware enclave abstractions |
+| `conxius-enclave-sdk` | Beta | Hardware enclave abstractions |
 | lib-conxian-core | Beta | Clippy + audit enforced |
 
 > **Evidence**: [TRUST_AND_READINESS_VERIFICATION.md §2]
 
 #### 9.2 CI/CD Pipeline
-- Conxian Unified CI: 9/9 jobs
+- Conxian Unified CI: historical 9/9 pipeline evidence exists; as of 2026-07-28, current GitHub-hosted Actions are blocked before job steps by the account billing/spend state and are not re-verified
 - Suites: B2B (Nexus), B2C (Wallet), Core Library, Gateway, Repo Hygiene, Summary Gate
 - Promotion pipeline: dev → staged → main with automated verification
 

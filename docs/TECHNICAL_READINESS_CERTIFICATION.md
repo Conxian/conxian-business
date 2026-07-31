@@ -2,6 +2,12 @@
 ## Market-Operational Proof of Viability
 **Date:** 2026-05-29 | **Scope:** Full Ecosystem Audit | **Status:** VERIFIED
 
+> **Historical certification — SDK interpretation superseded on 2026-07-20.** This document preserves the May 29 build and ecosystem assessment. Its `VERIFIED`, `PRODUCTION`, `Ready to license`, and `TECHNICALLY READY` labels are dated historical claims, not current approval for `conxius-enclave-sdk` production support.
+>
+> The current SDK authority is the immutable [Production Enablement Audit — 2026-07-20](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [Capability and Evidence Matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md), recorded by merged [PR #193](https://github.com/Conxian/conxius-enclave-sdk/pull/193) at merge commit `79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8` against audited baseline `8194aa8ade26a9d5d7ed54b7f80f36796fce585c`.
+>
+> **Current status: Beta / conditional.** Do not enable value-bearing production signing or settlement from the audited tree; issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain open.
+
 ---
 
 ## 0. Unified Theory v2 — Upgrade Analysis
@@ -113,7 +119,7 @@ The recommended v2.1 upgrades add **quantitative precision** for real-world busi
 | **conxian-nexus** | Core Rust crate | ✅ COMPILED |
 | **conxius-enclave-sdk** | Core Rust crate | ✅ COMPILED |
 
-**Workspace Root:** [Cargo.toml](Cargo.toml)
+**Workspace Root:** [Cargo.toml](../Cargo.toml)
 
 ### 1.2 Build Results
 
@@ -152,7 +158,7 @@ The recommended v2.1 upgrades add **quantitative precision** for real-world busi
 
 ### 2.1 Setup Script
 
-[setup_windows.ps1](setup_windows.ps1) — verified working, idempotent, fully automated.
+[setup_windows.ps1](../setup_windows.ps1) — verified working, idempotent, fully automated.
 
 ### 2.2 What It Verifies
 
@@ -183,7 +189,7 @@ The recommended v2.1 upgrades add **quantitative precision** for real-world busi
 
 ### 3.1 Conxian Protocol Contracts
 
-**Location:** [Conxian/contracts/](Conxian/contracts/)
+**Location:** [Conxian/contracts/](https://github.com/Conxian/Conxian/tree/7e6aa76cc35dfbef3470ddd243356aa67ad17bcc/contracts)
 
 | Category | Count | Examples |
 |:---|---:|:---|
@@ -206,7 +212,7 @@ The recommended v2.1 upgrades add **quantitative precision** for real-world busi
 
 ### 3.2 Conxius Wallet Contracts
 
-**Location:** [conxius-wallet/](conxius-wallet/)
+**Location:** [conxius-wallet/](https://github.com/Conxian/conxius-wallet/tree/d0532234a2ace9a7bb31ef54b4002f1f66fc481c)
 
 | Contract | Category | Purpose |
 |:---|---|:---|
@@ -234,11 +240,11 @@ All contracts across both projects have been migrated to **Clarity 4**:
 
 ---
 
-## 4. Conxian Gateway — Sovereign Middleware
+## 4. Conxian Fusion (`conxian-gateway`) — Sovereign Middleware
 
 ### 4.1 Project Structure
 
-**Workspace Root:** [conxian-gateway/Cargo.toml](conxian-gateway/Cargo.toml)
+**Workspace Root:** [conxian-gateway/Cargo.toml](https://github.com/Conxian/conxian-gateway/blob/54edf2e639a67092647a2a620081a698569b7319/Cargo.toml)
 
 | Member | Purpose | Rust Files |
 |:---|---|:---:|
@@ -272,7 +278,9 @@ All contracts across both projects have been migrated to **Clarity 4**:
 
 ---
 
-## 5. Conxius Enclave SDK — Hardware Security Primitive
+## 5. `conxius-enclave-sdk` — historical hardware security assessment
+
+> **Current-status cross-reference:** The component and integration observations below record what was compiled or architected on 2026-05-29. They do not establish production support. The current maturity is **Beta / conditional**; interface/code presence, build success, or WASM compilation cannot upgrade the upstream audit or capability matrix.
 
 ### 5.1 Component Architecture
 
@@ -289,7 +297,7 @@ All contracts across both projects have been migrated to **Clarity 4**:
 | Consumer | Integration Method | Status |
 |:---|---|:---:|
 | Conxius Wallet (Android) | JNI via Rust FFI | ✅ |
-| Conxian Gateway | Native Rust crate | ✅ |
+| Conxian Fusion | Native Rust crate | ✅ |
 | Web Frontend | WASM bundle | ✅ |
 | Third-party apps | WASM + B2B licensing | 🔜 v1.0 launch |
 
@@ -317,7 +325,7 @@ All contracts across both projects have been migrated to **Clarity 4**:
 |:---|---|
 | Biometric Auth | Android BiometricPrompt |
 | Hardware-Backed Keys | Android StrongBox |
-| TEE Integration | TrustZone via Enclave SDK |
+| TEE Integration | TrustZone via `conxius-enclave-sdk` |
 | Offline-First | Local key storage, no cloud dependency |
 
 ---
@@ -328,12 +336,12 @@ All contracts across both projects have been migrated to **Clarity 4**:
 
 | Component | Status | Documentation |
 |:---|---|:---:|
-| System Graph | ✅ COMPLETE | [SYSTEM_GRAPH.md](conxius-platform/SYSTEM_GRAPH.md) |
-| Phase 5/6 Risk Register | ✅ COMPLETE | [PHASE_5_6_RISK_REGISTER.md](conxius-platform/docs/PHASE_5_6_RISK_REGISTER.md) |
+| System Graph | ✅ COMPLETE | [SYSTEM_GRAPH.md](https://github.com/Conxian/conxius-platform/blob/7566d15463b04eefec46cd124d9ef196b7b5383e/docs/architecture/SYSTEM_GRAPH.md) |
+| Phase 5/6 Risk Register | ✅ COMPLETE | [PHASE_5_6_RISK_REGISTER.md](https://github.com/Conxian/conxius-platform/blob/7566d15463b04eefec46cd124d9ef196b7b5383e/docs/PHASE_5_6_RISK_REGISTER.md) |
 | Phase 7 Sovereign Design | 🔄 IN PROGRESS | NixOS control plane migration |
-| WHITEPAPER | ✅ COMPLETE | [WHITEPAPER.md](conxius-platform/WHITEPAPER.md) |
+| WHITEPAPER | ✅ COMPLETE | [WHITEPAPER.md](https://github.com/Conxian/conxius-platform/blob/7566d15463b04eefec46cd124d9ef196b7b5383e/docs/WHITEPAPER.md) |
 
-### 7.2 conxius_orbit
+### 7.2 `conxius-orbit`
 
 | Feature | Status |
 |:---|---|
@@ -368,13 +376,15 @@ All contracts across both projects have been migrated to **Clarity 4**:
 | **Platform Control** (Platform) | 🟡 **TRANSITIONAL** | ❌ Internal tool | 🔄 Phase 7 migration |
 | **Shared SDK** (lib-conxian-core) | 🟢 **PRODUCTION** | ✅ Licensing via SDK | ✅ Developer-facing |
 
+The **Rust Backend (Nexus + SDK)** row above is a historical aggregate assessment. It must not be read as current `conxius-enclave-sdk` production or licensing evidence; the current SDK status remains **Beta / conditional** under the July 20 audit and matrix.
+
 ### 9.2 Readiness by Market Segment
 
 | Market Segment | Ready? | What's Needed |
 |:---|---:|:---|
 | **Enterprise B2B** (Gateway) | 🟢 Tech ready, need customers | 3-5 design partners |
 | **Consumer Wallet** (Android) | 🟢 Ready for growth | iOS port + marketing |
-| **Developer SDK** (Enclave SDK) | 🟢 Ready to license | v1.0 release + docs |
+| **Developer SDK** (`conxius-enclave-sdk`) | **Historical:** 🟢 Ready to license | Current status: **Beta / conditional**; v1.0 release evidence, protocol correctness, hardware/attestation evidence, and independent review remain required |
 | **DeFi Protocol** (Contracts) | 🟡 Testnet ready | Mainnet deployment + audit |
 | **Creator Economy** (Platform) | 🟡 Feature-complete | User acquisition strategy |
 
@@ -385,7 +395,7 @@ All contracts across both projects have been migrated to **Clarity 4**:
 | `cargo build --workspace` | ✅ PASS | Exit code 0, 181+ crates |
 | `cargo test --workspace` | ⚠️ BLOCKED | Disk space exhaustion (56 MB free) — NOT a code issue |
 | `conxian-gateway cargo build` | ⚠️ BLOCKED | Disk space exhaustion — requires 10+ GB |
-| Rust source files (Gateway) | ✅ 32 files statically verified | [Full module tree confirmed](conxian-gateway) |
+| Rust source files (Gateway) | ✅ 32 files statically verified | [Full module tree confirmed](https://github.com/Conxian/conxian-gateway/tree/54edf2e639a67092647a2a620081a698569b7319) |
 | Clarity 4 contracts | ✅ 199+ entries verified | 100% at clarity-version = 4, zero on v1-3 |
 | Windows setup reproducibility | ✅ Idempotent script verified | setup_windows.ps1 |
 | LLVM MinGW toolchain | ✅ Working | secp256k1-sys links |
@@ -396,13 +406,13 @@ All contracts across both projects have been migrated to **Clarity 4**:
 
 ## 10. Operational Readiness Statement
 
-**Certification:** The Conxian Ecosystem is **TECHNICALLY READY** for market operations across the following dimensions:
+**Historical certification statement (2026-05-29):** The Conxian Ecosystem was assessed as **TECHNICALLY READY** for market operations across the following dimensions:
 
 1. **Rust Middleware Layer** — Compiled, tested, and Windows/Linux compatible. Ready for B2B deployment.
 2. **Smart Contract Layer** — 207+ Clarity 4 contracts deployed on testnet. Ready for mainnet launch.
 3. **Wallet Layer** — Android production app. iOS is the critical gap.
 4. **Developer Tooling** — Orbit CLI/TUI ready for developer self-service.
-5. **SDK Layer** — Enclave SDK compiled to WASM target. Ready for licensing.
+5. **SDK Layer** — Historical record: `conxius-enclave-sdk` compiled to a WASM target and was described as ready for licensing. Current status: **Beta / conditional**; no value-bearing production signing or settlement is supported from the audited tree.
 
 **Critical Path Items Before Full Market Launch:**
 
@@ -418,7 +428,7 @@ All contracts across both projects have been migrated to **Clarity 4**:
 | Gateway Production SLA | MEDIUM | 90 days | Ops |
 | Phase 7 NixOS Completion | MEDIUM | 6-12 months | Architecture |
 
-**Final Certification:** ✅ **PASS — Codebase is technically sound. Build compiles cleanly. Clarity 4 contracts verified. Tests blocked by infrastructure constraint (disk space), not code quality. Once disk is freed, full test suite should execute cleanly.**
+**Historical final certification:** ✅ **PASS — Codebase was assessed as technically sound. Build compiled cleanly. Clarity 4 contracts were verified. Tests were blocked by an infrastructure constraint (disk space), not code quality. This historical conclusion does not override the current SDK audit.
 
 ---
 

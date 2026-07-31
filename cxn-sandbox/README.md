@@ -22,7 +22,7 @@ Click the button below for instant setup:
 ### Option 3: Docker (One Command)
 
 ```bash
-docker run -p 3000:3000 -p 3001:3000 conxian/sandbox:latest
+docker run -p 3000:3000 -p 3001:3001 conxian/sandbox:latest
 ```
 
 ### Option 4: Local Development
@@ -54,9 +54,9 @@ npm run example:hello-world
 
 ## 📦 What's Included
 
-- **Conxian Gateway** - ISO 20022 ↔ Bitcoin bridge
+- **`conxian-gateway`** - ISO 20022 ↔ Bitcoin bridge
 - **Conxian Nexus** - Settlement layer
-- **Conxius Enclave SDK** - TEE primitives
+- **`conxius-enclave-sdk`** - TEE primitives
 - **Redis + PostgreSQL** - Data layer
 - **TypeScript SDK** - `@conxian/sdk`
 - **20+ Examples** - Runnable code samples
@@ -81,7 +81,7 @@ console.log(`Network: ${status.network}`);
 ### 2. ISO 20022 Payment
 
 ```typescript
-import { ConxianGateway } from '@conxian/sdk';
+import { ConxianGateway, types } from '@conxian/sdk';
 
 const gateway = new ConxianGateway({ sandbox: true });
 
@@ -187,7 +187,7 @@ console.log(` MRENCLAVE: ${attestation.mrenclave}`);
                                   │
                                   ▼
 ┌─────────────────────────────────────────────────────────────────────┐
-│                        Conxian Gateway                               │
+│                        `conxian-gateway`                            │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐              │
 │  │ ISO 20022    │  │   Compliance │  │   Settlement │              │
 │  │   Parser     │  │   Engine     │  │   Adapter    │              │
@@ -242,7 +242,7 @@ MIT - See [LICENSE](LICENSE)
 
 <p align="center">
   <strong>Built with 💜 by Conxian Labs</strong><br>
-  <a href="https://conxian-labs.com">conxian-labs.com</a> ·
-  <a href="https://docs.conxian-labs.com">Docs</a> ·
+  <a href="https://conxian-labs.com">conxian-labs.com</a> · 
+  <a href="https://docs.conxian-labs.com">Docs</a> · 
   <a href="https://discord.gg/conxian">Discord</a>
 </p>

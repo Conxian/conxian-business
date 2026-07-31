@@ -29,9 +29,11 @@ This is the release discipline checklist for `conxian-nexus` (the Rust "Glass No
 - `Repo Hygiene (ZSE & Submodules)` runs on every PR.
 - `B2B Suite (Nexus & SDK)` runs on:
   - every push to `main`, and
-  - internal PRs that update `conxian-nexus` or `lib-conclave-sdk` submodule pointers (or any PR labeled `b2b`).
+  - internal PRs that update `conxian-nexus` or `conxius-enclave-sdk` submodule pointers (or any PR labeled `b2b`).
 
 For "release candidate" PRs that bump `conxian-nexus`, the `B2B Suite (Nexus & SDK)` check should be treated as required.
+
+For `conxius-enclave-sdk` release-candidate PRs, also apply the immutable [2026-07-20 production-enablement audit](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [capability matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md). API presence or a passing build cannot promote an SDK release candidate beyond **Beta / conditional** or authorize value-bearing production signing or settlement.
 
 ### In `Conxian/conxian-nexus`
 

@@ -2,7 +2,7 @@
 
 > **Issue**: [#829](https://github.com/Conxian/conxian-business/issues/829) — Maintain canonical packaging, customer journey, and pricing doctrine set
 > **Status**: Canonical scaffold (pricing details in Linear per ZSE)
-> **Last updated**: 2026-07-03
+> **Last updated**: 2026-07-28
 > **Owner**: Packaging lane (per [OPERATING_LANE_BOUNDARIES.md](OPERATING_LANE_BOUNDARIES.md))
 
 ## Purpose
@@ -13,7 +13,7 @@ This document defines the canonical commercial packaging doctrine for Conxian-La
 - Gateway, Wallet, and SDK remain the primary offer structure
 - Pricing, buyer journeys, and packaging logic do not drift from implementation truth
 
-**ZSE note**: This document defines the public-safe offer architecture, customer journey model, and packaging logic. Actual pricing tiers, revenue projections, and partner-specific commercial terms are maintained in the Conxian Linear workspace. See [BOUNDARY_DECISION_LOG.md](BOUNDARY_DECISION_LOG.md).
+**ZSE note**: This document defines the public-safe offer architecture, customer journey model, and packaging logic. Actual pricing tiers, revenue projections, and partner-specific commercial terms are maintained in the authorized Linear workspace. See [BOUNDARY_DECISION_LOG.md](BOUNDARY_DECISION_LOG.md).
 
 ---
 
@@ -23,14 +23,14 @@ Conxian-Labs offers three primary products, consistent across all packaging tier
 
 | Product | Type | What It Is | Maturity |
 |---------|------|------------|----------|
-| **Conxian Gateway** | B2B Infrastructure | ISO 20022 compliance pipe bridging Bitcoin/Stacks with legacy banking. Includes ZKC (Zero-Knowledge Compliance) and SYI (Sovereign Yield Index). | Beta |
+| **`conxian-gateway`** | B2B Infrastructure | ISO 20022 compliance pipe bridging Bitcoin/Stacks with legacy banking. Includes ZKC (Zero-Knowledge Compliance) and SYI (Sovereign Yield Index). | Beta |
 | **Conxius Wallet** | B2C / Enterprise Client | Sovereign Bitcoin command center (Android-first, offline-first). Hardware-enforced key custody via StrongBox/TEE. | Stable (v1.9.2) |
-| **Conxius Enclave SDK** | Developer Tool | Cross-platform Rust/WASM SDK for hardware enclave abstractions. Enables third-party builders to integrate sovereign key management. | Beta |
+| **`conxius-enclave-sdk`** | Developer Tool | Cross-platform Rust/WASM SDK for hardware enclave abstractions. Enables third-party builders to integrate sovereign key management. | Beta |
 
 **Supporting products** (not primary offers, but available to partners):
 - Conxian Nexus: Multi-protocol state verification node (API access)
 - Conxius Platform: Local developer deployment orchestrator
-- Conxius Orbit: Stacks smart contract deployment toolkit
+- `conxius-orbit`: Stacks smart contract deployment toolkit
 
 ---
 
@@ -134,7 +134,7 @@ The following is the canonical one-pager structure for external use (investors, 
 
 **Who it's for**: Banks, fintechs, governments, and developers who need Bitcoin-native infrastructure without surrendering sovereignty.
 
-**Status**: Active. CI 9/9 green. Conxius Wallet v1.9.2 (Stable). ConxianCSF pre-mainnet.
+**Status**: Active. Historical 9/9 pipeline evidence exists; as of 2026-07-28, current GitHub-hosted Actions are blocked before job steps by the account billing/spend state and are not re-verified. Conxius Wallet v1.9.2 (Stable). ConxianCSF pre-mainnet.
 
 **Contact**: [commercial@conxian-labs.com]
 ```

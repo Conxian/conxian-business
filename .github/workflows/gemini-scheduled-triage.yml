@@ -85,11 +85,16 @@ jobs:
           ISSUE_COUNT="$(echo "${ISSUES}" | jq 'length')"
           echo "✅ Found ${ISSUE_COUNT} issue(s) to triage! 🎯"
 
+      - name: 'Checkout repository'
+        if: |-
+          ${{ steps.find_issues.outputs.issues_to_triage != '[]' }}
+        uses: 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' # ratchet:actions/checkout@v6
+
       - name: 'Run Gemini Issue Analysis'
         id: 'gemini_issue_analysis'
         if: |-
           ${{ steps.find_issues.outputs.issues_to_triage != '[]' }}
-        uses: 'google-github-actions/run-gemini-cli@v0' # ratchet:exclude
+        uses: './.github/actions/run-gemini-cli'
         env:
           GITHUB_TOKEN: '' # Do not pass any auth token here since this runs on untrusted inputs
           ISSUES_TO_TRIAGE: '${{ steps.find_issues.outputs.issues_to_triage }}'

@@ -1,55 +1,58 @@
-# Promotion checklists (feature -> dev -> staged -> main)
+# Promotion checklists
 
-These checklists define the required evidence and safety assertions for promoting work through the portfolio’s environment branches.
+Branch roles and routes are defined normatively in
+`openspec/specs/git-management/spec.md` and operationally in
+`docs/BRANCH_AND_PROMOTION_STANDARD.md`.
 
-Branch roles and the required promotion path are defined in:
+## Ordinary work -> `dev`
 
-- `docs/BRANCHING_AND_PROMOTION_POLICY.md`
-- `docs/BRANCH_AND_PROMOTION_STANDARD.md`
-- `openspec/specs/git-management/spec.md`
+Use for allowed feature, fix, documentation, chore, hotfix, and dependency
+branches, including ordinary fork pull requests.
 
-CI enforcement:
-
-- `.github/workflows/branch-promotion-policy.yml` enforces the ordered promotion path.
-- The same workflow enforces that PR descriptions targeting `dev`, `staged`, and `main` include the relevant checklist sections below.
-
-## 1) Feature branch -> `dev` (local validation)
-
-Use this checklist for PRs that merge a feature branch into `dev`.
-
+<!-- PROMOTION:FEATURE->DEV -->
 ### Feature -> dev promotion checklist
 
-- [ ] I targeted `dev` (not `staged`/`main`) and the change is appropriate for testnet/non-production validation.
-- [ ] I ran the relevant local validation for the touched areas (examples: `python3 scripts/bos_repo_check.py`, `cargo test`, `npm test`, `npm --prefix showcase-dapp run lint`).
-- [ ] The PR is scoped and does not mix unrelated changes (especially across `.github/`, `openspec/`, `docs/`, `scripts/`).
-- [ ] If this change touches wallets/signers/treasury/deployment surfaces, I described the change boundary and the expected runtime lane (`dev`/testnet).
+- [ ] I targeted `dev`, the non-production integration branch.
+- [ ] I ran and recorded relevant local validation for the touched scope.
+- [ ] The pull request is focused and contains no unrelated branch-governance or product changes.
+- [ ] Any wallet, signer, treasury, or deployment boundary affected by the work is described for the non-production lane.
 
-## 2) `dev` -> `staged` (integrated testnet validation -> mainnet candidate)
+## `dev` -> `staged`
 
-Use this checklist for promotion PRs that move a testnet-validated change from `dev` into `staged`.
+Use for direct `dev` promotion or an exact immutable
+`promotion/dev-to-staged-<source-sha>` candidate. Promotions must be
+same-repository. Generated candidates also include the exact-evidence block.
 
-`staged` is a mainnet-candidate branch: it must be safe to promote to `main` after completing the Mainnet Acceptance Evidence Pack requirements.
-
+<!-- PROMOTION:DEV->STAGED -->
 ### Dev -> staged promotion checklist
 
-- [ ] Integrated testnet validation completed on `dev` and is linked here (Stacks testnet + Bitcoin testnet/signet as applicable).
-- [ ] Required CI checks are green for the exact promotion candidate commit.
-- [ ] Wallet / signer / treasury boundary checks are explicitly recorded:
-  - no launch-critical automation depends on personal or bootstrap wallets
-  - production principals are not hardcoded (contracts fetch principals dynamically where required)
-  - signer scope is correct for the runtime lane (no mainnet keys used in testnet contexts)
-- [ ] If this promotion includes wallet custody/signer/privacy scope, [`docs/WALLET_LIFECYCLE_CONTROL_CHECKLIST.md`](./WALLET_LIFECYCLE_CONTROL_CHECKLIST.md) is updated with `VER-1`, `VER-2`, and `REL-1` evidence for the exact candidate commit.
-- [ ] Deployment boundary checks are explicitly recorded:
-  - no testnet endpoints/default networks leak into production paths
-  - environment-specific behavior is guarded by the branch/runtime lane (not ad-hoc conditionals)
-- [ ] Any required submodule pins, lockfiles, and artifact provenance are updated for the promotion candidate.
+- [ ] Integrated non-production/testnet validation completed on `dev` and is linked.
+- [ ] Required checks are recorded for the exact promotion source SHA; hosted-check blockers are distinguished from code failures.
+- [ ] Wallet boundary checks are explicitly recorded.
+- [ ] Signer boundary checks are explicitly recorded.
+- [ ] Treasury boundary checks are explicitly recorded.
+- [ ] Deployment boundary checks are explicitly recorded.
+- [ ] Applicable pins, lockfiles, and artifact provenance are recorded without rewriting unrelated pins.
 
-## 3) `staged` -> `main` (mainnet acceptance)
+### Exact promotion evidence
 
-Promotion to `main` is only allowed from `staged` and MUST include a Mainnet Acceptance Evidence Pack.
+Required for a generated candidate:
 
+- Promotion source SHA: `<40-character lowercase source SHA>`
+- Promotion target-base SHA: `<40-character lowercase target SHA at creation>`
+- Promotion commit window: `<target-base-sha>..<source-sha>`
+
+## `staged` -> `main`
+
+Use for direct `staged` promotion or an exact immutable
+`promotion/staged-to-main-<source-sha>` candidate. Promotions must be
+same-repository. There is no direct `dev` or Dependabot route to `main`.
+
+<!-- PROMOTION:STAGED->MAIN -->
 ### Mainnet acceptance evidence pack
 
-Provide the evidence pack directly in the PR description under this heading, or link to a versioned in-repo file per `openspec/specs/mainnet-acceptance-evidence-pack/spec.md`.
-
-- [ ] If wallet custody/signer/privacy scope is included, link the completed [`docs/WALLET_LIFECYCLE_CONTROL_CHECKLIST.md`](./WALLET_LIFECYCLE_CONTROL_CHECKLIST.md) entry with `REL-2`, `OPS-1`, and `OPS-2` evidence.
+Complete every section required by
+`openspec/specs/mainnet-acceptance-evidence-pack/spec.md` in the pull request
+body or link a versioned in-repository pack. Generated candidates also include
+the exact promotion evidence block above. A heading without completed evidence
+does not authorize merge.

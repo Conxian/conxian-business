@@ -19,6 +19,13 @@ Provide a reusable decision surface for evaluating whether a technical or produc
 - **Implemented**: code exists, but production enforcement may still depend on environment or control activation.
 - **Production-enforced**: protected by runtime controls, release policy, and readiness gates.
 - **Externally verified**: independently reviewed or audited.
+- **Interface/code presence only**: a public surface or implementation is visible, but that evidence cannot be promoted to production support.
+
+## Current SDK authority — 2026-07-20
+
+For `conxius-enclave-sdk`, the current authority is the immutable [Production Enablement Audit — 2026-07-20](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [Capability and Evidence Matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md), recorded by merged [PR #193](https://github.com/Conxian/conxius-enclave-sdk/pull/193) at merge commit `79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8` against audited baseline `8194aa8ade26a9d5d7ed54b7f80f36796fce585c`.
+
+The SDK is **Beta / conditional**. No value-bearing production signing or settlement is supported from the audited tree, and issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain open. This business-repo matrix records claim boundaries; it cannot upgrade upstream evidence or reclassify a capability as production-supported.
 
 ## Current matrix
 
@@ -27,8 +34,9 @@ Provide a reusable decision surface for evaluating whether a technical or produc
 | `conxius-wallet` | StrongBox/TEE-backed security exists | Code-visible | Implemented | Real Android keystore and StrongBox-oriented code paths are present. |
 | `conxius-wallet` | Play Integrity is production-enforced | Code-visible, but stubbed path inspected | Not yet safe | Release builds now fail closed until end-to-end production path exists. |
 | `conxius-wallet` | DLC execution is production-ready | Code-visible, but simulated path inspected | Not yet safe | Simulated flow is now debug-only and fails closed in release builds. |
-| `conxius-enclave-sdk` | Hardware-backed signing architecture exists | Code-visible | Implemented | Real signing code exists. |
-| `conxius-enclave-sdk` | Active production attestation is hardware-bound | Code-visible, mixed with software-driver simulation | Not yet safe | Depends on hardware-bound drivers, not just repo-visible software paths. |
+| `conxius-enclave-sdk` | Signing and attestation interfaces/code paths are present | Code-visible | Interface/code presence only | Public APIs and implementation paths are visible, but this does not establish hardware-backed production support. See the current audit and capability matrix. |
+| `conxius-enclave-sdk` | Active production attestation is hardware-bound | Code-visible, mixed with software-driver simulation | Not yet safe — Beta / conditional | Depends on hardware-bound drivers, full caller enforcement, and evidence beyond repo-visible software paths. |
+| `conxius-enclave-sdk` | Value-bearing production signing or settlement is supported | July 20 audit and capability matrix explicitly say not to enable it | Not claimed — Beta / conditional | No value-bearing production signing or settlement from the audited tree; unresolved acceptance work remains in issues #195–#202. |
 | `conxian-gateway` | Institutional middleware runtime exists | Code-visible, Release-visible | Implemented | Real runtime code and release history exist. |
 | `conxian-gateway` | All critical verification paths are production-enforced | Code-visible with simulated validation references | Not yet safe | Must stay tied to readiness gates and environment-backed verification. |
 | `Conxian` protocol | Material protocol implementation exists | Code-visible | Implemented | Real Clarity and sBTC-related surface exists. |

@@ -21,6 +21,8 @@ This directory contains the public-safe documentation entrypoints for `conxian-b
 - [`BRANCH_AND_PROMOTION_STANDARD.md`](./BRANCH_AND_PROMOTION_STANDARD.md) — canonical branch roles and promotion flow.
 - [`PROMOTION_CHECKLISTS.md`](./PROMOTION_CHECKLISTS.md) — required promotion checklists and evidence.
 - [`INTEGRATED_SYSTEM_TESTNET_GATE.md`](./INTEGRATED_SYSTEM_TESTNET_GATE.md) — full-system public-testnet gate before promotion.
+- [`governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md`](./governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md) — fail-closed policy for immutable external semantic-source evidence.
+- [`governance/FIBO_PROVENANCE_RESEARCH_NOTE.md`](./governance/FIBO_PROVENANCE_RESEARCH_NOTE.md) — public-safe pinned-source observations and unresolved provenance boundaries; no corpus adoption.
 
 ## Link continuity
 

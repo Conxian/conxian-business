@@ -2,7 +2,7 @@
 
 This repository is public.
 
-Jurisdiction-specific compliance thresholds, rule triggers, and any operational enforcement details are maintained in the Conxian Linear workspace.
+Jurisdiction-specific compliance thresholds, rule triggers, and any operational enforcement details are maintained in the authorized Linear workspace.
 
 See:
 

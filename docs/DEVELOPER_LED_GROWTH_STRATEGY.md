@@ -16,10 +16,10 @@
 | Asset | Location | TTFV Impact | Status |
 |-------|----------|-------------|--------|
 | **DEVELOPER_QUICKSTART.md** | Root | Medium | ⚠️ Outdated, multi-repo |
-| **conxius-enclave-sdk** | Submodule | Low | ⚠️ No releases |
+| **`conxius-enclave-sdk`** | Submodule | Low | ⚠️ No releases |
 | **conxius-platform** | Submodule | Medium | ✅ Good scaffolding |
-| **conxius-orbit** | Submodule | High | ✅ CLI deployment tool |
-| **conxian-gateway** | Submodule | Medium | ⚠️ Needs examples |
+| `conxius-orbit` | Submodule | High | ✅ CLI deployment tool |
+| **`conxian-gateway`** | Submodule | Medium | ⚠️ Needs examples |
 | **conxian-nexus** | Submodule | Medium | ✅ API documented |
 | **docker-compose.yml** | Root | High | ⚠️ Complex setup |
 | **Clarinet integration** | Conxian | High | ✅ Stacks native |
@@ -147,13 +147,14 @@
 **The Solution:**
 
 ```bash
-# Canonical in-repo sandbox
-git clone https://github.com/Conxian/conxian-business.git
-cd conxian-business/cxn-sandbox
-pnpm install --frozen-lockfile
+# Option 1: GitHub Codespaces Template
+# URL: github.com/Conxian/cxn-sandbox
 
-# Start the local stack when Docker is available
-docker compose up
+# Option 2: Gitpod
+# URL: gitpod.io/#https://github.com/Conxian/cxn-sandbox
+
+# Option 3: Docker One-Liner
+docker run -p 3000:3000 -p 3001:3001 conxian/sandbox:latest
 ```
 
 **Repository Structure (cxn-sandbox):**
@@ -283,16 +284,21 @@ One-click deployable Conxian project template.
 ## Quick Start
 
 ```bash
-# Canonical local checkout
-git clone https://github.com/Conxian/conxian-business.git
-cd conxian-business/cxn-sandbox
-pnpm install --frozen-lockfile
-pnpm run dev
+# Option 1: GitHub Codespaces (Recommended)
+# Click "Use this template" → "Open in Codespaces"
+
+# Option 2: Gitpod
+# Open in Gitpod: https://gitpod.io/#https://github.com/Conxian/cxn-starter
+
+# Option 3: Local
+git clone https://github.com/Conxian/cxn-starter
+cd cxn-starter
+npm install && npm run dev
 ```
 
 ## What's Included
 
-- ✅ Conxian Gateway (ISO 20022 bridge)
+- ✅ `conxian-gateway` (ISO 20022 bridge)
 - ✅ Conxian Nexus (settlement layer)
 - ✅ Redis + PostgreSQL
 - ✅ TypeScript SDK
@@ -306,7 +312,7 @@ pnpm run dev
 
 ## Contributing
 
-See [CONTRIBUTING.md](../CONTRIBUTING.md)
+See [examples/CONTRIBUTING.md](examples/CONTRIBUTING.md)
 ```
 
 ### 4.5 P4: Community Contribution Flow (Week 4)
@@ -389,7 +395,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md)
 
 ```sql
 -- Activation Cohort Query
-SELECT
+SELECT 
   signup_week,
   COUNT(DISTINCT user_id) as total,
   SUM(CASE WHEN first_payment_at IS NOT NULL THEN 1 ELSE 0 END) as activated,
@@ -488,7 +494,7 @@ LIMIT 12;
 
 ### Phase 1: Foundation (Week 1-2)
 
-- [ ] **MAINTAIN** the in-repo `cxn-sandbox` developer template
+- [ ] **CREATE** `cxn-sandbox` template repo
 - [ ] **ADD** `.devcontainer.json` for instant setup
 - [ ] **CREATE** `@conxian/sdk` npm package
 - [ ] **PUBLISH** first SDK version (even beta)
@@ -497,7 +503,7 @@ LIMIT 12;
 
 ### Phase 2: Expansion (Week 3-4)
 
-- [ ] **DOCUMENT** the canonical `cxn-sandbox` checkout flow
+- [ ] **CREATE** `cxn-starter` template repo
 - [ ] **ADD** GitHub Codespaces button to READMEs
 - [ ] **PUBLISH** SDK to npm with docs
 - [ ] **CREATE** "good first issue" labels
