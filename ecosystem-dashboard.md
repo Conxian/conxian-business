@@ -255,11 +255,15 @@ cd ../conxian-nexus && cargo update webpki-roots
 | `deepseek-plan-execute.yml` | Label `deepseek-plan` added | `deepseek-reasoner` (R1) | Generates implementation plan with file paths |
 
 ### Configuration
-| Variable | Value | Set On |
-|----------|-------|--------|
-| `vars.DEEPSEEK_MODEL` | `deepseek-chat` | 6 repos ✅ |
-| `vars.DEEPSEEK_REASONER_MODEL` | `deepseek-reasoner` | 6 repos ✅ |
-| `secrets.DEEPSEEK_API_KEY` | **NEEDED** | Add to each repo |
+| Variable | Value | Where |
+|----------|-------|-------|
+| `vars.DEEPSEEK_MODEL` | `deepseek-chat` | `conxian-business` only ✅ |
+| `vars.DEEPSEEK_REASONER_MODEL` | `deepseek-reasoner` | `conxian-business` only ✅ |
+| `secrets.DEEPSEEK_API_KEY` | **NEEDED** | `conxian-business` only — one repo, all workflows |
+
+> All DeepSeek workflows + the `run-deepseek` action live in `conxian-business`.
+> Other repos are submodules — their CI runs through the monorepo's workflows.
+> Only ONE `DEEPSEEK_API_KEY` secret needed, in ONE repo.
 
 ### Gemini Workflows (6 retained)
 | Workflow | Role | Model |
@@ -272,6 +276,6 @@ cd ../conxian-nexus && cargo update webpki-roots
 | `gemini-scheduled-triage.yml` | Cron triage | `vars.GEMINI_MODEL` |
 
 ### Action Required
-1. **Add `DEEPSEEK_API_KEY`** secret to each repo (get from https://platform.deepseek.com/api_keys)
-2. All variables already set across 6 repos
-3. DeepSeek workflows will auto-activate once the secret exists
+1. **Add `DEEPSEEK_API_KEY`** secret to `Conxian/conxian-business` only → https://platform.deepseek.com/api_keys
+2. Done — workflows auto-activate once the single secret exists
+3. All 3 DeepSeek workflows trigger automatically: PR open → review, issue open → triage, `deepseek-plan` label → plan
