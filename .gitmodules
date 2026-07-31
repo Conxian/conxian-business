@@ -42,4 +42,6 @@
 	branch = main
 [submodule "conxian-market"]
 	path = conxian-market
-	url = https://github.com/Conxian/conxian_market.git
+	url = https://github.com/Conxian/conxian_market
+	branch = main
+	update = none
