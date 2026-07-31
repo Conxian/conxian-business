@@ -308,3 +308,35 @@ cd ../conxian-nexus && cargo update webpki-roots
 - 🟡 `GOOGLE_API_KEY` in runtime is 0 chars (OK — Actions secrets work, just not in this sandbox)
 - 🟢 P0 #480: Sandbox TTFV fix (stale SDK reference) — separate workstream
 - 🟢 BOS Gate 0 advancement — role assignment needed
+
+---
+
+## 11. CI/CD Audit — Session 46 Remediation
+
+### Root cause analysis
+
+| Repo | Workflow | Status | Root Cause | Fix |
+|------|----------|--------|------------|-----|
+| `conxian-business` | Secret Scan (gitleaks) | 🔴 FAIL | **GitHub org billing failure** — "recent account payments have failed or spending limit needs to be increased" | Requires org admin: check billing at https://github.com/settings/billing |
+| `conxian-business` | Conxian Unified CI (3 jobs) | 🔴 FAIL | **Same billing failure** — Repo Hygiene, Detect CI triggers, CI Summary Gate all blocked | Same as above |
+| `Conxian/Conxian` | Sovereign Guard Audit | 🟢 FIXED | Duplicate `.github/CODEOWNERS` (root + .github/) — `verify_codeowners_policy.py` rejects multiple CODEOWNERS | PR #612 — deleted duplicate |
+| `Conxian/Conxian` | Documentation Validation | 🟢 FIXED | `verify-knowledge-base.py --check` failed — KB facts stale after session-46 changes | PR #612 — regenerated AGENTS.md facts |
+| `conxius-platform` | E2E Synergy Testing | 🔴 FLAKY | Docker build failure in admin-dashboard (TypeScript errors). Intermittent since Jul 28, pre-existing | Not session-46; platform team needs to fix TS build |
+| `conxius-wallet` | All workflows | 🟢 PASS | — | — |
+| `conxian-nexus` | CodeQL | 🟢 PASS | — | — |
+| `lib-conxian-core` | SDK Compatibility | 🟢 PASS | — | — |
+| `conxian-gateway` | Secret Scan | 🟢 PASS | — | — |
+
+### Actions taken
+- Conxian/Conxian PR #612: delete `.github/CODEOWNERS`, regenerate `AGENTS.md` KB facts
+- Submodule pin updated: `Conxian` → `fe51cb26`
+- Billing issue documented — requires org admin attention
+
+### Billing impact
+All license-based GitHub Actions jobs on `conxian-business` are blocked:
+- gitleaks (uses `GITLEAKS_LICENSE` secret — license-governed binary)
+- Repo Hygiene, Detect CI triggers, CI Summary Gate (likely larger runners or minutes)
+
+All code-level test suites (Core Library, B2B Suite, B2C Wallet, Gateway, Transparency, Testnet Simulation) are **skipped** because the gating jobs can't start.
+
+**Fix**: Go to https://github.com/settings/billing → update payment method or increase spending limit.
