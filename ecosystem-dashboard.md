@@ -208,7 +208,7 @@ cd ../conxian-nexus && cargo update webpki-roots
 | `gemini-invoke.yml` | `gemini-3.6-flash` | General purpose |
 
 ### Configuration
-- **GitHub Variable**: `vars.GEMINI_MODEL` = model name (e.g., `gemini-3.6-flash`)
+- **GitHub Variable**: `vars.GEMINI_MODEL` = `gemini-3.6-flash` ✅ SET (2026-07-31)
 - **GitHub Secret**: `secrets.GOOGLE_API_KEY` = API key
 - **Fallback**: `secrets.GEMINI_API_KEY` (deprecated, unused)
 - **Auth priority**: `GOOGLE_API_KEY` → `GEMINI_API_KEY` → Vertex AI WIF → GCA
@@ -218,3 +218,15 @@ cd ../conxian-nexus && cargo update webpki-roots
 - `secrets.GCP_SA_KEY` — Service account JSON key for deployment auth
 - **Cloud Run**: `conxian-gateway` (us-central1, 512Mi, 0-2 instances)
 - **Artifact Registry**: `gcr.io/<project>/conxian-gateway`
+
+### Switch Status (session 46)
+| Repo | `GEMINI_MODEL` | API Test |
+|------|---------------|----------|
+| `conxian-business` | `gemini-3.6-flash` ✅ | 429 credits depleted — key works, billing needs top-up |
+| `Conxian/Conxian` | `gemini-3.6-flash` ✅ | Same key |
+| `conxius-enclave-sdk` | `gemini-3.6-flash` ✅ | Same key |
+| `conxian-nexus` | `gemini-3.6-flash` ✅ | Same key |
+| `lib-conxian-core` | `gemini-3.6-flash` ✅ | Same key |
+| `conxius-platform` | `gemini-3.6-flash` ✅ | Same key |
+
+**Action required**: Top up prepaid credits at https://ai.studio/projects to unblock Gemini workflows.
