@@ -279,3 +279,32 @@ cd ../conxian-nexus && cargo update webpki-roots
 1. **Add `DEEPSEEK_API_KEY`** secret to `Conxian/conxian-business` only → https://platform.deepseek.com/api_keys
 2. Done — workflows auto-activate once the single secret exists
 3. All 3 DeepSeek workflows trigger automatically: PR open → review, issue open → triage, `deepseek-plan` label → plan
+
+---
+
+## 10. Session 46 — Merge Status
+
+| PR | Repo | Status |
+|----|------|--------|
+| #978 | `conxian-business` | ✅ Merged to main |
+| #611 | `Conxian/Conxian` | ✅ Merged to main |
+| #473 | `conxius-wallet` | ✅ Merged to main |
+
+### What landed on main
+- 8 Clarity contracts fixed (non-ASCII, types, contract-call, match, errors, parens)
+- 5 service stubs (bip21, lightning, seed, storage, signer)
+- 18/18 tests passing (5 previously excluded files re-enabled)
+- Root CircleCI config: 8 CI jobs + 3 deploy jobs (GCP/Firebase/Vercel)
+- Wallet CircleCI config: Android build + lint
+- DeepSeek integration: 3 workflows + OpenAI-compatible action
+- Gemini switch: `GEMINI_MODEL=gemini-3.6-flash` on all repos
+- Dependabot remediation: postcss fixed in Conxian
+- Ecosystem dashboard: 48 issues, 16 repos, GCP/CI/AI all documented
+- KB: Linear→GitHub migration, CI/CD split, Dependabot guidance
+
+### Remaining gaps
+- 🔴 **Gemini credits depleted** — top up at https://ai.studio/projects
+- 🟡 61 Dependabot alerts on conxian-business (1 critical, 27 high)
+- 🟡 `GOOGLE_API_KEY` in runtime is 0 chars (OK — Actions secrets work, just not in this sandbox)
+- 🟢 P0 #480: Sandbox TTFV fix (stale SDK reference) — separate workstream
+- 🟢 BOS Gate 0 advancement — role assignment needed
