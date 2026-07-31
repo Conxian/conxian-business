@@ -3,6 +3,10 @@ name: DeepSeek Plan-Execute
 on:
   issues:
     types: [labeled]
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deepseek-plan-execute.yml'
   workflow_dispatch:
 
 permissions:

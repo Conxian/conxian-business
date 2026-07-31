@@ -3,6 +3,10 @@ name: DeepSeek Triage
 on:
   issues:
     types: [opened]
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deepseek-triage.yml'
   workflow_dispatch:
 
 permissions:
