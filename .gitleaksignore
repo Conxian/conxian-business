@@ -1,2 +1,1 @@
-# False positives — ecosystem dashboard documents API key formats but contains no secrets
-ecosystem-dashboard.md:generic-api-key:*
+generic-api-key:ecosystem-dashboard.md
