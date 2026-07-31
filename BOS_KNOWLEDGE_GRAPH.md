@@ -74,15 +74,16 @@ The current doctrine relationship is:
 | `jurisdictional-sharding.clar` | compliance/ | Compliance | ✅ | 0 |
 | `block-utils.clar` | utils/ | Util | ✅ | 0 |
 | `operational-treasury.clar` | agents/ | **Critical** | ✅ | 0 |
-| `pausable.clar` | access/ | **Critical** | ✅ | ❌ ACL missing |
+| `cxd-price-initializer.clar` | tokens/ | Stub | ⚠️ | 7-line placeholder stub — `(define-public (placeholder) (ok true))`. No oracle feed, no collateral ratio, no price feed. |
+| `pausable.clar` | access/ | **Critical** | ⚠️ | ❌ `set-paused` permissionless (anyone can pause). 4 lines, no admin guard. **Not imported by any contract** (staking/vaults use inline pause with ACL). Dead code risk. |
 
 ### 🪙 Tokens
 
 | Entity | Type | Trait | Issue |
 |--------|------|-------|-------|
-| **CXD** | Stablecoin | ft-trait | No peg mechanism |
-| **CXLP** | LP Token | sip-010-ft-trait | Mint/burn broken |
-| **CXVG** | Governance | sip-010-ft-trait | No distribution |
+| **CXD** | Stablecoin | ft-trait | ⚠️ Price initializer is stub (no oracle/peg) | `contracts/tokens/cxd-token.clar` (98 lines), `contracts/tokens/cxd-price-initializer.clar` (7-line stub) |
+| **CXLP** | LP Token | sip-010-ft-trait | ✅ Fully functional (KB was outdated) | `contracts/tokens/cxlp-token.clar` (189 lines) |
+| **CXVG** | Governance | sip-010-ft-trait | ⚠️ No distribution (mint only) | `contracts/tokens/cxvg-token.clar` — has mint() but no airdrop/claim/vesting |
 
 ### 🔧 Technical Components
 
