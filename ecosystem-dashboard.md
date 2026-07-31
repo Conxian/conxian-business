@@ -174,3 +174,47 @@ cd ../conxian-nexus && cargo update webpki-roots
 - `Conxian/`: protocol-ci, deploy-mainnet, deploy-testnet, gitleaks, sovereign-guard, verify-deployment-evidence, scheduled-protocol-test, session-tracker, docs-validate, conxian-ui-ci, dependency-review
 - `conxius-wallet/`: ci, android-release, deploy-proxy, secret-scan, dependency-review
 - `conxian-labs-site/`: ci, deploy, dependency-review
+
+
+---
+
+## 8. Google AI Studio Integration (session 46)
+
+### API Key
+- **Project**: `conxian-platform`
+- **Key type**: AI Studio API key (Gemini API v1beta)
+- **Auth method**: `GOOGLE_API_KEY` → GitHub Secret → Gemini workflows
+- **Usage dashboard**: https://aistudio.google.com/usage?project=conxian-platform
+
+### Available Models (47 total)
+| Tier | Models | Use Case |
+|------|--------|----------|
+| **Latest** | `gemini-3.6-flash`, `gemini-3.5-flash`, `gemini-3.5-flash-lite` | Code review, triage, dispatch (fast + cheap) |
+| **Pro** | `gemini-3.1-pro-preview`, `gemini-3-pro-preview` | Plan-execute, complex reasoning |
+| **Thinking** | `gemini-2.5-pro`, `gemini-2.5-flash` | Deep analysis (all support `thinking: true`) |
+| **Vision** | `gemini-3-pro-image`, `gemini-3.1-flash-image` | Image analysis, screenshot review |
+| **Research** | `deep-research-pro-preview-04-2026` | In-depth codebase research |
+| **Embedding** | `gemini-embedding-2` (8K tokens) | Semantic search, RAG |
+| **Image Gen** | `imagen-4.0-generate-001`, `veo-3.1-generate-preview` | Asset generation |
+
+### Recommended model per workflow
+| Workflow | Model | Reason |
+|----------|-------|--------|
+| `gemini-triage.yml` | `gemini-3.6-flash` | Fast, cheap, 1M ctx window |
+| `gemini-review.yml` | `gemini-3.5-flash` | Good balance speed/quality |
+| `gemini-plan-execute.yml` | `gemini-3.1-pro-preview` | Complex planning needs pro |
+| `gemini-dispatch.yml` | `gemini-3.6-flash` | Dispatch routing, simple |
+| `gemini-scheduled-triage.yml` | `gemini-3.5-flash-lite` | Scheduled, cost-sensitive |
+| `gemini-invoke.yml` | `gemini-3.6-flash` | General purpose |
+
+### Configuration
+- **GitHub Variable**: `vars.GEMINI_MODEL` = model name (e.g., `gemini-3.6-flash`)
+- **GitHub Secret**: `secrets.GOOGLE_API_KEY` = API key
+- **Fallback**: `secrets.GEMINI_API_KEY` (deprecated, unused)
+- **Auth priority**: `GOOGLE_API_KEY` → `GEMINI_API_KEY` → Vertex AI WIF → GCA
+
+### GCP Services (service account)
+- `secrets.GCP_PROJECT_ID` — GCP project for Cloud Run
+- `secrets.GCP_SA_KEY` — Service account JSON key for deployment auth
+- **Cloud Run**: `conxian-gateway` (us-central1, 512Mi, 0-2 instances)
+- **Artifact Registry**: `gcr.io/<project>/conxian-gateway`
