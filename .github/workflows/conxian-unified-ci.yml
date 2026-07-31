@@ -87,14 +87,13 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
-        submodules: false
+        submodules: recursive
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Ensure submodules are initialized
       run: |
         git submodule sync --recursive
-        git submodule update --init --recursive
-        git submodule deinit -f conxian-market 2>/dev/null || true
+        git submodule update --init
         git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
     - name: Setup Python
       uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # ratchet:actions/setup-python@v7.0.0
