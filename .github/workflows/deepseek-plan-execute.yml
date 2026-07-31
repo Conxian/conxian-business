@@ -3,10 +3,6 @@ name: DeepSeek Plan-Execute
 on:
   issues:
     types: [labeled]
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/deepseek-plan-execute.yml'
   workflow_dispatch:
 
 permissions:
@@ -15,9 +11,7 @@ permissions:
 
 jobs:
   plan:
-    if: |
-      github.event_name != 'push' &&
-      contains(github.event.label.name, 'deepseek-plan')
+    if: contains(github.event.label.name, 'deepseek-plan')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -33,6 +27,7 @@ jobs:
           echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: DeepSeek implementation plan
+        id: deepseek_call
         uses: ./.github/actions/run-deepseek
         with:
           deepseek_api_key: '${{ secrets.DEEPSEEK_API_KEY }}'
