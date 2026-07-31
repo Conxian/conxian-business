@@ -2,8 +2,34 @@
 
 ## BOS Operational Standards
 > **Framework**: Multi-Dimensional ITIL5-Aligned Knowledge Architecture
-> **Version**: 1.0 (2026-07-08)
+> **Version**: 1.1 (2026-07-31 — Session 46)
 > **Reference**: `docs/BOS_KNOWLEDGE_FRAMEWORK.md`
+
+---
+
+### Session 46 KB — Clarity Contract Chain-Check Patterns
+
+Common Clarity contract issues and their fixes:
+
+| Issue | Symptom | Fix |
+|-------|---------|-----|
+| **Non-ASCII in comments** | `illegal non-ASCII character` | Replace `→` `—` with `->` `--` |
+| **Double-wrapped errors** | `(response UnknownType (response UnknownType uint))` | `(err ERR_X)` → `ERR_X` when `ERR_X` is already `(err u...)` |
+| **match on uint** | `match requires response or optional, found uint` | Use nested `if` chains instead |
+| **match on optional with 4 args** | `match arms must match (got 'bool' and '(response ...)')` | Use `default-to` for read-only, `unwrap!` for public |
+| **contract-call? in asserts!** | `expecting 'bool', found '(response bool ...)'` | Wrap with `default-to false` |
+| **as-contract token transfers** | `missing contract name` in SIP-010 calls | Use `(as-contract (contract-call? .token transfer ...))` |
+
+### Service Stub Pattern (tests/excluded → enabled)
+- Tests excluded via `vitest.config.ts` exclude list block simnet init when imports resolve
+- Create stub service files that satisfy TypeScript imports
+- Fix chain-check issues in all contracts (not just test-specific ones)
+- Re-enable tests by removing from exclude list
+
+### Dependabot Alert Access
+- `GITHUB_TOKEN` lacks `security_events` scope → use `GITHUB_PAT_KEY` for Dependabot API
+- `pnpm` via corepack may hang due to network — install pnpm globally first
+- See `dependabot-fixes.md` for full remediation guide
 
 ---
 
