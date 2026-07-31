@@ -131,15 +131,44 @@ cd ../conxian-nexus && cargo update webpki-roots
 
 | Workload | Platform | Reason |
 |----------|----------|--------|
-| Lightweight checks (lint, secret scan, dep review) | GitHub Actions | Free for public repos, fast feedback on PRs |
-| Heavy CI (Clarity chain-check, Rust cargo test, integration tests) | CircleCI | Lower cost for compute-heavy jobs, avoids Actions billing limits |
-| Deployment (testnet/mainnet) | GitHub Actions | Requires GitHub deployment environment integration |
-| Scheduled jobs (protocol tests, session tracking, docs validate) | GitHub Actions | Cron triggers native to Actions |
+| Lightweight checks (lint, secret scan, dep review, docs validate) | GitHub Actions | Free for public repos, fast feedback on PRs |
+| Heavy CI (Clarity chain-check, Rust cargo test/build, integration tests) | CircleCI | Lower cost for compute-heavy jobs, avoids Actions billing limits |
+| Android build (wallet APK) | CircleCI | Requires Android SDK, heavy resource usage |
+| Deployment (GCP Cloud Run, Firebase, Vercel) | CircleCI | Consolidated deploy pipeline with release markers |
+| Gemini AI agent workflows | GitHub Actions | Lightweight API calls, needs GitHub context |
+| Branch promotion policy | GitHub Actions | `pull_request_target` requires Actions |
+| Secret scanning (gitleaks) | GitHub Actions | Pre-commit hook integration |
 
-### Current CircleCI State
-- `.circleci/config.yml`: Hello-world boilerplate (not yet configured for real workloads)
-- `conxius-wallet/.circleci/config.yml`: Wallet CI pipeline
-- Migration from Actions → CircleCI in progress for compute-heavy jobs
+### CircleCI Configs (session 46)
+
+| Config | Jobs | Status |
+|--------|------|--------|
+| `.circleci/config.yml` | 8 jobs: clarity-check, gateway-test, nexus-test, core-test, enclave-sdk-test, wallet-test, platform-test, ui-test | ✅ Validated |
+| `.circleci/deploy.yml` | 3 jobs: gateway-cloud-run (GCP), firebase-deploy, vercel-deploy | ✅ Validated |
+| `conxius-wallet/.circleci/config.yml` | 3 jobs: wallet-test, android-build, android-lint | ✅ Validated |
+
+### GCP/Cloud Environment
+
+| Secret | Used By | Status |
+|--------|---------|--------|
+| `GCP_PROJECT_ID` | CircleCI deploy, Actions gateway-cloud-run | Configured in GitHub Secrets |
+| `GCP_SA_KEY` | GCP auth (service account JSON key) | Configured in GitHub Secrets |
+| `GOOGLE_API_KEY` | Gemini agent workflows (6 workflows) | Configured in GitHub Secrets |
+| `FIREBASE_TOKEN` | Firebase hosting deploy | Configured in GitHub Secrets |
+| `VERCEL_TOKEN` + `VERCEL_ORG_ID` | Vercel docs deployment | Configured in GitHub Secrets |
+
+### GCP Services
+- **Cloud Run**: `conxian-gateway` (us-central1, 512Mi/1CPU, 0-2 instances, authenticated)
+- **Container Registry**: `gcr.io/<project>/conxian-gateway`
+- **Firebase**: Showcase DApp hosting (`showcase-dapp/out/` → static HTML)
+
+### GitHub Actions Remaining (lightweight, 88 workflows total)
+- `secret-scan.yml` — gitleaks
+- `dependency-review.yml` — per-repo dep review
+- `gemini-*.yml` (6 workflows) — AI agent dispatch/triage/review
+- `branch-promotion-policy.yml` — promotion route enforcement
+- `sovereign-guard.yml` — repo-level governance
+- `action-version-audit.yml` — pinned action SHA audit
 
 ### GitHub Actions Workflows (20+ across monorepo)
 - `Conxian/`: protocol-ci, deploy-mainnet, deploy-testnet, gitleaks, sovereign-guard, verify-deployment-evidence, scheduled-protocol-test, session-tracker, docs-validate, conxian-ui-ci, dependency-review
