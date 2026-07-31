@@ -33,7 +33,7 @@
 | Issue | Repo | Title | Code Location | Status |
 |-------|------|-------|---------------|--------|
 | #480 | Conxian | Developer Sandbox: TTFV < 15 minutes | `cxn-sandbox/` uses old `@conxian/sdk` + `ConxianGateway`. Live SDK is `@conxian/client-sdk` at `packages/client-sdk/`. Sandbox inside gateway at `conxian-gateway/examples/developer-sandbox/` uses correct SDK. | Sandbox uses stale mock SDK. Gateway sandbox is current. |
-| #943 | conxian-business | Establish GitHub-first operating model | Meta: BOS governance restructure | BLOCKED by Linear capacity |
+| #943 | conxian-business | Establish GitHub-first operating model | Meta: BOS governance restructure | IN PROGRESS — Linear retired, GitHub now canonical tracker |
 
 ### P1 (High)
 | Issue | Repo | Title | Code Location |
@@ -45,7 +45,7 @@
 | #515 | Conxian | Enforce Main Branch Merge Gates, Reconcile CODEOWNERS | `.github/CODEOWNERS`, branch protection rules, `scripts/branch_promotion_policy.py` |
 | #496 | Conxian | Partnership Fee Contracts | Fee collection: `contracts/treasury/` path; related to #488, #529 |
 | #488 | Conxian | 2% Protocol Fee Collection | `contracts/treasury/revenue-distributor.clar`, `contracts/treasury/allocation-policy.clar` |
-| #944 | conxian-business | Retire Linear-first references, publish migration map | Meta: BOS governance |
+| #944 | conxian-business | Retire Linear-first references, publish migration map | Meta: BOS governance | IN PROGRESS — Linear references being retired, migration to GitHub underway |
 
 ### P2
 | Issue | Repo | Title |
@@ -55,17 +55,17 @@
 
 ### BOS Governance Gates (#890 → #932–#938)
 
-**Root cause:** No approved restricted Linear tracker exists (Linear `USAGE_LIMIT_EXCEEDED` on `activeIssueCount`). Without an internal system-of-record, no gate can formally advance. GitHub issue hierarchy (#932–#938) serves as public-safe coordination mirrors only.
+**Canonical tracker:** GitHub issue hierarchy (#932–#938) is now the authoritative tracking layer. Linear has been retired as system-of-record.
 
-**Gate 0 blockers:** Linear capacity, accountable role assignment, accepted immutable baseline.
-**Gate 1 blockers:** Divergent SHAs between main/dev/staged; two required business validators absent; GitHub Actions blocked by billing/spending limit (runs don't execute); no candidate-wide green CI.
+**Gate 0 blockers:** Accountable role assignment, accepted immutable baseline.
+**Gate 1 blockers:** Divergent SHAs between main/dev/staged; two required business validators absent; CI migration to CircleCI in progress (GitHub Actions billing limit workaround); no candidate-wide green CI.
 **Gates 4-5 blockers:** Hardware-backed signing/attestation depends on enclave-sdk issues #195, #200, #202.
 **Gate 6:** Not authorized until all prior gates clear.
 
 | Gate | Status | Title | Actual Blocker |
 |------|--------|-------|----------------|
-| #932 Gate 0 | BLOCKED | Re-baseline and accountable ownership | Linear capacity + accountable roles unassigned |
-| #933 Gate 1 | NOT MET | Reproducible candidate, pins, validators, green CI | SHA divergence + Actions billing block + 2 validators absent |
+| #932 Gate 0 | BLOCKED | Re-baseline and accountable ownership | Accountable roles unassigned + immutable baseline not accepted |
+| #933 Gate 1 | NOT MET | Reproducible candidate, pins, validators, green CI | SHA divergence + CI migration to CircleCI in progress + 2 validators absent |
 | #934 Gate 2 | NOT MET | Safe authority-transfer semantics | Depends on Gate 0+1 |
 | #935 Gate 3 | NOT MET | Testnet rehearsal, readback, failure drills | Depends on Gate 0-2 |
 | #936 Gate 4 | BLOCKED | Hardware-backed signing/attestation | Depends on enclave-sdk #195, #200, #202 |
@@ -106,15 +106,42 @@ cd ../conxian-nexus && cargo update webpki-roots
 
 ---
 
-## 5. Next Steps / Gaps
+## 7. Next Steps / Gaps
 
 | Gap | Priority | Action |
 |-----|----------|--------|
 | Pnpm repos Dependabot | HIGH | Run `pnpm update` locally in conxian-ui, conxius-platform, conxian-gateway, conxius-wallet |
 | Cargo Dependabot | HIGH | `cargo update` in conxian-gateway, conxian-nexus |
-| BOS Gate 0 (#932) | P0 | Session 46 work partially addresses re-baseline; needs explicit gate evidence |
-| BOS Gate 1 (#933) | P0 | Session 46 CI is green (18/18 tests); submodule pins established |
+| CircleCI migration | P0 | Configure real CircleCI jobs for heavy CI (Clarity chain-check, cargo test); remove hello-world boilerplate |
+| BOS Gate 0 (#932) | P0 | Assign accountable roles; accept immutable baseline (SHA pins from session 46 qualify) |
+| BOS Gate 1 (#933) | P0 | Session 46: 18/18 tests green, submodule pins established in Conxian; needs candidate-wide CI on CircleCI |
+| Sandbox #480 | P0 | Replace `@conxian/sdk` with `@conxian/client-sdk` or point to gateway sandbox |
 | Conxian PR #611 merge | P1 | Needs review → merge → update submodule pin |
 | conxian-business PR #978 merge | P1 | Needs review → merge |
-| Issue #888 (MAINTENANCE) | P2 | Marked "Completed" — can likely be closed |
+| Linear retirement (#944) | P1 | Remove remaining Linear references from docs, workflows, AGENTS.md |
+| GitHub operating model (#943) | P1 | Document GitHub-first workflow in GOVERNANCE.md |
 | elliptic replacement | P3 | Replace elliptic with noble-curves (@noble/secp256k1) |
+
+
+---
+
+## 6. CI/CD Architecture
+
+### Strategy: GitHub Actions + CircleCI split
+
+| Workload | Platform | Reason |
+|----------|----------|--------|
+| Lightweight checks (lint, secret scan, dep review) | GitHub Actions | Free for public repos, fast feedback on PRs |
+| Heavy CI (Clarity chain-check, Rust cargo test, integration tests) | CircleCI | Lower cost for compute-heavy jobs, avoids Actions billing limits |
+| Deployment (testnet/mainnet) | GitHub Actions | Requires GitHub deployment environment integration |
+| Scheduled jobs (protocol tests, session tracking, docs validate) | GitHub Actions | Cron triggers native to Actions |
+
+### Current CircleCI State
+- `.circleci/config.yml`: Hello-world boilerplate (not yet configured for real workloads)
+- `conxius-wallet/.circleci/config.yml`: Wallet CI pipeline
+- Migration from Actions → CircleCI in progress for compute-heavy jobs
+
+### GitHub Actions Workflows (20+ across monorepo)
+- `Conxian/`: protocol-ci, deploy-mainnet, deploy-testnet, gitleaks, sovereign-guard, verify-deployment-evidence, scheduled-protocol-test, session-tracker, docs-validate, conxian-ui-ci, dependency-review
+- `conxius-wallet/`: ci, android-release, deploy-proxy, secret-scan, dependency-review
+- `conxian-labs-site/`: ci, deploy, dependency-review

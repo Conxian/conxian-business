@@ -31,6 +31,16 @@ Common Clarity contract issues and their fixes:
 - `pnpm` via corepack may hang due to network — install pnpm globally first
 - See `dependabot-fixes.md` for full remediation guide
 
+### CI/CD Architecture (2026-07-31)
+- **GitHub Actions**: Lightweight checks (lint, secret scan, dep review) + deployments
+- **CircleCI**: Heavy compute (Clarity chain-check, Rust cargo test, integration tests) — cost optimization
+- `.circleci/config.yml`: Currently hello-world boilerplate; needs real job configuration
+
+### Linear → GitHub Migration (2026-07-31)
+- Linear retired as system-of-record. All tracking is GitHub-native.
+- BOS gates (#932–#938) are the canonical authority-transfer trackers
+- Historical Linear references (CON-XXXX) in closed issues/docs are artifacts, not active deps
+
 ---
 
 ### Multi-Dimensional Query Lens
