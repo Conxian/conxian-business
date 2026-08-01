@@ -58,18 +58,20 @@
 
 ## Coverage Summary
 
-- **Fully Covered:** 10 protocols (Lightning, Stacks, Rootstock, Liquid, RGB, BitVM2/Citrea, DLC, Ark, Fedimint, Babylon)
+- **Fully Covered:** 11 protocols (Lightning, Stacks, Rootstock, Liquid, RGB, BitVM2/Citrea, DLC, Ark, Spark, Fedimint, Babylon)
 - **Partially Covered:** 0
-- **Not Covered:** 5 protocols (Merlin Chain, SatoshiVM, Botanix/Spiderchain, Bitlayer, Spark, Hemi)
+- **Not Covered:** 4 protocols (Merlin Chain, SatoshiVM, Botanix/Spiderchain, Bitlayer)
 - **Not Needed (EVM-native):** Starknet, Arbitrum, Optimism, Base — handled by EVM bridge abstraction
+
+> **Spark** is already in `lib_conxian_core::control_model::Chain::Spark` and `ChainFamily::Statechain`. Full protocol coverage via enclave-sdk pending statechain module implementation.
 
 ## Action Items
 
 | Priority | Protocol | Action |
 |----------|----------|--------|
-| P1 | Spark | Research protocol; if Ark-compatible, minimal SDK work needed |
+| P1 | Enclave SDK statechain | Implement Spark/Mercury Layer support using existing Chain taxonomy |
 | P2 | Botanix/Spiderchain | Monitor TVL growth; evaluate if EVM bridge suffices |
-| P3 | Merlin, SatoshiVM, Bitlayer, Hemi | EVM-compatible L2s; ethereum.rs bridge likely sufficient |
+| P3 | Merlin, SatoshiVM, Bitlayer | EVM-compatible L2s; ethereum.rs bridge likely sufficient |
 
 ## Reference
 
