@@ -7,49 +7,85 @@
 
 ---
 
-### Session 47 KB — Monorepo Architecture & SDK Wiring Audit
+### Session 48 KB — Full Capability Audit & All Wiring Gaps Closed
 
-Full functionality analysis across all 12 submodules. Key findings documented below.
+Deep cross-repo audit of every `lib.rs` ground truth, every `mod.rs` declaration,
+every `use` import, and every struct field. All 4 gaps identified in Session 47
+are now closed. Submodules bumped to latest main.
 
-#### SDK Capability Map
+#### SDK Capability Map (Ground Truth from lib.rs)
 
-| Crate | Modules | Key Public Types |
-|-------|---------|-----------------|
-| **conxius-enclave-sdk** (v0.2.x) | 50+ protocol modules | EnclaveManager, SignRequest, MuSig2, BitVM2, ZKML, DLC, FROST, Lightning, SwapRouter, Solver, Stablecoin, Settlement, Ark, Covenant, Intent, Economy, Asset, Credit, JobCard, MMR, SIDL, CCTP, ChainAbstraction, A2P, AccountAbstraction, Rails (Bisq, Boltz, Changelly, Wormhole, NTT, x402) |
-| **lib-conxian-core** (v0.2.x) | 15 modules | ProtocolVerifier, BIP110, TrustTier, AnchoringPublisher, LightningAdapter, RGBAdapter, StacksAdapter, Bitcoin(Taproot/BIP-322/Liquid), sBTC, CJCS, DLC, FROST, Covenant, Intent |
+| Crate | Version | Modules | Key Public Types |
+|-------|---------|---------|-----------------|
+| **conxius-enclave-sdk** | v2.0.12 | 46 (7 infra + 37 protocol + 2 subdir) | EnclaveManager, SignRequest, FROST DKG, MuSig2, BitVM2, BitVM (primitives), Statechain (Spark VTXO), ZKML, DLC, Lightning, SwapRouter, Solver, StablecoinOrchestrator, SettlementService, Ark, Covenant, Intent, Economy, Asset, Credit, JobCard, MMR, SIDL, CCTP, ChainAbstraction, AccountAbstraction, ControlModelAdapter, A2P, Rails (Bisq, Boltz, Changelly, NTT, Wormhole, x402), Nexus (Fedimint) |
+| **lib-conxian-core** | v0.3.x | 17 (10 core + 7 CXIP 20) | ProtocolVerifier, TrustTier, BIP110, AnchoringPublisher, DeploymentPlan, StakingIntent, FedimintMint, SBTCBridge, SBTCIntent, RGBAdapter, RGBRuntime, LightningAdapter, SilentPaymentScanner, JobCard, WorkIntent, UniversalChainSigner, AttestationCertificate, EnclaveVerificationError, StacksNakamoto |
 
-#### Consumer Wiring Status
+> **Statechain (Spark):** `Chain::Spark` + `ChainFamily::Statechain` in core.
+> Enclave-SDK has full FROST-based statechain module (1-of-n trust, T2 Managed).
 
-| Repo | SDK Modules Used | Status |
-|------|-----------------|--------|
-| **conxian-nexus** | 12/17 (control_model, signing, verifier, anchoring, bitcoin, protocol, lightning, adapters) + enclave attestation | ✅ Wired (Session 47) |
-| **conxian-gateway** | Own `conxian_core` + contract bridge | ✅ Bridge added (Session 47) |
-| **conxius-wallet** | Silent payments + optional enclave feature gate | ✅ Wired via `enclave` feature |
-| **conxius-platform** | TS orchestration, CI gates | ✅ All scripts canonical |
-| **conxius-orbit** | CLI for 247 contracts | ✅ Full surface |
+#### Consumer Wiring — All 17 Core Modules
 
-#### Architecture Decisions (Session 47)
+| # | Module | Consumer(s) | Wiring Path |
+|---|--------|-------------|-------------|
+| 1 | control_model | Nexus, Gateway, Platform, SDK | TrustTier (4 variants), Chain, BridgeSystem |
+| 2 | signing | Nexus | SignerCapabilities, SigningAlgorithm, SigningTarget |
+| 3 | verifier | Nexus | 10+ types via compat::core_bridge::core_types |
+| 4 | anchoring | Nexus | 8 types via compat::core_bridge::core_types |
+| 5 | bitcoin | Nexus | taproot, bip322 via compat::core_bridge |
+| 6 | protocol | Nexus | dlc, frost, covenant, intent via compat::core_bridge |
+| 7 | lightning | Nexus | LightningAdapter via compat::core_bridge |
+| 8 | adapters | Nexus | StateProofError via compat::core_bridge |
+| 9 | enclave | Nexus (PR #196 merged) | AttestationCertificate, EnclaveVerificationError |
+| 10 | contract_bridge | Gateway (stacks/), Orbit (py mirror) | Gateway: typed ContractCall. Orbit: DeploymentPlan |
+| 11 | babylon | Gateway | babylon_adapter.rs → StakingIntent (core struct) |
+| 12 | fedimint | Gateway | fedimint_adapter.rs → FedimintMint (core struct) |
+| 13 | cjcs | Platform | governance/cjcs.ts → JobCard {context, type, work_intent} |
+| 14 | deployment | Orbit | scripts/deployment_plan.py → CLI wizard |
+| 15 | stacks | Gateway | stacks/sbtc.rs → SBTCBridge, Emily API |
+| 16 | rgb | Gateway | rgb_adapter.rs → GatewayRgbAdapter |
+| 17 | crypto | Internal | Key derivation (not consumed externally) |
+
+> **All 17 modules wired.** No core module is unused.
+
+#### Audit Discoveries & Fixes (Session 48)
+
+| Issue | Severity | Impact | Fix |
+|-------|----------|--------|-----|
+| Gateway FedimintMint fields wrong (federation_id→mint_id) | CRITICAL | Would not compile | Corrected to mint_id, community_name, total_liquidity_sats |
+| Gateway StakingIntent fields wrong (staker→staker_pubkey) | CRITICAL | Would not compile | Corrected to staker_pubkey, finality_provider_pubkey, amount_sats, lock_time_blocks |
+| Gateway engine missing lib-conxian-core dep | CRITICAL | Would not compile | Added workspace dep |
+| Platform CJCS types mismatched core schema | HIGH | Serialization mismatch | Rewrote to {context, type, work_intent} |
+| Platform TrustTier missing ObserverOnly | MEDIUM | Missing tier | Added 4th variant |
+| Research: Spark "NOT COVERED" | LOW | Wrong docs | Moved to covered (Chain enum + statechain module) |
+| Enclave-SDK missing 2 modules in AGENTS.md | LOW | Incomplete catalog | Added bitvm2, control_model_adapter |
+
+#### Gaps Closed (Session 48)
+
+| Gap | Before | After |
+|-----|--------|-------|
+| Nexus enclave attestation | PR #196 blocked | Merged (CI passed) |
+| Stacks (SBTCBridge) | Not consumed | Gateway stacks/sbtc.rs + Emily API |
+| RGB | Not consumed | Gateway rgb_adapter.rs + GatewayRgbAdapter |
+| Statechain (Spark) | No module | Enclave-SDK statechain.rs (FROST, 1-of-n) |
+
+#### Architecture Decisions (Session 48)
 
 | Decision | Rationale |
 |----------|-----------|
-| Gateway keeps `conxian_core` separate from `lib-conxian-core` | Gateway = operational types (persistence, trust policy, settlement). Core = protocol primitives (verifier, control models, chain adapters). Correct trait/impl split. |
-| Adapter layer is NOT duplicated | Gateway has runtime impls (HTTP clients, RPC). Core has trait definitions. Babylon/Fedimint/Liquid/Stacks follow this pattern correctly. |
-| Gateway contract bridge lives in `internal/engine/src/stacks/contract_bridge.rs` | Typed ContractCall with canonical contract enumeration. Principal validation. Preview mode for reads. |
-| Wallet enclave path is feature-gated | `conxius-silent-payments` crate has optional `enclave` feature → re-exports `conxius-enclave-sdk`. Android JNI layer is the next integration step. |
+| Gateway engine now depends on lib-conxian-core | Required for FedimintMint/StakingIntent core struct fields |
+| Enclave-SDK uses `control_model_adapter` not direct core import | Cycle-safe: SDK mirrors core DTOs without crate dependency |
+| CJCS TypeScript extends core's minimal struct | Core: {context, type, work_intent}. Platform: +id, state, trustTier, timestamps |
+| Gateway persistence (SovereignBackend) | Multi-backend: File → Tableland → Kwil, env-driven selection |
 
-#### Bootstrap Noise Fix (Session 47)
+#### Consumer Wiring Detail — Enclave-SDK
 
-Four contracts (`conxian-protocol`, `dex-factory`, `office-manager`, `mock-token`) were
-removed from `setup-test-env.ts` `contractsToInit` because they lack `initialize()`
-functions. The `run-tests.sh` allowlist is retained as defense-in-depth. Prior
-bootstrap errors were harmless `try/catch` swallows.
-
-#### CircleCI Migration
-
-The `.circleci/config.yml` remains hello-world boilerplate. Heavy compute
-(Clarity chain-check, Rust cargo test, integration tests) should migrate from
-GitHub Actions to CircleCI for cost optimization. Current GitHub Actions CI is
-green across all PRs.
+| Repo | Modules | Key Wires |
+|------|---------|-----------|
+| **conxian-nexus** | enclave attestation (via core) | AttestationCertificate in ExecutionRequest |
+| **conxian-gateway** | sBTC, RGB, contract bridge, Fedimint/Babylon | Core types in babylon_adapter, fedimint_adapter, stacks/sbtc, rgb_adapter |
+| **conxius-wallet** | Silent payments, enclave feature gate | BIP-322 via silent-payments crate |
+| **conxius-platform** | CJCS types, SLA enforcer | cjcs.ts → lib_conxian_core::cjcs |
+| **conxius-orbit** | DeploymentPlan mirror | 247 contracts + Nakamoto hash in CLI wizard |
 
 ### Session 46 KB — Clarity Contract Chain-Check Patterns
 
