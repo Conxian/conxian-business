@@ -1,4 +1,4 @@
-# Conxian Industrial Engine & SIDL (ATS v12.0) - Agent Guidelines
+# Conxian Industrial Engine & SIDL (ATS v13.0 — Session 47, Aug 2026) - Agent Guidelines
 
 ## 0. THE CONXIAN UNIFIED THEORY (v2.0)
 All agentic sessions must adhere to the equations defined in `docs/CONXIAN_UNIFIED_THEORY_v2.md`.
