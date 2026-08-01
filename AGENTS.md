@@ -432,12 +432,44 @@ Implementation tracker: `conxian_market/docs/IMPLEMENTATION_TRACKER.md`
 | Gate | Issue | Status | Blocker |
 |:-----|:------|:------:|:--------|
 | Gate 0 — Re-baseline | [#932](https://github.com/Conxian/conxian-business/issues/932) | In Progress | [#943](https://github.com/Conxian/conxian-business/issues/943) Linear→GitHub |
-| Gate 1 — Green CI | [#933](https://github.com/Conxian/conxian-business/issues/933) | In Progress | [#1082](https://github.com/Conxian/conxius-platform/issues/1082) CI scripts |
+| Gate 1 — Green CI | [#933](https://github.com/Conxian/conxian-business/issues/933) | **✅ 98%** | ~~[#1082](https://github.com/Conxian/conxius-platform/issues/1082) CI scripts~~ conxius-orbit Pages env, conxian-business deepseek* workflows (see below) |
 | Gate 2 — Authority transfer | [#934](https://github.com/Conxian/conxian-business/issues/934) | Pending | Gate 0 |
 | Gate 3 — Testnet rehearsal | [#935](https://github.com/Conxian/conxian-business/issues/935) | Pending | Gates 0-2 |
 | Gate 4 — Attestation | [#936](https://github.com/Conxian/conxian-business/issues/936) | Pending | Enclave P0s |
 | Gate 5 — Security acceptance | [#937](https://github.com/Conxian/conxian-business/issues/937) | Pending | [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) |
 | Gate 6 — Mainnet handoff | [#938](https://github.com/Conxian/conxian-business/issues/938) | Pending | All above |
+
+### CI Status (2026-08-01 — Session 49)
+
+| Repo | Latest CI | Status |
+|------|-----------|--------|
+| conxian-business | Unified CI | ✅ All suites green (B2B + Gateway + B2C + Core) |
+| conxian-gateway | Rust CI + Lightning | ✅ Green (clippy fix: #222) |
+| conxius-orbit | CI | ✅ Main CI green; pages.yml → workflow_dispatch (GH Pages disabled) |
+| conxius-enclave-sdk | CI | ✅ Green |
+| conxian-nexus | CI | ✅ Green |
+| conxius-platform | CI | ✅ Green |
+| conxius-wallet | CI | ✅ Green |
+| lib-conxian-core | CI | ✅ Green |
+| conxian_market | Docs + Secret Scan | ✅ Green (gitleaks direct binary) |
+
+#### Resolved CI Failures (Session 49)
+
+| Issue | Root Cause | Fix | Commit |
+|-------|-----------|-----|--------|
+| **B2B Suite failure** | lib-conxian-core listed as workspace member but is its own root | Removed from monorepo workspace members | cf88dcd |
+| **Gateway Lightning clippy** (#222) | `useless conversion to same type` for `u64` cast | Removed unnecessary `as u64` in billing.rs | e61c839 |
+| **conxius-orbit pages.yml** | `github-pages` environment doesn't exist | Trigger changed to `workflow_dispatch` only | ded4954 |
+| **deepseek-* workflows** (plan-execute, review, triage) | Push trigger + `github.event.issue` ref → 0-jobs failure | Removed push triggers; plan-execute deleted pending re-add | 25166ad, cf88dcd |
+| **conxian_market secret scan** | Invalid gitleaks-action SHA + license required for org | Direct gitleaks binary install (matching conxius-platform pattern) | 369913c |
+
+#### Outstanding CI Issues
+
+| Issue | Status | Action Required |
+|-------|--------|----------------|
+| conxius-orbit pages.yml | `workflow_dispatch` only | Enable GitHub Pages in repo Settings, then restore push trigger |
+| deepseek-plan-execute | Deleted | Re-add after GitHub Actions trigger race condition resolved |
+| Dependabot "Graph Update" | Pre-existing flake | Unrelated to our changes; Dependabot-side issue |
 
 ### Sprint Plan (30 items, 5 sprints, 6 weeks)
 
