@@ -3,11 +3,6 @@ name: DeepSeek Plan-Execute
 on:
   issues:
     types: [labeled]
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/deepseek-plan-execute.yml'
-      - '.github/actions/run-deepseek/**'
   workflow_dispatch:
 
 permissions:
@@ -15,15 +10,18 @@ permissions:
   issues: write
 
 jobs:
-  validate:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo 'DeepSeek plan-execute validated — ready for labeled issues.'
   plan:
-    if: github.event_name == 'issues' && contains(github.event.label.name, 'deepseek-plan')
+    if: github.event_name == 'issues'
     runs-on: ubuntu-latest
     steps:
+      - name: Check label
+        run: |
+          LABEL="${{ github.event.label.name }}"
+          if [[ "$LABEL" != *"deepseek-plan"* ]]; then
+            echo "Skipping: label '$LABEL' does not contain 'deepseek-plan'"
+            exit 0
+          fi
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Load repo context
