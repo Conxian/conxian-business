@@ -21,7 +21,7 @@ jobs:
     steps:
       - run: echo 'DeepSeek plan-execute validated — ready for labeled issues.'
   plan:
-    if: contains(github.event.label.name, 'deepseek-plan')
+    if: github.event_name == 'issues' && contains(github.event.label.name, 'deepseek-plan')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
