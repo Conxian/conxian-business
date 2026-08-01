@@ -419,3 +419,32 @@ git cherry-pick <COMMIT_SHA> && git push origin <BRANCH_NAME>
 1. Commit to `main` first for infrastructure changes (CI configs, workflows)
 2. Cherry-pick fix to PR branch if PR exists
 3. Always use `Co-authored-by: openhands <openhands@all-hands.dev>` in commit message
+
+---
+
+## Session 48 Gap Analysis — Implementation Tracking
+
+Full analysis: `conxian_market/docs/research/CROSS_REPO_GAP_ANALYSIS_SESSION_48.md`
+Implementation tracker: `conxian_market/docs/IMPLEMENTATION_TRACKER.md`
+
+### BOS Gate Status (SAB Handoff)
+
+| Gate | Issue | Status | Blocker |
+|:-----|:------|:------:|:--------|
+| Gate 0 — Re-baseline | [#932](https://github.com/Conxian/conxian-business/issues/932) | In Progress | [#943](https://github.com/Conxian/conxian-business/issues/943) Linear→GitHub |
+| Gate 1 — Green CI | [#933](https://github.com/Conxian/conxian-business/issues/933) | In Progress | [#1082](https://github.com/Conxian/conxius-platform/issues/1082) CI scripts |
+| Gate 2 — Authority transfer | [#934](https://github.com/Conxian/conxian-business/issues/934) | Pending | Gate 0 |
+| Gate 3 — Testnet rehearsal | [#935](https://github.com/Conxian/conxian-business/issues/935) | Pending | Gates 0-2 |
+| Gate 4 — Attestation | [#936](https://github.com/Conxian/conxian-business/issues/936) | Pending | Enclave P0s |
+| Gate 5 — Security acceptance | [#937](https://github.com/Conxian/conxian-business/issues/937) | Pending | [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) |
+| Gate 6 — Mainnet handoff | [#938](https://github.com/Conxian/conxian-business/issues/938) | Pending | All above |
+
+### Sprint Plan (30 items, 5 sprints, 6 weeks)
+
+```
+S1 (Foundation):    7 items — Linear→GitHub, CI validation, Gitleaks, rulesets
+S2 (Attestation):   5 items — AWS Nitro, KeyMint, roots, CCTP, WASM boundary
+S3 (Revenue):       6 items — CON-1427 fee collection, partnership contracts, MRR billing
+S4 (Builders):      4 items — Dev sandbox, wallet value gate, treasury dashboard
+S5 (Protocol):      8 items — FROST audit, RGB stash, DLC CET, sBTC vault, merge gates
+```
