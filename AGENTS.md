@@ -22,7 +22,7 @@ Full functionality analysis across all 12 submodules. Key findings documented be
 
 | Repo | SDK Modules Used | Status |
 |------|-----------------|--------|
-| **conxian-nexus** | 9/15 (control_model, signing, verifier, anchoring, bitcoin, protocol, lightning, adapters, crypto) | ✅ Fully wired |
+| **conxian-nexus** | 12/17 (control_model, signing, verifier, anchoring, bitcoin, protocol, lightning, adapters) + enclave attestation | ✅ Wired (Session 47) |
 | **conxian-gateway** | Own `conxian_core` + contract bridge | ✅ Bridge added (Session 47) |
 | **conxius-wallet** | Silent payments + optional enclave feature gate | ✅ Wired via `enclave` feature |
 | **conxius-platform** | TS orchestration, CI gates | ✅ All scripts canonical |
