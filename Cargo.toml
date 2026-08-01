@@ -3,6 +3,8 @@
 # causes nested-workspace conflicts that break `cargo` invocations under Unified CI.
 members = [
     "conxian-nexus",
-    "conxius-enclave-sdk"
+    "conxius-enclave-sdk",
+    "lib-conxian-core",
+    "lib-conxian-core/tests/sdk-compat",
 ]
 resolver = "2"
