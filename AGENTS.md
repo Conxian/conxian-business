@@ -2,10 +2,54 @@
 
 ## BOS Operational Standards
 > **Framework**: Multi-Dimensional ITIL5-Aligned Knowledge Architecture
-> **Version**: 1.1 (2026-07-31 — Session 46)
+> **Version**: 1.2 (2026-08-01 — Session 47)
 > **Reference**: `docs/BOS_KNOWLEDGE_FRAMEWORK.md`
 
 ---
+
+### Session 47 KB — Monorepo Architecture & SDK Wiring Audit
+
+Full functionality analysis across all 12 submodules. Key findings documented below.
+
+#### SDK Capability Map
+
+| Crate | Modules | Key Public Types |
+|-------|---------|-----------------|
+| **conxius-enclave-sdk** (v0.2.x) | 50+ protocol modules | EnclaveManager, SignRequest, MuSig2, BitVM2, ZKML, DLC, FROST, Lightning, SwapRouter, Solver, Stablecoin, Settlement, Ark, Covenant, Intent, Economy, Asset, Credit, JobCard, MMR, SIDL, CCTP, ChainAbstraction, A2P, AccountAbstraction, Rails (Bisq, Boltz, Changelly, Wormhole, NTT, x402) |
+| **lib-conxian-core** (v0.2.x) | 15 modules | ProtocolVerifier, BIP110, TrustTier, AnchoringPublisher, LightningAdapter, RGBAdapter, StacksAdapter, Bitcoin(Taproot/BIP-322/Liquid), sBTC, CJCS, DLC, FROST, Covenant, Intent |
+
+#### Consumer Wiring Status
+
+| Repo | SDK Modules Used | Status |
+|------|-----------------|--------|
+| **conxian-nexus** | 9/15 (control_model, signing, verifier, anchoring, bitcoin, protocol, lightning, adapters, crypto) | ✅ Fully wired |
+| **conxian-gateway** | Own `conxian_core` + contract bridge | ✅ Bridge added (Session 47) |
+| **conxius-wallet** | Silent payments + optional enclave feature gate | ✅ Wired via `enclave` feature |
+| **conxius-platform** | TS orchestration, CI gates | ✅ All scripts canonical |
+| **conxius-orbit** | CLI for 247 contracts | ✅ Full surface |
+
+#### Architecture Decisions (Session 47)
+
+| Decision | Rationale |
+|----------|-----------|
+| Gateway keeps `conxian_core` separate from `lib-conxian-core` | Gateway = operational types (persistence, trust policy, settlement). Core = protocol primitives (verifier, control models, chain adapters). Correct trait/impl split. |
+| Adapter layer is NOT duplicated | Gateway has runtime impls (HTTP clients, RPC). Core has trait definitions. Babylon/Fedimint/Liquid/Stacks follow this pattern correctly. |
+| Gateway contract bridge lives in `internal/engine/src/stacks/contract_bridge.rs` | Typed ContractCall with canonical contract enumeration. Principal validation. Preview mode for reads. |
+| Wallet enclave path is feature-gated | `conxius-silent-payments` crate has optional `enclave` feature → re-exports `conxius-enclave-sdk`. Android JNI layer is the next integration step. |
+
+#### Bootstrap Noise Fix (Session 47)
+
+Four contracts (`conxian-protocol`, `dex-factory`, `office-manager`, `mock-token`) were
+removed from `setup-test-env.ts` `contractsToInit` because they lack `initialize()`
+functions. The `run-tests.sh` allowlist is retained as defense-in-depth. Prior
+bootstrap errors were harmless `try/catch` swallows.
+
+#### CircleCI Migration
+
+The `.circleci/config.yml` remains hello-world boilerplate. Heavy compute
+(Clarity chain-check, Rust cargo test, integration tests) should migrate from
+GitHub Actions to CircleCI for cost optimization. Current GitHub Actions CI is
+green across all PRs.
 
 ### Session 46 KB — Clarity Contract Chain-Check Patterns
 
