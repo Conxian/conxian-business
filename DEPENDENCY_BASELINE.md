@@ -1,7 +1,7 @@
 # BOS Gate 0 — Dependency Baseline Inventory
 
 **Accepted**: 2026-08-01
-**Business head**: [`ba8ae6b`](https://github.com/Conxian/conxian-business/commit/ba8ae6b5e58ed2444c7f527c28324a442d1931c3)
+**Business head**: [`c74f5f8`](https://github.com/Conxian/conxian-business/commit/c74f5f8) — updated pins below
 **System of record**: GitHub (Linear workspace deprecated)
 
 ## Submodule pins
@@ -11,7 +11,7 @@ remote default-branch heads is noted where observed.
 
 | Component | Business pin | Remote head (2026-08-01) | Diverged? |
 |-----------|-------------|--------------------------|:---------:|
-| **Conxian** (protocol) | [`bb2e68b`](https://github.com/Conxian/Conxian/commit/bb2e68b6) | [`79ec331`](https://github.com/Conxian/Conxian/commit/79ec3311) | ✅ yes |
+| **Conxian** (protocol) | [`79ec331`](https://github.com/Conxian/Conxian/commit/79ec3311) | same | no |
 | **conxian-gateway** | [`e61c839`](https://github.com/Conxian/conxian-gateway/commit/e61c8399) | same | no |
 | **conxius-wallet** | [`a272223`](https://github.com/Conxian/conxius-wallet/commit/a2722237) | same | no |
 | **conxian-nexus** | [`7b2ff9a`](https://github.com/Conxian/conxian-nexus/commit/7b2ff9ac) | same | no |
@@ -20,7 +20,7 @@ remote default-branch heads is noted where observed.
 | **conxius-orbit** | [`ded4954`](https://github.com/Conxian/conxius-orbit/commit/ded4954) | same | no |
 | **conxius-enclave-sdk** | [`b9b264b`](https://github.com/Conxian/conxius-enclave-sdk/commit/b9b264b7) | same | no |
 | **lib-conxian-core** | [`6f7e037`](https://github.com/Conxian/lib-conxian-core/commit/6f7e037e) | same | no |
-| **conxian-market** | [`7c2afb0`](https://github.com/Conxian/conxian_market/commit/7c2afb04) (`update = none`) | [`369913c`](https://github.com/Conxian/conxian_market/commit/369913c6) | ✅ yes |
+| **conxian-market** | [`369913c`](https://github.com/Conxian/conxian_market/commit/369913c6) (`update = none`) | same | no |
 | **conxian-labs-site** | [`64e6f2a`](https://github.com/Conxian/conxian-labs-site/commit/64e6f2ab) | — | — |
 
 ## `.gitmodules` branch hints
