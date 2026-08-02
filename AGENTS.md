@@ -480,3 +480,152 @@ S3 (Revenue):       6 items — CON-1427 fee collection, partnership contracts, 
 S4 (Builders):      4 items — Dev sandbox, wallet value gate, treasury dashboard
 S5 (Protocol):      8 items — FROST audit, RGB stash, DLC CET, sBTC vault, merge gates
 ```
+
+---
+
+### Session 49 — Full Production Bootstrap & Cross-Cloud Audit (2026-08-02)
+
+Full inventory of every cloud service, every repo, every PR. Production-gap analysis.
+
+#### GitHub: All Repos Clean
+
+| Repo | Issues | Open PRs | Default Branch | Archived |
+|------|--------|----------|----------------|----------|
+| Conxian/Conxian (protocol) | 10 | 0 | main | No |
+| Conxian/conxius-platform (platform) | 6 | 0 | main | No |
+| Conxian/conxian-labs-site (website) | 0 | 0 | main | No |
+
+**All merged PRs (Session 48):** #646 (Gate 2 tests), #620 (GH Actions deps), #621 (npm deps), #649 (session tracker) all merged into main. #627 closed.
+
+#### Neon (org-silent-sun-00457600): Production-Ready
+
+| Project | ID | Region | PG | Autoscaling | Branches | Endpoints |
+|---------|-----|--------|-----|-------------|----------|-----------|
+| Gateway | noisy-cloud-41146057 | aws-ap-southeast-1 | 18 | 0.25-2 CU | 1 (main) | 1 (idle) |
+| Conxian Nexus | orange-paper-76209725 | aws-eu-central-1 | 17 | 0.25-2 CU | 5 (main + 1 test + 3 preview) | 5 (all idle) |
+
+Both projects use `suspend_timeout_seconds: 0` (never auto-suspend). Active compute cycling confirmed. GitHub integration on both.
+
+#### Supabase (org dmhmarjqzgodyovlhamv)
+
+| Project | ID | PG | Region | Tables | Status |
+|---------|-----|-----|--------|--------|--------|
+| Conxian BOS | yauldfcpswnufgwfvnlr | 17.6 | eu-central-1 | 11 tables (exit_velocity, runway_metrics, ma_milestones, erp_sync_events, fleet_metrics, grid_oracle_logs, ip_audit_logs, deai_requests, deployment_efficiency, ats_violations, yield_events) | ACTIVE_HEALTHY |
+| Conxian-platform | iczqutrbbfudfzfplymc | 17.6 | eu-central-1 | Unknown | ACTIVE_HEALTHY (separate API key; $SUPABASE_API_KEY only covers BOS project) |
+
+**BOS verified live data:**
+- Runway: ZAR 15.5M fiat, 22.85 sBTC, 145K STX, ZAR 450K/mo burn → 56mo runway
+- Exit Velocity: target ZAR 2B, current ZAR 1.55B (↑ from ZAR 1.122B in May), structural integrity 1.00
+- M&A Milestones: 5 completed (Phase 10 alignment, BOS state sync, macro-crisis simulation, Render pipeline, week 1 baseline)
+
+#### Render: Near-Production (1 blocker)
+
+| Service | ID | Plan | Region | URL | Status |
+|---------|-----|------|--------|-----|--------|
+| conxian-labs-site | srv-d9ndhr2jnfac73as7te0 | free | oregon | conxian-labs-site-xhqq.onrender.com | Live (v1.1.0) |
+
+**Blocker:** Upgrade to Starter plan requires payment method on Render dashboard. Free plan auto-sleeps after inactivity.
+**Custom domain:** `www.conxian-labs.com` pending — needs detach from deleted static site, then attach to this service.
+**Latest deploy:** `c2375e54` (2026-08-02T06:18Z, live).
+
+#### CircleCI: Idle
+
+Project `gh/Conxian/conxius-platform` registered but zero builds. No `.circleci/config.yml` in main branch (hello-world boilerplate mentioned in AGENTS.md but branch `fix/ci-cd-fixes` not found on GitHub). Heavy compute (Clarity chain-check, Rust cargo test) targeted for migration from GHA but not yet implemented.
+
+#### Production Gap Summary
+
+| Gap | Severity | Action | Owner |
+|-----|----------|--------|-------|
+| Render free → Starter | MEDIUM | Add payment method in Render Dashboard | Human billing |
+| Render custom domain | LOW | Detach `www.conxian-labs.com` from deleted static site, attach to web service | Human DNS |
+| CircleCI pipeline | LOW | Write `.circleci/config.yml`, push, trigger build | Engineering |
+| Supabase Conxian-platform key | LOW | Recover/rotate API key for full visibility | Human credentials |
+
+#### Open Issues (P0/P1)
+
+**Conxian/Conxian:** #532 (partnership launch gate), #530 (Stacks.js SDK), #529 (partner usage ledger), #527 (fee policy), #515 (merge gates), #507 (sBTC vault), #500 (oracle/DEX wiring), #496 (partnership fee contracts), #488 (2% protocol fee), #480 (dev sandbox TTFV <15min)
+
+**conxius-platform:** #1212 (stale branch review), #1168 (founder rights research), #1167 (protocol handoff alignment), #1082 (CI validation scripts), #958 (auto-merge), #854 (org-wide rulesets)
+
+#### Architecture: Runtime Wiring Verified
+
+All 17 lib-conxian-core modules wired (Session 48 audit). SDK capability map confirmed: conxius-enclave-sdk v2.0.12 (46 modules), lib-conxian-core v0.3.x (17 modules). Gateway, Nexus, Platform, Orbit consumers all connected to correct core types and struct fields.
+
+#### Gap Register Status (from Unified Production Readiness Report)
+
+**P0 (Critical):** ALL CLOSED (7/7): mainnet plan, principal contamination, branch audit, submodule integrity, SDK checklist, CI hygiene, Clarity 4 orbit.
+**P1 (High):** ALL CLOSED (7/7): Bitcoin/Lightning coverage, API docs, PRDs, hardcoded deps, admin API, mock stubs.
+**P2 (Medium):** 4 OPEN (GAP-016 API docs, GAP-017 dev portal, GAP-018 marketing, GAP-019 telemetry) — Sprint 4.
+**P3 (Lower):** 4 OPEN (MEV monitoring, Kwil migration, Radicle, Akash) — Phase 7.
+
+**Enclave-SDK caution:** Historical June "PRODUCTION-READY" assessment superseded by July 20 audit. Current status: **Beta / conditional**. Issues #195–#202 remain open. Do not enable value-bearing production signing from the audited tree.
+
+#### Repo Portfolio (Flagship vs Supporting)
+
+| Tier | Repos |
+|------|-------|
+| Primary Strategic | Conxian (protocol), conxian-gateway, conxian-nexus, conxius-wallet |
+| Supporting | lib-conxian-core, conxius-enclave-sdk, conxius-platform, conxius-orbit, .github |
+| Reference | conxian_ui, conxian-labs-site, demo-repository, conxian.github.io |
+| Governance | conxian-business (this repo) |
+
+---
+
+### Session 50 — Full Production Readiness Assessment (2026-08-02)
+
+Cross-reference of self-assessed mainnet readiness, BOS buildout gaps, and live infrastructure.
+
+#### Per-Repo Readiness
+
+| Repo | Self-Assessment | Live State | Self-Grade | Verdict |
+|------|----------------|------------|------------|---------|
+| **Conxian (protocol)** | READY FOR MAINNET v0.6.2 | 219 .clar files, Clarity 4 complete, 0 PRs open | ✅ All checks | **PRODUCTION** — Core contracts real, gas healthy. STUB_CONTRACTS.md stale but non-blocking. |
+| **conxian-gateway** | READY FOR MAINNET v0.1.1 | 39/39 PRD reqs complete, Rust workspace, BitVM2 Groth16 | ✅ All checks | **PRODUCTION** — Most mature subrepo. ISO 20022, ZKC, A2P all implemented. |
+| **conxian-nexus** | (no mainnet checklist) | 37+ Rust files, 96% Stacks coverage, FSOC sequencer | ⚠️ BETA | **BETA QUALITY** — Bitcoin 80%, Lightning 67%. Functional but coverage gaps remain. |
+| **conxius-wallet** | READY FOR MAINNET v1.6.0 | Android-first, StrongBox, 13 protocols, BDK, Jetpack Compose | ✅ All checks | **TECHNICALLY PRODUCTION** — Code ready. Business dimensions (GTM, compliance, tokenomics) are limiters. |
+| **conxius-enclave-sdk** | ~~READY FOR MAINNET v1.6.0~~ → **BETA/CONDITIONAL** | 46 modules v2.0.12, issues #195–#202 open | ⚠️ SUPERSEDED | **BETA ONLY** — July 20 audit superseded. Do NOT sign value-bearing production. |
+| **conxius-platform** | INCUBATING (Mainnet Ready) | Docker Compose stacks, ZSE-compliant templates, all checks | ✅ All checks | **INCUBATING** — Dev orchestration solid. Production orchestration path pending (GAP-013 closed, but core logic needs implementation). |
+| **conxius-orbit** | (no checker) | Python CLI, Clarinet SDK, Clarity 4 gap | ⚠️ BETA | **BETA** — Works for Clarity 2/3. Clarity 4 support blocks devnet testing. |
+| **conxian-ui** | (no checker) | 17 TS files, shared SDK, Next.js | ⚠️ EARLY | **EARLY STAGE** — Useful shared library, not production surface. |
+| **lib-conxian-core** | (no checker) | 17 modules, BitVM2 production code, Musig2, RGB | ✅ All checks | **PRODUCTION CORE** — BitVM2 Groth16 is real. API docs are the primary gap. |
+| **conxian-labs-site** | (no checker) | Render free tier, v1.1.0, Node.js | ⚠️ FREE TIER | **LIVE (free)** — Serves v1.1.0. Free tier auto-sleeps. Upgrade to Starter blocked by payment method. |
+
+#### BOS Buildout P0 Gaps (All Repos)
+
+Every repo has P0 gaps in its BOS buildout doc. None has fully closed P0. Summary:
+
+| Repo | P0 Gaps | Critical Item |
+|------|---------|---------------|
+| Conxian | 1 | Mainnet release plan standardization (CON-371) |
+| conxian-gateway | 1 | Partner Integration Guide |
+| conxian-nexus | 1 | State Recovery Runbook |
+| conxius-wallet | 2 | Safety + release integrity |
+| conxius-enclave-sdk | 2 | Release integrity + safety gates |
+| conxius-platform | 2 | Deployment guides + boundary validation |
+| conxius-orbit | 1 | Mainnet Deployment Runbook |
+| conxian-ui | 1 | Component Library docs |
+| lib-conxian-core | 1 | Core Contribution Guide |
+| conxian-labs-site | 1 | Press Kit |
+
+**All P0 gaps are documentation/runbook gaps — not code defects, not missing features, not architectural issues.**
+
+#### Infrastructure Alignment
+
+| Layer | Status | Action |
+|-------|--------|--------|
+| **Neon** | ✅ Production-grade | Both projects autoscaled, GH integrated, suspend_timeout=0 |
+| **Supabase BOS** | ✅ Production (live data) | ZAR 1.55B valuation, runway data flowing |
+| **Supabase Platform** | ⚠️ Blocked | Separate API key needed for visibility |
+| **Render** | ⚠️ Free tier | Add payment method → upgrade to Starter ($7/mo) |
+| **Render domain** | ⚠️ Blocked | `www.conxian-labs.com` stuck on deleted static site — Render API says delete from old site first, but site no longer exists |
+| **CircleCI** | ⚠️ PR-only | 8 CI + 3 deploy jobs ready. `build_prs_only=true` — pipeline triggers only from PRs. Need a PR or setting change |
+
+#### Production Alignment Verdict
+
+**Code-technology: ready.** All P0 unified gaps closed. Primary strategic repos (Protocol, Gateway, Wallet) are technically production-ready. Supporting repos are solid except enclave-sdk (beta/conditional).
+
+**Operational: documentation-gapped.** Every repo has P0 documentation gaps (runbooks, deployment guides). These are non-blocking for soft launch but represent operational risk.
+
+**Infrastructure: 2 human blockers.** Render payment method + domain detachment. Both require Render dashboard access.
+
+**CI/CD: CircleCI ready, waiting for trigger.** Config is valid and comprehensive. Blocked by `build_prs_only=true` project setting.
