@@ -6,40 +6,39 @@ on:
   workflow_dispatch:
     inputs:
       source_branch:
-        description: 'Source branch to promote from'
+        description: Source branch to promote from
         required: true
         type: choice
-        options:
-          - dev
-          - staged
+        options: [dev, staged]
       target_branch:
-        description: 'Target branch to promote into'
+        description: Target branch to promote into
         required: true
         type: choice
-        options:
-          - staged
-          - main
+        options: [staged, main]
 
 permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: auto-promotion-${{ github.event_name == 'workflow_dispatch' && inputs.source_branch || github.ref_name }}
+  cancel-in-progress: false
+
 jobs:
   promote:
-    name: Create promotion PR
+    name: Create immutable promotion candidate
     runs-on: ubuntu-latest
-    # On push, only run for the actual branch update (not tag pushes).
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/'))
     steps:
-      - name: Determine source and target
+      - name: Determine promotion lane
         id: branches
         env:
           SOURCE_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.source_branch || github.ref_name }}
           TARGET_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.target_branch || '' }}
         run: |
           set -euo pipefail
-          SOURCE="${SOURCE_REF}"
-          TARGET="${TARGET_REF}"
+          SOURCE="$SOURCE_REF"
+          TARGET="$TARGET_REF"
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             case "${SOURCE}:${TARGET}" in
@@ -49,146 +48,137 @@ jobs:
                 exit 1
                 ;;
             esac
+          elif [ "$SOURCE" = "dev" ]; then
+            TARGET="staged"
+          elif [ "$SOURCE" = "staged" ]; then
+            TARGET="main"
           else
-            case "$SOURCE" in
-              dev) TARGET="staged" ;;
-              staged) TARGET="main" ;;
-              *)
-                echo "::error::Unsupported source branch: $SOURCE"
-                exit 1
-                ;;
-            esac
+            echo "::error::Unsupported source branch: $SOURCE"
+            exit 1
           fi
 
-          if [ "$SOURCE" = "dev" ]; then
-            CHECKLIST_TAG="PROMOTION:DEV->STAGED"
-          else
-            CHECKLIST_TAG="PROMOTION:STAGED->MAIN"
-          fi
+          echo "source=${SOURCE}" >> "$GITHUB_OUTPUT"
+          echo "target=${TARGET}" >> "$GITHUB_OUTPUT"
 
-          PROMO_BRANCH="promotion/${SOURCE}-to-${TARGET}"
-          {
-            echo "source=${SOURCE}"
-            echo "target=${TARGET}"
-            echo "checklist_tag=${CHECKLIST_TAG}"
-            echo "promo_branch=${PROMO_BRANCH}"
-          } >> "$GITHUB_OUTPUT"
-
-      - name: Check for direct and generated promotion PRs
-        id: existing
-        env:
-          GH_TOKEN: ${{ github.token }}
-          SOURCE: ${{ steps.branches.outputs.source }}
-          TARGET: ${{ steps.branches.outputs.target }}
-          PROMO_BRANCH: ${{ steps.branches.outputs.promo_branch }}
-        run: |
-          set -euo pipefail
-          DIRECT="$(gh pr list \
-            --repo "${{ github.repository }}" \
-            --base "$TARGET" \
-            --head "$SOURCE" \
-            --state open \
-            --json number \
-            --jq '.[0].number // ""')"
-          PROMOTION="$(gh pr list \
-            --repo "${{ github.repository }}" \
-            --base "$TARGET" \
-            --head "$PROMO_BRANCH" \
-            --state open \
-            --json number \
-            --jq '.[0].number // ""')"
-          {
-            echo "direct_number=${DIRECT}"
-            echo "promotion_number=${PROMOTION}"
-          } >> "$GITHUB_OUTPUT"
-
-      - name: Checkout source branch
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
+      - name: Checkout exact source revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
         with:
-          ref: ${{ steps.branches.outputs.source }}
+          ref: ${{ github.event_name == 'push' && github.sha || steps.branches.outputs.source }}
           fetch-depth: 0
 
-      - name: Get exact promotion candidate details
+      - name: Capture exact candidate evidence
         id: details
         env:
           SOURCE: ${{ steps.branches.outputs.source }}
           TARGET: ${{ steps.branches.outputs.target }}
         run: |
           set -euo pipefail
-          git fetch origin "$TARGET"
-          SOURCE_SHA="$(git rev-parse HEAD)"
-          TARGET_SHA="$(git rev-parse "origin/${TARGET}")"
-          COMMITS="$(git log --max-count=20 --oneline --no-merges "${TARGET_SHA}..${SOURCE_SHA}")"
+          git fetch --no-tags origin "$SOURCE" "$TARGET"
 
-          {
-            echo "source_sha=${SOURCE_SHA}"
-            echo "target_sha=${TARGET_SHA}"
-          } >> "$GITHUB_OUTPUT"
+          SOURCE_SHA=$(git rev-parse HEAD)
+          TARGET_SHA=$(git rev-parse "origin/${TARGET}")
+          if ! git merge-base "$SOURCE_SHA" "$TARGET_SHA" >/dev/null; then
+            echo "::error::Source and target have no merge base. Refusing bulk synchronization; open a reviewed manual promotion PR after lineage reconciliation."
+            exit 1
+          fi
 
+          COMMIT_WINDOW="${TARGET_SHA}..${SOURCE_SHA}"
+          COMMITS=$(git log "$COMMIT_WINDOW" --oneline --no-merges | head -20 || true)
           if [ -z "$COMMITS" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::No new commits to promote from ${SOURCE} to ${TARGET}."
+            echo "::notice::No new commits to promote from ${SOURCE}@${SOURCE_SHA} to ${TARGET}@${TARGET_SHA}."
             exit 0
           fi
 
-          echo "skip=false" >> "$GITHUB_OUTPUT"
+          PROMO_BRANCH="promotion/${SOURCE}-to-${TARGET}-${SOURCE_SHA}"
           {
+            echo "skip=false"
+            echo "source_sha=${SOURCE_SHA}"
+            echo "target_sha=${TARGET_SHA}"
+            echo "commit_window=${COMMIT_WINDOW}"
+            echo "promo_branch=${PROMO_BRANCH}"
             echo 'commit_summary<<EOF'
             echo "$COMMITS"
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
-      - name: Generate exact-candidate PR body
+      - name: Detect exact existing candidate PR
         if: steps.details.outputs.skip != 'true'
+        id: existing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET: ${{ steps.branches.outputs.target }}
+          PROMO_BRANCH: ${{ steps.details.outputs.promo_branch }}
+        run: |
+          set -euo pipefail
+          EXISTING=$(gh pr list \
+            --repo "${{ github.repository }}" \
+            --base "$TARGET" \
+            --head "$PROMO_BRANCH" \
+            --state open \
+            --json number \
+            --jq '.[0].number // ""')
+          echo "number=${EXISTING}" >> "$GITHUB_OUTPUT"
+          if [ -n "$EXISTING" ]; then
+            echo "::notice::Exact promotion candidate PR #${EXISTING} already exists."
+          fi
+
+      - name: Publish immutable candidate ref
+        if: steps.details.outputs.skip != 'true' && steps.existing.outputs.number == ''
+        env:
+          PROMO_BRANCH: ${{ steps.details.outputs.promo_branch }}
+          SOURCE_SHA: ${{ steps.details.outputs.source_sha }}
+        run: |
+          set -euo pipefail
+          git branch "$PROMO_BRANCH" "$SOURCE_SHA"
+          REMOTE_SHA=$(git ls-remote --heads origin "refs/heads/${PROMO_BRANCH}" | awk '{print $1}')
+          if [ -n "$REMOTE_SHA" ] && [ "$REMOTE_SHA" != "$SOURCE_SHA" ]; then
+            echo "::error::Immutable candidate ref already exists at a different SHA. Refusing to overwrite it."
+            exit 1
+          fi
+          git push -u origin "$PROMO_BRANCH"
+
+      - name: Build promotion PR body
+        if: steps.details.outputs.skip != 'true' && steps.existing.outputs.number == ''
         env:
           SOURCE: ${{ steps.branches.outputs.source }}
           TARGET: ${{ steps.branches.outputs.target }}
-          CHECKLIST_TAG: ${{ steps.branches.outputs.checklist_tag }}
-          COMMIT_SUMMARY: ${{ steps.details.outputs.commit_summary }}
           SOURCE_SHA: ${{ steps.details.outputs.source_sha }}
           TARGET_SHA: ${{ steps.details.outputs.target_sha }}
-          PROMO_BRANCH: ${{ steps.branches.outputs.promo_branch }}
+          COMMIT_WINDOW: ${{ steps.details.outputs.commit_window }}
+          COMMIT_SUMMARY: ${{ steps.details.outputs.commit_summary }}
         run: |
-          set -euo pipefail
           python3 - <<'PY'
           import datetime
           import os
-          from pathlib import Path
 
-          source = os.environ['SOURCE']
-          target = os.environ['TARGET']
-          checklist_tag = os.environ['CHECKLIST_TAG']
-          commits = os.environ['COMMIT_SUMMARY']
-          source_sha = os.environ['SOURCE_SHA']
-          target_sha = os.environ['TARGET_SHA']
-          promo_branch = os.environ['PROMO_BRANCH']
-          date_str = datetime.date.today().isoformat()
+          source = os.environ["SOURCE"]
+          target = os.environ["TARGET"]
+          source_sha = os.environ["SOURCE_SHA"]
+          target_sha = os.environ["TARGET_SHA"]
+          window = os.environ["COMMIT_WINDOW"]
+          commits = os.environ["COMMIT_SUMMARY"]
+          metadata = f"""### Exact promotion evidence
 
-          candidate = f'''<!-- AUTO_PROMOTION_CANDIDATE_START -->
-          ### Exact promotion candidate
+          - Promotion source SHA: `{source_sha}`
+          - Promotion target-base SHA: `{target_sha}`
+          - Promotion commit window: `{window}`
 
-          - Source: `{source}` at `{source_sha}`
-          - Target: `{target}` at `{target_sha}`
-          - Generated branch: `{promo_branch}`
-          <!-- AUTO_PROMOTION_CANDIDATE_END -->'''
+          ### Included changes
 
-          included = f'''### Included changes
           ```text
           {commits}
-          ```'''
+          ```
+          """
 
-          if source == 'dev' and target == 'staged':
-              body = f'''## Dev → Staged Promotion
+          if (source, target) == ("dev", "staged"):
+              body = f"""## Dev -> staged promotion
 
-          Auto-generated promotion PR from `dev` to `staged`.
+          Immutable candidate generated from the exact `dev` revision recorded below.
 
-          {candidate}
+          {metadata}
 
-          {included}
-
-          ---
-
-          <!-- {checklist_tag} -->
+          <!-- PROMOTION:DEV->STAGED -->
           ### Dev -> staged promotion checklist
 
           - [ ] Integrated testnet validation completed on `dev` and is linked here.
@@ -196,140 +186,63 @@ jobs:
           - [ ] Wallet / signer / treasury boundary checks are explicitly recorded.
           - [ ] Deployment boundary checks are explicitly recorded.
           - [ ] Any required submodule pins, lockfiles, and artifact provenance are updated.
-
-          ---
-
-          *This PR was auto-generated by the Auto-Promotion workflow.*
-          '''
-              title = f'PROMOTION:DEV->STAGED — {date_str}'
+          """
           else:
-              body = f'''## Staged → Main Promotion
+              body = f"""## Staged -> main promotion
 
-          Auto-generated promotion PR from `staged` to `main`.
+          Immutable candidate generated from the exact `staged` revision recorded below.
 
-          {candidate}
+          {metadata}
 
-          {included}
-
-          ---
-
-          <!-- {checklist_tag} -->
+          <!-- PROMOTION:STAGED->MAIN -->
           ### Mainnet acceptance evidence pack
 
-          Required for `staged` -> `main` promotions. Provide the evidence pack under this heading, or link to a versioned in-repo file per `openspec/specs/mainnet-acceptance-evidence-pack/spec.md`.
+          #### Promotion metadata
+          Complete all fields required by `openspec/specs/mainnet-acceptance-evidence-pack/spec.md`.
 
-          ---
+          #### Mainnet-only production scope
+          Complete before review.
 
-          *This PR was auto-generated by the Auto-Promotion workflow.*
-          '''
-              title = f'PROMOTION:STAGED->MAIN — {date_str}'
+          #### Contamination and residue proof
+          Complete before review.
 
-          Path('pr_body.md').write_text(body.lstrip(), encoding='utf-8')
-          Path('pr_title.txt').write_text(title, encoding='utf-8')
-          Path('candidate_block.md').write_text(candidate.strip(), encoding='utf-8')
-          Path('included_block.md').write_text(included.strip(), encoding='utf-8')
+          #### Successful production validation
+          Complete before review.
+
+          #### Release-readiness sign-off
+          Complete before review.
+
+          #### Owner accountability
+          Complete before review.
+          """
+
+          date_str = datetime.date.today().isoformat()
+          title = f"PROMOTION:{source.upper()}->{target.upper()} — {date_str} — {source_sha[:12]}"
+          with open("pr_body.md", "w", encoding="utf-8") as handle:
+              handle.write(body)
+          with open("pr_title.txt", "w", encoding="utf-8") as handle:
+              handle.write(title)
           PY
 
-      - name: Synchronize generated promotion branch
-        if: steps.existing.outputs.direct_number == '' && steps.details.outputs.skip != 'true'
-        env:
-          PROMO_BRANCH: ${{ steps.branches.outputs.promo_branch }}
-        run: |
-          set -euo pipefail
-          git fetch origin "refs/heads/${PROMO_BRANCH}:refs/remotes/origin/${PROMO_BRANCH}" 2>/dev/null || true
-          REMOTE_SHA="$(git rev-parse "refs/remotes/origin/${PROMO_BRANCH}" 2>/dev/null || true)"
-          git checkout --detach "${{ steps.details.outputs.source_sha }}"
-
-          if [ -n "$REMOTE_SHA" ]; then
-            git push --force-with-lease="refs/heads/${PROMO_BRANCH}:${REMOTE_SHA}" \
-              origin "HEAD:refs/heads/${PROMO_BRANCH}"
-          else
-            git push --force-with-lease="refs/heads/${PROMO_BRANCH}:" \
-              origin "HEAD:refs/heads/${PROMO_BRANCH}"
-          fi
-
-      - name: Refresh existing generated promotion PR
-        if: steps.existing.outputs.direct_number == '' && steps.existing.outputs.promotion_number != '' && steps.details.outputs.skip != 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PROMOTION_NUMBER: ${{ steps.existing.outputs.promotion_number }}
-          TARGET: ${{ steps.branches.outputs.target }}
-        run: |
-          set -euo pipefail
-          gh pr view "$PROMOTION_NUMBER" \
-            --repo "${{ github.repository }}" \
-            --json body \
-            --jq .body > current_pr_body.md
-          python3 - "$TARGET" <<'PY'
-          import sys
-          from pathlib import Path
-
-          target = sys.argv[1]
-          current = Path('current_pr_body.md').read_text(encoding='utf-8')
-          candidate = Path('candidate_block.md').read_text(encoding='utf-8').strip()
-          included = Path('included_block.md').read_text(encoding='utf-8').strip()
-          start = '<!-- AUTO_PROMOTION_CANDIDATE_START -->'
-          end = '<!-- AUTO_PROMOTION_CANDIDATE_END -->'
-
-          if start in current and end in current:
-              before = current.split(start, 1)[0]
-              after = current.split(end, 1)[1]
-              updated = f'{before}{candidate}{after}'
-          elif target == 'main' and '### Mainnet acceptance evidence pack' in current:
-              evidence = current[current.index('### Mainnet acceptance evidence pack'):]
-              prefix = current[:current.index('### Mainnet acceptance evidence pack')]
-              updated = f'{prefix}{candidate}\n\n{included}\n\n---\n\n{evidence}'
-          elif '<!-- PROMOTION:DEV->STAGED -->' in current:
-              checklist = current[current.index('<!-- PROMOTION:DEV->STAGED -->'):]
-              prefix = current[:current.index('<!-- PROMOTION:DEV->STAGED -->')]
-              updated = f'{prefix}{candidate}\n\n{included}\n\n---\n\n{checklist}'
-          else:
-              updated = f'{current.rstrip()}\n\n{candidate}\n\n{included}\n'
-
-          Path('updated_pr_body.md').write_text(updated, encoding='utf-8')
-          PY
-          gh pr edit "$PROMOTION_NUMBER" \
-            --repo "${{ github.repository }}" \
-            --title "$(cat pr_title.txt)" \
-            --body-file updated_pr_body.md
-          echo "::notice::Refreshed promotion PR #${PROMOTION_NUMBER} to the exact source candidate."
-
-      - name: Create promotion PR when permitted
-        if: steps.existing.outputs.direct_number == '' && steps.existing.outputs.promotion_number == '' && steps.details.outputs.skip != 'true'
+      - name: Open draft promotion PR
+        if: steps.details.outputs.skip != 'true' && steps.existing.outputs.number == ''
         env:
           GH_TOKEN: ${{ github.token }}
           TARGET: ${{ steps.branches.outputs.target }}
-          PROMO_BRANCH: ${{ steps.branches.outputs.promo_branch }}
+          PROMO_BRANCH: ${{ steps.details.outputs.promo_branch }}
         run: |
           set -euo pipefail
-          if gh pr create \
+          if ! gh pr create \
             --repo "${{ github.repository }}" \
             --base "$TARGET" \
             --head "$PROMO_BRANCH" \
+            --draft \
             --title "$(cat pr_title.txt)" \
-            --body-file pr_body.md >/tmp/auto-promotion-create.out 2>/tmp/auto-promotion-create.err; then
-            echo "::notice::Created promotion PR from ${PROMO_BRANCH} to ${TARGET}."
-          else
-            {
-              echo "### Auto-Promotion fallback"
-              echo
-              echo "The promotion branch \\`${PROMO_BRANCH}\\` was synchronized to the exact source candidate, but the repository's current Actions token is not permitted to create pull requests."
-              echo "Open a PR manually from \\`${PROMO_BRANCH}\\` to \\`${TARGET}\\`; no protected branch was pushed."
-            } >> "$GITHUB_STEP_SUMMARY"
-            echo "::warning::Promotion branch ${PROMO_BRANCH} is ready, but Actions cannot create pull requests with the approved token. Manual PR creation is required."
+            --body-file pr_body.md; then
+            echo "::error::Automatic PR creation is unavailable. The immutable candidate ref remains published; open a manual promotion PR from ${PROMO_BRANCH} to ${TARGET} using pr_body.md without rewriting the ref."
+            exit 1
           fi
-
-      - name: Report direct promotion PR
-        if: steps.existing.outputs.direct_number != ''
-        run: |
-          echo "::notice::Direct source-to-target promotion PR #${{ steps.existing.outputs.direct_number }} is already open; no generated promotion PR was created."
-
-      - name: Report existing generated promotion PR
-        if: steps.existing.outputs.direct_number == '' && steps.existing.outputs.promotion_number != ''
-        run: |
-          echo "::notice::Generated promotion PR #${{ steps.existing.outputs.promotion_number }} was synchronized to the current source candidate."
 
       - name: Report nothing to promote
         if: steps.details.outputs.skip == 'true'
-        run: |
-          echo "::notice::No new commits between ${{ steps.branches.outputs.source }} and ${{ steps.branches.outputs.target }}."
+        run: echo "::notice::No commits are pending in the exact promotion window."

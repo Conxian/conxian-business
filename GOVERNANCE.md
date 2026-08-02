@@ -8,8 +8,6 @@ Canonical business-purpose and public/private split guidance for this repo lives
 
 Canonical parent-control alignment guidance for this repo (scope boundaries, control-domain mapping, evidence, rollback, and accountability) lives in `docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md`.
 
-Canonical GitHub-native intake, coordination, evidence, and source-of-truth rules live in [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](./docs/GITHUB_NATIVE_BOS_WORKSPACE.md). GitHub Issues and pull requests are authoritative for all new BOS work; Linear references are historical/archive provenance only.
-
 ## Ownership
 
 - **Repo owners:** defined by `CODEOWNERS`.
@@ -19,32 +17,32 @@ Canonical GitHub-native intake, coordination, evidence, and source-of-truth rule
 
 All repositories in the Conxian portfolio must adhere to the [**Branching and Promotion Policy**](./docs/BRANCHING_AND_PROMOTION_POLICY.md).
 
-- **`main` branch**: Reserved for mainnet-only production code. No stubs, mocks, or placeholders.
-- **`staged` branch**: Reserved for mainnet candidate validation and promotion to `main`.
-- **`dev` branch**: Default branch for development and testnet-oriented logic.
+- **`main` branch**: GitHub default and production branch.
+- **`dev` branch**: Non-production integration branch; never the GitHub default.
+- **`staged` branch**: Candidate branch between integration and production.
 
-Feature branches should validate locally first, then land in `dev` via pull request.
+Ordinary work should validate locally first, then land in `dev` via pull
+request. Only the exact direct and generated routes in
+[`docs/BRANCH_AND_PROMOTION_STANDARD.md`](./docs/BRANCH_AND_PROMOTION_STANDARD.md)
+may promote into `staged` or `main`.
 
 ## Approval model
 
-All public-safe changes land via pull request and are coordinated through GitHub Issues, pull requests, and the organization Project when available. Changes must link the governing or owning-repository GitHub issue, receive `CODEOWNERS` review, and follow `docs/BOS_BUSINESS_BUILDOUT.md` plus documentation-alignment/`CHANGELOG.md` rules for boundary or policy changes. Use only an opaque approved reference token when a protected decision must be referenced.
+All changes land via pull request and must follow the workflow defined in `docs/BOS_BUSINESS_BUILDOUT.md` (Linear issue linkage, `CODEOWNERS` review, and documentation-alignment/`CHANGELOG.md` update rules for boundary or policy changes).
 
 ## Documentation confidentiality (ZSE)
 
 Conxian operates under a Zero Secret Egress (ZSE) mandate.
 
 - Public-safe documentation may live in Git.
-- Restricted legal, financial, security, identity, custody, recovery, strategy, credentials, private endpoints, signer data, raw configuration, and privileged operational records must remain in an approved non-Git restricted-record system. GitHub may contain sanitized status and only a minimum opaque approved pointer; never copy protected content or access details.
+- Strategic, legal, operational, and administrative documents that are internal-only must be stored in the authorized Linear workspace (Kwil/Tableland) and referenced from Git with a pointer.
 
 ## Policies
 
-- Repository boundary: Treat this repo as public for ZSE boundary purposes. Internal-only strategy, legal interpretations, operational runbooks, and infrastructure identifiers must live in an approved non-Git restricted-record system.
+- Repository boundary: Treat this repo as public for ZSE boundary purposes. Internal-only strategy, legal interpretations, operational runbooks, and infrastructure identifiers must live in the authorized Linear workspace.
 - Contributing guidelines: [`CONTRIBUTING.md`](./CONTRIBUTING.md)
 - Security policy: [`SECURITY.md`](./SECURITY.md)
 - BOS business buildout and repo operating model: [`docs/BOS_BUSINESS_BUILDOUT.md`](./docs/BOS_BUSINESS_BUILDOUT.md)
-- GitHub-native BOS workspace: [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](./docs/GITHUB_NATIVE_BOS_WORKSPACE.md)
-- GitHub-first BOS operating model: [`docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`](./docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md)
-- Nexus licensing governance: [`docs/NEXUS_LICENSING_GOVERNANCE.md`](./docs/NEXUS_LICENSING_GOVERNANCE.md)
 - Parent-control alignment baseline (CON-694): [`docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md`](./docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md)
 - Branching and promotion: [`docs/BRANCHING_AND_PROMOTION_POLICY.md`](./docs/BRANCHING_AND_PROMOTION_POLICY.md)
 - License: [`LICENSE`](./LICENSE) (GNU GPL v3.0)

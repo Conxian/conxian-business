@@ -1,25 +1,27 @@
 # Release and merge hygiene
 
-This repository uses GitHub Actions workflows in `.github/workflows/` as the source of truth for what CI *can* run. The repository’s branch protection rules define which checks are *required* to merge to `main`.
+This repository uses GitHub Actions workflows in `.github/workflows/` as the
+checked-in source of what CI can run. Live GitHub administration separately
+defines the default branch, rulesets/protections, required checks, and reviews.
+Checked-in files do not prove that administrator-owned state is active.
 
 The goals:
 
 - Keep `main` always mergeable and safe to deploy.
-- Ensure every merge has clear public-safe provenance through the governing or owning-repository GitHub issue and pull request.
+- Ensure every merge has clear provenance (Linear issue + PR).
 - Make releases and changelogs easy to audit.
 
 ## Branch and promotion standard
 
 This repository uses a three-branch model:
 
-- `dev` = testnet-only and non-production validation
-- `staged` = mainnet candidate validation
-- `main` = mainnet-only production code
+- `main` = GitHub default and production branch
+- `dev` = non-production integration branch, never the GitHub default
+- `staged` = candidate branch between integration and production
 
-Promotion rules:
-
-- No direct promotion from `dev` to `main`.
-- Promotion to `main` happens only from `staged`.
+Promotion rules use only the direct and immutable generated routes in
+`docs/BRANCH_AND_PROMOTION_STANDARD.md`. There is no direct `dev` -> `main`,
+generic `promotion/*`, forked promotion, or Dependabot-to-`main` route.
 
 Reference: `docs/BRANCH_AND_PROMOTION_STANDARD.md` and `openspec/specs/git-management/spec.md`.
 
@@ -27,14 +29,16 @@ Reference: `docs/BRANCH_AND_PROMOTION_STANDARD.md` and `openspec/specs/git-manag
 
 ### Always-on checks for PRs targeting `dev`, `staged`, or `main`
 
-These workflows run on every pull request targeting `dev`, `staged`, or `main`. Branch protection rules determine which checks are *required* to merge into protected branches (typically `staged`/`main`), and promotion PRs are expected to have all checks green before merge.
+These workflows are configured to run on pull requests targeting `dev`,
+`staged`, or `main`. Whether they start and whether GitHub requires them are
+separate hosted-runner and administrator-owned facts. Promotion PRs must record
+the exact observed check state before merge.
 
 *Note:* check names shown in the PR UI may drift over time; rely on the PR UI’s required checks list when in doubt.
 
 - Unified CI (see [`conxian-unified-ci.yml`](./workflows/conxian-unified-ci.yml))
   - Repo hygiene:
     - ZSE knowledge retention via `scripts/verify_knowledge_retention.py`.
-    - GitHub-native BOS authority and intake policy via `scripts/verify_github_native_bos_workspace.py`.
     - Tracked artifact scanning via `scripts/verify_tracked_artifacts.py`.
       - False positives can be allowlisted via `.github/artifact-scan-allowlist.txt` (case-sensitive; paths are normalized to forward slashes with no leading `./`):
         - Plain (non-glob) patterns (no glob metacharacters such as `*`, `?`, or bracket expressions like `[a-z]`):
@@ -80,11 +84,14 @@ How maintainers should interpret summary checks:
 
 ## GitHub settings required outside this repository
 
-Some promotion controls are configured in **GitHub repository settings** (not in Git-tracked files).
+Some promotion controls are configured in **GitHub repository settings** (not
+in Git-tracked files). The list below is required target state, not a claim
+that the settings are currently administrator-verified.
 
 Minimum required setup:
 
-1. Ensure `staged` exists as a long-lived branch (typically created from `dev`).
+1. Keep `main` as the GitHub default/production branch, `dev` as integration,
+   and `staged` as the candidate branch.
 2. Add branch protection (or an active branch ruleset) for `staged` and `main`.
 3. Require these status checks on `staged` and `main`:
    - `Conxian Unified CI`
@@ -94,7 +101,10 @@ Minimum required setup:
 4. Require at least one approving review on `staged` and `main`.
 5. Disable force-pushes and branch deletion on `staged` and `main`.
 
-`scripts/verify_promotion_controls.py` validates the in-repo workflow policy plus `dev`/`staged`/`main` branch topology and protection/ruleset presence.
+`scripts/verify_promotion_controls.py` validates checked-in policy and reports
+live protection access separately. Inaccessible settings are
+`UNVERIFIED/BLOCKED`; even readable responses are not recorded as an
+administrator-verification pass by this static tool.
 
 ### Label-gated suites (opt-in, based on change scope)
 
@@ -119,7 +129,7 @@ Notes:
 - No direct commits to `main`. Use a PR.
 - Use the correct base branch (`dev`, `staged`, or `main`) based on the branch and promotion standard.
 - One PR = one focused change (keep it reviewable).
-- PRs should map to the authoritative public-safe GitHub issue in the governing or owning repository (include it in the PR description).
+- PRs should map to a Linear issue (include it in the PR description).
 - Follow `CODEOWNERS` for review routing.
 - Validate locally before requesting review (CI is the gate, not the first signal).
 - Before merge:

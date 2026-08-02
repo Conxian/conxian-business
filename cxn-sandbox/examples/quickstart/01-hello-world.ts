@@ -1,9 +1,9 @@
 /**
  * Conxian Hello World Example
- *
+ * 
  * This example demonstrates the simplest possible interaction with
  * the Conxian Gateway - a status check that requires no authentication.
- *
+ * 
  * TTFV Target: < 2 minutes
  */
 
@@ -21,7 +21,7 @@ async function main() {
   try {
     // Get gateway status
     const status = await gateway.status();
-
+    
     console.log('✅ Connected!\n');
     console.log('📊 Gateway Status:');
     console.log(`   Version:  ${status.version}`);
@@ -48,7 +48,7 @@ async function main() {
     console.log('Next steps:');
     console.log('   1. Run: npm run example:payment');
     console.log('   2. Read: https://docs.conxian-labs.com');
-
+    
   } catch (error) {
     console.error('❌ Connection failed:', error.message);
     console.log('\nMake sure the gateway is running:');

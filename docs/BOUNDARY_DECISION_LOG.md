@@ -2,34 +2,25 @@
 
 > **Issue**: [#825](https://github.com/Conxian/conxian-business/issues/825) — Boundary review for tracked strategy and scorecard material
 > **Status**: Canonical
-> **Last reviewed**: 2026-07-26
+> **Last reviewed**: 2026-07-03
 > **Review cadence**: On every major release or boundary-affecting PR
 
 ## Purpose
 
-This document records explicit boundary decisions for every artifact in `conxian-business` that could blur the line between **public-safe** (safe for GitHub) and **restricted** (must remain in an approved non-Git restricted-record system under Zero Secret Egress).
+This document records explicit boundary decisions for every artifact in `conxian-business` that could blur the line between **public-safe** (OK to expose in a public repo) and **internal-only** (must remain in the authorized Linear workspace per Zero Secret Egress mandate).
 
 ## Classification Framework
 
 | Classification | Definition | Where It Lives |
 |----------------|-----------|----------------|
 | **Public-safe** | No secrets, no commercially sensitive strategy, no operational runbooks. Safe for public GitHub. | Git (this repo) |
-| **Public-safe stub** | A short pointer file in Git; canonical content remains in an approved non-Git restricted-record system. Resolves link continuity while keeping sensitive detail out of public view. | Git (stub) + approved restricted system (canonical) |
-| **Restricted** | Contains protected strategy, legal, financial, security, identity, custody, recovery, partner, or privileged operational records. Must NOT appear in Git in any form. | Approved non-Git restricted-record system only |
+| **Public-safe stub** | A short pointer file in Git; canonical content lives in Linear. Resolves link continuity while keeping sensitive detail out of public view. | Git (stub) + Linear (canonical) |
+| **Internal-only** | Contains commercially sensitive strategy, partner data, operational runbooks, or privileged identifiers. Must NOT appear in Git in any form. | Linear only |
 | **Derived (generated)** | Auto-generated from canonical sources; not edited by hand. `.generated/` directory (gitignored). | `.generated/` (local only) |
-
-## Proposed GitHub-First Baseline (2026-07-26)
-
-| Artifact / decision | Classification | Boundary decision | Status / tracking |
-| --- | --- | --- | --- |
-| `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` | **Public-safe** | GitHub is canonical for public-safe intake, prioritization, delivery status, PR traceability, sanitized decisions, and immutable evidence links. Private visibility does not authorize restricted records. | Proposed implementation baseline; [#943](https://github.com/Conxian/conxian-business/issues/943) |
-| Legacy Linear-first references | **Mixed; classification required** | Do not mechanically replace. Classify each as `historical`, `retire`, `GitHub mapping`, `restricted-record token`, or `rewrite` without copying protected content. | Controlled migration; [#944](https://github.com/Conxian/conxian-business/issues/944) |
-| Branch/default mismatch | **Public-safe governance state** | This baseline does not choose a branch model or claim unverified protections. | Deferred to [#945](https://github.com/Conxian/conxian-business/issues/945) |
-| Organization `BOS Control Plane` Project | **Public-safe index only** | Project fields and items must remain public-safe; creation is currently admin-blocked. | [Conxian/.github#61](https://github.com/Conxian/.github/issues/61) |
 
 ## Sovereign Boundary Invariants
 
-1. **No secrets in Git.** Secrets, privileged identifiers, and restricted operational records remain in an approved non-Git restricted-record system.
+1. **No secrets in Git.** Secrets, privileged identifiers, and operational runbooks live in Linear or Supabase only.
 2. **Stubs fail closed.** If canonical content is unavailable, the stub resolves to `err-u501` / `err-u503`.
 3. **Commitment-based linking.** When internal-only documents must be referenced from public-safe surfaces, use hash commitments (`sha256(hex)`), not URLs or identifiers.
 4. **Contamination guard.** Any `.clar` file in a production-track path with hardcoded testnet/simnet principals breaks the build immediately.
@@ -45,8 +36,6 @@ This document records explicit boundary decisions for every artifact in `conxian
 | `Sovereign-Strategy-Nexus/` | **Public-safe stub** | Canonical strategy tracking and narrative scaffolding in Linear. Git directory is a ZSE stub. | Strategy material must not mix into product repos. Per BOS_PRESERVE_ENHANCE_REPLACE_GAP_MATRIX. |
 | `docs/operations/CON-682_APPROVED_METRIC_SPEC.md` | **Public-safe** | Formula definitions (C_R, O_C, V_X, A_S, N_E) are safe to publish. Actual metric values and dashboards remain in Linear/Supabase. | Formulas are architecture-level; values are commercially sensitive. |
 | `cxn-grid-oracle/` | **Public-safe** | Schema-level oracle surface only. Alpha; not a BOS critical dependency. | Small, public-safe interface contract per BOS_PRESERVE_ENHANCE_REPLACE_GAP_MATRIX. |
-| `Conxian/` | **Public-safe stub** (Read-Only) | Reference smart contracts and on-chain assets. Intentionally pinned. | Smart contracts are treated as stable reference implementations. No active refactoring to prevent DeFi reconstruction overhead. |
-| `conxius-orbit/` | **Public-safe** (Read-Only) | CLI deployment utility for Stacks contracts. | Frozen as a stable reference implementation to avoid recreating custom deployers and runtime CLI wrappers. |
 
 ### BOS State & Orchestration
 
@@ -108,7 +97,7 @@ Before closing a boundary-affecting PR, verify:
 - [ ] New `.md` files classified as public-safe, public-safe stub, or internal-only
 - [ ] No secrets, privileged identifiers, or operational runbooks in new files
 - [ ] If referencing internal-only content, use hash commitments, not URLs
-- [ ] Stub files use the approved minimum opaque restricted-record token when a pointer is necessary
+- [ ] Stub files include pointer to the canonical Linear issue
 - [ ] This boundary decision log updated with new artifacts
 
 ## Related Documents

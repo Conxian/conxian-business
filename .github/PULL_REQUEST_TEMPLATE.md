@@ -2,7 +2,6 @@
 Provide a concise but comprehensive summary of the changes in this Pull Request. Explain **why** this change is necessary and **what** it accomplishes.
 
 ### Strategic Alignment
-- [ ] This PR links the authoritative GitHub issue or governing pull request and follows [`docs/GITHUB_NATIVE_BOS_WORKSPACE.md`](../docs/GITHUB_NATIVE_BOS_WORKSPACE.md).
 - [ ] This PR aligns with the BOS operating model docs ([SERVICE_LOOP.md](https://github.com/Conxian/conxian-business/blob/main/conxian-business/SERVICE_LOOP.md), [openspec/](https://github.com/Conxian/conxian-business/tree/main/openspec/)).
 - [ ] If this introduces new documentation or files, `SUMMARY.md` has been updated accordingly.
 - [ ] Security and Compliance considerations have been reviewed (refer to [SECURITY.md](https://github.com/Conxian/conxian-business/blob/main/SECURITY.md) and [CSF_MAINNET_READINESS_GATE.md](https://github.com/Conxian/conxian-business/blob/main/docs/CSF_MAINNET_READINESS_GATE.md) where applicable).
@@ -17,10 +16,9 @@ Provide a concise but comprehensive summary of the changes in this Pull Request.
 
 ### Checklist
 - [ ] I have performed a self-review of my own work.
-- [ ] I confirmed this PR contains no credentials, private endpoints, signer data, raw configuration, privileged legal advice, or restricted runbook content.
-- [ ] I targeted the correct base branch (`dev`, `staged`, or `main`) per [`docs/BRANCHING_AND_PROMOTION_POLICY.md`](../docs/BRANCHING_AND_PROMOTION_POLICY.md).
+- [ ] I followed the exact route matrix in [`docs/BRANCH_AND_PROMOTION_STANDARD.md`](../docs/BRANCH_AND_PROMOTION_STANDARD.md): ordinary work -> `dev`, `dev`/exact dev candidate -> `staged`, or `staged`/exact staged candidate -> `main`.
 - [ ] If label-gated suites apply, I have applied (or requested a maintainer to apply) the correct PR label(s) so the relevant CI suites run (see [`RELEASE_HYGIENE.md`](./RELEASE_HYGIENE.md)).
-- [ ] I have verified that all automated checks (if any) pass successfully.
+- [ ] I recorded exact local and hosted-check outcomes without treating an unavailable hosted runner as either code failure or test success.
 - [ ] The language and tone adhere to the Earthy Corporate Finance standard.
 - [ ] Any references to temporal events on-chain are properly anchored (e.g., Bitcoin burn-block-height).
 - [ ] My commits follow the [Conventional Commits](https://www.conventionalcommits.org/) format.
@@ -45,10 +43,18 @@ Delete the sections that do not apply to your PR.
 - [ ] Deployment boundary checks are explicitly recorded.
 - [ ] Any required submodule pins, lockfiles, and artifact provenance are updated for the promotion candidate.
 
+### Exact promotion evidence
+
+Required only for an immutable generated candidate; delete otherwise.
+
+- Promotion source SHA: `<40-character lowercase source SHA>`
+- Promotion target-base SHA: `<40-character lowercase target SHA at creation>`
+- Promotion commit window: `<target-base-sha>..<source-sha>`
+
 <!-- PROMOTION:STAGED->MAIN -->
 ### Mainnet acceptance evidence pack
 
-Required for `staged` -> `main` promotions. Provide the evidence pack under this heading, or link to a versioned in-repo file per `openspec/specs/mainnet-acceptance-evidence-pack/spec.md`.
+Required for direct and generated routes into `main`. Complete the evidence pack under this heading, or link to a versioned in-repo file per `openspec/specs/mainnet-acceptance-evidence-pack/spec.md`.
 
 ### Additional Notes
 *Any other relevant information, context, or blocking dependencies for the reviewers.*

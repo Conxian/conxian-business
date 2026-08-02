@@ -1,49 +1,59 @@
-# Branch and promotion standard (dev/staged/main)
+# Branch and promotion standard
 
-This repository (and the broader Conxian portfolio) uses a three-branch model to keep testnet validation, mainnet candidate validation, and mainnet production releases cleanly separated.
+This is the concise operational source for branch usage. The normative
+requirements are in `openspec/specs/git-management/spec.md`.
 
 ## Branch roles
 
-- `dev`: testnet-only and non-production validation.
-- `staged`: mainnet candidate validation.
-- `main`: mainnet-only production code.
+- `main` is the GitHub default branch and the production branch.
+- `dev` is the non-production integration branch; it is never the GitHub
+  default branch.
+- `staged` is the candidate branch between integration and production.
 
-## Promotion rules
+## Exact routes
 
-- Allowed promotion path: `dev` -> `staged` -> `main`.
-- Emergency hotfix path: `hotfix/*` -> `staged` -> `main`.
-- Direct promotion from `dev` to `main` is not allowed.
-- Promotions into `staged` or `main` must originate from an in-repo branch (not a fork).
+| Work | Pull request route |
+|---|---|
+| Normal feature/fix/docs/chore/hotfix/dependency work | allowed ordinary work branch -> `dev` |
+| Integration promotion | `dev` -> `staged` |
+| Immutable generated integration promotion | `promotion/dev-to-staged-<source-sha>` -> `staged` |
+| Production promotion | `staged` -> `main` |
+| Immutable generated production promotion | `promotion/staged-to-main-<source-sha>` -> `main` |
 
-In practice, “promotion” means opening a pull request from the source branch into the target branch.
+Ordinary fork pull requests may target `dev`. Promotions into `staged` or
+`main` must be same-repository. There is no direct `dev` -> `main` route, no
+generic `promotion/*` route, and no Dependabot-to-`main` exception.
 
-## Standard workflow
+Generated candidates use the full source SHA in the branch name and record the
+exact source SHA, target-base SHA, and commit window in the pull request body.
+The recorded values must match the pull request refs and SHAs.
 
-1. Create a feature branch from `dev`.
-2. Validate locally first (run the checks relevant to the component you changed), then open a PR into `dev`.
-3. Validate the change in a testnet/non-production context.
-4. When the change is a mainnet candidate, open a promotion PR from `dev` into `staged`.
-5. After mainnet-candidate validation completes and approvals are in place, open a promotion PR from `staged` into `main`.
+## Evidence
 
-Promotion checklists live in `docs/PROMOTION_CHECKLISTS.md`.
+- Every route includes its matching checklist from
+  `docs/PROMOTION_CHECKLISTS.md`.
+- Every direct or generated route into `main` includes the complete Mainnet
+  Acceptance Evidence Pack.
+- Generated candidate creation is idempotent for one source SHA and never
+  rewrites an immutable candidate with a bare force push.
 
-For emergency fixes, open a promotion PR from `hotfix/*` into `staged`, then promote `staged` into `main`.
+## Enforcement boundary
 
-## Enforcement
+`.github/workflows/branch-promotion-policy.yml` and
+`scripts/branch_promotion_policy.py` are checked-in controls. The workflow uses
+`pull_request_target`, explicit read-only permissions, and a shallow checkout of
+the repository default branch. It executes only that trusted policy script
+against `GITHUB_EVENT_PATH`; it never checks out or executes PR head/merge code
+and never interpolates PR-controlled title, body, head SHA, or head ref into a
+shell command.
 
-### Ownership and business-unit boundaries
+PR #971 is a manually owner-reviewed bootstrap, not secure self-validation. The
+live PR continues to use the older workflow from `main` until this change is
+merged. Only a later sentinel PR can prove the new trusted default-branch
+workflow operationally.
 
-`CODEOWNERS` is the source of truth for review routing.
-
-- Any change that crosses a business-unit boundary or touches governance/release-policy surfaces (`openspec/`, `.github/`, `docs/`, `scripts/`) must receive review from the owners defined in `CODEOWNERS`.
-
-### CI and branch protections
-
-GitHub Actions provides the check surface; branch protection rules decide what is required.
-
-At a minimum:
-
-- `staged` and `main` should require the repo hygiene suite and the branch promotion policy check.
-- `main` should require all mainnet-acceptance checks relevant to the changed business unit(s).
-
-Reference: `.github/RELEASE_HYGIENE.md`.
+Default-branch selection, branch protections/rulesets, required checks,
+approval counts, deletion rules, and force-push rules are administrator-owned
+settings. Until an authorized administrator verifies them, their state is
+**not administrator-verified**. If the settings API is inaccessible, report
+that state as **unverified/blocked**, never passing.

@@ -1,4 +1,4 @@
-# Conxian Industrial Engine & SIDL (ATS v12.0) - Agent Guidelines
+# Conxian Industrial Engine & SIDL (ATS v13.0 — Session 47, Aug 2026) - Agent Guidelines
 
 ## 0. THE CONXIAN UNIFIED THEORY (v2.0)
 All agentic sessions must adhere to the equations defined in `docs/CONXIAN_UNIFIED_THEORY_v2.md`.
@@ -33,6 +33,6 @@ All agentic sessions must adhere to the equations defined in `docs/CONXIAN_UNIFI
 
 ## 6. KNOWLEDGE RETENTION & HYGIENE (March 2026 Mandate)
 - **Zero Secret Egress (ZSE)**: No sensitive operational, strategy, or financial material may be tracked in the active Git index.
-- **Migration Boundary**: Before any path containing sensitive material (e.g., `internal/strategy/`, `archive/`) is added to `.gitignore`, migrate its restricted records to the approved non-Git restricted-record system. GitHub may retain only public-safe or sanitized evidence and non-sensitive traceability; credentials and key material belong in approved secret management.
+- **Migration Mandate**: Before any path containing sensitive material (e.g., `internal/strategy/`, `archive/`) is added to `.gitignore`, all contained knowledge must be migrated to the **Linear Virtual Office** (e.g., parent issue CON-306).
 - **Verification**: Run `python3 scripts/verify_knowledge_retention.py` to ensure all ignored sensitive paths are accounted for in the `audit/migration_manifest.json`.
 - **Hygiene**: The root directory must remain clean of build artifacts (`*.log`, `*.txt`, `*.patch`).

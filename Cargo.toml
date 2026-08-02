@@ -1,8 +1,9 @@
 [workspace]
-# Intentionally exclude `conxian-gateway` here: it is its own workspace root, and listing it as a member
-# causes nested-workspace conflicts that break `cargo` invocations under Unified CI.
+# Intentionally exclude `conxian-gateway` and `lib-conxian-core` here: they are their own
+# workspace roots, and listing them as members causes nested-workspace conflicts that
+# break `cargo` invocations under Unified CI (B2B Suite + Core Library Suite).
 members = [
     "conxian-nexus",
-    "conxius-enclave-sdk"
+    "conxius-enclave-sdk",
 ]
 resolver = "2"

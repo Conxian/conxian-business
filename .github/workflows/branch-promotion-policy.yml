@@ -1,131 +1,29 @@
 name: Branch Promotion Policy
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize, edited]
-    branches: [ main, staged, dev ]
+  pull_request_target:
+    types: [opened, reopened, synchronize, edited, ready_for_review, converted_to_draft]
+    branches: [main, staged, dev]
+
+permissions:
+  contents: read
+  pull-requests: read
 
 jobs:
   enforce:
     name: Enforce branch promotion rules
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
     steps:
-      - name: Validate base/head branch relationship
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # ratchet:actions/github-script@v9.0.0
+      - name: Checkout policy implementation
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
         with:
-          script: |
-            const pr = context.payload.pull_request;
-            const baseRef = pr.base.ref;
-            const headRef = pr.head.ref;
+          # The enforcement implementation always comes from trusted
+          # default-branch code. Never check out the PR head or merge commit.
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 1
+          persist-credentials: false
 
-            const baseRepoId = pr.base.repo?.id;
-            const headRepoId = pr.head.repo?.id;
-
-            const baseFull = (
-              pr.base.repo?.full_name ?? `${context.repo.owner}/${context.repo.repo}`
-            ).toLowerCase();
-            const headFull = pr.head.repo?.full_name?.toLowerCase() ?? null;
-
-            let sameRepo = null;
-            if (baseRepoId && headRepoId) sameRepo = baseRepoId === headRepoId;
-            else if (headFull) sameRepo = headFull === baseFull;
-
-            core.info(
-              `Branch promotion check: ${headFull ?? 'unknown'}:${headRef} -> ${baseFull}:${baseRef}`
-            );
-
-            if ((baseRef === 'main' || baseRef === 'staged') && sameRepo !== true) {
-              core.setFailed(
-                sameRepo === null
-                  ? `Promotions into '${baseRef}' require resolvable head/base repository metadata (refusing to proceed).`
-                  : `Promotions into '${baseRef}' must come from an in-repo branch (got '${headFull ?? 'unknown'}:${headRef}' -> '${baseFull}:${baseRef}').`
-              );
-              return;
-            }
-
-            const authorizedRoutes = new Map([
-              [
-                'dev->staged',
-                { description: "the direct 'dev' -> 'staged' promotion", requiresMainnetEvidence: false },
-              ],
-              [
-                'promotion/dev-to-staged->staged',
-                { description: "the generated 'promotion/dev-to-staged' -> 'staged' promotion", requiresMainnetEvidence: false },
-              ],
-              [
-                'staged->main',
-                { description: "the direct 'staged' -> 'main' promotion", requiresMainnetEvidence: true },
-              ],
-              [
-                'promotion/staged-to-main->main',
-                { description: "the generated 'promotion/staged-to-main' -> 'main' promotion", requiresMainnetEvidence: true },
-              ],
-            ]);
-
-            const route = authorizedRoutes.get(`${headRef}->${baseRef}`);
-            if ((baseRef === 'main' || baseRef === 'staged') && !route) {
-              const expected =
-                baseRef === 'main'
-                  ? "'staged' or 'promotion/staged-to-main'"
-                  : "'dev' or 'promotion/dev-to-staged'";
-              core.setFailed(
-                `PRs into '${baseRef}' must use an explicit authorized source (${expected}; got '${headRef}' -> '${baseRef}').`
-              );
-              return;
-            }
-
-            if (route) {
-              core.info(`Authorized route: ${route.description}`);
-            }
-
-            const body = pr.body ?? '';
-
-            const bodyErrors = [];
-            const requireBodyPattern = (pattern, message) => {
-              if (pattern.test(body)) return;
-              bodyErrors.push(message);
-            };
-
-            if (baseRef === 'dev') {
-              requireBodyPattern(
-                /(PROMOTION:FEATURE->DEV)|(^###\s+Feature\s*->\s*dev\s+promotion\s+checklist\b)/im,
-                "PRs into 'dev' must include the feature -> dev promotion checklist in the PR description (see docs/PROMOTION_CHECKLISTS.md)."
-              );
-            }
-
-            if (baseRef === 'staged') {
-              requireBodyPattern(
-                /(PROMOTION:DEV->STAGED)|(^###\s+Dev\s*->\s*staged\s+promotion\s+checklist\b)/im,
-                "PRs into 'staged' must include the dev -> staged promotion checklist in the PR description (see docs/PROMOTION_CHECKLISTS.md)."
-              );
-              requireBodyPattern(
-                /\bwallet\b/i,
-                "PRs into 'staged' must explicitly record wallet boundary checks in the PR description (see docs/PROMOTION_CHECKLISTS.md)."
-              );
-              requireBodyPattern(
-                /\bsigner\b/i,
-                "PRs into 'staged' must explicitly record signer boundary checks in the PR description (see docs/PROMOTION_CHECKLISTS.md)."
-              );
-              requireBodyPattern(
-                /\btreasury\b/i,
-                "PRs into 'staged' must explicitly record treasury boundary checks in the PR description (see docs/PROMOTION_CHECKLISTS.md)."
-              );
-              requireBodyPattern(
-                /deployment\s+boundary/i,
-                "PRs into 'staged' must explicitly record deployment boundary checks in the PR description (see docs/PROMOTION_CHECKLISTS.md)."
-              );
-            }
-
-            if (route?.requiresMainnetEvidence) {
-              requireBodyPattern(
-                /(^###\s+Mainnet\s+acceptance\s+evidence\s+pack\b)|audit\/mainnet-acceptance\//im,
-                "PRs into 'main' from 'staged' must include a Mainnet Acceptance Evidence Pack under '### Mainnet acceptance evidence pack' (or link to audit/mainnet-acceptance/*) per openspec/specs/mainnet-acceptance-evidence-pack/spec.md."
-              );
-            }
-
-            if (bodyErrors.length > 0) {
-              core.setFailed(bodyErrors.join("\n"));
-            }
+      - name: Enforce exact route and evidence matrix
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 scripts/branch_promotion_policy.py --event-path "$GITHUB_EVENT_PATH"

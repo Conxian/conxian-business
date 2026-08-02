@@ -5,8 +5,6 @@ This directory contains the public-safe documentation entrypoints for `conxian-b
 ## Start here
 
 - [`../README.md`](../README.md) — repository entrypoint and overall orientation.
-- [`GITHUB_NATIVE_BOS_WORKSPACE.md`](./GITHUB_NATIVE_BOS_WORKSPACE.md) — authority, intake, evidence, Project v2, migration, and ZSE rules for all new BOS work.
-- [`NEXUS_LICENSING_GOVERNANCE.md`](./NEXUS_LICENSING_GOVERNANCE.md) — Nexus licensing governance/RACI and blocker map without license-term selection.
 - [`REPO_PORTFOLIO.md`](./REPO_PORTFOLIO.md) — ecosystem repo map and role definitions.
 - [`PORTFOLIO_BUSINESS_UNIT_MAP.md`](./PORTFOLIO_BUSINESS_UNIT_MAP.md) — canonical portfolio business-unit mapping and separation-of-concerns rules.
 - [`DOCUMENTATION_ALIGNMENT_INDEX.md`](./DOCUMENTATION_ALIGNMENT_INDEX.md) — documentation index and canonical/supporting classification.
@@ -19,11 +17,12 @@ This directory contains the public-safe documentation entrypoints for `conxian-b
 
 ## Governance and release workflow
 
-- [`GITHUB_NATIVE_BOS_WORKSPACE.md`](./GITHUB_NATIVE_BOS_WORKSPACE.md) — canonical GitHub-native governance and coordination model.
 - [`PRIVATE_REPO_REPO_CHECK_WORKFLOW.md`](./PRIVATE_REPO_REPO_CHECK_WORKFLOW.md) — private-repo boundary, hygiene, governance, and release check workflow.
 - [`BRANCH_AND_PROMOTION_STANDARD.md`](./BRANCH_AND_PROMOTION_STANDARD.md) — canonical branch roles and promotion flow.
 - [`PROMOTION_CHECKLISTS.md`](./PROMOTION_CHECKLISTS.md) — required promotion checklists and evidence.
 - [`INTEGRATED_SYSTEM_TESTNET_GATE.md`](./INTEGRATED_SYSTEM_TESTNET_GATE.md) — full-system public-testnet gate before promotion.
+- [`governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md`](./governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md) — fail-closed policy for immutable external semantic-source evidence.
+- [`governance/FIBO_PROVENANCE_RESEARCH_NOTE.md`](./governance/FIBO_PROVENANCE_RESEARCH_NOTE.md) — public-safe pinned-source observations and unresolved provenance boundaries; no corpus adoption.
 
 ## Link continuity
 

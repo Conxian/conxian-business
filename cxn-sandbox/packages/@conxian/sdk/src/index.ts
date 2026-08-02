@@ -1,6 +1,6 @@
 /**
  * @conxian/sdk - Mock SDK for Sandbox Examples
- *
+ * 
  * This is a simulation SDK that demonstrates the API without
  * requiring actual infrastructure. For production use, install
  * the real SDK from @conxian/sdk.
@@ -76,7 +76,7 @@ export class ConxianGateway {
 
   async status(): Promise<GatewayStatus> {
     await new Promise(resolve => setTimeout(resolve, 100));
-
+    
     return {
       version: 'v0.4.0-alpha',
       network: this.sandbox ? 'sandbox' : 'testnet',
@@ -99,10 +99,10 @@ export class ConxianGateway {
     };
   }
 
-  payments = {
+  async payments = {
     async create(req: PaymentRequest): Promise<PaymentResult> {
       await new Promise(resolve => setTimeout(resolve, 200));
-
+      
       return {
         id: `pay_${Date.now()}`,
         status: 'pending_settlement',
@@ -113,7 +113,7 @@ export class ConxianGateway {
 
   async settle(req: { paymentId: string; rail: string; amount: string; beneficiaryAddress: string }): Promise<SettlementResult> {
     await new Promise(resolve => setTimeout(resolve, 500));
-
+    
     return {
       txid: `tx_${Math.random().toString(36).substring(7)}`,
       confirmations: 0,
@@ -122,10 +122,10 @@ export class ConxianGateway {
     };
   }
 
-  lightning = {
+  async lightning = {
     async createInvoice(req: { amount: string; description: string }): Promise<LightningInvoice> {
       await new Promise(resolve => setTimeout(resolve, 100));
-
+      
       const hash = Math.random().toString(36).substring(7);
       return {
         lnbc: `lnbc${req.amount}1p${hash}...`,
@@ -154,7 +154,7 @@ export class EnclaveSDK {
 
   async attest(req: { report: any }): Promise<EnclaveAttestation> {
     await new Promise(resolve => setTimeout(resolve, 200));
-
+    
     return {
       valid: true,
       tee_type: 'Intel SGX2 (simulation)',
@@ -164,5 +164,8 @@ export class EnclaveSDK {
 }
 
 export { ConxianGateway as Gateway, EnclaveSDK as Enclave };
-
-// Interfaces above are intentionally type-only exports; they have no runtime values.
+export const types = {
+  PaymentRequest,
+  PaymentResult,
+  SettlementResult
+};

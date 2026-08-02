@@ -111,14 +111,17 @@ class BosProductionBoundaryVerifierTests(unittest.TestCase):
 
         self.assert_passes()
 
-    def test_boundary_validator_stub_reference_is_exempt(self) -> None:
+    def test_boundary_validator_policy_self_references_are_exempt(self) -> None:
+        fixture = "scripts/verify_bos_production_boundary.py"
         self._write(
-            "scripts/verify_bos_production_boundary.py",
-            f'PATH = "candidate{STUB_SUFFIX}"\n',
+            fixture,
+            f'STUB_PATH = "candidate{STUB_SUFFIX}"\n'
+            f'GENERATED_PATH = "{GENERATED_DIR}report.json"\n',
         )
-        self._track("scripts/verify_bos_production_boundary.py")
+        self._track(fixture)
 
-        self.assert_passes()
+        with mock.patch.object(verifier, "__file__", str(self.repo / fixture)):
+            self.assert_passes()
 
     def test_other_top_level_verifier_stub_reference_fails(self) -> None:
         self._write("scripts/verify_runtime.py", f'PATH = "candidate{STUB_SUFFIX}"\n')
@@ -149,6 +152,42 @@ class BosProductionBoundaryVerifierTests(unittest.TestCase):
         self.assertIn("hard-code testnet as the active network", output)
         self.assertIn("embed testnet principals", output)
 
+    def test_top_level_typescript_template_literals_fail(self) -> None:
+        st_principal = "S" + "T" + ("A" * 20)
+        sn_principal = "S" + "N" + ("B" * 20)
+        network_fixture = "scripts/template-network.ts"
+        signer_fixture = "scripts/template-signer.ts"
+        self._write(
+            network_fixture,
+            "const network = networkFromName(`testnet`);\n"
+            f"const deployer = `{st_principal}`;\n",
+        )
+        self._write(signer_fixture, f"const signer = `{sn_principal}`;\n")
+        self._track(network_fixture, signer_fixture)
+
+        status, output = self._run()
+        self.assertEqual(status, 1, output)
+        self.assertIn(
+            f"hard-code testnet as the active network: {network_fixture}", output
+        )
+        self.assertIn(
+            f"embed testnet principals (require explicit flags): {network_fixture}",
+            output,
+        )
+        self.assertIn(
+            f"embed testnet principals (require explicit flags): {signer_fixture}",
+            output,
+        )
+
+    def test_tracked_source_path_with_spaces_is_scanned(self) -> None:
+        fixture = "src/runtime policy.py"
+        self._write(fixture, f'PATH = "candidate{STUB_SUFFIX}"\n')
+        self._track(fixture)
+
+        self.assert_fails_with(
+            f"Production/CI code must not reference {STUB_SUFFIX}: {fixture}"
+        )
+
     def test_git_enumeration_failure_fails_closed(self) -> None:
         output = io.StringIO()
         with (
@@ -165,6 +204,24 @@ class BosProductionBoundaryVerifierTests(unittest.TestCase):
 
         self.assertEqual(status, 1, output.getvalue())
         self.assertIn("Failed to enumerate tracked files via git", output.getvalue())
+
+    def test_malformed_git_index_output_fails_closed(self) -> None:
+        output = io.StringIO()
+        malformed_output = b"100644 deadbeef 0\tvalid.py\x00malformed-entry\x00"
+        with (
+            mock.patch.object(verifier, "repo_root", return_value=str(self.repo)),
+            mock.patch.object(
+                verifier.subprocess,
+                "check_output",
+                return_value=malformed_output,
+            ),
+            redirect_stdout(output),
+            redirect_stderr(output),
+        ):
+            status = verifier.main()
+
+        self.assertEqual(status, 1, output.getvalue())
+        self.assertIn("Failed to parse tracked Git index entries", output.getvalue())
 
     def test_gitmodules_declaration_does_not_exclude_normal_tracked_directory(
         self,
@@ -184,7 +241,7 @@ class BosProductionBoundaryVerifierTests(unittest.TestCase):
         )
 
     def test_real_gitlink_path_is_excluded(self) -> None:
-        gitlink_path = "vendor/component"
+        gitlink_path = "vendor/component with spaces"
         self._write(gitlink_path, f'PATH = "candidate{STUB_SUFFIX}"\n')
         self._git(
             "update-index",

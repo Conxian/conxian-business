@@ -4,14 +4,10 @@
 * [Archive Migration (authorized Linear workspace; ZSE)](ARCHIVE_MIGRATION.md)
 * [Conxian: one-page market narrative](docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md)
 * [Documentation Alignment Index](docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
-* [GitHub-native BOS workspace](docs/GITHUB_NATIVE_BOS_WORKSPACE.md)
-* [GitHub-First BOS Operating Model](docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md)
-* [Nexus licensing governance](docs/NEXUS_LICENSING_GOVERNANCE.md)
 * [BOS business buildout (this repo)](docs/BOS_BUSINESS_BUILDOUT.md)
 * [Conxian-business parent-control alignment baseline (CON-694)](docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md)
 * [Repo Portfolio (Flagship vs Supporting)](docs/REPO_PORTFOLIO.md)
 * [Portfolio repository and subrepository inventory](docs/PORTFOLIO_REPOSITORY_INVENTORY.md)
-* [Public repository control matrix](docs/PUBLIC_REPO_CONTROL_MATRIX.md)
 * [Governance files standardization (public repos)](docs/GOVERNANCE_FILES_STANDARDIZATION.md)
 * [Portfolio business-unit map and separation of concerns](docs/PORTFOLIO_BUSINESS_UNIT_MAP.md)
 * [Repo Readiness Gates (Control Domains)](docs/REPO_READINESS_GATES_BY_CONTROL_DOMAIN.md)
@@ -20,6 +16,8 @@
 * [Branching and promotion policy](docs/BRANCHING_AND_PROMOTION_POLICY.md)
 * [Branch and promotion standard (dev/staged/main)](docs/BRANCH_AND_PROMOTION_STANDARD.md)
 * [Promotion checklists (feature -> dev -> staged -> main)](docs/PROMOTION_CHECKLISTS.md)
+* [External semantic-source intake policy](docs/governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md)
+* [FIBO provenance research note (no adoption)](docs/governance/FIBO_PROVENANCE_RESEARCH_NOTE.md)
 * [Deployment verification matrix (runtime lanes)](docs/DEPLOYMENT_VERIFICATION_MATRIX.md)
 * [Integrated system testnet gate (dev)](docs/INTEGRATED_SYSTEM_TESTNET_GATE.md)
 * [Mainnet acceptance evidence pack (staged -> main)](openspec/specs/mainnet-acceptance-evidence-pack/spec.md)
@@ -55,6 +53,8 @@
 
 ## 🤖 Business Operations System (BOS)
 
+* [GitHub-first BOS operating model and research cycle](docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md)
+* [BOS research candidate ledger — 2026-07-28](docs/BOS_RESEARCH_CANDIDATE_LEDGER.md)
 * [BOS wallet control model](docs/BOS_WALLET_CONTROL_MODEL.md)
 * [BOS self-executing contract trigger (CON-440)](docs/protocols/BOS_SELF_EXECUTING_CONTRACT_TRIGGER_V1.md)
 * [Conxius Wallet BOS buildout](docs/CONXIUS_WALLET_BOS_BUILDOUT.md)
@@ -85,7 +85,7 @@
 * [Arch Guardian](Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md)
 * [Grid Oracle (Agnostic)](cxn-grid-oracle/README.md)
 * [Ops Engine](Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md)
-  * [Historical ExCo intake and wiring migration record](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
+  * [ExCo intake (Linear-first) and wiring](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
 
 ## 🏛️ Ground Truth (OpenSpec)
 
