@@ -35,8 +35,13 @@
 [submodule "conxius-enclave-sdk"]
 	path = conxius-enclave-sdk
 	url = https://github.com/Conxian/conxius-enclave-sdk
-	branch = master
+	branch = main
 [submodule "lib-conxian-core"]
 	path = lib-conxian-core
 	url = https://github.com/Conxian/lib-conxian-core
 	branch = main
+[submodule "conxian-market"]
+	path = conxian-market
+	url = https://github.com/Conxian/conxian_market
+	branch = main
+	update = none
