@@ -629,3 +629,53 @@ Every repo has P0 gaps in its BOS buildout doc. None has fully closed P0. Summar
 **Infrastructure: 2 human blockers.** Render payment method + domain detachment. Both require Render dashboard access.
 
 **CI/CD: CircleCI ready, waiting for trigger.** Config is valid and comprehensive. Blocked by `build_prs_only=true` project setting.
+
+---
+
+### Session 51 — conxian_market + Branch Policy Alignment (2026-08-02)
+
+#### conxian_market (Reference Surface)
+
+| Field | Value |
+|-------|-------|
+| Description | "Primary value capture mechanism" — AI labor marketplace |
+| Default branch | main |
+| Open PRs | 0 |
+| Open issues | 3 (#9 governance disposition, #8 treasury dashboard, #6 RFC economic funding) |
+| AGENTS.md | Does NOT exist |
+| Portfolio tier | Reference surface — "Research/experimental marketplace surface pending external doctrine alignment" |
+
+**Status: EARLY RESEARCH.** No AGENTS.md, no CI, no PRs. Governance disposition (#9) is the gate for bringing this repo into operational alignment. Core architecture described in README: discovery, settlement (2% fee), escrow (ERC-8183). BYOK mandate. Three deployment lanes (cloud, edge-local, on-prem).
+
+#### Branch Policy Compliance Audit
+
+Per `docs/BRANCH_AND_PROMOTION_STANDARD.md`: normal PRs target `dev`, promotions flow `dev→staged→main`. No direct-to-main PRs. No Dependabot exception.
+
+| PR | Repo | Original Base | Corrected Base | Status |
+|----|------|---------------|----------------|--------|
+| #981 | conxian-business | main | **dev** ✅ | Ready (AGENTS.md Session 50) |
+| #1213 | conxius-platform | main | **dev** ✅ | Ready (CircleCI config) |
+| #309 | conxian-gateway | main | **dev** ✅ | Dependabot npm — 15/16 checks pass, MSRV flake |
+| #310 | conxian-gateway | main | **dev** ✅ | Dependabot GHA — 15/16 checks pass, MSRV flake |
+
+**All 4 open PRs now target `dev` per branch policy.**
+
+**Root cause:** conxian-gateway's `.github/dependabot.yml` doesn't set `target-branch`, so Dependabot defaults to `main`. Fix needed: add `target-branch: dev` to all ecosystems in `conxian-gateway/.github/dependabot.yml`.
+
+#### Full Repo Alignment (12 repos)
+
+| # | Repo | Tier | Readiness | Open PRs | AGENTS.md |
+|---|------|------|-----------|----------|-----------|
+| 1 | Conxian/Conxian | Primary | PRODUCTION | 0 | ✅ |
+| 2 | conxian-gateway | Primary | PRODUCTION | 2 (deps→dev) | ✅ |
+| 3 | conxian-nexus | Primary | BETA | 0 | ✅ |
+| 4 | conxius-wallet | Primary | TECH-PROD | 0 | ✅ |
+| 5 | lib-conxian-core | Supporting | PROD-CORE | 0 | ✅ |
+| 6 | conxius-enclave-sdk | Supporting | BETA/COND | 0 | ✅ |
+| 7 | conxius-platform | Supporting | INCUBATING | 1 (CI→dev) | ✅ |
+| 8 | conxius-orbit | Supporting | BETA | 0 | ✅ |
+| 9 | conxian_ui | Reference | EARLY | 0 | ✅ |
+| 10 | conxian-labs-site | Reference | LIVE (free) | 0 | ✅ |
+| 11 | conxian_market | Reference | EARLY-RESEARCH | 0 | ❌ |
+| 12 | .github | Supporting | GOV-BASELINE | 0 | ✅ |
+| — | conxian-business | Governance | GOVERNANCE | 1 (docs→dev) | ✅ (this) |
