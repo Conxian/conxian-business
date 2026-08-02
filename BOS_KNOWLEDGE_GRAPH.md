@@ -12,7 +12,7 @@ This document is the **mandatory BOS Knowledge Graph** referenced in `AGENTS.md`
 The current doctrine relationship is:
 
 - **Conxian-Labs (Pty) Ltd** is the legal builder/operator company and a non-custodial software and infrastructure builder/operator. It provides routing, orchestration, compliance integration, and verification; it is not a market participant, discretionary fund manager, or user-data extraction business.
-- **Conxian** is the protocol/DAO layer. **Conxius** is the client/access/developer-tooling layer. Internal strategy and operations remain separate in the authorized Linear workspace under ZSE.
+- **Conxian** is the protocol/DAO layer. **Conxius** is the client/access/developer-tooling layer. Internal strategy and operations use authorized private channels under ZSE.
 - **CSF / Conxian Finance Protocol**, **Fusion**, and **Nexus** are protocol/infrastructure product domains or legacy operating labels under the Conxian/Conxius crosswalk; they are not standalone legal custodians, fund controllers, or ambiguous business entities.
 - Protocol contracts and DAO rules may implement escrow, settlement, treasury, or yield behavior. Those are protocol-level state transitions and do not establish Conxian-Labs custody, discretionary fund control, or market operation.
 - Dated strategy, research, market-narrative, and planning surfaces are public-safe stubs with their restricted canonical source referenced by CON-1530; removed detail was not copied elsewhere in Git.
@@ -27,7 +27,7 @@ The current doctrine relationship is:
 | CSF / Conxian Finance Protocol | classifies | Protocol/infrastructure product domain under Conxian; not a legal entity or custodian. |
 | Fusion | classifies | Enterprise integration/infrastructure product domain under Conxian; not a legal entity or custodian. |
 | Nexus | classifies | State/proof/telemetry infrastructure product domain under Conxian; not a legal entity or custodian. |
-| Internal strategy and operations | remains separate from | Public-safe repository documentation; canonical restricted material is maintained in Linear. |
+| Internal strategy and operations | remains separate from | Public-safe repository documentation; restricted material uses authorized private channels. |
 
 
 ## Entity Registry
@@ -74,15 +74,16 @@ The current doctrine relationship is:
 | `jurisdictional-sharding.clar` | compliance/ | Compliance | ✅ | 0 |
 | `block-utils.clar` | utils/ | Util | ✅ | 0 |
 | `operational-treasury.clar` | agents/ | **Critical** | ✅ | 0 |
-| `pausable.clar` | access/ | **Critical** | ✅ | ❌ ACL missing |
+| `cxd-price-initializer.clar` | tokens/ | Stub | ⚠️ | 7-line placeholder stub — `(define-public (placeholder) (ok true))`. No oracle feed, no collateral ratio, no price feed. |
+| `pausable.clar` | access/ | **Critical** | ⚠️ | ❌ `set-paused` permissionless (anyone can pause). 4 lines, no admin guard. **Not imported by any contract** (staking/vaults use inline pause with ACL). Dead code risk. |
 
 ### 🪙 Tokens
 
 | Entity | Type | Trait | Issue |
 |--------|------|-------|-------|
-| **CXD** | Stablecoin | ft-trait | No peg mechanism |
-| **CXLP** | LP Token | sip-010-ft-trait | Mint/burn broken |
-| **CXVG** | Governance | sip-010-ft-trait | No distribution |
+| **CXD** | Stablecoin | ft-trait | ⚠️ Price initializer is stub (no oracle/peg) | `contracts/tokens/cxd-token.clar` (98 lines), `contracts/tokens/cxd-price-initializer.clar` (7-line stub) |
+| **CXLP** | LP Token | sip-010-ft-trait | ✅ Fully functional (KB was outdated) | `contracts/tokens/cxlp-token.clar` (189 lines) |
+| **CXVG** | Governance | sip-010-ft-trait | ⚠️ No distribution (mint only) | `contracts/tokens/cxvg-token.clar` — has mint() but no airdrop/claim/vesting |
 
 ### 🔧 Technical Components
 
@@ -748,14 +749,14 @@ URL, hardware result, or acceptance state is inferred by this digest.
 
 ---
 
-## Dated Digest: CON-1571 Governance Bootstrap (2026-07-28)
+## Dated Digest: CON-1571 Governance Bootstrap (2026-07-28) → GitHub-Only Migration (2026-07-31)
 
 ### Decision and incident boundary
 
 | Field | Public-safe record |
 |---|---|
 | Authority | [CON-1571](https://linear.app/conxian-labs/issue/CON-1571/bosp1-reconcile-default-branch-promotion-policy-and-branch-protections) and [Business #945](https://github.com/Conxian/conxian-business/issues/945) govern branch-policy reconciliation. |
-| Canonical hierarchy | `main` remains the GitHub default and production branch; `dev` is the non-production integration branch; `staged` is the candidate branch. |
+| Canonical hierarchy | GitHub is the sole tracking layer (Linear retired). `main` is default + production; `dev` is non-production integration; `staged` is candidate lane. |
 | Route decision | Normal work targets `dev`; only `dev` or an exact immutable dev candidate targets `staged`; only `staged` or an exact immutable staged candidate targets `main`. |
 | Split-lineage incident | Full-history inspection found split roots between `main` and `dev`/`staged`. This bootstrap authorizes no merge, reset, bulk cherry-pick, pin rewrite, or long-lived branch-ref mutation. |
 | Prior merge | [PR #970](https://github.com/Conxian/conxian-business/pull/970) is already merged in `main` at `f6e7331c3e2eb6e35ed42e47b9e4c88aafbc7bc2`; it is evidence already present, not branch reconciliation and not a transplant source. |
@@ -802,3 +803,30 @@ URL, hardware result, or acceptance state is inferred by this digest.
 
 *Generated per AGENTS.md Knowledge Management mandate*
 *Next update: After Phase 1 remediation (Week 2)*
+
+
+---
+## Session 46 Update — Linear→GitHub Migration (2026-07-31)
+
+### Decision
+
+Linear has been retired as the system-of-record for Conxian. All tracking is now GitHub-native:
+- Issues use the GitHub issue tracker (no Linear mirrors)
+- BOS gates (#932-#938) are the canonical authority-transfer trackers
+- CircleCI + GitHub Actions split for CI/CD cost optimization
+- CircleCI handles heavy compute (Clarity chain-check, Rust cargo test); Actions handles lightweight checks and deployments
+
+### Entities updated
+
+| Entity | Change |
+|--------|--------|
+| BOS Governance | Linear references deprecated; GitHub-only tracking active |
+| CI/CD | CircleCI (heavy) + GitHub Actions (lightweight + deploy) |
+| Issue #944 | Retire Linear-first references — IN PROGRESS |
+| Issue #943 | GitHub-first operating model — IN PROGRESS |
+
+### Remaining Linear artifacts
+
+- `AGENTS.md` references to Linear should be reviewed and updated
+- Some closed issues may reference Linear issue IDs (CON-XXXX) — these are historical references, not active dependencies
+- Session tracker workflow may need to be updated if it references Linear

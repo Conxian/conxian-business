@@ -51,7 +51,7 @@ Out-of-scope for this pack:
 | --- | --- | --- | --- | --- |
 | P3 entry requires rollback drill completed before controlled slice | `docs/architecture/BITVM2_SBTC_BRIDGE_TARGET_ARCHITECTURE.md:133` | [`11-phase3-checkpoints-and-metrics.txt`](./evidence/con-683/11-phase3-checkpoints-and-metrics.txt) | **documented** | Gate condition captured; no linked executed drill report in this repo snapshot. |
 | G3 rollback readiness requires timed drill + reconciliation evidence + RTO compliance | `docs/COMPATIBILITY_MATRIX_AND_ACCEPTANCE_GATE_CHECKLIST.md:47,95-97` | [`12-gate-checklist-pass-fail-criteria.txt`](./evidence/con-683/12-gate-checklist-pass-fail-criteria.txt) | **documented** | Acceptance criteria are objective; required execution artifacts are currently missing. |
-| Runbook has rollback scenarios (Gateway disconnect, contract vulnerability) | `docs/PHASE6_OBSERVABILITY_RUNBOOK.md:17-26` | [`03-recovery-runbook-and-drill-requirements.txt`](./evidence/con-683/03-recovery-runbook-and-drill-requirements.txt) | **partial** | Public-safe scenario steps exist; does not include timed drill outputs or reconciliation report. |
+| Runbook has rollback scenarios (Gateway disconnect, contract vulnerability) | `docs/PHASE6_OBSERVABILITY_RUNBOOK.md:17-26` | [`03-recovery-runbook-and-drill-reqs.txt`](./evidence/con-683/03-recovery-runbook-and-drill-reqs.txt) | **partial** | Public-safe scenario steps exist; does not include timed drill outputs or reconciliation report. |
 | Sensitive runbooks/logs must stay outside git and be linked from Linear | `docs/INTEGRATED_SYSTEM_TESTNET_GATE.md:59` | [`13-integrated-testnet-evidence-and-no-go.txt`](./evidence/con-683/13-integrated-testnet-evidence-and-no-go.txt) | **documented** | Policy supports private evidence placement; this pack currently lacks direct Linear artifact links for drill execution. |
 | Maintainer payout runbook and some operational docs are stubs canonical in sovereign layer | `docs/DOCUMENTATION_ALIGNMENT_INDEX.md:174-177`, `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md` | [`07-known-doc-gaps-scan.txt`](./evidence/con-683/07-known-doc-gaps-scan.txt) | **gap identified** | Stub policy is clear, but concrete private links required for full recovery evidence traceability are not present in this repo pack. |
 
@@ -66,7 +66,7 @@ Out-of-scope for this pack:
 | Baseline compartmentalization check executes successfully | [`08-unbundle-check.txt`](./evidence/con-683/08-unbundle-check.txt) | **PASS** |
 | Full local test suite runs in current environment | [`09-test-suite-check.txt`](./evidence/con-683/09-test-suite-check.txt), [`10-submodule-status.txt`](./evidence/con-683/10-submodule-status.txt) | **BLOCKED** (workspace submodules not initialized; missing `conxian-nexus/Cargo.toml`) |
 | Telemetry + gate threshold requirements are traceably documented for Phase 3 | [`02-telemetry-threshold-criteria.txt`](./evidence/con-683/02-telemetry-threshold-criteria.txt), [`11-phase3-checkpoints-and-metrics.txt`](./evidence/con-683/11-phase3-checkpoints-and-metrics.txt), [`14-telemetry-signal-threshold-scan.txt`](./evidence/con-683/14-telemetry-signal-threshold-scan.txt) | **PASS (requirements capture)** |
-| Recovery/no-go policy is explicitly documented and fail-closed oriented | [`03-recovery-runbook-and-drill-requirements.txt`](./evidence/con-683/03-recovery-runbook-and-drill-requirements.txt), [`13-integrated-testnet-evidence-and-no-go.txt`](./evidence/con-683/13-integrated-testnet-evidence-and-no-go.txt) | **PASS (requirements capture)** |
+| Recovery/no-go policy is explicitly documented and fail-closed oriented | [`03-recovery-runbook-and-drill-reqs.txt`](./evidence/con-683/03-recovery-runbook-and-drill-reqs.txt), [`13-integrated-testnet-evidence-and-no-go.txt`](./evidence/con-683/13-integrated-testnet-evidence-and-no-go.txt) | **PASS (requirements capture)** |
 
 ## Missing instrumentation / documentation gaps
 
@@ -103,7 +103,7 @@ Conditions to move from **CONDITIONAL** to **GO**:
 | --- | --- | --- |
 | [`01-evidence-pack-spec-and-promotion-checklist.txt`](./evidence/con-683/01-evidence-pack-spec-and-promotion-checklist.txt) | Confirms evidence-pack format/checklist anchors | pass |
 | [`02-telemetry-threshold-criteria.txt`](./evidence/con-683/02-telemetry-threshold-criteria.txt) | Threshold and no-go language discovery | pass |
-| [`03-recovery-runbook-and-drill-requirements.txt`](./evidence/con-683/03-recovery-runbook-and-drill-requirements.txt) | Recovery/runbook requirement discovery | pass |
+| [`03-recovery-runbook-and-drill-reqs.txt`](./evidence/con-683/03-recovery-runbook-and-drill-reqs.txt) | Recovery/runbook requirement discovery | pass |
 | [`04-production-residue-scan.txt`](./evidence/con-683/04-production-residue-scan.txt) | Residue scan in production paths | pass (clean, no matches) |
 | [`05-testnet-principal-literal-scan.txt`](./evidence/con-683/05-testnet-principal-literal-scan.txt) | Hardcoded testnet principal scan | pass (clean, no matches) |
 | [`06-hardcoded-testnet-network-scan.txt`](./evidence/con-683/06-hardcoded-testnet-network-scan.txt) | Hardcoded testnet default scan in scripts | pass (clean, no matches) |
