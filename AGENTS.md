@@ -1311,3 +1311,9 @@ Full audit of all 12 repos against ground-truth code. Key findings:
 #### Artifacts
 - `docs/research/CROSS_REPO_SDK_CAPABILITY_AUDIT_SESSION52.md` (300+ lines)
 - 10 new issues across 2 repos
+
+
+### DKG Implemented (Session 52.5.4+)
+
+FROST DKG (dkg::part1/2/3) pushed to enclave-sdk PR #264. 5-party 3-of-5 test.
+Removes trusted dealer assumption. Closes #265.
