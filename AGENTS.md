@@ -720,4 +720,53 @@ Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conx
 | Render domain | `www.conxian-labs.com` stuck on deleted site | Detach domain from deleted static site, reattach to active web service |
 | conxian_market #9 | Governance disposition | Needs owner decision |
 
-**Open Issues (53 total across 12 repos):** 16 priority-critical (BOS Gates 0-6 + enclave P0s + wallet P0 + sandbox), 10 P1, 27 other. All actionable items already tracked in GitHub issues — no untracked work identified.
+**Open Issues (53 total across 12 repos):** 16 priority-critical (BOS Gates 0-6 + enclave P0s + wallet P0 + sandbox), 10 P1, 27 other.
+
+---
+
+### Session 52 — BOS Gates Advancement + conxian_market Integration
+
+**Gate 1 → 100% (RESOLVED):**
+- conxius-orbit: `github-pages` environment created, latest pages.yml run SUCCESS
+- conxian-business: Removed dead `validate` jobs from deepseek-review.yml and deepseek-triage.yml (commits c7c2de7, 2c7737d)
+- Commented on #933 with resolution evidence
+
+**Gate 0 — Re-baseline (PARTIAL, human-blocked):**
+- Created `docs/DATA_CLASSIFICATION_GUARDRAILS.md` (c8af430)
+- Updated `GOVERNANCE.md` with GitHub-first operating model declaration
+- Updated `BOS_KNOWLEDGE_GRAPH.md` (Clarity v5) with Gate 0 authority relationships + re-baseline evidence
+- Commented on #943 and #932 with current state
+- **Human blockers**: non-Git restricted-record successor, accountable role assignments
+
+**Gates 2-6 (PLANNED):**
+- Created `docs/BOS_GATES_ADVANCEMENT_PLAN.md` (332df12) — full dependency chain, next actions per gate
+- Commented on #934, #935, #936, #937, #938 with plan references
+- Gates 2-6 are infrastructure/hardware/security-dependent — not automatable without deployment access
+
+**Enclave P0 Attestation Chain:**
+- nitros.rs: 2600+ lines of offline CBOR/COSE attestation code
+- android_strongbox.rs, android_authorization.rs: Android KeyMint support
+- durable_replay.rs, replay_guard.rs: distributed replay protection
+- Gap: production provider qualification needs AWS account + Android hardware
+- P0s #240, #241, #242 remain open pending provider access
+
+**conxian_market #9 (RESOLVED — active implementation):**
+- Classified as active implementation with full ecosystem integration
+- Created `docs/research/ECOSYSTEM_INTEGRATION_RESEARCH.md` (d9cc069): 5 integration points + 5 expansion horizons
+- Gateway → settlement rails, Nexus → trust/ZK, Enclave → BYOK/hardware, lib-conxian-core → chains, Conxian → contracts
+
+**Conxian #480 Developer Sandbox (VERIFIED — already aligned):**
+- Sandbox in conxian-gateway/examples/developer-sandbox/ already uses `@conxian/client-sdk` + `ConxianClient`
+- Narrow proof path: health → supported chains → Babylon rehearsal
+- TTFV well under 15 minutes via pnpm workspace
+
+**Session 52 Artifacts:**
+| File | Repo | Action |
+|------|------|--------|
+| `.github/workflows/deepseek-review.yml` | conxian-business | Removed dead validate job |
+| `.github/workflows/deepseek-triage.yml` | conxian-business | Removed dead validate job |
+| `docs/DATA_CLASSIFICATION_GUARDRAILS.md` | conxian-business | Created |
+| `GOVERNANCE.md` | conxian-business | GitHub-first declaration added |
+| `BOS_KNOWLEDGE_GRAPH.md` | conxian-business | Gate 0 baseline update |
+| `docs/BOS_GATES_ADVANCEMENT_PLAN.md` | conxian-business | Created |
+| `docs/research/ECOSYSTEM_INTEGRATION_RESEARCH.md` | conxian_market | Created |
