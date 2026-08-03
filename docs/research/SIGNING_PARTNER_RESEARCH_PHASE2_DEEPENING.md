@@ -338,14 +338,23 @@ Week 5-6:  BDK PSBT+FROST demo (wallet) → end-to-end signing
 
 ## 11. Immediate Actions
 
-| Priority | Action | Issue |
-|:--------:|--------|:-----:|
-| **P0** | Implement DKG wrappers in frost_crypto.rs | enclave-sdk new issue |
-| **P0** | Create execution context bridging opaque envelopes → raw bytes | enclave-sdk new issue |
-| **P0** | AWS account for Nitro production qualification | business #936 |
-| **P1** | Research ROAST → Nexus coordinator design | nexus new issue |
-| **P1** | Map ERC-7683 → Conxian CrossChainIntent | lib-conxian-core new issue |
-| **P2** | Gateway Fedimint guardian PoC | gateway new issue |
+| Priority | Action | Issue | Status |
+|:--------:|--------|:-----:|:------:|
+| **P0** | Implement DKG wrappers in frost_crypto.rs | enclave-sdk #265 | ✅ **DONE** (Session 53, 0b0e3cd) |
+| **P0** | Create execution context bridging opaque envelopes → raw bytes | enclave-sdk #266 | 🔄 In Progress |
+| **P0** | AWS account for Nitro production qualification | business #936 | 🔒 Hardware-blocked |
+| **P1** | Research ROAST → Nexus coordinator design | nexus #213 | 📋 Open |
+| **P1** | Map ERC-7683 → Conxian CrossChainIntent | lib-conxian-core | 📋 Open |
+| **P2** | Gateway Fedimint guardian PoC | gateway | 📋 Open |
+
+### DKG Implementation Details (Completed Session 53)
+
+- **File:** `src/protocol/frost_crypto.rs` (260 lines)
+- **Library:** ZF FROST v3.0.0 (`frost-secp256k1-tr`, RFC 9591)
+- **Functions:** `dkg_part1`, `dkg_part2`, `dkg_part3`, `trusted_dealer_keygen`
+- **Tests:** 3/3 passing, full 3-of-5 DKG ceremony test
+- **PR:** enclave-sdk #264 (`feat/frost-crypto-zf-v3`), 458/458 tests passing
+- **Key fix:** `Identifier::deserialize` needs full serialized scalar (32 bytes), not raw u16
 
 ---
 

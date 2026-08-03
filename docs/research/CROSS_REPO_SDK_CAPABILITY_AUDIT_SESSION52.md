@@ -273,7 +273,7 @@ or not yet implemented as separate files.
 ### Short-term (next sprint)
 
 4. **Merge PR #264** — unblocks FROST keygen with trusted dealer
-5. **Implement DKG (issue #265)** — removes trusted dealer assumption
+5. **~~Implement DKG (issue #265)~~** ✅ **DONE** — removes trusted dealer assumption. Completed Session 53 (PR #264, 0b0e3cd). 3/3 tests passing, full 3-of-5 ceremony.
 6. **Implement execution context bridge (#266)** — enables full FROST signing flow
 
 ### Medium-term
