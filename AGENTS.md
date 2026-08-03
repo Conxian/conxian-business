@@ -1030,3 +1030,67 @@ business, gateway, orbit, enclave, nexus, platform, wallet, lib-conxian-core, ma
 | Render payment/domain | 🔒 Needs dashboard access |
 
 **Verdict: All code, CI, docs, and config verified. 0 issues left behind.**
+
+
+---
+
+### Session 52.5.1 — Cross-Repo Promotion Chain Audit & Cleanup (2026-08-03)
+
+Full promotion chain audit across all 12 repos. 10 promotion/back-merge PRs created,
+stale branches and PRs cleaned up.
+
+#### Business Cleanup
+
+| Action | Detail |
+|--------|--------|
+| Deleted 10 stale promotion branches | All `promotion/dev-to-staged-*` branches purged |
+| Closed 2 stale auto-promotion PRs | #1000, #1001 auto-closed when branches deleted |
+| Deleted 2 merged feature branches | `chore/con-1421-community-voting-pin`, `deploy-pipeline-setup` |
+| Retained 3 diverged branches | `ci-test-no-skip-ci`, `circleci-project-setup`, `jules-*-deffb5f4` (unique commits) |
+
+#### Promotion Chain Audit — All 12 Repos
+
+| Repo | dev vs staged | Action | PR |
+|------|:------------:|--------|:---:|
+| Conxian/Conxian | dev 1 ahead, 27 behind | staged→dev back-merge | #656 |
+| conxian-gateway | dev 0 ahead, 18 behind | staged→dev back-merge | #314 |
+| conxian-nexus | dev 6 ahead, 0 behind | dev→staged promote | #212 |
+| conxius-wallet | dev 1 ahead, 0 behind | dev→staged promote | #478 |
+| conxius-enclave-sdk | dev 1 ahead, 0 behind | dev→staged promote | #263 |
+| conxius-platform | dev 1 ahead, 7 behind | staged→dev back-merge | #1216 |
+| conxius-orbit | dev==staged, main ahead | main→staged back-merge | #280 |
+| conxian_ui | dev==staged, main ahead | main→staged back-merge | #165 |
+| conxian_market | dev==staged, main ahead | main→staged back-merge | #20 |
+| lib-conxian-core | dev==staged, main ahead | main→staged back-merge | #239 |
+| conxian-labs-site | main only (no dev/staged) | N/A — cleanest repo | — |
+| conxian-business | dev ahead, staged/main diverged | Manual (main has direct commit 8e27584) | — |
+
+#### Stale Branch Inventory (Non-Business Repos)
+
+| Repo | Stale Branches | Action |
+|------|---------------|--------|
+| Conxian/Conxian | 6 charlie/*, feat/governance-*, feat/kb-* | Keep (may have unmerged work) |
+| conxian-gateway | docs/kb-session-47, docs/session-48-*, feat/core-wire-* | Keep |
+| conxian-nexus | docs/kb-*, docs/salvage-*, docs/session-48-*, feat/*, fix/* | Keep |
+| conxius-wallet | 2 charlie/*, dependabot/*, docs/kb-*, feat/*, fix/*, promotion/* | Keep |
+| conxius-enclave-sdk | docs/kb-*, docs/session-48-* | Keep |
+| conxius-platform | 2 charlie/*, docs/*, feat/*, fix/*, kb-evolution/* | Keep |
+| conxius-orbit | botshelo/*, ci-remediation-*, feat/*, fix/*, jules/*, release/* | Keep |
+| conxian_ui | charlie/*, ci/*, docs/*, feat/*, jules/* | Keep |
+| conxian_market | circleci-project-setup, docs/kb-* | Keep |
+| lib-conxian-core | candidate-base/*, 3 charlie/*, docs/kb-*, feat/*, feature/* | Keep |
+
+**Policy:** Non-business stale branches retained to avoid data loss. Only branches
+confirmed fully merged (status "behind") were deleted from business.
+
+#### PR Summary
+
+**10 PRs created across 10 repos** (conxian-labs-site and business excluded):
+
+- **4 forward promotions**: nexus #212, wallet #478, enclave #263 (dev→staged)
+- **6 back-merges**: Conxian #656, gateway #314, platform #1216 (staged→dev), orbit #280, ui #165, market #20, lib-core #239 (main→staged)
+
+**Business:** Needs manual promotion. dev (ef6c18b) → staged (83414fc) → main (8e27584).
+Main has direct commit (position research #989) that must be preserved.
+
+**All changes committed to dev as part of this session.**
