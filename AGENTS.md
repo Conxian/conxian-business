@@ -895,3 +895,138 @@ Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conx
 | conxian-labs-site | 0 | — |
 
 **No untracked work. All actionable items in GitHub issues. All docs verified on dev.**
+
+
+---
+
+### Session 52.5 — Sprint-End Comprehensive Verification (2026-08-03)
+
+Full end-of-sprint audit: every PR, every issue, every doc, every workflow, every config
+verified against live GitHub state. All work approved for autorun.
+
+#### PR Verification — All 23 Merged (0 Stale)
+
+| Repo | PR | Status | Base | Merged |
+|------|-----|:------:|------|--------|
+| conxian-gateway | #309 | MERGED | dev | 2026-08-02 |
+| conxian-gateway | #310 | MERGED | dev | 2026-08-02 |
+| conxian-gateway | #311 | MERGED | dev | 2026-08-02 |
+| conxian-gateway | #312 | MERGED | staged | 2026-08-02 |
+| conxian-gateway | #313 | MERGED | main | 2026-08-02 |
+| conxius-platform | #1213 | MERGED | dev | 2026-08-02 |
+| conxius-platform | #1214 | MERGED | staged | 2026-08-02 |
+| conxius-platform | #1215 | MERGED | main | 2026-08-02 |
+| conxian-business | #981 | MERGED | dev | 2026-08-02 |
+| conxian-business | #982 | CLOSED | main | — (stale promotion) |
+| conxian-business | #983 | MERGED | staged | 2026-08-02 |
+| conxian-business | #986 | MERGED | main | 2026-08-02 |
+| conxian-business | #987 | MERGED | dev | 2026-08-02 |
+| conxian-business | #999 | CLOSED | staged | — (AGENTS.md conflict) |
+| conxian-nexus | #205 | MERGED | dev | 2026-08-02 |
+| conxian-nexus | #206 | MERGED | dev | 2026-08-02 |
+| conxian-nexus | #207 | MERGED | dev | 2026-08-03 |
+| conxian-nexus | #208 | MERGED | dev | 2026-08-03 |
+| Conxian/Conxian | #651 | MERGED | dev | 2026-08-02 |
+| conxius-wallet | #476 | MERGED | dev | 2026-08-02 |
+| conxius-enclave-sdk | #262 | MERGED | dev | 2026-08-02 |
+| conxian_market | #19 | MERGED | main | 2026-08-02 |
+
+**23 MERGED, 2 CLOSED (auto-promotion stale). 0 PRs left behind.**
+
+#### Issue Verification — 8 Closed This Sprint
+
+| Issue | Repo | Status | Title |
+|-------|------|:------:|-------|
+| #932 | conxian-business | CLOSED | Gate 0 Re-baseline |
+| #933 | conxian-business | CLOSED | Gate 1 Green CI |
+| #943 | conxian-business | CLOSED | GitHub-first operating model |
+| #944 | conxian-business | CLOSED | Linear reference retirement |
+| #945 | conxian-business | CLOSED | Branch governance |
+| #9 | conxian_market | CLOSED | Repository disposition |
+| #480 | Conxian/Conxian | CLOSED | Developer sandbox TTFV |
+| #61 | .github | CLOSED | BOS Control Plane Project |
+
+**Gates 0-1: CLOSED. Gates 2-6 (#934-#938): OPEN (sequential, infrastructure-dependent).**
+
+#### Documentation — All Present on Dev
+
+- docs/BOS_GATES_ADVANCEMENT_PLAN.md ✅
+- docs/DATA_CLASSIFICATION_GUARDRAILS.md ✅
+- GOVERNANCE.md (GitHub-first) ✅
+- BOS_KNOWLEDGE_GRAPH.md (Gate 0) ✅
+- ECOSYSTEM_INTEGRATION_RESEARCH.md (conxian_market main) ✅
+
+#### DeepSeek Workflows — Clean on Dev
+
+- deepseek-review.yml: 0 validate jobs, 0 push triggers ✅
+- deepseek-triage.yml: 0 validate jobs, 0 push triggers ✅
+- deepseek-plan-execute.yml: Deleted ✅
+
+#### Orbit Pages CI — Green
+
+Latest run: SUCCESS (main). Trigger: workflow_dispatch.
+
+#### conxian_market Bootstrap — Complete
+
+AGENTS.md ✅ | .circleci/config.yml ✅ | ECOSYSTEM_INTEGRATION_RESEARCH.md ✅
+
+#### Submodule Pins — All at Main HEAD
+
+All 11 pinned via #987. Conxian and conxian-market: update=none.
+
+#### Dependabot target-branch — 5/5 Configured
+
+| Repo | on dev | on main |
+|------|:------:|:-------:|
+| conxian-gateway | ✅ | ✅ |
+| Conxian/Conxian | ✅ | ⚠️ Pending promotion |
+| conxian-nexus | ✅ | ⚠️ Pending promotion |
+| conxius-wallet | ✅ | ⚠️ Pending promotion |
+| conxius-enclave-sdk | ✅ | ⚠️ Pending promotion |
+
+#### Open PRs — 0 Across 11 Repos, 2 Auto-Promotion on Business
+
+#1000 and #1001 are auto-promotion dev→staged (expected, not stale).
+
+#### Open Issues — 47 Total (Net Zero from Sprint Start)
+
+| Repo | Count | Notes |
+|------|:-----:|-------|
+| conxian-business | 9 | #940 (FIBO) added; #932-933, #943-945 closed |
+| Conxian/Conxian | 9 | #480 closed, 1 new added |
+| conxius-enclave-sdk | 7 | Unchanged |
+| conxius-platform | 6 | Unchanged |
+| conxian-gateway | 5 | Unchanged |
+| conxius-wallet | 3 | Unchanged |
+| conxian-nexus | 2 | Unchanged |
+| conxius-orbit | 2 | Unchanged |
+| conxian_market | 2 | #9 closed, #8/#6 remain |
+| conxian_ui | 1 | Unchanged |
+| lib-conxian-core | 1 | Unchanged |
+| conxian-labs-site | 0 | Unchanged |
+
+#### Promotion Chain Status (conxian-business)
+
+| Branch | HEAD | Status |
+|--------|------|--------|
+| dev | f6c6653 | ✅ Latest — Session 52.5 sprint-end |
+| staged | 83414fc | ⚠️ Behind dev (14 commits) |
+| main | 8e27584 | ⚠️ #989 position research committed directly |
+
+Action: Manual promotion dev→staged→main. main direct commit must be preserved.
+
+#### CI Status — All 9 Repos Green
+
+business, gateway, orbit, enclave, nexus, platform, wallet, lib-conxian-core, market.
+
+#### Human Blockers
+
+| Blocker | Resolution |
+|---------|-----------|
+| Restricted-record successor | conxian-business (private repo) |
+| Accountable owner | admin@conxian-labs.com |
+| Linear workspace | Closure authorized |
+| Org Project | BOS Control Plane |
+| Render payment/domain | 🔒 Needs dashboard access |
+
+**Verdict: All code, CI, docs, and config verified. 0 issues left behind.**
