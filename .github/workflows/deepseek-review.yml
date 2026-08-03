@@ -13,11 +13,6 @@ permissions:
   issues: write
 
 jobs:
-  validate:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo 'DeepSeek review validated — ready for PRs and issue comments.'
   review:
     if: |
       github.event_name != 'push' && (
