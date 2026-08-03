@@ -1252,3 +1252,31 @@ MuSig2, BIP-322, DLC, and Nitro are fully implemented — FROST is the #1 gap.
 - `docs/research/SIGNING_PARTNER_RESEARCH_AND_ETHOS_ALIGNMENT.md` — full 300+ line report
 - Cross-referenced against: enclave-sdk lib.rs, frost.rs, musig2.rs, nitro.rs
 - Links to: enclave-sdk #260 (FROST statechain), business #890 (Gate 0)
+
+
+---
+
+### Session 52.5.4+ — Phase 2 Signing Research Deepening (2026-08-03)
+
+Deepened signing partner research across 9 unexplored areas. Key finding:
+**ZF FROST v3.0.0 has full Pedersen DKG built-in** (dkg::part1/part2/part3).
+No external ChillDKG needed. Also: key refresh + share recovery included.
+
+#### New Issues Created
+
+| Issue | Repo | Priority | Title |
+|-------|------|:--------:|-------|
+| #265 | enclave-sdk | P0 | FROST DKG wrappers |
+| #266 | enclave-sdk | P0 | Execution context bridge |
+| #213 | conxian-nexus | P1 | ROAST coordinator |
+| #240 | lib-conxian-core | P1 | ERC-7683 intent mapping |
+
+#### Phase 2 Coverage: 9 areas, 12 recommendations
+
+DKG, ROAST, Post-Quantum, Fedimint, Intents, Simplicity, TEE Evolution, RGB, Taproot Assets.
+
+#### Artifacts
+
+- `docs/research/SIGNING_PARTNER_RESEARCH_PHASE2_DEEPENING.md` (300+ lines)
+- enclave-sdk PR #264 (FROST crypto + fixes)
+- 4 new issues across 3 repos
