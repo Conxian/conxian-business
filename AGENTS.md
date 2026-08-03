@@ -1413,3 +1413,89 @@ Removes trusted dealer assumption. Closes #265.
 - [ ] #213 ROAST coordinator in nexus
 - [ ] #267 BitVM2 Groth16 (P0)
 - [ ] Enclave P0 attestation (#240-#242) — needs hardware access
+
+---
+
+### Session 54 — FROST Execution Context + Phase 3 Enhancement Roadmap
+
+#### #266 Solved — FrostSigningContext (PR #275)
+
+The critical gap between `frost.rs` (opaque envelopes) and `frost_crypto.rs`
+(real ZF FROST v3.0.0) is bridged.
+
+**`FrostSigningContext`** — a crypto-aware execution context that:
+- Stores raw ZF FROST bytes keyed by SHA-256 digest
+- `generate_key_package(min, max)` → real trusted dealer keygen → `FrostKeyPackage`
+- `create_nonces(key_digest)` → nonce + commitment generation
+- `create_signing_package(msg, commitment_digests)` → signing session
+- `create_signature_share(key_digest, nonce_digest, msg)` → individual share
+- `aggregate_signatures(kp, shares)` → hex-encoded BIP-340 Schnorr signature
+- 3 tests: e2e 2-of-3, unknown digest rejection, missing signing package
+
+**Architecture:**
+```
+FrostSigningContext (NEW)  ←  bridges the gap
+    ├── stores raw bytes keyed by SHA-256 digest
+    ├── calls frost_crypto.rs for real crypto
+    └── uses FrostManager types for boundary validation
+
+FrostManager (unchanged)   ←  structural validation only
+frost_crypto.rs (unchanged) ←  ZF FROST v3.0.0 real crypto
+```
+
+**PR:** [#275](https://github.com/Conxian/conxius-enclave-sdk/pull/275)
+**Branch:** `feat/frost-signing-context` (bf3b349)
+
+#### Issues Status Update
+
+| Issue | Status |
+|-------|--------|
+| #264 FROST compilation | ✅ Merged to main |
+| #265 DKG implementation | ✅ Closed |
+| #266 FROST context bridge | ✅ PR #275, solution implemented |
+| #274 AGENTS.md module count | ✅ Closed (47 modules, 5553286) |
+| gateway #315 adapter files | ✅ Closed |
+
+#### Phase 3 Enhancement Roadmap (7 Issues)
+
+Full analysis: `docs/research/PHASE3_ENHANCEMENT_ROADMAP_SESSION54.md`
+
+| Priority | Issue | Module | Effort | Depends On |
+|:--------:|-------|--------|:------:|------------|
+| **1** | #273 | Covenant | 1 sprint | — (self-contained) |
+| **2** | #269 | CCTP attestation | 0.5 sprint | k256, base64 |
+| **3** | #268 | Ark ASP signing | 1 sprint | #275 FROST context |
+| **4** | #270 | DLC CET + oracle | 1 sprint | FROST, PSBT |
+| **5** | #272 | BitVM SNARK | 0.5 sprint | #267 shared verifier |
+| **6** | #267 | BitVM2 Groth16 | 2 sprints | bellman, #272 |
+| **7** | #271 | Lightning LDK | 2-3 sprints | LDK crate |
+
+**Recommended feature flag pattern** (from #266 solution):
+```toml
+bitvm2-crypto = ["bellman"]
+ark-crypto = ["frost-crypto"]
+cctp-attestation = ["k256", "base64"]
+dlc-crypto = ["frost-crypto"]
+lightning-crypto = ["lightning", "lightning-invoice"]
+covenant-crypto = []  # no external deps
+```
+
+**Module count projection:** 47 → 54 (7 crypto backends)
+
+#### Current State
+
+| Metric | Value |
+|--------|-------|
+| Open issues (all repos) | 54 (↓2 from Session 53) |
+| Open PRs | 1 (#275, FROST context) |
+| Remaining audit issues | 7 (#267-#273) |
+| Total with concrete plans | 7/7 |
+
+#### Key Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| Covenant first in Phase 3 | Self-contained, no external deps, builds confidence |
+| BitVM2 + BitVM share Groth16 verifier | Same infrastructure (bellman), split protocol vs primitives |
+| Lightning saved for last | Most complex integration, LDK is a heavy dependency |
+| Each crypto module mirrors frost_crypto.rs pattern | Proven pattern: feature gate → `*_crypto.rs` → tests |
