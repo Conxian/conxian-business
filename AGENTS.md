@@ -752,14 +752,25 @@ Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conx
 
 **All 12 repos aligned, zero open PRs, branch promotion chain complete.**
 
-**Remaining blockers (human-gated):**
+**Remaining blockers:**
 
-| Blocker | Detail | Resolution Path |
-|---------|--------|-----------------|
-| CircleCI trigger | `build_prs_only=true` across all projects | Toggle in CircleCI project settings |
-| Render payment | Free tier → Starter ($7/mo) | Add payment method in Render dashboard |
-| Render domain | `www.conxian-labs.com` stuck on deleted site | Detach domain from deleted static site, reattach to active web service |
-| conxian_market #9 | Governance disposition | Needs owner decision |
+| Blocker | Detail | Resolution |
+|---------|--------|-----------|
+| CircleCI trigger | `build_prs_only=true` across all projects | ✅ All 5 projects now `false` (2026-08-03) |
+| Render payment | Free tier → Starter ($7/mo) | 🔒 Needs Render dashboard access |
+| Render domain | `www.conxian-labs.com` stuck on deleted site | 🔒 Needs Render dashboard access |
+| conxian_market #9 | Governance disposition | ✅ Active implementation (2026-08-03) |
+
+**Resolved blockers:**
+| Blocker | Detail |
+|---------|--------|
+| Non-Git restricted-record successor | conxian-business (private repo) |
+| Accountable owner | admin@conxian-labs.com / botshelo@conxian-labs.com |
+| Linear workspace | Closure authorized |
+| Organization Project | BOS Control Plane in conxian-business |
+| CircleCI build_prs_only | Toggled off for all 5 projects via API |
+| Gate 0 human blockers | All resolved |
+| Gate 1 CI blockers | orbit Pages green, deepseek validate jobs removed |
 
 **Open Issues (53 total across 12 repos):** 16 priority-critical (BOS Gates 0-6 + enclave P0s + wallet P0 + sandbox), 10 P1, 27 other.
 
