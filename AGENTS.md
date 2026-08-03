@@ -1487,9 +1487,9 @@ covenant-crypto = []  # no external deps
 | Metric | Value |
 |--------|-------|
 | Open issues (all repos) | 54 (↓2 from Session 53) |
-| Open PRs | 1 (#275, FROST context) |
-| Remaining audit issues | 7 (#267-#273) |
-| Total with concrete plans | 7/7 |
+| Open PRs | 0 |
+| Remaining audit issues | 3 (#267 BitVM2, #271 Lightning, #272 BitVM) |
+| Resolved audit issues | 8 of 11 (see Session 56 audit tracker) |
 
 #### Key Decisions
 
@@ -1571,3 +1571,73 @@ For modules needing external crypto crates:
 | Ark signing delegates to FrostSigningContext | Reuses #275 bridge, no duplicate crypto |
 | CCTP uses SHA-256 for hash binding | Avoids adding `sha3` dep; production should use keccak256 |
 | BitVM/BitVM2 saved for bellman integration | Shared Groth16 infrastructure, done together next sprint |
+
+---
+
+### Session 56 — Full Census: 55 Open Issues Across 13 Repos
+
+Cross-repo sweep verified every open issue against GitHub live state.
+
+#### Full Issue Inventory (2026-08-03)
+
+| # | Repo | Count | Key Items |
+|---|------|:-----:|-----------|
+| 1 | conxian-business | 9 | #890 BOS-001, #934-#938 Gates 2-6, #940 FIBO, #942 Nexus licensing, #989 Positioning |
+| 2 | enclave-sdk | 9 | #198 CCTP/AA, #200 WASM, #202 Security review, #240-#242 Attestation, #267 BitVM2, #271 Lightning, #272 BitVM |
+| 3 | Conxian/protocol | 9 | #488 2% fee, #496 Partnership fees, #500 Oracle/DEX, #507 sBTC vault, #515 Merge gates, #527 Fee policy, #529 Usage ledger, #530 SDK/indexing, #532 Legal gate |
+| 4 | platform | 6 | #854 Rulesets, #958 Auto-merge, #1082 CI scripts, #1167 Handoff routing, #1168 Founder rights, #1212 Stale branches |
+| 5 | gateway | 5 | #189 BitVM3, #220 DLC CET, #228 RGB stash, #245 BIP-110, #306 MRR billing |
+| 6 | nexus | 3 | #174 Licensing, #178 Gitleaks, #213 ROAST coordinator |
+| 7 | wallet | 3 | #356 CI/CD, #357 Tech debt, #444 Value-operation gate |
+| 8 | .github | 4 | #43 Issue-only control, #47 Secret prevention, #53 Metadata, #60 Licenses |
+| 9 | lib-core | 2 | #233 Chain transports, #240 ERC-7683 intents |
+| 10 | orbit | 2 | #278 Pages, #279 CI/Release |
+| 11 | market | 2 | #6 Funding RFC, #8 Treasury dashboard |
+| 12 | ui | 1 | #161 Preview/production deployment |
+| 13 | conxian-labs-site | 0 | — |
+| | **TOTAL** | **55** | |
+
+#### Priority Breakdown
+
+| Tier | Count | Issues |
+|:----:|:-----:|--------|
+| **P0** | 8 | #890 (BOS-001), #934-#938 (Gates 2-6), #240-#242 (enclave attestation), #444 (wallet gate) |
+| **P1** | 14 | #488, #496, #527, #529, #530, #532 (Conxian fees/legal), #213 (ROAST), #198, #200, #202 (enclave P0/P1), #267 (BitVM2), #271 (Lightning), #240 (ERC-7683) |
+| **P2** | 5 | #500, #507 (Conxian), #272 (BitVM), #306 (MRR), #228 (RGB) |
+| **Other** | 28 | Governance, CI, research, hygiene, docs |
+
+#### Changes Since Session 55
+
+| Change | Detail |
+|--------|--------|
+| .github count | Was 3 → **4** (#43 added to inventory) |
+| enclave-sdk | 9 open (was 7 resolved + 3 remaining = 10, but #274 closed during census) |
+| Total issues | 55 (corrected from 50 in Session 55) |
+| Newly noted | .github #43 (issue-only control) not previously tracked |
+
+#### Enclave-SDK Audit Tracker
+
+| # | Title | P | Status |
+|---|-------|:--:|--------|
+| #266 | FROST execution context | P0 | ✅ Closed (#275) |
+| #273 | Covenant CTV/APO | P2 | ✅ Closed (#276) |
+| #269 | CCTP attestation | P1 | ✅ Closed (#277) |
+| #268 | Ark VTXO signing | P1 | ✅ Closed (#278) |
+| #270 | DLC oracle + CET | P1 | ✅ Closed (#279) |
+| #264 | FROST compilation | P0 | ✅ Closed |
+| #265 | DKG implementation | P0 | ✅ Closed |
+| #274 | AGENTS.md count | P2 | ✅ Closed |
+| **#267** | **BitVM2 Groth16** | **P0** | **OPEN — bellman** |
+| **#272** | **BitVM SNARK** | **P2** | **OPEN — bellman** |
+| **#271** | **Lightning LDK** | **P1** | **OPEN — LDK crate** |
+
+#### Cross-Repo Dependencies
+
+```
+enclave-sdk #267 (BitVM2) ──depends on──▶ bellman crate (not yet added)
+enclave-sdk #272 (BitVM)  ──shares with──▶ #267 (same Groth16 infra)
+nexus #213 (ROAST)        ──depends on──▶ enclave-sdk #266 (FROST context) ✅
+gateway #220 (DLC CET)    ──depends on──▶ enclave-sdk #270 (DLC oracle) ✅
+gateway #228 (RGB stash)  ──independent──▶ rgb-std crate
+gateway #306 (MRR)        ──independent──▶ billing module
+```

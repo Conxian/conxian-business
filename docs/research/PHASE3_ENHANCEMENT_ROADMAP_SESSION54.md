@@ -1,10 +1,8 @@
-# Phase 3 Enhancement Roadmap — Session 54
+# Phase 3 Enhancement Roadmap — Session 55 Update
 
-> Comprehensive research, dependency analysis, and implementation plans for
-> enclave-sdk enhancement issues #267–#273.
+> **4/7 complete.** 5 PRs merged in Session 55. 3 issues remain (#267, #272, #271).
 >
-> All 7 issues are structural-boundary modules (ProtocolUnsupported stubs).
-> Each needs real crypto/protocol execution wired through.
+> Original scope: enclave-sdk enhancement issues #267–#273.
 
 ---
 
@@ -302,13 +300,14 @@ secp256k1 signature verification (already in deps).
 
 | Priority | Issue | Effort | Depends On | Cumulative |
 |:--------:|-------|:------:|------------|:----------:|
-| **1** | #273 Covenant | 1 sprint | — | 1 sprint |
-| **2** | #269 CCTP | 0.5 sprint | — | 1.5 sprints |
-| **3** | #268 Ark | 1 sprint | #275 (FROST context) | 2.5 sprints |
-| **4** | #270 DLC | 1 sprint | FROST, bitcoin PSBT | 3.5 sprints |
-| **5** | #272 BitVM | 0.5 sprint | #267 (shared verifier) | 4 sprints |
-| **6** | #267 BitVM2 | 2 sprints | bellman, #272 | 6 sprints |
-| **7** | #271 Lightning | 2-3 sprints | LDK | 8-9 sprints |
+| **1** | #273 Covenant | ✅ DONE | — | Session 55 |
+| **2** | #269 CCTP | ✅ DONE | — | Session 55 |
+| **3** | #268 Ark | ✅ DONE | — | Session 55 |
+| **4** | #270 DLC | ✅ DONE | — | Session 55 |
+| **5** | #272 BitVM | 0.5 sprint | #267 (shared verifier) | TBD |
+| **6** | #267 BitVM2 | 2 sprints | bellman, #272 | TBD |
+| **7** | #271 Lightning | 2-3 sprints | LDK | TBD |
+
 
 **Why this order:**
 1. Covenant (#273) is self-contained, no external deps, builds confidence
