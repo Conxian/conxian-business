@@ -1280,3 +1280,34 @@ DKG, ROAST, Post-Quantum, Fedimint, Intents, Simplicity, TEE Evolution, RGB, Tap
 - `docs/research/SIGNING_PARTNER_RESEARCH_PHASE2_DEEPENING.md` (300+ lines)
 - enclave-sdk PR #264 (FROST crypto + fixes)
 - 4 new issues across 3 repos
+
+
+---
+
+### Session 52.5.4+ — Cross-Repo SDK Capability Audit (2026-08-03)
+
+Full audit of all 12 repos against ground-truth code. Key findings:
+
+**Enclave-SDK**: 57 modules (not 46). 5 boundary-only, 4 structural-only.
+**lib-conxian-core**: 17/17 modules verified wired. No dead modules.
+**Consumer wiring**: Nexus 9/9 verified. Platform CJCS aligned. Gateway adapters need path verification.
+
+#### Issues Created (10 new)
+
+| Issue | Repo | Title |
+|-------|------|-------|
+| #267 | enclave-sdk | P0: bitvm2 Groth16 SNARK verification |
+| #268 | enclave-sdk | P1: Ark protocol signing |
+| #269 | enclave-sdk | P1: CCTP attestation verification |
+| #270 | enclave-sdk | P1: DLC CET signing |
+| #271 | enclave-sdk | P1: Lightning LDK payment execution |
+| #272 | enclave-sdk | P2: BitVM SNARK proof validation |
+| #273 | enclave-sdk | P2: Covenant enforcement |
+| #274 | enclave-sdk | P2: AGENTS.md module count update |
+| #315 | conxian-gateway | P1: Adapter file location verification |
+
+#### Total Issues: 63 across 12 repos (+10 from audit)
+
+#### Artifacts
+- `docs/research/CROSS_REPO_SDK_CAPABILITY_AUDIT_SESSION52.md` (300+ lines)
+- 10 new issues across 2 repos
