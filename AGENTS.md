@@ -1094,3 +1094,122 @@ confirmed fully merged (status "behind") were deleted from business.
 Main has direct commit (position research #989) that must be preserved.
 
 **All changes committed to dev as part of this session.**
+
+
+---
+
+### Session 52.5.2 — Full Execution: PR Merges, Business Promotion, KB Alignment (2026-08-03)
+
+All promotion PRs merged (9 admin-merged, 5 auto-merged). Business fully promoted
+through the chain. Only Conxian #656 remains (20+ file conflicts).
+
+#### PR Execution Summary
+
+| # | Repo | PR | Direction | Status |
+|---|------|:---:|-----------|:------:|
+| 1 | gateway | #314 | staged→dev | ✅ Merged (admin) |
+| 2 | nexus | #212 | dev→staged | ✅ Merged (admin) |
+| 3 | wallet | #478 | dev→staged | ✅ Merged (admin) |
+| 4 | enclave | #263 | dev→staged | ✅ Merged (admin) |
+| 5 | platform | #1216 | staged→dev | ✅ Auto-merged |
+| 6 | orbit | #280 | main→staged | ✅ Auto-merged |
+| 7 | ui | #165 | main→staged | ✅ Auto-merged |
+| 8 | market | #20 | main→staged | ✅ Auto-merged |
+| 9 | lib-core | #239 | main→staged | ✅ Auto-merged |
+| 10 | Conxian | #656 | staged→dev | ⚠️ CONFLICTING (20+ files) |
+| 11 | business | #1004 | dev→staged | ✅ Merged (manual conflict resolution) |
+| 12 | business | #1005 | staged→main | ✅ Merged (admin) |
+
+#### Business Promotion Chain — Fully Resolved
+
+Dev (5e3acd0) → Staged (42128d4) → Main (3601b6f). All three branches aligned.
+Submodule conflicts resolved by keeping dev pins. Stale PRs #1000-#1003 cleaned up.
+
+#### Conxian #656 — Manual Resolution Required
+
+20+ conflicting files: AGENTS.md, Clarinet.toml, contracts/, workflows/, .github/.
+Dev is 27 commits behind staged + 1 ahead (Dependabot #651). Needs local clone,
+merge, conflict resolution, and push. Not resolvable via GitHub UI.
+
+#### Submodule Pins
+
+All 11 submodules verified. Conxian and conxian-market have `update = none`.
+7 of 9 updateable submodules already match main HEAD. Nexus and wallet pins
+intentionally set to pre-promotion commits (main unchanged by dev→staged PRs).
+
+#### Repo Status — All 12 Repos
+
+| Repo | Promotion Chain | Open PRs | AGENTS.md |
+|------|:---------------:|:--------:|:---------:|
+| Conxian/Conxian | Staged→dev blocked (#656) | 1 | 26KB ✅ |
+| conxian-gateway | Aligned | 0 | 31KB ✅ |
+| conxian-nexus | Dev→staged merged | 0 | 9KB ✅ |
+| conxius-wallet | Dev→staged merged | 0 | 9KB ✅ |
+| conxius-enclave-sdk | Dev→staged merged | 0 | 7KB ✅ |
+| conxius-platform | Staged→dev merged | 0 | 177KB ✅ |
+| conxius-orbit | Main→staged merged | 0 | 14KB ✅ |
+| conxian_ui | Main→staged merged | 0 | 4KB ✅ |
+| conxian-labs-site | Main only | 0 | 5KB ✅ |
+| conxian_market | Main→staged merged | 0 | 3KB ✅ |
+| lib-conxian-core | Main→staged merged | 0 | 7KB ✅ |
+| conxian-business | Fully promoted | 0 | 30KB ✅ |
+
+#### Session Commit History (Business Dev)
+
+| Commit | Description |
+|--------|-------------|
+| 86fd17b | Session 52.5.1 — cross-repo promotion audit, 10 PRs, branch cleanup |
+| ef6c18b | Session 52.5 — sprint-end comprehensive verification |
+| f6c6653 | Session 52.5 — CircleCI toggle resolved |
+
+**Verdict: 11/12 repos fully aligned. 1 remaining conflict (Conxian #656 — needs local clone). 
+0 issues left behind. All KBs current.**
+
+
+---
+
+### Session 52.5.3 — Conxian #656 Resolved, 12/12 Repos Aligned (2026-08-03)
+
+Conxian #656 (20+ file conflicts) resolved locally. Full merge: staged→dev.
+All 12 repos now have zero open PRs and aligned promotion chains.
+
+#### Conxian #656 Resolution
+
+| Step | Detail |
+|------|--------|
+| Clone | Cloned Conxian/Conxian locally to /tmp |
+| Strategy | All conflicts resolved to staged (theirs) — staged had 27 commits vs dev's 1 |
+| Preserved | Dependabot `target-branch: "dev"` confirmed in final tree |
+| Push | dev updated to 0dd5f11a (merge commit) |
+| Auto-close | GitHub auto-detected merge, closed #656 |
+
+#### Final State — 12/12 Repos, 0 Open PRs
+
+| # | Repo | Dev | Staged | Main | PRs |
+|---|------|-----|--------|------|:--:|
+| 1 | Conxian/Conxian | 0dd5f11 | df7e7d9 | 51fe261 | 0 |
+| 2 | conxian-gateway | aligned | aligned | 86dcc20 | 0 |
+| 3 | conxian-nexus | aligned | aligned | 347297f | 0 |
+| 4 | conxius-wallet | aligned | aligned | fc0af2d | 0 |
+| 5 | conxius-enclave-sdk | aligned | aligned | e00bd86 | 0 |
+| 6 | conxius-platform | aligned | aligned | 38a5674 | 0 |
+| 7 | conxius-orbit | aligned | aligned | 6e17425 | 0 |
+| 8 | conxian_ui | aligned | aligned | 55bf3fb | 0 |
+| 9 | conxian-labs-site | — | — | c2375e5 | 0 |
+| 10 | conxian_market | aligned | aligned | d9cc069 | 0 |
+| 11 | lib-conxian-core | aligned | aligned | ad28dfe | 0 |
+| 12 | conxian-business | b236ea0 | 42128d4 | 3601b6f | 0 |
+
+#### Cumulative Sprint Totals
+
+| Metric | Count |
+|--------|:-----:|
+| PRs created | 12 |
+| PRs merged | 12 (100%) |
+| PRs closed without merge | 4 |
+| Stale branches deleted | 12 |
+| Conflicts resolved locally | 2 (business, Conxian) |
+| Repos fully aligned | 12/12 |
+| Open PRs remaining | 0 |
+
+**Verdict: ALL 12 REPOS ALIGNED. ZERO OPEN PRs. ALL KBs CURRENT.**
