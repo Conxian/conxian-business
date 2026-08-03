@@ -770,3 +770,35 @@ Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conx
 | `BOS_KNOWLEDGE_GRAPH.md` | conxian-business | Gate 0 baseline update |
 | `docs/BOS_GATES_ADVANCEMENT_PLAN.md` | conxian-business | Created |
 | `docs/research/ECOSYSTEM_INTEGRATION_RESEARCH.md` | conxian_market | Created |
+
+---
+
+### Session 52.5 — Human Blockers Resolved
+
+**Gate 0 → RESOLVED.** Owner decision closed all remaining blockers:
+
+| Blocker | Resolution | Issue |
+|---------|-----------|-------|
+| Non-Git restricted-record successor | **conxian-business** (private repo) | #943 ✅ |
+| Accountable owner | **admin@conxian-labs.com / botshelo@conxian-labs.com** | #932 ✅ |
+| Linear workspace | **Closure authorized** | #944 ✅ |
+| Organization Project | **BOS Control Plane** in conxian-business | .github #61 ✅ |
+
+**All gates now unblocked.** Gates 2-6 can advance sequentially. #945 (branch governance) and #942 (nexus licensing decision log) remain open for tracking. All P0/P1 issues remain open in their owning repos but are no longer gate-blocked.
+
+**Repo Alignment (final):**
+| # | Repo | Tier | Readiness | Open PRs | AGENTS.md |
+|---|------|------|-----------|----------|-----------|
+| 1 | Conxian/Conxian | Primary | PRODUCTION | 0 | ✅ |
+| 2 | conxian-gateway | Primary | PRODUCTION | 0 | ✅ |
+| 3 | conxian-nexus | Primary | BETA | 0 | ✅ |
+| 4 | conxius-wallet | Primary | TECH-PROD | 0 | ✅ |
+| 5 | lib-conxian-core | Supporting | PROD-CORE | 0 | ✅ |
+| 6 | conxius-enclave-sdk | Supporting | BETA/COND | 0 | ✅ |
+| 7 | conxius-platform | Supporting | INCUBATING | 0 | ✅ |
+| 8 | conxius-orbit | Supporting | BETA | 0 | ✅ |
+| 9 | conxian_ui | Reference | EARLY | 0 | ✅ |
+| 10 | conxian-labs-site | Reference | LIVE (free) | 0 | ✅ |
+| 11 | conxian_market | Reference | ACTIVE | 0 | ✅ |
+| 12 | .github | Supporting | GOV-BASELINE | 0 | ✅ |
+| — | conxian-business | Governance | GOVERNANCE | 0 | ✅ (this) |
