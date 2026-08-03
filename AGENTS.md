@@ -704,6 +704,47 @@ Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conx
 | 11 | conxian_market | Reference | BOOTSTRAPPED | 0 | ✅ |
 | 12 | .github | Supporting | GOV-BASELINE | 0 | ✅ |
 | — | conxian-business | Governance | GOVERNANCE | 0 | ✅ (this) |
+---
+
+### Sprint-End Verification (2026-08-03)
+
+**All repos verified — zero open PRs, 47 open issues, promotion chain documented.**
+
+**Issues closed this sprint:**
+| Issue | Repo | Resolution |
+|-------|------|-----------|
+| #932 | conxian-business | Gate 0 re-baseline — human blockers resolved |
+| #933 | conxian-business | Gate 1 green CI — orbit Pages + deepseek fix |
+| #943 | conxian-business | GitHub-first operating model — restricted-record successor |
+| #944 | conxian-business | Linear reference retirement — workspace closure authorized |
+| #945 | conxian-business | Branch governance — resolved by promotion chain |
+| #9 | conxian_market | Repository disposition — active implementation |
+| #480 | Conxian/Conxian | Developer sandbox — already aligned, verified |
+| #61 | .github | Organization Project — BOS Control Plane in conxian-business |
+
+**Promotion status:**
+- conxian-business: dev at f6dda91, staged at 83414fc — AGENTS.md conflict (known pattern, same as Session 51 #986)
+- 8 stale auto-promotion PRs (#991-#998) cleaned up
+- Single promotion PR #999 created and closed (conflict); manual resolution needed
+- All changes verified on dev branch
+
+**Open issue distribution (47 total):**
+| Repo | Count | Top items |
+|------|-------|-----------|
+| conxian-business | 9 | #890 BOS-001, #934-#938 Gates 2-6, #942 nexus, #989 position |
+| Conxian/Conxian | 9 | #499 governance, #507 sBTC, #515 gates, #527-#532 fees/legal |
+| conxius-enclave-sdk | 7 | #195 umbrella, #198 CCTP, #200 WASM, #202 security, #240-#242 attestation |
+| conxius-platform | 6 | #854 rulesets, #958 auto-merge, #1082 CI scripts |
+| conxian-gateway | 5 | #311 Dependabot, #313 promotion, MSRV/CI |
+| conxius-wallet | 3 | #444 value-operation gate |
+| conxian-nexus | 2 | #178 PRD scope |
+| conxius-orbit | 2 | #278 Pages, #279 CI release |
+| conxian_market | 2 | #6 economics, #8 treasury |
+| conxian_ui | 1 | #13 BOS business buildout |
+| lib-conxian-core | 1 | #98 CI |
+| conxian-labs-site | 0 | — |
+
+**No untracked work. All actionable items in GitHub issues. All docs verified on dev.**
 
 ---
 
@@ -802,3 +843,44 @@ Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conx
 | 11 | conxian_market | Reference | ACTIVE | 0 | ✅ |
 | 12 | .github | Supporting | GOV-BASELINE | 0 | ✅ |
 | — | conxian-business | Governance | GOVERNANCE | 0 | ✅ (this) |
+---
+
+### Sprint-End Verification (2026-08-03)
+
+**All repos verified — zero open PRs, 47 open issues, promotion chain documented.**
+
+**Issues closed this sprint:**
+| Issue | Repo | Resolution |
+|-------|------|-----------|
+| #932 | conxian-business | Gate 0 re-baseline — human blockers resolved |
+| #933 | conxian-business | Gate 1 green CI — orbit Pages + deepseek fix |
+| #943 | conxian-business | GitHub-first operating model — restricted-record successor |
+| #944 | conxian-business | Linear reference retirement — workspace closure authorized |
+| #945 | conxian-business | Branch governance — resolved by promotion chain |
+| #9 | conxian_market | Repository disposition — active implementation |
+| #480 | Conxian/Conxian | Developer sandbox — already aligned, verified |
+| #61 | .github | Organization Project — BOS Control Plane in conxian-business |
+
+**Promotion status:**
+- conxian-business: dev at f6dda91, staged at 83414fc — AGENTS.md conflict (known pattern, same as Session 51 #986)
+- 8 stale auto-promotion PRs (#991-#998) cleaned up
+- Single promotion PR #999 created and closed (conflict); manual resolution needed
+- All changes verified on dev branch
+
+**Open issue distribution (47 total):**
+| Repo | Count | Top items |
+|------|-------|-----------|
+| conxian-business | 9 | #890 BOS-001, #934-#938 Gates 2-6, #942 nexus, #989 position |
+| Conxian/Conxian | 9 | #499 governance, #507 sBTC, #515 gates, #527-#532 fees/legal |
+| conxius-enclave-sdk | 7 | #195 umbrella, #198 CCTP, #200 WASM, #202 security, #240-#242 attestation |
+| conxius-platform | 6 | #854 rulesets, #958 auto-merge, #1082 CI scripts |
+| conxian-gateway | 5 | #311 Dependabot, #313 promotion, MSRV/CI |
+| conxius-wallet | 3 | #444 value-operation gate |
+| conxian-nexus | 2 | #178 PRD scope |
+| conxius-orbit | 2 | #278 Pages, #279 CI release |
+| conxian_market | 2 | #6 economics, #8 treasury |
+| conxian_ui | 1 | #13 BOS business buildout |
+| lib-conxian-core | 1 | #98 CI |
+| conxian-labs-site | 0 | — |
+
+**No untracked work. All actionable items in GitHub issues. All docs verified on dev.**
