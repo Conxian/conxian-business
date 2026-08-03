@@ -642,40 +642,82 @@ Every repo has P0 gaps in its BOS buildout doc. None has fully closed P0. Summar
 | Default branch | main |
 | Open PRs | 0 |
 | Open issues | 3 (#9 governance disposition, #8 treasury dashboard, #6 RFC economic funding) |
-| AGENTS.md | Does NOT exist |
+| AGENTS.md | ✅ Root AGENTS.md created (#19) |
+| CI/CD | ✅ CircleCI pipeline (test/typecheck/secret-scan) |
 | Portfolio tier | Reference surface — "Research/experimental marketplace surface pending external doctrine alignment" |
 
-**Status: EARLY RESEARCH.** No AGENTS.md, no CI, no PRs. Governance disposition (#9) is the gate for bringing this repo into operational alignment. Core architecture described in README: discovery, settlement (2% fee), escrow (ERC-8183). BYOK mandate. Three deployment lanes (cloud, edge-local, on-prem).
+**Status: BOOTSTRAPPED.** Root-level AGENTS.md created. CircleCI pipeline deployed (3 real jobs replacing hello-world). All merged to main via #19. Governance disposition (#9) remains the gate for full operational alignment.
 
-#### Branch Policy Compliance Audit
+#### Branch Policy Compliance Audit — ALL RESOLVED
 
-Per `docs/BRANCH_AND_PROMOTION_STANDARD.md`: normal PRs target `dev`, promotions flow `dev→staged→main`. No direct-to-main PRs. No Dependabot exception.
+All 4 out-of-policy PRs corrected and merged:
 
-| PR | Repo | Original Base | Corrected Base | Status |
+| PR | Repo | Original Base | Corrected Base | Resolution |
 |----|------|---------------|----------------|--------|
-| #981 | conxian-business | main | **dev** ✅ | Ready (AGENTS.md Session 50) |
-| #1213 | conxius-platform | main | **dev** ✅ | Ready (CircleCI config) |
-| #309 | conxian-gateway | main | **dev** ✅ | Dependabot npm — 15/16 checks pass, MSRV flake |
-| #310 | conxian-gateway | main | **dev** ✅ | Dependabot GHA — 15/16 checks pass, MSRV flake |
+| #981 | conxian-business | main | **dev** ✅ | Squash-merged |
+| #1213 | conxius-platform | main | **dev** ✅ | Squash-merged |
+| #309 | conxian-gateway | main | **dev** ✅ | Squash-merged |
+| #310 | conxian-gateway | main | **dev** ✅ | Squash-merged |
+| #311 | conxian-gateway | — | **dev** ✅ | Adds `target-branch: dev` to Dependabot |
 
-**All 4 open PRs now target `dev` per branch policy.**
+#### Dependabot Compliance — 5 Repos Fixed
 
-**Root cause:** conxian-gateway's `.github/dependabot.yml` doesn't set `target-branch`, so Dependabot defaults to `main`. Fix needed: add `target-branch: dev` to all ecosystems in `conxian-gateway/.github/dependabot.yml`.
+All repos with Dependabot now route PRs to `dev` per branch promotion standard:
+
+| Repo | PR | Fix |
+|------|-----|-----|
+| conxian-gateway | #311 | Added `target-branch: "dev"` |
+| Conxian/Conxian | #651 | Added `target-branch: "dev"` (npm + GHA) |
+| conxian-nexus | #206 | Added `target-branch: "dev"` (cargo + GHA) |
+| conxius-wallet | #476 | Added `target-branch: "dev"` (npm + gradle + cargo + GHA) |
+| conxius-enclave-sdk | #262 | Added `target-branch: "dev"` (cargo + GHA) |
+
+#### Full Promotion Chain — 3 Repos (dev→staged→main)
+
+| Repo | dev→staged | staged→main | Final Alignment |
+|------|-----------|-------------|-----------------|
+| conxian-gateway | #312 merge | #313 (manual, Cargo.toml conflict) | main = staged = dev |
+| conxius-platform | #1214 merge | #1215 merge | main = staged = dev |
+| conxian-business | #983 merge | #986 (manual, AGENTS.md conflict) | main = staged = dev |
+
+#### Submodule Pin Update (conxian-business)
+
+All 11 submodules bumped to current `main` HEAD (#987):
+Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conxian-ui, conxius-enclave-sdk, conxius-orbit, conxius-platform, conxius-wallet, lib-conxian-core.
+
+`Conxian` and `conxian-market` intentionally set to `update = none` in `.gitmodules`.
 
 #### Full Repo Alignment (12 repos)
 
 | # | Repo | Tier | Readiness | Open PRs | AGENTS.md |
 |---|------|------|-----------|----------|-----------|
 | 1 | Conxian/Conxian | Primary | PRODUCTION | 0 | ✅ |
-| 2 | conxian-gateway | Primary | PRODUCTION | 2 (deps→dev) | ✅ |
+| 2 | conxian-gateway | Primary | PRODUCTION | 0 | ✅ |
 | 3 | conxian-nexus | Primary | BETA | 0 | ✅ |
 | 4 | conxius-wallet | Primary | TECH-PROD | 0 | ✅ |
 | 5 | lib-conxian-core | Supporting | PROD-CORE | 0 | ✅ |
 | 6 | conxius-enclave-sdk | Supporting | BETA/COND | 0 | ✅ |
-| 7 | conxius-platform | Supporting | INCUBATING | 1 (CI→dev) | ✅ |
+| 7 | conxius-platform | Supporting | INCUBATING | 0 | ✅ |
 | 8 | conxius-orbit | Supporting | BETA | 0 | ✅ |
 | 9 | conxian_ui | Reference | EARLY | 0 | ✅ |
 | 10 | conxian-labs-site | Reference | LIVE (free) | 0 | ✅ |
-| 11 | conxian_market | Reference | EARLY-RESEARCH | 0 | ❌ |
+| 11 | conxian_market | Reference | BOOTSTRAPPED | 0 | ✅ |
 | 12 | .github | Supporting | GOV-BASELINE | 0 | ✅ |
-| — | conxian-business | Governance | GOVERNANCE | 1 (docs→dev) | ✅ (this) |
+| — | conxian-business | Governance | GOVERNANCE | 0 | ✅ (this) |
+
+---
+
+### Session 51 — Completion Summary
+
+**All 12 repos aligned, zero open PRs, branch promotion chain complete.**
+
+**Remaining blockers (human-gated):**
+
+| Blocker | Detail | Resolution Path |
+|---------|--------|-----------------|
+| CircleCI trigger | `build_prs_only=true` across all projects | Toggle in CircleCI project settings |
+| Render payment | Free tier → Starter ($7/mo) | Add payment method in Render dashboard |
+| Render domain | `www.conxian-labs.com` stuck on deleted site | Detach domain from deleted static site, reattach to active web service |
+| conxian_market #9 | Governance disposition | Needs owner decision |
+
+**Open Issues (53 total across 12 repos):** 16 priority-critical (BOS Gates 0-6 + enclave P0s + wallet P0 + sandbox), 10 P1, 27 other. All actionable items already tracked in GitHub issues — no untracked work identified.
