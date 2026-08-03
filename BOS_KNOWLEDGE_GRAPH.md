@@ -1,11 +1,43 @@
 # Conxian Labs BOS Knowledge Graph
-> Clarity-version: 4 | Epoch: latest | Generated: 2026-07-22
+> Clarity-version: 5 | Epoch: latest | Generated: 2026-08-02 | Gate 0 baseline
 
 ## Overview
 
 This document is the **mandatory BOS Knowledge Graph** referenced in `AGENTS.md`. It provides structured entity extraction for graph-aware traversal by agentic systems.
 
 ---
+
+
+
+## Gate 0 Authority Relationships (2026-08-02)
+
+Active public-safe coordination trackers as of re-baseline:
+
+| Tracker | Repository | Role | Status |
+|---------|-----------|------|--------|
+| [#943](https://github.com/Conxian/conxian-business/issues/943) | conxian-business | GitHub-first operating model authority | Phase 0 active |
+| [#944](https://github.com/Conxian/conxian-business/issues/944) | conxian-business | Linear reference retirement | P1 |
+| [#945](https://github.com/Conxian/conxian-business/issues/945) | conxian-business | Branch governance | P1 |
+| [#942](https://github.com/Conxian/conxian-business/issues/942) | conxian-business | Nexus licensing decision log | Governance |
+| [#932](https://github.com/Conxian/conxian-business/issues/932) | conxian-business | Gate 0 re-baseline | BLOCKED (human) |
+| [#933](https://github.com/Conxian/conxian-business/issues/933) | conxian-business | Gate 1 green CI | RESOLVED 2026-08-02 |
+| [#890](https://github.com/Conxian/conxian-business/issues/890) | conxian-business | BOS-001 parent SAB handoff | Active |
+| [#61](https://github.com/Conxian/.github/issues/61) | .github | Organization Project governance | Pending |
+| [CON-1558](https://linear.app/conxian-labs/issue/CON-1558) | Linear | Gate 0 synchronized mirror | Mirror only |
+
+## Gate 0 Re-baseline Evidence (2026-08-02)
+
+| Artifact | Location | Status |
+|----------|----------|--------|
+| GitHub-first operating model | `docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md` | ✅ Deployed |
+| Data classification guardrails | `docs/DATA_CLASSIFICATION_GUARDRAILS.md` | ✅ Deployed |
+| GOVERNANCE GitHub-first declaration | `GOVERNANCE.md` | ✅ Updated |
+| Branch promotion chain (3 repos) | dev→staged→main | ✅ Complete |
+| Dependabot→dev (5 repos) | gateway, Conxian, nexus, wallet, enclave | ✅ Fixed |
+| AGENTS.md repo alignment | `AGENTS.md` | ✅ Session 51 complete |
+| Non-Git restricted-record successor | — | 🔴 HUMAN BLOCKER |
+| Accountable role assignments | [#942](https://github.com/Conxian/conxian-business/issues/942) | 🔴 HUMAN BLOCKER |
+
 
 ## Doctrine decision — CON-1530 (2026-07-22)
 

@@ -13,6 +13,21 @@ Canonical parent-control alignment guidance for this repo (scope boundaries, con
 - **Repo owners:** defined by `CODEOWNERS`.
 - **Policy owners:** `CODEOWNERS` is authoritative for governance, security, and documentation-policy changes.
 
+
+
+## GitHub-First Operating Model
+
+This repository operates under the **GitHub-first public-safe BOS research-cycle operating model**
+([`docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md`](docs/GITHUB_FIRST_BOS_OPERATING_MODEL.md)).
+
+- **GitHub Issues** are the canonical public-safe work-intake and prioritization surface.
+- **Pull requests** are the canonical delivery and traceability mechanism.
+- **The authorized organization Project** is the canonical cross-repo coordination view.
+- **Linear** is retained for restricted internal coordination only; no bulk content migration is authorized.
+- Restricted records (legal, financial, identity, custody, security) must reside in the approved
+  non-Git restricted-record successor, not in GitHub.
+- All GitHub content is subject to [`docs/DATA_CLASSIFICATION_GUARDRAILS.md`](docs/DATA_CLASSIFICATION_GUARDRAILS.md).
+
 ## Branching and Promotion
 
 All repositories in the Conxian portfolio must adhere to the [**Branching and Promotion Policy**](./docs/BRANCHING_AND_PROMOTION_POLICY.md).
