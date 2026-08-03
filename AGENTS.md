@@ -1213,3 +1213,42 @@ All 12 repos now have zero open PRs and aligned promotion chains.
 | Open PRs remaining | 0 |
 
 **Verdict: ALL 12 REPOS ALIGNED. ZERO OPEN PRs. ALL KBs CURRENT.**
+
+
+---
+
+### Session 52.5.4 — Signing Partner Research & Ethos Alignment (2026-08-03)
+
+Comprehensive audit of all signing partners against Conxian's sovereign-first,
+Bitcoin-native ethos. Ground-truth analysis of enclave-sdk signing modules.
+
+#### Key Finding: FROST Is Boundary-Only
+
+Enclave-sdk `frost.rs` (716 lines) is a structural validation layer with ZERO
+cryptographic execution. All value-bearing operations return `ProtocolUnsupported`.
+MuSig2, BIP-322, DLC, and Nitro are fully implemented — FROST is the #1 gap.
+
+#### Top Recommendations
+
+| Tier | Solution | Score | Action |
+|:----:|----------|:-----:|--------|
+| **P0** | ZF FROST (Rust, secp256k1, MIT) | 6/6 | Integrate into enclave-sdk |
+| **P0** | BDK + FROST PSBT signing | 6/6 | Wallet mainnet readiness |
+| **P1** | Lit Protocol (Naga mainnet) | 4/6 | Cross-chain Gateway signing |
+| **P1** | BIP-FROST standardization | 5/6 | Monitor + align |
+
+#### Rejected Partners
+
+| Partner | Reason |
+|---------|--------|
+| Entropy | AGPL-3.0 license |
+| Threshold Network | GPL-3.0 + ECDSA-only |
+| Wormhole | Centralized trust + $326M exploit |
+| Azure/GCP TEE | Vendor lock-in vs Nitro |
+| Coinbase FROST | Proprietary, not available |
+
+#### Artifacts
+
+- `docs/research/SIGNING_PARTNER_RESEARCH_AND_ETHOS_ALIGNMENT.md` — full 300+ line report
+- Cross-referenced against: enclave-sdk lib.rs, frost.rs, musig2.rs, nitro.rs
+- Links to: enclave-sdk #260 (FROST statechain), business #890 (Gate 0)
