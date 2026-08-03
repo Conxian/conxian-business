@@ -1213,3 +1213,203 @@ All 12 repos now have zero open PRs and aligned promotion chains.
 | Open PRs remaining | 0 |
 
 **Verdict: ALL 12 REPOS ALIGNED. ZERO OPEN PRs. ALL KBs CURRENT.**
+
+
+---
+
+### Session 52.5.4 — Signing Partner Research & Ethos Alignment (2026-08-03)
+
+Comprehensive audit of all signing partners against Conxian's sovereign-first,
+Bitcoin-native ethos. Ground-truth analysis of enclave-sdk signing modules.
+
+#### Key Finding: FROST Is Boundary-Only
+
+Enclave-sdk `frost.rs` (716 lines) is a structural validation layer with ZERO
+cryptographic execution. All value-bearing operations return `ProtocolUnsupported`.
+MuSig2, BIP-322, DLC, and Nitro are fully implemented — FROST is the #1 gap.
+
+#### Top Recommendations
+
+| Tier | Solution | Score | Action |
+|:----:|----------|:-----:|--------|
+| **P0** | ZF FROST (Rust, secp256k1, MIT) | 6/6 | Integrate into enclave-sdk |
+| **P0** | BDK + FROST PSBT signing | 6/6 | Wallet mainnet readiness |
+| **P1** | Lit Protocol (Naga mainnet) | 4/6 | Cross-chain Gateway signing |
+| **P1** | BIP-FROST standardization | 5/6 | Monitor + align |
+
+#### Rejected Partners
+
+| Partner | Reason |
+|---------|--------|
+| Entropy | AGPL-3.0 license |
+| Threshold Network | GPL-3.0 + ECDSA-only |
+| Wormhole | Centralized trust + $326M exploit |
+| Azure/GCP TEE | Vendor lock-in vs Nitro |
+| Coinbase FROST | Proprietary, not available |
+
+#### Artifacts
+
+- `docs/research/SIGNING_PARTNER_RESEARCH_AND_ETHOS_ALIGNMENT.md` — full 300+ line report
+- Cross-referenced against: enclave-sdk lib.rs, frost.rs, musig2.rs, nitro.rs
+- Links to: enclave-sdk #260 (FROST statechain), business #890 (Gate 0)
+
+
+---
+
+### Session 52.5.4+ — Phase 2 Signing Research Deepening (2026-08-03)
+
+Deepened signing partner research across 9 unexplored areas. Key finding:
+**ZF FROST v3.0.0 has full Pedersen DKG built-in** (dkg::part1/part2/part3).
+No external ChillDKG needed. Also: key refresh + share recovery included.
+
+#### New Issues Created
+
+| Issue | Repo | Priority | Title |
+|-------|------|:--------:|-------|
+| #265 | enclave-sdk | P0 | FROST DKG wrappers |
+| #266 | enclave-sdk | P0 | Execution context bridge |
+| #213 | conxian-nexus | P1 | ROAST coordinator |
+| #240 | lib-conxian-core | P1 | ERC-7683 intent mapping |
+
+#### Phase 2 Coverage: 9 areas, 12 recommendations
+
+DKG, ROAST, Post-Quantum, Fedimint, Intents, Simplicity, TEE Evolution, RGB, Taproot Assets.
+
+#### Artifacts
+
+- `docs/research/SIGNING_PARTNER_RESEARCH_PHASE2_DEEPENING.md` (300+ lines)
+- enclave-sdk PR #264 (FROST crypto + fixes)
+- 4 new issues across 3 repos
+
+
+---
+
+### Session 52.5.4+ — Cross-Repo SDK Capability Audit (2026-08-03)
+
+Full audit of all 12 repos against ground-truth code. Key findings:
+
+**Enclave-SDK**: 57 modules (not 46). 5 boundary-only, 4 structural-only.
+**lib-conxian-core**: 17/17 modules verified wired. No dead modules.
+**Consumer wiring**: Nexus 9/9 verified. Platform CJCS aligned. Gateway adapters need path verification.
+
+#### Issues Created (10 new)
+
+| Issue | Repo | Title |
+|-------|------|-------|
+| #267 | enclave-sdk | P0: bitvm2 Groth16 SNARK verification |
+| #268 | enclave-sdk | P1: Ark protocol signing |
+| #269 | enclave-sdk | P1: CCTP attestation verification |
+| #270 | enclave-sdk | P1: DLC CET signing |
+| #271 | enclave-sdk | P1: Lightning LDK payment execution |
+| #272 | enclave-sdk | P2: BitVM SNARK proof validation |
+| #273 | enclave-sdk | P2: Covenant enforcement |
+| #274 | enclave-sdk | P2: AGENTS.md module count update |
+| #315 | conxian-gateway | P1: Adapter file location verification |
+
+#### Total Issues: 63 across 12 repos (+10 from audit)
+
+#### Artifacts
+- `docs/research/CROSS_REPO_SDK_CAPABILITY_AUDIT_SESSION52.md` (300+ lines)
+- 10 new issues across 2 repos
+
+
+### DKG Implemented (Session 52.5.4+)
+
+FROST DKG (dkg::part1/2/3) pushed to enclave-sdk PR #264. 5-party 3-of-5 test.
+Removes trusted dealer assumption. Closes #265.
+
+---
+
+### Session 53 — Sprint-End: FROST Complete, Full Verification Sweep
+
+#### FROST Fix (enclave-sdk #264 — feat/frost-crypto-zf-v3)
+
+| Metric | Result |
+|--------|--------|
+| Compilation (`cargo check --features frost-crypto`) | ✅ 0 errors |
+| Tests (`cargo test --features frost-crypto --lib`) | ✅ **458 passed, 0 failed** |
+| frost_crypto tests (3) | ✅ all passing |
+| DKG full ceremony (3-of-5) | ✅ PASSING |
+| trusted_dealer_keygen | ✅ PASSING |
+| create_nonces_and_commitments | ✅ PASSING |
+
+**Root cause of compilation failures:** `round2::sign()` takes `&KeyPackage`, not `&SigningShare`. Changed frost_crypto.rs signing functions to deserialize `KeyPackage` and use `kp.signing_share()` for `round1::commit()`. Also fixed `dkg_part2`/`dkg_part3` use of `Identifier::deserialize` (needs full serialized scalar, not raw u16 bytes).
+
+**Pre-existing test failures fixed:** 2 stub tests in `frost.rs` and `statechain.rs` expected `ProtocolUnsupported` when `frost-crypto` feature enabled. Fixed by adding `#[cfg(not(feature = "frost-crypto"))]` gates — these tests only validate stub behavior when stubs are in use.
+
+**Pushed:** `0b0e3cd` on `feat/frost-crypto-zf-v3` (2 commits: compilation fix + test gates).
+
+#### Issues Closed This Session
+
+| Issue | Repo | Resolution |
+|-------|------|-----------|
+| #265 | enclave-sdk | ✅ DKG implemented (dkg_part1/2/3 + full ceremony test) |
+| #315 | gateway | ✅ Adapter files verified — all 4 exist at correct paths with correct core types |
+
+#### Issues Updated
+
+| Issue | Repo | Update |
+|-------|------|--------|
+| #266 | enclave-sdk | Commented: bridge gap analysis (envelope ↔ raw bytes) |
+| #274 | enclave-sdk | In progress: AGENTS.md module count update |
+
+#### Full Cross-Repo Issue Census (60 → 58 open)
+
+| Repo | Open | Delta |
+|------|------|-------|
+| conxius-enclave-sdk | **16** | ←17 (-1: #265 closed) |
+| conxian-business | 9 | — (BOS gates, research, governance) |
+| Conxian/Conxian | 9 | — (fees, sBTC, partnership, governance) |
+| conxian-gateway | **5** | ←6 (-1: #315 closed) |
+| conxius-platform | 6 | — (rulesets, auto-merge, CI scripts) |
+| conxian-nexus | 3 | — (#213 ROAST, #178 gitleaks, #174 license) |
+| conxius-wallet | 3 | — (#444 value gate, deps) |
+| conxius-orbit | 2 | — (#278 Pages, #279 CI) |
+| conxian_market | 2 | — (#6 economics, #8 treasury) |
+| lib-conxian-core | 2 | — (#98 CI, #128) |
+| conxian_ui | 1 | — (#13 buildout) |
+| conxian-labs-site | 0 | — |
+
+**58 open issues total (↓2 from Session 52.5).**
+
+#### P0 Enclave Issues (Still Open, Hardware-Blocked)
+
+| Issue | Item | Blocker |
+|-------|------|---------|
+| #240 | Attestation roots, collateral, revocation, replay | AWS account + Android hardware |
+| #241 | Android KeyMint/StrongBox + Play Integrity | Android hardware |
+| #242 | AWS Nitro attestation + KMS secret-release | AWS account |
+| #202 | Independent security review + release evidence | External audit |
+| #198 | CCTP/AA/asset metadata fail-closed | Architecture decision |
+| #266 | FROST execution context bridge | Next after #264 merge |
+| #267 | BitVM2 Groth16 SNARK verification | P0 enhancement |
+
+#### Verification Sweep Results
+
+| Check | Status |
+|-------|--------|
+| All Dependabot PRs route to `dev` (5 repos) | ✅ Verified |
+| Submodule pins at main HEAD | ✅ Verified (Session 51) |
+| Adapter file locations match AGENTS.md wiring | ✅ Verified (gateway #315) |
+| Branch promotion chain (dev→staged→main) | ✅ 3 repos synced |
+| 0 open PRs (excluding our #264) | ✅ Clean sweep |
+| conxian_market AGENTS.md + CircleCI | ✅ Bootstrapped (Session 51) |
+| orbit pages CI | ✅ Green (Session 52) |
+| deepseek workflows | ✅ Fixed (Session 52) |
+
+#### Key Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| KeyPackage over SigningShare for signing API | `round2::sign()` requires `&KeyPackage` in ZF FROST v3. API now takes key_pkg_bytes |
+| `#[cfg(not(feature = "frost-crypto"))]` for stub tests | Clean separation: stub tests only validate stubs |
+| Direct type aliases (no generics) for frost_crypto | Simpler, faster compile. No `Ciphersuite` trait bound needed |
+
+#### Open Actions for Next Sprint
+
+- [ ] Merge #264 (FROST complete) — last gate: PR review
+- [ ] #266 FROST execution context bridge (envelope ↔ raw bytes)
+- [ ] #274 AGENTS.md module count 46→57
+- [ ] #213 ROAST coordinator in nexus
+- [ ] #267 BitVM2 Groth16 (P0)
+- [ ] Enclave P0 attestation (#240-#242) — needs hardware access
