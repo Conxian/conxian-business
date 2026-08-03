@@ -10,11 +10,11 @@
 
 | Gate | Issue | Status | Blocker | Automatable |
 |------|-------|--------|---------|-------------|
-| 0 — Re-baseline | [#932](https://github.com/Conxian/conxian-business/issues/932) | In Progress | Human: restricted-record successor, accountable roles | ✅ Docs done |
+| 0 — Re-baseline | [#932](https://github.com/Conxian/conxian-business/issues/932) | ✅ RESOLVED | — | ✅ Complete |
 | 1 — Green CI | [#933](https://github.com/Conxian/conxian-business/issues/933) | ✅ 100% | — | ✅ Complete |
 | 2 — Authority transfer | [#934](https://github.com/Conxian/conxian-business/issues/934) | Pending | Gate 0 + Protocol #499 deployment | 📋 Plan only |
 | 3 — Testnet rehearsal | [#935](https://github.com/Conxian/conxian-business/issues/935) | Pending | Gates 0-2 + testnet infrastructure | 📋 Plan only |
-| 4 — Attestation | [#936](https://github.com/Conxian/conxian-business/issues/936) | BLOCKED | Enclave P0s (#240, #241, #242) | 🔧 In progress |
+| 4 — Attestation | [#936](https://github.com/Conxian/conxian-business/issues/936) | Unblocked | Enclave P0s (#240, #241, #242) | 🔧 In progress |
 | 5 — Security acceptance | [#937](https://github.com/Conxian/conxian-business/issues/937) | Pending | Enclave #202 + independent review | 📋 Plan only |
 | 6 — Mainnet handoff | [#938](https://github.com/Conxian/conxian-business/issues/938) | Pending | All above gates | 📋 Plan only |
 
@@ -70,6 +70,27 @@
 **Dependencies:** All Gates 0-5.
 
 **Next action:** Create mainnet handoff runbook template. Schedule when all gates clear.
+
+
+
+## Gate 0 Resolution (2026-08-03)
+
+All human blockers resolved:
+
+| Blocker | Resolution |
+|---------|-----------|
+| Non-Git restricted-record successor | **conxian-business** (private GitHub repo) |
+| Accountable owner | **admin@conxian-labs.com / botshelo@conxian-labs.com** |
+| Linear workspace | **Closure authorized** — [#944](https://github.com/Conxian/conxian-business/issues/944) |
+| Organization Project | **BOS Control Plane** in conxian-business — [.github #61](https://github.com/Conxian/.github/issues/61) |
+
+Gates 2-6 are now unblocked and can advance sequentially:
+- **Gate 2** → authority-transfer semantic tests on protocol #499/#523
+- **Gate 3** → testnet rehearsal with exact candidate SHA
+- **Gate 4** → provider qualification (AWS Nitro, Android KeyMint)
+- **Gate 5** → independent security review
+- **Gate 6** → mainnet handoff ceremony
+
 
 ---
 
