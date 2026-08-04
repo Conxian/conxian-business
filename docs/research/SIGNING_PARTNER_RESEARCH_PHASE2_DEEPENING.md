@@ -279,7 +279,7 @@ Asset overlay on Bitcoin using Taproot.
 | Signing | Taproot script-path spends for asset transfers |
 | Conxian Status | Not yet integrated |
 | Key Requirement | Asset metadata in Taproot leaves, signed by asset owner |
-| Integration | UniversalChainSigner (lib-conxian-core) can sign Taproot Assets transfers |
+| Integration | UniversalChainSigner (lib-conxian-core) supports cryptographic signing of Taproot Assets transfers |
 
 ---
 

@@ -403,7 +403,7 @@ FROST (ZF Frost) + MuSig2 (already implemented) + secp256k1
      └── Enclave SDK: FROST boundary → ZF FROST crypto backend
 ```
 
-**Action:** Integrate `ZcashFoundation/frost` (secp256k1) into Conxius Enclave SDK.
+**Action:** Integrate `ZcashFoundation/frost` (secp256k1) into conxius-enclave-sdk.
 Replace `ProtocolUnsupported` stubs with real cryptographic execution.
 Estimated effort: 2-4 weeks (boundary already complete).
 
