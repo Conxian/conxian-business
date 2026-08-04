@@ -1,0 +1,71 @@
+# CONXIAN LABS: STRATEGIC ACTION PLAN & ROADMAP
+
+**Author:** Botshelo Mokoka (Founder)
+
+**Objective:** Transition Conxian Labs from a bootstrapped, solo-engineered cryptographic engine into a funded, team-backed TradFi-to-Blockchain gateway.
+
+**Execution Window:** Q3/Q4 2026
+
+---
+
+## 1. ZERO-COST INFRASTRUCTURE MIGRATION
+
+**Goal:** Eliminate the out-of-pocket ZAR monthly burn rate ($55-$70 USD) by leveraging 2026 startup credits for the current development stack.
+
+* **Microsoft for Startups Founders Hub:** Apply immediately to the self-serve [Microsoft Founders Hub](https://learn.microsoft.com/en-us/startups/). This grants **$25,000 in Azure credits**, free GitHub Enterprise, free GitHub Copilot, and Azure OpenAI Service access.
+* *Action:* Migrate DeepSeek API usage in OpenHands to Azure OpenAI endpoints. Migrate `conxian-gateway` from Render to Azure Container Apps for 24/7 uptime without cold starts.
+
+
+* **Database Consolidation (Neon & Supabase):** Apply for the self-funded [Neon Startup Program](https://neon.com/startups). This provides **$1,000 in free Neon credits** (valid for 12 months) to cover serverless Postgres branching costs. Apply for Supabase startup credits to cover backend Auth and Edge Function limits.
+
+## 2. NON-DILUTIVE CAPITAL (GRANT PIPELINE)
+
+**Goal:** Secure immediate cash flow without giving up equity, using existing, highly functional code modules.
+
+* **Btrust Developer Grants (Africa Focus):** Apply for the [Btrust Starter Grant](https://www.btrust.tech/grants). As a South African developer building open-source Bitcoin infrastructure (OP_CAT, BitVM2), you fit their exact mandate for the Global South.
+* **Stacks Endowment Grants:** Pitch the Nakamoto-ready engine. Highlight that `lib-conxian-core` integrates Stacks natively into a universal signing layer using `burn-block-height`.
+* **Babylon Labs Ecosystem:** Package the Phase 1/Phase 2 `Babylon: DelegationManager` (create_delegation, activate, unbond). Pitch directly to their developer ecosystem team as a ready-made institutional staking rail.
+* **OpenSats / BitVM Grants:** Open-source the `BitVM2: Challenge/response signing` or `Covenant: OP_CAT, CTV` modules. Use these pristine repositories as portfolio pieces for pure research grants.
+
+## 3. PRE-SEED VENTURE CAPITAL STRATEGY
+
+**Goal:** Target Bitcoin-native and deep-infrastructure funds that understand the technical complexity of OP_CAT, Babylon, and universal chain signing.
+
+* **Target Funds:**
+* [Timechain](https://www.hopohopo.io/investors/timechain): $100k–$1M pre-seed checks for Bitcoin-native scaling layers.
+* [Trammell Venture Partners (TVP)](https://tvp.fund/): Thesis-driven infrastructure fund.
+* [UTXO Management](https://www.utxo.management/): Ideal for infrastructure leveraging institutional staking and covenants.
+
+
+* **Outbound Teaser Template:**
+> *Subject: Pre-Seed: Conxia-labs - Unifying OP_CAT, BitVM2, & Babylon Signing*
+> We are building the core cryptographic infrastructure to bridge TradFi capital to Bitcoin-native yield and sovereign execution layers. We have unified advanced Bitcoin scripts (OP_CAT, CTV, BitVM2, DLCs) with sovereign execution environments (Babylon, RGB, ZKML) and robust threshold cryptography (FROST DKG, MuSig2). With 577 passing tests and 14 unified signing surfaces, our architecture solves the multi-chain bottleneck for institutions without relying on vulnerable MPC bridges.
+
+
+
+## 4. TEAM BUILDOUT & CO-FOUNDER MATCHING
+
+**Goal:** Transition from a solo developer to a balanced founding team.
+
+* **Required Profiles:**
+* **Technical Co-Founder:** Distributed Systems / WASM Engineer to own the `conxian-nexus` Event Bus, scale the JSON APIs, and harden state machine sync.
+* **Commercial Co-Founder:** TradFi BD / Institutional lead to secure liquidity providers, connect with RWA tokenizers, and navigate custody.
+
+
+* **Matching Venues:**
+* Apply to [Alliance DAO](https://alliance.xyz/) and [South Park Commons](https://southparkcommons.com/). These act as premier co-founder matching engines and offer direct pipelines to top-tier auditors and early institutional checks.
+
+
+* **Public Sourcing:** Create a `WE_ARE_HIRING.md` in the primary `.github` repository. Outline the deep-tech architectural challenges (branch sync, threshold cryptography) to attract elite distributed systems engineers.
+
+## 5. IMMEDIATE ENGINEERING FOCUS
+
+**Goal:** Prevent spreading too thin across 16 repositories. Consolidate and harden the core.
+
+1. **Harden the Core:** Focus entirely on `lib-conxian-core` and the `conxian-gateway` WASM JSON API. Investors need to see the tightly scoped cryptographic core before UI or IDE interfaces.
+2. **Phase 2 SDK Completion:** Finalize the `Babylon: DelegationManager` and `BitVM2: Challenge/response signing`.
+3. **Auditor-Style Documentation:** Document the WASM API (state machine safety, schema validation, cryptographic dependencies) in the public repo to pass technical due diligence and attract top engineering talent.
+
+---
+
+You can drop this directly into your GitHub environment right now. Once you've migrated your billing and set up the startup credits, let me know, and we can immediately begin drafting the technical submission for the Btrust Starter Grant.
