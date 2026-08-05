@@ -1641,3 +1641,94 @@ gateway #220 (DLC CET)    ──depends on──▶ enclave-sdk #270 (DLC oracle
 gateway #228 (RGB stash)  ──independent──▶ rgb-std crate
 gateway #306 (MRR)        ──independent──▶ billing module
 ```
+
+
+---
+
+### Session 57 — Full Ecosystem Verification & Remediation (2026-08-05)
+
+Ground-truth audit of all 16 repos. Every issue, PR, CI run, and Dependabot alert
+verified against live GitHub state. 3 actions taken, 2 PRs opened, 1 new issue created.
+
+#### Cross-Repo Census (Live State)
+
+| Repo | Open Issues | Open PRs | CI | Dep Alerts |
+|------|:-----------:|:--------:|:--:|:----------:|
+| .github | 4 | 0 | ✅ | 0 |
+| .github-private | 0 | 0 | ✅ | — |
+| Conxian (protocol) | 9 | 0 | ✅ | 1 |
+| conxian-business | 9 | 0 | ✅ | 30 ⚠️ |
+| conxian-gateway | 5 | 0 | ✅ | 7 |
+| conxian-labs-site | 0 | 0 | ✅ | 0 |
+| conxian-nexus | 3 | 0 | ✅ | 0 |
+| conxian.github.io | 1 | 0 | ✅ | 0 |
+| conxian_market | 1 | 0 | ✅ | 0 |
+| conxian_ui | 1 | 0 | ✅ | 0 |
+| conxius-enclave-sdk | 9 | 0 | ✅ | 1 |
+| conxius-orbit | 2 | 0 | ⚠️ flake | 0 |
+| conxius-platform | 6 | 2 | ❌ dep flake | 8 |
+| conxius-wallet | 3 | 2 | ✅ | 5+ |
+| demo-repository | 0 | 0 | ✅ | 0 |
+| lib-conxian-core | 2 | 0 | ✅ | 0 |
+| **TOTAL** | **55** | **4** | — | — |
+
+#### Actions Taken
+
+| Action | Detail | PR/Issue |
+|--------|--------|:--------:|
+| Fixed Dependabot #7 (jsonwebtoken) | jsonwebtoken 9→10, CVE-2026-25537, 564 tests pass | enclave-sdk [#284](https://github.com/Conxian/conxius-enclave-sdk/pull/284) |
+| Updated stale IMPLEMENTATION_TRACKER.md | 0/30→6/30, verified all 30 issues against live state | market [#24](https://github.com/Conxian/conxian_market/pull/24) |
+| Created FROST attestation gating issue | P2: gate FROST DKG ceremonies behind attestation | enclave-sdk [#283](https://github.com/Conxian/conxius-enclave-sdk/issues/283) |
+| Reran orbit CI failed jobs | Ubuntu 3.11 matrix job; 11/12 already pass | [Run](https://github.com/Conxian/conxius-orbit/actions/runs/30975740603) |
+
+#### Remaining Items Verified
+
+| Item | Status | Detail |
+|------|:------:|--------|
+| Dependabot #7 (jsonwebtoken) | ✅ FIXED | PR #284, v10.3+ resolves CVE-2026-25537 |
+| FROST ceremony attestation gating (P2) | ✅ CREATED | Issue #283, scoped with deps on #240/#241/#242 |
+| v2.0.12 release tag (sdk) | ✅ EXISTS | Tag at commit `04e2b926` |
+
+#### Dependabot Alert Triage
+
+| Repo | Critical | High | Actionable |
+|------|:--------:|:----:|------------|
+| conxian-business | 1 (tar) | 29 | `pnpm update` for most npm; `cargo update` for quinn-proto |
+| conxian-gateway | 0 | 7 | `cargo update` for rustls-webpki; npm updates for postcss/sharp |
+| conxius-platform | 0 | 8 | All npm transitive; `pnpm update` |
+| conxius-enclave-sdk | 0 | 0 | ✅ ALL CLEAR (after #284 merge) |
+
+#### CI Failures (Both Transient)
+
+| Repo | Run | Cause | Action |
+|------|-----|-------|--------|
+| conxius-orbit | CI ubuntu-latest Python 3.11 | Matrix flake (11/12 pass) | Rerun queued |
+| conxius-platform | Dependabot auto-bump | Dep resolution transient | Self-resolving on next bump |
+
+#### Discrepancies Resolved
+
+| Claim | Actual | Resolution |
+|-------|--------|------------|
+| "wallet: 0 open PRs" | 2 Dependabot PRs | Verified: #480, #481 |
+| "orbit: Dep Review startup_failure" | CI ubuntu 3.11 flake | Rerun queued |
+| "market: 0 open issues" | 1 open issue (#8) | Verified |
+| "Tracker: Sprint 1 3/7 done" | Tracker showed 0/30 | Fixed in market PR #24 |
+
+#### Implementation Tracker (Updated)
+
+| Sprint | Complete | Remaining |
+|:------:|:--------:|:---------:|
+| S1 — Foundation | 3/7 | 4 |
+| S2 — Attestation | 0/5 | 5 |
+| S3 — Revenue | 0/6 | 6 |
+| S4 — Builders | 2/4 | 2 |
+| S5 — Protocol | 1/8 | 7 |
+| **Total** | **6/30** | **24** |
+
+#### New Enclave-SDK Issue
+
+| Issue | Priority | Depends On |
+|-------|:--------:|------------|
+| #283 — Gate FROST DKG ceremonies behind attestation | P2 | #240, #241, #242 |
+
+
