@@ -1731,4 +1731,50 @@ verified against live GitHub state. 3 actions taken, 2 PRs opened, 1 new issue c
 |-------|:--------:|------------|
 | #283 — Gate FROST DKG ceremonies behind attestation | P2 | #240, #241, #242 |
 
+### Session 57.5 — Remediation Complete (2026-08-05 05:40Z)
+
+All approved actions executed. Dependabot #7 auto-resolved fixed.
+
+#### Merged Today
+
+| PR | Repo | Action | Status |
+|:--:|------|--------|:------:|
+| #285 | enclave-sdk | jsonwebtoken 9→10 (CVE-2026-25537) | ✅ Merged |
+| #25 | market | Implementation tracker 0/30→6/30 | ✅ Merged |
+| #1222 | platform | pnpm update (8 high alerts) | ✅ Merged |
+| — | business (dev) | pnpm update + AGENTS.md (2 commits) | ✅ Pushed |
+
+#### Final PR Census
+
+| Repo | Open PRs | Notes |
+|------|:--------:|-------|
+| wallet | 2 | Dependabot auto-bumps (#480, #481) |
+| platform | 2 | 1 Dependabot (#1220) + 1 draft (#1217) |
+| All others | 0 | Clean sweep |
+
+#### Dependabot Status
+
+| Repo | Before | After |
+|------|:------:|:-----:|
+| enclave-sdk | 1 (med) | **0** ✅ |
+| platform | 8 high | Updated (transitive remain) |
+| business | 1 crit + 29 high | Updated on dev (not yet promoted) |
+| gateway | 7 high | Deferred (path deps) |
+
+#### CI Status
+
+| Repo | Status |
+|------|:------:|
+| orbit | ✅ Pages deploy success (rerun resolved flake) |
+| All others | ✅ Green |
+
+#### Total Session 57 Impact
+
+- **3 PRs merged** (enclave-sdk, market, platform)
+- **2 commits pushed** (business dev)
+- **1 new issue created** (enclave-sdk #283 FROST attestation)
+- **1 Dependabot alert auto-resolved** (enclave-sdk #7 jsonwebtoken)
+- **6/30 tracker items verified & documented**
+- **AGENTS.md updated** with full census + triage
+
 
