@@ -25,7 +25,7 @@ jobs:
       - checkout
       - run:
           name: Initialize submodules
-          command: git submodule update --init --recursive
+          command: git submodule sync --recursive && for sub in Conxian conxian-gateway conxian-labs-site conxian-nexus conxian-ui conxius-enclave-sdk conxius-orbit conxius-platform conxius-wallet lib-conxian-core; do git submodule update --init --depth 1 "$sub"; done && git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
       - run:
           name: Authenticate with GCP
           command: |
@@ -71,7 +71,7 @@ jobs:
       - checkout
       - run:
           name: Initialize submodules
-          command: git submodule update --init --recursive
+          command: git submodule sync --recursive && for sub in Conxian conxian-gateway conxian-labs-site conxian-nexus conxian-ui conxius-enclave-sdk conxius-orbit conxius-platform conxius-wallet lib-conxian-core; do git submodule update --init --depth 1 "$sub"; done && git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
       - run:
           name: Install Firebase CLI
           command: sudo npm install -g firebase-tools
@@ -90,7 +90,7 @@ jobs:
       - checkout
       - run:
           name: Initialize submodules
-          command: git submodule update --init --recursive
+          command: git submodule sync --recursive && for sub in Conxian conxian-gateway conxian-labs-site conxian-nexus conxian-ui conxius-enclave-sdk conxius-orbit conxius-platform conxius-wallet lib-conxian-core; do git submodule update --init --depth 1 "$sub"; done && git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
       - run:
           name: Install Vercel CLI
           command: sudo npm install -g vercel
