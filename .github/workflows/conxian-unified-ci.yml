@@ -271,7 +271,7 @@ jobs:
         cargo test --locked
         cargo clippy --locked --all-targets --all-features -- -D warnings
     - name: Install cargo-audit
-      uses: taiki-e/install-action@41049aa56687c35e0afa74eed4f09cec4f9afabf # v2
+      uses: taiki-e/install-action@67729d5c413db75907f0ad1e39bb04b9c868ff60 # v2
       with:
         tool: cargo-audit@0.22.1
     - name: Dependency audit
