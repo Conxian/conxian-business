@@ -29,13 +29,24 @@ executors:
     resource_class: medium
 
 commands:
+  checkout-repo:
+    description: "Clone repo via HTTPS (no SSH key needed)"
+    steps:
+      - run:
+          name: Clone repository
+          command: |
+            git clone --depth 1 https://x-access-token:${GH_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git .
+            git config user.email "circleci@conxian.io"
+            git config user.name "CircleCI"
+
   checkout-submodules:
     description: "Checkout repo with public submodules (conxian-market is private)"
     steps:
-      - checkout
+      - checkout-repo
       - run:
           name: Initialize public submodules
           command: |
+            git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
             git submodule sync --recursive
             for sub in Conxian conxian-gateway conxian-labs-site conxian-nexus \
                        conxian-ui conxius-enclave-sdk conxius-orbit conxius-platform \
@@ -106,7 +117,7 @@ jobs:
   gitleaks:
     executor: python-executor
     steps:
-      - checkout
+      - checkout-repo
       - run:
           name: Run gitleaks detect
           command: |
@@ -152,7 +163,7 @@ jobs:
   root-audit:
     executor: node-executor
     steps:
-      - checkout
+      - checkout-repo
       - run:
           name: Install pnpm
           command: sudo npm install -g pnpm@9
