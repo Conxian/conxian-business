@@ -16,14 +16,24 @@ jobs:
       - name: Checkout repository (pinned submodule SHAs)
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
         with:
-          submodules: recursive
-          token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+          submodules: false
           persist-credentials: false
 
       - name: Ensure submodules are initialized
         run: |
           git submodule sync --recursive
-          git submodule update --init
+          # Init public submodules only. conxian-market is private (update=none).
+          git submodule update --init -- \
+            Conxian \
+            conxian-gateway \
+            conxian-labs-site \
+            conxian-nexus \
+            conxian-ui \
+            conxius-enclave-sdk \
+            conxius-orbit \
+            conxius-platform \
+            conxius-wallet \
+            lib-conxian-core
           git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
 
       - name: Setup Python

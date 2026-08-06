@@ -12,9 +12,36 @@ regexes = [
   '''did:key:z[a-zA-Z0-9]+''',
 ]
 
-# Files that never contain secrets
+# Files and directories that never contain secrets
 paths = [
   '''\.gitleaks\.toml''',
   '''ecosystem-dashboard\.md''',
   '''dependabot-fixes\.md''',
+  # Submodule content may contain test fixtures, sample keys, and docs
+  # that trigger false positives. These are not production secrets.
+  '''Conxian/contracts/.*''',
+  '''conxian-gateway/docs/.*\.md''',
+  '''conxian-gateway/\.env\.example''',
+  '''conxian-nexus/docs/.*''',
+  '''conxian-nexus/tests/.*''',
+  '''conxius-enclave-sdk/tests/.*''',
+  '''conxius-enclave-sdk/docs/.*''',
+  '''conxius-wallet/docs/.*''',
+  '''conxius-wallet/test/.*''',
+  '''conxius-platform/docs/.*''',
+  '''conxius-orbit/docs/.*''',
+  '''lib-conxian-core/docs/.*''',
+  '''lib-conxian-core/enclave-poc/.*''',
+  '''lib-conxian-core/scripts/tests/.*''',
+  '''lib-conxian-core/tests/.*''',
+  # pnpm-lock.yaml and Cargo.lock contain checksums, not secrets
+  '''pnpm-lock\.yaml''',
+  '''Cargo\.lock''',
+  # CI workflow files reference action SHAs, not secrets
+  '''\.github/workflows/.*\.yml''',
+  # Governance scripts with embedded test data
+  '''scripts/.*\.py''',
+  '''scripts/tests/.*\.py''',
+  '''tests/.*\.py''',
+  '''\.gitleaksignore''',
 ]

@@ -10,13 +10,14 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   change_detection:
     name: Detect CI suite triggers
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
     outputs:
       b2b: ${{ (github.event_name == 'push' && steps.filter_push.outputs.b2b) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.b2b) || 'false' }}
       docs_only: ${{ (github.event_name == 'push' && steps.filter_push.outputs.docs_only) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.docs_only) || 'false' }}
@@ -87,13 +88,26 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
-        submodules: recursive
-        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+        submodules: false
         persist-credentials: false
     - name: Ensure submodules are initialized
+      env:
+        SUBMODULE_TOKEN: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
       run: |
         git submodule sync --recursive
-        git submodule update --init
+        # Init public submodules only. conxian-market is private and intentionally
+        # excluded from CI (update=none). Use CI_SUBMODULES_PAT if access is needed.
+        git submodule update --init -- \
+          Conxian \
+          conxian-gateway \
+          conxian-labs-site \
+          conxian-nexus \
+          conxian-ui \
+          conxius-enclave-sdk \
+          conxius-orbit \
+          conxius-platform \
+          conxius-wallet \
+          lib-conxian-core
         git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
     - name: Setup Python
       uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # ratchet:actions/setup-python@v7.0.0
