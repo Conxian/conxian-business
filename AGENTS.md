@@ -1777,4 +1777,53 @@ All approved actions executed. Dependabot #7 auto-resolved fixed.
 - **6/30 tracker items verified & documented**
 - **AGENTS.md updated** with full census + triage
 
+### Session 58 — Org-Wide Submodule Bump & Branch Reconciliation (2026-08-07)
+
+#### Submodule Bumps — All 7 Stale Pins to Latest Main
+
+| Submodule | Before | After | Delta |
+|-----------|--------|-------|:-----:|
+| conxian-gateway | a08fb9f | 2abfbcc | +27 |
+| conxius-enclave-sdk | dd73e8d | fbef269 | +10 |
+| conxian-nexus | d982924 | 883fd65 | +7 |
+| conxian-market | 403c4c3 | 276d9f4 | +5 |
+| conxius-wallet | 76dd852 | 9a204cb | +2 |
+| lib-conxian-core | 951ac57 | 0e29d7d | +2 |
+| conxius-platform | 0d36114 | 52aee16 | +1 |
+
+#### Branch Reconciliation — main ↔ dev
+
+- Merged `dev` (6 commits: Session 57 docs, doctrine fixes, pnpm update) → `main`
+- Merged 6 Dependabot PRs (#1016–#1021) → `dev`
+- Promoted updated `dev` → `main` (resolved pnpm-lock + unified-ci conflicts)
+- **Main and dev now fully reconciled**; main contains all dev work
+
+#### Dependabot PRs Merged
+
+| PR | Dependency | Target |
+|:--:|-----------|--------|
+| #1016 | pnpm/action-setup 6.0.10 | dev |
+| #1017 | @types/react 19.2.18 | dev |
+| #1018 | redis 1.5.0 | dev |
+| #1019 | react-dom + @types/react-dom | dev |
+| #1020 | lucide-react 1.28.0 | dev |
+| #1021 | taiki-e/install-action 2.85.7 | dev |
+
+#### BOS-001 Gate Status (Unchanged — All Require Human Ops)
+
+| Gate | Status | Blocker |
+|------|:------:|---------|
+| #934 Gate 2 — Authority transfer | NOT MET | Deployment evidence needed |
+| #935 Gate 3 — Testnet rehearsal | NOT MET | Exact-candidate bundle needed |
+| #936 Gate 4 — HW attestation | BLOCKED | Provider qualification needed |
+| #937 Gate 5 — Security acceptance | BLOCKED | SBOM/provenance needed |
+| #938 Gate 6 — Mainnet handoff | NOT AUTHORIZED | All prior gates needed |
+
+#### Final Org State
+
+- **15 repos** in Conxian org, **11 submodules** all at latest main
+- **0 open Dependabot PRs** on business repo (all merged)
+- **13 open issues** (6 deps resolved, 7 strategic/gate open)
+- **Main ahead of origin/main by 15 commits** (awaiting push)
+
 
