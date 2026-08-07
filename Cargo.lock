@@ -2513,7 +2513,7 @@ dependencies = [
 [[package]]
 name = "conxius-enclave-sdk"
 version = "2.0.15"
-source = "git+https://github.com/Conxian/conxius-enclave-sdk?tag=v2.0.15#5cf890bfd6c6fc3ffcd43593d68fe9c94ea61a49"
+source = "git+https://github.com/Conxian/conxius-enclave-sdk?tag=v2.0.15#5bb1e3e6ea36901ce67ad3ff1e82355161221180"
 dependencies = [
  "aes",
  "aes-gcm",
