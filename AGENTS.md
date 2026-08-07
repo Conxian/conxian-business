@@ -2,7 +2,7 @@
 
 ## BOS Operational Standards
 > **Framework**: Multi-Dimensional ITIL5-Aligned Knowledge Architecture
-> **Version**: 1.2 (2026-08-01 — Session 47)
+> **Version**: 1.2 (2026-08-01 — Session 58)
 > **Reference**: `docs/BOS_KNOWLEDGE_FRAMEWORK.md`
 
 ---
@@ -10,7 +10,7 @@
 ### Session 48 KB — Full Capability Audit & All Wiring Gaps Closed
 
 Deep cross-repo audit of every `lib.rs` ground truth, every `mod.rs` declaration,
-every `use` import, and every struct field. All 4 gaps identified in Session 47
+every `use` import, and every struct field. All 4 gaps identified in Session 58
 are now closed. Submodules bumped to latest main.
 
 #### SDK Capability Map (Ground Truth from lib.rs)
