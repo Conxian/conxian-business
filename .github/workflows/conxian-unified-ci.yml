@@ -10,31 +10,74 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-  pull-requests: read
-
 jobs:
   change_detection:
     name: Detect CI suite triggers
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     outputs:
-      b2b: ${{ steps.classify.outputs.b2b }}
-      docs_only: ${{ steps.classify.outputs.docs_only }}
-      code_impacting: ${{ steps.classify.outputs.code_impacting }}
+      b2b: ${{ (github.event_name == 'push' && steps.filter_push.outputs.b2b) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.b2b) || 'false' }}
+      docs_only: ${{ (github.event_name == 'push' && steps.filter_push.outputs.docs_only) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.docs_only) || 'false' }}
+      code_impacting: ${{ (github.event_name == 'push' && steps.filter_push.outputs.code_impacting) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.code_impacting) || 'true' }}
     steps:
-    - name: Classify change scope
-      id: classify
+    - name: Classify PR change scope
+      if: github.event_name == 'pull_request'
+      id: classify_pr
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # ratchet:actions/github-script@v9.0.0
+      with:
+        script: |
+          const pr = context.payload.pull_request;
+          if (!pr) {
+            core.setOutput('b2b', 'false');
+            core.setOutput('docs_only', 'false');
+            core.setOutput('code_impacting', 'true');
+            return;
+          }
+
+          const changedFiles = await github.paginate(github.rest.pulls.listFiles, {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: pr.number,
+            per_page: 100,
+          });
+
+          const paths = changedFiles.map((file) => file.filename);
+
+          const isDocsOnlyPath = (path) => (
+            path.startsWith('docs/') ||
+            path.endsWith('.md') ||
+            path.endsWith('.rst') ||
+            path === 'SUMMARY.md' ||
+            path === 'CHANGELOG.md' ||
+            (path.startsWith('.github/') && path.endsWith('.md'))
+          );
+
+          const codeImpacting = paths.some((path) => !isDocsOnlyPath(path));
+          const docsOnly = !codeImpacting;
+          const b2b = paths.some((path) => (
+            path === 'conxian-nexus' ||
+            path.startsWith('conxian-nexus/') ||
+            path === 'conxius-enclave-sdk' ||
+            path.startsWith('conxius-enclave-sdk/') ||
+            path === '.gitmodules'
+          ));
+
+          core.setOutput('b2b', b2b ? 'true' : 'false');
+          core.setOutput('docs_only', docsOnly ? 'true' : 'false');
+          core.setOutput('code_impacting', codeImpacting ? 'true' : 'false');
+
+          core.info(`Detected ${paths.length} changed files for PR #${pr.number}.`);
+          core.info(`b2b=${b2b}, docs_only=${docsOnly}, code_impacting=${codeImpacting}`);
+
+    - name: Default push classification
+      if: github.event_name == 'push'
+      id: filter_push
       run: |
-        if [ "${{ github.event_name }}" = "push" ]; then
-          echo "b2b=true" >> "$GITHUB_OUTPUT"
-          echo "docs_only=false" >> "$GITHUB_OUTPUT"
-          echo "code_impacting=true" >> "$GITHUB_OUTPUT"
-          exit 0
-        fi
-        echo "b2b=false" >> "$GITHUB_OUTPUT"
-        echo "docs_only=false" >> "$GITHUB_OUTPUT"
-        echo "code_impacting=true" >> "$GITHUB_OUTPUT"
+        echo "b2b=true" >> $GITHUB_OUTPUT
+        echo "docs_only=false" >> $GITHUB_OUTPUT
+        echo "code_impacting=true" >> $GITHUB_OUTPUT
 
   repo-hygiene:
     name: Repo Hygiene (ZSE & Submodules)
@@ -44,19 +87,13 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
-        submodules: false
+        submodules: recursive
+        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Ensure submodules are initialized
       run: |
-        set -e
         git submodule sync --recursive
-        # Init each public submodule individually, skipping conxian-market
-        # which is private (update=none). github.token lacks cross-repo access.
-        for sub in Conxian conxian-gateway conxian-labs-site conxian-nexus \
-                   conxian-ui conxius-enclave-sdk conxius-orbit conxius-platform \
-                   conxius-wallet lib-conxian-core; do
-          git submodule update --init --depth 1 "$sub"
-        done
+        git submodule update --init
         git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
     - name: Setup Python
       uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # ratchet:actions/setup-python@v7.0.0
@@ -234,7 +271,7 @@ jobs:
         cargo test --locked
         cargo clippy --locked --all-targets --all-features -- -D warnings
     - name: Install cargo-audit
-      uses: taiki-e/install-action@6a1bd70eaac3c8bdf093356838d7ee09fda951cf # v2
+      uses: taiki-e/install-action@67729d5c413db75907f0ad1e39bb04b9c868ff60 # v2
       with:
         tool: cargo-audit@0.22.1
     - name: Dependency audit
@@ -274,7 +311,7 @@ jobs:
         token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
     - name: Setup pnpm
-      uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271  # ratchet:pnpm/action-setup@v6
+      uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86  # ratchet:pnpm/action-setup@v6
       with:
         version: 9.15.9
         run_install: false
