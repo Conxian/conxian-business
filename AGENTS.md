@@ -1872,4 +1872,31 @@ The business repo uses **git submodules** for source tracking, but Rust crates r
 - Updating Cargo.toml pins changes what `cargo build` actually compiles
 - **Both must be kept in sync** for the dependency chain to be consistent
 
+#### Cargo Workspace Lesson: Lock File Resolution
+
+The business monorepo has a root `Cargo.toml` workspace. Running `cargo update` in `conxian-nexus/` resolves against the workspace root, so the lock file at `conxian-business/Cargo.lock` gets updated — NOT `conxian-nexus/Cargo.lock`. To update a sub-crate's lock file for CI (where the crate is its own workspace root), temporarily remove the parent `Cargo.toml` workspace before running `cargo update`.
+
+### Session 58.6 — P0/P1/P2 Completion & Nexus CI Fix (2026-08-07)
+
+#### P0-P1 Complete
+All P0 (dependency drift) and P1 (deprecation cleanup) items complete. Tags pushed:
+- **conxius-enclave-sdk** v2.0.15 (commit `5cf890b`): P1 dead code cleanup included
+- **lib-conxian-core** v0.3.2 (commit `59202da`): 5 deprecated APIs removed, pins enclave-sdk v2.0.15
+- **conxian-gateway** main: uses `tag = "v0.3.2"` for lib-conxian-core
+
+#### Nexus PR #220 CI Fix
+Root cause: `sed 's/version = "0.3.1"/"0.3.2"/' Cargo.lock` was too broad — changed `rand_chacha` 0.3.1 → 0.3.2 (nonexistent on crates.io). Additionally, the workspace root Cargo.toml caused `cargo update` to generate lock in the wrong location. Fix:
+1. P1 dead code in enclave-sdk fixed (2 commits: ensure_operation_signature_is_bound + telemetry helpers + unused imports)
+2. Cargo.lock regenerated from clean baseline with workspace root temporarily removed
+3. PR #220 merged: Build & Test ✅ SUCCESS
+
+#### Final Org State
+| Crate | Tag | Commit |
+|-------|-----|--------|
+| conxius-enclave-sdk | v2.0.15 | 5cf890b |
+| lib-conxian-core | v0.3.2 | 59202da |
+| conxian-gateway | — | main (pins v0.3.2) |
+| conxian-nexus | — | main (PR #220 merged) |
+| conxian-business | — | main (all submodules synced) |
+
 
