@@ -1826,4 +1826,50 @@ All approved actions executed. Dependabot #7 auto-resolved fixed.
 - **13 open issues** (6 deps resolved, 7 strategic/gate open)
 - **Main ahead of origin/main by 15 commits** (awaiting push)
 
+### Session 58.5 — P0 Dependency Drift Remediation + P1 Deprecation Cleanup (2026-08-07)
+
+#### P0 — Cross-Repo Dependency Chain Fixed
+
+| Crate | Before | After | Delta |
+|-------|--------|-------|:-----:|
+| **conxius-enclave-sdk** | v2.0.14 (`098e2ac`) | **v2.0.15** (`d7555d7`) | +58 commits |
+| **lib-conxian-core** | v0.3.1 → pin v2.0.14 | **v0.3.2** → pin v2.0.15 | +3 commits |
+| **conxian-gateway** (Cargo.toml) | rev `f2ec1a4` | **tag `v0.3.2`** | -8 commit drift |
+| **conxian-nexus** (Cargo.toml) | rev `89ebdfc2` | **tag `v0.3.2`** | PR #220 |
+
+Dependency chain now consistent:
+```
+gateway → lib-conxian-core v0.3.2 → conxius-enclave-sdk v2.0.15
+nexus   → lib-conxian-core v0.3.2 → conxius-enclave-sdk v2.0.15
+```
+
+#### P1 — Deprecated API Removal
+
+| Crate | Removed | Lines Deleted |
+|-------|:-------:|:------------:|
+| lib-conxian-core | 5 deprecated fns | -65 |
+| conxius-enclave-sdk | 7 deprecated fns/structs | -419 |
+
+Zero downstream consumers affected — all deprecated APIs had `_checked` replacements already in use.
+
+#### P2 — Pre-Release Dependency Watchlist
+
+| Dependency | Current | Risk | Action When |
+|-----------|---------|------|------------|
+| `bitcoin` | **0.33.0-beta** | API instability | Track for 0.33.0 stable release |
+| `secp256k1` | **0.32.0-beta.2** | API instability | Track for 0.32.0 stable release |
+| `rgb-std` | **0.12.0-rc.3** | Pre-release | Track for 0.12.0 stable release |
+| `cryptoki` | **0.10** | Pre-1.0 (unstable API) | Track for 1.0 |
+| `webauthn-rs` | **0.5** | Pre-1.0 (unstable API) | Track for 1.0 |
+| `frost-secp256k1-tr` | **git (ZcashFoundation)** | Not on crates.io | Track for crates.io publication |
+
+**Monitoring**: All 5 pre-release deps are in `conxius-enclave-sdk`. `rgb-std` is in `lib-conxian-core`. CI runs `cargo audit` and `cargo deny` to catch advisories. No immediate action needed — track upstream releases.
+
+#### Architectural Note: Submodule vs Cargo Dependency
+
+The business repo uses **git submodules** for source tracking, but Rust crates resolve dependencies from **GitHub at pinned revisions in Cargo.toml**. These are independent mechanisms:
+- Bumping a submodule updates local source code for inspection
+- Updating Cargo.toml pins changes what `cargo build` actually compiles
+- **Both must be kept in sync** for the dependency chain to be consistent
+
 
