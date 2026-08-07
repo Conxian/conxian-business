@@ -1,5 +1,114 @@
 {
   "$schema": "external-semantic-sources.schema.v1.json",
   "schemaVersion": "1.0.0",
-  "sources": []
+  "sources": [
+    {
+      "id": "iso20022",
+      "name": "ISO 20022 Financial Messaging Standard",
+      "repositoryUrl": "https://www.iso20022.org/",
+      "commitSha": "0000000000000000000000000000000000000000",
+      "archiveUrl": "https://www.iso20022.org/iso-20022-message-definitions.pdf/0000000000000000000000000000000000000000",
+      "archiveSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "observedDate": "2026-08-07",
+      "state": "research-only",
+      "review": {
+        "disposition": "approved-for-research",
+        "reference": "docs/ISO_20022_INTEGRATION_SPEC.md"
+      },
+      "selectedFiles": [],
+      "importClosure": {
+        "status": "not-evaluated",
+        "imports": [],
+        "evidence": null
+      },
+      "notices": {
+        "rootLicense": null,
+        "files": []
+      },
+      "extensionNamespace": {
+        "uri": "https://conxian.com/iso20022",
+        "owner": "Conxian"
+      },
+      "transformations": {
+        "status": "not-evaluated",
+        "rationale": "ISO 20022 XML schemas used as reference for gateway message mapping",
+        "records": [],
+        "evidence": null
+      },
+      "sbomHandoff": {
+        "status": "not-ready",
+        "evidence": null
+      },
+      "claims": {
+        "supported": [],
+        "notSupported": [
+          "registry presence alone as adoption",
+          "legal advice",
+          "endorsement",
+          "certification",
+          "partnership",
+          "compliance evidence",
+          "authority evidence",
+          "attestation evidence",
+          "candidate acceptance",
+          "release approval",
+          "BOS Gate 0-6 advancement"
+        ]
+      }
+    },
+    {
+      "id": "stacks-blockchain",
+      "name": "Stacks Blockchain L1",
+      "repositoryUrl": "https://github.com/stacks-network/stacks-core",
+      "commitSha": "0000000000000000000000000000000000000000",
+      "archiveUrl": "https://github.com/stacks-network/stacks-core/0000000000000000000000000000000000000000",
+      "archiveSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "observedDate": "2026-08-07",
+      "state": "research-only",
+      "review": {
+        "disposition": "approved-for-research",
+        "reference": "docs/architecture/CONXIAN_L3_PROFILE_ADR.md"
+      },
+      "selectedFiles": [],
+      "importClosure": {
+        "status": "not-evaluated",
+        "imports": [],
+        "evidence": null
+      },
+      "notices": {
+        "rootLicense": null,
+        "files": []
+      },
+      "extensionNamespace": {
+        "uri": "https://conxian.com/stacks",
+        "owner": "Conxian"
+      },
+      "transformations": {
+        "status": "not-evaluated",
+        "rationale": "Stacks L1 consumed as canonical truth layer for Conxian L3",
+        "records": [],
+        "evidence": null
+      },
+      "sbomHandoff": {
+        "status": "not-ready",
+        "evidence": null
+      },
+      "claims": {
+        "supported": [],
+        "notSupported": [
+          "registry presence alone as adoption",
+          "legal advice",
+          "endorsement",
+          "certification",
+          "partnership",
+          "compliance evidence",
+          "authority evidence",
+          "attestation evidence",
+          "candidate acceptance",
+          "release approval",
+          "BOS Gate 0-6 advancement"
+        ]
+      }
+    }
+  ]
 }

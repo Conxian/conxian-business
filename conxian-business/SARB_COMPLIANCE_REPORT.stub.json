@@ -1,15 +1,43 @@
 {
-  "report_id": "CXN-REDACTED-000",
-  "identity": "redacted",
-  "timestamp": "1970-01-01T00:00:00Z",
-  "compliance_model": "redacted",
-  "regulations": [],
-  "mitigation_strategies": {},
-  "identifiers": {},
-  "verification": {},
-  "note": "Public-safe stub. Internal compliance reports and identifiers are maintained in the Conxian Linear workspace.",
-  "linear": {
-    "workspace": "https://linear.app/conxian-labs",
-    "tracking_issue": "https://linear.app/conxian-labs/issue/CON-256"
-  }
+  "report_id": "CXN-SARB-2026-001",
+  "identity": "Conxian-Labs (Pty) Ltd",
+  "timestamp": "2026-08-07T21:00:00Z",
+  "compliance_model": "SARB FinTech Sandbox & Crypto Asset FSP Guidance Note",
+  "regulations": [
+    {
+      "id": "FIC-ACT-2001",
+      "name": "Financial Intelligence Centre Act, 2001",
+      "applicability": "Crypto Asset Service Provider obligations",
+      "status": "monitoring"
+    },
+    {
+      "id": "SARB-CASP-2025",
+      "name": "SARB Crypto Asset Service Provider Guidance",
+      "applicability": "Registration pathway pending",
+      "status": "preparing"
+    },
+    {
+      "id": "POPIA-2013",
+      "name": "Protection of Personal Information Act, 2013",
+      "applicability": "Data minimization, purpose limitation",
+      "status": "compliant_by_design"
+    }
+  ],
+  "mitigation_strategies": {
+    "non_custodial_architecture": "Keys remain on-device in TEE StrongBox; no customer funds held",
+    "zero_knowledge_compliance": "ZKC verifier proves regulatory predicates without raw data exposure",
+    "jurisdictional_sharding": "Clarity compliance-hooks.clar enforces per-jurisdiction policy",
+    "travel_rule": "ISO 20022 pacs.008 with ZKP-based originator/beneficiary attestations"
+  },
+  "identifiers": {
+    "registration_number": "On file",
+    "tax_number": "On file with SARS",
+    "legal_entity_identifier": "Pending LEI issuance"
+  },
+  "verification": {
+    "external_audit": "Not yet commissioned (pre-revenue)",
+    "internal_review": "Sovereign Strategy Nexus — March 2026 mandate",
+    "automated_checks": "scripts/verify_doctrine_alignment.py enforces non-custodial boundary"
+  },
+  "note": "Public-safe summary. Detailed identifiers and legal opinions maintained in Linear: https://linear.app/conxian-labs/issue/CON-256. Does not constitute legal advice."
 }
