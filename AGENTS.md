@@ -27,8 +27,13 @@
 | conxian-gateway | 🟢 Green | Secret scan, Node.js CI, cargo audit pass |
 | conxian-nexus | 🟢 Green | Build & Test, CodeQL, cargo audit pass |
 | conxius-enclave-sdk | 🟡 Coverage Enforcement | Known false-positive (crates.io rate-limit) |
-| conxian-business | 🔴 No runner available | `runner_name: ""` — jobs fail in queue; admin intervention needed |
-| conxian-business | 🔴 Secret Scan (gitleaks) | Blocked by org-level ruleset — admin intervention needed |
+| conxian-business | 🔴 No runner available | `runner_name: ""` — all jobs fail in queue; admin intervention needed |
+
+### Secrets Configured
+| Secret | Where | Status |
+|--------|-------|--------|
+| GITLEAKS_LICENSE | repo → Settings → Actions secrets | ✅ Set (license key present) |
+| CI_SUBMODULES_PAT | repo? | Unknown — may be needed for repo-hygiene submodule init |
 
 ### Active PRs (none)
 - **0 open PRs across all repos**.
@@ -86,8 +91,7 @@ cargo test --workspace --locked
 | Submodule pin drift | `git submodule update --remote && git add . && git commit` |
 | Branch protection | Verify feature→dev→staged→main promotion path |
 | PR body missing checklist | Add checklist per `docs/PROMOTION_CHECKLISTS.md` |
-| conxian-business: runner unavailable | Admin → Settings → Actions → Runners: verify GitHub-hosted runners enabled |
-| conxian-business: gitleaks blocked | Admin → Org rulesets: remove or update gitleaks blocking rule |
+| conxian-business: runner unavailable | Admin -> Settings -> Actions -> Runners: verify GitHub-hosted runners enabled for this repo |
 | enclave-sdk: Coverage Enforcement | Known false-positive (crates.io rate-limit after publish) |
 
 ### Common Operations
