@@ -1,7 +1,7 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
-> **Version**: 1.3 (2026-08-07 — Session 58)
+> **Version**: 1.4 (2026-08-08 — Session 59)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
 
 ---
@@ -20,14 +20,18 @@
 | conxius-orbit | — | — | — | — |
 | conxius-wallet | — | — | — | — |
 
-### CI Status
-All repos green on main. Known non-blocking issues:
-- **enclave-sdk Release Strict**: Publish verify step false-positive (crates.io rate-limit); crate is live.
-- **Secret Scan (gitleaks)**: Blocked by org-level ruleset — admin intervention needed.
+### CI Status (2026-08-08)
+| Repo | Status | Note |
+|------|--------|------|
+| lib-conxian-core | 🟢 Green | All CI, audit, hygiene check pass |
+| conxian-gateway | 🟢 Green | Secret scan, Node.js CI, cargo audit pass |
+| conxian-nexus | 🟢 Green | Build & Test, CodeQL, cargo audit pass |
+| conxius-enclave-sdk | 🟡 Coverage Enforcement | Known false-positive (crates.io rate-limit) |
+| conxian-business | 🔴 No runner available | `runner_name: ""` — jobs fail in queue; admin intervention needed |
+| conxian-business | 🔴 Secret Scan (gitleaks) | Blocked by org-level ruleset — admin intervention needed |
 
-### Active PRs
-- **conxian-nexus #221**: `fix/dependency-policy-v0.3.2` — dependency policy v0.3.2 alignment, all CI green.
-- **conxian-nexus #222**: `docs/version-fix` — README version badge fix.
+### Active PRs (none)
+- **0 open PRs across all repos**.
 
 ---
 
@@ -82,6 +86,9 @@ cargo test --workspace --locked
 | Submodule pin drift | `git submodule update --remote && git add . && git commit` |
 | Branch protection | Verify feature→dev→staged→main promotion path |
 | PR body missing checklist | Add checklist per `docs/PROMOTION_CHECKLISTS.md` |
+| conxian-business: runner unavailable | Admin → Settings → Actions → Runners: verify GitHub-hosted runners enabled |
+| conxian-business: gitleaks blocked | Admin → Org rulesets: remove or update gitleaks blocking rule |
+| enclave-sdk: Coverage Enforcement | Known false-positive (crates.io rate-limit after publish) |
 
 ### Common Operations
 ```bash
