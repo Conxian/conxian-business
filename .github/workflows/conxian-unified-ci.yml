@@ -18,21 +18,29 @@ jobs:
       contents: read
       pull-requests: read
     outputs:
-      b2b: ${{ (github.event_name == 'push' && steps.filter_push.outputs.b2b) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.b2b) || 'false' }}
-      docs_only: ${{ (github.event_name == 'push' && steps.filter_push.outputs.docs_only) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.docs_only) || 'false' }}
-      code_impacting: ${{ (github.event_name == 'push' && steps.filter_push.outputs.code_impacting) || (github.event_name == 'pull_request' && steps.classify_pr.outputs.code_impacting) || 'true' }}
+      b2b: ${{ steps.classify.outputs.b2b || 'false' }}
+      docs_only: ${{ steps.classify.outputs.docs_only || 'false' }}
+      code_impacting: ${{ steps.classify.outputs.code_impacting || 'true' }}
     steps:
-    - name: Classify PR change scope
-      if: github.event_name == 'pull_request'
-      id: classify_pr
+    - name: Classify change scope
+      id: classify
       uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # ratchet:actions/github-script@v9.0.0
       with:
         script: |
+          if (context.eventName === 'push') {
+            core.setOutput('b2b', 'true');
+            core.setOutput('docs_only', 'false');
+            core.setOutput('code_impacting', 'true');
+            core.info('Push event — treating as full code-impacting change.');
+            return;
+          }
+
           const pr = context.payload.pull_request;
           if (!pr) {
             core.setOutput('b2b', 'false');
             core.setOutput('docs_only', 'false');
             core.setOutput('code_impacting', 'true');
+            core.info('No pull_request payload found; defaulting to code-impacting.');
             return;
           }
 
@@ -71,14 +79,6 @@ jobs:
           core.info(`Detected ${paths.length} changed files for PR #${pr.number}.`);
           core.info(`b2b=${b2b}, docs_only=${docsOnly}, code_impacting=${codeImpacting}`);
 
-    - name: Default push classification
-      if: github.event_name == 'push'
-      id: filter_push
-      run: |
-        echo "b2b=true" >> $GITHUB_OUTPUT
-        echo "docs_only=false" >> $GITHUB_OUTPUT
-        echo "code_impacting=true" >> $GITHUB_OUTPUT
-
   repo-hygiene:
     name: Repo Hygiene (ZSE & Submodules)
     runs-on: ubuntu-latest
@@ -87,14 +87,20 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
-        submodules: recursive
-        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
-    - name: Ensure submodules are initialized
+    - name: Initialize submodules
+      env:
+        SUBMODULE_TOKEN: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
       run: |
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf "https://github.com/"
+        fi
         git submodule sync --recursive
-        git submodule update --init
+        git submodule update --init --recursive
         git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global --unset url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf
+        fi
     - name: Setup Python
       uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # ratchet:actions/setup-python@v7.0.0
       with:
@@ -188,9 +194,19 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
-        submodules: recursive
-        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
+    - name: Initialize submodules
+      env:
+        SUBMODULE_TOKEN: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+      run: |
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf "https://github.com/"
+        fi
+        git submodule sync --recursive
+        git submodule update --init --recursive
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global --unset url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf
+        fi
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9  # ratchet:dtolnay/rust-toolchain@v1
       with:
@@ -223,9 +239,19 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
-        submodules: recursive
-        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
+    - name: Initialize submodules
+      env:
+        SUBMODULE_TOKEN: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+      run: |
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf "https://github.com/"
+        fi
+        git submodule sync --recursive
+        git submodule update --init --recursive
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global --unset url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf
+        fi
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9  # ratchet:dtolnay/rust-toolchain@v1
       with:
@@ -254,9 +280,19 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
-        submodules: recursive
-        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
+    - name: Initialize submodules
+      env:
+        SUBMODULE_TOKEN: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+      run: |
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf "https://github.com/"
+        fi
+        git submodule sync --recursive
+        git submodule update --init --recursive
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global --unset url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf
+        fi
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
       with:
@@ -307,9 +343,19 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
-        submodules: recursive
-        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
+    - name: Initialize submodules
+      env:
+        SUBMODULE_TOKEN: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+      run: |
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf "https://github.com/"
+        fi
+        git submodule sync --recursive
+        git submodule update --init --recursive
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global --unset url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf
+        fi
     - name: Setup pnpm
       uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86  # ratchet:pnpm/action-setup@v6
       with:
@@ -367,9 +413,19 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
-        submodules: recursive
-        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
+    - name: Initialize submodules
+      env:
+        SUBMODULE_TOKEN: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+      run: |
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf "https://github.com/"
+        fi
+        git submodule sync --recursive
+        git submodule update --init --recursive
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global --unset url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf
+        fi
     - name: Setup Python
       uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # ratchet:actions/setup-python@v7.0.0
       with:
@@ -396,9 +452,19 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # ratchet:actions/checkout@v7.0.1
       with:
-        submodules: recursive
-        token: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
         persist-credentials: false
+    - name: Initialize submodules
+      env:
+        SUBMODULE_TOKEN: ${{ secrets.CI_SUBMODULES_PAT || github.token }}
+      run: |
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf "https://github.com/"
+        fi
+        git submodule sync --recursive
+        git submodule update --init --recursive
+        if [ -n "${SUBMODULE_TOKEN}" ]; then
+          git config --global --unset url."https://x-access-token:${SUBMODULE_TOKEN}@github.com/".insteadOf
+        fi
     - name: Setup Python
       uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # ratchet:actions/setup-python@v7.0.0
       with:

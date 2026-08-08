@@ -9,6 +9,15 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Changed (Session 58 — 2026-08-07)
+- **Dependency drift remediation across all Conxian repos**:
+  - Published `conxius-enclave-sdk` v2.0.16 to crates.io (resolved stale-manifest issue by adding `version` field to `frost-secp256k1-tr` git dependency and `release-evidence/` to `.gitignore`).
+  - Published `lib-conxian-core` v0.3.2 to crates.io (depends on enclave-sdk v2.0.16).
+  - Updated `conxian-gateway` Cargo.lock to resolve `lib-conxian-core` via tag `v0.3.2`.
+  - Updated `conxian-nexus` dependency policy scripts and compliance artifact generation to accept `lib-conxian-core` v0.3.2 (rev `930caaa`). PR #221 all CI green.
+  - Synced all submodules in conxian-business and updated workspace `Cargo.lock`.
+  - Updated documentation (READMEs, CHANGELOGs, AGENTS.md) across all repos to reflect current versions.
+
 ### Added
 - **Cross-Issue Boundary & Doctrine Sprint — 6 artifacts delivered**:
   - **#825**: Created `docs/BOUNDARY_DECISION_LOG.md` — systematic boundary register for all public-safe vs internal-only artifacts. Classifies 20+ artifacts across strategy, BOS state, architecture, bounties, and CI/CD.

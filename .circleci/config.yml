@@ -1,6 +1,7 @@
 # Conxian Protocol CI — CircleCI
 # Heavy compute jobs moved from GitHub Actions to reduce billing.
-# Lightweight checks (secret-scan, dep-review, docs-validate) remain on Actions.
+# GitHub Actions is experiencing a runner provisioning outage (all file-based
+# workflows fail with steps:[]). CircleCI handles the complete CI surface.
 version: 2.1
 
 executors:
@@ -17,19 +18,42 @@ executors:
       - image: cimg/node:22.19.0
     resource_class: medium
 
+  python-executor:
+    docker:
+      - image: cimg/python:3.11
+    resource_class: small
+
   clarity-executor:
     docker:
       - image: cimg/node:22.19.0
     resource_class: medium
 
 commands:
-  checkout-submodules:
-    description: "Checkout repo with submodules"
+  checkout-repo:
+    description: "Clone repo via HTTPS (no SSH key needed)"
     steps:
-      - checkout
       - run:
-          name: Initialize submodules
-          command: git submodule update --init --recursive
+          name: Clone repository
+          command: |
+            git clone --depth 1 https://x-access-token:${GH_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git .
+            git config user.email "circleci@conxian.io"
+            git config user.name "CircleCI"
+
+  checkout-submodules:
+    description: "Checkout repo with public submodules (conxian-market is private)"
+    steps:
+      - checkout-repo
+      - run:
+          name: Initialize public submodules
+          command: |
+            git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
+            git submodule sync --recursive
+            for sub in Conxian conxian-gateway conxian-labs-site conxian-nexus \
+                       conxian-ui conxius-enclave-sdk conxius-orbit conxius-platform \
+                       conxius-wallet lib-conxian-core; do
+              git submodule update --init --depth 1 "$sub"
+            done
+            git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
 
   rust-cache:
     description: "Cache Rust dependencies for a submodule workspace"
@@ -74,7 +98,7 @@ commands:
     steps:
       - run:
           name: Install pnpm
-          command: sudo npm install -g pnpm@latest
+          command: sudo npm install -g pnpm@9
       - restore_cache:
           keys:
             - pnpm-{{ arch }}-{{ checksum "<< parameters.workspace_path >>/pnpm-lock.yaml" }}
@@ -89,6 +113,67 @@ commands:
             - ~/.local/share/pnpm
 
 jobs:
+  # ── Security Scan (gitleaks) ──
+  gitleaks:
+    executor: python-executor
+    steps:
+      - checkout-repo
+      - run:
+          name: Run gitleaks detect
+          command: |
+            VERSION="8.24.2"
+            ARCH="$(uname -m)"
+            case "$ARCH" in x86_64|amd64) TA="x64" ;; aarch64|arm64) TA="arm64" ;; *) echo "unsupported arch"; exit 1 ;; esac
+            curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_${TA}.tar.gz" | tar -xz gitleaks
+            chmod +x gitleaks
+            ./gitleaks detect --source . --redact --no-git --config .gitleaks.toml --verbose
+
+  # ── Repo Hygiene (Python scripts) ──
+  repo-hygiene:
+    executor: python-executor
+    resource_class: medium
+    steps:
+      - checkout-submodules
+      - run:
+          name: Install Python deps
+          command: pip install --disable-pip-version-check packaging
+      - run:
+          name: Verify knowledge retention (ZSE)
+          command: python3 scripts/verify_knowledge_retention.py
+      - run:
+          name: Verify submodule integrity
+          command: python3 scripts/verify_submodule_integrity.py
+      - run:
+          name: Verify doctrine alignment
+          command: python3 scripts/verify_doctrine_alignment.py
+      - run:
+          name: Verify LTS compliance
+          command: python3 scripts/verify_lts_compliance.py
+      - run:
+          name: Verify release hygiene
+          command: python3 scripts/verify_release_hygiene.py
+      - run:
+          name: Verify contamination guard
+          command: python3 scripts/verify_contamination_guard.py
+      - run:
+          name: Verify BOS production boundary
+          command: python3 scripts/verify_bos_production_boundary.py
+
+  # ── Root pnpm audit ──
+  root-audit:
+    executor: node-executor
+    steps:
+      - checkout-repo
+      - run:
+          name: Install pnpm
+          command: sudo npm install -g pnpm@9
+      - run:
+          name: Audit root dependencies
+          command: pnpm audit || true
+      - run:
+          name: Verify lockfile is up-to-date
+          command: pnpm install --frozen-lockfile
+
   # ── Clarity Contracts (Conxian/Conxian) ──
   clarity-check:
     executor: clarity-executor
@@ -169,6 +254,28 @@ jobs:
           name: Platform tests
           command: cd conxius-platform && pnpm test
 
+  # ── Orbit (Python) ──
+  orbit-test:
+    executor: python-executor
+    steps:
+      - checkout-submodules
+      - run:
+          name: Orbit validation
+          command: |
+            pip install -r conxius-orbit/requirements.txt
+            python3 conxius-orbit/conxian_testnet_deploy.py --help
+
+  # ── Labs Site (TypeScript) ──
+  labs-site-test:
+    executor: node-executor
+    steps:
+      - checkout-submodules
+      - node-install:
+          workspace_path: "conxian-labs-site"
+      - run:
+          name: Labs site build check
+          command: cd conxian-labs-site && pnpm build
+
   # ── UI (Next.js) ──
   ui-test:
     executor: node-executor
@@ -185,6 +292,9 @@ workflows:
   version: 2
   protocol-ci:
     jobs:
+      - gitleaks
+      - repo-hygiene
+      - root-audit
       - clarity-check
       - gateway-test
       - nexus-test
@@ -192,4 +302,6 @@ workflows:
       - enclave-sdk-test
       - wallet-test
       - platform-test
+      - orbit-test
+      - labs-site-test
       - ui-test
