@@ -139,10 +139,13 @@ def main() -> int:
         broken = 0
         for link in links:
             target = REPO_ROOT / link
+            if is_in_submodule(link, submodule_paths):
+                # Submodule content lives in its own repo; skip file-exists check here.
+                continue
             if not target.exists():
                 errors.append(f"SUMMARY.md references missing file: {link}")
                 broken += 1
-            elif not is_in_submodule(link, submodule_paths) and link not in tracked:
+            elif link not in tracked:
                 errors.append(f"SUMMARY.md references untracked file: {link}")
                 broken += 1
         print(f"  Checked {len(links)} link(s), {broken} broken")
