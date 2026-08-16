@@ -9,6 +9,12 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Fixed
+- **Release Hygiene Verification for Submodules**:
+  - Updated `scripts/verify_release_hygiene.py` to query git tags within submodule directories (`crate_dir`) instead of root repository scope.
+  - Enhanced version parsing in `parse_changelog_versions` to recognize version headers formatted as `## [vX.Y.Z]`.
+  - Allowed released submodule pins whose version matches `Cargo.toml` to satisfy CHANGELOG hygiene checks.
+
 ### Changed (Session 58 — 2026-08-07)
 - **Dependency drift remediation across all Conxian repos**:
   - Published `conxius-enclave-sdk` v2.0.16 to crates.io (resolved stale-manifest issue by adding `version` field to `frost-secp256k1-tr` git dependency and `release-evidence/` to `.gitignore`).

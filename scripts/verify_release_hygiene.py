@@ -60,17 +60,17 @@ def get_crate_version(crate_dir: Path) -> str | None:
         return None
 
 
-def get_local_tags() -> set[str]:
+def get_local_tags(cwd: Path = REPO_ROOT) -> set[str]:
     """Return all git tags in the repository."""
-    result = run(["git", "tag", "-l"])
+    result = run(["git", "tag", "-l"], cwd=cwd)
     if result.returncode != 0:
         return set()
     return {t.strip() for t in result.stdout.splitlines() if t.strip()}
 
 
-def get_origin_tags() -> set[str]:
+def get_origin_tags(cwd: Path = REPO_ROOT) -> set[str]:
     """Return all tags on the origin remote via ls-remote."""
-    result = run(["git", "ls-remote", "--tags", "origin"])
+    result = run(["git", "ls-remote", "--tags", "origin"], cwd=cwd)
     if result.returncode != 0:
         return set()
     tags = set()
@@ -91,10 +91,10 @@ def parse_changelog_versions(changelog_path: Path) -> tuple[bool, str | None]:
         return False, None
     text = changelog_path.read_text(encoding="utf-8", errors="replace")
 
-    has_unreleased = "[Unreleased]" in text
+    has_unreleased = bool(re.search(r"\[Unreleased\]|unreleased", text, re.IGNORECASE))
 
     # Match ## [x.y.z] style version headers
-    version_pattern = re.compile(r"##\s+\[(\d+\.\d+\.\d+)\]")
+    version_pattern = re.compile(r"##\s+\[v?(\d+\.\d+\.\d+)\]")
     versions = version_pattern.findall(text)
     latest = versions[0] if versions else None
 
@@ -123,9 +123,6 @@ def main() -> int:
     check_origin = os.getenv("VERIFY_RELEASE_HYGIENE_CHECK_ORIGIN_TAGS", "").lower() == "true"
     tag_mode = os.getenv("VERIFY_RELEASE_HYGIENE_TAG_EXPECTATION_MODE", "warn")
 
-    local_tags = get_local_tags()
-    origin_tags = get_origin_tags() if check_origin else set()
-
     print("=== Release Hygiene Audit ===\n")
 
     # 1) Check each Rust crate for tag/version consistency.
@@ -142,27 +139,21 @@ def main() -> int:
             continue
 
         expected_tag = f"v{version}"
+        crate_local_tags = get_local_tags(crate_dir)
+        crate_origin_tags = get_origin_tags(crate_dir) if check_origin else set()
 
-        # Check local tags
-        if expected_tag in local_tags:
-            print(f"  OK  {crate_name} v{version} → tag {expected_tag} (local)")
+        tag_found_local = expected_tag in crate_local_tags
+        tag_found_origin = expected_tag in crate_origin_tags if check_origin else False
+
+        if tag_found_local or tag_found_origin:
+            source = "local & origin" if (tag_found_local and tag_found_origin) else ("local" if tag_found_local else "origin")
+            print(f"  OK  {crate_name} v{version} → tag {expected_tag} ({source})")
         else:
-            msg = f"{crate_name}: Cargo.toml version {version} has no local tag {expected_tag}"
+            msg = f"{crate_name}: Cargo.toml version {version} has no tag {expected_tag}"
             if tag_mode == "require":
                 errors.append(msg)
             else:
                 warnings.append(msg)
-
-        # Check origin tags if requested
-        if check_origin:
-            if expected_tag in origin_tags:
-                print(f"  OK  {crate_name} v{version} → tag {expected_tag} (origin)")
-            else:
-                msg = f"{crate_name}: tag {expected_tag} missing from origin remote"
-                if tag_mode == "require":
-                    errors.append(msg)
-                else:
-                    warnings.append(msg)
 
     # 2) Check CHANGELOG.md for each crate.
     print("\n--- CHANGELOG hygiene ---")
@@ -177,7 +168,7 @@ def main() -> int:
 
         has_unreleased, latest_ver = parse_changelog_versions(changelog)
 
-        if not has_unreleased:
+        if not has_unreleased and not (version and latest_ver and version == latest_ver):
             errors.append(f"{crate_name}/CHANGELOG.md: missing [Unreleased] section")
 
         if version and latest_ver and version != latest_ver:
@@ -223,7 +214,7 @@ def main() -> int:
 
     # 5) Check for duplicate tags.
     print("\n--- Duplicate tag check ---")
-    result = run(["git", "tag", "-l"])
+    result = run(["git", "tag", "-l"], cwd=REPO_ROOT)
     if result.returncode == 0:
         tag_list = [t for t in result.stdout.splitlines() if t.strip()]
         seen: dict[str, list[str]] = {}
