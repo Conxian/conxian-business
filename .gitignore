@@ -16,6 +16,11 @@ _pages/
 **/_pages/
 .vercel/
 **/.vercel/
+.next/
+**/.next/
+.turbo/
+out/
+**/out/
 *.so
 *.dylib
 *.dll
