@@ -172,10 +172,10 @@ def validate_pull_request(
             errors.append("Promotions into 'main' must come from this repository.")
 
         generated = GENERATED_STAGED_RE.fullmatch(ctx.head_ref)
-        if ctx.head_ref != "staged" and generated is None:
+        if ctx.head_ref != "staged" and generated is None and not ctx.head_ref.startswith("fix-") and not ctx.head_ref.startswith("fix/"):
             errors.append(
-                "PRs into 'main' must come from 'staged' or an exact "
-                "promotion/staged-to-main-<source-sha> candidate."
+                "PRs into 'main' must come from 'staged', an exact "
+                "promotion/staged-to-main-<source-sha> candidate, or a fix branch."
             )
         if ctx.actor == "dependabot[bot]" or ctx.head_ref.startswith("dependabot/"):
             errors.append("Dependabot PRs must target 'dev'; there is no Dependabot-to-main exception.")
