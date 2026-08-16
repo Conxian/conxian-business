@@ -3,7 +3,7 @@
 [![Conxian Unified CI](https://github.com/Conxian/conxian-business/actions/workflows/conxian-unified-ci.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/conxian-unified-ci.yml)
 [![Deploy Documentation](https://github.com/Conxian/conxian-business/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/Conxian/conxian-business/actions/workflows/deploy-docs.yml)
 
-This repository is the public-safe governance and specification surface for the Conxian Business Operations System (BOS). It documents infrastructure, routing, orchestration, compliance integration, and verification patterns anchored to Bitcoin; it is not a custody system or market-operation console.
+This repository is the governance and specification surface for the Conxian Business Operations System (BOS). It documents infrastructure, routing, orchestration, compliance integration, and verification patterns anchored to Bitcoin; it is not a custody system or market-operation console.
 
 Governance baseline — OpenSpec, portfolio doctrine, and submodule wiring for the Conxian ecosystem.
 
