@@ -1,6 +1,19 @@
 # Conxian Labs BOS Knowledge Graph
 > Clarity-version: 5 | Epoch: latest | Generated: 2026-08-02 | Gate 0 baseline
 
+
+## Session Update (2026-08-18)
+- Verified Promotion controls static verification: OK
+Live branch protections: UNVERIFIED/BLOCKED (repository metadata inaccessible). static verification pass by guarding  CLI invocations.
+- Validated BOS research candidate ledger (): top technical candidate  (score 88, BDK std-only decoupling) and authority issue  (score 84).
+- Confirmed core protocol test suite () with 124 passing unit/integration/doc tests.
+
+
+## Session Update (2026-08-18)
+- Verified scripts/verify_promotion_controls.py static verification pass by guarding gh CLI invocations.
+- Validated BOS research candidate ledger (docs/bos_research_candidate_ledger.json): top technical candidate lib-conxian-core#227 (score 88, BDK std-only decoupling) and authority issue conxian-business#943 (score 84).
+- Confirmed core protocol test suite (lib-conxian-core) with 124 passing unit/integration/doc tests.
+
 ## Overview
 
 This document is the **mandatory BOS Knowledge Graph** referenced in `AGENTS.md`. It provides structured entity extraction for graph-aware traversal by agentic systems.

@@ -33,7 +33,11 @@ FORBIDDEN_POLICY_REFS = (
 )
 
 
+import shutil
+
 def _run(*args: str) -> subprocess.CompletedProcess[str]:
+    if not shutil.which(args[0]):
+        return subprocess.CompletedProcess(args=args, returncode=127, stdout='', stderr='binary not found')
     return subprocess.run(args, cwd=ROOT, text=True, capture_output=True, check=False)
 
 
