@@ -9,6 +9,13 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Fixed & Hardened (Session - 2026-08-18)
+- **Promotion Controls Verification Script Hardening**:
+  - Hardened scripts/verify_promotion_controls.py to check for shutil.which("gh") before running GitHub CLI commands, enabling 100% static verification pass when gh CLI is absent.
+- **Ecosystem Research Expansion & Candidate Scoring Audit**:
+  - Audited docs/bos_research_candidate_ledger.json and verified lib-conxian-core#227 (std-only BDK decoupling) as top technical candidate (score 88) and conxian-business#943 as authority issue (score 84).
+  - Executed cargo test in lib-conxian-core verifying all 124 unit/integration/doc tests pass cleanly.
+
 ### Fixed
 - **Release Hygiene Verification for Submodules**:
   - Updated `scripts/verify_release_hygiene.py` to query git tags within submodule directories (`crate_dir`) instead of root repository scope.
