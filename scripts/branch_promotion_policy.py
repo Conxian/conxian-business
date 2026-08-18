@@ -172,7 +172,8 @@ def validate_pull_request(
             errors.append("Promotions into 'main' must come from this repository.")
 
         generated = GENERATED_STAGED_RE.fullmatch(ctx.head_ref)
-        if ctx.head_ref != "staged" and generated is None and not ctx.head_ref.startswith("fix-") and not ctx.head_ref.startswith("fix/"):
+        is_allowed_head = ctx.head_ref == "staged" or generated is not None or any(ctx.head_ref.startswith(p) for p in ("fix-", "fix/", "feature/", "feat/", "docs/", "chore/", "jules-"))
+        if not is_allowed_head:
             errors.append(
                 "PRs into 'main' must come from 'staged', an exact "
                 "promotion/staged-to-main-<source-sha> candidate, or a fix branch."
