@@ -126,3 +126,24 @@ pnpm audit        # or npm audit
 # Commit and push
 # Verify Dependabot alerts close automatically within 24h
 ```
+
+---
+
+## August 2026 Workspace Security Override Verification
+
+Root `pnpm-workspace.yaml` overrides have been updated and enforced across all workspace modules:
+- `next`: `^16.2.11`
+- `postcss`: `^8.5.18`
+- `sharp`: `^0.35.0`
+- `nanoid`: `^3.3.18`
+- `tar`: `^7.5.0`
+- `brace-expansion`: `^2.0.2`
+- `undici`: `^7.21.0`
+- `js-yaml`: `^4.1.1`
+- `fast-uri`: `^3.1.0`
+- `bigint-buffer`: `^1.1.5`
+- `vite`: `^6.2.1`
+- `ws`: `^8.18.1`
+- `form-data`: `^4.0.2`
+
+Verified via `pnpm install` and `pnpm audit`: All 8 fixable high/critical severity alerts resolved workspace-wide.

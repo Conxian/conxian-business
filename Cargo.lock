@@ -2460,6 +2460,55 @@ dependencies = [
 
 [[package]]
 name = "conxius-enclave-sdk"
+version = "2.0.15"
+source = "git+https://github.com/Conxian/conxius-enclave-sdk?tag=v2.0.15#5bb1e3e6ea36901ce67ad3ff1e82355161221180"
+dependencies = [
+ "aes",
+ "aes-gcm",
+ "alloy",
+ "async-trait",
+ "base64 0.23.1",
+ "bdk_wallet",
+ "bitcoin 0.33.0-beta",
+ "blake2",
+ "bs58",
+ "ciborium",
+ "der 0.8.1",
+ "ed25519-dalek",
+ "getrandom 0.2.17",
+ "getrandom 0.3.4",
+ "getrandom 0.4.3",
+ "hex",
+ "hmac 0.13.0",
+ "js-sys",
+ "jsonwebtoken",
+ "k256 0.14.0",
+ "lightning-invoice",
+ "musig2",
+ "p384",
+ "pbkdf2 0.13.0",
+ "quick-xml",
+ "rand 0.10.2",
+ "rand_core 0.10.1",
+ "reqwest",
+ "secp256k1 0.32.0-beta.2",
+ "secrecy",
+ "serde",
+ "serde-wasm-bindgen",
+ "serde_json",
+ "sha2 0.11.0",
+ "subtle",
+ "thiserror 2.0.19",
+ "tokio",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "web-sys",
+ "x509-cert",
+ "zeroize",
+]
+
+[[package]]
+name = "conxius-enclave-sdk"
 version = "2.0.16"
 dependencies = [
  "aes",
@@ -2506,55 +2555,6 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "webauthn-rs",
- "x509-cert",
- "zeroize",
-]
-
-[[package]]
-name = "conxius-enclave-sdk"
-version = "2.0.16"
-source = "git+https://github.com/Conxian/conxius-enclave-sdk?tag=v2.0.16#7ae0d15d8fb564bb3c6d2c8e5e309ecae317b6ae"
-dependencies = [
- "aes",
- "aes-gcm",
- "alloy",
- "async-trait",
- "base64 0.23.1",
- "bdk_wallet",
- "bitcoin 0.33.0-beta",
- "blake2",
- "bs58",
- "ciborium",
- "der 0.8.1",
- "ed25519-dalek",
- "getrandom 0.2.17",
- "getrandom 0.3.4",
- "getrandom 0.4.3",
- "hex",
- "hmac 0.13.0",
- "js-sys",
- "jsonwebtoken",
- "k256 0.14.0",
- "lightning-invoice",
- "musig2",
- "p384",
- "pbkdf2 0.13.0",
- "quick-xml",
- "rand 0.10.2",
- "rand_core 0.10.1",
- "reqwest",
- "secp256k1 0.32.0-beta.2",
- "secrecy",
- "serde",
- "serde-wasm-bindgen",
- "serde_json",
- "sha2 0.11.0",
- "subtle",
- "thiserror 2.0.19",
- "tokio",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
  "x509-cert",
  "zeroize",
 ]
@@ -4423,7 +4423,7 @@ checksum = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe"
 [[package]]
 name = "lib-conxian-core"
 version = "0.3.2"
-source = "git+https://github.com/Conxian/lib-conxian-core?rev=930caaa839cefb90b5a6c10ae62585e5d893a516#930caaa839cefb90b5a6c10ae62585e5d893a516"
+source = "git+https://github.com/Conxian/lib-conxian-core?rev=6075ef7c1640b03246eec4b0d323a19960b18f91#6075ef7c1640b03246eec4b0d323a19960b18f91"
 dependencies = [
  "aluvm",
  "anyhow",
@@ -4434,7 +4434,7 @@ dependencies = [
  "base64 0.23.1",
  "bitcoin 0.32.102",
  "chrono",
- "conxius-enclave-sdk 2.0.16 (git+https://github.com/Conxian/conxius-enclave-sdk?tag=v2.0.16)",
+ "conxius-enclave-sdk 2.0.15",
  "der 0.8.1",
  "getrandom 0.2.17",
  "hex",

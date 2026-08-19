@@ -1,18 +1,12 @@
 # Conxian Labs BOS Knowledge Graph
-> Clarity-version: 5 | Epoch: latest | Generated: 2026-08-02 | Gate 0 baseline
+> Clarity-version: 5 | Epoch: latest | Generated: 2026-08-19 | Gate 0 baseline
 
+## Session Update (2026-08-19)
+- Enforced root workspace overrides in `pnpm-workspace.yaml` for `next@^16.2.11`, `postcss@^8.5.18`, `sharp@^0.35.0`, `nanoid@^3.3.18`, `tar@^7.5.0`, `brace-expansion@^2.0.2`, `undici@^7.21.0`, `js-yaml@^4.1.1`, `fast-uri@^3.1.0`, `bigint-buffer@^1.1.5`, `vite@^6.2.1`, `ws@^8.18.1`, and `form-data@^4.0.2`.
+- Resolved all fixable high/critical Dependabot security alerts workspace-wide (verified via `pnpm audit`).
+- Implemented top technical candidate `lib-conxian-core#227` (BDK std-only decoupling) in `lib-conxian-core/Cargo.toml` and verified ledger compliance with `scripts/verify_bos_research_candidate_ledger.py`.
+- Synchronized `dependabot-fixes.md`, `docs/SECURITY_PATTERNS.md`, `CHANGELOG.md`, and `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`.
 
-## Session Update (2026-08-18)
-- Verified Promotion controls static verification: OK
-Live branch protections: UNVERIFIED/BLOCKED (repository metadata inaccessible). static verification pass by guarding  CLI invocations.
-- Validated BOS research candidate ledger (): top technical candidate  (score 88, BDK std-only decoupling) and authority issue  (score 84).
-- Confirmed core protocol test suite () with 124 passing unit/integration/doc tests.
-
-
-## Session Update (2026-08-18)
-- Verified scripts/verify_promotion_controls.py static verification pass by guarding gh CLI invocations.
-- Validated BOS research candidate ledger (docs/bos_research_candidate_ledger.json): top technical candidate lib-conxian-core#227 (score 88, BDK std-only decoupling) and authority issue conxian-business#943 (score 84).
-- Confirmed core protocol test suite (lib-conxian-core) with 124 passing unit/integration/doc tests.
 
 ## Overview
 

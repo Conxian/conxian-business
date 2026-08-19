@@ -511,3 +511,18 @@ Per CertiK Clarity Best Practices:
 
 *Generated per Conxian Unified Theory v2.0*
 *For protocol issues #464, #469, #470, #471, #472*
+
+---
+
+## Workspace Dependency Hardening & Overrides (BOS v1.9.5)
+
+Transitive dependency vulnerabilities across the Node.js/pnpm monorepo workspace are mitigated at the workspace root via `pnpm-workspace.yaml` overrides:
+- `next`: Enforces `>=16.2.11` to prevent App Router DoS, SSRF, and Turbopack proxy bypasses (GHSA-89xv-2m56-2m9x, GHSA-p9j2-gv94-2wf4, GHSA-m99w-x7hq-7vfj, GHSA-6gpp-xcg3-4w24).
+- `postcss`: Enforces `>=8.5.18` to prevent sourceMappingURL path traversal (GHSA-r28c-9q8g-f849).
+- `sharp`: Enforces `>=0.35.0` to resolve libvips vulnerabilities (GHSA-f88m-g3jw-g9cj).
+- `nanoid`: Enforces `>=3.3.18` to prevent infinite loop DoS (GHSA-28wg-ghj8-5hjv, GHSA-2v37-7h3g-55p8).
+- `tar`: Enforces `>=7.5.0` to eliminate negative entry and unbounded decompression DoS (GHSA-23hp-3jrh-7fpw, GHSA-8x88-c5mf-7j5w).
+- `brace-expansion`: Enforces `>=2.0.2` to prevent exponential time and unbounded memory DoS (GHSA-mh99-v99m-4gvg, GHSA-3jxr-9vmj-r5cp).
+- `undici`: Enforces `>=7.21.0` to resolve WebSocket fragment DoS and TLS validation bypasses (GHSA-vxpw-j846-p89q, GHSA-vmh5-mc38-953g).
+
+All overrides are periodically audited via `pnpm audit` and verified against GitHub Dependabot alerts.
