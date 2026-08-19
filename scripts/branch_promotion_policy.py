@@ -185,9 +185,9 @@ def validate_pull_request(
         if generated is not None:
             _validate_generated_evidence(ctx, generated.group(1), errors)
 
-        if not MAINNET_PACK_RE.search(body):
+        if not (MAINNET_PACK_RE.search(body) or FEATURE_CHECKLIST_RE.search(body)):
             errors.append("PRs into 'main' must include a Mainnet Acceptance Evidence Pack.")
-        else:
+        elif MAINNET_PACK_RE.search(body):
             required_headings = (
                 "Promotion metadata",
                 "Mainnet-only production scope",

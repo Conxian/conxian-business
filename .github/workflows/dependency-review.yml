@@ -95,7 +95,6 @@ jobs:
       contents: read
     outputs:
       review_outcome: ${{ steps.review.outcome }}
-      dependency_changes: ${{ steps.review.outputs.dependency-changes }}
       vulnerable_changes: ${{ steps.review.outputs.vulnerable-changes }}
       invalid_license_changes: ${{ steps.review.outputs.invalid-license-changes }}
       denied_changes: ${{ steps.review.outputs.denied-changes }}
@@ -123,7 +122,6 @@ jobs:
           DEPENDENCY_FILES_CHANGED: ${{ needs.dependency-file-detection.outputs.dependency_files_changed }}
           REVIEW_JOB_RESULT: ${{ needs.dependency-review.result }}
           REVIEW_OUTCOME: ${{ needs.dependency-review.outputs.review_outcome }}
-          DEPENDENCY_CHANGES: ${{ needs.dependency-review.outputs.dependency_changes }}
           VULNERABLE_CHANGES: ${{ needs.dependency-review.outputs.vulnerable_changes }}
           INVALID_LICENSE_CHANGES: ${{ needs.dependency-review.outputs.invalid_license_changes }}
           DENIED_CHANGES: ${{ needs.dependency-review.outputs.denied_changes }}
@@ -147,7 +145,6 @@ jobs:
           review_job_result = os.getenv('REVIEW_JOB_RESULT', 'skipped')
           review_outcome = os.getenv('REVIEW_OUTCOME', '')
 
-          dependency_changes = parse_json_array(os.getenv('DEPENDENCY_CHANGES', ''))
           vulnerable_changes = parse_json_array(os.getenv('VULNERABLE_CHANGES', ''))
           invalid_license_changes = parse_json_array(os.getenv('INVALID_LICENSE_CHANGES', ''))
           denied_changes = parse_json_array(os.getenv('DENIED_CHANGES', ''))
@@ -187,7 +184,6 @@ jobs:
               summary.write(f'- Dependency review job result: `{review_job_result}`\n')
               if review_outcome:
                   summary.write(f'- Dependency review step outcome: `{review_outcome}`\n')
-              summary.write(f'- Dependency delta entries reported: `{len(dependency_changes)}`\n\n')
 
               summary.write('| Signal | Count |\n')
               summary.write('| --- | ---: |\n')
