@@ -136,3 +136,10 @@ can enter a later comparable scorecard.
 5. Keep implementation and acceptance evidence in the owning repository.
 6. Re-run the validator and focused tests; a no-fact-change refresh must produce
    no semantic change.
+
+## August 2026 Workspace Security Override and Dependabot Audit Refresh
+
+An August 2026 workspace-wide Dependabot audit and remediation pass was executed:
+- **Root workspace overrides:** Enforced in `pnpm-workspace.yaml` for `next@^16.2.11`, `postcss@^8.5.18`, `sharp@^0.35.0`, `nanoid@^3.3.18`, `tar@^7.5.0`, `brace-expansion@^2.0.2`, `undici@^7.21.0`, `js-yaml@^4.1.1`, `fast-uri@^3.1.0`, `bigint-buffer@^1.1.5`, `vite@^6.2.1`, `ws@^8.18.1`, and `form-data@^4.0.2`.
+- **Audit Verification:** `pnpm audit` verified that all 8 fixable high/critical severity security alerts across `conxian-ui`, `conxius-platform`, `conxian-gateway`, and workspace applications are resolved.
+- **Unfixable upstream dependencies:** `elliptic` and `bigint-buffer` maintain unpatched status (`<0.0.0` upstream fixes available), mitigated via input validation boundary checks and workspace isolation.

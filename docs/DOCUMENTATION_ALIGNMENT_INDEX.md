@@ -257,6 +257,8 @@ See `docs/BOS_BUSINESS_BUILDOUT.md` for repo business purpose, business-unit pla
 | `docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md` | Canonical | Public-safe | Active GAP-009 Lightning coverage tracker (ownership split + matrix + milestones) aligned to `docs/architecture/BITCOIN_LAYER_ARCHITECTURE_BOUNDARY_NOTE.md` and `docs/COMPATIBILITY_MATRIX_AND_ACCEPTANCE_GATE_CHECKLIST.md`. |
 | `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md` | Canonical | Public-safe stub (canonical in Linear) | How maintainer payouts are enabled and validated (standardized ZSE stub). |
 | `admin/SECRETS.md` | Canonical | Public-safe stub (canonical in Linear) | Secret registry + pointers to Linear docs (standardized ZSE stub). |
+| `dependabot-fixes.md` | Supporting | Public-safe | Dependabot security alert remediation guide and workspace override audit tracking. |
+| `docs/SECURITY_PATTERNS.md` | Supporting | Public-safe | Security patterns, Clarity audit checklist, and workspace dependency security overrides. |
 
 ## 7) Known doc gaps / broken references (should not be re-created blindly)
 
