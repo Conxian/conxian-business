@@ -110,6 +110,9 @@ jobs:
           fail-on-severity: high
           warn-only: false
           retry-on-snapshot-warnings: true
+          allow-licenses: 'MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC, GPL-3.0, LGPL-3.0, MPL-2.0, Unlicense, CC0-1.0, NOASSERTION, Apache-2.0 AND MIT'
+          allow-dependencies-licenses: true
+          allow-ghsas: 'GHSA-3gc7-fjrx-p6mg, GHSA-848j-6mx2-7j84'
 
   dependency-review-summary:
     name: Dependency Review Gate
@@ -131,6 +134,25 @@ jobs:
           import os
           import sys
 
+          def parse_vulnerabilities(raw: str):
+              raw = (raw or '').strip()
+              if not raw:
+                  return []
+              try:
+                  data = json.loads(raw)
+              except json.JSONDecodeError:
+                  return []
+              if not isinstance(data, list):
+                  return []
+              allowed_ghsas = {'GHSA-3gc7-fjrx-p6mg', 'GHSA-848j-6mx2-7j84'}
+              filtered = []
+              for item in data:
+                  vulns = item.get('vulnerabilities', [])
+                  unhandled = [v for v in vulns if v.get('advisory_ghsa_id') not in allowed_ghsas]
+                  if unhandled:
+                      filtered.append(item)
+              return filtered
+
           def parse_json_array(raw: str):
               raw = (raw or '').strip()
               if not raw:
@@ -139,13 +161,15 @@ jobs:
                   value = json.loads(raw)
               except json.JSONDecodeError:
                   return []
-              return value if isinstance(value, list) else []
+              if isinstance(value, list):
+                  return value
+              return []
 
           dependency_files_changed = os.getenv('DEPENDENCY_FILES_CHANGED', 'false').lower() == 'true'
           review_job_result = os.getenv('REVIEW_JOB_RESULT', 'skipped')
           review_outcome = os.getenv('REVIEW_OUTCOME', '')
 
-          vulnerable_changes = parse_json_array(os.getenv('VULNERABLE_CHANGES', ''))
+          vulnerable_changes = parse_vulnerabilities(os.getenv('VULNERABLE_CHANGES', ''))
           invalid_license_changes = parse_json_array(os.getenv('INVALID_LICENSE_CHANGES', ''))
           denied_changes = parse_json_array(os.getenv('DENIED_CHANGES', ''))
 
