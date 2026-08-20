@@ -52,7 +52,8 @@ The Conxian ecosystem is organized by function to ensure clarity and modularity 
 - **[`Nakamoto-Guardian/`](./Nakamoto-Guardian)**: **Compliance**. Policy enforcement and anti-fragility monitoring.
 
 ### 3. Protocol & SDKs
-- **[`Conxian/`](./Conxian)**: **Protocol/DAO**. Conxian protocol rules and Clarity smart contracts.
+- **[`Conxian/`](./Conxian)**: **[Deprecated] Protocol/DAO**. Legacy Clarity smart contracts repository (deprecated; active protocol owned by lib-conxian-core, conxian-gateway, conxian-nexus, conxian-business).
+- **[`conxian-market/`](./conxian-market)**: **AI Marketplace**. AI Marketplace and Agentic Commerce surface mapped in business repo.
 - **[`conxius-enclave-sdk/`](./conxius-enclave-sdk)**: **Enclave SDK**. Enclave and hardware-attestation primitives.
 - **[`lib-conxian-core/`](./lib-conxian-core)**: **Shared Core**. Common models for BitVM2, CJCS, and Gateway engine.
 
