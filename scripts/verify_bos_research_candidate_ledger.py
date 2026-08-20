@@ -51,7 +51,9 @@ GAP_CLASSES = {
 }
 DATED_CANDIDATES = {
     "lib-conxian-core#227": (88, "selected-technical"),
+    "conxian-market-alignment#10": (87, "retained-under-owner"),
     "conxian-nexus#169/pr#172": (86, "retained-under-owner"),
+    "conxian-protocol-deprecation#612": (85, "retained-under-owner"),
     "conxian-business#943": (84, "selected-authority"),
     "android-first-attestation-owner-chain": (82, "retained-under-owner"),
     "conxius-platform#854": (78, "retained-deferred-owner-admin-evidence"),
