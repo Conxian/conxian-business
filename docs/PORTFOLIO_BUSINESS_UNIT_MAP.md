@@ -233,7 +233,7 @@ This section intentionally repeats the asset list with additional positioning de
 | Repo / asset | Unique value | In scope | Out of scope |
 | --- | --- | --- | --- |
 | `Conxian/` | Legacy protocol and on-chain assets (Deprecated) | Historical contracts, traits, fee logic | Deprecated; active protocol owned by core, gateway, nexus, business |
-| `conxian-market/` | AI Marketplace & Agentic Commerce | Agentic commerce, AI market contracts, research | Company custody or fund authority |
+| `conxian-market/` | AI Marketplace & Agentic Commerce | Agentic commerce, AI market contracts, research | Discretionary asset management or proprietary market operation |
 | `conxius-wallet/` | User self-custody and signing surface | Key management, offline-first wallet UX | Running the state node, ERP integrations |
 | `conxian-gateway/` | Fusion integration and compliance | Webhooks, compliance pipelines, aggregation | Being the authoritative state source |
 | `conxian-nexus/` | Authoritative state + telemetry | Block height authority, state services, metrics | UI, treasury automation |
