@@ -92,7 +92,8 @@ The current doctrine relationship is:
 | Entity | GitHub | Language | Focus | Operating label / maturity and claim state |
 |--------|--------|----------|-------|--------|
 | `conxian-business` | Conxian/conxian-business | Mixed | Governance and specifications | Production intent / Beta; Implemented governance, Target-state proposals |
-| `Conxian` | Conxian/Conxian | Clarity | Protocol contracts | Production intent / Beta; Implemented code, readiness conditional |
+| `Conxian` | Conxian/Conxian | Clarity | [Deprecated] Legacy protocol contracts | Deprecated / Archive candidate; active protocol in core/gateway/nexus |
+| `conxian-market` | Conxian/conxian_market | TypeScript/Rust | AI Marketplace & Agentic Commerce | Production intent / Incubating; mapped and integrated in business repo |
 | `conxian-gateway` | Conxian/conxian-gateway | Rust | Routing and compliance middleware | Production intent / Beta; Implemented runtime, verification conditional |
 | `conxian-nexus` | Conxian/conxian-nexus | Clarity/Rust | State and proof node | Production intent / Beta; Implemented code, deployment claims conditional |
 | `conxius-wallet` | Conxian/conxius-wallet | TypeScript | Android client and signing surface | Production intent / Stable; capability-scoped Implemented claims |

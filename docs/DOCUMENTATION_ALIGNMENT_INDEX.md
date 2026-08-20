@@ -172,7 +172,8 @@ These are the documents most likely to answer “what are we building?” and �
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
-| `Conxian/PRD.md` | Canonical | Public-safe | Conxian protocol PRD (modules, status, and benchmarks). |
+| `Conxian/PRD.md` | Archive candidate (deprecated) | Public-safe | Legacy protocol PRD (Conxian/Conxian is deprecated in favor of lib-conxian-core, conxian-gateway, conxian-nexus, conxian-business). |
+| `conxian-market` | Supporting | Public-safe | AI Marketplace & Agentic Commerce surface mapped and integrated in conxian-business. |
 | `Conxian/docs/ARCHITECTURE.md` | Canonical | Public-safe | Protocol architecture description. |
 | `Conxian/docs/WHITEPAPER.md` | Archive candidate (rewrite required) | Public-safe | Historical protocol whitepaper surface; not a current doctrine source. Rewrite against `docs/TECHNICAL_WHITEPAPER_OUTLINE.md` and the portfolio doctrine before reclassification. External follow-up; no submodule content was changed here. |
 | `Conxian/docs/ROADMAP.md` | Canonical | Public-safe | Protocol roadmap and phases. |

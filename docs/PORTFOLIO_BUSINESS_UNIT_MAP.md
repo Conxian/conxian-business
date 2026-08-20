@@ -67,7 +67,8 @@ Current baseline for key ecosystem repos:
 
 | Repository | Category | Notes |
 | --- | --- | --- |
-| `Conxian/` | `primary strategic` | Conxian protocol domain (CSF legacy taxonomy) and on-chain interfaces; not a company custody authority. |
+| `Conxian/` | `primary strategic` | Deprecated protocol repository; core responsibilities owned by lib-conxian-core, conxian-gateway, conxian-nexus, conxian-business. |
+| `conxian-market/` | `supporting` | AI Marketplace and Agentic Commerce surface mapped in business repo. |
 | `conxian-gateway/` | `primary strategic` | Conxian enterprise-infrastructure domain (Fusion legacy taxonomy); integration middleware and compliance boundary. |
 | `conxian-nexus/` | `primary strategic` | Conxian state/proof infrastructure domain (Nexus legacy taxonomy); authoritative state and telemetry node. |
 | `conxius-wallet/` | `primary strategic` | Conxius client/access surface for end users and builders who retain self-custody. |
@@ -116,7 +117,8 @@ Until portfolio hygiene automation is live, reviewers should treat these invaria
 
 | Asset | Type | Primary BU / function | Primary concern(s) | Notes |
 | --- | --- | --- | --- | --- |
-| `Conxian/` | Submodule | **CSF** (Protocol) | Protocol + contracts | Canonical on-chain source; should not contain off-chain service logic. |
+| `Conxian/` | Submodule | **CSF** (Protocol; Deprecated) | Protocol + contracts (Deprecated) | Deprecated protocol repository; active protocol owned by lib-conxian-core, conxian-gateway, conxian-nexus, conxian-business. |
+| `conxian-market/` | Submodule | **Agentic Commerce** (Market) | AI Marketplace + Agentic Commerce | Pinned submodule mapped in business repo for AI Marketplace and Agentic Commerce; update=none for CI. |
 | `conxius-wallet/` | Submodule | **Conxius** (Wallet) | Wallet + user self-custody | Mobile client; keys remain user-controlled and no shared backend logic is implied beyond boundary APIs. |
 | `conxian-gateway/` | Submodule | **Fusion** (Gateway) | Gateway + compliance | Integration surface; consumes Nexus state; should not be a UI host. |
 | `conxian-nexus/` | Submodule | **Nexus** (State node) | State + telemetry | Must remain the authoritative node/service surface. |
@@ -230,7 +232,8 @@ This section intentionally repeats the asset list with additional positioning de
 
 | Repo / asset | Unique value | In scope | Out of scope |
 | --- | --- | --- | --- |
-| `Conxian/` | Canonical protocol and on-chain assets | Contracts, traits, fee logic, registries | Wallet UX, off-chain integration services |
+| `Conxian/` | Legacy protocol and on-chain assets (Deprecated) | Historical contracts, traits, fee logic | Deprecated; active protocol owned by core, gateway, nexus, business |
+| `conxian-market/` | AI Marketplace & Agentic Commerce | Agentic commerce, AI market contracts, research | Discretionary asset management or proprietary market operation |
 | `conxius-wallet/` | User self-custody and signing surface | Key management, offline-first wallet UX | Running the state node, ERP integrations |
 | `conxian-gateway/` | Fusion integration and compliance | Webhooks, compliance pipelines, aggregation | Being the authoritative state source |
 | `conxian-nexus/` | Authoritative state + telemetry | Block height authority, state services, metrics | UI, treasury automation |

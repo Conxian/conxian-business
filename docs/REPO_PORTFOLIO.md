@@ -32,7 +32,7 @@ Use one conservative role line in a repository description and the top of its RE
 
 These are protocol, infrastructure, and client surfaces with primary architectural responsibility. Their maturity and claim state remain evidence-scoped in the doctrine register.
 
-- [Conxian](https://github.com/Conxian/Conxian) — Protocol and on-chain contract layer.
+- [Conxian](https://github.com/Conxian/Conxian) — Deprecated protocol repository (legacy Clarity contracts; active protocol owned by lib-conxian-core, conxian-gateway, conxian-nexus, conxian-business).
 - [conxian-gateway](https://github.com/Conxian/conxian-gateway) — Institutional routing, aggregation, and compliance middleware.
 - [conxian-nexus](https://github.com/Conxian/conxian-nexus) — State, proof, synchronization, and telemetry node.
 - [conxius-wallet](https://github.com/Conxian/conxius-wallet) — Android-first, offline-first self-custody client and signing surface.
@@ -53,7 +53,7 @@ These repositories provide shared primitives, local orchestration, deployment to
 - [conxian-labs-site](https://github.com/Conxian/conxian-labs-site) — Public website and documentation distribution surface.
 - [demo-repository](https://github.com/Conxian/demo-repository) — Organization demonstration surface.
 - [conxian.github.io](https://github.com/Conxian/conxian.github.io) — Public documentation/site hub.
-- [conxian_market](https://github.com/Conxian/conxian_market) — Research/experimental marketplace surface pending external doctrine alignment.
+- [conxian_market](https://github.com/Conxian/conxian_market) — AI Marketplace & Agentic Commerce surface mapped and integrated in business repo.
 
 ### Governance baseline
 
