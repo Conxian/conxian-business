@@ -55,7 +55,11 @@ def get_crate_version(crate_dir: Path) -> str | None:
         with open(toml_path, "rb") as f:
             data = tomllib.load(f)
         pkg = data.get("package", {})
-        return pkg.get("version")
+        if "version" in pkg:
+            return pkg.get("version")
+        workspace = data.get("workspace", {})
+        ws_pkg = workspace.get("package", {})
+        return ws_pkg.get("version")
     except Exception:
         return None
 

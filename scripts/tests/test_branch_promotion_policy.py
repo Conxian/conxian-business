@@ -86,6 +86,8 @@ class BranchPromotionPolicyTests(unittest.TestCase):
             "chore/governance",
             "hotfix/governance",
             "dependabot/pip/pyyaml-7",
+            "jules-11985745885184503922-5f6c9698",
+            "jules/discovery-report",
         ):
             with self.subTest(head=head):
                 self.assertAccepted(context(head, "dev", FEATURE_BODY))
