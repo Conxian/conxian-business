@@ -110,11 +110,40 @@ def check_sdk_versions(lts: dict, errors: list[str], warnings: list[str]) -> Non
                         errors.append(msg)
 
 
+def _is_version_in_lts_range(clean_ver: str, lts_range: str) -> bool:
+    """Check if clean_ver satisfies lts_range, with or without packaging module."""
+    range_norm = lts_range.strip()
+
+    # 1. Direct wildcard matching (e.g., "15.3.x", "19.0.x", "6.x")
+    if range_norm.endswith(".x") or range_norm.endswith(".*"):
+        prefix = range_norm[:-2]
+        return clean_ver.startswith(prefix)
+
+    # 2. Try packaging module if installed
+    try:
+        from packaging.specifiers import SpecifierSet
+        pep440_range = range_norm.replace(".x", ".*")
+        if ".*" in pep440_range and not pep440_range.startswith(("==", ">", "<", "~=", "!=")):
+            pep440_range = f"=={pep440_range}"
+        return SpecifierSet(pep440_range).contains(clean_ver)
+    except (ImportError, Exception):
+        pass
+
+    # 3. Fallback basic component matching
+    import re
+    ver_parts = [int(p) for p in re.findall(r"\d+", clean_ver)]
+    range_parts = [int(p) for p in re.findall(r"\d+", range_norm)]
+
+    if ver_parts and range_parts:
+        match_len = min(len(ver_parts), len(range_parts))
+        return ver_parts[:match_len] == range_parts[:match_len]
+
+    return True
+
+
 def check_framework_lts(pins: dict, errors: list[str], warnings: list[str]) -> None:
     """Validate framework versions are within LTS ranges."""
     import re
-    from packaging.version import Version
-    from packaging.specifiers import SpecifierSet
 
     frameworks = {
         "next": pins.get("nextjs", ""),
@@ -136,12 +165,9 @@ def check_framework_lts(pins: dict, errors: list[str], warnings: list[str]) -> N
             if fw_name in deps and lts_range:
                 dep_ver = deps[fw_name]
                 clean_ver = re.sub(r'^[\^~>=<]+', '', dep_ver)
-                try:
-                    if not SpecifierSet(lts_range).contains(clean_ver):
-                        msg = f"{rel}: {fw_name}@{dep_ver} is outside LTS range ({lts_range})"
-                        (warnings if WARN_ONLY else errors).append(msg)
-                except Exception:
-                    pass  # Can't parse, skip
+                if not _is_version_in_lts_range(clean_ver, lts_range):
+                    msg = f"{rel}: {fw_name}@{dep_ver} is outside LTS range ({lts_range})"
+                    (warnings if WARN_ONLY else errors).append(msg)
 
 
 def check_toolchain_in_dockerfiles(pins: dict, errors: list[str], warnings: list[str]) -> None:
