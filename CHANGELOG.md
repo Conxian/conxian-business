@@ -16,6 +16,9 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
   - Expanded `docs/bos_research_candidate_ledger.json`, `scripts/verify_bos_research_candidate_ledger.py`, and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md` with scored candidates `conxian-market-alignment#10` (score 87) and `conxian-protocol-deprecation#612` (score 85).
 
 ### Security & Dependency Hardening (August 2026)
+- **LTS Compliance Verification Script Hardening**:
+  - Hardened `scripts/verify_lts_compliance.py` to handle missing Python `packaging` module gracefully by implementing a fallback version range comparator.
+  - Verified `python3 scripts/verify_lts_compliance.py` runs and passes cleanly across environments without external dependency failures.
 - **Workspace Security Overrides & Dependabot Remediation**:
   - Enforced root workspace overrides in `pnpm-workspace.yaml` for `next@^16.2.11`, `postcss@^8.5.18`, `sharp@^0.35.0`, `nanoid@^3.3.18`, `tar@^7.5.0`, `brace-expansion@^2.0.2`, `undici@^7.21.0`, `js-yaml@^4.1.1`, `fast-uri@^3.1.0`, `bigint-buffer@^1.1.5`, `vite@^6.2.1`, `ws@^8.18.1`, and `form-data@^4.0.2`.
   - Executed `pnpm audit` verifying zero fixable high/critical severity security alerts across all workspace submodules.
