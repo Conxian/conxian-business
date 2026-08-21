@@ -110,11 +110,32 @@ def check_sdk_versions(lts: dict, errors: list[str], warnings: list[str]) -> Non
                         errors.append(msg)
 
 
+def _is_version_in_range(version_str: str, range_str: str) -> bool:
+    """Check if clean version string matches wildcard / specifier range with fallback."""
+    try:
+        from packaging.specifiers import SpecifierSet
+        return SpecifierSet(range_str).contains(version_str)
+    except Exception:
+        pass
+
+    # Simple fallback matching for 'X.Y.x', 'X.x', or simple equality/ranges
+    v_parts = version_str.split(".")
+    r_parts = range_str.split(".")
+    for i, r_p in enumerate(r_parts):
+        if r_p in ("x", "*", ""):
+            continue
+        if i >= len(v_parts):
+            return False
+        r_num = "".join(ch for ch in r_p if ch.isdigit())
+        v_num = "".join(ch for ch in v_parts[i] if ch.isdigit())
+        if r_num and v_num and int(r_num) != int(v_num):
+            return False
+    return True
+
+
 def check_framework_lts(pins: dict, errors: list[str], warnings: list[str]) -> None:
     """Validate framework versions are within LTS ranges."""
     import re
-    from packaging.version import Version
-    from packaging.specifiers import SpecifierSet
 
     frameworks = {
         "next": pins.get("nextjs", ""),
@@ -137,7 +158,7 @@ def check_framework_lts(pins: dict, errors: list[str], warnings: list[str]) -> N
                 dep_ver = deps[fw_name]
                 clean_ver = re.sub(r'^[\^~>=<]+', '', dep_ver)
                 try:
-                    if not SpecifierSet(lts_range).contains(clean_ver):
+                    if not _is_version_in_range(clean_ver, lts_range):
                         msg = f"{rel}: {fw_name}@{dep_ver} is outside LTS range ({lts_range})"
                         (warnings if WARN_ONLY else errors).append(msg)
                 except Exception:
