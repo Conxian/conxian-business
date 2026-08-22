@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   async headers() {
-    return [
+    const headers = [
       {
         source: "/(.*)",
         headers: [
@@ -14,7 +14,16 @@ const nextConfig: NextConfig = {
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
         ],
       },
+      ...(process.env.NODE_ENV === "development"
+        ? [
+            {
+              source: "/_next/static/:path*",
+              headers: [{ key: "Cache-Control", value: "no-store, must-revalidate" }],
+            },
+          ]
+        : []),
     ];
+    return headers;
   },
 };
 
