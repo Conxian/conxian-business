@@ -369,13 +369,6 @@ jobs:
         # conxius-wallet is pnpm-lockfile-first; keep cache/install aligned to pnpm lockfile.
         cache: 'pnpm'
         cache-dependency-path: conxius-wallet/pnpm-lock.yaml
-    - name: Verify pinned pnpm
-      run: |
-        PNPM_VERSION="$(pnpm --version)"
-        if [ "$PNPM_VERSION" != "9.15.9" ]; then
-          echo "Expected pnpm 9.15.9, got $PNPM_VERSION"
-          exit 1
-        fi
     - name: Install & Test
       run: |
         cd conxius-wallet

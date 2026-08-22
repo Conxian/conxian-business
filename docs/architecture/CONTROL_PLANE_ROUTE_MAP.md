@@ -1,6 +1,6 @@
 # Control-Plane Route Map
 
-This document describes the initial route structure for the internal BOS control-plane application.
+This document describes the route structure for the internal BOS control-plane application. The application is deployed at `control.conxian-labs.com`; public/client service discovery belongs to the separate Labs deployment at `www.conxian-labs.com`.
 
 ## Root routes
 

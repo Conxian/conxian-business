@@ -40,6 +40,46 @@ body {
   margin: 0 0 8px;
 }
 
+.sidebar-links {
+  display: grid;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.button.primary {
+  color: var(--bg);
+  background: var(--accent);
+}
+
+.button.secondary {
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+}
+
 .content-shell {
   min-width: 0;
 }
@@ -137,6 +177,29 @@ body {
   border: 1px solid var(--panel-border);
   border-radius: 16px;
   padding: 20px;
+}
+
+.surface-directory {
+  margin-bottom: 16px;
+}
+
+.surface-grid {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.surface-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  background: rgba(122, 162, 255, 0.04);
+}
+
+.surface-item p {
+  margin-bottom: 0;
 }
 
 .action-panel-body,

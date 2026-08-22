@@ -15,8 +15,13 @@ const cards = [
   },
 ];
 
-export function OverviewCards() {
-  const health = getControlPlaneHealth();
+export async function OverviewCards() {
+  let health: { status: string; message: string };
+  try {
+    health = await getControlPlaneHealth();
+  } catch {
+    health = { status: "unconfigured", message: "Runtime health is unavailable in this environment." };
+  }
 
   return (
     <section className="grid">

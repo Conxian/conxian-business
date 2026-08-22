@@ -12,22 +12,27 @@ import {
   sampleReleaseArtifacts,
 } from "./sample-data";
 
-function withFallback<T>(items: T[], fallback: T[]): T[] {
-  return items.length > 0 ? items : fallback;
+async function withFallback<T>(items: Promise<T[]>, fallback: T[]): Promise<T[]> {
+  try {
+    const resolved = await items;
+    return resolved.length > 0 ? resolved : fallback;
+  } catch {
+    return fallback;
+  }
 }
 
-export function getReleaseGovernanceData(): ReleaseArtifact[] {
+export function getReleaseGovernanceData(): Promise<ReleaseArtifact[]> {
   return withFallback(listReleaseArtifacts(), sampleReleaseArtifacts);
 }
 
-export function getAuditData(): AuditEvent[] {
+export function getAuditData(): Promise<AuditEvent[]> {
   return withFallback(listAuditEvents(), sampleAuditEvents);
 }
 
-export function getPolicyApprovalData(): GovernanceAction[] {
+export function getPolicyApprovalData(): Promise<GovernanceAction[]> {
   return withFallback(listGovernanceActions(), sampleGovernanceActions);
 }
 
-export function getEnvironmentData(): EnvironmentRecord[] {
+export function getEnvironmentData(): Promise<EnvironmentRecord[]> {
   return withFallback(listEnvironments(), sampleEnvironments);
 }

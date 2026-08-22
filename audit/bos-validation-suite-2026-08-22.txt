@@ -1,0 +1,184 @@
+=== scripts/verify_action_versions.py ===
+Checking 22 unique action reference(s) in workflows and local actions...
+
+  OK  Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32  (cached-OK)  [.github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml]
+  OK  actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  (cached-OK)  [.github/workflows/action-version-audit.yml]
+  OK  actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  (cached-OK)  [.github/workflows/action-version-audit.yml]
+  OK  actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  (cached-OK)  [.github/workflows/action-version-audit.yml, .github/workflows/auto-promotion.yml, .github/workflows/auto-sync-submodules.yml, .github/workflows/branch-promotion-policy.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/dependency-review.yml, .github/workflows/deploy-docs.yml, .github/workflows/gateway-cloud-run.yml, .github/workflows/secret-scan.yml, .github/workflows/showcase-dapp-deploy.yml, .github/workflows/showcase-dapp-deploy.yml, .github/workflows/sovereign-guard.yml, .github/workflows/tag-release.yml]
+  OK  actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d  (cached-OK)  [.github/workflows/deploy-docs.yml]
+  OK  actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294  (cached-OK)  [.github/workflows/dependency-review.yml]
+  OK  actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128  (cached-OK)  [.github/workflows/deploy-docs.yml]
+  OK  actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  (cached-OK)  [.github/workflows/conxian-unified-ci.yml, .github/workflows/dependency-review.yml]
+  OK  actions/setup-node@820762786026740c76f36085b0efc47a31fe5020  (cached-OK)  [.github/workflows/conxian-unified-ci.yml]
+  OK  actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  (cached-OK)  [.github/workflows/action-version-audit.yml, .github/workflows/auto-sync-submodules.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml, .github/workflows/sovereign-guard.yml, .github/workflows/tag-release.yml]
+  OK  actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  (cached-OK)  [.github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml]
+  OK  actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  (cached-OK)  [.github/workflows/deploy-docs.yml]
+  OK  dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8  (cached-OK)  [.github/workflows/conxian-unified-ci.yml]
+  OK  dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9  (cached-OK)  [.github/workflows/conxian-unified-ci.yml, .github/workflows/conxian-unified-ci.yml]
+  OK  google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093  (cached-OK)  [.github/workflows/gateway-cloud-run.yml]
+  OK  google-github-actions/deploy-cloudrun@2028e2d7d30a78c6910e0632e48dd561b064884d  (cached-OK)  [.github/workflows/gateway-cloud-run.yml]
+  OK  google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db  (cached-OK)  [.github/workflows/gateway-cloud-run.yml]
+  OK  neondatabase/create-branch-action@v6  (cached-OK)  [.github/workflows/neon_workflow.yml]
+  OK  neondatabase/delete-branch-action@v3  (cached-OK)  [.github/workflows/neon_workflow.yml]
+  OK  pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86  (cached-OK)  [.github/workflows/conxian-unified-ci.yml]
+  OK  taiki-e/install-action@67729d5c413db75907f0ad1e39bb04b9c868ff60  (cached-OK)  [.github/workflows/conxian-unified-ci.yml]
+  OK  tj-actions/branch-names@v8  (cached-OK)  [.github/workflows/neon_workflow.yml]
+
+✅ All 22 action version(s) valid.
+=== scripts/verify_bos_production_boundary.py ===
+BOS production boundary checks: OK
+=== scripts/verify_bos_research_candidate_ledger.py ===
+Success: BOS research candidate ledger verified (/vercel/share/v0-project/docs/bos_research_candidate_ledger.json).
+=== scripts/verify_contamination_guard.py ===
+=== Production Contamination Guard ===
+
+Scanning for hardcoded testnet/simnet principals in .clar files...
+
+Found 2 .clar file(s)
+
+✅ No hardcoded testnet/simnet principals found.
+
+✅ Production Contamination Guard: PASSED
+=== scripts/verify_doctrine_alignment.py ===
+Doctrine alignment check: OK
+- canonical documents loaded: 3
+- structurally parsed repository rows: 16 (expected 16)
+- high-risk dispositions validated: 13
+- local Markdown links and fragments checked in canonical docs: 51
+- public-safe strategy stubs validated: 6
+- public Markdown display-alias scope: 274 files; explicitly indexed: 117; excluded internal/archive: 6; AGENTS.md normative exception and historical URL allowlist entries: 6
+- company/SAB custody-boundary scope: 274 files; explicitly indexed: 117; excluded internal/archive: 6; protocol/contract state, DAO governance, user self-custody, and regulated-partner custody are explicit allowances
+=== scripts/verify_knowledge_retention.py ===
+Success: Knowledge retention manifest coverage verified.
+=== scripts/verify_lts_compliance.py ===
+LTS Compliance: validating against 'lts' track
+LTS Compliance: OK (warnings)
+  ⚠️  showcase-dapp/package.json: next@16.2.12 is outside LTS range (15.3.x)
+  ⚠️  showcase-dapp/package.json: react@19.2.8 is outside LTS range (19.0.x)
+  ⚠️  node_modules/.pnpm/styled-jsx@5.1.6_react@19.2.7/node_modules/styled-jsx/package.json: react@17.0.1 is outside LTS range (19.0.x)
+  ⚠️  apps/control-plane/package.json: next@^16.2.6 is outside LTS range (15.3.x)
+  ⚠️  apps/control-plane/package.json: react@^19.2.0 is outside LTS range (19.0.x)
+=== scripts/verify_m2m_autonomy_readiness.py ===
+M2M/autonomy readiness ledger: OK (6 gaps)
+=== scripts/verify_promotion_controls.py ===
+Promotion controls static verification: OK
+Live branch protections: UNVERIFIED/BLOCKED (repository metadata inaccessible).
+=== scripts/verify_release_hygiene.py ===
+=== Release Hygiene Audit ===
+
+--- Crate version ↔ tag consistency ---
+
+--- CHANGELOG hygiene ---
+
+--- Root CHANGELOG hygiene ---
+  OK  Root CHANGELOG has [Unreleased] section
+
+--- README version badge staleness ---
+
+--- Duplicate tag check ---
+  OK  No duplicate tags found
+
+--- Submodule release pin check ---
+  OK  Conxian pinned at 51fe2615
+  OK  conxian-gateway pinned at e64b68f6
+  OK  conxian-labs-site pinned at c2375e54
+  OK  conxian-market pinned at 276d9f4f
+  OK  conxian-nexus pinned at 352197ba
+  OK  conxian-ui pinned at 55bf3fb4
+  OK  conxius-enclave-sdk pinned at a607b470
+  OK  conxius-orbit pinned at 299d83c7
+  OK  conxius-platform pinned at 14f91297
+  OK  conxius-wallet pinned at 9a204cba
+  OK  lib-conxian-core pinned at a1bb7e3e
+
+⚠ 8 warning(s):
+  • conxian-gateway: Cargo.toml not found or unparseable
+  • conxian-nexus: Cargo.toml not found or unparseable
+  • lib-conxian-core: Cargo.toml not found or unparseable
+  • conxius-enclave-sdk: Cargo.toml not found or unparseable
+  • conxian-gateway: CHANGELOG.md not found
+  • conxian-nexus: CHANGELOG.md not found
+  • lib-conxian-core: CHANGELOG.md not found
+  • conxius-enclave-sdk: CHANGELOG.md not found
+
+✅ Release hygiene verified.
+=== scripts/verify_repo_governance_baseline.py ===
+Repository governance baseline: OK
+=== scripts/verify_service_registry.py ===
+service registry: OK (12 services)
+=== scripts/verify_submodule_integrity.py ===
+=== Submodule Pin Integrity Audit ===
+
+Found 11 submodule(s) in .gitmodules
+
+--- Checking submodule pin validity ---
+  OK  Conxian: update=none (intentionally pinned, skip init check)
+  OK  conxian-market: update=none (intentionally pinned, skip init check)
+
+--- Checking update-policy hardening ---
+  OK  conxian-gateway: update=checkout
+  OK  conxius-wallet: update=checkout
+  OK  conxian-nexus: update=checkout
+  OK  conxian-ui: update=checkout
+  OK  Conxian: update=none (matches expected override)
+  OK  conxius-platform: update=checkout
+  OK  conxius-orbit: update=checkout
+  OK  conxian-labs-site: update=checkout
+  OK  conxius-enclave-sdk: update=checkout
+  OK  lib-conxian-core: update=checkout
+  OK  conxian-market: update=none (matches expected override)
+
+❌ 9 violation(s) found:
+  • Submodule 'conxian-gateway': not initialized (empty directory)
+  • Submodule 'conxius-wallet': not initialized (empty directory)
+  • Submodule 'conxian-nexus': not initialized (empty directory)
+  • Submodule 'conxian-ui': not initialized (empty directory)
+  • Submodule 'conxius-platform': not initialized (empty directory)
+  • Submodule 'conxius-orbit': not initialized (empty directory)
+  • Submodule 'conxian-labs-site': not initialized (empty directory)
+  • Submodule 'conxius-enclave-sdk': not initialized (empty directory)
+  • Submodule 'lib-conxian-core': not initialized (empty directory)
+=== scripts/verify_tracked_artifacts.py ===
+--- Checking required root artifacts ---
+  OK  README.md
+  OK  CHANGELOG.md
+  OK  SECURITY.md
+  OK  GOVERNANCE.md
+  OK  CONTRIBUTING.md
+  OK  LICENSE
+  OK  SUMMARY.md
+  OK  AGENTS.md
+  OK  BOS_KNOWLEDGE_GRAPH.md
+  OK  spec.md
+  OK  ecosystem-dashboard.md
+  OK  DEVELOPER_QUICKSTART.md
+  OK  RELEASING.md
+  OK  DEPENDENCY_BASELINE.md
+
+--- Checking required documentation ---
+  OK  docs/BOS_BUSINESS_BUILDOUT.md
+  OK  docs/PORTFOLIO_BUSINESS_UNIT_MAP.md
+  OK  docs/CONXIAN_UNIFIED_THEORY_v2.md
+  OK  docs/DAO_GOVERNANCE_SPEC.md
+  OK  docs/TECHNICAL_READINESS_CERTIFICATION.md
+  OK  docs/UNIFIED_PRODUCTION_READINESS_GAP_REPORT.md
+  OK  docs/DEVELOPER_LED_GROWTH_STRATEGY.md
+  OK  docs/ISO_20022_INTEGRATION_SPEC.md
+  OK  docs/SAB_MIGRATION_READINESS_GATES.md
+  OK  docs/TECHNICAL_WHITEPAPER_OUTLINE.md
+
+--- Validating SUMMARY.md links ---
+  Checked 102 link(s), 0 broken
+
+--- Scanning for stale generated artifacts ---
+  OK  No stale generated artifacts found
+
+--- Checking evidence pack structure ---
+  OK  14 evidence file(s) tracked
+
+--- Checking AGENTS.md integrity ---
+  OK  AGENTS.md (4287 bytes)
+
+✅ All tracked artifacts verified.
+=== scripts/verify_wallet_lifecycle_control_gates.py ===
+Wallet lifecycle control gates: OK

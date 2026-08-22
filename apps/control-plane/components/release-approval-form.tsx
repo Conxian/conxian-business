@@ -20,9 +20,9 @@ export function ReleaseApprovalForm({ artifacts }: { artifacts: ReleaseArtifact[
     >
       <form
         className="stack"
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
-          const result = requestReleaseApprovalV1({
+          const result = await requestReleaseApprovalV1({
             artifactId,
             requestedBy: actor.id,
             notes,
