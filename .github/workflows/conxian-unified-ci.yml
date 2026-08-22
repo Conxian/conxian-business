@@ -367,7 +367,7 @@ jobs:
     - name: Setup pnpm
       uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86  # ratchet:pnpm/action-setup@v6
       with:
-        version: 10.12.4
+        version: 11.13.0
         package_json_file: conxius-wallet/package.json
         run_install: false
     - name: Setup Node.js
@@ -381,8 +381,8 @@ jobs:
     - name: Verify pinned pnpm
       run: |
         PNPM_VERSION="$(pnpm --version)"
-        if [ "$PNPM_VERSION" != "10.12.4" ]; then
-          echo "Expected pnpm 10.12.4, got $PNPM_VERSION"
+        if [ "$PNPM_VERSION" != "11.13.0" ]; then
+          echo "Expected pnpm 11.13.0, got $PNPM_VERSION"
           exit 1
         fi
     - name: Install & Test
