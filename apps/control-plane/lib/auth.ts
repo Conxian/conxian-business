@@ -1,4 +1,5 @@
 import { betterAuth } from "better-auth";
+import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { Pool } from "pg";
 import { db } from "./db";
@@ -59,5 +60,9 @@ export function canOperate(role: ControlPlaneRole) {
 
 export async function requireControlPlaneAccess() {
   const { headers } = await import("next/headers");
-  return getCurrentActor(await headers());
+  try {
+    return await getCurrentActor(await headers());
+  } catch {
+    redirect("/sign-in");
+  }
 }
