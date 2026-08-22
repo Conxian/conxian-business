@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "as_of": "2026-08-22",
+  "status_vocabulary": [
+    "Implemented",
+    "Verified",
+    "Conditional",
+    "Incubating",
+    "Stub/Quarantined",
+    "Blocked (human)",
+    "Not Run"
+  ],
+  "autonomy_claim": "Not certified: full M2M and autonomous operation requires capability-scoped evidence across every implementation repository and lab.",
+  "gaps": [
+    {
+      "id": "M2M-001",
+      "severity": "critical",
+      "domain": "identity",
+      "owner": "conxian-gateway",
+      "status": "Not Run",
+      "evidence": ["docs/protocols/SIGNED_EVENT_ENVELOPE_V1.md", "docs/protocols/SESSION_BROKER_NORMATIVE_SPEC.md"],
+      "gap": "A single executable cross-repository M2M handshake, audience/scope enforcement, rotation, revocation, and replay test is not evidenced in the canonical repository.",
+      "acceptance": "Negative-path integration tests reject expired, wrong-audience, wrong-scope, replayed, revoked, and malformed signed messages."
+    },
+    {
+      "id": "AUTO-001",
+      "severity": "critical",
+      "domain": "orchestration",
+      "owner": "conxius-platform",
+      "status": "Incubating",
+      "evidence": ["docs/architecture/BOS_CONTROL_PLANE_TARGET_ARCHITECTURE.md", "docs/REPO_PORTFOLIO.md"],
+      "gap": "The control-plane architecture is documented, but durable autonomous run evidence with leases, retries, compensation, reconciliation, pause, and kill-switch behavior is not present in this baseline.",
+      "acceptance": "A clean-state lab executes a run through restart, duplicate delivery, timeout, retry, compensation, reconciliation, pause, and resume with an auditable run ID."
+    },
+    {
+      "id": "ASSET-001",
+      "severity": "critical",
+      "domain": "assets",
+      "owner": "conxius-enclave-sdk",
+      "status": "Conditional",
+      "evidence": ["docs/UNIFIED_PRODUCTION_READINESS_GAP_REPORT.md", "docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md"],
+      "gap": "Signing and attestation are documented as beta/conditional; value-bearing autonomous settlement must remain disabled until the current acceptance audit is closed.",
+      "acceptance": "Production-boundary checks fail closed when signing, attestation, oracle, policy, or settlement evidence is absent."
+    },
+    {
+      "id": "LAB-001",
+      "severity": "high",
+      "domain": "labs",
+      "owner": "conxius-orbit",
+      "status": "Conditional",
+      "evidence": ["audit/bos_safe_lab_manifest.json", "docs/REPO_PORTFOLIO.md", "conxian-business/BOS_RUNTIME_OWNERSHIP_MAP.md"],
+      "gap": "The full lab dependency manifest, preflight, reproducible execution path, and evidence capture are not yet canonicalized.",
+      "acceptance": "A documented runner validates toolchains, networks, credentials, fixtures, safety limits, expected outputs, teardown, and emits immutable evidence without fabricated success."
+    },
+    {
+      "id": "KB-001",
+      "severity": "high",
+      "domain": "governance",
+      "owner": "conxian-business",
+      "status": "Conditional",
+      "evidence": ["BOS_KNOWLEDGE_GRAPH.md", "docs/UNIFIED_PRODUCTION_READINESS_GAP_REPORT.md"],
+      "gap": "Readiness language and implementation evidence are distributed across historical reports, requiring an automated contradiction and freshness gate.",
+      "acceptance": "CI validates the ledger schema, status vocabulary, dates, evidence paths, and blocks unsupported blanket autonomy or production claims."
+    }
+  ]
+}

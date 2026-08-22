@@ -127,6 +127,10 @@ jobs:
     - name: Verify BOS production boundary
       run: |
         python3 scripts/verify_bos_production_boundary.py
+    - name: Verify M2M and autonomy readiness ledger
+      run: |
+        python3 scripts/verify_m2m_autonomy_readiness.py
+        python3 -m unittest -v scripts/tests/test_verify_m2m_autonomy_readiness.py
     - name: Run BOS production boundary regression suite
       run: |
         python3 -m unittest -v tests/test_verify_bos_production_boundary.py

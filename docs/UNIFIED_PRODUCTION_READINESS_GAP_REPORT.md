@@ -1,4 +1,4 @@
-﻿# Unified Production Readiness Gap Report
+# Unified Production Readiness Gap Report
 
 **Date:** 2026-06-03  
 **Version:** 1.0  
@@ -29,6 +29,8 @@
 ---
 
 ## 1. Executive Summary
+
+> **Current autonomy posture (2026-08-22):** Full M2M/autonomous readiness is **not certified**. The canonical, capability-scoped gap ledger is [`audit/m2m_autonomy_gap_ledger.json`](../audit/m2m_autonomy_gap_ledger.json), enforced by `scripts/verify_m2m_autonomy_readiness.py`. It records identity handshake evidence, durable orchestration, asset-signing conditions, reproducible labs, and KB contradiction controls as `Not Run`, `Incubating`, `Conditional`, or `Conditional`; these statuses must not be promoted to production claims without executable evidence.
 
 Conxian Labs has **10 active sub-repositories** plus the **conxian-business** orchestration repo. After a comprehensive audit across all repos — examining PRDs, BOS Buildout docs, Mainnet Readiness assessments, architecture docs, source code, GitHub issues, and market research — the ecosystem presents a **paradox**:
 
