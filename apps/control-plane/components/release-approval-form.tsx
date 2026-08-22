@@ -9,6 +9,7 @@ export function ReleaseApprovalForm({ artifacts }: { artifacts: ReleaseArtifact[
   const [artifactId, setArtifactId] = useState(artifacts[0]?.id ?? "");
   const [notes, setNotes] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
   return (
     <ActionPanel
@@ -19,11 +20,15 @@ export function ReleaseApprovalForm({ artifacts }: { artifacts: ReleaseArtifact[
         className="stack"
         onSubmit={async (event) => {
           event.preventDefault();
+          if (pending) return;
+          setPending(true);
           try {
             const result = await requestReleaseApproval({ artifactId, notes });
             setMessage(result.accepted ? `${result.message} Audit event recorded.` : result.message);
           } catch {
             setMessage("The approval request could not be submitted. Please try again.");
+          } finally {
+            setPending(false);
           }
         }}
       >
@@ -48,7 +53,7 @@ export function ReleaseApprovalForm({ artifacts }: { artifacts: ReleaseArtifact[
           />
         </label>
 
-        <button type="submit">Request approval</button>
+        <button type="submit" disabled={pending}>{pending ? "Submitting…" : "Request approval"}</button>
       </form>
 
       <ActionFeedback message={message} />

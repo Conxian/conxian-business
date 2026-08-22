@@ -7,8 +7,7 @@ import {
 
 const configuredRuntimeBaseUrl =
   process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() ||
-  process.env.ADMIN_RUNTIME_BASE_URL?.trim() ||
-  process.env.NEXT_PUBLIC_CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim();
+  process.env.ADMIN_RUNTIME_BASE_URL?.trim();
 
 configureAdminRuntimeClient({ runtimeBaseUrl: configuredRuntimeBaseUrl });
 

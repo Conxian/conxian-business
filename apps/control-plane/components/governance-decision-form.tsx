@@ -10,6 +10,7 @@ export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[
   const [decision, setDecision] = useState<WorkflowDecision>("approve");
   const [notes, setNotes] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
   return (
     <ActionPanel
@@ -20,11 +21,15 @@ export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[
         className="stack"
         onSubmit={async (event) => {
           event.preventDefault();
+          if (pending) return;
+          setPending(true);
           try {
             const result = await submitGovernanceDecision({ actionId, decision, notes });
             setMessage(result.accepted ? `${result.message} Audit event recorded.` : result.message);
           } catch {
             setMessage("The decision could not be submitted. Please try again.");
+          } finally {
+            setPending(false);
           }
         }}
       >
@@ -58,7 +63,7 @@ export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[
           />
         </label>
 
-        <button type="submit">Submit decision</button>
+        <button type="submit" disabled={pending}>{pending ? "Submitting…" : "Submit decision"}</button>
       </form>
 
       <ActionFeedback message={message} />

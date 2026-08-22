@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/next";
+import { headers } from "next/headers";
+import { SignOutButton } from "../components/sign-out-button";
+import { auth } from "../lib/auth";
 
 export const metadata: Metadata = {
   title: "Conxian BOS Control Plane",
@@ -17,7 +20,9 @@ const navItems = [
   { href: "/environments", label: "Environments" },
 ];
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const session = await auth.api.getSession({ headers: await headers() });
+
   return (
     <html lang="en">
       <body>
@@ -28,6 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <h1 className="sidebar-title">BOS Control Plane</h1>
               <p className="muted small">Private governance and operations surface.</p>
               <div className="sidebar-links">
+                {session?.user && <SignOutButton />}
                 <Link className="nav-link" href="/nexus">Public Nexus</Link>
                 <Link className="nav-link" href="/gateway">Public Gateway</Link>
                 <Link className="nav-link" href="/market">Public Market</Link>

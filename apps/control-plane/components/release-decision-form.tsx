@@ -10,6 +10,7 @@ export function ReleaseDecisionForm({ artifacts }: { artifacts: ReleaseArtifact[
   const [decision, setDecision] = useState<WorkflowDecision>("approve");
   const [notes, setNotes] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
   return (
     <ActionPanel
@@ -20,11 +21,15 @@ export function ReleaseDecisionForm({ artifacts }: { artifacts: ReleaseArtifact[
         className="stack"
         onSubmit={async (event) => {
           event.preventDefault();
+          if (pending) return;
+          setPending(true);
           try {
             const result = await submitReleaseDecision({ artifactId, decision, notes });
             setMessage(result.accepted ? `${result.message} Audit event recorded.` : result.message);
           } catch {
             setMessage("The release decision could not be submitted. Please try again.");
+          } finally {
+            setPending(false);
           }
         }}
       >
@@ -58,7 +63,7 @@ export function ReleaseDecisionForm({ artifacts }: { artifacts: ReleaseArtifact[
           />
         </label>
 
-        <button type="submit">Submit release decision</button>
+        <button type="submit" disabled={pending}>{pending ? "Submitting…" : "Submit release decision"}</button>
       </form>
 
       <ActionFeedback message={message} />
