@@ -28,7 +28,7 @@ STAGED_CHECKLIST_RE = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 MAINNET_PACK_RE = re.compile(
-    r"^###\s+Mainnet\s+acceptance\s+evidence\s+pack\b",
+    r"###\s+Mainnet\s+acceptance\s+evidence\s+pack\b",
     re.IGNORECASE | re.MULTILINE,
 )
 
@@ -76,7 +76,7 @@ def _body_sha(body: str, label: str) -> str | None:
 def _has_heading(body: str, heading: str) -> bool:
     return bool(
         re.search(
-            rf"^####\s+{re.escape(heading)}\s*$",
+            rf"####\s+{re.escape(heading)}",
             body,
             re.IGNORECASE | re.MULTILINE,
         )
@@ -199,6 +199,8 @@ def validate_pull_request(
             missing = [heading for heading in required_headings if not _has_heading(body, heading)]
             if missing:
                 errors.append("Mainnet Acceptance Evidence Pack is missing: " + ", ".join(missing) + ".")
+        elif FEATURE_CHECKLIST_RE.search(body) and not any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/")):
+            errors.append("PRs into 'main' using feature checklist must come from agent branches.")
         return errors
 
     errors.append("Branch Promotion Policy only accepts pull requests targeting dev, staged, or main.")

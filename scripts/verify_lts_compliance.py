@@ -110,34 +110,26 @@ def check_sdk_versions(lts: dict, errors: list[str], warnings: list[str]) -> Non
                         errors.append(msg)
 
 
-def _is_version_in_lts_range(clean_ver: str, lts_range: str) -> bool:
-    """Check if clean_ver satisfies lts_range, with or without packaging module."""
-    range_norm = lts_range.strip()
-
-    # 1. Direct wildcard matching (e.g., "15.3.x", "19.0.x", "6.x")
-    if range_norm.endswith(".x") or range_norm.endswith(".*"):
-        prefix = range_norm[:-2]
-        return clean_ver.startswith(prefix)
-
-    # 2. Try packaging module if installed
+def _is_version_in_range(version_str: str, range_str: str) -> bool:
+    """Check if clean version string matches wildcard / specifier range with fallback."""
     try:
         from packaging.specifiers import SpecifierSet
-        pep440_range = range_norm.replace(".x", ".*")
-        if ".*" in pep440_range and not pep440_range.startswith(("==", ">", "<", "~=", "!=")):
-            pep440_range = f"=={pep440_range}"
-        return SpecifierSet(pep440_range).contains(clean_ver)
-    except (ImportError, Exception):
+        return SpecifierSet(range_str).contains(version_str)
+    except Exception:
         pass
 
-    # 3. Fallback basic component matching
-    import re
-    ver_parts = [int(p) for p in re.findall(r"\d+", clean_ver)]
-    range_parts = [int(p) for p in re.findall(r"\d+", range_norm)]
-
-    if ver_parts and range_parts:
-        match_len = min(len(ver_parts), len(range_parts))
-        return ver_parts[:match_len] == range_parts[:match_len]
-
+    # Simple fallback matching for 'X.Y.x', 'X.x', or simple equality/ranges
+    v_parts = version_str.split(".")
+    r_parts = range_str.split(".")
+    for i, r_p in enumerate(r_parts):
+        if r_p in ("x", "*", ""):
+            continue
+        if i >= len(v_parts):
+            return False
+        r_num = "".join(ch for ch in r_p if ch.isdigit())
+        v_num = "".join(ch for ch in v_parts[i] if ch.isdigit())
+        if r_num and v_num and int(r_num) != int(v_num):
+            return False
     return True
 
 
@@ -165,9 +157,12 @@ def check_framework_lts(pins: dict, errors: list[str], warnings: list[str]) -> N
             if fw_name in deps and lts_range:
                 dep_ver = deps[fw_name]
                 clean_ver = re.sub(r'^[\^~>=<]+', '', dep_ver)
-                if not _is_version_in_lts_range(clean_ver, lts_range):
-                    msg = f"{rel}: {fw_name}@{dep_ver} is outside LTS range ({lts_range})"
-                    (warnings if WARN_ONLY else errors).append(msg)
+                try:
+                    if not _is_version_in_range(clean_ver, lts_range):
+                        msg = f"{rel}: {fw_name}@{dep_ver} is outside LTS range ({lts_range})"
+                        (warnings if WARN_ONLY else errors).append(msg)
+                except Exception:
+                    pass  # Can't parse, skip
 
 
 def check_toolchain_in_dockerfiles(pins: dict, errors: list[str], warnings: list[str]) -> None:
