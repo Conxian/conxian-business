@@ -2,6 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Conxian BOS Control Plane",
@@ -43,6 +45,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
           <div className="content-shell">{children}</div>
         </div>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
