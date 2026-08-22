@@ -1,5 +1,8 @@
 export type GovernanceActionStatus = "draft" | "pending" | "approved" | "rejected" | "changes_requested";
 
+export * from "./m2m";
+export * from "./autonomous-run";
+
 /** Canonical fields required for brokered machine-to-machine requests. */
 export interface M2MRequestContext {
   protocolVersion: "m2m.v1";
