@@ -21,25 +21,33 @@ export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[
     >
       <form
         className="stack"
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
-          const result = submitGovernanceDecisionV1({
-            actionId,
-            decision,
-            actorId: actor.id,
-            notes,
-          });
+          setMessage(null);
 
-          if (result.accepted) {
-            const audit = createAuditActionEvent({
-              category: "policy",
-              actor: actor.name,
-              summary: `Governance action ${decision}`,
-              relatedEntityId: actionId,
-              actionType: "governance_decision",
-              outcome: "accepted",
+          try {
+            const result = await submitGovernanceDecisionV1({
+              actionId,
+              decision,
+              actorId: actor.id,
+              notes,
             });
-            setMessage(`${result.message} Audit event ${audit.id} created.`);
+
+            if (result.accepted) {
+              const audit = createAuditActionEvent({
+                category: "policy",
+                actor: actor.name,
+                summary: `Governance action ${decision}`,
+                relatedEntityId: actionId,
+                actionType: "governance_decision",
+                outcome: "accepted",
+              });
+              setMessage(`${result.message} Audit event ${audit.id} created.`);
+            } else {
+              setMessage(result.message);
+            }
+          } catch (error) {
+            setMessage(error instanceof Error ? error.message : "Unable to submit governance decision.");
           }
         }}
       >
