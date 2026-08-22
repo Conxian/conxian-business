@@ -60,9 +60,8 @@ export function canOperate(role: ControlPlaneRole) {
 
 export async function requireControlPlaneAccess() {
   const { headers } = await import("next/headers");
-  try {
-    return await getCurrentActor(await headers());
-  } catch {
-    redirect("/sign-in");
-  }
+  const requestHeaders = await headers();
+  const session = await auth.api.getSession({ headers: requestHeaders });
+  if (!session?.user) redirect("/sign-in");
+  return getCurrentActor(requestHeaders);
 }

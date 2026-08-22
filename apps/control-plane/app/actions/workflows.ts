@@ -22,6 +22,11 @@ const decision = (value: unknown): "approve" | "reject" | "request_changes" => {
   return value;
 };
 
+const inputObject = (value: unknown): Record<string, unknown> => {
+  if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("Invalid input");
+  return value as Record<string, unknown>;
+};
+
 async function actor() {
   const current = await getCurrentActor(await headers());
   return current;
@@ -31,33 +36,36 @@ async function recordAudit(current: Awaited<ReturnType<typeof actor>>, category:
   await db.insert(auditEvent).values({ id: crypto.randomUUID(), category, actorId: current.id, actorName: current.name, summary, relatedEntityId: entity, actionType: type, outcome: "accepted" });
 }
 
-export async function requestReleaseApproval(input: { artifactId: string; notes: string }) {
+export async function requestReleaseApproval(input: unknown) {
   const current = await actor();
   if (!canOperate(current.role)) throw new Error("Forbidden");
-  const artifactId = text(input.artifactId, 200);
-  const notes = text(input.notes || "No additional notes", 4000);
+  const values = inputObject(input);
+  const artifactId = text(values.artifactId, 200);
+  const notes = text(values.notes || "No additional notes", 4000);
   const result = await requestReleaseApprovalV1({ artifactId, requestedBy: current.id, notes });
   if (result.accepted) await recordAudit(current, "release", "Release approval requested", artifactId, "request_release_approval");
   return result;
 }
 
-export async function submitReleaseDecision(input: { artifactId: string; decision: "approve" | "reject" | "request_changes"; notes: string }) {
+export async function submitReleaseDecision(input: unknown) {
   const current = await actor();
   if (!canApprove(current.role)) throw new Error("Forbidden");
-  const artifactId = text(input.artifactId, 200);
-  const notes = text(input.notes || "No additional notes", 4000);
-  const selectedDecision = decision(input.decision);
+  const values = inputObject(input);
+  const artifactId = text(values.artifactId, 200);
+  const notes = text(values.notes || "No additional notes", 4000);
+  const selectedDecision = decision(values.decision);
   const result = await submitReleaseDecisionV1({ artifactId, decision: selectedDecision, actorId: current.id, notes });
   if (result.accepted) await recordAudit(current, "release", `Release decision: ${selectedDecision}`, artifactId, "release_decision");
   return result;
 }
 
-export async function submitGovernanceDecision(input: { actionId: string; decision: "approve" | "reject" | "request_changes"; notes: string }) {
+export async function submitGovernanceDecision(input: unknown) {
   const current = await actor();
   if (!canApprove(current.role)) throw new Error("Forbidden");
-  const actionId = text(input.actionId, 200);
-  const notes = text(input.notes || "No additional notes", 4000);
-  const selectedDecision = decision(input.decision);
+  const values = inputObject(input);
+  const actionId = text(values.actionId, 200);
+  const notes = text(values.notes || "No additional notes", 4000);
+  const selectedDecision = decision(values.decision);
   const result = await submitGovernanceDecisionV1({ actionId, decision: selectedDecision, actorId: current.id, notes });
   if (result.accepted) await recordAudit(current, "policy", `Governance decision: ${selectedDecision}`, actionId, "governance_decision");
   return result;
