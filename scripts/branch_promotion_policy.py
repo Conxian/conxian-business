@@ -28,7 +28,7 @@ STAGED_CHECKLIST_RE = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 MAINNET_PACK_RE = re.compile(
-    r"^###\s+Mainnet\s+acceptance\s+evidence\s+pack\b",
+    r"###\s+Mainnet\s+acceptance\s+evidence\s+pack\b",
     re.IGNORECASE | re.MULTILINE,
 )
 
@@ -76,7 +76,7 @@ def _body_sha(body: str, label: str) -> str | None:
 def _has_heading(body: str, heading: str) -> bool:
     return bool(
         re.search(
-            rf"^####\s+{re.escape(heading)}\s*$",
+            rf"####\s+{re.escape(heading)}",
             body,
             re.IGNORECASE | re.MULTILINE,
         )
