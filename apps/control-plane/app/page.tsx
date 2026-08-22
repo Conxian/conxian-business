@@ -1,8 +1,10 @@
 import { OverviewCards } from "../components/overview-cards";
 import { PageHeader } from "../components/page-header";
 import { getAuditData, getPolicyApprovalData, getReleaseGovernanceData } from "../lib/module-adapters";
+import { requireControlPlaneAccess } from "../lib/auth";
 
 export default async function HomePage() {
+  const actor = await requireControlPlaneAccess();
   const artifacts = await getReleaseGovernanceData();
   const auditEvents = await getAuditData();
   const governanceActions = await getPolicyApprovalData();
@@ -13,6 +15,7 @@ export default async function HomePage() {
         eyebrow="Private BOS application"
         title="Overview"
         description="This app is the internal starting point for governance, audit, release, policy, and environment workflows across the Conxian stack."
+        actor={actor}
       />
 
       <OverviewCards />

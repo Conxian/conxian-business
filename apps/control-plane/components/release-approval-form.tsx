@@ -3,12 +3,9 @@
 import type { ReleaseArtifact } from "@conxian/schemas";
 import { useState } from "react";
 import { ActionFeedback, ActionPanel } from "./action-panel";
-import { getCurrentActor } from "../lib/auth";
-import { createAuditActionEvent } from "../lib/audit";
-import { requestReleaseApprovalV1 } from "../lib/workflow-clients";
+import { requestReleaseApproval } from "../app/actions/workflows";
 
 export function ReleaseApprovalForm({ artifacts }: { artifacts: ReleaseArtifact[] }) {
-  const actor = getCurrentActor();
   const [artifactId, setArtifactId] = useState(artifacts[0]?.id ?? "");
   const [notes, setNotes] = useState("");
   const [message, setMessage] = useState<string | null>(null);
@@ -22,22 +19,11 @@ export function ReleaseApprovalForm({ artifacts }: { artifacts: ReleaseArtifact[
         className="stack"
         onSubmit={async (event) => {
           event.preventDefault();
-          const result = await requestReleaseApprovalV1({
-            artifactId,
-            requestedBy: actor.id,
-            notes,
-          });
-
-          if (result.accepted) {
-            const audit = createAuditActionEvent({
-              category: "release",
-              actor: actor.name,
-              summary: "Release approval requested",
-              relatedEntityId: artifactId,
-              actionType: "request_release_approval",
-              outcome: "accepted",
-            });
-            setMessage(`${result.message} Audit event ${audit.id} created.`);
+          try {
+            const result = await requestReleaseApproval({ artifactId, notes });
+            setMessage(result.message);
+          } catch {
+            setMessage("The approval request could not be submitted. Please try again.");
           }
         }}
       >

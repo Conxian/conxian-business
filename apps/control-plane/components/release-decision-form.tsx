@@ -3,12 +3,9 @@
 import type { ReleaseArtifact, WorkflowDecision } from "@conxian/schemas";
 import { useState } from "react";
 import { ActionFeedback, ActionPanel } from "./action-panel";
-import { getCurrentActor } from "../lib/auth";
-import { createAuditActionEvent } from "../lib/audit";
-import { submitReleaseDecisionV1 } from "../lib/workflow-clients";
+import { submitReleaseDecision } from "../app/actions/workflows";
 
 export function ReleaseDecisionForm({ artifacts }: { artifacts: ReleaseArtifact[] }) {
-  const actor = getCurrentActor();
   const [artifactId, setArtifactId] = useState(artifacts[0]?.id ?? "");
   const [decision, setDecision] = useState<WorkflowDecision>("approve");
   const [notes, setNotes] = useState("");
@@ -23,23 +20,11 @@ export function ReleaseDecisionForm({ artifacts }: { artifacts: ReleaseArtifact[
         className="stack"
         onSubmit={async (event) => {
           event.preventDefault();
-          const result = await submitReleaseDecisionV1({
-            artifactId,
-            decision,
-            actorId: actor.id,
-            notes,
-          });
-
-          if (result.accepted) {
-            const audit = createAuditActionEvent({
-              category: "release",
-              actor: actor.name,
-              summary: `Release decision ${decision}`,
-              relatedEntityId: artifactId,
-              actionType: "release_decision",
-              outcome: "accepted",
-            });
-            setMessage(`${result.message} Audit event ${audit.id} created.`);
+          try {
+            const result = await submitReleaseDecision({ artifactId, decision, notes });
+            setMessage(result.accepted ? result.message : result.message);
+          } catch {
+            setMessage("The release decision could not be submitted. Please try again.");
           }
         }}
       >

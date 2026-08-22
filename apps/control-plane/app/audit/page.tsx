@@ -1,9 +1,11 @@
 import { DataTable } from "../../components/data-table";
+import { requireControlPlaneAccess } from "../../lib/auth";
 import { PageHeader } from "../../components/page-header";
 import { getAuditData } from "../../lib/module-adapters";
 import type { AuditEvent } from "@conxian/schemas";
 
 export default async function AuditPage() {
+  const actor = await requireControlPlaneAccess();
   const events = await getAuditData();
 
   return (
@@ -12,6 +14,7 @@ export default async function AuditPage() {
         eyebrow="Module"
         title="Audit"
         description="Review operational evidence and auditable activity across workflows."
+        actor={actor}
       />
 
       <section className="card">
