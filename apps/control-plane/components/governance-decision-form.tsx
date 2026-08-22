@@ -21,9 +21,9 @@ export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[
     >
       <form
         className="stack"
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
-          const result = submitGovernanceDecisionV1({
+          const result = await submitGovernanceDecisionV1({
             actionId,
             decision,
             actorId: actor.id,

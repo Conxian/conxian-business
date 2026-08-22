@@ -21,9 +21,9 @@ export function ReleaseDecisionForm({ artifacts }: { artifacts: ReleaseArtifact[
     >
       <form
         className="stack"
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
-          const result = submitReleaseDecisionV1({
+          const result = await submitReleaseDecisionV1({
             artifactId,
             decision,
             actorId: actor.id,

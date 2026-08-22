@@ -2,10 +2,10 @@ import { OverviewCards } from "../components/overview-cards";
 import { PageHeader } from "../components/page-header";
 import { getAuditData, getPolicyApprovalData, getReleaseGovernanceData } from "../lib/module-adapters";
 
-export default function HomePage() {
-  const artifacts = getReleaseGovernanceData();
-  const auditEvents = getAuditData();
-  const governanceActions = getPolicyApprovalData();
+export default async function HomePage() {
+  const artifacts = await getReleaseGovernanceData();
+  const auditEvents = await getAuditData();
+  const governanceActions = await getPolicyApprovalData();
 
   return (
     <main className="page-shell">

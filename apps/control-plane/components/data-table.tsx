@@ -1,9 +1,10 @@
+import type { ReactNode } from "react";
 import { StatusBadge } from "./status-badge";
 
 export interface DataTableColumn<T> {
   key: string;
   header: string;
-  render: (item: T) => string | number | JSX.Element;
+  render: (item: T) => ReactNode;
 }
 
 export function DataTable<T>({

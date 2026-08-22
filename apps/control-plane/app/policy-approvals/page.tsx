@@ -5,9 +5,9 @@ import { getPolicyApprovalData } from "../../lib/module-adapters";
 import type { GovernanceAction } from "@conxian/schemas";
 import { GovernanceDecisionForm } from "../../components/governance-decision-form";
 
-export default function PolicyApprovalsPage() {
+export default async function PolicyApprovalsPage() {
   const actor = getCurrentActor();
-  const actions = getPolicyApprovalData();
+  const actions = await getPolicyApprovalData();
 
   return (
     <main className="page-shell">
