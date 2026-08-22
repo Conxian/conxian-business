@@ -16,6 +16,8 @@ See the [repo portfolio](docs/REPO_PORTFOLIO.md#ecosystem-repos) for the portfol
 - [`docs/DOCTRINE_ALIGNMENT_STANDARD.md`](./docs/DOCTRINE_ALIGNMENT_STANDARD.md)
 - [`docs/PORTFOLIO_DOCTRINE_REGISTER.md`](./docs/PORTFOLIO_DOCTRINE_REGISTER.md)
 - [`docs/DOCUMENTATION_ALIGNMENT_INDEX.md`](./docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
+- [`docs/architecture/BOS_SERVICE_TOPOLOGY.md`](./docs/architecture/BOS_SERVICE_TOPOLOGY.md)
+- [`ops/service-registry.json`](./ops/service-registry.json)
 
 ## Purpose
 

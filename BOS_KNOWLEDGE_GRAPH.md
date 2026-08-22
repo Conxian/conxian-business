@@ -2,6 +2,10 @@
 > Clarity-version: 5 | Epoch: latest | Generated: 2026-08-19 | Gate 0 baseline
 
 ## Session Update (2026-08-22)
+- Established the canonical M2M/autonomy readiness ledger at `audit/m2m_autonomy_gap_ledger.json` and safe-lab manifest at `audit/bos_safe_lab_manifest.json`; current posture is **not certified** for full autonomous execution.
+- Live validation recorded in `audit/live_runtime_validation_2026-08-22.md`: production build and local controls pass, but Vercel production has no admin runtime base URL and deployment protection blocked anonymous endpoint verification; live operations remain blocked pending human configuration/access.
+- Added CI-enforced validation for capability-scoped statuses, evidence references, and safe-lab production prohibition via `scripts/verify_m2m_autonomy_readiness.py`.
+- Added shared M2M request context, policy decision, autonomous run, and audit-event schemas in `packages/schemas/src/index.ts`; executable cross-repository enforcement remains a tracked gap.
 - Conducted full commit history audit across all 10 remote branches (`main`, `dev`, `staged`, `jules-*`, `jules/*`, `promotion/*`); confirmed all PRs (#1035, #1037, #1038, #1040, #1045) and enhancements are fully merged into `main` (commit `77c0b9b`).
 - Verified `dev` and `staged` branch synchronization with `main` (0 unmerged commits diff).
 - Categorized 8 stale feature and promotion branches for deletion while preserving `main`, `dev`, and `staged`.

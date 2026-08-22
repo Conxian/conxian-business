@@ -5,29 +5,45 @@ import {
   listReleaseArtifacts,
 } from "@conxian/client-sdk";
 import type { AuditEvent, EnvironmentRecord, GovernanceAction, ReleaseArtifact } from "@conxian/schemas";
-import {
-  sampleAuditEvents,
-  sampleEnvironments,
-  sampleGovernanceActions,
-  sampleReleaseArtifacts,
-} from "./sample-data";
 
-function withFallback<T>(items: T[], fallback: T[]): T[] {
-  return items.length > 0 ? items : fallback;
+function hasRuntimeBaseUrl(): boolean {
+  return Boolean(
+    process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() ||
+      process.env.ADMIN_RUNTIME_BASE_URL?.trim() ||
+      process.env.NEXT_PUBLIC_CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim(),
+  );
 }
 
-export function getReleaseGovernanceData(): ReleaseArtifact[] {
-  return withFallback(listReleaseArtifacts(), sampleReleaseArtifacts);
+function requireRuntimeUrl(): boolean {
+  return hasRuntimeBaseUrl();
 }
 
-export function getAuditData(): AuditEvent[] {
-  return withFallback(listAuditEvents(), sampleAuditEvents);
+export async function getReleaseGovernanceData(): Promise<ReleaseArtifact[]> {
+  if (!requireRuntimeUrl()) return [];
+  return listReleaseArtifacts();
 }
 
-export function getPolicyApprovalData(): GovernanceAction[] {
-  return withFallback(listGovernanceActions(), sampleGovernanceActions);
+export async function getAuditData(): Promise<AuditEvent[]> {
+  if (!requireRuntimeUrl()) return [];
+  return listAuditEvents();
 }
 
-export function getEnvironmentData(): EnvironmentRecord[] {
-  return withFallback(listEnvironments(), sampleEnvironments);
+export async function getPolicyApprovalData(): Promise<GovernanceAction[]> {
+  if (!requireRuntimeUrl()) return [];
+  return listGovernanceActions();
+}
+
+export async function getEnvironmentData(): Promise<EnvironmentRecord[]> {
+  if (!requireRuntimeUrl()) return [];
+  return listEnvironments();
+}
+
+export function getRuntimeConfigurationStatus(): { configured: boolean; source: "server" | "client" | "none" } {
+  if (process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() || process.env.ADMIN_RUNTIME_BASE_URL?.trim()) {
+    return { configured: true, source: "server" };
+  }
+  if (process.env.NEXT_PUBLIC_CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim()) {
+    return { configured: true, source: "client" };
+  }
+  return { configured: false, source: "none" };
 }

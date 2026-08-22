@@ -1,4 +1,56 @@
 export type GovernanceActionStatus = "draft" | "pending" | "approved" | "rejected" | "changes_requested";
+
+export * from "./m2m";
+export * from "./autonomous-run";
+
+/** Canonical fields required for brokered machine-to-machine requests. */
+export interface M2MRequestContext {
+  protocolVersion: "m2m.v1";
+  clientId: string;
+  audience: string;
+  scopes: string[];
+  correlationId: string;
+  idempotencyKey: string;
+  nonce: string;
+  issuedAt: string;
+  expiresAt: string;
+  proofOfPossessionJkt: string;
+  attestationRef: string;
+}
+
+export type M2MPolicyDecision = "ALLOW" | "DENY" | "PAUSE";
+
+export interface M2MPolicyDecisionRecord {
+  decision: M2MPolicyDecision;
+  reasonCode: string;
+  policyVersion: string;
+  subject: string;
+  requiredApprovals: number;
+  approvals: number;
+  evaluatedAt: string;
+}
+
+export interface AutonomousRunRecord {
+  runId: string;
+  state: "PENDING" | "RUNNING" | "PAUSED" | "RETRYING" | "COMPENSATING" | "RECONCILING" | "SUCCEEDED" | "FAILED" | "CANCELLED";
+  trigger: string;
+  policy: M2MPolicyDecisionRecord;
+  attempt: number;
+  idempotencyKey: string;
+  lastTransitionAt: string;
+}
+
+export interface M2MAuditEvent {
+  eventId: string;
+  eventType: string;
+  traceId: string;
+  subject: string;
+  audience: string;
+  scopes: string[];
+  decision: M2MPolicyDecision;
+  reasonCode: string;
+  timestamp: string;
+}
 export type ReleaseArtifactStatus = "draft" | "in_review" | "approved" | "published" | "rejected";
 export type EnvironmentVerificationStatus = "pending" | "verified" | "restricted";
 export type AuditEventCategory = "release" | "policy" | "environment" | "governance";

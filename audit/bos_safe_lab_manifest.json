@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "name": "bos-safe-autonomy-lab",
+  "as_of": "2026-08-22",
+  "mode": "local-or-isolated-testnet-only",
+  "production_execution": "forbidden",
+  "required_tools": {
+    "node": ">=20.19.0 <25",
+    "pnpm": "10.x",
+    "python": ">=3.11",
+    "rust": "stable"
+  },
+  "required_prerequisites": [
+    "all root submodules initialized at recorded gitlink SHAs",
+    "explicit RPC/network configuration",
+    "explicit funded test principals for testnet runs",
+    "secret-provider injection for signing or attestation tests",
+    "append-only evidence output location"
+  ],
+  "phases": [
+    "preflight",
+    "build",
+    "unit-and-contract-tests",
+    "m2m-handshake-negative-paths",
+    "autonomous-run-retry-replay-reconciliation",
+    "asset-policy-fail-closed-tests",
+    "evidence-capture",
+    "teardown"
+  ],
+  "safety_invariants": [
+    "never use mainnet credentials or value-bearing assets",
+    "never fabricate transaction IDs, signatures, attestations, or settlement success",
+    "fail closed when policy, oracle, attestation, revocation, or audit dependencies are unavailable",
+    "pause before irreversible or high-risk operations",
+    "record commit SHAs, tool versions, inputs, outputs, and failures"
+  ],
+  "status": "Not Run",
+  "blockers": [
+    "provider credentials, hardware TEE, and funded isolated principals require human provisioning",
+    "full cross-repository runner is not yet implemented"
+  ]
+}
