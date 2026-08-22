@@ -1,0 +1,4 @@
+{
+  "installCommand": "pnpm --dir apps/control-plane install --no-frozen-lockfile",
+  "buildCommand": "pnpm --dir apps/control-plane run build"
+}
