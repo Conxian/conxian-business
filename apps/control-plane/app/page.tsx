@@ -3,11 +3,9 @@ import { PageHeader } from "../components/page-header";
 import { getAuditData, getPolicyApprovalData, getReleaseGovernanceData } from "../lib/module-adapters";
 
 export default async function HomePage() {
-  const [artifacts, auditEvents, governanceActions] = await Promise.all([
-    getReleaseGovernanceData(),
-    getAuditData(),
-    getPolicyApprovalData(),
-  ]);
+  const artifacts = await getReleaseGovernanceData();
+  const auditEvents = await getAuditData();
+  const governanceActions = await getPolicyApprovalData();
 
   return (
     <main className="page-shell">
