@@ -1,12 +1,11 @@
-import { headers } from "next/headers";
 import { DataTable } from "../../components/data-table";
-import { getCurrentActor } from "../../lib/auth";
+import { requireControlPlaneAccess } from "../../lib/auth";
 import { PageHeader } from "../../components/page-header";
 import { getAuditData } from "../../lib/module-adapters";
 import type { AuditEvent } from "@conxian/schemas";
 
 export default async function AuditPage() {
-  const actor = await getCurrentActor(await headers());
+  const actor = await requireControlPlaneAccess();
   const events = await getAuditData();
 
   return (

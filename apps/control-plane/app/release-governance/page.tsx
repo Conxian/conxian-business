@@ -1,7 +1,7 @@
-import { redirect } from "next/navigation";
 import { DataTable, StatusBadge } from "../../components/data-table";
 import { PageHeader } from "../../components/page-header";
 import { requireControlPlaneAccess, canApprove, canOperate } from "../../lib/auth";
+
 import { getReleaseGovernanceData } from "../../lib/module-adapters";
 import type { ReleaseArtifact } from "@conxian/schemas";
 import { ReleaseApprovalForm } from "../../components/release-approval-form";
@@ -30,8 +30,8 @@ export default async function ReleaseGovernancePage() {
           </ul>
         </article>
 
-        <ReleaseApprovalForm artifacts={artifacts} actor={actor} />
-        <ReleaseDecisionForm artifacts={artifacts} actor={actor} />
+        <ReleaseApprovalForm artifacts={artifacts} />
+        <ReleaseDecisionForm artifacts={artifacts} />
       </section>
 
       <section className="card">

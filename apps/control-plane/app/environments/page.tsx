@@ -1,12 +1,11 @@
 import { DataTable, StatusBadge } from "../../components/data-table";
-import { getCurrentActor } from "../../lib/auth";
 import { PageHeader } from "../../components/page-header";
 import { getEnvironmentData } from "../../lib/module-adapters";
 import { requireControlPlaneAccess } from "../../lib/auth";
 import type { EnvironmentRecord } from "@conxian/schemas";
 
 export default async function EnvironmentsPage() {
-  const actor = await getCurrentActor(await headers());
+  const actor = await requireControlPlaneAccess();
   const environments = await getEnvironmentData();
 
   return (

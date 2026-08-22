@@ -24,7 +24,7 @@ export default async function PolicyApprovalsPage() {
           <p>{canApprove(actor.role) ? "This actor can approve or reject actions." : "This actor can review but not approve actions."}</p>
         </article>
 
-        <GovernanceDecisionForm actions={actions} actor={actor} />
+        <GovernanceDecisionForm actions={actions} />
       </section>
 
       <section className="card">

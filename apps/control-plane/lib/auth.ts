@@ -1,5 +1,8 @@
 import { betterAuth } from "better-auth";
+import { eq } from "drizzle-orm";
 import { Pool } from "pg";
+import { db } from "./db";
+import { user } from "./db/schema";
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const productionOrigins = [
@@ -38,11 +41,20 @@ export type AuthenticatedActor = { id: string; name: string; role: ControlPlaneR
 export async function getCurrentActor(headers: Headers): Promise<AuthenticatedActor> {
   const session = await auth.api.getSession({ headers });
   if (!session?.user) throw new Error("Unauthorized");
-  return { id: session.user.id, name: session.user.name, role: "admin" };
+  const [record] = await db.select({ role: user.role }).from(user).where(eq(user.id, session.user.id)).limit(1);
+  const role = record?.role;
+  if (role !== "viewer" && role !== "operator" && role !== "approver" && role !== "admin") {
+    throw new Error("Forbidden");
+  }
+  return { id: session.user.id, name: session.user.name, role };
 }
 
 export function canApprove(role: ControlPlaneRole) {
   return role === "approver" || role === "admin";
+}
+
+export function canOperate(role: ControlPlaneRole) {
+  return role === "operator" || role === "approver" || role === "admin";
 }
 
 export async function requireControlPlaneAccess() {
