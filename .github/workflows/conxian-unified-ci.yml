@@ -367,7 +367,6 @@ jobs:
     - name: Setup pnpm
       uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86  # ratchet:pnpm/action-setup@v6
       with:
-        version: 11.12.0
         package_json_file: conxius-wallet/package.json
         run_install: false
     - name: Setup Node.js
@@ -378,13 +377,6 @@ jobs:
         # conxius-wallet is pnpm-lockfile-first; keep cache/install aligned to pnpm lockfile.
         cache: 'pnpm'
         cache-dependency-path: conxius-wallet/pnpm-lock.yaml
-    - name: Verify pinned pnpm
-      run: |
-        PNPM_VERSION="$(pnpm --version)"
-        if [ "$PNPM_VERSION" != "11.12.0" ]; then
-          echo "Expected pnpm 11.12.0, got $PNPM_VERSION"
-          exit 1
-        fi
     - name: Install & Test
       run: |
         cd conxius-wallet
