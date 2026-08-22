@@ -139,6 +139,29 @@ body {
   padding: 20px;
 }
 
+.surface-directory {
+  margin-bottom: 16px;
+}
+
+.surface-grid {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.surface-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  background: rgba(122, 162, 255, 0.04);
+}
+
+.surface-item p {
+  margin-bottom: 0;
+}
+
 .action-panel-body,
 .stack {
   display: grid;
