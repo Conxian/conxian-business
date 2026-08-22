@@ -19,8 +19,9 @@ export function PageHeader({
           <h2>{title}</h2>
           <p className="lede">{description}</p>
         </div>
-        <div className="actor-chip">
-          <span>{actor.name}</span>
+        <div className="actor-chip" aria-label={`Logged in as ${actor.name}, role ${actor.role}`}>
+          <span className="chip-muted">Logged in as</span>
+          <strong>{actor.name}</strong>
           <span className="chip-muted">{actor.role}</span>
         </div>
       </div>
