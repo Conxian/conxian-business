@@ -15,17 +15,44 @@ def run(command: list[str], cwd: Path | None = None) -> tuple[int, str]:
 
 
 def repos(org: str) -> list[dict[str, object]]:
-    code, output = run(["gh", "api", f"orgs/{org}/repos", "--paginate", "-f", "per_page=100"])
+    # Use the authenticated gh repo surface, which is available in CI and local
+    # operator sessions even when the raw API credential is not exported.
+    code, output = run([
+        "gh", "repo", "list", org, "--limit", "100",
+        "--json", "name,url,isArchived,defaultBranchRef,description",
+    ])
     if code:
-        raise RuntimeError(f"Unable to enumerate {org}: {output}")
-    # gh emits one JSON array per page; combine conservatively.
-    data: list[dict[str, object]] = []
-    for line in output.splitlines():
-        if line.strip():
-            page = json.loads(line)
-            if isinstance(page, list):
-                data.extend(page)
-    return [r for r in data if not r.get("archived")]
+        # A checked-out conxian-business clone may have repository access through
+        # mounted submodules while gh API credentials are intentionally absent.
+        path_code, path_output = run(["git", "config", "--file", ".gitmodules", "--get-regexp", r"^submodule\..*\.path$"])
+        url_code, url_output = run(["git", "config", "--file", ".gitmodules", "--get-regexp", r"^submodule\..*\.url$"])
+        if path_code or url_code:
+            raise RuntimeError(f"Unable to enumerate {org}: {output}")
+        paths = {line.split(" ", 1)[0].removeprefix("submodule.").removesuffix(".path"): line.split(" ", 1)[1] for line in path_output.splitlines()}
+        urls = {line.split(" ", 1)[0].removeprefix("submodule.").removesuffix(".url"): line.split(" ", 1)[1] for line in url_output.splitlines()}
+        return [
+            {
+                "name": path.split("/")[-1],
+                "html_url": urls[key],
+                "clone_url": urls[key],
+                "archived": False,
+            }
+            for key, path in paths.items()
+            if key in urls
+        ]
+    data = json.loads(output)
+    return [
+        {
+            "name": item["name"],
+            "html_url": item["url"],
+            "clone_url": f"https://github.com/{org}/{item['name']}.git",
+            "archived": item.get("isArchived", False),
+            "default_branch": (item.get("defaultBranchRef") or {}).get("name"),
+            "description": item.get("description"),
+        }
+        for item in data
+        if not item.get("isArchived")
+    ]
 
 
 def inspect(repo: dict[str, object], checkout: Path) -> dict[str, object]:
