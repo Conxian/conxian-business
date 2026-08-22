@@ -3,8 +3,8 @@ import { PageHeader } from "../../components/page-header";
 import { getAuditData } from "../../lib/module-adapters";
 import type { AuditEvent } from "@conxian/schemas";
 
-export default async function AuditPage() {
-  const events = await getAuditData();
+export default function AuditPage() {
+  const events = getAuditData();
 
   return (
     <main className="page-shell">

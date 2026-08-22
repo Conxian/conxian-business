@@ -3,8 +3,8 @@ import { PageHeader } from "../../components/page-header";
 import { getEnvironmentData } from "../../lib/module-adapters";
 import type { EnvironmentRecord } from "@conxian/schemas";
 
-export default async function EnvironmentsPage() {
-  const environments = await getEnvironmentData();
+export default function EnvironmentsPage() {
+  const environments = getEnvironmentData();
 
   return (
     <main className="page-shell">

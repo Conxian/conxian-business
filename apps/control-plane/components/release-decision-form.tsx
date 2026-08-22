@@ -21,33 +21,25 @@ export function ReleaseDecisionForm({ artifacts }: { artifacts: ReleaseArtifact[
     >
       <form
         className="stack"
-        onSubmit={async (event) => {
+        onSubmit={(event) => {
           event.preventDefault();
-          setMessage(null);
+          const result = submitReleaseDecisionV1({
+            artifactId,
+            decision,
+            actorId: actor.id,
+            notes,
+          });
 
-          try {
-            const result = await submitReleaseDecisionV1({
-              artifactId,
-              decision,
-              actorId: actor.id,
-              notes,
+          if (result.accepted) {
+            const audit = createAuditActionEvent({
+              category: "release",
+              actor: actor.name,
+              summary: `Release decision ${decision}`,
+              relatedEntityId: artifactId,
+              actionType: "release_decision",
+              outcome: "accepted",
             });
-
-            if (result.accepted) {
-              const audit = createAuditActionEvent({
-                category: "release",
-                actor: actor.name,
-                summary: `Release decision ${decision}`,
-                relatedEntityId: artifactId,
-                actionType: "release_decision",
-                outcome: "accepted",
-              });
-              setMessage(`${result.message} Audit event ${audit.id} created.`);
-            } else {
-              setMessage(result.message);
-            }
-          } catch (error) {
-            setMessage(error instanceof Error ? error.message : "Unable to submit release decision.");
+            setMessage(`${result.message} Audit event ${audit.id} created.`);
           }
         }}
       >

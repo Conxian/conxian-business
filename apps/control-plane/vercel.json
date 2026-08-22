@@ -1,4 +1,0 @@
-{
-  "installCommand": "pnpm install --filter @conxian/control-plane --no-frozen-lockfile",
-  "buildCommand": "pnpm run build"
-}
