@@ -1,9 +1,11 @@
 import { DataTable, StatusBadge } from "../../components/data-table";
 import { PageHeader } from "../../components/page-header";
 import { getEnvironmentData } from "../../lib/module-adapters";
+import { requireControlPlaneAccess } from "../../lib/auth";
 import type { EnvironmentRecord } from "@conxian/schemas";
 
 export default async function EnvironmentsPage() {
+  const actor = await requireControlPlaneAccess();
   const environments = await getEnvironmentData();
 
   return (
@@ -12,6 +14,7 @@ export default async function EnvironmentsPage() {
         eyebrow="Module"
         title="Environments"
         description="Track environment ownership, classification, and verification state."
+        actor={actor}
       />
 
       <section className="card">

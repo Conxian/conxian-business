@@ -1,13 +1,14 @@
 import { DataTable, StatusBadge } from "../../components/data-table";
 import { PageHeader } from "../../components/page-header";
-import { getCurrentActor, canApprove, canOperate } from "../../lib/auth";
+import { requireControlPlaneAccess, canApprove, canOperate } from "../../lib/auth";
+
 import { getReleaseGovernanceData } from "../../lib/module-adapters";
 import type { ReleaseArtifact } from "@conxian/schemas";
 import { ReleaseApprovalForm } from "../../components/release-approval-form";
 import { ReleaseDecisionForm } from "../../components/release-decision-form";
 
 export default async function ReleaseGovernancePage() {
-  const actor = getCurrentActor();
+  const actor = await requireControlPlaneAccess();
   const artifacts = await getReleaseGovernanceData();
 
   return (
@@ -16,6 +17,7 @@ export default async function ReleaseGovernancePage() {
         eyebrow="Module"
         title="Release governance"
         description="Track release artifacts, approval state, and promotion readiness."
+        actor={actor}
       />
 
       <section className="grid">

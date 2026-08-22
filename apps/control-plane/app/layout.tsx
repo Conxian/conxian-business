@@ -27,6 +27,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <p className="eyebrow">Conxian</p>
               <h1 className="sidebar-title">BOS Control Plane</h1>
               <p className="muted small">Private governance and operations surface.</p>
+              <div className="sidebar-links">
+                <Link className="nav-link" href="/nexus">Public Nexus</Link>
+                <Link className="nav-link" href="/gateway">Public Gateway</Link>
+                <Link className="nav-link" href="/market">Public Market</Link>
+              </div>
             </div>
 
             <nav>

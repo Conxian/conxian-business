@@ -5,45 +5,34 @@ import {
   listReleaseArtifacts,
 } from "@conxian/client-sdk";
 import type { AuditEvent, EnvironmentRecord, GovernanceAction, ReleaseArtifact } from "@conxian/schemas";
+import {
+  sampleAuditEvents,
+  sampleEnvironments,
+  sampleGovernanceActions,
+  sampleReleaseArtifacts,
+} from "./sample-data";
 
-function hasRuntimeBaseUrl(): boolean {
-  return Boolean(
-    process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() ||
-      process.env.ADMIN_RUNTIME_BASE_URL?.trim() ||
-      process.env.NEXT_PUBLIC_CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim(),
-  );
-}
-
-function requireRuntimeUrl(): boolean {
-  return hasRuntimeBaseUrl();
-}
-
-export async function getReleaseGovernanceData(): Promise<ReleaseArtifact[]> {
-  if (!requireRuntimeUrl()) return [];
-  return listReleaseArtifacts();
-}
-
-export async function getAuditData(): Promise<AuditEvent[]> {
-  if (!requireRuntimeUrl()) return [];
-  return listAuditEvents();
-}
-
-export async function getPolicyApprovalData(): Promise<GovernanceAction[]> {
-  if (!requireRuntimeUrl()) return [];
-  return listGovernanceActions();
-}
-
-export async function getEnvironmentData(): Promise<EnvironmentRecord[]> {
-  if (!requireRuntimeUrl()) return [];
-  return listEnvironments();
-}
-
-export function getRuntimeConfigurationStatus(): { configured: boolean; source: "server" | "client" | "none" } {
-  if (process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() || process.env.ADMIN_RUNTIME_BASE_URL?.trim()) {
-    return { configured: true, source: "server" };
+async function withFallback<T>(items: Promise<T[]>, fallback: T[]): Promise<T[]> {
+  try {
+    const resolved = await items;
+    return resolved.length > 0 ? resolved : fallback;
+  } catch {
+    return fallback;
   }
-  if (process.env.NEXT_PUBLIC_CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim()) {
-    return { configured: true, source: "client" };
-  }
-  return { configured: false, source: "none" };
+}
+
+export function getReleaseGovernanceData(): Promise<ReleaseArtifact[]> {
+  return withFallback(listReleaseArtifacts(), sampleReleaseArtifacts);
+}
+
+export function getAuditData(): Promise<AuditEvent[]> {
+  return withFallback(listAuditEvents(), sampleAuditEvents);
+}
+
+export function getPolicyApprovalData(): Promise<GovernanceAction[]> {
+  return withFallback(listGovernanceActions(), sampleGovernanceActions);
+}
+
+export function getEnvironmentData(): Promise<EnvironmentRecord[]> {
+  return withFallback(listEnvironments(), sampleEnvironments);
 }
