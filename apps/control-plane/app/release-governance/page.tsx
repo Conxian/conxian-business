@@ -6,9 +6,9 @@ import type { ReleaseArtifact } from "@conxian/schemas";
 import { ReleaseApprovalForm } from "../../components/release-approval-form";
 import { ReleaseDecisionForm } from "../../components/release-decision-form";
 
-export default async function ReleaseGovernancePage() {
+export default function ReleaseGovernancePage() {
   const actor = getCurrentActor();
-  const artifacts = await getReleaseGovernanceData();
+  const artifacts = getReleaseGovernanceData();
 
   return (
     <main className="page-shell">

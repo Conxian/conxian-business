@@ -1,8 +1,6 @@
 # BOS Runtime Ownership Map
-**Version:** v1.1 (August 2026)
+**Version:** v1.0 (April 2026)
 **Status:** CANONICAL REFERENCE
-
-> **Autonomy boundary (2026-08-22):** BOS is not certified for full M2M/autonomous execution. Capability-scoped evidence and unresolved blockers are tracked in `audit/m2m_autonomy_gap_ledger.json`; the safe lab is local/isolated-testnet-only and forbids production execution.
 
 This document maps the Conxian Sovereign BOS capabilities to their respective runtime repositories. It distinguishes between conceptual documentation, public-safe stubs (ZSE), and actual production implementation.
 

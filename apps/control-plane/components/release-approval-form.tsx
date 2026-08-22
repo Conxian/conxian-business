@@ -20,32 +20,24 @@ export function ReleaseApprovalForm({ artifacts }: { artifacts: ReleaseArtifact[
     >
       <form
         className="stack"
-        onSubmit={async (event) => {
+        onSubmit={(event) => {
           event.preventDefault();
-          setMessage(null);
+          const result = requestReleaseApprovalV1({
+            artifactId,
+            requestedBy: actor.id,
+            notes,
+          });
 
-          try {
-            const result = await requestReleaseApprovalV1({
-              artifactId,
-              requestedBy: actor.id,
-              notes,
+          if (result.accepted) {
+            const audit = createAuditActionEvent({
+              category: "release",
+              actor: actor.name,
+              summary: "Release approval requested",
+              relatedEntityId: artifactId,
+              actionType: "request_release_approval",
+              outcome: "accepted",
             });
-
-            if (result.accepted) {
-              const audit = createAuditActionEvent({
-                category: "release",
-                actor: actor.name,
-                summary: "Release approval requested",
-                relatedEntityId: artifactId,
-                actionType: "request_release_approval",
-                outcome: "accepted",
-              });
-              setMessage(`${result.message} Audit event ${audit.id} created.`);
-            } else {
-              setMessage(result.message);
-            }
-          } catch (error) {
-            setMessage(error instanceof Error ? error.message : "Unable to request release approval.");
+            setMessage(`${result.message} Audit event ${audit.id} created.`);
           }
         }}
       >
