@@ -1,12 +1,12 @@
 import { DataTable, StatusBadge } from "../../components/data-table";
 import { PageHeader } from "../../components/page-header";
-import { getCurrentActor, canApprove } from "../../lib/auth";
+import { requireControlPlaneAccess, canApprove } from "../../lib/auth";
 import { getPolicyApprovalData } from "../../lib/module-adapters";
 import type { GovernanceAction } from "@conxian/schemas";
 import { GovernanceDecisionForm } from "../../components/governance-decision-form";
 
 export default async function PolicyApprovalsPage() {
-  const actor = getCurrentActor();
+  const actor = await requireControlPlaneAccess();
   const actions = await getPolicyApprovalData();
 
   return (
@@ -15,6 +15,7 @@ export default async function PolicyApprovalsPage() {
         eyebrow="Module"
         title="Policy approvals"
         description="Review pending governance and policy actions before execution."
+        actor={actor}
       />
 
       <section className="grid">
@@ -23,7 +24,7 @@ export default async function PolicyApprovalsPage() {
           <p>{canApprove(actor.role) ? "This actor can approve or reject actions." : "This actor can review but not approve actions."}</p>
         </article>
 
-        <GovernanceDecisionForm actions={actions} />
+        <GovernanceDecisionForm actions={actions} actor={actor} />
       </section>
 
       <section className="card">

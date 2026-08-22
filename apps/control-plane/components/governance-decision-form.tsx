@@ -3,12 +3,9 @@
 import type { GovernanceAction, WorkflowDecision } from "@conxian/schemas";
 import { useState } from "react";
 import { ActionFeedback, ActionPanel } from "./action-panel";
-import { getCurrentActor } from "../lib/auth";
-import { createAuditActionEvent } from "../lib/audit";
-import { submitGovernanceDecisionV1 } from "../lib/workflow-clients";
+import { submitGovernanceDecision } from "../app/actions/workflows";
 
 export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[] }) {
-  const actor = getCurrentActor();
   const [actionId, setActionId] = useState(actions[0]?.id ?? "");
   const [decision, setDecision] = useState<WorkflowDecision>("approve");
   const [notes, setNotes] = useState("");
@@ -23,23 +20,11 @@ export function GovernanceDecisionForm({ actions }: { actions: GovernanceAction[
         className="stack"
         onSubmit={async (event) => {
           event.preventDefault();
-          const result = await submitGovernanceDecisionV1({
-            actionId,
-            decision,
-            actorId: actor.id,
-            notes,
-          });
-
-          if (result.accepted) {
-            const audit = createAuditActionEvent({
-              category: "policy",
-              actor: actor.name,
-              summary: `Governance action ${decision}`,
-              relatedEntityId: actionId,
-              actionType: "governance_decision",
-              outcome: "accepted",
-            });
-            setMessage(`${result.message} Audit event ${audit.id} created.`);
+          try {
+            const result = await submitGovernanceDecision({ actionId, decision, notes });
+            setMessage(result.accepted ? `${result.message} Audit event recorded.` : result.message);
+          } catch {
+            setMessage("The decision could not be submitted. Please try again.");
           }
         }}
       >
