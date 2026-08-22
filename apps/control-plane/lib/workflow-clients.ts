@@ -5,12 +5,11 @@ import {
   submitReleaseDecisionV1,
 } from "@conxian/client-sdk";
 
-const configuredRuntimeBaseUrl = process.env.NEXT_PUBLIC_CONXIAN_ADMIN_RUNTIME_BASE_URL;
+const configuredRuntimeBaseUrl =
+  process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() ||
+  process.env.ADMIN_RUNTIME_BASE_URL?.trim() ||
+  process.env.NEXT_PUBLIC_CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim();
 
-configureAdminRuntimeClient({
-  runtimeBaseUrl:
-    configuredRuntimeBaseUrl ??
-    (typeof window !== "undefined" ? window.location.origin : undefined),
-});
+configureAdminRuntimeClient({ runtimeBaseUrl: configuredRuntimeBaseUrl });
 
 export { requestReleaseApprovalV1, submitReleaseDecisionV1, submitGovernanceDecisionV1 };

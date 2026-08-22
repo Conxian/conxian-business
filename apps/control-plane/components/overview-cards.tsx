@@ -16,9 +16,14 @@ const cards = [
 ];
 
 export async function OverviewCards() {
-  const health = process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() || process.env.ADMIN_RUNTIME_BASE_URL?.trim()
+  const runtimeConfigured = Boolean(
+    process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() ||
+      process.env.ADMIN_RUNTIME_BASE_URL?.trim() ||
+      process.env.NEXT_PUBLIC_CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim(),
+  );
+  const health = runtimeConfigured
     ? await getControlPlaneHealth()
-    : { status: "demo", message: "Runtime URL is not configured." };
+    : { status: "unconfigured", message: "Live runtime URL is not configured; no live operations are available." };
 
   return (
     <section className="grid">

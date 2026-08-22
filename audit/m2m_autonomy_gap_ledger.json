@@ -53,6 +53,16 @@
       "acceptance": "A documented runner validates toolchains, networks, credentials, fixtures, safety limits, expected outputs, teardown, and emits immutable evidence without fabricated success."
     },
     {
+      "id": "LIVE-001",
+      "severity": "critical",
+      "domain": "operations",
+      "owner": "conxian-business",
+      "status": "Blocked (human)",
+      "evidence": ["audit/live_runtime_validation_2026-08-22.md", "docs/architecture/CONTROL_PLANE_ADMIN_RUNTIME_API_CONTRACT.md"],
+      "gap": "The Vercel production project has no configured admin runtime base URL, and deployment protection prevents anonymous live endpoint verification.",
+      "acceptance": "Production and preview environments expose the canonical runtime URL, authenticated health/readiness checks pass, and approved test-mode read/write operations produce auditable evidence."
+    },
+    {
       "id": "KB-001",
       "severity": "high",
       "domain": "governance",
