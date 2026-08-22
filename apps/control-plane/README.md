@@ -1,6 +1,6 @@
 # BOS Control Plane
 
-This application is the initial internal UI scaffold for the Conxian BOS control plane.
+This application is the internal UI for the Conxian BOS control plane. Deploy it to `control.conxian-labs.com`; the public Labs experience remains a separate deployment at `www.conxian-labs.com`.
 
 ## Intended modules
 - release governance
