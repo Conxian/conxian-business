@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "bos.service-registry.v1",
+  "sourceOfTruth": "conxian-business",
+  "publicDomain": {
+    "hostname": "www.conxian-labs.com",
+    "role": "public-web",
+    "runtimeApi": false
+  },
+  "services": [
+    {"id":"control-plane","repository":"conxian-business","role":"authenticated-operations-ui","deployment":"Vercel","hostname":"control.conxian-labs.com","healthPath":"/api/health","readinessPath":"/api/readiness","auth":"Vercel protection + BOS session","safeTestMode":true},
+    {"id":"admin-runtime","repository":"conxian-business","role":"authenticated-governance-api","deployment":"independent runtime","hostname":"admin-runtime.conxian-labs.com","healthPath":"/admin/v1/runtime/health","readinessPath":"/admin/v1/runtime/readiness","auth":"M2M brokered","safeTestMode":true},
+    {"id":"gateway","repository":"conxian-gateway","role":"protocol-gateway","deployment":"independent runtime","hostname":null,"healthPath":"/health","readinessPath":"/readiness","auth":"M2M brokered","safeTestMode":true},
+    {"id":"nexus","repository":"conxian-nexus","role":"orchestration-and-policy","deployment":"independent runtime","hostname":null,"healthPath":"/health","readinessPath":"/readiness","auth":"M2M brokered","safeTestMode":true},
+    {"id":"platform","repository":"conxius-platform","role":"platform-services","deployment":"independent runtime","hostname":null,"healthPath":"/health","readinessPath":"/readiness","auth":"M2M brokered","safeTestMode":true},
+    {"id":"orbit","repository":"conxius-orbit","role":"agent-runtime","deployment":"isolated worker","hostname":null,"healthPath":"/health","readinessPath":"/readiness","auth":"M2M brokered","safeTestMode":true},
+    {"id":"wallet","repository":"conxius-wallet","role":"wallet-and-asset-controls","deployment":"isolated runtime","hostname":null,"healthPath":"/health","readinessPath":"/readiness","auth":"M2M brokered","safeTestMode":true},
+    {"id":"enclave-sdk","repository":"conxius-enclave-sdk","role":"attestation-library","deployment":"library","hostname":null,"healthPath":null,"readinessPath":null,"auth":"in-process","safeTestMode":true},
+    {"id":"core","repository":"lib-conxian-core","role":"shared-domain-core","deployment":"library","hostname":null,"healthPath":null,"readinessPath":null,"auth":"in-process","safeTestMode":true},
+    {"id":"ui","repository":"conxian-ui","role":"shared-ui","deployment":"library","hostname":null,"healthPath":null,"readinessPath":null,"auth":"none","safeTestMode":true},
+    {"id":"market","repository":"conxian-market","role":"market-surface","deployment":"independent runtime","hostname":null,"healthPath":"/health","readinessPath":"/readiness","auth":"M2M brokered","safeTestMode":true},
+    {"id":"labs-site","repository":"conxian-labs-site","role":"public-web","deployment":"Vercel/Cloudflare","hostname":"www.conxian-labs.com","healthPath":"/","readinessPath":null,"auth":"public","safeTestMode":false}
+  ]
+}

@@ -11,7 +11,10 @@
 >
 > The current authority is the immutable [Production Enablement Audit — 2026-07-20](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/audits/PRODUCTION_ENABLEMENT_AUDIT_2026-07-20.md) and [Capability and Evidence Matrix](https://github.com/Conxian/conxius-enclave-sdk/blob/79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8/docs/architecture/CAPABILITY_MATRIX.md), recorded by merged [PR #193](https://github.com/Conxian/conxius-enclave-sdk/pull/193) at merge commit `79a4a082ab2c05e5b1b30335ab56b9e6d068c7e8` against audited baseline `8194aa8ade26a9d5d7ed54b7f80f36796fce585c`.
 >
-> **Current SDK status: Beta / conditional.** Do not enable value-bearing production signing or settlement from the audited tree; the acceptance work remains open across issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202).
+> **Current SDK status: Beta / conditional.** Do not enable value-bearing production signing or settlement from the audited tree; the acceptance work remains open across issues [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195)–[#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202)
+>
+> **Deployment topology update (2026-08-22):** `www.conxian-labs.com` is public-web only. The canonical service registry is [`ops/service-registry.json`](../ops/service-registry.json), and the recommended authenticated Control Plane/admin-runtime split is documented in [`BOS_SERVICE_TOPOLOGY.md`](architecture/BOS_SERVICE_TOPOLOGY.md). No service is considered online without verified health/readiness evidence.
+.
 
 ## Table of Contents
 
