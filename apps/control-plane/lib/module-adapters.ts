@@ -16,18 +16,30 @@ function withFallback<T>(items: T[], fallback: T[]): T[] {
   return items.length > 0 ? items : fallback;
 }
 
-export function getReleaseGovernanceData(): ReleaseArtifact[] {
-  return withFallback(listReleaseArtifacts(), sampleReleaseArtifacts);
+function hasRuntimeBaseUrl(): boolean {
+  return Boolean(
+    process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() ||
+      process.env.ADMIN_RUNTIME_BASE_URL?.trim() ||
+      process.env.NEXT_PUBLIC_CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim(),
+  );
 }
 
-export function getAuditData(): AuditEvent[] {
-  return withFallback(listAuditEvents(), sampleAuditEvents);
+export async function getReleaseGovernanceData(): Promise<ReleaseArtifact[]> {
+  if (!hasRuntimeBaseUrl()) return sampleReleaseArtifacts;
+  return withFallback(await listReleaseArtifacts(), sampleReleaseArtifacts);
 }
 
-export function getPolicyApprovalData(): GovernanceAction[] {
-  return withFallback(listGovernanceActions(), sampleGovernanceActions);
+export async function getAuditData(): Promise<AuditEvent[]> {
+  if (!hasRuntimeBaseUrl()) return sampleAuditEvents;
+  return withFallback(await listAuditEvents(), sampleAuditEvents);
 }
 
-export function getEnvironmentData(): EnvironmentRecord[] {
-  return withFallback(listEnvironments(), sampleEnvironments);
+export async function getPolicyApprovalData(): Promise<GovernanceAction[]> {
+  if (!hasRuntimeBaseUrl()) return sampleGovernanceActions;
+  return withFallback(await listGovernanceActions(), sampleGovernanceActions);
+}
+
+export async function getEnvironmentData(): Promise<EnvironmentRecord[]> {
+  if (!hasRuntimeBaseUrl()) return sampleEnvironments;
+  return withFallback(await listEnvironments(), sampleEnvironments);
 }

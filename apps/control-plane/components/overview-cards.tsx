@@ -15,8 +15,10 @@ const cards = [
   },
 ];
 
-export function OverviewCards() {
-  const health = getControlPlaneHealth();
+export async function OverviewCards() {
+  const health = process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() || process.env.ADMIN_RUNTIME_BASE_URL?.trim()
+    ? await getControlPlaneHealth()
+    : { status: "demo", message: "Runtime URL is not configured." };
 
   return (
     <section className="grid">
