@@ -6,7 +6,7 @@ Goal: before any change is treated as eligible for **Mainnet promotion** (via `d
 
 Canonical trackers:
 
-- authorized Linear workspace: https://sovereign.conxian.com/issue/CON-487/define-testnet-gate-for-integrated-system-validation
+- authorized GitHub organization: https://sovereign.conxian.com/issue/CON-487/define-testnet-gate-for-integrated-system-validation
 - GitHub (synced thread): https://github.com/Conxian/conxius-platform/issues/511
 
 This gate is intentionally **public-safe**:
@@ -56,7 +56,7 @@ For a `dev` PR (or a `dev` -> `staged` promotion request), attach a single “In
 - A small list of transaction ids that exercise the required end-to-end flows (Stacks tx ids required; include Bitcoin tx ids when relevant).
 - A short list of any deviations (and whether they are blockers).
 
-Evidence must remain public-safe. If a supporting runbook/log contains sensitive material, store it outside git (per ZSE) and link it from Linear.
+Evidence must remain public-safe. If a supporting runbook/log contains sensitive material, store it outside git (per ZSE) and link it from GitHub.
 
 ## Gate requirements (must all be satisfied)
 

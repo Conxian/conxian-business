@@ -13,7 +13,7 @@ To sequence delivery in `conxian-nexus` and `conxian-gateway`, we need a single 
 This ADR records the approved decision from CON-789 and the linked `conxian-business` issue discussion.
 
 Decision references:
-- Linear: https://linear.app/conxian-labs/issue/CON-789/research-and-decide-tier-1-chain-families-for-nexus-and-gateway#comment-7e4ccd52
+- GitHub: https://github.com/Conxian/conxian-business/issues?q=CON-789#comment-7e4ccd52
 - GitHub: https://github.com/Conxian/conxian-business/issues/735#issuecomment-4645699391
 
 ## Decision

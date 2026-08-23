@@ -76,7 +76,7 @@ Current baseline for key ecosystem repos:
 | `conxius-enclave-sdk/` | `supporting` | Conxius enclave and attestation tooling for higher layers. |
 | `conxius-platform/` | `supporting` | Conxius local stack and developer orchestration. |
 | `conxian-labs-site/` | `reference` | Public narrative and docs distribution surface. |
-| `Sovereign-Strategy-Nexus/` | `internal strategy` | Internal strategy and M&A operating surface; canonical detail stays in the authorized Linear workspace. |
+| `Sovereign-Strategy-Nexus/` | `internal strategy` | Internal strategy and M&A operating surface; canonical detail stays in the authorized GitHub organization. |
 | `conxian-business` | `governance baseline` | Portfolio governance and standards source. |
 
 ## Portfolio-level map (repos, subrepos, and BOS assets)
@@ -145,7 +145,7 @@ Until portfolio hygiene automation is live, reviewers should treat these invaria
 | `Fiscal-Vault-Oracle/` | Operating function (Protocol/tenant policy) | Contract- and tenant-defined accounting policy | Reference automation module; not Conxian-Labs custody or discretionary fund management. |
 | `Nakamoto-Guardian/` | Operating function (Compliance) | Enforcement/compliance | Architecture + regulatory enforcement module (BOS EXCO suite). |
 | `Sovereign-Ops-Orchestrator/` | Operating function (Ops) | Execution orchestration | Work/ops engine; connects BOS state machine to execution platforms. |
-| `Sovereign-Strategy-Nexus/` | Operating function (Strategy) | Strategy and M&A | Strategic intelligence layer; keep internal strategy material in the authorized Linear workspace. |
+| `Sovereign-Strategy-Nexus/` | Operating function (Strategy) | Strategy and M&A | Strategic intelligence layer; keep internal strategy material in the authorized GitHub organization. |
 | `cxn-grid-oracle/` | Operating function (Grid oracle) | External oracle integration | Energy/grid orchestration module; separate from protocol and wallet. |
 
 ## Separation-of-concerns model (portfolio rules)
@@ -159,7 +159,7 @@ The goal is to keep each repo’s business unit legible to partners/auditors and
 3. **Conxian enterprise-infrastructure domain (Fusion)** (`conxian-gateway/`) must not become the authoritative chain state source; it consumes Nexus.
 4. **Conxian state/proof infrastructure domain (Nexus)** (`conxian-nexus/`) must not become a UI repo; it provides state and telemetry.
 5. **BOS / Governance** (this repo: `conxian-business`) must not become a dumping ground for product code; it defines specs, governance, and portfolio wiring.
-6. **Operating functions** (strategy/treasury/compliance/ops/admin) must not leak sensitive information into git; internal-only strategy belongs in the authorized Linear workspace.
+6. **Operating functions** (strategy/treasury/compliance/ops/admin) must not leak sensitive information into git; internal-only strategy belongs in the authorized GitHub organization.
 
 ### 2) Allowed dependency directions (high level)
 
@@ -194,13 +194,13 @@ Published boundary interfaces include:
    - Consumption: update `conxius-wallet/` and/or `conxian-ui/`.
    - Portfolio wiring: bump pinned submodules in this BOS repo and keep this map consistent.
 2. **Treasury policy change (EXCO)**
-   - Internal decision context stays in the authorized Linear workspace.
+   - Internal decision context stays in the authorized GitHub organization.
    - Update `Fiscal-Vault-Oracle/` policy/specs, with `Nakamoto-Guardian/` enforcing compliance gates.
    - Reflect required telemetry via `conxian-nexus/`; surface any public-facing comms via `conxian-labs-site/`.
 3. **Compliance incident / enforcement workflow**
    - Detection in `conxian-nexus/` and/or `conxian-gateway/`.
    - Enforcement in `Nakamoto-Guardian/` with execution/orchestration via `Sovereign-Ops-Orchestrator/`.
-   - If the incident changes required controls, update OpenSpec/BOS docs (public) and keep sensitive details in the authorized Linear workspace.
+   - If the incident changes required controls, update OpenSpec/BOS docs (public) and keep sensitive details in the authorized GitHub organization.
 
 ## Cross-unit governance + documentation requirements (target state)
 
@@ -219,7 +219,7 @@ These are the minimum cross-unit artifacts needed to operate the portfolio as fo
    - A lightweight rule for when a change requires a BOS/OpenSpec update vs. when it can stay within a single unit repo.
    - Target location: `docs/CROSS_UNIT_CHANGE_CONTROL.md`.
 5. **Documentation classification** (ZSE):
-   - Public docs in git (`docs/`, `openspec/`), sensitive strategy/ops in the authorized Linear workspace.
+   - Public docs in git (`docs/`, `openspec/`), sensitive strategy/ops in the authorized GitHub organization.
    - Target location: `docs/DOCUMENTATION_CLASSIFICATION.md`.
 
 ## Unique value + scope definition (by repo)
@@ -295,7 +295,7 @@ Notes on the requested repos:
 | --- | --- | --- | --- |
 | `Fiscal-Vault-Oracle/` | Protocol/tenant accounting policy automation | Contract-defined treasury, yield, and bond issuance specs | Wallet UX and user self-custody |
 | `Nakamoto-Guardian/` | Enforcement and compliance | Compliance gating, anti-fragility loops | Product UX |
-| `Sovereign-Ops-Orchestrator/` | Execution orchestration | Work execution + Linear wiring | Protocol code |
+| `Sovereign-Ops-Orchestrator/` | Execution orchestration | Work execution + GitHub wiring | Protocol code |
 | `Sovereign-Strategy-Nexus/` | Strategic intelligence | M&A velocity, IP sovereignty | Public product marketing copy |
 | `cxn-grid-oracle/` | External oracle integration | Grid/demand-response routing | Protocol authority or custody |
 
@@ -322,7 +322,7 @@ P0 (portfolio integrity and “who owns what”):
 2. Fix submodule hygiene so the pinned portfolio is mechanically reliable (including CI/automation that fails when `.gitmodules` and this map diverge in either direction, or when any gitlink is missing a `.gitmodules` entry).
 3. Add a boundary **interface registry** (APIs/schemas/contracts) so units can move independently without silent drift.
 4. Add cross-unit **change control** rules so BOS/OpenSpec updates happen at the right times.
-5. Standardize **documentation classification** rules (git vs Linear) to prevent ZSE drift.
+5. Standardize **documentation classification** rules (git vs GitHub) to prevent ZSE drift.
 6. Introduce a machine-readable portfolio manifest that can be validated against `.gitmodules` and used to prevent drift between this document and BOS runtime artifacts (including resolving the `./conxian-business/` naming collision by renaming the nested state directory to something unambiguous).
 
 P1 (separation enforcement and partner legibility):

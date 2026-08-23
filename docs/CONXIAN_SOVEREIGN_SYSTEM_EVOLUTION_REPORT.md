@@ -6,7 +6,7 @@
 
 ## 1. Executive Summary
 
-This report outlines the transition path for the Conxian ecosystem from its "Web2-Assisted Bootstrap" phase to a "Full-Stack Sovereign Bitcoin-Native Solution." To fulfill the system ethos—Decentralized, Sovereign, Bitcoin-native, Dimensionally Aligned, and Autonomous—all non-native dependencies (Neon, Supabase, Linear, Render, Vercel, GitHub) must be treated as temporary scaffolds and systematically replaced by Bitcoin-aligned alternatives.
+This report outlines the transition path for the Conxian ecosystem from its "Web2-Assisted Bootstrap" phase to a "Full-Stack Sovereign Bitcoin-Native Solution." To fulfill the system ethos—Decentralized, Sovereign, Bitcoin-native, Dimensionally Aligned, and Autonomous—all non-native dependencies (Neon, Supabase, GitHub, Render, Vercel, GitHub) must be treated as temporary scaffolds and systematically replaced by Bitcoin-aligned alternatives.
 
 ## 2. The Conxian Ethos Alignment
 
@@ -24,7 +24,7 @@ This report outlines the transition path for the Conxian ecosystem from its "Web
 | :--- | :--- | :--- | :--- |
 | **Neon (PostgreSQL)** | Transactional State | Centralized database authority; hosting risk. | **Kwil** (Relational SQL on-chain). |
 | **Supabase** | Analytics & BOS State | Vendor lock-in; data siloing; non-native proofs. | **Tableland** (Audit) / **Space and Time** (Analytics). |
-| **Linear** | Task Coordination | Centralized workflow; secret egress risk (ZSE). | **Radicle Issues** / **Sovereign Ops Orchestrator**. |
+| **GitHub** | Task Coordination | Centralized workflow; secret egress risk (ZSE). | **Radicle Issues** / **Sovereign Ops Orchestrator**. |
 | **Render / Vercel** | Hosting & CI/CD | Platform censorship; centralized entry points. | **Akash Network** (Compute) / **IPFS** (Static). |
 | **GitHub** | Code Hosting | Centralized source of truth; account risk. | **Radicle** (P2P Code Collaboration). |
 | **Google Gemini** | AI Inference | Proprietary models; privacy risk. | **Self-hosted LLMs** (via Akash/Golem) / **Nostr NWC**. |
@@ -65,8 +65,8 @@ This report outlines the transition path for the Conxian ecosystem from its "Web
 - **Prerequisite**: Containerization of all components (Nexus, Gateway, UI).
 
 ### Phase 3: Coordination Migration (Q3 2026)
-- **Action**: Replace Linear tasks with Radicle-native issues or a custom Sovereign Ops Dashboard.
-- **ZSE Hardening**: Remove all external links from repo stubs; point to authorized Linear workspace.
+- **Action**: Replace GitHub tasks with Radicle-native issues or a custom Sovereign Ops Dashboard.
+- **ZSE Hardening**: Remove all external links from repo stubs; point to authorized GitHub organization.
 
 ### Phase 4: AI & Identity Alignment (Q4 2026)
 - **Action**: Integrate local LLM inference for the Conxius Wallet (Satoshi Auditor).
@@ -112,7 +112,7 @@ This report outlines the transition path for the Conxian ecosystem from its "Web
 
 #### [Fiscal-Vault-Oracle](../Fiscal-Vault-Oracle)
 - **Status**: Active (Stubbed).
-- **Advice**: Move the "Treasury MCP" logic from Linear to a sovereign, encrypted coordination layer. Implement the DLC Bond principal drawdown logic as a fully automated on-chain flow.
+- **Advice**: Move the "Treasury MCP" logic from GitHub to a sovereign, encrypted coordination layer. Implement the DLC Bond principal drawdown logic as a fully automated on-chain flow.
 
 #### [Nakamoto-Guardian](../Nakamoto-Guardian)
 - **Status**: Active (Stubbed).

@@ -9,16 +9,16 @@ This is the coordinating "source of truth" artifact for the SAB infrastructure m
 
 ## Canonical tracker
 
-- Linear: [CON-329][con-329]
+- GitHub: [CON-329][con-329]
 
-[con-329]: https://linear.app/conxian-labs/issue/CON-329/create-sab-migration-control-plane-and-dependency-inventory
+[con-329]: https://github.com/Conxian/conxian-business/issues?q=CON-329
 
 Related execution issues (parallelized):
 
-- https://linear.app/conxian-labs/issue/CON-334/map-target-datastore-decisions-by-sab-data-domain
-- https://linear.app/conxian-labs/issue/CON-335/define-pilot-readiness-gates-and-evidence-requirements
-- https://linear.app/conxian-labs/issue/CON-336/sequence-sab-migration-waves-by-value-reversibility-and-risk
-- https://linear.app/conxian-labs/issue/CON-337/inventory-current-supabase-and-neon-dependencies-by-service
+- https://github.com/Conxian/conxian-business/issues?q=CON-334
+- https://github.com/Conxian/conxian-business/issues?q=CON-335
+- https://github.com/Conxian/conxian-business/issues?q=CON-336
+- https://github.com/Conxian/conxian-business/issues?q=CON-337
 
 ## Status and review cadence
 

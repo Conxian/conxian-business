@@ -38,7 +38,7 @@ Active public-safe coordination trackers as of re-baseline:
 | [#933](https://github.com/Conxian/conxian-business/issues/933) | conxian-business | Gate 1 green CI | RESOLVED 2026-08-02 |
 | [#890](https://github.com/Conxian/conxian-business/issues/890) | conxian-business | BOS-001 parent SAB handoff | Active |
 | [#61](https://github.com/Conxian/.github/issues/61) | .github | Organization Project governance | Pending |
-| [CON-1558](https://linear.app/conxian-labs/issue/CON-1558) | Linear | Gate 0 synchronized mirror | Mirror only |
+| [CON-1558](https://github.com/Conxian/conxian-business/issues?q=CON-1558) | Linear | Gate 0 synchronized mirror | Mirror only |
 
 ## Gate 0 Re-baseline Evidence (2026-08-02)
 
@@ -287,7 +287,7 @@ graph TB
 | Dependabot allowlist for transitive npm deps | 2026-07-08 | undici/ws transitive chains via bdk/wswrapper | Fix upstream |
 | GitGuardian var naming convention (no PASSWORD/SECRET in keys) | 2026-07-08 | Avoid false positives from variable names | - |
 | Docker env vars use DB_* prefix, not *_PASSWORD | 2026-07-08 | GitGuardian pattern avoidance | - |
-| CON-1573 Core boundary: BDK std-only now; transport-neutral capability/provenance contracts strategically | 2026-07-29 | Keep networking and persistence drivers outside Core, preserve offline/non-custodial behavior and existing multi-chain protocol/adapter surfaces, and separate transport authentication from chain-proof verification | [CON-1573](https://linear.app/conxian-labs/issue/CON-1573/security-provide-a-v02-compatible-core-candidate-without-legacy), [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), [PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [PR #231](https://github.com/Conxian/lib-conxian-core/pull/231) |
+| CON-1573 Core boundary: BDK std-only now; transport-neutral capability/provenance contracts strategically | 2026-07-29 | Keep networking and persistence drivers outside Core, preserve offline/non-custodial behavior and existing multi-chain protocol/adapter surfaces, and separate transport authentication from chain-proof verification | [CON-1573](https://github.com/Conxian/conxian-business/issues?q=CON-1573), [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), [PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [PR #231](https://github.com/Conxian/lib-conxian-core/pull/231) |
 | Community governance remediation scope | 2026-07-21 | Prefer the self-contained, non-executing community-voting ledger in protocol PR #521 over isolated `upgrade-controller` work; keep the broader governance gap open until proposal/timelock plumbing and the overlapping #499 scope are resolved. | Protocol PR #521 merge and broader governance decision |
 
 ---
@@ -331,7 +331,7 @@ graph TB
 
 | Field | Record |
 |-------|--------|
-| Linear umbrella | [CON-1506 — production enablement](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) — **authenticated/internal reference only; not public evidence**. Private Linear content is not reproduced here. |
+| GitHub umbrella | [CON-1506 — production enablement](https://github.com/Conxian/conxian-business/issues?q=CON-1506) — **authenticated/internal reference only; not public evidence**. Private Linear content is not reproduced here. |
 | GitHub umbrella | [conxius-enclave-sdk issue #191](https://github.com/Conxian/conxius-enclave-sdk/issues/191) (**OPEN / REOPENED**) |
 | Historical status snapshot | **Beta / conditional**; the latest mandatory gate recorded in [the failed-gate comment](https://github.com/Conxian/conxius-enclave-sdk/issues/191#issuecomment-5027149779) was **136 passed, 1 failed** because of a nondeterministic future-timestamp attestation test. This July 20 snapshot is historical. Current issue state is recorded in the July 22 CON-1512 digest below: #195, #198, #200, and #202 remain open; #196, #197, #199, and #201 are closed. Production enablement remains blocked for value-bearing use. |
 | Review boundary | The dated audit remains historical evidence; current status is governed by live GitHub records and the July 22 CON-1512 research/phase-plan record while provider, runtime, release, and independent-acceptance gaps remain open. |
@@ -341,7 +341,7 @@ graph TB
 
 | Entity | Type | Role / state | Evidence |
 |--------|------|--------------|----------|
-| `CON-1506` | Linear umbrella issue | Authenticated/internal tracking reference only, not public evidence; private Linear content is not reproduced, and no value-bearing production approval is implied | [Linear issue](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) |
+| `CON-1506` | GitHub umbrella issue | Authenticated/internal tracking reference only, not public evidence; private Linear content is not reproduced, and no value-bearing production approval is implied | [GitHub issue](https://github.com/Conxian/conxian-business/issues?q=CON-1506) |
 | `#191` | GitHub umbrella issue | **OPEN / REOPENED** historical public umbrella for the enablement review; current unresolved blockers are tracked in #195, #198, #200, and #202, while #196, #197, #199, and #201 are closed but do not by themselves authorize production support | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/191) |
 | `#191 comment 5027149779` | GitHub issue comment / mandatory-gate result | Latest public gate evidence: **136 passed, 1 failed** because of a nondeterministic future-timestamp attestation test; implementation is paused pending remediation and a repeatable exact-full-gate pass | [Failed-gate comment](https://github.com/Conxian/conxius-enclave-sdk/issues/191#issuecomment-5027149779) |
 | `#193` | Audit documentation pull request | Merged public-safe audit baseline; corrects readiness language to Beta / conditional | [Audit PR](https://github.com/Conxian/conxius-enclave-sdk/pull/193) |
@@ -403,7 +403,7 @@ graph TB
 
 | Evidence | Link |
 |----------|------|
-| Linear umbrella | [CON-1506 — production enablement](https://linear.app/conxian-labs/issue/CON-1506/production-enablement) — authenticated/internal reference only; not public evidence |
+| GitHub umbrella | [CON-1506 — production enablement](https://github.com/Conxian/conxian-business/issues?q=CON-1506) — authenticated/internal reference only; not public evidence |
 | Current public status boundary | [conxius-enclave-sdk issue #191](https://github.com/Conxian/conxius-enclave-sdk/issues/191), current [#195–#202](https://github.com/Conxian/conxius-enclave-sdk/issues/195), and the July 22 [CON-1512 research/phase plan](docs/CON-1512_HARDWARE_SIGNING_ATTESTATION_PHASE_PLAN.md) |
 | Current mandatory-gate evidence | [#191 comment 5027149779](https://github.com/Conxian/conxius-enclave-sdk/issues/191#issuecomment-5027149779) — **136 passed, 1 failed**; nondeterministic future-timestamp attestation test; implementation paused pending a fix and repeatable exact-full-gate pass |
 | Historical audit documentation | [PR #193](https://github.com/Conxian/conxius-enclave-sdk/pull/193) |
@@ -419,8 +419,8 @@ graph TB
 
 | Field | Record |
 |-------|--------|
-| Linear umbrella | [CON-1512 — enforce hardware-backed signing and mandatory attestation](https://linear.app/conxian-labs/issue/CON-1512/p0-enforce-hardware-backed-signing-and-mandatory-attestation-for-value) — current implementation/research authority; private Linear detail is not reproduced here. |
-| Child issues | [CON-1543](https://linear.app/conxian-labs/issue/CON-1543/p0-operationalize-attestation-roots-collateral-revocation-and), [CON-1544](https://linear.app/conxian-labs/issue/CON-1544/p0-qualify-android-keymintstrongbox-authorization-and-play-integrity), and [CON-1545](https://linear.app/conxian-labs/issue/CON-1545/p0-qualify-aws-nitro-attestation-and-kms-secret-release-boundary) |
+| GitHub umbrella | [CON-1512 — enforce hardware-backed signing and mandatory attestation](https://github.com/Conxian/conxian-business/issues?q=CON-1512) — current implementation/research authority; private Linear detail is not reproduced here. |
+| Child issues | [CON-1543](https://github.com/Conxian/conxian-business/issues?q=CON-1543), [CON-1544](https://github.com/Conxian/conxian-business/issues?q=CON-1544), and [CON-1545](https://github.com/Conxian/conxian-business/issues?q=CON-1545) |
 | Live state revalidation | GitHub and Linear states were revalidated on **July 22, 2026**: CON-1512 is **Urgent / In Progress**; CON-1543 and CON-1519 are **Urgent / Triage**; CON-1544 is **Urgent / In Review** and remains open; CON-1546 is **Urgent / Triage**; SDK #241 and #240 are open; SDK #243 and wallet #441/#442 are merged; SDK #246 was **MERGED** at **2026-07-22 16:36:34 UTC**. Wallet #443 was still open at that earlier snapshot and later **MERGED** at **2026-07-22 18:34:15 UTC**. These administrative states do not establish production support. |
 | Current boundary | Authorization proof, platform attestation, and protocol-key custody/signing are separate claims. Their intersection is required for value-bearing operations; unsupported paths remain fail closed. Administrative closure/completion of a tracker is not production qualification evidence. |
 | Provider decision | Split portfolio: Android KeyMint/StrongBox plus server-verified Play Integrity for phone/client evidence; AWS Nitro plus attested KMS release for server/cloud evidence. Neither track is current production support or a substitute for protocol-key custody evidence. |
@@ -434,11 +434,11 @@ The three-claim boundary is expanded into six auditable evidence lanes. Progress
 | Evidence lane | Current boundary | Promotion requirement | No-go claim |
 |----------------|------------------|-----------------------|-------------|
 | **Android client evidence/token collection and deterministic request binding** | Merged SDK [#243](https://github.com/Conxian/conxius-enclave-sdk/pull/243) and wallet [#441](https://github.com/Conxian/conxius-wallet/pull/441) / [#442](https://github.com/Conxian/conxius-wallet/pull/442), with merged hardening [SDK #246](https://github.com/Conxian/conxius-enclave-sdk/pull/246) (**2026-07-22 16:36:34 UTC**) / wallet [#443](https://github.com/Conxian/conxius-wallet/pull/443) (**2026-07-22 18:34:15 UTC**), define bounded client/SDK evidence collection and binding interfaces. | Canonical operation digest, nonce/challenge, audience, package/signing identity, key identity, purpose, algorithm, and evidence/token digests with deterministic positive and negative vectors. | Client-collected evidence, a bound request envelope, or a merged interface PR does not qualify a real device/provider or create an authoritative backend verdict. |
-| **Trusted backend certificate/token verification and revocation** | Open SDK [#240](https://github.com/Conxian/conxius-enclave-sdk/issues/240), [CON-1543](https://linear.app/conxian-labs/issue/CON-1543/p0-operationalize-attestation-roots-collateral-revocation-and), and [CON-1544](https://linear.app/conxian-labs/issue/CON-1544/p0-qualify-android-keymintstrongbox-authorization-and-play-integrity) own the operational trust boundary. | Versioned verifier registry, certificate-chain/trusted-root validation, current collateral, revocation, server-side Play Integrity token verification, exact release identity/request binding, and a normalized policy verdict. | Token presence, client-side parsing, or structural certificate evidence does not prove backend verification, current revocation status, or provider qualification. |
-| **Freshness and durable replay** | Shared under open SDK [#240](https://github.com/Conxian/conxius-enclave-sdk/issues/240) / [CON-1543](https://linear.app/conxian-labs/issue/CON-1543/p0-operationalize-attestation-roots-collateral-revocation-and); no completed distributed replay service is claimed. | Trusted time/expiry, stale-result rejection, nonce/challenge uniqueness, and atomic durable `consume_once` across restarts, replicas, and recovery. | A process-local cache, client timestamp, fixture, or one successful request does not establish durable replay protection. |
+| **Trusted backend certificate/token verification and revocation** | Open SDK [#240](https://github.com/Conxian/conxius-enclave-sdk/issues/240), [CON-1543](https://github.com/Conxian/conxian-business/issues?q=CON-1543), and [CON-1544](https://github.com/Conxian/conxian-business/issues?q=CON-1544) own the operational trust boundary. | Versioned verifier registry, certificate-chain/trusted-root validation, current collateral, revocation, server-side Play Integrity token verification, exact release identity/request binding, and a normalized policy verdict. | Token presence, client-side parsing, or structural certificate evidence does not prove backend verification, current revocation status, or provider qualification. |
+| **Freshness and durable replay** | Shared under open SDK [#240](https://github.com/Conxian/conxius-enclave-sdk/issues/240) / [CON-1543](https://github.com/Conxian/conxian-business/issues?q=CON-1543); no completed distributed replay service is claimed. | Trusted time/expiry, stale-result rejection, nonce/challenge uniqueness, and atomic durable `consume_once` across restarts, replicas, and recovery. | A process-local cache, client timestamp, fixture, or one successful request does not establish durable replay protection. |
 | **Production authorization enforcement** | The merged boundaries are inputs only. Wallet gate/envelope work is tracked in [#444 / CON-1546](https://github.com/Conxian/conxius-wallet/issues/444); the canonical rail artifact [#244](https://github.com/Conxian/conxius-enclave-sdk/pull/244) merged on 2026-07-22. | A centralized fail-closed gate must combine authoritative evidence, exact operation binding, freshness/replay, signer policy, and typed outcomes; software, mock, debug, and synthetic-success routes must be ineligible for value operations. | Merged interface code, green CI, a current branch, or UI confirmation does not authorize production value operations. |
-| **Protocol-key custody** | Protocol-key custody remains separate under [CON-1512](https://linear.app/conxian-labs/issue/CON-1512/p0-enforce-hardware-backed-signing-and-mandatory-attestation-for-value) and SDK [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195). Android P-256 authorization is distinct from Bitcoin/Stacks secp256k1/Schnorr signing. | Exact protocol-key identity, non-exportability or approved custody boundary, signer authorization, algorithm/payload binding, deterministic protocol vectors, and exact runtime/release evidence. | KeyMint/StrongBox or Play Integrity evidence does not establish custody of the Bitcoin/Stacks protocol key or prove the required protocol signature path. |
-| **Independent release acceptance** | [CON-1519](https://linear.app/conxian-labs/issue/CON-1519/p0-complete-independent-security-review-and-release-acceptance) and SDK [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain the independent review and release gate. | Exact source/artifact identity, SBOM, provenance, dependency/security evidence, version/pin synchronization, capability-level tests, and independent review of the claimed scope. | A merged PR, current head, green CI, or generated documentation does not establish independent release acceptance. |
+| **Protocol-key custody** | Protocol-key custody remains separate under [CON-1512](https://github.com/Conxian/conxian-business/issues?q=CON-1512) and SDK [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195). Android P-256 authorization is distinct from Bitcoin/Stacks secp256k1/Schnorr signing. | Exact protocol-key identity, non-exportability or approved custody boundary, signer authorization, algorithm/payload binding, deterministic protocol vectors, and exact runtime/release evidence. | KeyMint/StrongBox or Play Integrity evidence does not establish custody of the Bitcoin/Stacks protocol key or prove the required protocol signature path. |
+| **Independent release acceptance** | [CON-1519](https://github.com/Conxian/conxian-business/issues?q=CON-1519) and SDK [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) remain the independent review and release gate. | Exact source/artifact identity, SBOM, provenance, dependency/security evidence, version/pin synchronization, capability-level tests, and independent review of the claimed scope. | A merged PR, current head, green CI, or generated documentation does not establish independent release acceptance. |
 
 The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#443 do not qualify real devices/providers, prove trusted backend verification or revocation, establish durable replay, authorize production value operations, establish protocol-key custody, or satisfy independent release acceptance. Wallet #443 merged at **2026-07-22 18:34:15 UTC** as bounded hardening evidence; open SDK #240 and CON-1544 remain prerequisite tracks.
 
@@ -446,10 +446,10 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 
 | Entity | Type | Current state | Evidence |
 |--------|------|---------------|----------|
-| `CON-1512` | Linear implementation umbrella | Current research and sequencing authority for hardware-backed signing and mandatory attestation | [Linear issue](https://linear.app/conxian-labs/issue/CON-1512/p0-enforce-hardware-backed-signing-and-mandatory-attestation-for-value) |
-| `CON-1543` | Linear shared prerequisite | Trust roots, collateral, revocation, and distributed replay | [Linear issue](https://linear.app/conxian-labs/issue/CON-1543/p0-operationalize-attestation-roots-collateral-revocation-and) |
-| `CON-1544` | Linear provider track | **URGENT / IN REVIEW**; remains open as of July 22, 2026 | Android qualification remains incomplete: trusted roots/collateral, server-side verification, real-device/runtime evidence, exact key/operation binding, replay, and independent release acceptance remain required; unsupported production paths stay fail closed. [Linear issue](https://linear.app/conxian-labs/issue/CON-1544/p0-qualify-android-keymintstrongbox-authorization-and-play-integrity) |
-| `CON-1545` | Linear provider track | AWS Nitro attestation and KMS secret-release boundary qualification | [Linear issue](https://linear.app/conxian-labs/issue/CON-1545/p0-qualify-aws-nitro-attestation-and-kms-secret-release-boundary) |
+| `CON-1512` | GitHub implementation umbrella | Current research and sequencing authority for hardware-backed signing and mandatory attestation | [GitHub issue](https://github.com/Conxian/conxian-business/issues?q=CON-1512) |
+| `CON-1543` | GitHub shared prerequisite | Trust roots, collateral, revocation, and distributed replay | [GitHub issue](https://github.com/Conxian/conxian-business/issues?q=CON-1543) |
+| `CON-1544` | GitHub provider track | **URGENT / IN REVIEW**; remains open as of July 22, 2026 | Android qualification remains incomplete: trusted roots/collateral, server-side verification, real-device/runtime evidence, exact key/operation binding, replay, and independent release acceptance remain required; unsupported production paths stay fail closed. [GitHub issue](https://github.com/Conxian/conxian-business/issues?q=CON-1544) |
+| `CON-1545` | GitHub provider track | AWS Nitro attestation and KMS secret-release boundary qualification | [GitHub issue](https://github.com/Conxian/conxian-business/issues?q=CON-1545) |
 | `#195` | SDK issue | **OPEN** P0 hardware-backed signing and mandatory attestation umbrella | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/195) |
 | `#196` | SDK issue | **CLOSED** canonical Bitcoin/Ethereum verification and derivation; closure is not universal production support | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/196) |
 | `#197` | SDK issue | **CLOSED** threshold and settlement placeholder quarantine/remediation; closure is capability-scoped | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/197) |
@@ -459,7 +459,7 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 | `#201` | SDK issue | **CLOSED** telemetry privacy and public-safe operational work; current capability evidence remains scoped | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/201) |
 | `#202` | SDK issue | **OPEN** independent security review and release acceptance | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/202) |
 | `#240` | SDK issue | **OPEN** shared trust/collateral/revocation/replay prerequisite | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/240) |
-| `#241` | SDK issue | **OPEN** Android provider track; corresponding Linear CON-1544 is **URGENT / IN REVIEW** | Qualification remains incomplete; real trusted roots/collateral, server-side verification, real-device/runtime evidence, exact key/operation binding, replay, and independent release acceptance remain required; unsupported production paths stay fail closed. [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/241) |
+| `#241` | SDK issue | **OPEN** Android provider track; corresponding GitHub Issues-1544 is **URGENT / IN REVIEW** | Qualification remains incomplete; real trusted roots/collateral, server-side verification, real-device/runtime evidence, exact key/operation binding, replay, and independent release acceptance remain required; unsupported production paths stay fail closed. [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/241) |
 | `#242` | SDK issue | **OPEN** AWS Nitro provider track | [GitHub issue](https://github.com/Conxian/conxius-enclave-sdk/issues/242) |
 | `#444 / CON-1546` | Wallet issue / Linear tracker | **OPEN / TRIAGE** centralized wallet value-operation gate and software/synthetic-success quarantine; **next 86/100 containment candidate; not production support** | [GitHub issue](https://github.com/Conxian/conxius-wallet/issues/444) |
 | `#237` | SDK pull request | **MERGED** independent proof-factor verification at `8f3fa687f4a880c0a12ec1fabc613ecc9e043df4` | [GitHub PR](https://github.com/Conxian/conxius-enclave-sdk/pull/237) |
@@ -470,8 +470,8 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 | `#442` | Wallet pull request | **MERGED** Play Integrity SDK request boundary | Bounded client token/request collection and binding only; server-side verification, revocation, real-device qualification, and production authorization remain open. [GitHub PR](https://github.com/Conxian/conxius-wallet/pull/442) |
 | `#443` | Wallet pull request | **MERGED** at **2026-07-22 18:34:15 UTC** — KeyMint authorization-evidence hardening follow-up | Bounded merged implementation evidence; no hardware/provider qualification, production support, or independent acceptance claim. [GitHub PR](https://github.com/Conxian/conxius-wallet/pull/443) |
 | `#244` | Repository pull request | **MERGED** on **2026-07-22 15:55:09 UTC** as bounded canonical six-proof rail implementation; merge commit [`4292dcd8a6ceb1301e7f2085a95cce544527cdb0`](https://github.com/Conxian/conxius-enclave-sdk/commit/4292dcd8a6ceb1301e7f2085a95cce544527cdb0). Merge does not establish hardware/provider qualification, production support, or independent acceptance. | [GitHub PR](https://github.com/Conxian/conxius-enclave-sdk/pull/244) |
-| `CON-1517` | Linear runtime/release issue | Runtime/platform evidence and WASM secret-boundary work remain required | [Linear issue](https://linear.app/conxian-labs/issue/CON-1517/p1-harden-the-wasm-secret-boundary-and-add-runtimeplatform-evidence) |
-| `CON-1519` | Linear acceptance issue | Independent security review and release acceptance remain required | [Linear issue](https://linear.app/conxian-labs/issue/CON-1519/p0-complete-independent-security-review-and-release-acceptance) |
+| `CON-1517` | GitHub runtime/release issue | Runtime/platform evidence and WASM secret-boundary work remain required | [GitHub issue](https://github.com/Conxian/conxian-business/issues?q=CON-1517) |
+| `CON-1519` | GitHub acceptance issue | Independent security review and release acceptance remain required | [GitHub issue](https://github.com/Conxian/conxian-business/issues?q=CON-1519) |
 | `#890` | Business issue / downstream gate | **OPEN**, Gate 0 blocked; not execution authorization | [GitHub issue](https://github.com/Conxian/conxian-business/issues/890) |
 
 ### Relationships
@@ -507,15 +507,15 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 | Evidence | Link |
 |----------|------|
 | Canonical research and phase plan | [`docs/CON-1512_HARDWARE_SIGNING_ATTESTATION_PHASE_PLAN.md`](docs/CON-1512_HARDWARE_SIGNING_ATTESTATION_PHASE_PLAN.md) |
-| Stable bounded interface/containment artifacts | Merged SDK Android boundary [#243](https://github.com/Conxian/conxius-enclave-sdk/pull/243), merged SDK hardening [#246](https://github.com/Conxian/conxius-enclave-sdk/pull/246) (**2026-07-22 16:36:34 UTC**), open provider-neutral contracts [#245](https://github.com/Conxian/conxius-enclave-sdk/pull/245) with current review findings [#4755943314](https://github.com/Conxian/conxius-enclave-sdk/pull/245#pullrequestreview-4755943314), merged wallet KeyMint boundary [#441](https://github.com/Conxian/conxius-wallet/pull/441), merged wallet Play Integrity request boundary [#442](https://github.com/Conxian/conxius-wallet/pull/442), and merged wallet hardening follow-up [#443](https://github.com/Conxian/conxius-wallet/pull/443) (**2026-07-22 18:34:15 UTC**). These are bounded interface/containment artifacts only: they do not establish production provider verification, durable replay, real-device qualification, protocol-key custody evidence, or independent release acceptance. PR #245's current review identified unresolved policy-digest/expected-collateral binding, idempotent-vs-conflicting replay outcome, deserialization invariant, and non-production replay-store registration gaps; SDK [#240](https://github.com/Conxian/conxius-enclave-sdk/issues/240), [CON-1543](https://linear.app/conxian-labs/issue/CON-1543/p0-operationalize-attestation-roots-collateral-revocation-and), and [CON-1544](https://linear.app/conxian-labs/issue/CON-1544/p0-qualify-android-keymintstrongbox-authorization-and-play-integrity) remain open prerequisite tracks, and this update does not modify PR #245. |
+| Stable bounded interface/containment artifacts | Merged SDK Android boundary [#243](https://github.com/Conxian/conxius-enclave-sdk/pull/243), merged SDK hardening [#246](https://github.com/Conxian/conxius-enclave-sdk/pull/246) (**2026-07-22 16:36:34 UTC**), open provider-neutral contracts [#245](https://github.com/Conxian/conxius-enclave-sdk/pull/245) with current review findings [#4755943314](https://github.com/Conxian/conxius-enclave-sdk/pull/245#pullrequestreview-4755943314), merged wallet KeyMint boundary [#441](https://github.com/Conxian/conxius-wallet/pull/441), merged wallet Play Integrity request boundary [#442](https://github.com/Conxian/conxius-wallet/pull/442), and merged wallet hardening follow-up [#443](https://github.com/Conxian/conxius-wallet/pull/443) (**2026-07-22 18:34:15 UTC**). These are bounded interface/containment artifacts only: they do not establish production provider verification, durable replay, real-device qualification, protocol-key custody evidence, or independent release acceptance. PR #245's current review identified unresolved policy-digest/expected-collateral binding, idempotent-vs-conflicting replay outcome, deserialization invariant, and non-production replay-store registration gaps; SDK [#240](https://github.com/Conxian/conxius-enclave-sdk/issues/240), [CON-1543](https://github.com/Conxian/conxian-business/issues?q=CON-1543), and [CON-1544](https://github.com/Conxian/conxian-business/issues?q=CON-1544) remain open prerequisite tracks, and this update does not modify PR #245. |
 | SDK umbrella | [#195](https://github.com/Conxian/conxius-enclave-sdk/issues/195) |
 | Shared prerequisite | [#240](https://github.com/Conxian/conxius-enclave-sdk/issues/240) |
 | Android track | [#241](https://github.com/Conxian/conxius-enclave-sdk/issues/241) |
 | AWS Nitro track | [#242](https://github.com/Conxian/conxius-enclave-sdk/issues/242) |
 | Merged proof verification | [#237](https://github.com/Conxian/conxius-enclave-sdk/pull/237), [#239](https://github.com/Conxian/conxius-enclave-sdk/pull/239) |
 | Rail-convergence implementation | Merged [#244](https://github.com/Conxian/conxius-enclave-sdk/pull/244) at merge commit [`4292dcd8a6ceb1301e7f2085a95cce544527cdb0`](https://github.com/Conxian/conxius-enclave-sdk/commit/4292dcd8a6ceb1301e7f2085a95cce544527cdb0); bounded implementation evidence only. |
-| Runtime/platform evidence | [CON-1517](https://linear.app/conxian-labs/issue/CON-1517/p1-harden-the-wasm-secret-boundary-and-add-runtimeplatform-evidence) |
-| Independent review/release acceptance | [CON-1519](https://linear.app/conxian-labs/issue/CON-1519/p0-complete-independent-security-review-and-release-acceptance), [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) |
+| Runtime/platform evidence | [CON-1517](https://github.com/Conxian/conxian-business/issues?q=CON-1517) |
+| Independent review/release acceptance | [CON-1519](https://github.com/Conxian/conxian-business/issues?q=CON-1519), [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) |
 | Downstream business gate | [#890](https://github.com/Conxian/conxian-business/issues/890) |
 
 ## Dated Digest: CON-1421 Governance Stub Reconciliation (2026-07-21)
@@ -524,7 +524,7 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 
 | Field | Record |
 |-------|--------|
-| Linear issue | [CON-1421 — 16 of 28 governance contracts are stubs](https://linear.app/conxian-labs/issue/CON-1421/medium-16-of-28-governance-contracts-are-stubs) — **In Progress** |
+| GitHub issue | [CON-1421 — 16 of 28 governance contracts are stubs](https://github.com/Conxian/conxian-business/issues?q=CON-1421) — **In Progress** |
 | Historical accounting | The issue body names 15 contracts. `proposal-engine-trait.clar` is the likely omitted 16th entry; six listed entries are partial skeletons rather than blank stubs, so the original “16 non-functional stubs” wording requires typed reconciliation. |
 | Community-voting implementation | [Protocol PR #521](https://github.com/Conxian/Conxian/pull/521) is **OPEN / MERGEABLE / CLEAN** at audited head [`90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1`](https://github.com/Conxian/Conxian/commit/90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1); all currently reported checks pass and the independent re-audit reports no P0/P1 findings. State is **implemented and pinned for review**, not merged or deployed. |
 | Historical umbrella | [Conxian #463](https://github.com/Conxian/Conxian/issues/463) is an OPEN / REOPENED historical umbrella. This scoped remediation does not close the broader governance gap or make the umbrella a proof of full resolution. |
@@ -535,10 +535,10 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 
 | Entity | Type | Role / state | Evidence |
 |--------|------|--------------|----------|
-| `Governance remediation workstream` | Project | Reconciles the historical governance-stub inventory while preserving explicit review and deployment boundaries | [CON-1421](https://linear.app/conxian-labs/issue/CON-1421/medium-16-of-28-governance-contracts-are-stubs), [#463](https://github.com/Conxian/Conxian/issues/463), [#499](https://github.com/Conxian/Conxian/issues/499) |
+| `Governance remediation workstream` | Project | Reconciles the historical governance-stub inventory while preserving explicit review and deployment boundaries | [CON-1421](https://github.com/Conxian/conxian-business/issues?q=CON-1421), [#463](https://github.com/Conxian/Conxian/issues/463), [#499](https://github.com/Conxian/Conxian/issues/499) |
 | `conxian-business` | Parent repository | Carries the review-only `Conxian` submodule pin and this knowledge crystallization | [Parent repository](https://github.com/Conxian/conxian-business) |
 | `Conxian` | Protocol repository | Supplies the audited governance implementation candidate; the parent pin is review-bound to the exact protocol commit | [Protocol repository](https://github.com/Conxian/Conxian) |
-| `CON-1421` | Linear issue | Tracks the medium-priority governance inventory correction and scoped remediation; remains In Progress | [Linear issue](https://linear.app/conxian-labs/issue/CON-1421/medium-16-of-28-governance-contracts-are-stubs) |
+| `CON-1421` | GitHub issue | Tracks the medium-priority governance inventory correction and scoped remediation; remains In Progress | [GitHub issue](https://github.com/Conxian/conxian-business/issues?q=CON-1421) |
 | `#521` | Protocol pull request | Implements the community-voting lifecycle; open and not merged | [Protocol PR #521](https://github.com/Conxian/Conxian/pull/521) |
 | `90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1` | Audited protocol commit | Exact reviewed head to pin; not a deployment or merge claim | [Protocol commit](https://github.com/Conxian/Conxian/commit/90ef8a2f883ddab7cb0cfd00f68ba4d829f0a8e1) |
 
@@ -591,7 +591,7 @@ The no-go boundary is explicit: merged SDK #243 and #246 and wallet #441/#442/#4
 
 | Evidence | Link |
 |----------|------|
-| Linear issue | [CON-1421](https://linear.app/conxian-labs/issue/CON-1421/medium-16-of-28-governance-contracts-are-stubs) |
+| GitHub issue | [CON-1421](https://github.com/Conxian/conxian-business/issues?q=CON-1421) |
 | Historical umbrella | [Conxian #463](https://github.com/Conxian/Conxian/issues/463) |
 | Active overlapping scope | [Conxian #499](https://github.com/Conxian/Conxian/issues/499) |
 | Protocol implementation PR | [Conxian PR #521](https://github.com/Conxian/Conxian/pull/521) |
@@ -754,7 +754,7 @@ URL, hardware result, or acceptance state is inferred by this digest.
 
 | Field | Public-safe record |
 |---|---|
-| Authority | [CON-1573](https://linear.app/conxian-labs/issue/CON-1573/security-provide-a-v02-compatible-core-candidate-without-legacy) and [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227) own the maintenance decision and implementation evidence. |
+| Authority | [CON-1573](https://github.com/Conxian/conxian-business/issues?q=CON-1573) and [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227) own the maintenance decision and implementation evidence. |
 | Immediate v0.2 maintenance decision | Core uses BDK with `default-features = false, features = ["std"]`; networking and persistence drivers are not enabled in Core. |
 | Strategic decision | Core defines transport-neutral capability and provenance contracts. Opt-in Electrum, Esplora, RPC, light-client, and indexer backends belong in Gateway/backend or other owning adapter layers outside Core. |
 | Verification boundary | TLS authenticates a transport endpoint; chain-proof validation establishes state. Remote observations must not be labeled verified unless the applicable proof policy succeeds. |
@@ -788,7 +788,7 @@ URL, hardware result, or acceptance state is inferred by this digest.
 
 | Evidence | Link |
 |---|---|
-| Architecture/maintenance authority | [CON-1573](https://linear.app/conxian-labs/issue/CON-1573/security-provide-a-v02-compatible-core-candidate-without-legacy) |
+| Architecture/maintenance authority | [CON-1573](https://github.com/Conxian/conxian-business/issues?q=CON-1573) |
 | Core owner tracker | [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227) |
 | Merged predecessor | [Core PR #229](https://github.com/Conxian/lib-conxian-core/pull/229) |
 | Current review artifact | [Core PR #231](https://github.com/Conxian/lib-conxian-core/pull/231) |
@@ -803,7 +803,7 @@ URL, hardware result, or acceptance state is inferred by this digest.
 
 | Field | Public-safe record |
 |---|---|
-| Authority | [CON-1571](https://linear.app/conxian-labs/issue/CON-1571/bosp1-reconcile-default-branch-promotion-policy-and-branch-protections) and [Business #945](https://github.com/Conxian/conxian-business/issues/945) govern branch-policy reconciliation. |
+| Authority | [CON-1571](https://github.com/Conxian/conxian-business/issues?q=CON-1571) and [Business #945](https://github.com/Conxian/conxian-business/issues/945) govern branch-policy reconciliation. |
 | Canonical hierarchy | GitHub is the sole tracking layer (Linear retired). `main` is default + production; `dev` is non-production integration; `staged` is candidate lane. |
 | Route decision | Normal work targets `dev`; only `dev` or an exact immutable dev candidate targets `staged`; only `staged` or an exact immutable staged candidate targets `main`. |
 | Split-lineage incident | Full-history inspection found split roots between `main` and `dev`/`staged`. This bootstrap authorizes no merge, reset, bulk cherry-pick, pin rewrite, or long-lived branch-ref mutation. |
@@ -868,13 +868,13 @@ Linear has been retired as the system-of-record for Conxian. All tracking is now
 
 | Entity | Change |
 |--------|--------|
-| BOS Governance | Linear references deprecated; GitHub-only tracking active |
+| BOS Governance | GitHub-only tracking active |
 | CI/CD | CircleCI (heavy) + GitHub Actions (lightweight + deploy) |
-| Issue #944 | Retire Linear-first references — IN PROGRESS |
+| Issue #944 | Retire GitHub-first references — COMPLETED |
 | Issue #943 | GitHub-first operating model — IN PROGRESS |
 
-### Remaining Linear artifacts
+### Legacy tracking artifacts
 
-- `AGENTS.md` references to Linear should be reviewed and updated
-- Some closed issues may reference Linear issue IDs (CON-XXXX) — these are historical references, not active dependencies
+- All issue and project references are maintained natively on GitHub
+- Some closed issues may reference GitHub issue IDs (CON-XXXX) — these are historical references, not active dependencies
 - Session tracker workflow may need to be updated if it references Linear

@@ -23,7 +23,7 @@
 6. [Market Position & Competitive Gap Analysis](#6-market-position--competitive-gap-analysis)
 7. [Unified Gap Register](#7-unified-gap-register)
 8. [Prioritized Remediation Roadmap](#8-prioritized-remediation-roadmap)
-9. [GitHub / Linear / Team Alignment](#9-github--linear--team-alignment)
+9. [GitHub / Team Alignment](#9-github--team-alignment)
 10. [Next Steps & Recommendations](#10-next-steps--recommendations)
 
 ---
@@ -293,7 +293,7 @@ Scoring: 0=Not started, 1=Early, 2=Functional, 3=Production
 | Compliance filings pending | HIGH | Cannot onboard institutional clients | File regulatory registrations in target jurisdictions |
 | Developer documentation fragmented | MEDIUM | Slows ecosystem adoption | Consolidate API docs into coherent developer portal |
 | No production usage metrics | MEDIUM | Can't demonstrate traction | Instrument Gateway/Nexus with telemetry, publish case study |
-| GitHub/Linear alignment partial | LOW | Slows team coordination | Resolve all open issues (5), close stale ones |
+| GitHub/GitHub alignment partial | LOW | Slows team coordination | Resolve all open issues (5), close stale ones |
 
 ### 6.3 Unique Competitive Advantages (Moats)
 
@@ -408,7 +408,7 @@ Scoring: 0=Not started, 1=Early, 2=Functional, 3=Production
 
 ---
 
-## 9. GitHub / Linear / Team Alignment
+## 9. GitHub / Team Alignment
 
 ### Open Issues Mapping (Sprint 3 — ALL CLOSED)
 

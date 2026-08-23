@@ -19,7 +19,7 @@ Per the repo portfolio, `conxius-orbit` is a **tooling** repo:
 ## 3) Separating Technical Support from Business Operations
 
 - **Technical Support**: CLI documentation, bug reports, and feature requests related to deployment mechanics (Git).
-- **Business Operations**: Management of deployment keys (ZSE), vendor accounts for RPC providers, and strategic rollout timelines (Linear/Vault).
+- **Business Operations**: Management of deployment keys (ZSE), vendor accounts for RPC providers, and strategic rollout timelines (Vault/Secrets Manager).
 
 ## 4) Business Logic and Documentation Gaps
 
@@ -37,5 +37,5 @@ Per the repo portfolio, `conxius-orbit` is a **tooling** repo:
 - Implement automated "Sentinel" checks for production-bound deployments.
 
 **P2 (Documentation Alignment)**
-- Migrate sensitive infrastructure credentials to Linear.
+- Migrate sensitive infrastructure credentials to restricted vault/secure storage.
 - Standardize `CHANGELOG.md` with `## [Unreleased]` section.

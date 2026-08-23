@@ -8,9 +8,9 @@ assignees: ''
 
 > Note: This repository is public. Do not include confidential strategy, financial targets, operational runbooks, legal interpretations, or infrastructure identifiers.
 >
-> For internal proposals, use the authorized Linear workspace instead: https://linear.app/conxian-labs
+> For internal proposals, use the authorized GitHub organization instead: https://github.com/Conxian
 >
-> ExCo operational requests are Linear-first. If mirrored to GitHub, include the full Linear issue URL.
+> ExCo operational requests are GitHub-first. If mirrored to GitHub, include the full GitHub issue URL.
 
 ## Executive Summary
 

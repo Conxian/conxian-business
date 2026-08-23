@@ -9,7 +9,7 @@ Review the repository across these domains:
 1. **Boundary and visibility**
    - Confirm the repository visibility matches its content and description.
    - Remove or stub internal-only strategy, legal, operational, security, and financial material.
-   - Keep only public-safe content in git when the repository may be exposed outside the authorized Linear workspace.
+   - Keep only public-safe content in git when the repository may be exposed outside the authorized GitHub organization.
 
 2. **Secrets and sensitive material**
    - Remove `.env` files, secret inventories, credentials, tokens, and infrastructure identifiers from version control.

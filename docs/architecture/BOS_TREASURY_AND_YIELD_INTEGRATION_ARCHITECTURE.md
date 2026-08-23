@@ -16,7 +16,7 @@ Goals:
 
 Non-goals:
 
-- Defining secret management, allowlists, or vendor-specific endpoints (ZSE: these live in Linear).
+- Defining secret management, allowlists, or vendor-specific endpoints (ZSE: these live on GitHub).
 - Replacing on-chain policy (contracts); this doc defines an integration boundary and verification expectations.
 
 ## 2) Core invariants (must always hold)

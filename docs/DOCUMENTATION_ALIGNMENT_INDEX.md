@@ -9,14 +9,14 @@ Portfolio doctrine is defined centrally in [`DOCTRINE_ALIGNMENT_STANDARD.md`](./
 - **Canonical**: the current “source of truth” for a domain. If two docs disagree, update the non-canonical doc to match the canonical one.
 - **Supporting**: helpful context, audits, reports, briefs, or deep dives that clarify (but don’t define) the system.
 - **Public-safe**: ok to link in public contexts and external conversations.
-- **Public-safe stub (canonical in authorized Linear workspace)**: safe to link publicly; this repo file is a short pointer stub (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)). It must not contain any operational, security, financial, legal, and strategic details beyond the pointer. The full canonical content is maintained in the authorized Linear workspace under ZSE.
-- **Internal-only (canonical in authorized Linear workspace only)**: operational, security, financial, legal, and strategic material whose canonical document must live only in the authorized Linear workspace. If a repo link target must be preserved, use a **Public-safe stub (canonical in authorized Linear workspace)** (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)) so existing links continue to resolve.
+- **Public-safe stub (canonical in authorized GitHub organization)**: safe to link publicly; this repo file is a short pointer stub (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)). It must not contain any operational, security, financial, legal, and strategic details beyond the pointer. The full canonical content is maintained in the authorized GitHub organization under ZSE.
+- **Internal-only (canonical in authorized GitHub organization only)**: operational, security, financial, legal, and strategic material whose canonical document must live only in the authorized GitHub organization. If a repo link target must be preserved, use a **Public-safe stub (canonical in authorized GitHub organization)** (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)) so existing links continue to resolve.
 
 For the separate dimensions of claim state, operating label, maturity, and document classification, follow the [Doctrine Alignment Standard](./DOCTRINE_ALIGNMENT_STANDARD.md) and the [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md).
 
 Notes:
 
-- Treat this repo as public for boundary purposes; hosting visibility may differ by deployment. "Internal-only" material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see authorized Linear workspace issue CON-256).
+- Treat this repo as public for boundary purposes; hosting visibility may differ by deployment. "Internal-only" material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see authorized GitHub organization issue CON-256).
 - OpenSpec change sets typically have 4 layers: `proposal.md` (intent), `design.md` (architecture), `specs/*/spec.md` (requirements), `tasks.md` (execution).
 
 ## GAP-020 cross-link alignment (issue #724)
@@ -43,25 +43,25 @@ Notes:
 
 ### Archival candidates
 
-- `docs/LINEAR_TASK_INVENTORY_2026-05-29.md` — public-safe stub; the dated planning snapshot moved to the authorized Linear workspace under CON-1530.
-- `docs/RESEARCH_FINDINGS_2026-05-29.md` — public-safe stub; the dated research snapshot moved to the authorized Linear workspace under CON-1530.
-- `docs/BUSINESS_ANALYSIS_2026-05-29.md` — public-safe stub; the dated analysis moved to the authorized Linear workspace under CON-1530.
-- `docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md` — public-safe stub; the dated narrative moved to the authorized Linear workspace under CON-1530.
-- `conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md` — public-safe stub; the research summary moved to the authorized Linear workspace under CON-1530.
-- `docs/ITIL5_STRATEGIC_ANALYSIS_2026.md` — public-safe stub; the full internal strategy remains in Linear and the former competitive analysis is not retained here.
+- `docs/TASK_TASK_INVENTORY_2026-05-29.md` — public-safe stub; the dated planning snapshot moved to the authorized GitHub organization under CON-1530.
+- `docs/RESEARCH_FINDINGS_2026-05-29.md` — public-safe stub; the dated research snapshot moved to the authorized GitHub organization under CON-1530.
+- `docs/BUSINESS_ANALYSIS_2026-05-29.md` — public-safe stub; the dated analysis moved to the authorized GitHub organization under CON-1530.
+- `docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md` — public-safe stub; the dated narrative moved to the authorized GitHub organization under CON-1530.
+- `conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md` — public-safe stub; the research summary moved to the authorized GitHub organization under CON-1530.
+- `docs/ITIL5_STRATEGIC_ANALYSIS_2026.md` — public-safe stub; the full internal strategy remains in restricted vault/secure storage and the former competitive analysis is not retained here.
 
 ### CON-1530 public-safe stub dispositions
 
-The following link-preserving stubs are intentionally retained in Git. Their canonical restricted sources are owned by Conxian-Labs (Pty) Ltd in the authorized Linear workspace; no removed detail is copied into another Git file.
+The following link-preserving stubs are intentionally retained in Git. Their canonical restricted sources are owned by Conxian-Labs (Pty) Ltd in the authorized GitHub organization; no removed detail is copied into another Git file.
 
 | File | Classification | Ownership | Why content moved | Canonical pointer |
 | --- | --- | --- | --- | --- |
-| `docs/BUSINESS_ANALYSIS_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated internal analysis is not a current public doctrine source. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
-| `conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Research detail belongs in the authorized workspace, not public Git. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
-| `docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated positioning material is maintained outside the public repository. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
-| `docs/LINEAR_TASK_INVENTORY_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal work-management detail belongs in active authorized systems. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
-| `docs/RESEARCH_FINDINGS_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated findings are superseded and are not a current public doctrine source. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
-| `docs/ITIL5_STRATEGIC_ANALYSIS_2026.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal strategy remains in the authorized workspace under ZSE. | [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) |
+| `docs/BUSINESS_ANALYSIS_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated internal analysis is not a current public doctrine source. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
+| `conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Research detail belongs in the authorized workspace, not public Git. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
+| `docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated positioning material is maintained outside the public repository. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
+| `docs/TASK_TASK_INVENTORY_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal work-management detail belongs in active authorized systems. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
+| `docs/RESEARCH_FINDINGS_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated findings are superseded and are not a current public doctrine source. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
+| `docs/ITIL5_STRATEGIC_ANALYSIS_2026.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal strategy remains in the authorized workspace under ZSE. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
 
 ## 1) Repo navigation (start here)
 
@@ -77,24 +77,24 @@ The following link-preserving stubs are intentionally retained in Git. Their can
 | `docs/BRANCH_AND_PROMOTION_STANDARD.md` | Canonical | Public-safe | Canonical `dev`/`staged`/`main` branch roles and promotion workflow. |
 | `docs/PROMOTION_CHECKLISTS.md` | Canonical | Public-safe | Required checklists and evidence for feature -> `dev` -> `staged` -> `main` promotions. |
 | `docs/INTEGRATED_SYSTEM_TESTNET_GATE.md` | Canonical | Public-safe | Full-system public-testnet gate for `dev` before promotion to `staged`/`main`. |
-| `ARCHIVE_MIGRATION.md` | Canonical | Public-safe | ZSE placeholder + pointer to authorized Linear workspace for legacy material. |
+| `ARCHIVE_MIGRATION.md` | Canonical | Public-safe | ZSE placeholder + pointer to authorized GitHub organization for legacy material. |
 
 ## 2) BOS (Business Operations System)
 
-These are the “operating-model” documents that explain how BOS components relate, how execution is intended to be wired into Linear, and what gets measured.
+These are the “operating-model” documents that explain how BOS components relate, how execution is intended to be wired into restricted vault/secure storage, and what gets measured.
 
 | Document | Role | Visibility | What it’s for |
 | --- | --- | --- | --- |
 | `conxian-business/SERVICE_LOOP.md` | Supporting | Public-safe | BOS reference loop for client/protocol intent, routing, and verification. |
-| `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Public-safe stub (canonical in Linear) | Public-safe BOS state machine pointer stub (standardized ZSE stub). |
-| `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md` | Canonical | Public-safe | ExCo Linear-first intake standard (required fields, triage flow, execution linkbacks) with sensitive details remaining in Linear under ZSE. |
-| `Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md` | Supporting | Public-safe stub (canonical in Linear) | Bottleneck and deployment efficiency metrics (standardized ZSE stub). |
-| `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md` | Supporting | Public-safe stub (canonical in Linear) | Strategy coordination pointer; full internal content remains in Linear (standardized ZSE stub). |
-| `Sovereign-Strategy-Nexus/docs/SOVEREIGN_MOI_ALIGNMENT.md` | Canonical | Public-safe stub (canonical in Linear) | “MOI” alignment source for Strategy Nexus narratives (standardized ZSE stub). |
-| `Sovereign-Strategy-Nexus/docs/ZK_DATA_ROOM_SCHEMA.md` | Canonical | Public-safe stub (canonical in Linear) | ZK data room schema (standardized ZSE stub). |
-| `Sovereign-Strategy-Nexus/docs/SOVEREIGN_PITCH_DECK_NARRATIVE.md` | Supporting | Public-safe stub (canonical in Linear) | Pitch narrative scaffolding (standardized ZSE stub). |
-| `Fiscal-Vault-Oracle/SOVEREIGN_RUNWAY.md` | Canonical | Public-safe stub (canonical in Linear) | Protocol/reference policy and oracle constraints (standardized ZSE stub). |
-| `Fiscal-Vault-Oracle/LSEG_MCP_AUDIT.md` | Supporting | Public-safe stub (canonical in Linear) | LSEG MCP audit context for treasury/oracle integrity (standardized ZSE stub). |
+| `conxian-business/BOS_STATE_MACHINE.stub.json` | Supporting | Public-safe stub (canonical in restricted vault/secure storage) | Public-safe BOS state machine pointer stub (standardized ZSE stub). |
+| `Sovereign-Ops-Orchestrator/TASK_WIRING.md` | Canonical | Public-safe | ExCo GitHub-first intake standard (required fields, triage flow, execution linkbacks) with sensitive details remaining on GitHub under ZSE. |
+| `Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md` | Supporting | Public-safe stub (canonical in restricted vault/secure storage) | Bottleneck and deployment efficiency metrics (standardized ZSE stub). |
+| `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md` | Supporting | Public-safe stub (canonical in restricted vault/secure storage) | Strategy coordination pointer; full internal content remains in restricted vault/secure storage (standardized ZSE stub). |
+| `Sovereign-Strategy-Nexus/docs/SOVEREIGN_MOI_ALIGNMENT.md` | Canonical | Public-safe stub (canonical in restricted vault/secure storage) | “MOI” alignment source for Strategy Nexus narratives (standardized ZSE stub). |
+| `Sovereign-Strategy-Nexus/docs/ZK_DATA_ROOM_SCHEMA.md` | Canonical | Public-safe stub (canonical in restricted vault/secure storage) | ZK data room schema (standardized ZSE stub). |
+| `Sovereign-Strategy-Nexus/docs/SOVEREIGN_PITCH_DECK_NARRATIVE.md` | Supporting | Public-safe stub (canonical in restricted vault/secure storage) | Pitch narrative scaffolding (standardized ZSE stub). |
+| `Fiscal-Vault-Oracle/SOVEREIGN_RUNWAY.md` | Canonical | Public-safe stub (canonical in restricted vault/secure storage) | Protocol/reference policy and oracle constraints (standardized ZSE stub). |
+| `Fiscal-Vault-Oracle/LSEG_MCP_AUDIT.md` | Supporting | Public-safe stub (canonical in restricted vault/secure storage) | LSEG MCP audit context for treasury/oracle integrity (standardized ZSE stub). |
 | `docs/architecture/BOS_TREASURY_AND_YIELD_INTEGRATION_ARCHITECTURE.md` | Canonical | Public-safe | Protocol/tenant treasury and yield integration boundary: intent-based operations, oracle publishing, reconciliation, and failure handling (no dashboard-to-contract coupling). |
 | `docs/architecture/BOS_SOVEREIGN_ENTERPRISE_IDENTITY_ARCHITECTURE.md` | Canonical | Public-safe | Enterprise identity + ERP session brokering architecture: hardware-backed keys, attestation, short-lived PoP-bound sessions, and recovery. |
 | `docs/protocols/BOS_SELF_EXECUTING_CONTRACT_TRIGGER_V1.md` | Canonical | Public-safe | Verified CLM webhook → queued pending on-chain action with 144-block timelock → multisig finalization, with replay protection, cancellation semantics, monitoring, and audit traceability. |
@@ -103,7 +103,7 @@ These are the “operating-model” documents that explain how BOS components re
 | `docs/architecture/CONXIAN_L3_PROFILE_ADR.md` | Canonical | Public-safe | Decision ADR for the Conxian L3 profile (settlement model, Nakamoto vs sBTC signer boundary, compatibility-first dual lane, and promotion/rollback gates). |
 | `docs/architecture/BITVM2_SBTC_BRIDGE_TARGET_ARCHITECTURE.md` | Canonical | Public-safe | Target-state BitVM2 + sBTC bridge architecture (components, trust boundaries, proof/verification flow, failure controls, and phased rollout checkpoints). |
 | `docs/COMPATIBILITY_MATRIX_AND_ACCEPTANCE_GATE_CHECKLIST.md` | Canonical | Public-safe | Cross-repo compatibility matrix and objective acceptance-gate evidence checklist for the 13-repo migration set. |
-| `Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md` | Canonical | Public-safe stub (canonical in Linear) | ATS enforcement + collision audits framing (standardized ZSE stub). |
+| `Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md` | Canonical | Public-safe stub (canonical in restricted vault/secure storage) | ATS enforcement + collision audits framing (standardized ZSE stub). |
 | `cxn-grid-oracle/README.md` | Supporting | Public-safe | Grid oracle overview (agnostic). |
 
 ### GitHub-first BOS research-cycle ownership
@@ -123,7 +123,7 @@ classes, two-layer selection, uncertainty, and non-claims:
 | Semantic-source cycle | [Business #940](https://github.com/Conxian/conxian-business/issues/940), [merged PR #956](https://github.com/Conxian/conxian-business/pull/956) | Existing bounded implementation; preserve its historical check state and non-adoption/non-acceptance boundary. |
 | Attestation and independent acceptance | [Repository #240](https://github.com/Conxian/conxius-enclave-sdk/issues/240), [#241](https://github.com/Conxian/conxius-enclave-sdk/issues/241), [#242](https://github.com/Conxian/conxius-enclave-sdk/issues/242), [#202](https://github.com/Conxian/conxius-enclave-sdk/issues/202) | Implementation and acceptance stay in the owning repository; this index does not duplicate its threat model or phase plan. |
 | Wallet consumer boundary | [Wallet #444](https://github.com/Conxian/conxius-wallet/issues/444) | Consumer enforcement remains wallet-owned and does not imply upstream acceptance. |
-| Selected next technical candidate and CON-1573 architecture decision | [CON-1573](https://linear.app/conxian-labs/issue/CON-1573/security-provide-a-v02-compatible-core-candidate-without-legacy), [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), [merged PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [review-ready PR #231](https://github.com/Conxian/lib-conxian-core/pull/231) | Selected at 88/100 without displacing #943 authority. Immediate maintenance uses BDK std-only with no Core networking/persistence drivers; transport-specific backends remain opt-in outside Core. Final release and exact downstream repin/acceptance remain owner gates. |
+| Selected next technical candidate and CON-1573 architecture decision | [CON-1573](https://github.com/Conxian/conxian-business/issues?q=CON-1573), [Core #227](https://github.com/Conxian/lib-conxian-core/issues/227), [merged PR #229](https://github.com/Conxian/lib-conxian-core/pull/229), [review-ready PR #231](https://github.com/Conxian/lib-conxian-core/pull/231) | Selected at 88/100 without displacing #943 authority. Immediate maintenance uses BDK std-only with no Core networking/persistence drivers; transport-specific backends remain opt-in outside Core. Final release and exact downstream repin/acceptance remain owner gates. |
 | Independent Nexus remediation | [Nexus #178](https://github.com/Conxian/conxian-nexus/issues/178) | Separate narrow CI item, not part of the selected #943 implementation. |
 
 Existing historical classifications elsewhere in this index remain unchanged.
@@ -254,16 +254,16 @@ See `docs/BOS_BUSINESS_BUILDOUT.md` for repo business purpose, business-unit pla
 | `docs/operations/SAB_MIGRATION_WAVES.md` | Supporting | Public-safe | Deprecated non-canonical pointer kept for link continuity; directs readers to `docs/SAB_MIGRATION_WAVES.md`. |
 | `docs/operations/CON-681_PHASE6_PRODUCTION_ROLLOUT_RUNBOOK.md` | Canonical | Public-safe | Canonical CON-681 Phase 6 rollout runbook with staged gates, observability thresholds, rollback triggers/actions, and operator communication templates. |
 | `docs/operations/CON-681_PHASE6_ROLLBACK_DRILL_SIMULATION.md` | Supporting | Public-safe | CON-681 rollback drill simulation artifact (scenario, timeline, observed metrics, RTO/RPO outcome, and corrective actions). |
-| `docs/operations/CON-762_PARTNER_SCORECARD_AND_SHORTLIST.md` | Canonical | ZSE stub (canonical in Linear) | CON-762 partner scorecard model and artifact index — migrated to Linear under ZSE (Conxian/conxius-platform#1078). CSV artifacts under `docs/operations/con-762-partner-scorecard/*` are also ZSE stubs. |
+| `docs/operations/CON-762_PARTNER_SCORECARD_AND_SHORTLIST.md` | Canonical | ZSE stub (canonical in restricted vault/secure storage) | CON-762 partner scorecard model and artifact index — migrated to restricted vault/secure storage under ZSE (Conxian/conxius-platform#1078). CSV artifacts under `docs/operations/con-762-partner-scorecard/*` are also ZSE stubs. |
 | `docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md` | Canonical | Public-safe | Active GAP-009 Lightning coverage tracker (ownership split + matrix + milestones) aligned to `docs/architecture/BITCOIN_LAYER_ARCHITECTURE_BOUNDARY_NOTE.md` and `docs/COMPATIBILITY_MATRIX_AND_ACCEPTANCE_GATE_CHECKLIST.md`. |
-| `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md` | Canonical | Public-safe stub (canonical in Linear) | How maintainer payouts are enabled and validated (standardized ZSE stub). |
-| `admin/SECRETS.md` | Canonical | Public-safe stub (canonical in Linear) | Secret registry + pointers to Linear docs (standardized ZSE stub). |
+| `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md` | Canonical | Public-safe stub (canonical in restricted vault/secure storage) | How maintainer payouts are enabled and validated (standardized ZSE stub). |
+| `admin/SECRETS.md` | Canonical | Public-safe stub (canonical in restricted vault/secure storage) | Secret registry + pointers to restricted vault/secure storage docs (standardized ZSE stub). |
 | `dependabot-fixes.md` | Supporting | Public-safe | Dependabot security alert remediation guide and workspace override audit tracking. |
 | `docs/SECURITY_PATTERNS.md` | Supporting | Public-safe | Security patterns, Clarity audit checklist, and workspace dependency security overrides. |
 
 ## 7) Known doc gaps / broken references (should not be re-created blindly)
 
-These are referenced by current docs but are not present in the active Git index. Before recreating them from scratch, first check whether they were intentionally migrated to the authorized Linear workspace under ZSE.
+These are referenced by current docs but are not present in the active Git index. Before recreating them from scratch, first check whether they were intentionally migrated to the authorized GitHub organization under ZSE.
 
 - `docs/STRATEGOS_MANDATE.md` (referenced by `audit/strategos-alignment.md`, `Fiscal-Vault-Oracle/SOVEREIGN_RUNWAY.md`).
 - `system_ip_audit.md` (referenced by `Sovereign-Strategy-Nexus/REALTIME_M&A_VELOCITY.md`).
@@ -276,25 +276,25 @@ If an issue is in a planning or execution state, the description should link to 
 
 | Issue | Add links to | Why |
 | --- | --- | --- |
-| https://linear.app/conxian-labs/issue/CON-343 | `openspec/changes/sovereign-data-migration-sovereign-egress/specs.md`, `openspec/changes/sovereign-data-migration-sovereign-egress/specs/sovereign-data-migration-sovereign-egress/spec.md`, `ARCHIVE_MIGRATION.md` | This issue is spec-first and directly tied to ZSE + migration. |
-| https://linear.app/conxian-labs/issue/CON-158 | `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`, `SUMMARY.md`, `openspec/changes/remediate-enterprise-sovereignty/specs.md` | This is the “alignment” umbrella; it should anchor to the index + baseline OpenSpec. |
-| https://linear.app/conxian-labs/issue/CON-152 | `conxian-business/SERVICE_LOOP.md`, `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` | BOS operating model work should reference the service loop + wiring + state machine. |
-| https://linear.app/conxian-labs/issue/CON-157 | `Conxian/PRD.md`, `conxian-gateway/PRD.md`, `conxian-nexus/docs/PRD.md` | “Business-unit model” extraction should start from PRDs (what exists and how it’s separated). |
-| https://linear.app/conxian-labs/issue/CON-160 | `conxian-gateway/PRD.md`, `lib-conxian-core/docs/PRD.md`, `openspec/changes/remediate-enterprise-sovereignty/specs/enterprise-sovereignty/spec.md` | Settlement ingress touches gateway/core-lib conventions + sovereignty requirements. |
-| https://linear.app/conxian-labs/issue/CON-780 | `docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md`, `docs/architecture/BITCOIN_LAYER_ARCHITECTURE_BOUNDARY_NOTE.md`, `docs/COMPATIBILITY_MATRIX_AND_ACCEPTANCE_GATE_CHECKLIST.md` | GAP-009 Lightning coverage execution should anchor to the active tracker, service/adapter ownership boundary, and shared acceptance-gate criteria. |
-| https://linear.app/conxian-labs/issue/CON-131 | `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`, `CONTRIBUTING.md` | Bounty workflow should reference the payout runbook + repo workflow norms. |
-| https://linear.app/conxian-labs/issue/CON-325 | `admin/SECRETS.md`, `ARCHIVE_MIGRATION.md`, `docs/AGENTS.md` (ZSE section) | Secrets removal work should anchor to the ZSE “where is it now?” docs. |
-| https://linear.app/conxian-labs/issue/CON-326 | `openspec/specs/git-management/spec.md`, `CONTRIBUTING.md` | Repo discipline/categorization should cite the OpenSpec git rules + contributing norms. |
-| https://linear.app/conxian-labs/issue/CON-327 | `openspec/specs/git-management/spec.md`, `SECURITY.md`, `.github/*` templates | Governance standardization needs the existing governance/security baselines. |
+| https://github.com/Conxian/conxian-business/issues?q=CON-343 | `openspec/changes/sovereign-data-migration-sovereign-egress/specs.md`, `openspec/changes/sovereign-data-migration-sovereign-egress/specs/sovereign-data-migration-sovereign-egress/spec.md`, `ARCHIVE_MIGRATION.md` | This issue is spec-first and directly tied to ZSE + migration. |
+| https://github.com/Conxian/conxian-business/issues?q=CON-158 | `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`, `SUMMARY.md`, `openspec/changes/remediate-enterprise-sovereignty/specs.md` | This is the “alignment” umbrella; it should anchor to the index + baseline OpenSpec. |
+| https://github.com/Conxian/conxian-business/issues?q=CON-152 | `conxian-business/SERVICE_LOOP.md`, `Sovereign-Ops-Orchestrator/TASK_WIRING.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` | BOS operating model work should reference the service loop + wiring + state machine. |
+| https://github.com/Conxian/conxian-business/issues?q=CON-157 | `Conxian/PRD.md`, `conxian-gateway/PRD.md`, `conxian-nexus/docs/PRD.md` | “Business-unit model” extraction should start from PRDs (what exists and how it’s separated). |
+| https://github.com/Conxian/conxian-business/issues?q=CON-160 | `conxian-gateway/PRD.md`, `lib-conxian-core/docs/PRD.md`, `openspec/changes/remediate-enterprise-sovereignty/specs/enterprise-sovereignty/spec.md` | Settlement ingress touches gateway/core-lib conventions + sovereignty requirements. |
+| https://github.com/Conxian/conxian-business/issues?q=CON-780 | `docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md`, `docs/architecture/BITCOIN_LAYER_ARCHITECTURE_BOUNDARY_NOTE.md`, `docs/COMPATIBILITY_MATRIX_AND_ACCEPTANCE_GATE_CHECKLIST.md` | GAP-009 Lightning coverage execution should anchor to the active tracker, service/adapter ownership boundary, and shared acceptance-gate criteria. |
+| https://github.com/Conxian/conxian-business/issues?q=CON-131 | `docs/bounties/MAINTAINER_PAYOUT_ENABLEMENT_RUNBOOK.md`, `CONTRIBUTING.md` | Bounty workflow should reference the payout runbook + repo workflow norms. |
+| https://github.com/Conxian/conxian-business/issues?q=CON-325 | `admin/SECRETS.md`, `ARCHIVE_MIGRATION.md`, `docs/AGENTS.md` (ZSE section) | Secrets removal work should anchor to the ZSE “where is it now?” docs. |
+| https://github.com/Conxian/conxian-business/issues?q=CON-326 | `openspec/specs/git-management/spec.md`, `CONTRIBUTING.md` | Repo discipline/categorization should cite the OpenSpec git rules + contributing norms. |
+| https://github.com/Conxian/conxian-business/issues?q=CON-327 | `openspec/specs/git-management/spec.md`, `SECURITY.md`, `.github/*` templates | Governance standardization needs the existing governance/security baselines. |
 
-## 9) Proposed Linear documents to create (durable workspace access)
+## 9) Proposed GitHub documents to create (durable workspace access)
 
-These are the highest-value sources to copy into Linear so day-to-day work stays stable even if the repo has to remove or relocate sensitive material.
+These are the highest-value sources to copy into restricted vault/secure storage so day-to-day work stays stable even if the repo has to remove or relocate sensitive material.
 
 1. **BOS Operating Model (canonical)**
-   - Source: `conxian-business/SERVICE_LOOP.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` (public-safe pointer; canonical BOS state machine definition is maintained in Linear).
-2. **Execution wiring: Linear ↔ BOS state layer (canonical)**
-   - Source: `Sovereign-Ops-Orchestrator/LINEAR_WIRING.md`.
+   - Source: `conxian-business/SERVICE_LOOP.md`, `conxian-business/BOS_STATE_MACHINE.stub.json` (public-safe pointer; canonical BOS state machine definition is maintained in restricted vault/secure storage).
+2. **Execution wiring: GitHub ↔ BOS state layer (canonical)**
+   - Source: `Sovereign-Ops-Orchestrator/TASK_WIRING.md`.
 3. **Zero Secret Egress (ZSE) + knowledge retention (canonical)**
    - Source: `ARCHIVE_MIGRATION.md`, `docs/AGENTS.md` (Knowledge retention & hygiene section), `admin/SECRETS.md`.
 4. **OpenSpec: Enterprise Sovereignty baseline (canonical)**
@@ -327,7 +327,7 @@ These documents were created during the 2026-07-03 cross-issue boundary and doct
 | `docs/OPERATING_LANE_BOUNDARIES.md` | Canonical | Public-safe | Explicit lane boundaries for Packaging (doctrine), GTM (execution), and Operations (coordination). Includes escalation paths, anti-patterns, and cross-lane operating loop. |
 | `docs/operations/WEEKLY_GROWTH_DRIVER_REVIEW.md` | Canonical | Public-safe | Weekly GTM metrics review template covering qualified conversations, demos, pilots, proofs, and responsiveness. Cross-references BOS operational metrics (CON-682). |
 | `docs/TECHNICAL_WHITEPAPER_OUTLINE.md` | Canonical | Public-safe | 10-section flagship whitepaper outline with evidence references: system architecture, BOS state machine, security model, protocol layer, execution layer, compliance layer, client layer. |
-| `docs/COMMERCIAL_PACKAGING_DOCTRINE.md` | Canonical | Public-safe | Offer structure (Gateway/Wallet/SDK), 3-tier packaging matrix, pricing doctrine, customer journey stages, pilot path, and executive one-pager template (pricing details in Linear per ZSE). |
+| `docs/COMMERCIAL_PACKAGING_DOCTRINE.md` | Canonical | Public-safe | Offer structure (Gateway/Wallet/SDK), 3-tier packaging matrix, pricing doctrine, customer journey stages, pilot path, and executive one-pager template (pricing details in restricted vault/secure storage per ZSE). |
 
 ### Cross-references
 

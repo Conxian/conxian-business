@@ -6,9 +6,9 @@ labels: documentation
 assignees: '
 ---
 
-> Note: This repository is public. Do not include confidential strategy, operational, legal, or infrastructure details. For internal-only material, use the authorized Linear workspace: https://linear.app/conxian-labs
+> Note: This repository is public. Do not include confidential strategy, operational, legal, or infrastructure details. For internal-only material, use the authorized GitHub organization: https://github.com/Conxian
 >
-> ExCo operational requests are Linear-first. If mirrored to GitHub, include the full Linear issue URL.
+> ExCo operational requests are GitHub-first. If mirrored to GitHub, include the full GitHub issue URL.
 
 ### Target Document
 *Which document or section requires updating? (e.g., `ALIGNMENT.md`, `02_strategy/ROADMAP.md`)*

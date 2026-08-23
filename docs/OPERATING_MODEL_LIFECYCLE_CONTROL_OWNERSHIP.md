@@ -18,7 +18,7 @@ It standardizes:
 
 This standard applies to all change streams that touch cross-repo interfaces, runtime behavior, release promotion, or production operations.
 
-Sensitive operational details remain in Linear under Zero Secret Egress (ZSE) policy.
+Sensitive operational details remain on GitHub under Zero Secret Egress (ZSE) policy.
 
 ## 2) Source alignment
 

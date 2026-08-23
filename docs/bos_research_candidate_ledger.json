@@ -43,7 +43,7 @@
   "selectedTechnicalArtifact": {
     "candidateId": "lib-conxian-core#227",
     "tracker": "https://github.com/Conxian/lib-conxian-core/issues/227",
-    "decisionIssue": "https://linear.app/conxian-labs/issue/CON-1573/security-provide-a-v02-compatible-core-candidate-without-legacy",
+    "decisionIssue": "https://github.com/Conxian/conxian-business/issues?q=CON-1573",
     "pullRequests": [
       "https://github.com/Conxian/lib-conxian-core/pull/229",
       "https://github.com/Conxian/lib-conxian-core/pull/231"
@@ -75,7 +75,7 @@
         "https://github.com/Conxian/lib-conxian-core/pull/229",
         "https://github.com/Conxian/lib-conxian-core/pull/231",
         "https://github.com/Conxian/conxian-nexus/pull/177",
-        "https://linear.app/conxian-labs/issue/CON-1573/security-provide-a-v02-compatible-core-candidate-without-legacy",
+        "https://github.com/Conxian/conxian-business/issues?q=CON-1573",
         "https://github.com/Conxian/lib-conxian-core/pull/229#pullrequestreview-4795322131",
         "https://github.com/bitcoindevkit/bdk/blob/f71bc34f32603b887d19d244878442c1895a41ea/Cargo.toml",
         "https://github.com/rust-lang/cargo/blob/0158e40d8638a7de292b7242b1533caaf48cbe5f/doc/book/src/reference/features.md",

@@ -19,7 +19,7 @@ Per the repo portfolio, `conxian-gateway` is a **flagship** repo:
 ## 3) Separating Runtime/Integration from Internal Controls
 
 - **Runtime/Integration**: Rust service code, API definitions, and partner adapters (Git).
-- **Internal Controls**: Production endpoint credentials, partner-specific commercial terms, and detailed compliance audit trails (Linear/Supabase).
+- **Internal Controls**: Production endpoint credentials, partner-specific commercial terms, and detailed compliance audit trails (restricted vault/Supabase).
 
 ## 4) Business Logic and Documentation Gaps
 
@@ -37,5 +37,5 @@ Per the repo portfolio, `conxian-gateway` is a **flagship** repo:
 - Define explicit ownership for compliance-gating logic.
 
 **P2 (Documentation Alignment)**
-- Migrate sensitive partner mapping to Linear.
+- Migrate sensitive partner mapping to restricted vault/secure storage.
 - Establish a "Global Settlement Ingress" rollout tracker.

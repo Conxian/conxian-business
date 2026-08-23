@@ -344,7 +344,7 @@ Status: clean (except expected development files)
 - Scope documented: Private repo, OpenSpec public-safe docs
 - Branch policy: feature→dev→staged→main enforced
 - Bounty workflow: Framework in place
-- ExCo intake: Linear-first established
+- ExCo intake: GitHub-first established
 - PR process: Checklist documented
 
 ✅ **SECURITY.md**

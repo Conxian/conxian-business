@@ -13,7 +13,7 @@ This directory contains the public-safe BOS governance surface: OpenSpec referen
 - Define and explain BOS governance, ownership boundaries, and specification workflows.
 - Describe infrastructure routing, orchestration, compliance integration, verification, and tenant-isolation patterns.
 - Keep public documentation aligned with evidence and with the separation between Conxian protocol/DAO components and Conxius client/access/developer tooling.
-- Preserve safe pointers when detailed strategy, legal, security, financial, or operational material belongs in the authorized Linear workspace under Zero Secret Egress (ZSE).
+- Preserve safe pointers when detailed strategy, legal, security, financial, or operational material belongs in the authorized GitHub organization under Zero Secret Egress (ZSE).
 
 ## Non-scope
 

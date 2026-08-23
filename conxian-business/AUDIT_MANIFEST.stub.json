@@ -21,5 +21,5 @@
     "14-telemetry-signal-threshold-scan.txt"
   ],
   "stacks_anchor_payload": "To be anchored at mainnet deployment",
-  "note": "Public-safe summary. Generated audit evidence is written to conxian-business/.generated/AUDIT_MANIFEST.json (gitignored). Canonical audit details maintained in Linear: https://linear.app/conxian-labs/issue/CON-256"
+  "note": "Public-safe summary. Generated audit evidence is written to conxian-business/.generated/AUDIT_MANIFEST.json (gitignored). Canonical audit details maintained in Linear: https://github.com/Conxian/conxian-business/issues?q=CON-256"
 }

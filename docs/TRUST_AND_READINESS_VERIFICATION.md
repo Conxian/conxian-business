@@ -170,7 +170,7 @@ The Conxian BOS is a **sovereign-first, non-custodial** financial infrastructure
 - **Zero Secret Egress**: No secrets in Git; contamination guard enforces production principal hygiene
 - **Verifiable state**: Cryptographic MMR proofs and BitVM2 Groth16 verification for cross-chain state
 - **Honest maturity labeling**: Conxius Wallet is Stable/Production-ready; Nexus and Gateway are Beta; `conxius-enclave-sdk` is Beta / conditional with no value-bearing production signing or settlement; ConxianCSF mainnet is gated on ALEX funding
-- **Clear boundary model**: Public-safe architecture docs; internal-only operational detail in Linear per ZSE
+- **Clear boundary model**: Public-safe architecture docs; internal-only operational detail on GitHub per ZSE
 
 **What we do not claim**: third-party audits, production SLAs, full decentralization, or payable bug bounties. See [Section 4](#4-what-is-not-claimed-trust-boundary) for the complete non-claim boundary.
 

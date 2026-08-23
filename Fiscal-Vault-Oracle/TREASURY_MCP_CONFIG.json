@@ -4,9 +4,9 @@
   "bridges": {},
   "resource_mappings": {},
   "audit_trail": {},
-  "note": "Public-safe stub. Internal MCP endpoints, permissions, and vendor integrations are maintained in the Conxian Linear workspace.",
+  "note": "Public-safe stub. Internal MCP endpoints, permissions, and vendor integrations are maintained in the Conxian GitHub organization/issues.",
   "linear": {
-    "workspace": "https://linear.app/conxian-labs",
-    "tracking_issue": "https://linear.app/conxian-labs/issue/CON-256"
+    "workspace": "https://github.com/Conxian",
+    "tracking_issue": "https://github.com/Conxian/conxian-business/issues?q=CON-256"
   }
 }

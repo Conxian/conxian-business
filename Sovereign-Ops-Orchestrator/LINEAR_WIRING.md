@@ -2,7 +2,7 @@
 
 This repository is public. ExCo-relevant newly discovered work is **Sovereign-first**.
 
-Detailed strategic, financial, legal, security, and deep operational runbook content remains canonical in the authorized Linear workspace under Zero Secret Egress (ZSE).
+Detailed strategic, financial, legal, security, and deep operational runbook content remains canonical in the authorized GitHub organization under Zero Secret Egress (ZSE).
 
 Traceability:
 
@@ -36,12 +36,12 @@ When intake touches protocol-adapter execution (including emerging rails), inclu
 ## Intake flow (concise)
 
 1. **Discover**: capture the originating signal and links.
-2. **Create/route issue (Linear-first)**: open or route the issue in Linear with all required fields.
+2. **Create/route issue (GitHub-first)**: open or route the issue in Linear with all required fields.
 3. **Triage**: confirm owner, urgency, and execution surface.
-4. **Execution linkbacks**: link implementation artifacts (PRs/issues/docs) back to the Linear issue, and include the Linear URL in mirrored public-safe GitHub items.
+4. **Execution linkbacks**: link implementation artifacts (PRs/issues/docs) back to the GitHub issue, and include the Linear URL in mirrored public-safe GitHub items.
 
 ## ZSE boundary
 
-Sensitive strategic, financial, legal, security, and detailed operational material stays in the authorized Linear workspace only.
+Sensitive strategic, financial, legal, security, and detailed operational material stays in the authorized GitHub organization only.
 
 Public GitHub artifacts must remain sanitized/public-safe and should point back to the canonical coordination layer issue.

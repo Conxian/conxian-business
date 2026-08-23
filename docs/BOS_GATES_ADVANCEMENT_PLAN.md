@@ -81,7 +81,7 @@ All human blockers resolved:
 |---------|-----------|
 | Non-Git restricted-record successor | **conxian-business** (private GitHub repo) |
 | Accountable owner | **admin@conxian-labs.com / botshelo@conxian-labs.com** |
-| Linear workspace | **Closure authorized** — [#944](https://github.com/Conxian/conxian-business/issues/944) |
+| GitHub organization/issues | **Closure authorized** — [#944](https://github.com/Conxian/conxian-business/issues/944) |
 | Organization Project | **BOS Control Plane** in conxian-business — [.github #61](https://github.com/Conxian/.github/issues/61) |
 
 Gates 2-6 are now unblocked and can advance sequentially:

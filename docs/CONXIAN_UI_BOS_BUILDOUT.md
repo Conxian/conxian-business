@@ -19,7 +19,7 @@ Per the repo portfolio, `Conxian_UI` (to be renamed `conxian-ui`) is an **operat
 ## 3) Separating Presentation Layer from Internal Controls
 
 - **Presentation Layer**: React/Next.js components, styling, and client-side routing (Git).
-- **Internal Controls**: Admin-only dashboard routes, internal analytics keys, and sensitive environment configuration (Linear/Supabase).
+- **Internal Controls**: Admin-only dashboard routes, internal analytics keys, and sensitive environment configuration (restricted vault/Supabase).
 
 ## 4) Business Logic and Documentation Gaps
 
@@ -37,5 +37,5 @@ Per the repo portfolio, `Conxian_UI` (to be renamed `conxian-ui`) is an **operat
 - Implement explicit "stop-ship" checks for UI regressions on critical paths.
 
 **P2 (Documentation Alignment)**
-- Move internal-only operating guides to Linear.
+- Move internal-only operating guides to restricted vault/secure storage.
 - Standardize `CHANGELOG.md` with `## [Unreleased]` section.

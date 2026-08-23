@@ -19,7 +19,7 @@ Per the repo portfolio, `conxian-nexus` is a **flagship** repo:
 ## 3) Separating Protocol/Runtime from Internal Controls
 
 - **Protocol/Runtime**: State machine implementation, sync ingestion loops, and telemetry exporters (Git).
-- **Internal Controls**: Database connection strings for production instances, detailed infrastructure monitoring dashboards, and incident response runbooks (Linear/Supabase).
+- **Internal Controls**: Database connection strings for production instances, detailed infrastructure monitoring dashboards, and incident response runbooks (restricted vault/Supabase).
 
 ## 4) Business Logic and Documentation Gaps
 
@@ -37,5 +37,5 @@ Per the repo portfolio, `conxian-nexus` is a **flagship** repo:
 - [x] Finalize Prometheus metrics exporter for mainnet-ready telemetry.
 
 **P2 (Documentation Alignment)**
-- Move sensitive infrastructure mapping to Linear.
+- Move sensitive infrastructure mapping to restricted vault/secure storage.
 - Update `SECURITY.md` to reflect the public/private boundary for state data.

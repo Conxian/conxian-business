@@ -2,7 +2,7 @@
 
 ## Context links
 
-- Linear issue: [CON-780](https://linear.app/conxian-labs/issue/CON-780/expand-lightning-test-coverage-from-67percent-to-90percent-gap-009)
+- GitHub issue: [CON-780](https://github.com/Conxian/conxian-business/issues?q=CON-780)
 - Umbrella tracker (business): [conxian-business#723](https://github.com/Conxian/conxian-business/issues/723)
 - Nexus execution issue (service layer): [conxian-nexus#104](https://github.com/Conxian/conxian-nexus/issues/104)
 - Gateway execution issue (adapter layer): [conxian-gateway#117](https://github.com/Conxian/conxian-gateway/issues/117)
@@ -41,7 +41,7 @@
 ## Shared definition of done
 
 - All 10 shared matrix scenarios are covered by automated tests across Nexus service-layer and Gateway adapter-layer boundaries.
-- [conxian-nexus#104](https://github.com/Conxian/conxian-nexus/issues/104) and [conxian-gateway#117](https://github.com/Conxian/conxian-gateway/issues/117) are both closed with linked evidence and traceability back to [conxian-business#723](https://github.com/Conxian/conxian-business/issues/723) and [CON-780](https://linear.app/conxian-labs/issue/CON-780/expand-lightning-test-coverage-from-67percent-to-90percent-gap-009).
+- [conxian-nexus#104](https://github.com/Conxian/conxian-nexus/issues/104) and [conxian-gateway#117](https://github.com/Conxian/conxian-gateway/issues/117) are both closed with linked evidence and traceability back to [conxian-business#723](https://github.com/Conxian/conxian-business/issues/723) and [CON-780](https://github.com/Conxian/conxian-business/issues?q=CON-780).
 - Scoped Lightning coverage gate is enforced in CI at `>=90%` with fail-under behavior.
 - PR-level coverage artifacts are generated for Lightning changes and retained for review.
 - No open P1 regressions remain for GAP-009 in the production-readiness roadmap.

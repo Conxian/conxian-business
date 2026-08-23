@@ -1,8 +1,8 @@
 # CON-681 Phase 6 rollback drill simulation
 
 **Status:** Canonical drill artifact for CON-681 gate evidence
-**Issue:** [CON-681](https://linear.app/conxian-labs/issue/CON-681/intelligencephase-6-production-rollout-runbook-observability-rollback)
-**Visibility:** Public-safe (sensitive environment identifiers remain in Linear under ZSE)
+**Issue:** [CON-681](https://github.com/Conxian/conxian-business/issues?q=CON-681)
+**Visibility:** Public-safe (sensitive environment identifiers remain on GitHub under ZSE)
 **Simulation date:** 2026-05-26
 **Simulation type:** Tabletop + metric replay (assumption-driven)
 
@@ -101,7 +101,7 @@ This artifact includes tabletop assumptions and metric replay rather than unrest
 
 - Production traffic was represented by controlled replay samples.
 - Sensitive environment identifiers (service IDs, pager routes, exact secret-backed toggles) were omitted from this repo per ZSE policy.
-- Detailed evidence artifacts are tracked in CON-681 internal Linear records.
+- Detailed evidence artifacts are tracked in CON-681 internal GitHub records.
 
 ## 9) Linked canonical references
 

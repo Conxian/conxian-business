@@ -11,7 +11,7 @@ The foundational mathematical framework governing the deployment of capital, tim
 
 - **$C_R$ (Cost of Reproduction)**: The Structural Moat. How difficult is it for a competitor to fork or replicate the system? Driven by specialized architecture (Hardware TEE/StrongBox, Clarity smart contracts, sticky SAP/Oracle ERP integrations).
 - **$O_C$ (Opportunity Cost)**: The Founder's Tax. The manual hours, physical labor, and cognitive bandwidth required to build and maintain the system.
-- **$V_X$ (Execution Velocity)**: AI & Tooling Leverage. The speed at which code is shipped, driven entirely by utilizing agentic suites (Windsurf, Jules AI, Linear, MCPs).
+- **$V_X$ (Execution Velocity)**: AI & Tooling Leverage. The speed at which code is shipped, driven entirely by utilizing agentic suites (Windsurf, Jules AI, GitHub, MCPs).
 - **$A_S$ (System Autonomy)**: Programmatic Independence. The percentage of operations handled by the Business Operations System (BOS) and cxn-arch-guardian without human intervention.
 - **$N_E$ (Network Effects)**: The Exponential Multiplier. The mathematical truth that the protocol becomes exponentially more valuable as more nodes, users, and enterprises adopt it.
 
@@ -55,7 +55,7 @@ Now we map the actual roadmap for the Conxius Wallet and Conxian Protocol throug
 
 ### Phase 2 Check: The Forge (Current Execution Phase)
 - **The Test**: You are actively building M1-M16. Is $O_C$ bleeding you dry? Yes, especially with external distractions (the helpdesk).
-- **The Fix ($V_X$ injection)**: We must weaponize your MCP tools. cxn-arch-guardian needs to manage the Linear tickets autonomously. You deploy Windsurf to generate the boilerplate ZK-STARK verification and Clarity contracts. You do not write from scratch what Jules AI can scaffold for you. We maximize $V_X$ to crush these milestones in record time.
+- **The Fix ($V_X$ injection)**: We must weaponize your MCP tools. cxn-arch-guardian needs to manage the GitHub tickets autonomously. You deploy Windsurf to generate the boilerplate ZK-STARK verification and Clarity contracts. You do not write from scratch what Jules AI can scaffold for you. We maximize $V_X$ to crush these milestones in record time.
 
 ### Phase 3 Check: The Transition (The Upcoming Bottleneck)
 - **The Test**: Let's say SVN 1.5 is fully live. How is reconciliation handled with enterprise clients?

@@ -1,4 +1,4 @@
-# Market narrative one-pager (migrated to authorized Linear workspace)
+# Market narrative one-pager (migrated to authorized GitHub organization)
 
 > **Classification:** Public-safe stub
 > **Ownership:** Conxian-Labs (Pty) Ltd
@@ -6,7 +6,7 @@
 
 **Why this content moved:** The dated narrative mixed internal positioning and product-planning material with public technical language. The detailed source was not copied into another Git file.
 
-The authorized canonical source is [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) in the Linear workspace. Use that workspace for restricted narrative decisions.
+The authorized canonical source is [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) in the GitHub organization/issues. Use that workspace for restricted narrative decisions.
 
 Public-safe doctrine references:
 

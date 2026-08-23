@@ -34,17 +34,17 @@ via pull request. Promotions use only the exact direct or generated routes in
 
 Reference: [`docs/bounties/BOUNTY_WORKFLOW.md`](./docs/bounties/BOUNTY_WORKFLOW.md).
 
-## ExCo intake (Linear-first)
+## ExCo intake (GitHub-first)
 
-- For ExCo-relevant newly discovered work, create/route the item in Linear first using the [ExCo intake standard](./Sovereign-Ops-Orchestrator/LINEAR_WIRING.md).
+- For ExCo-relevant newly discovered work, create/route the item in GitHub Issues / Projects first.
 - For protocol-adapter or emerging-rail intake, include the maturity lane fields defined in [Protocol Adapter Maturity Lanes](./docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md).
 - If the maturity lane is missing at intake, record and proceed with the required default: `Research`.
-- If work is mirrored to GitHub, include the full Linear issue URL in the issue/PR body for traceability.
-- Keep sensitive strategic, financial, legal, security, and detailed operational content in Linear only (ZSE).
+- Include the full GitHub issue URL in the PR body for traceability.
+- All issues, planning, and tracking reside on GitHub under Zero Secret Egress (ZSE) guardrails.
 
 ## Pull Request Process
 
-1.  Ensure all code changes map to an existing Linear issue.
+1.  Ensure all code changes map to an existing GitHub issue.
 2.  Maintain Zero Secret Egress (ZSE) compliance.
 3.  All Clarity smart contracts must pass the Vitest/Simnet test suite.
 4.  Documentation must be updated to match implementation.

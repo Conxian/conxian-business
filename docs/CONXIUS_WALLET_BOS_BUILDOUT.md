@@ -57,7 +57,7 @@ The wallet already contains a strong starting point for release prep. Use it as 
 
 - Release prep (public-safe only; no store account ops, no signing key custody procedures): [`conxius-wallet/docs/operations/ANDROID_RELEASE_PREP.md`](https://github.com/Conxian/conxius-wallet/blob/ef68ec49891d4a7085e499732b9fa0ce5816c1e2/docs/operations/ANDROID_RELEASE_PREP.md)
 - Device readiness (public-safe only; no production endpoint mapping): [`conxius-wallet/docs/operations/DEVICE_READINESS_REPORT.md`](https://github.com/Conxian/conxius-wallet/blob/ef68ec49891d4a7085e499732b9fa0ce5816c1e2/docs/operations/DEVICE_READINESS_REPORT.md)
-- Internal-only: Play Store operations + signing key custody runbook (authorized Linear workspace)
+- Internal-only: Play Store operations + signing key custody runbook (authorized GitHub organization)
 
 Minimum release controls:
 
@@ -92,7 +92,7 @@ This repo (and the wallet repo) are public. To stay aligned with ZSE:
 - Sanitized risk registry (no partner-only or exploit-adjacent detail).
 - Generalized build instructions that do not embed org identifiers, account names, or secrets.
 
-**Internal-only (migrate to authorized Linear workspace; keep git as a stub that links out)**
+**Internal-only (migrate to authorized GitHub organization; keep git as a stub that links out)**
 
 - Incident response runbooks, escalation trees, and “stop-ship” criteria.
 - App store operational details (accounts, roles, recovery codes, signing key custody/rotation procedures).
@@ -114,7 +114,7 @@ The wallet repo has extensive product/ops documentation. The main gaps for day-2
 **P0 (safety + release integrity)**
 
 - Confirm branch protections + required reviewers/owners are enforced in the wallet repo.
-- Ensure release signing key custody and app store admin procedures are internal-only (Linear), not in git.
+- Ensure release signing key custody and app store admin procedures are internal-only (GitHub), not in git.
 - Add an explicit “stop-ship” policy and rollback path for Play Store staged rollouts.
 
 **P1 (operational clarity + anti-drift)**
@@ -125,5 +125,5 @@ The wallet repo has extensive product/ops documentation. The main gaps for day-2
 
 **P2 (documentation hygiene + separation)**
 
-- Classify wallet docs as public-safe vs internal-only and migrate internal-only docs to Linear.
+- Classify wallet docs as public-safe vs internal-only and migrate internal-only docs to restricted vault/secure storage.
 - Add a “production environment matrix” doc (internal-only) that maps endpoints, flags, and partner dependencies.

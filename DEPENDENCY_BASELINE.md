@@ -2,7 +2,7 @@
 
 **Accepted**: 2026-08-01
 **Business head**: [`c74f5f8`](https://github.com/Conxian/conxian-business/commit/c74f5f8) — updated pins below
-**System of record**: GitHub (Linear workspace deprecated)
+**System of record**: GitHub (GitHub issues/projects active)
 
 ## Submodule pins
 

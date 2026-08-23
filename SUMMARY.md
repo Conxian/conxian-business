@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [Archive Migration (authorized Linear workspace; ZSE)](ARCHIVE_MIGRATION.md)
+* [Archive Migration (authorized GitHub organization; ZSE)](ARCHIVE_MIGRATION.md)
 * [Conxian: one-page market narrative](docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md)
 * [Documentation Alignment Index](docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
 * [BOS business buildout (this repo)](docs/BOS_BUSINESS_BUILDOUT.md)
@@ -85,7 +85,7 @@
 * [Arch Guardian](Nakamoto-Guardian/ANTI_FRAGILITY_LOOP.md)
 * [Grid Oracle (Agnostic)](cxn-grid-oracle/README.md)
 * [Ops Engine](Sovereign-Ops-Orchestrator/DEPLOYMENT_EFFICIENCY.md)
-  * [ExCo intake (Linear-first) and wiring](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
+  * [ExCo intake (GitHub-first) and wiring](Sovereign-Ops-Orchestrator/LINEAR_WIRING.md)
 
 ## 🏛️ Ground Truth (OpenSpec)
 

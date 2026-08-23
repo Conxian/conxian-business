@@ -10,7 +10,7 @@ The goal is to keep launch, economy design, and go-to-market work consistent: **
 
 Canonical trackers:
 
-- Linear: https://linear.app/conxian-labs/issue/CON-426/lock-csf-first-operating-sequence-and-proof-gates
+- GitHub: https://github.com/Conxian/conxian-business/issues?q=CON-426
 
 ## Terms
 

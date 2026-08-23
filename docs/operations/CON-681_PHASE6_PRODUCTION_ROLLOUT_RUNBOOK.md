@@ -1,8 +1,8 @@
 # CON-681 Phase 6 production rollout runbook (canonical)
 
 **Status:** Canonical
-**Issue:** [CON-681](https://linear.app/conxian-labs/issue/CON-681/intelligencephase-6-production-rollout-runbook-observability-rollback)
-**Visibility:** Public-safe (sensitive execution details remain in Linear records under ZSE)
+**Issue:** [CON-681](https://github.com/Conxian/conxian-business/issues?q=CON-681)
+**Visibility:** Public-safe (sensitive execution details remain on GitHub records under ZSE)
 **Last updated:** 2026-05-26
 
 ## 1) Purpose and scope
@@ -16,7 +16,7 @@ It defines:
 - explicit rollback triggers and deterministic operator actions,
 - operator checklists and communication templates used during normal rollout and incidents.
 
-For privileged identifiers (service account names, paging routes, secret-backed endpoints, and privileged command payloads), reference the CON-681 internal Linear sub-records.
+For privileged identifiers (service account names, paging routes, secret-backed endpoints, and privileged command payloads), reference the CON-681 internal GitHub sub-records.
 
 ## 2) Rollout gate model (required order)
 
@@ -153,4 +153,4 @@ Corrective actions: <ticket/issue refs>
 - Cross-repo gate checklist: [Compatibility matrix and acceptance gate checklist](../COMPATIBILITY_MATRIX_AND_ACCEPTANCE_GATE_CHECKLIST.md)
 - Compatibility pointer (legacy link path): [Phase 6 observability runbook shim](../PHASE6_OBSERVABILITY_RUNBOOK.md)
 
-For sensitive implementation details and restricted operational parameters, use CON-681 child records in Linear rather than storing those details in this repository.
+For sensitive implementation details and restricted operational parameters, use CON-681 child records on GitHub rather than storing those details in this repository.

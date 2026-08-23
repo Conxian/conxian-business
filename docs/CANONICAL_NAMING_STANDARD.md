@@ -70,7 +70,7 @@ Examples:
 - ZSE
 - control domain
 - lifecycle gate
-- authorized Linear workspace
+- authorized GitHub organization
 
 ## Repo role naming rule
 

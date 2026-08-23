@@ -1,6 +1,6 @@
 # CON-683 — Phase 3 controlled production slice evidence pack (2026-05-26)
 
-- **Issue:** https://linear.app/conxian-labs/issue/CON-683/build-phase-3-evidence-pack-for-autonomy-gate
+- **Issue:** https://github.com/Conxian/conxian-business/issues?q=CON-683
 - **Repository:** `Conxian/conxian-business`
 - **Snapshot commit (pack authoring start):** `477817cbbd673c8c9c363583b2b3336d48e1167b`
 - **Local evidence artifacts:** `audit/evidence/con-683/`

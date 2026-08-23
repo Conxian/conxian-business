@@ -66,7 +66,7 @@ If a release has breaking changes, add:
 - Prefer short, past-tense, user-impact bullets (example: "Fixed wallet cache key rotation on Android" instead of "Work on cache key rotation").
 - Use scopes when a repo contains multiple products/packages: `- <scope>: Fixed …` (example: `- wallet: Fixed …`).
 - Include references when possible:
-  - Linear issue identifier (example: `CON-242`)
+  - GitHub issue identifier (example: `CON-242`)
   - PR number and/or commit hash
 - Avoid internal-only details and secrets (ZSE).
 

@@ -7,7 +7,7 @@
 
 > Current workspace release: **v1.9.2** (see [`CHANGELOG.md`](../CHANGELOG.md))
 
-The **Fiscal Vault Oracle** is a public reference surface for policy coordination, oracle inputs, and contract-level financial state in the Conxian Business Operations System (BOS). Detailed operational, vendor, legal, and financial strategy material remains in the authorized Linear workspace under ZSE.
+The **Fiscal Vault Oracle** is a public reference surface for policy coordination, oracle inputs, and contract-level financial state in the Conxian Business Operations System (BOS). Detailed operational, vendor, legal, and financial strategy material remains in the authorized GitHub organization under ZSE.
 
 ## Purpose
 

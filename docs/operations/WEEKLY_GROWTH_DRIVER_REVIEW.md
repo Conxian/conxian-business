@@ -25,7 +25,7 @@ This document defines the weekly growth-driver operating loop for the remote-fir
 1. **No metric outruns evidence.** Every growth claim must reference a verifiable artifact (demo recording, proposal doc, proof asset).
 2. **Readiness-gated.** If a component is Beta (per TRUST_AND_READINESS_VERIFICATION.md), growth claims about it must include the Beta qualifier.
 3. **Durable artifacts only.** "Had a good call" is not a metric. "Qualified conversation logged with outcome and next step" is.
-4. **ZSE boundary.** Metric VALUES (pipeline counts, win rates, revenue projections) stay in Linear/Supabase. Only the review PROCESS and formula DEFINITIONS live in Git.
+4. **ZSE boundary.** Metric VALUES (pipeline counts, win rates, revenue projections) stay in restricted vault/Supabase. Only the review PROCESS and formula DEFINITIONS live in Git.
 
 ## Weekly Growth-Driver Metrics
 
@@ -35,7 +35,7 @@ This document defines the weekly growth-driver operating loop for the remote-fir
 |--------|------------|-------------------|--------|
 | **Qualified conversations** | Conversations with buyers who match the current packaging persona and qualification criteria | Conversation log with stage, outcome, next step | Growth trend |
 | **Demos delivered** | Completed product demonstrations against the current implementation state (not target-state) | Demo recording or demo summary artifact | Growth trend |
-| **Pilot proposals submitted** | Formal pilot proposals sent to qualified buyers | Proposal document (public-safe summary; details in Linear) | Growth trend |
+| **Pilot proposals submitted** | Formal pilot proposals sent to qualified buyers | Proposal document (public-safe summary; details in restricted vault/secure storage) | Growth trend |
 | **Pilot starts** | Pilots that have begun with signed agreements | Pilot start date and scope | Growth trend |
 | **Proof assets created** | Claim-safe, evidence-backed proof assets (case studies, benchmarks, integration examples) | Link to proof asset | ≥ 1 per week |
 | **Claim-safe assets shipped** | Proof assets published to public surfaces after readiness verification | Published URL | ≥ 1 per fortnight |
@@ -93,7 +93,7 @@ The GTM review should cross-reference, not duplicate, the BOS operational metric
 
 - Assign owners for follow-up actions
 - Escalate cross-lane blockers to the bi-weekly sync
-- Update the weekly review log (Linear)
+- Update the weekly review log (GitHub)
 
 ## Weekly Review Log Template
 
@@ -135,7 +135,7 @@ The GTM review should cross-reference, not duplicate, the BOS operational metric
 1. **GTM metrics are NOT operational metrics.** GTM tracks commercial motion; Operations tracks system health. Do not conflate.
 2. **GTM claims must not outrun evidence.** If a feature is Beta, GTM materials must say Beta. See [TRUST_AND_READINESS_VERIFICATION.md](TRUST_AND_READINESS_VERIFICATION.md).
 3. **Proof assets are claim-safe by default.** Before publishing any proof asset externally, verify against the Trust & Proof Messaging framework.
-4. **Pipeline detail stays in Linear.** The weekly review log template above is for the public-safe process definition. Actual pipeline values and buyer names live in Linear per ZSE.
+4. **Pipeline detail stays on GitHub.** The weekly review log template above is for the public-safe process definition. Actual pipeline values and buyer names live on GitHub per ZSE.
 
 ## Related Documents
 

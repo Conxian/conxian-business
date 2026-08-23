@@ -20,12 +20,12 @@ Per the repo portfolio, `Conxian` is a **flagship** repo:
 
 - **Protocol**: Smart contract source code, traits, and on-chain logic (Git).
 - **Product**: Product-specific adapters and integration logic should live in Gateway/Wallet, not Protocol.
-- **Business**: Fee split models, royalty specifics, and treasury management policies (Linear).
+- **Business**: Fee split models, royalty specifics, and treasury management policies (GitHub).
 
 ## 4) Public-Facing vs Internal Operating Documentation
 
 - **Public (Git)**: Contract documentation, ABIs, security policy, and contribution guidelines.
-- **Internal (Linear)**: Audit history detail, private key custody procedures (ZSE), and strategic roadmap specifics.
+- **Internal (GitHub)**: Audit history detail, private key custody procedures (ZSE), and strategic roadmap specifics.
 
 ## 5) Prioritized Build/Repair List
 
@@ -38,5 +38,5 @@ Per the repo portfolio, `Conxian` is a **flagship** repo:
 - Fix `CODEOWNERS` to ensure 100% review coverage.
 
 **P2 (Documentation Alignment)**
-- Migrate internal-only research to Linear.
+- Migrate internal-only research to restricted vault/secure storage.
 - Update `CHANGELOG.md` to follow Keep a Changelog standard.

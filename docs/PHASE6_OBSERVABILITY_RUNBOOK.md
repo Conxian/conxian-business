@@ -14,4 +14,4 @@ This file is intentionally brief. The canonical Phase 6 operations documentation
 - Required observability coverage includes request rate, error rate, p95 latency, and contract-violation counters per interface.
 - Rollback is trigger-driven with deterministic operator actions and communication templates.
 
-For sensitive operational details (restricted identifiers, privileged command payloads, environment-specific routing), use the internal CON-681 Linear records under ZSE policy.
+For sensitive operational details (restricted identifiers, privileged command payloads, environment-specific routing), use the internal CON-681 GitHub records under ZSE policy.

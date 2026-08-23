@@ -19,7 +19,7 @@ Per the repo portfolio, `lib-conxian-core` is a **supporting** repo:
 ## 3) Internal Operating Documentation vs Public SDK Surface
 
 - **Public Surface**: Shared models, serialization traits, and public utility functions (Git).
-- **Internal Operating Docs**: Benchmarking reports, detailed trade-off analysis for core decisions, and internal-only security audit findings (Linear).
+- **Internal Operating Docs**: Benchmarking reports, detailed trade-off analysis for core decisions, and internal-only security audit findings (GitHub).
 
 ## 4) Business Logic and Documentation Gaps
 
@@ -37,5 +37,5 @@ Per the repo portfolio, `lib-conxian-core` is a **supporting** repo:
 - Implement automated versioning and publishing checks.
 
 **P2 (Documentation Alignment)**
-- Migrate sensitive research and performance logs to Linear.
+- Migrate sensitive research and performance logs to restricted vault/secure storage.
 - Align core models with CJCS v2.0 standards.

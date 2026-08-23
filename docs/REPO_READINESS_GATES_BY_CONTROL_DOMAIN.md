@@ -4,12 +4,12 @@ This page defines the **minimum control gates** required for each active flagshi
 
 - what is safe to keep **public**,
 - what can **ship** (be deployed / released) without additional controls,
-- what must remain **private** (kept in Linear under ZSE), and
+- what must remain **private** (kept in restricted vault/secure storage under ZSE), and
 - what needs **additional controls** before rollout.
 
 Canonical tracker:
 
-- authorized Linear workspace: https://sovereign.conxian.com/issue/CON-227/map-repo-readiness-gates-by-control-domain
+- authorized GitHub organization: https://sovereign.conxian.com/issue/CON-227/map-repo-readiness-gates-by-control-domain
 
 ## Current status
 
@@ -139,7 +139,7 @@ These repos still must meet the public-safe baseline and standard engineering hy
 
 ### What must stay private (content-level, not necessarily repo-level)
 
-Regardless of repo visibility, the following content **must not be tracked in GitHub** and should live in Linear under ZSE:
+Regardless of repo visibility, the following content **must not be tracked in GitHub** and should live in restricted vault/secure storage under ZSE:
 
 - treasury signing procedures, key custody details, seed phrases, private endpoints
 - partner/customer confidential details
@@ -154,5 +154,5 @@ Service surfaces (for example, repos that expose a production-facing network ser
 ## Follow-ups (recommended)
 
 1. `conxius-wallet` posture confirmed as non-custodial; keep `DC = 2` to reflect wallet-grade on-device key handling and signing boundaries.
-2. Add a lightweight “evidence” section per flagship repo (links to CI, release tags, runbooks in Linear) without embedding sensitive details.
+2. Add a lightweight “evidence” section per flagship repo (links to CI, release tags, runbooks on GitHub) without embedding sensitive details.
 3. Reconcile public messaging in the `conxian-business` repo description with ZSE language (avoid stating it contains non-public docs if it is public).

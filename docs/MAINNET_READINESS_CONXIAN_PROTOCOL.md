@@ -24,7 +24,7 @@ This checklist tracks the mainnet readiness for the core `Conxian` protocol repo
 ### 4) Ownership & Governance
 - [x] **CODEOWNERS**: Correctly mapped to `@botshelomokoka @admin-conxian-labs`.
 - [x] **README**: Standardized with Purpose, Status, Ownership, and Releases sections.
-- [x] **ZSE Compliance**: Strategic knowledge migrated to authorized Linear workspace.
+- [x] **ZSE Compliance**: Strategic knowledge migrated to authorized GitHub organization.
 
 ---
 © 2026 Conxian-Labs (Pty) Ltd.

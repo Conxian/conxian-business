@@ -1,4 +1,4 @@
-# Planning snapshot (migrated to authorized Linear workspace)
+# Planning snapshot (migrated to authorized GitHub organization)
 
 > **Classification:** Public-safe stub
 > **Ownership:** Conxian-Labs (Pty) Ltd
@@ -6,7 +6,7 @@
 
 **Why this content moved:** The dated planning snapshot exposed internal sequencing and work-management detail that is maintained in the authorized work systems, not in public Git. The detailed source was not copied into another Git file.
 
-The authorized canonical source is [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) in the Linear workspace. Use that workspace for current planning and execution records.
+The authorized canonical source is [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) in the GitHub organization/issues. Use that workspace for current planning and execution records.
 
 Public-safe doctrine references:
 
