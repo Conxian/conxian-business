@@ -116,7 +116,7 @@ If overlap remains high, it should be narrowed, merged, archived, or demoted fur
 
 ## CON-702 checkpoint resolution (`conxian_ui` parent control alignment)
 
-Issue link: [CON-702 — Align Conxian_UI to parent control model](https://linear.app/conxian-labs/issue/CON-702/align-conxian-ui-to-parent-control-model)
+Issue link: [CON-702 — Align Conxian_UI to parent control model](https://github.com/Conxian/conxian-business/issues?q=CON-702)
 
 This checkpoint resolves the role contradiction and sets an implementation baseline:
 

@@ -1,6 +1,6 @@
 # CON-137: Community funding model for system delivery
 
-This document is the policy artifact for [CON-137](https://linear.app/conxian-labs/issue/CON-137/community-funding-model-for-system-delivery).
+This document is the policy artifact for [CON-137](https://github.com/Conxian/conxian-business/issues?q=CON-137).
 
 It defines which work can be community-funded, which work must remain internal-only, and how to size bounties in a consistent, reviewable way.
 
@@ -105,7 +105,7 @@ Apply multipliers for review cost and priority (round to nearest 5 BP).
 
 Once ConxianCSF is live and ALEX funding is the active bounty source of funds, store the bounty entry with:
 
-- `issue_url` (Linear + GitHub/PR links when applicable)
+- `issue_url` (GitHub + GitHub/PR links when applicable)
 - `total_bp`
 - `max_payout` (derived from a governance-set conversion rate)
 - `expiry` (explicit timebox)

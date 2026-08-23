@@ -43,7 +43,7 @@ Link your legacy ERP via the MCP bridge:
 - [ ] Test the x402 Payment Loop.
 
 ## 4. Support
-- **Linear**: [Open a tenant-support issue](https://linear.app/conxian-labs/team/TENANT)
+- **Linear**: [Open a tenant-support issue](https://github.com/Conxian/team/TENANT)
 - **Docs**: [Full BaaP Specification](./BOS_PLATFORM_SPEC.md)
 
 ---

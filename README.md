@@ -27,7 +27,7 @@ Define and version Conxian's Business Operations System (BOS) as an auditable, p
 
 This status framing is being kept aligned during the `conxius-platform` documentation transition.
 
-Documentation here follows public-safe boundary rules; internal-only strategy, legal, security, financial, and operational details remain in the authorized Linear workspace under ZSE.
+Documentation here follows public-safe boundary rules; internal-only strategy, legal, security, financial, and operational details remain in the authorized GitHub organization under ZSE.
 
 Release and SemVer tagging follows the process in `RELEASING.md` (`vX.Y.Z`), with history tracked in `CHANGELOG.md`.
 
@@ -98,7 +98,7 @@ This repository follows Zero Secret Egress (ZSE) boundary discipline. See [Repos
 
 ## Repository visibility and public/private boundary
 
-Treat this repository as public-safe for boundary purposes. Detailed strategy, legal interpretations, operational runbooks, infrastructure identifiers, and any secret inventory are maintained in the authorized Linear workspace (not in git), in compliance with our Zero Secret Egress (ZSE) mandate.
+Treat this repository as public-safe for boundary purposes. Detailed strategy, legal interpretations, operational runbooks, infrastructure identifiers, and any secret inventory are maintained in the authorized GitHub organization (not in git), in compliance with our Zero Secret Egress (ZSE) mandate.
 
 Detailed strategy and roadmap content must not be duplicated in this README; see `docs/BOS_BUSINESS_BUILDOUT.md` for the public vs internal documentation rules.
 

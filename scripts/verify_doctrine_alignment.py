@@ -13,7 +13,7 @@ from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 CON_1530_URL = (
-    "https://linear.app/conxian-labs/issue/CON-1530/"
+    "https://github.com/Conxian/conxian-business/issues?q=CON-1530/"
     "doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and"
 )
 

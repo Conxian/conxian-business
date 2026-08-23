@@ -1,6 +1,6 @@
 # Conxian-Labs bounty workflow (stricter)
 
-This document defines the **Conxian-Labs** Linear bounty workflow and the operational rules that keep bounties claimable, reviewable, and non-confusing (especially before payouts are enabled).
+This document defines the **Conxian-Labs** GitHub bounty workflow and the operational rules that keep bounties claimable, reviewable, and non-confusing (especially before payouts are enabled).
 
 ## Goals
 
@@ -15,7 +15,7 @@ Related policy docs:
 
 Being claimable under this workflow means maintainers will review contributions; it does not, by itself, mean the issue is community-funded or payable.
 
-## Labels (Linear + GitHub)
+## Labels (GitHub + GitHub)
 
 These labels are used for visibility and filtering; they are separate from workflow states.
 
@@ -28,7 +28,7 @@ These labels are used for visibility and filtering; they are separate from workf
 
 ## Status model
 
-Recommended Linear team workflow states:
+Recommended GitHub team workflow states:
 
 - `Triage` — inbound; not yet approved for community claiming
 - `Todo` — approved and claimable (see rules below)
@@ -74,15 +74,15 @@ Maintainer-only payout enablement checklist:
 
 Payout-enabling controls must remain maintainer-only and must not be used until ConxianCSF is verified deployed on Stacks mainnet and the ALEX launch-path funding is ready.
 
-## Linear configuration (maintainer)
+## GitHub configuration (maintainer)
 
-Team workflow states are configured in Linear:
+Team workflow states are configured on GitHub:
 
 `Settings → Teams → Conxian-Labs → Issue statuses & automations`
 
 ### Suggested state types
 
-If you have to map these to Linear's state types:
+If you have to map these to restricted vault/secure storage's state types:
 
 - `Triage`, `Todo`: _Unstarted_
 - `Claimed`, `In Progress`, `In Review`: _Started_
@@ -91,9 +91,9 @@ If you have to map these to Linear's state types:
 
 ### Suggested automations
 
-Linear can't reliably enforce "assignee required" on state transitions, but it can still reduce operator mistakes.
+GitHub can't reliably enforce "assignee required" on state transitions, but it can still reduce operator mistakes.
 
 Recommended automations:
 
-1. When a **bounty** issue moves to `Todo` → clear assignee (or enforce this manually if Linear can't scope the automation to bounty-labeled issues).
-2. When a **bounty** issue moves to `Canceled` or `Duplicate` → clear assignee (or enforce this manually if Linear can't scope the automation to bounty-labeled issues).
+1. When a **bounty** issue moves to `Todo` → clear assignee (or enforce this manually if GitHub can't scope the automation to bounty-labeled issues).
+2. When a **bounty** issue moves to `Canceled` or `Duplicate` → clear assignee (or enforce this manually if GitHub can't scope the automation to bounty-labeled issues).

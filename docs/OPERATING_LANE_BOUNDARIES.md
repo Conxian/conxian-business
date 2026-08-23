@@ -80,7 +80,7 @@ These lanes replace the previous ambiguous overlap where operations acted as a p
 - Infrastructure decisions are made by Operations; commercial implications are communicated to Packaging
 
 **Dependencies**:
-- Reads from: Architecture docs, deployment plans, Linear runbooks
+- Reads from: Architecture docs, deployment plans, GitHub runbooks
 - Does NOT own: Commercial strategy, buyer pipeline, pricing, marketing
 
 ## Cross-Lane Coordination
@@ -121,7 +121,7 @@ These lane boundaries are derived from and consistent with:
 
 - **Three-Lane Runtime Deployment Architecture**: Community, Business-managed, and Enterprise lanes define deployment ownership; operating lanes (Packaging, GTM, Operations) define organizational ownership
 - **Portfolio Business-Unit Map**: Conxius (B2C), CSF (Protocol), Fusion (B2B/B2G), Nexus (State) are the four business units; operating lanes cut across them
-- **BOS Preserve/Enhance/Replace Gap Matrix**: Strategy artifacts live in Linear (ZSE); public-safe pointers only in Git
+- **BOS Preserve/Enhance/Replace Gap Matrix**: Strategy artifacts live on GitHub (ZSE); public-safe pointers only in Git
 
 ## Related Documents
 

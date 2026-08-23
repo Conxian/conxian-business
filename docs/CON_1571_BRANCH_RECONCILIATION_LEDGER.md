@@ -1,7 +1,7 @@
 # CON-1571 Branch Reconciliation Disposition Ledger
 
 **Recorded:** 2026-07-28
-**Authority:** [Linear CON-1571](https://linear.app/conxian-labs/issue/CON-1571/bosp1-reconcile-default-branch-promotion-policy-and-branch-protections), [GitHub issue #945](https://github.com/Conxian/conxian-business/issues/945), and draft [PR #971](https://github.com/Conxian/conxian-business/pull/971)
+**Authority:** [GitHub Issues-1571](https://github.com/Conxian/conxian-business/issues?q=CON-1571), [GitHub issue #945](https://github.com/Conxian/conxian-business/issues/945), and draft [PR #971](https://github.com/Conxian/conxian-business/pull/971)
 
 ## Purpose and boundary
 

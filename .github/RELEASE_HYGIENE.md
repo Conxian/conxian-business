@@ -8,7 +8,7 @@ Checked-in files do not prove that administrator-owned state is active.
 The goals:
 
 - Keep `main` always mergeable and safe to deploy.
-- Ensure every merge has clear provenance (Linear issue + PR).
+- Ensure every merge has clear provenance (GitHub issue + PR).
 - Make releases and changelogs easy to audit.
 
 ## Branch and promotion standard
@@ -129,7 +129,7 @@ Notes:
 - No direct commits to `main`. Use a PR.
 - Use the correct base branch (`dev`, `staged`, or `main`) based on the branch and promotion standard.
 - One PR = one focused change (keep it reviewable).
-- PRs should map to a Linear issue (include it in the PR description).
+- PRs should map to a GitHub issue (include it in the PR description).
 - Follow `CODEOWNERS` for review routing.
 - Validate locally before requesting review (CI is the gate, not the first signal).
 - Before merge:

@@ -4,7 +4,7 @@
 
 The **Sovereign Ops Orchestrator** is the operational coordination layer of the Conxian Business Operations System (BOS).
 
-This repository is public. Detailed wiring, operational dashboards, and execution runbooks are maintained in the authorized Linear workspace.
+This repository is public. Detailed wiring, operational dashboards, and execution runbooks are maintained in the authorized GitHub organization.
 
 ## Purpose
 
@@ -13,7 +13,7 @@ This repository is public. Detailed wiring, operational dashboards, and executio
 
 ## Status
 
-active — Public-safe orchestration and wiring artifacts live here; detailed runbooks and dashboards are maintained in the authorized Linear workspace.
+active — Public-safe orchestration and wiring artifacts live here; detailed runbooks and dashboards are maintained in the authorized GitHub organization.
 
 ## Canonical documentation
 

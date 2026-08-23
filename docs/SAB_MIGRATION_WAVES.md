@@ -71,8 +71,8 @@ When older issues or runbooks still mention “Wave 1–4” (legacy framing), m
 
 ## Blockers + sequencing dependencies
 
-1. Per-service dependency truth must be finished for cutover readiness (especially Supabase write paths): https://linear.app/conxian-labs/issue/CON-337/inventory-current-supabase-and-neon-dependencies-by-service
-2. Pilot readiness evidence needs an explicit cut list and rollback trigger: https://linear.app/conxian-labs/issue/CON-335/define-pilot-readiness-gates-and-evidence-requirements
+1. Per-service dependency truth must be finished for cutover readiness (especially Supabase write paths): https://github.com/Conxian/conxian-business/issues?q=CON-337
+2. Pilot readiness evidence needs an explicit cut list and rollback trigger: https://github.com/Conxian/conxian-business/issues?q=CON-335
 3. Analytics target-state is still open ([SAB-DS-002](./SAB_DATASTORE_DECISION_LOG.md#sab-ds-002)), so it must not contaminate Wave 1 sequencing.
 4. Model Context Protocol (MCP) boundary decision is a real dependency for a clean Supabase bridge replacement (keep stable interface vs redesign); leaving it open blocks Wave 2 planning.
 

@@ -1,4 +1,4 @@
-# Business analysis snapshot (migrated to authorized Linear workspace)
+# Business analysis snapshot (migrated to authorized GitHub organization)
 
 > **Classification:** Public-safe stub
 > **Ownership:** Conxian-Labs (Pty) Ltd
@@ -6,7 +6,7 @@
 
 **Why this content moved:** The dated analysis was an internal strategy source and this repository is public. Its detailed decision material is not retained in Git and was not copied into another repository file.
 
-The authorized canonical source is [CON-1530](https://linear.app/conxian-labs/issue/CON-1530/doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and) in the Linear workspace. Use that workspace for restricted decisions and current planning.
+The authorized canonical source is [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) in the GitHub organization/issues. Use that workspace for restricted decisions and current planning.
 
 Public-safe doctrine references:
 

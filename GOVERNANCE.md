@@ -23,7 +23,7 @@ This repository operates under the **GitHub-first public-safe BOS research-cycle
 - **GitHub Issues** are the canonical public-safe work-intake and prioritization surface.
 - **Pull requests** are the canonical delivery and traceability mechanism.
 - **The authorized organization Project** is the canonical cross-repo coordination view.
-- **Linear** is retained for restricted internal coordination only; no bulk content migration is authorized.
+- **GitHub Issues and Projects** serve as the sole system-of-record for work coordination, issue tracking, and planning.
 - Restricted records (legal, financial, identity, custody, security) must reside in the approved
   non-Git restricted-record successor, not in GitHub.
 - All GitHub content is subject to [`docs/DATA_CLASSIFICATION_GUARDRAILS.md`](docs/DATA_CLASSIFICATION_GUARDRAILS.md).
@@ -43,18 +43,18 @@ may promote into `staged` or `main`.
 
 ## Approval model
 
-All changes land via pull request and must follow the workflow defined in `docs/BOS_BUSINESS_BUILDOUT.md` (Linear issue linkage, `CODEOWNERS` review, and documentation-alignment/`CHANGELOG.md` update rules for boundary or policy changes).
+All changes land via pull request and must follow the workflow defined in `docs/BOS_BUSINESS_BUILDOUT.md` (GitHub issue linkage, `CODEOWNERS` review, and documentation-alignment/`CHANGELOG.md` update rules for boundary or policy changes).
 
 ## Documentation confidentiality (ZSE)
 
 Conxian operates under a Zero Secret Egress (ZSE) mandate.
 
 - Public-safe documentation may live in Git.
-- Strategic, legal, operational, and administrative documents that are internal-only must be stored in the authorized Linear workspace (Kwil/Tableland) and referenced from Git with a pointer.
+- Strategic, legal, operational, and administrative documents that are internal-only must be managed in secure GitHub repositories/issues under ZSE boundary rules.
 
 ## Policies
 
-- Repository boundary: Treat this repo as public for ZSE boundary purposes. Internal-only strategy, legal interpretations, operational runbooks, and infrastructure identifiers must live in the authorized Linear workspace.
+- Repository boundary: Treat this repo as public for ZSE boundary purposes. All issue management and strategic tracking reside natively on GitHub.
 - Contributing guidelines: [`CONTRIBUTING.md`](./CONTRIBUTING.md)
 - Security policy: [`SECURITY.md`](./SECURITY.md)
 - BOS business buildout and repo operating model: [`docs/BOS_BUSINESS_BUILDOUT.md`](./docs/BOS_BUSINESS_BUILDOUT.md)

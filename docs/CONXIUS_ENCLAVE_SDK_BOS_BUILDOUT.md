@@ -105,7 +105,7 @@ In this BOS repo, the canonical cross-repo checklist is:
 
 - Historical mainnet readiness checklist — `conxius-enclave-sdk`: `docs/MAINNET_READINESS_CONXIUS_ENCLAVE_SDK.md`
 
-### Internal-only operating docs (authorized Linear workspace)
+### Internal-only operating docs (authorized GitHub organization)
 
 Keep privileged operational material out of Git, even for an SDK:
 
@@ -113,7 +113,7 @@ Keep privileged operational material out of Git, even for an SDK:
 - Key custody procedures (device provisioning, attestation key lifecycle, incident response runbooks).
 - Commercial terms and partner integration runbooks.
 
-If downstream teams need the concept in Git, store a public-safe stub plus a Linear pointer, using the ZSE stub template: `docs/templates/ZSE_STUB_TEMPLATE.md`.
+If downstream teams need the concept in Git, store a public-safe stub plus a GitHub pointer, using the ZSE stub template: `docs/templates/ZSE_STUB_TEMPLATE.md`.
 
 ## 5) Governance gaps (what blocks “stable public SDK operations”)
 
@@ -126,7 +126,7 @@ Gaps to close before treating the SDK as a stable, widely-consumed dependency:
 4. **Downstream integration guide**: a short “how to consume” guide for wallet/gateway/nexus (feature flags, target triples, WASM packaging expectations).
 5. **Security audit readiness**: define the minimum audit bar for `1.0.0` (threat model scope + what components must be audited).
 
-Suggested canonical home (public-safe): add an “Audit readiness” section to `conxius-enclave-sdk/SECURITY.md`, and keep any privileged runbooks and vendor engagement detail in Linear.
+Suggested canonical home (public-safe): add an “Audit readiness” section to `conxius-enclave-sdk/SECURITY.md`, and keep any privileged runbooks and vendor engagement detail on GitHub.
 
 ## 6) Prioritized build/repair list
 

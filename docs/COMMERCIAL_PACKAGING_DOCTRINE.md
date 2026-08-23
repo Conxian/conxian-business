@@ -1,7 +1,7 @@
 # Commercial Packaging Doctrine — Offer Structure, Pricing, and Customer Journey
 
 > **Issue**: [#829](https://github.com/Conxian/conxian-business/issues/829) — Maintain canonical packaging, customer journey, and pricing doctrine set
-> **Status**: Canonical scaffold (pricing details in Linear per ZSE)
+> **Status**: Canonical scaffold (pricing details in restricted vault/secure storage per ZSE)
 > **Last updated**: 2026-07-28
 > **Owner**: Packaging lane (per [OPERATING_LANE_BOUNDARIES.md](OPERATING_LANE_BOUNDARIES.md))
 
@@ -13,7 +13,7 @@ This document defines the canonical commercial packaging doctrine for Conxian-La
 - Gateway, Wallet, and SDK remain the primary offer structure
 - Pricing, buyer journeys, and packaging logic do not drift from implementation truth
 
-**ZSE note**: This document defines the public-safe offer architecture, customer journey model, and packaging logic. Actual pricing tiers, revenue projections, and partner-specific commercial terms are maintained in the authorized Linear workspace. See [BOUNDARY_DECISION_LOG.md](BOUNDARY_DECISION_LOG.md).
+**ZSE note**: This document defines the public-safe offer architecture, customer journey model, and packaging logic. Actual pricing tiers, revenue projections, and partner-specific commercial terms are maintained in the authorized GitHub organization. See [BOUNDARY_DECISION_LOG.md](BOUNDARY_DECISION_LOG.md).
 
 ---
 
@@ -66,7 +66,7 @@ Conxian-Labs offers three primary products, consistent across all packaging tier
 | **Support** | Community (GitHub, docs) | Business-hours, email/Slack | 24/7, dedicated account manager |
 | **Compliance** | Self-assessment | ZKC reports included | Custom compliance pipeline |
 
-**ZSE boundary**: Actual price points, volume discounts, and enterprise contract values are maintained in Linear. Contact [commercial@conxian-labs.com] for current pricing.
+**ZSE boundary**: Actual price points, volume discounts, and enterprise contract values are maintained in restricted vault/secure storage. Contact [commercial@conxian-labs.com] for current pricing.
 
 ### 3.3 Pricing Governance
 
@@ -147,7 +147,7 @@ The following is the canonical one-pager structure for external use (investors, 
 2. **Maturity labels must match implementation.** If the TRUST_AND_READINESS_VERIFICATION.md says Beta, packaging says Beta.
 3. **Pricing must not drift from product.** If a feature is removed or changed, pricing must be reviewed.
 4. **Customer journey stages must match operational readiness.** Do not offer "managed operations" for a component that lacks monitoring and rollback runbooks.
-5. **Public-safe only in Git.** Pricing figures, partner-specific terms, and revenue projections live in Linear.
+5. **Public-safe only in Git.** Pricing figures, partner-specific terms, and revenue projections live on GitHub.
 
 ---
 

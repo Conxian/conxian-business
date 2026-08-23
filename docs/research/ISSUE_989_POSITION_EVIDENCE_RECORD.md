@@ -18,7 +18,7 @@ links, sanitized technical evidence, and explicit non-claims.
 The full TAM/SAM/SOM application, competitive positioning, customer and ACV
 scenarios, pricing, partner analysis, market-capture recommendations, and
 financial analysis are withheld until #943 designates an approved non-Git
-restricted-record successor and its accountable owner. Historical Linear
+restricted-record successor and its accountable owner. Historical GitHub
 references are continuity artifacts, not authorization to store restricted
 content in Git or GitHub.
 

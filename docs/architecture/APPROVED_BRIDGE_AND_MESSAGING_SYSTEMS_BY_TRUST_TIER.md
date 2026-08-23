@@ -71,7 +71,7 @@ Protocol-specific `securityParams` SHOULD be included and validated per system (
 
 ## Source references
 
-- Linear issue: [CON-791 — Research and approve bridge and messaging systems by trust tier](https://linear.app/conxian-labs/issue/CON-791/research-and-approve-bridge-and-messaging-systems-by-trust-tier)
+- GitHub issue: [CON-791 — Research and approve bridge and messaging systems by trust tier](https://github.com/Conxian/conxian-business/issues?q=CON-791)
 - GitHub issue: [#737 — Research and approve bridge and messaging systems by trust tier](https://github.com/Conxian/conxian-business/issues/737)
 - Prior architecture context: [`docs/NEXUS_GATEWAY_UNIVERSAL_CHAIN_ARCHITECTURE.md`](../NEXUS_GATEWAY_UNIVERSAL_CHAIN_ARCHITECTURE.md)
 - Research tracker context: [`docs/REMAINING_UNIVERSAL_SUPPORT_RESEARCH.md`](../REMAINING_UNIVERSAL_SUPPORT_RESEARCH.md)

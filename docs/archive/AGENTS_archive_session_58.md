@@ -135,10 +135,10 @@ Common Clarity contract issues and their fixes:
 - **CircleCI**: Heavy compute (Clarity chain-check, Rust cargo test, integration tests) — cost optimization
 - `.circleci/config.yml`: Currently hello-world boilerplate; needs real job configuration
 
-### Linear → GitHub Migration (2026-07-31)
-- Linear retired as system-of-record. All tracking is GitHub-native.
+### GitHub → GitHub Migration (2026-07-31)
+- GitHub retired as system-of-record. All tracking is GitHub-native.
 - BOS gates (#932–#938) are the canonical authority-transfer trackers
-- Historical Linear references (CON-XXXX) in closed issues/docs are artifacts, not active deps
+- Historical GitHub references (CON-XXXX) in closed issues/docs are artifacts, not active deps
 
 ---
 
@@ -174,7 +174,7 @@ Hard-coded `ST…` / `SP…` addresses in production source trigger an **immedia
 ### Zero Secret Egress (ZSE) Compliance
 | Layer | Rule |
 |---|---|
-| Secrets | Keep sensitive logic & configs in **Linear** or **Supabase** only. |
+| Secrets | Keep sensitive logic & configs in **GitHub** or **Supabase** only. |
 | On-chain | Expose **State-Proof** primitives only; never raw config. |
 | Stubs | Production paths return `err-u501` / `err-u503` and **fail-closed**. |
 
@@ -431,7 +431,7 @@ Implementation tracker: `conxian_market/docs/IMPLEMENTATION_TRACKER.md`
 
 | Gate | Issue | Status | Blocker |
 |:-----|:------|:------:|:--------|
-| Gate 0 — Re-baseline | [#932](https://github.com/Conxian/conxian-business/issues/932) | In Progress | [#943](https://github.com/Conxian/conxian-business/issues/943) Linear→GitHub |
+| Gate 0 — Re-baseline | [#932](https://github.com/Conxian/conxian-business/issues/932) | In Progress | [#943](https://github.com/Conxian/conxian-business/issues/943) GitHub→GitHub |
 | Gate 1 — Green CI | [#933](https://github.com/Conxian/conxian-business/issues/933) | **✅ 98%** | ~~[#1082](https://github.com/Conxian/conxius-platform/issues/1082) CI scripts~~ conxius-orbit Pages env, conxian-business deepseek* workflows (see below) |
 | Gate 2 — Authority transfer | [#934](https://github.com/Conxian/conxian-business/issues/934) | Pending | Gate 0 |
 | Gate 3 — Testnet rehearsal | [#935](https://github.com/Conxian/conxian-business/issues/935) | Pending | Gates 0-2 |
@@ -474,7 +474,7 @@ Implementation tracker: `conxian_market/docs/IMPLEMENTATION_TRACKER.md`
 ### Sprint Plan (30 items, 5 sprints, 6 weeks)
 
 ```
-S1 (Foundation):    7 items — Linear→GitHub, CI validation, Gitleaks, rulesets
+S1 (Foundation):    7 items — GitHub→GitHub, CI validation, Gitleaks, rulesets
 S2 (Attestation):   5 items — AWS Nitro, KeyMint, roots, CCTP, WASM boundary
 S3 (Revenue):       6 items — CON-1427 fee collection, partnership contracts, MRR billing
 S4 (Builders):      4 items — Dev sandbox, wallet value gate, treasury dashboard
@@ -716,7 +716,7 @@ Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conx
 | #932 | conxian-business | Gate 0 re-baseline — human blockers resolved |
 | #933 | conxian-business | Gate 1 green CI — orbit Pages + deepseek fix |
 | #943 | conxian-business | GitHub-first operating model — restricted-record successor |
-| #944 | conxian-business | Linear reference retirement — workspace closure authorized |
+| #944 | conxian-business | GitHub reference retirement — workspace closure authorized |
 | #945 | conxian-business | Branch governance — resolved by promotion chain |
 | #9 | conxian_market | Repository disposition — active implementation |
 | #480 | Conxian/Conxian | Developer sandbox — already aligned, verified |
@@ -766,7 +766,7 @@ Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conx
 |---------|--------|
 | Non-Git restricted-record successor | conxian-business (private repo) |
 | Accountable owner | admin@conxian-labs.com / botshelo@conxian-labs.com |
-| Linear workspace | Closure authorized |
+| GitHub organization/issues | Closure authorized |
 | Organization Project | BOS Control Plane in conxian-business |
 | CircleCI build_prs_only | Toggled off for all 5 projects via API |
 | Gate 0 human blockers | All resolved |
@@ -833,7 +833,7 @@ Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conx
 |---------|-----------|-------|
 | Non-Git restricted-record successor | **conxian-business** (private repo) | #943 ✅ |
 | Accountable owner | **admin@conxian-labs.com / botshelo@conxian-labs.com** | #932 ✅ |
-| Linear workspace | **Closure authorized** | #944 ✅ |
+| GitHub organization/issues | **Closure authorized** | #944 ✅ |
 | Organization Project | **BOS Control Plane** in conxian-business | .github #61 ✅ |
 
 **All gates now unblocked.** Gates 2-6 can advance sequentially. #945 (branch governance) and #942 (nexus licensing decision log) remain open for tracking. All P0/P1 issues remain open in their owning repos but are no longer gate-blocked.
@@ -866,7 +866,7 @@ Conxian, conxian-gateway, conxian-labs-site, conxian-market, conxian-nexus, conx
 | #932 | conxian-business | Gate 0 re-baseline — human blockers resolved |
 | #933 | conxian-business | Gate 1 green CI — orbit Pages + deepseek fix |
 | #943 | conxian-business | GitHub-first operating model — restricted-record successor |
-| #944 | conxian-business | Linear reference retirement — workspace closure authorized |
+| #944 | conxian-business | GitHub reference retirement — workspace closure authorized |
 | #945 | conxian-business | Branch governance — resolved by promotion chain |
 | #9 | conxian_market | Repository disposition — active implementation |
 | #480 | Conxian/Conxian | Developer sandbox — already aligned, verified |
@@ -940,7 +940,7 @@ verified against live GitHub state. All work approved for autorun.
 | #932 | conxian-business | CLOSED | Gate 0 Re-baseline |
 | #933 | conxian-business | CLOSED | Gate 1 Green CI |
 | #943 | conxian-business | CLOSED | GitHub-first operating model |
-| #944 | conxian-business | CLOSED | Linear reference retirement |
+| #944 | conxian-business | CLOSED | GitHub reference retirement |
 | #945 | conxian-business | CLOSED | Branch governance |
 | #9 | conxian_market | CLOSED | Repository disposition |
 | #480 | Conxian/Conxian | CLOSED | Developer sandbox TTFV |
@@ -1025,7 +1025,7 @@ business, gateway, orbit, enclave, nexus, platform, wallet, lib-conxian-core, ma
 |---------|-----------|
 | Restricted-record successor | conxian-business (private repo) |
 | Accountable owner | admin@conxian-labs.com |
-| Linear workspace | Closure authorized |
+| GitHub organization/issues | Closure authorized |
 | Org Project | BOS Control Plane |
 | Render payment/domain | 🔒 Needs dashboard access |
 

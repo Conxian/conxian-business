@@ -246,11 +246,11 @@ All core contracts source dynamic principals from `operational-treasury.clar`. H
 
 | Layer | Rule |
 |-------|------|
-| **Secrets** | Sensitive configs live in Linear or Supabase only — never in source |
+| **Secrets** | Sensitive configs live on GitHub or Supabase only — never in source |
 | **On-chain** | Expose state-proof primitives only; never raw config |
 | **Stubs** | Production paths return `err-u501` / `err-u503` and fail-closed |
 
-Production stub audit files (`.stub.json`) are safe for public repos — canonical details are maintained in the authorized Linear workspace.
+Production stub audit files (`.stub.json`) are safe for public repos — canonical details are maintained in the authorized GitHub organization.
 
 ### Dual-Brand Architecture
 

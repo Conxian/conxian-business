@@ -19,7 +19,7 @@ Per the repo portfolio, `conxian-labs-site` is an **operating function** repo:
 ## 3) Separating Public Messaging from Internal Strategy
 
 - **Public Messaging**: Landing page copy, public documentation, and community blog posts (Git).
-- **Internal Strategy**: Detailed M&A narratives, confidential partnership notes, and granular financial projections (authorized Linear workspace).
+- **Internal Strategy**: Detailed M&A narratives, confidential partnership notes, and granular financial projections (authorized GitHub organization).
 
 ## 4) Business Logic and Documentation Gaps
 
@@ -38,4 +38,4 @@ Per the repo portfolio, `conxian-labs-site` is an **operating function** repo:
 
 **P2 (Documentation Alignment)**
 - Standardize `CHANGELOG.md` for the website itself.
-- Migrate any internal-only roadmap drafts to Linear.
+- Migrate any internal-only roadmap drafts to restricted vault/secure storage.

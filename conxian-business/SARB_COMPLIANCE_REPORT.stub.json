@@ -39,5 +39,5 @@
     "internal_review": "Sovereign Strategy Nexus — March 2026 mandate",
     "automated_checks": "scripts/verify_doctrine_alignment.py enforces non-custodial boundary"
   },
-  "note": "Public-safe summary. Detailed identifiers and legal opinions maintained in Linear: https://linear.app/conxian-labs/issue/CON-256. Does not constitute legal advice."
+  "note": "Public-safe summary. Detailed identifiers and legal opinions maintained in Linear: https://github.com/Conxian/conxian-business/issues?q=CON-256. Does not constitute legal advice."
 }

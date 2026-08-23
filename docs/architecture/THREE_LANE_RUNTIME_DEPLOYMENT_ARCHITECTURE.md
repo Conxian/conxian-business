@@ -20,7 +20,7 @@ Goals:
 Non-goals:
 
 - Vendor-specific infrastructure templates (K8s manifests, Terraform modules, managed service names).
-- Secret management details (ZSE: these live in Linear).
+- Secret management details (ZSE: these live on GitHub).
 - Contract-level protocol specs (covered by Conxian/OpenSpec docs).
 
 ## 2) Core invariants (must always hold)

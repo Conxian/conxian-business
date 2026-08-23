@@ -128,7 +128,7 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 > **Evidence**: [BOS_SOVEREIGN_ENTERPRISE_IDENTITY_ARCHITECTURE.md]
 
 #### 4.2 Zero Secret Egress (ZSE)
-- Three-layer rule: Secrets → Linear/Supabase; On-chain → State-proof primitives only; Stubs → fail-closed with `err-u501` / `err-u503`
+- Three-layer rule: Secrets → restricted vault/Supabase; On-chain → State-proof primitives only; Stubs → fail-closed with `err-u501` / `err-u503`
 - Contamination guard: production-track .clar files scanned for testnet/simnet principals; build breaks on violation
 
 > **Evidence**: [AGENTS.md § ZSE], [BOUNDARY_DECISION_LOG.md]
@@ -317,10 +317,10 @@ This document is the outline for the flagship Conxian technical whitepaper. The 
 5. **ZSE compliance** — no secrets, no operational runbooks, no privileged identifiers
 
 ### Sections that need additional research before drafting:
-- §5.2 Oracle economics and PPP methodology (currently stub in Git; canonical in Linear)
-- §7.2 SYI pricing model details (implementation detail in Linear)
+- §5.2 Oracle economics and PPP methodology (currently stub in Git; canonical in restricted vault/secure storage)
+- §7.2 SYI pricing model details (implementation detail on GitHub)
 - §8.2 Complete protocol integration matrix (needs wallet team input)
-- §5.3 Fiscal vault mechanics (canonical in Linear per ZSE)
+- §5.3 Fiscal vault mechanics (canonical in restricted vault/secure storage per ZSE)
 
 ### Target length: 25-30 pages (including diagrams and appendices)
 

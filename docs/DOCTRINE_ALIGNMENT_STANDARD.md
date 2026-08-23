@@ -17,7 +17,7 @@ This is the short, public-safe doctrine source for Conxian-Labs portfolio docume
 
 - **Conxian** is the protocol and DAO layer: contracts, protocol rules, state, verification, and governance interfaces.
 - **Conxius** is the client, access, and developer-tooling layer: wallet, platform, deployment tooling, and enclave abstractions.
-- Internal strategy, legal material, operating procedures, privileged infrastructure details, and sensitive commercial analysis remain separate from public-safe repository documentation and are maintained in the authorized Linear workspace under Zero Secret Egress (ZSE).
+- Internal strategy, legal material, operating procedures, privileged infrastructure details, and sensitive commercial analysis remain separate from public-safe repository documentation and are maintained in the authorized GitHub organization under Zero Secret Egress (ZSE).
 
 ## 3. Canonical taxonomy crosswalk
 
@@ -40,7 +40,7 @@ CSF, Fusion, and Nexus may remain useful operating labels in technical maps, but
 - Use those exact slugs when the product or repository identity is intended. Prose may use a neutral functional description such as “gateway middleware” only when no product identity is being asserted.
 - Historical or deprecated names may appear only when they are explicitly marked as historical/deprecated or occur inside a preserved URL, issue identifier, filename, or other non-display identifier.
 - AGENTS.md is normative instruction text and is the narrow documented exception for legacy aliases used to explain which names are prohibited. The verifier does not treat that instruction file as public product display text.
-- The only non-display historical URL allowlist is the preserved Linear issue URLs in `docs/bounties/CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md`; it does not allow the aliases in headings, prose, or rendered link labels.
+- The only non-display historical URL allowlist is the preserved GitHub issue URLs in `docs/bounties/CON-231_BOUNTY_CLASSIFICATION_2026-04-12.md`; it does not allow the aliases in headings, prose, or rendered link labels.
 
 ## 5. Infrastructure posture and Bitcoin anchor
 
@@ -91,7 +91,7 @@ Use these classifications for major artifacts:
 - **Deprecated:** superseded but retained for migration or history.
 - **Archive candidate:** should be retired, rewritten, or moved after link and evidence review.
 
-Compound classifications are allowed only when the relationship is explicit, for example `Archive candidate (rewrite required)` or `Public-safe stub (canonical in Linear)`.
+Compound classifications are allowed only when the relationship is explicit, for example `Archive candidate (rewrite required)` or `Public-safe stub (canonical in restricted vault/secure storage)`.
 
 ## 10. Contradiction-resolution rules
 
@@ -99,7 +99,7 @@ Compound classifications are allowed only when the relationship is explicit, for
 2. Use the most specific current evidence. A code path can support `Implemented`; it cannot establish `Verified` or `Stable` without the required evidence.
 3. Qualify protocol nouns. Contract escrow, DAO treasury, yield logic, and settlement are not company custody or discretionary market activity.
 4. Prefer the non-claim when a document mixes present evidence with roadmap language. Mark the unsupported portion `Target-state`, `Deprecated`, or `Archive candidate` rather than silently upgrading it.
-5. Do not copy internal strategy, competitive analysis, user-data plans, private operations, or custody procedures into public-safe docs. Replace migrated material with a public-safe stub and a pointer to the authorized Linear source.
+5. Do not copy internal strategy, competitive analysis, user-data plans, private operations, or custody procedures into public-safe docs. Replace migrated material with a public-safe stub and a pointer to the authorized GitHub source.
 6. External repository changes are follow-up work unless the file is in this repository. A register entry must record the disposition instead of implying that an upstream README, whitepaper, or contract document was already fixed.
 
 ## 11. Canonical anchors

@@ -4,7 +4,7 @@
 
 Implementation checkpoint created in `conxian-business` to lock role and boundary decisions for `Conxian_UI`.
 
-Source issue: [CON-702 — Align Conxian_UI to parent control model](https://linear.app/conxian-labs/issue/CON-702/align-conxian-ui-to-parent-control-model)
+Source issue: [CON-702 — Align Conxian_UI to parent control model](https://github.com/Conxian/conxian-business/issues?q=CON-702)
 
 ## Decision summary
 

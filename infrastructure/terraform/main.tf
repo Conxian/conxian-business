@@ -2,7 +2,7 @@
 //
 // This Terraform configuration is intentionally reduced to a public-safe template.
 // Concrete infrastructure definitions and any project-specific identifiers are
-// maintained outside git (see https://linear.app/conxian-labs/issue/CON-256).
+// maintained outside git (see https://github.com/Conxian/conxian-business/issues?q=CON-256).
 
 terraform {
   required_providers {

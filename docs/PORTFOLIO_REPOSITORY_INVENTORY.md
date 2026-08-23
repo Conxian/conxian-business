@@ -35,7 +35,7 @@ For the current doctrine dimensions—role, audience, operating label, maturity,
 | `Fiscal-Vault-Oracle` | Governance | Protocol/reference policy and oracle surface; not company treasury control | @botshelomokoka | P0 |
 | `Nakamoto-Guardian` | Governance | EXCO: Compliance & Security | @botshelomokoka | P0 |
 | `Sovereign-Ops-Orchestrator` | Governance | EXCO: Operations & Service Loop | @botshelomokoka | P0 |
-| `Sovereign-Strategy-Nexus` | Governance | Public-safe strategy coordination stub; full internal strategy remains in Linear | @botshelomokoka | P1 |
+| `Sovereign-Strategy-Nexus` | Governance | Public-safe strategy coordination stub; full internal strategy remains in restricted vault/secure storage | @botshelomokoka | P1 |
 | `cxn-grid-oracle` | Shared Runtime | Decentralized Data Oracle | @botshelomokoka | P1 |
 | `showcase-dapp` | User Surface | Demo & Integration Showcase | @botshelomokoka | P2 |
 | `.github` | Governance | Org-wide Standards & Workflows | @Conxian/Admins | P0 |

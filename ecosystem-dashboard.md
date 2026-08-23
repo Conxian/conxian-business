@@ -45,7 +45,7 @@
 | #515 | Conxian | Enforce Main Branch Merge Gates, Reconcile CODEOWNERS | `.github/CODEOWNERS`, branch protection rules, `scripts/branch_promotion_policy.py` |
 | #496 | Conxian | Partnership Fee Contracts | Fee collection: `contracts/treasury/` path; related to #488, #529 |
 | #488 | Conxian | 2% Protocol Fee Collection | `contracts/treasury/revenue-distributor.clar`, `contracts/treasury/allocation-policy.clar` |
-| #944 | conxian-business | Retire Linear-first references, publish migration map | Meta: BOS governance | IN PROGRESS — Linear references being retired, migration to GitHub underway |
+| #944 | conxian-business | Retire GitHub-first references, publish migration map | Meta: BOS governance | IN PROGRESS — Linear references being retired, migration to GitHub underway |
 
 ### P2
 | Issue | Repo | Title |

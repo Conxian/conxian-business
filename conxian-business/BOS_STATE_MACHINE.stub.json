@@ -34,5 +34,5 @@
     "mcp_interface": "v1.0",
     "sovereign_guardrail_default": "144-block timelock"
   },
-  "ZSE_NOTICE": "Internal state transition logic, weights, and private actor IDs are maintained in Linear: https://linear.app/conxian-labs/issue/CON-256"
+  "ZSE_NOTICE": "Internal state transition logic, weights, and private actor IDs are maintained in Linear: https://github.com/Conxian/conxian-business/issues?q=CON-256"
 }

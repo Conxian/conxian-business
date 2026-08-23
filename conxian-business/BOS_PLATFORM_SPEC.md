@@ -47,7 +47,7 @@ The `conxius-enclave-sdk` is a shared enclave and signing-abstraction reference 
 
 ## 5. Adoption context
 
-This specification makes no market-share, revenue, competitive-capture, or asset-management claim. Commercial strategy and market analysis belong in the authorized Linear workspace. Public documentation should describe the technical boundary and its evidence, not a promise to operate or capture a market.
+This specification makes no market-share, revenue, competitive-capture, or asset-management claim. Commercial strategy and market analysis belong in the authorized GitHub organization. Public documentation should describe the technical boundary and its evidence, not a promise to operate or capture a market.
 
 ## 6. Enhancements and roadmap
 

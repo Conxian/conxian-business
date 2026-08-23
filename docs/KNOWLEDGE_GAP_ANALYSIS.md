@@ -280,7 +280,7 @@ This section supersedes the current-status wording in the 2026-07-06 baseline wh
 
 ### Inventory correction
 
-- The [CON-1421 Linear issue](https://linear.app/conxian-labs/issue/CON-1421/medium-16-of-28-governance-contracts-are-stubs) and [Conxian #463](https://github.com/Conxian/Conxian/issues/463) body name 15 contracts, not 16.
+- The [CON-1421 GitHub issue](https://github.com/Conxian/conxian-business/issues?q=CON-1421) and [Conxian #463](https://github.com/Conxian/Conxian/issues/463) body name 15 contracts, not 16.
 - `proposal-engine-trait.clar` is the likely omitted 16th governance-gap entry.
 - Six listed entries are partial skeletons rather than blank stubs. Future reporting must distinguish blank stubs, partial skeletons, implemented-but-under-review contracts, deferred architecture, and intentionally inactive source.
 
@@ -316,7 +316,7 @@ The reviewed community-voting engine provides:
 
 | Evidence | Link |
 |----------|------|
-| Linear work item | [CON-1421](https://linear.app/conxian-labs/issue/CON-1421/medium-16-of-28-governance-contracts-are-stubs) |
+| GitHub work item | [CON-1421](https://github.com/Conxian/conxian-business/issues?q=CON-1421) |
 | Historical umbrella | [Conxian #463](https://github.com/Conxian/Conxian/issues/463) |
 | Active overlap | [Conxian #499](https://github.com/Conxian/Conxian/issues/499) |
 | Implementation PR | [Conxian PR #521](https://github.com/Conxian/Conxian/pull/521) |

@@ -1,6 +1,6 @@
 # Spec: CON-383 Full BOS Buildout — Stub Removal, Production Implementation & Verification
 
-**authorized Linear workspace:** [CON-383](https://sovereign.conxian.com/issue/CON-383/remove-bos-state-machine-stub-from-production-path)
+**authorized GitHub organization:** [CON-383](https://sovereign.conxian.com/issue/CON-383/remove-bos-state-machine-stub-from-production-path)
 **Related:** CON-385, CON-392, CON-394, CON-396
 **Scope:** `conxian-business` (primary), `conxian-nexus` (stubs), devcontainer
 
@@ -152,4 +152,4 @@ Once all `[STUB]` markers are removed from the above files, remove those file pa
 
 11. **CHANGELOG + audit docs (R6)** — Update `CHANGELOG.md`, `audit/active_session.json`, `audit/contamination_audit_report_2026_04_05.md`.
 
-12. **Commit on feature branch** — Branch name: `con-383-bos-full-buildout`. Commit with Linear issue reference.
+12. **Commit on feature branch** — Branch name: `con-383-bos-full-buildout`. Commit with GitHub issue reference.

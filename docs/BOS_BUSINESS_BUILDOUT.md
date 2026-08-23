@@ -32,7 +32,7 @@ If the repo’s flagship/supporting placement changes in `docs/REPO_PORTFOLIO.md
 
 ## Public/private split recommendation (ZSE)
 
-Treat this repository as public for boundary purposes. (This GitHub repository is private as of April 8, 2026.) The split below is a policy recommendation for what should be stored in Git vs stored in Linear.
+Treat this repository as public for boundary purposes. (This GitHub repository is private as of April 8, 2026.) The split below is a policy recommendation for what should be stored in Git vs stored in restricted vault/secure storage.
 
 ### Public-safe (keep in Git)
 
@@ -41,7 +41,7 @@ Treat this repository as public for boundary purposes. (This GitHub repository i
 - Public product documentation and external-facing architecture/PRD material that has been scrubbed of privileged implementation details, secret formats, and exploit-enabling diagrams.
 - Non-sensitive audits and public trust messaging.
 
-### Internal-only (store in the authorized Linear workspace; reference from Git)
+### Internal-only (store in the authorized GitHub organization; reference from Git)
 
 - **Strategic:** valuation framing, M\&A narratives, competitive positioning, partnership negotiation details, and time-bound roadmap milestones.
 - **Legal:** contracts, entity structuring, jurisdiction-specific filings, and anything that increases legal exposure if copied out of context.
@@ -53,7 +53,7 @@ Treat this repository as public for boundary purposes. (This GitHub repository i
 1. Never commit secrets (values) or credential material.
 2. If a document must be referenced but is internal-only, keep only:
    - a short public-safe summary, and
-   - a pointer to the canonical Linear document.
+   - a pointer to the canonical GitHub document.
 3. Treat “internal-only” as the default for:
    - strategy and treasury narratives
    - monetization and fee/royalty specifics
@@ -67,20 +67,20 @@ Treat this repository as public for boundary purposes. (This GitHub repository i
 | --- | --- | --- |
 | `README.md` | Role line + purpose + pointers to canonical docs. Avoid internal strategy and operational detail. | Repo code owners (`CODEOWNERS`). |
 | `docs/REPO_PORTFOLIO.md` | Canonical placement of this repo in the org trust surface. | Repo code owners. |
-| `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` | Canonical map of what docs exist + what’s canonical + what should be migrated to Linear. | Repo code owners. |
+| `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` | Canonical map of what docs exist + what’s canonical + what should be migrated to restricted vault/secure storage. | Repo code owners. |
 | `GOVERNANCE.md` | Governance model, ownership, and approval rules (high-level; no sensitive ops). | Repo code owners. |
 | `CODEOWNERS` | Review + ownership routing. | Repo code owners. |
-| `CONTRIBUTING.md` | Contribution workflow and linking expectations (Linear ↔ GitHub). | Repo code owners. |
+| `CONTRIBUTING.md` | Contribution workflow and linking expectations (GitHub ↔ GitHub). | Repo code owners. |
 | `SECURITY.md` | Security policy and private reporting process. | Repo code owners. |
 | `ARCHIVE_MIGRATION.md` | ZSE-safe pointer for legacy/removed material. | Repo code owners. |
 | `CHANGELOG.md` | Public, versioned changes to BOS/OpenSpec policies and externally visible behavior. | Repo code owners. |
 
-### Minimum internal-only set (authorized Linear workspace)
+### Minimum internal-only set (authorized GitHub organization)
 
-Maintain these as Linear documents (canonical for privileged detail), referenced from Git as needed:
+Maintain these as GitHub documents (canonical for privileged detail), referenced from Git as needed:
 
 - Detailed BOS operating model semantics (privileged service-loop + state-machine runbooks; Git keeps only public-safe summaries and pointers).
-- Execution wiring: Linear ↔ state layer ↔ repo automation.
+- Execution wiring: GitHub ↔ state layer ↔ repo automation.
 - ZSE / knowledge retention policy and migration manifests.
 - Secret management spec (procedural, privileged access).
 - Strategy/legal/ops/admin material that cannot be safely versioned in public Git.
@@ -88,19 +88,19 @@ Maintain these as Linear documents (canonical for privileged detail), referenced
 ## Governance, ownership, and approval workflow (repo expectations)
 
 1. All changes land via pull request.
-2. Every pull request must link to a Linear issue.
+2. Every pull request must link to a GitHub issue.
 3. `CODEOWNERS` review is required for any change.
 4. Any change that redefines BOS boundaries, OpenSpec requirements, or the doc-classification policy must:
    - update `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` where relevant, and
    - include a `CHANGELOG.md` entry when it changes externally visible behavior or expectations.
-5. Any internal-only material referenced from Git must point to Linear as the canonical source.
+5. Any internal-only material referenced from Git must point to restricted vault/secure storage as the canonical source.
 
 ## Prioritized build/repair list
 
 1. Keep `README.md` aligned with the “supporting repo” role line and remove internal strategy/ops detail from the public entrypoint.
 2. Keep `GOVERNANCE.md` as an explicit ownership + approval model tied to `CODEOWNERS` (not just a stub).
 3. Treat `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` as the canonical “doc registry” and keep it updated whenever docs are added, moved, or reclassified.
-4. Migrate internal-only documents that materially increase operational exposure to Linear, leaving behind only ZSE-safe summaries and links.
+4. Migrate internal-only documents that materially increase operational exposure to restricted vault/secure storage, leaving behind only ZSE-safe summaries and links.
 
 ## 3. Branching and Promotion Policy (CON-381, CON-389)
 

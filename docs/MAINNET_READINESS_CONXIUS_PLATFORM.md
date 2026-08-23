@@ -21,7 +21,7 @@ This checklist tracks the mainnet readiness for the `conxius-platform` repositor
 
 ### 4) Governance & Separation
 - [x] **CODEOWNERS**: Set to `@conxian/core-devs`.
-- [x] **ZSE Compliance**: Sensitive deployment runbooks migrated to Linear.
+- [x] **ZSE Compliance**: Sensitive deployment runbooks migrated to restricted vault/secure storage.
 - [x] **Role Separation**: Platform operations isolated from internal administrative controls.
 
 ---
