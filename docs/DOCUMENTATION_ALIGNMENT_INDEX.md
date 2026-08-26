@@ -43,7 +43,7 @@ Notes:
 
 ### Archival candidates
 
-- `docs/TASK_TASK_INVENTORY_2026-05-29.md` — public-safe stub; the dated planning snapshot moved to the authorized GitHub organization under CON-1530.
+- `docs/TASK_INVENTORY_2026-05-29.md` — public-safe stub; the dated planning snapshot moved to the authorized GitHub organization under CON-1530.
 - `docs/RESEARCH_FINDINGS_2026-05-29.md` — public-safe stub; the dated research snapshot moved to the authorized GitHub organization under CON-1530.
 - `docs/BUSINESS_ANALYSIS_2026-05-29.md` — public-safe stub; the dated analysis moved to the authorized GitHub organization under CON-1530.
 - `docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md` — public-safe stub; the dated narrative moved to the authorized GitHub organization under CON-1530.
@@ -59,7 +59,7 @@ The following link-preserving stubs are intentionally retained in Git. Their can
 | `docs/BUSINESS_ANALYSIS_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated internal analysis is not a current public doctrine source. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
 | `conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Research detail belongs in the authorized workspace, not public Git. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
 | `docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated positioning material is maintained outside the public repository. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
-| `docs/TASK_TASK_INVENTORY_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal work-management detail belongs in active authorized systems. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
+| `docs/TASK_INVENTORY_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal work-management detail belongs in active authorized systems. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
 | `docs/RESEARCH_FINDINGS_2026-05-29.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Dated findings are superseded and are not a current public doctrine source. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
 | `docs/ITIL5_STRATEGIC_ANALYSIS_2026.md` | Public-safe stub | Conxian-Labs (Pty) Ltd | Internal strategy remains in the authorized workspace under ZSE. | [CON-1530](https://github.com/Conxian/conxian-business/issues?q=CON-1530) |
 

@@ -12,10 +12,7 @@ from urllib.parse import unquote
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CON_1530_URL = (
-    "https://github.com/Conxian/conxian-business/issues?q=CON-1530/"
-    "doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and"
-)
+CON_1530_URL = "https://github.com/Conxian/conxian-business/issues?q=CON-1530"
 
 EXPECTED_REPOSITORIES = (
     "Conxian/.github-private",
@@ -67,7 +64,7 @@ HIGH_RISK_ARTIFACTS = (
     "docs/BUSINESS_ANALYSIS_2026-05-29.md",
     "conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md",
     "docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md",
-    "docs/LINEAR_TASK_INVENTORY_2026-05-29.md",
+    "docs/TASK_INVENTORY_2026-05-29.md",
     "docs/RESEARCH_FINDINGS_2026-05-29.md",
     "Top-level READMEs",
     "Company custody, treasury, or signer-control wording",
@@ -85,7 +82,7 @@ PUBLIC_SAFE_STUB_PATHS = (
     ROOT / "docs/BUSINESS_ANALYSIS_2026-05-29.md",
     ROOT / "conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md",
     ROOT / "docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md",
-    ROOT / "docs/LINEAR_TASK_INVENTORY_2026-05-29.md",
+    ROOT / "docs/TASK_INVENTORY_2026-05-29.md",
     ROOT / "docs/RESEARCH_FINDINGS_2026-05-29.md",
 )
 PROHIBITED_DISPLAY_ALIASES = (
@@ -861,7 +858,7 @@ def validate_register(errors: list[str], register: str) -> tuple[list[str], list
         "docs/BUSINESS_ANALYSIS_2026-05-29.md",
         "conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md",
         "docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md",
-        "docs/LINEAR_TASK_INVENTORY_2026-05-29.md",
+        "docs/TASK_INVENTORY_2026-05-29.md",
         "docs/RESEARCH_FINDINGS_2026-05-29.md",
     ):
         if path not in register:
