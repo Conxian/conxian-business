@@ -12,10 +12,7 @@ from urllib.parse import unquote
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CON_1530_URL = (
-    "https://github.com/Conxian/conxian-business/issues?q=CON-1530/"
-    "doctrine-alignment-sweep-across-portfolio-docs-whitepapers-readmes-and"
-)
+CON_1530_URL = "https://github.com/Conxian/conxian-business/issues?q=CON-1530"
 
 EXPECTED_REPOSITORIES = (
     "Conxian/.github-private",
