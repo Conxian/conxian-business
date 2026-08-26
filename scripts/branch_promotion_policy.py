@@ -20,7 +20,7 @@ GENERATED_DEV_RE = re.compile(r"^promotion/dev-to-staged-([0-9a-f]{40})$")
 GENERATED_STAGED_RE = re.compile(r"^promotion/staged-to-main-([0-9a-f]{40})$")
 
 FEATURE_CHECKLIST_RE = re.compile(
-    r"(?:PROMOTION:FEATURE->DEV|PROMOTION:FEATURE->MAIN|^###\s+Feature\s*->\s*dev\s+promotion\s+checklist\b)",
+    r"(?:PROMOTION:FEATURE->DEV|^###\s+Feature\s*->\s*dev\s+promotion\s+checklist\b)",
     re.IGNORECASE | re.MULTILINE,
 )
 STAGED_CHECKLIST_RE = re.compile(
