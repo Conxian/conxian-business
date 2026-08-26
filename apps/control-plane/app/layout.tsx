@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { headers } from "next/headers";
 import { SignOutButton } from "../components/sign-out-button";
 import { auth } from "../lib/auth";
@@ -56,6 +57,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           <div className="content-shell">{children}</div>
         </div>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
