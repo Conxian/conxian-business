@@ -1,12 +1,5 @@
 # Conxian Labs BOS Knowledge Graph
-> Clarity-version: 5 | Epoch: latest | Generated: 2026-08-27 | Session 60 baseline
-
-## Session Update (2026-08-27 — Session 60)
-- Executed full ecosystem audit (Code reality vs Cloud services vs GitHub Issues vs Knowledge Bases).
-- Re-verified 100% pass rate across all 9 core repository validation scripts (`python3 scripts/bos_repo_check.py`).
-- Confirmed full cloud infrastructure operational alignment across Neon PG 17/18, Supabase PG 17.6 (`ACTIVE_HEALTHY`), and Render (`conxian-labs-site` auto-deploying `main`).
-- Upgraded root `AGENTS.md` (v1.5) and `docs/AGENTS.md` (Session 60) with updated operational standards, CI pass status, cloud topology, and PR targeting rules.
-- Realigned issue inventory stubs and updated `CHANGELOG.md` under `[Unreleased]` with zero regressions.
+> Clarity-version: 5 | Epoch: latest | Generated: 2026-08-19 | Gate 0 baseline
 
 ## Session Update (2026-08-22)
 - Conducted full commit history audit across all 10 remote branches (`main`, `dev`, `staged`, `jules-*`, `jules/*`, `promotion/*`); confirmed all PRs (#1035, #1037, #1038, #1040, #1045) and enhancements are fully merged into `main` (commit `77c0b9b`).

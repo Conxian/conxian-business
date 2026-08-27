@@ -10,12 +10,6 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 ## [Unreleased]
 
 ### Full Infrastructure, Branch & System Operational Review (August 2026)
-- **Ecosystem-Wide Audit, Branch Maintenance & KB Realignment (August 27, 2026 — Session 60)**:
-  - Audited code reality against GitHub issues (#1212, #1223, #1082, #958, #1168, #1167), cloud services (Neon, Supabase, Render), and knowledge bases.
-  - Upgraded `AGENTS.md` (v1.5) and `docs/AGENTS.md` (Session 60) with updated operational standards, full CI pass rate status, cloud infrastructure topology, and PR targeting rules.
-  - Crystallized Session 60 maintenance update in `BOS_KNOWLEDGE_GRAPH.md`.
-  - Re-verified 100% pass rate across all 9 core repository validation scripts (`python3 scripts/bos_repo_check.py`) with zero regressions.
-
 - **Branch Synchronization & Enhancement Verification**:
   - Conducted full commit history audit across all remote branches (`main`, `dev`, `staged`, `jules-*`, `jules/*`, `promotion/*`).
   - Confirmed all code enhancements, CI fixes, and promotion policies from PRs #1035, #1037, #1038, #1040, and #1045 are fully merged into `main`.
