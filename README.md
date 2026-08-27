@@ -58,7 +58,7 @@ The Conxian ecosystem is organized by function to ensure clarity and modularity 
 - **[`lib-conxian-core/`](./lib-conxian-core)**: **Shared Core**. Common models for BitVM2, CJCS, and Gateway engine.
 
 ### 4. User Interfaces
-- **[`conxius-wallet/`](./conxius-wallet)**: **Mobile**. User-controlled, hardware-backed mobile client.
+- **[`conxius-wallet/`](./conxius-wallet)**: **Mobile**. Open-source, provider-agnostic universal self-custody & signing SDK.
 - **[`conxian-ui/`](./conxian-ui)**: **Web**. `conxian_ui` public interaction surface (upstream slug retained).
 - **[`conxian-labs-site/`](./conxian-labs-site)**: **Website**. Public ecosystem landing.
 

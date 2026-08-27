@@ -24,13 +24,11 @@ jobs:
           git submodule sync --recursive
           # Init public submodules only. conxian-market is private (update=none).
           git submodule update --init -- \
-            Conxian \
             conxian-gateway \
             conxian-labs-site \
             conxian-nexus \
             conxian-ui \
             conxius-enclave-sdk \
-            conxius-orbit \
             conxius-platform \
             conxius-wallet \
             lib-conxian-core
