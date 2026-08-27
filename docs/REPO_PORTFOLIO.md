@@ -35,7 +35,7 @@ These are protocol, infrastructure, and client surfaces with primary architectur
 - [Conxian](https://github.com/Conxian/Conxian) — Deprecated protocol repository (legacy Clarity contracts; active protocol owned by lib-conxian-core, conxian-gateway, conxian-nexus, conxian-business).
 - [conxian-gateway](https://github.com/Conxian/conxian-gateway) — Institutional routing, aggregation, and compliance middleware.
 - [conxian-nexus](https://github.com/Conxian/conxian-nexus) — State, proof, synchronization, and telemetry node.
-- [conxius-wallet](https://github.com/Conxian/conxius-wallet) — Android-first, offline-first self-custody client and signing surface.
+- [conxius-wallet](https://github.com/Conxian/conxius-wallet) — Open-source, provider-agnostic universal self-custody and signing SDK.
 
 ### Supporting
 

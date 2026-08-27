@@ -104,7 +104,7 @@ The current doctrine relationship is:
 | `conxian-market` | Conxian/conxian_market | TypeScript/Rust | AI Marketplace & Agentic Commerce | Production intent / Incubating; mapped and integrated in business repo |
 | `conxian-gateway` | Conxian/conxian-gateway | Rust | Routing and compliance middleware | Production intent / Beta; Implemented runtime, verification conditional |
 | `conxian-nexus` | Conxian/conxian-nexus | Clarity/Rust | State and proof node | Production intent / Beta; Implemented code, deployment claims conditional |
-| `conxius-wallet` | Conxian/conxius-wallet | TypeScript | Android client and signing surface | Production intent / Stable; capability-scoped Implemented claims |
+| `conxius-wallet` | Conxian/conxius-wallet | TypeScript | Open-source, provider-agnostic universal self-custody & signing SDK | Production intent / Stable; capability-scoped Implemented claims |
 | `conxius-platform` | Conxian/conxius-platform | TypeScript | Local developer orchestration | Reference implementation / Incubating |
 | `conxius-orbit` | Conxian/conxius-orbit | TypeScript | Contract deployment toolkit | Reference implementation / Incubating |
 | `conxius-enclave-sdk` | Conxian/conxius-enclave-sdk | Rust | Enclave and attestation abstraction | Reference implementation / Beta, conditional |

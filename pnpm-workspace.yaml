@@ -5,7 +5,6 @@ packages:
   - "conxius-wallet"
   - "conxius-platform"
   - "conxian-labs-site"
-  - "conxius-orbit"
 
 overrides:
   protobufjs: ^7.5.8
