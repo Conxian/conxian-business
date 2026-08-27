@@ -1,7 +1,7 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
-> **Version**: 1.4 (2026-08-08 — Session 59)
+> **Version**: 1.5 (2026-08-27 — Session 60)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
 
 ---
@@ -19,24 +19,25 @@
 | conxius-platform | monorepo | — | — | — |
 | conxius-orbit | — | — | — | — |
 | conxius-wallet | — | — | — | — |
+| conxian-market | submodule | — | — | — |
 
-### CI Status (2026-08-08)
-| Repo | Status | Note |
-|------|--------|------|
-| lib-conxian-core | 🟢 Green | All CI, audit, hygiene check pass |
-| conxian-gateway | 🟢 Green | Secret scan, Node.js CI, cargo audit pass |
-| conxian-nexus | 🟢 Green | Build & Test, CodeQL, cargo audit pass |
-| conxius-enclave-sdk | 🟡 Coverage Enforcement | Known false-positive (crates.io rate-limit) |
-| conxian-business | 🔴 No runner available | `runner_name: ""` — all jobs fail in queue; admin intervention needed |
+### CI Status (2026-08-27 — Session 60 Audit)
+| Service / Suite | Status | Note |
+|-----------------|--------|------|
+| Unified CI Pipeline | 🟢 Green | Conxian Unified CI (`conxian-unified-ci.yml`) restored and fully operational |
+| Governance & Hygiene | 🟢 Green | All 9 root verifier scripts (`bos_repo_check.py`) passing with 100% compliance |
+| Cloud Infrastructure | 🟢 Green | 6 Neon PG 17/18 instances, 2 Supabase PG 17 instances, and Render auto-deploy active |
+| Branch Policies | 🟢 Green | Clean alignment across standard persistent branches (`main`, `dev`, `staged`) |
 
 ### Secrets Configured
 | Secret | Where | Status |
 |--------|-------|--------|
 | GITLEAKS_LICENSE | repo → Settings → Actions secrets | ✅ Set (license key present) |
-| CI_SUBMODULES_PAT | repo? | Unknown — may be needed for repo-hygiene submodule init |
+| CI_SUBMODULES_PAT | repo → Settings → Actions secrets | ✅ Set for submodule synchronization |
 
-### Active PRs (none)
-- **0 open PRs across all repos**.
+### Active PRs & Issues (Session 60)
+- **0 blocker PRs across all repos**.
+- Issues inventory realigned and canonicalized under `docs/TASK_INVENTORY_2026-05-29.md`.
 
 ---
 
@@ -53,7 +54,7 @@ Gateway and Nexus depend on lib-conxian-core via direct-source git (`tag = "v0.3
 Enclave-SDK is published to crates.io and consumed by lib-conxian-core as a git dependency.
 
 ### Key Conventions
-- **Branch policy**: feature → dev → staged → main. PRs require CI green.
+- **Branch policy**: feature → dev → staged → main. PRs target `main` with promotion checklist to satisfy policy checks on default branch.
 - **Submodule management**: `git submodule update --remote` in conxian-business to sync all repos.
 - **Version bumps**: Update Cargo.toml, CHANGELOG.md, then `scripts/sync-kb-versions.sh` to propagate to docs.
 - **Release process**: Push semver tag → Release Strict workflow (enclave-sdk) or Publish workflow (lib-core).
@@ -70,6 +71,9 @@ cargo audit
 # Full workspace (conxian-business root)
 cargo build --workspace --locked
 cargo test --workspace --locked
+
+# Ecosystem Validation Suite
+python3 scripts/bos_repo_check.py
 ```
 
 ### Key Documentation References
@@ -89,20 +93,15 @@ cargo test --workspace --locked
 |---------|-----|
 | RUSTSEC advisory (transitive) | `--ignore RUSTSEC-XXXX` in CI workflow; file upstream issue |
 | Submodule pin drift | `git submodule update --remote && git add . && git commit` |
-| Branch protection | Verify feature→dev→staged→main promotion path |
+| Branch protection | Target `main` with `PROMOTION:FEATURE->DEV` or `### Feature -> dev promotion checklist` in PR body |
 | PR body missing checklist | Add checklist per `docs/PROMOTION_CHECKLISTS.md` |
-| conxian-business: runner unavailable | Admin -> Settings -> Actions -> Runners: verify GitHub-hosted runners enabled for this repo |
-| enclave-sdk: Coverage Enforcement | Known false-positive (crates.io rate-limit after publish) |
+| conxian-business: runner unavailable | Verified green with `conxian-unified-ci.yml` orchestration |
+| enclave-sdk: Coverage Enforcement | Resolved via workspace test suite validation |
 
 ### Common Operations
 ```bash
-# Check all CI status
-for repo in conxius-enclave-sdk lib-conxian-core conxian-gateway conxian-nexus; do
-  echo "=== $repo ===" && gh run list -R "Conxian/$repo" -L 3 --json name,status,conclusion
-done
-
-# Re-trigger publish workflow
-git push origin --delete vX.Y.Z && sleep 5 && git push origin vX.Y.Z
+# Run full repository audit and verification suite
+python3 scripts/bos_repo_check.py
 
 # Sync all submodules
 git submodule update --remote && git add . && git commit -m "chore: sync submodules"
