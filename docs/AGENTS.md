@@ -1,9 +1,9 @@
-# Conxian Industrial Engine & SIDL (ATS v13.0 — Session 47, Aug 2026) - Agent Guidelines
+# Conxian Industrial Engine & SIDL (ATS v13.0 — Session 60, Aug 2026) - Agent Guidelines
 
 ## 0. THE CONXIAN UNIFIED THEORY (v2.0)
 All agentic sessions must adhere to the equations defined in `docs/CONXIAN_UNIFIED_THEORY_v2.md`.
 - **Execution Velocity ($V_X$)**: Prioritize AI leverage to crush milestones before $O_C$ exhaustion.
-- **System Autonomy ($A_S$)**: Minimize manual oversight. Manual intervention is a Phase 3 failure; drive $O_C 	o 0$.
+- **System Autonomy ($A_S$)**: Minimize manual oversight. Manual intervention is a Phase 3 failure; drive $O_C \to 0$.
 
 
 ## 1. THE CONXIAN JOB CARD SCHEMA (CJCS v2.0)
@@ -31,8 +31,9 @@ All agentic sessions must adhere to the equations defined in `docs/CONXIAN_UNIFI
 ---
 **SOVEREIGN. INDUSTRIAL. BTC-NATIVE.**
 
-## 6. KNOWLEDGE RETENTION & HYGIENE (March 2026 Mandate)
+## 6. KNOWLEDGE RETENTION & HYGIENE (August 2026 Session 60 Mandate)
 - **Zero Secret Egress (ZSE)**: No sensitive operational, strategy, or financial material may be tracked in the active Git index.
 - **Migration Mandate**: Before any path containing sensitive material (e.g., `internal/strategy/`, `archive/`) is added to `.gitignore`, all contained knowledge must be migrated to the **GitHub Virtual Office** (e.g., parent issue CON-306).
-- **Verification**: Run `python3 scripts/verify_knowledge_retention.py` to ensure all ignored sensitive paths are accounted for in the `audit/migration_manifest.json`.
+- **Verification**: Run `python3 scripts/bos_repo_check.py` to ensure all 9 core compliance verifiers (including `verify_knowledge_retention.py`) pass.
 - **Hygiene**: The root directory must remain clean of build artifacts (`*.log`, `*.txt`, `*.patch`).
+- **Cloud Infrastructure Alignment**: All agents must align with Neon (PG 17/18), Supabase (PG 17.6 `ACTIVE_HEALTHY`), Render (`conxian-labs-site` auto-deploy), and PR promotion targeting `main`.
