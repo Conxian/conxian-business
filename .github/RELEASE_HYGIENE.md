@@ -113,7 +113,7 @@ Some suites only run when a label is applied. Most label-gated suites live in th
 | When you touch… | Add label | Expected CI suite |
 | --- | --- | --- |
 | `conxian-gateway/` or infra deployment concerns | `infra` | Gateway suite |
-| `conxian-nexus/` or `lib-conclave-sdk/` | `b2b` | B2B suite (Nexus & SDK) |
+| `conxian-nexus/` or `conxius-enclave-sdk/` | `b2b` | B2B suite (Nexus & SDK) |
 | `conxius-wallet/` | `b2c` | B2C wallet suite |
 | transparency audit or documentation validation | `audit` | Transparency audit + docs |
 | Conxius Orbit testnet simulation scripts | `simulation` | Testnet simulation |
