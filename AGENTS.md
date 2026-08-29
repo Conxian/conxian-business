@@ -28,7 +28,7 @@
 | lib-conxian-core | 🟢 Green | All CI, audit, hygiene check pass |
 | conxian-gateway | 🟢 Green | Secret scan, Node.js CI, cargo audit pass (post #333) |
 | conxius-wallet | 🟢 Green | Dependency audit, unit tests, lint, typecheck pass (post #496/#512) |
-| conxian-nexus | 🟡 3 PRs open | #245 (deps) nostr-sdk 0.45 migration + audit fix pushed; #250/#252 audit fix pushed; CI re-running |
+| conxian-nexus | 🟢 Green | #245 (deps) merged; #250/#252 CI green (Build & Test + audit pass) but blocked on code-owner review (self-approval disallowed) |
 | conxius-enclave-sdk | 🟡 Coverage Enforcement | Known false-positive (crates.io rate-limit) |
 | conxian-business | 🔴 No runner available | `runner_name: ""` — all jobs fail in queue; admin intervention needed |
 
@@ -39,13 +39,14 @@
 | CI_SUBMODULES_PAT | repo? | Unknown — may be needed for repo-hygiene submodule init |
 
 ### Active PRs (2026-08-29)
-- **conxian-nexus #245** — Rust deps group bump (7 updates incl. nostr-sdk 0.44→0.45, sha3 0.10→0.11). **Fixed & pushed**: nostr-sdk 0.45 API migration (`Client::builder().signer` → explicit `EventBuilder::finalize` + `Client::send_event`; `RelayPoolNotification` → `ClientNotification`; `notifications().recv()` → `StreamExt::next()`).
-- **conxian-nexus #250** — idempotency store. **Fixed & pushed**: audit workflow no longer regenerates lockfile.
-- **conxian-nexus #252** — KB/code audit alignment (conxius-enclave-sdk v2.0.16, 52 modules). **Fixed & pushed**: audit workflow no longer regenerates lockfile.
+- **conxian-nexus #245** — Rust deps group bump (7 updates incl. nostr-sdk 0.44→0.45, sha3 0.10→0.11). **MERGED** (squash). nostr-sdk 0.45 API migration (`Client::builder().signer` → explicit `EventBuilder::finalize` + `Client::send_event`; `RelayPoolNotification` → `ClientNotification`; `notifications().recv()` → `StreamExt::next()`).
+- **conxian-nexus #250** — idempotency store. **CI green** (Build & Test + audit pass); blocked on code-owner review (`admin-conxian-labs`) — author self-approval disallowed.
+- **conxian-nexus #252** — KB/code audit alignment (conxius-enclave-sdk v2.0.16, 52 modules). **CI green** (Build & Test + audit pass); blocked on code-owner review (`admin-conxian-labs`) — author self-approval disallowed.
 - All other repos: 0 open PRs.
 
 ### Known Issues (flagged, not yet resolved)
 - **secp256k1 yank (upstream blocker)**: `bitcoin 0.33.0-beta` → `secp256k1 ^0.32.0-beta.2` (yanked). Blocks any fresh `cargo` resolution in `conxius-enclave-sdk` and downstream. No stable `bitcoin 0.33.0` yet. Track: rust-bitcoin/bitcoin upstream.
+- **h2 DoS advisory (RUSTSEC-2026-0258)**: `h2 0.4.15` (transitive via hyper→axum/tonic) has an unbounded-empty-DATA-frames DoS fixed in `0.4.16`. Ignored in `cargo-audit` until the secp256k1 yank is resolved so the lockfile can be regenerated cleanly to bump `h2`.
 - **Module count drift (enclave-sdk)**: `AGENTS.md` header claims "52 modules" but the catalog lists 40 (23 blockchain + 17 infra); closed issue #274 asserted 57 (44 protocol + 11 infra + 2 subdir). Needs a dedicated recount pass.
 - **Dependabot (conxian-business)**: 12 open alerts (7 high / 3 moderate / 2 low) across JS packages in the parent monorepo.
 
