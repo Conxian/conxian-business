@@ -118,7 +118,7 @@ Superproject note: `Conxian_UI` is checked out at path `conxian-ui/` (planned re
 | Repo | Public posture | Ship posture | L | RC | FT | OC | DC | DR | OWN |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | `lib-conxian-core` | Public | Ship (library) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |
-| `lib-conclave-sdk` | Public | Conditional (crypto/supply-chain gates) | 1 | 0 | 0 | 0 | 0 | 2 | 2 |
+| `conxius-enclave-sdk` | Public | Conditional (crypto/supply-chain gates) | 1 | 0 | 0 | 0 | 0 | 2 | 2 |
 | `conxian-nexus` | Public | Conditional (service gates) | 1 | 2 | 1 | 1 | 0 | 3 | 2 |
 | `conxius-orbit` | Public | Conditional (deployment tool gates) | 1 | 1 | 3 | 3 | 0 | 3 | 3 |
 | `.github` | Public | Conditional (org-infra / high-blast-radius, elevated review) | 1 | 0 | 0 | 0 | 0 | 2 | 1 |

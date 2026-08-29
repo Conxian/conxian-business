@@ -48,7 +48,7 @@ This report outlines the transition path for the Conxian ecosystem from its "Web
 
 ### Compute & Hosting (The Muscle)
 - **Akash Network**: Decentralized cloud for running Nexus nodes, Gateway engines, and UI surfaces.
-- **Enclaves (TEE)**: Hardware-backed signing via lib-conclave-sdk (StrongBox).
+- **Enclaves (TEE)**: Hardware-backed signing via conxius-enclave-sdk (StrongBox).
 
 ### Identity & Messaging (The Connection)
 - **Nostr**: The universal transport layer for Agentic Intents (NIP-47 NWC).
