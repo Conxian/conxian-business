@@ -42,6 +42,7 @@
 - **conxian-nexus #245** — Rust deps group bump (7 updates incl. nostr-sdk 0.44→0.45, sha3 0.10→0.11). **MERGED** (squash). nostr-sdk 0.45 API migration (`Client::builder().signer` → explicit `EventBuilder::finalize` + `Client::send_event`; `RelayPoolNotification` → `ClientNotification`; `notifications().recv()` → `StreamExt::next()`).
 - **conxian-nexus #250** — idempotency store. **CI green** (Build & Test + audit pass); blocked on code-owner review (`admin-conxian-labs`) — author self-approval disallowed.
 - **conxian-nexus #252** — KB/code audit alignment (conxius-enclave-sdk v2.0.16, 52 modules). **CI green** (Build & Test + audit pass); blocked on code-owner review (`admin-conxian-labs`) — author self-approval disallowed.
+- **conxian-nexus #253** — align `lib-conxian-core` to `tag = "v0.3.2"` (pull enclave-sdk v2.0.16). `cargo check --locked` passes. (New this session.)
 - All other repos: 0 open PRs.
 
 ### Known Issues (flagged, not yet resolved)
@@ -64,8 +65,9 @@ conxius-enclave-sdk (v2.0.16)  ← lib-conxian-core (v0.3.2)
 Dependency pins (from `Cargo.toml`):
 - `lib-conxian-core` → `conxius-enclave-sdk` git `tag = "v2.0.16"`.
 - `conxian-gateway` → `lib-conxian-core` git `tag = "v0.3.2"`.
-- `conxian-nexus` → `lib-conxian-core` git `rev = "6075ef7c"` (not the `v0.3.2` tag; 4 commits pre-release).
+- `conxian-nexus` → `lib-conxian-core` git `rev = "6075ef7c"` (not the `v0.3.2` tag; 4 commits pre-release). **PR #253 aligns this to `tag = "v0.3.2"`** (pulls enclave-sdk v2.0.16 instead of v2.0.15).
 - Enclave-SDK is published to crates.io and consumed by lib-conxian-core as a git dependency.
+- Note: `SDK_OWNERSHIP_POLICY.md` (`.github-private`, 2026-06-13) says consumers should use "pinned Git SHAs" until a stable release cadence is established — this conflicts with the current tag-based practice (gateway + core use tags). Flagged; policy needs a refresh.
 
 ### Key Conventions
 - **Branch policy**: feature → dev → staged → main. PRs require CI green.
