@@ -12,8 +12,8 @@
 
 | Repo | Crate/Package | Version | Tag | Published |
 |------|-------|---------|-----|-----------|
-| conxius-enclave-sdk | `conxius-enclave-sdk` | 2.0.16 | v2.0.16 | ✅ crates.io |
-| lib-conxian-core | `lib-conxian-core` | 0.3.2 | v0.3.2 | ✅ crates.io |
+| conxius-enclave-sdk | `conxius-enclave-sdk` | 2.0.17 | v2.0.17 | ✅ crates.io |
+| lib-conxian-core | `lib-conxian-core` | 0.3.3 | v0.3.3 | ✅ crates.io |
 | conxian-gateway | `conxian-gateway` | 0.1.5 | v0.1.5 | — |
 | conxian-nexus | `conxian-nexus` | 0.4.23 | v0.4.22 | — |
 | conxius-platform | `conxius-platform` (npm) | 0.2.5 | v0.2.5 | — |
@@ -57,15 +57,15 @@
 
 ### Dependency Chain
 ```
-conxius-enclave-sdk (v2.0.16)  ← lib-conxian-core (v0.3.2)
+conxius-enclave-sdk (v2.0.17)  ← lib-conxian-core (v0.3.3)
                                               ↓
                                conxian-gateway  +  conxian-nexus
 ```
 
 Dependency pins (from `Cargo.toml`):
-- `lib-conxian-core` → `conxius-enclave-sdk` git `tag = "v2.0.16"`.
-- `conxian-gateway` → `lib-conxian-core` git `tag = "v0.3.2"`.
-- `conxian-nexus` → `lib-conxian-core` git `rev = "6075ef7c"` (not the `v0.3.2` tag; 4 commits pre-release). **PR #253 aligns this to `tag = "v0.3.2"`** (pulls enclave-sdk v2.0.16 instead of v2.0.15).
+- `lib-conxian-core` → `conxius-enclave-sdk` git `tag = "v2.0.17"`.
+- `conxian-gateway` → `lib-conxian-core` git `tag = "v0.3.3"`.
+- `conxian-nexus` → `lib-conxian-core` git `rev = "b85625f"` (v0.3.3). **PR #261 merged** (pins v0.3.3 rev; pulls enclave-sdk v2.0.17).
 - Enclave-SDK is published to crates.io and consumed by lib-conxian-core as a git dependency.
 - Note: `SDK_OWNERSHIP_POLICY.md` (`.github-private`, 2026-06-13) says consumers should use "pinned Git SHAs" until a stable release cadence is established — this conflicts with the current tag-based practice (gateway + core use tags). Flagged; policy needs a refresh.
 
