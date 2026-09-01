@@ -53,8 +53,9 @@
 - All other repos: 0 open PRs.
 
 ### Known Issues (flagged, not yet resolved)
-- **secp256k1 yank (upstream blocker)**: `bitcoin 0.33.0-beta` → `secp256k1 ^0.32.0-beta.2` (yanked). Blocks any fresh `cargo` resolution in `conxius-enclave-sdk` and downstream. No stable `bitcoin 0.33.0` yet. Track: rust-bitcoin/bitcoin upstream.
-- **h2 DoS advisory (RUSTSEC-2026-0258)**: `h2 0.4.15` (transitive via hyper→axum/tonic) has an unbounded-empty-DATA-frames DoS fixed in `0.4.16`. Ignored in `cargo-audit` until the secp256k1 yank is resolved so the lockfile can be regenerated cleanly to bump `h2`.
+- **secp256k1 yank**: RESOLVED 2026-09-01 — `conxius-enclave-sdk` v2.0.17 ships yanked-crate-free (`bitcoin 0.32.102` + `secp256k1 0.33.1`, no `0.32.0-beta.2`), re-enabling `full-sdk` downstream (gateway #356, nexus #264).
+- **h2 DoS advisory (RUSTSEC-2026-0258)**: `h2 0.4.15` (transitive via hyper→axum/tonic) has an unbounded-empty-DATA-frames DoS fixed in `0.4.16`. Now unblocked (yank resolved) — regenerate lockfiles to bump `h2` to `0.4.16`.
+- **Rust 1.98.0 assessment (2026-09-01)**: hold production at **1.97.1** (LTS anchor). 1.98.0 (2026-08-20) adds algebraic floats + `format_into`/`NumBuffer`, irrelevant to our consensus/signing integer math — do not adopt yet. (External report trait-solver/ManuallyDrop-RFC-3336/Release-Strict-CI/CVE-2026-5223 claims unverified/fabricated — CVE-2026-5223 is Medium, third-party-registry-only, fixed in 1.96.0.)
 - **Module count drift (enclave-sdk)**: RESOLVED 2026-09-01 — canonical count is **43 (25 blockchain + 18 infrastructure)**; corrected in SDK AGENTS.md (PR #331) and core AGENTS.md (PR #290).
 - **Dependabot (conxian-business)**: 12 open alerts (7 high / 3 moderate / 2 low) across JS packages in the parent monorepo.
 - **CI failures (conxian-business, 2026-09-01)**: `Validate workspace` — `pnpm-lock.yaml` out of sync with `conxius-wallet` (#1072); `Create Neon Branch` — Neon API 422 (#1073); Node 20 deprecation → migrate to **Node 24** (#1074).
@@ -83,7 +84,7 @@ Dependency pins (from `Cargo.toml`):
 - **Submodule management**: `git submodule update --remote` in conxian-business to sync all repos.
 - **Version bumps**: Update Cargo.toml, CHANGELOG.md, then `scripts/sync-kb-versions.sh` to propagate to docs.
 - **Release process**: Push semver tag → Release Strict workflow (enclave-sdk) or Publish workflow (lib-core).
-- **Rust toolchain**: `1.97.1` (enclave-sdk, gateway, lib-conxian-core `rust-version` — corrected from 1.94.0) / `1.97` (nexus).
+- **Rust toolchain**: `1.97.1` across all Rust repos (enclave-sdk, gateway, lib-conxian-core, nexus — normalized 2026-09-01).
 - **Node.js**: **24** (approved LTS — do NOT pin Node 20).
 
 ### Build Commands
