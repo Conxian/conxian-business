@@ -59,7 +59,7 @@
 - **Module count drift (enclave-sdk)**: RESOLVED 2026-09-01 — canonical count is **43 (25 blockchain + 18 infrastructure)**; corrected in SDK AGENTS.md (PR #331) and core AGENTS.md (PR #290).
 - **Dependabot (conxian-business)**: 12 open alerts (7 high / 3 moderate / 2 low) across JS packages in the parent monorepo.
 - **CI failures (conxian-business, 2026-09-01)**: `Validate workspace` — `pnpm-lock.yaml` out of sync with `conxius-wallet` (#1072); `Create Neon Branch` — Neon API 422 (#1073); Node 20 deprecation → migrate to **Node 24** (#1074).
-- **Open follow-ups (2026-09-01)**: org-wide audit remaining repos (#1075); production KMS release-signing key (#1076).
+- **Open follow-ups (2026-09-01)**: production KMS release-signing key (#1076); Node 20→24 migration (#1074); submodule sync post-merge. Org-wide audit (#1075) complete — Rust remediated (#331/#290/#356/#263/#264), JS repos no drift; full-sdk enabled on gateway (#356) + nexus (#264).
 
 ---
 
