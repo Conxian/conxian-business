@@ -49,6 +49,7 @@ tests/report.md
 # Environment and secrets
 .env
 .env.*
+.conxian-sdk-signer.aws
 !.env.example
 !.env.sample
 !.env.template
