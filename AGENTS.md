@@ -1,10 +1,17 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
-> **Version**: 1.5 (2026-08-29 — Ecosystem Maintenance & KB/Code Audit)
+> **Version**: 1.6 (2026-09-01 — KB/Code Audit Remediation + AWS Signer)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
 
 ---
+
+### Session 59 Summary (2026-09-01)
+- **KB/Code audit** — SDK module count 50→43 (PR #331 ✅); core MSRV 1.94.0→1.97.1 + count 52→43 (PR #290 ✅). Tooling added to `conxian-business` (PR #1071 ✅): `scripts/audit_doc_module_counts.py`, `scripts/verify_external_state.py`, `scripts/setup_conxian_signer.py`.
+- **AWS** — `conxian-sdk-signer` IAM user provisioned (EC2 Nitro + KMS release-signing + self key-rotation); key rotated + verified end-to-end.
+- **Git identity** — commits authored as `Botshelo Mokoka <41502979+botshelomokoka@users.noreply.github.com>` (GitHub noreply).
+- **Node.js**: **24 is the approved LTS** (do NOT pin Node 20).
+- **Open follow-ups**: #1072 (pnpm lockfile drift), #1073 (Neon branch 422), #1074 (Node 20→24), #1075 (org-wide audit — remaining repos), #1076 (prod KMS signing key).
 
 ## Current State
 
@@ -30,7 +37,7 @@
 | conxius-wallet | 🟢 Green | Dependency audit, unit tests, lint, typecheck pass (post #496/#512) |
 | conxian-nexus | 🟢 Green | #245 (deps) merged; #250/#252 CI green (Build & Test + audit pass) but blocked on code-owner review (self-approval disallowed) |
 | conxius-enclave-sdk | 🟡 Coverage Enforcement | Known false-positive (crates.io rate-limit) |
-| conxian-business | 🔴 No runner available | `runner_name: ""` — all jobs fail in queue; admin intervention needed |
+| conxian-business | 🟡 Partial | Runner now available; `Validate workspace` (pnpm drift #1072), `Create Neon Branch` (#1073), Node 20 deprecation (#1074) fail — non-required |
 
 ### Secrets Configured
 | Secret | Where | Status |
@@ -48,8 +55,10 @@
 ### Known Issues (flagged, not yet resolved)
 - **secp256k1 yank (upstream blocker)**: `bitcoin 0.33.0-beta` → `secp256k1 ^0.32.0-beta.2` (yanked). Blocks any fresh `cargo` resolution in `conxius-enclave-sdk` and downstream. No stable `bitcoin 0.33.0` yet. Track: rust-bitcoin/bitcoin upstream.
 - **h2 DoS advisory (RUSTSEC-2026-0258)**: `h2 0.4.15` (transitive via hyper→axum/tonic) has an unbounded-empty-DATA-frames DoS fixed in `0.4.16`. Ignored in `cargo-audit` until the secp256k1 yank is resolved so the lockfile can be regenerated cleanly to bump `h2`.
-- **Module count drift (enclave-sdk)**: `AGENTS.md` header claims "52 modules" but the catalog lists 40 (23 blockchain + 17 infra); closed issue #274 asserted 57 (44 protocol + 11 infra + 2 subdir). Needs a dedicated recount pass.
+- **Module count drift (enclave-sdk)**: RESOLVED 2026-09-01 — canonical count is **43 (25 blockchain + 18 infrastructure)**; corrected in SDK AGENTS.md (PR #331) and core AGENTS.md (PR #290).
 - **Dependabot (conxian-business)**: 12 open alerts (7 high / 3 moderate / 2 low) across JS packages in the parent monorepo.
+- **CI failures (conxian-business, 2026-09-01)**: `Validate workspace` — `pnpm-lock.yaml` out of sync with `conxius-wallet` (#1072); `Create Neon Branch` — Neon API 422 (#1073); Node 20 deprecation → migrate to **Node 24** (#1074).
+- **Open follow-ups (2026-09-01)**: org-wide audit remaining repos (#1075); production KMS release-signing key (#1076).
 
 ---
 
@@ -74,7 +83,8 @@ Dependency pins (from `Cargo.toml`):
 - **Submodule management**: `git submodule update --remote` in conxian-business to sync all repos.
 - **Version bumps**: Update Cargo.toml, CHANGELOG.md, then `scripts/sync-kb-versions.sh` to propagate to docs.
 - **Release process**: Push semver tag → Release Strict workflow (enclave-sdk) or Publish workflow (lib-core).
-- **Rust toolchain**: `1.97.1` (enclave-sdk, gateway) / `1.97` (nexus) / `1.94.0` (lib-conxian-core `rust-version`).
+- **Rust toolchain**: `1.97.1` (enclave-sdk, gateway, lib-conxian-core `rust-version` — corrected from 1.94.0) / `1.97` (nexus).
+- **Node.js**: **24** (approved LTS — do NOT pin Node 20).
 
 ### Build Commands
 ```bash
