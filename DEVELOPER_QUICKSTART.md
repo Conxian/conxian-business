@@ -5,7 +5,7 @@ Welcome to the Conxian Sovereign Business Operations System (BOS). This guide wi
 ## Prerequisites
 
 - **Docker & Docker Compose**: For running the database and local services.
-- **Node.js (v18+) & pnpm**: For the UI and smart contract tooling.
+- **Node.js 24 & pnpm 10**: For the UI and smart contract tooling.
 - **Rust (1.75+)**: For compiling the Gateway and Nexus middleware.
 - **Clarinet**: For local Stacks Devnet testing.
 

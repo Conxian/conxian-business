@@ -18,8 +18,14 @@ const developmentOrigins = [
   process.env.V0_SANDBOX_URL,
 ].filter((origin): origin is string => Boolean(origin));
 
+const authSecret = process.env.BETTER_AUTH_SECRET;
+if (!authSecret && process.env.NEXT_PHASE !== "phase-production-build") {
+  throw new Error("BETTER_AUTH_SECRET must be set before starting control-plane auth");
+}
+
 export const auth = betterAuth({
   database: pool,
+  secret: authSecret || "build-only-secret-not-for-runtime",
   emailAndPassword: { enabled: true },
   baseURL:
     process.env.BETTER_AUTH_URL ||
