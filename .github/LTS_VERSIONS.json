@@ -11,7 +11,7 @@
   },
   "tracks": {
     "lts": {
-      "node": "22",
+      "node": "24",
       "rust": "1.82",
       "rust_edition": "2021",
       "python": "3.12",
