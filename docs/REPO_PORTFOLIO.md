@@ -51,7 +51,6 @@ These repositories provide shared primitives, local orchestration, deployment to
 
 - [`conxian_ui`](https://github.com/Conxian/Conxian_UI) — Public web interaction surface; upstream GitHub slug is retained, while display text is normalized.
 - [conxian-labs-site](https://github.com/Conxian/conxian-labs-site) — Public website and documentation distribution surface.
-- [demo-repository](https://github.com/Conxian/demo-repository) — Organization demonstration surface.
 - [conxian.github.io](https://github.com/Conxian/conxian.github.io) — Public documentation/site hub.
 - [conxian_market](https://github.com/Conxian/conxian_market) — AI Marketplace & Agentic Commerce surface mapped and integrated in business repo.
 
