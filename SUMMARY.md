@@ -103,7 +103,7 @@
 ## 📦 Architecture
 
 
-* [Conxian Protocol](Conxian/docs/ARCHITECTURE.md)
+* [Conxian Protocol](docs/CONXIAN_PROTOCOL_BOS_BUILDOUT.md)
 * [Three-lane runtime deployment architecture (CON-455)](docs/architecture/THREE_LANE_RUNTIME_DEPLOYMENT_ARCHITECTURE.md)
 * [Conxian L3 profile ADR (CON-441)](docs/architecture/CONXIAN_L3_PROFILE_ADR.md)
 * [Protocol adapter maturity lanes (CON-715)](docs/architecture/PROTOCOL_ADAPTER_MATURITY_LANES.md)
