@@ -1,6 +1,6 @@
 # Conxian BOS Knowledge Framework
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 3.0 | Session: 46 | Generated: 2026-07-31
+> Version: 3.1 | Session: 61 | Generated: 2026-07-31
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 
@@ -489,6 +489,15 @@ conxian-business
 
 ```yaml
 changelog:
+  - version: 3.1
+    date: 2026-08-22
+    changes:
+      - "Session 61: Full multi-repo research synthesis & repo check integrity audit"
+      - "Resolved SUMMARY.md broken link violation (Conxian/docs/ARCHITECTURE.md -> docs/CONXIAN_PROTOCOL_BOS_BUILDOUT.md)"
+      - "Restored 100% PASS state on python3 scripts/bos_repo_check.py across all 7 verification suites"
+      - "Verified research candidate scoring alignment: Core #227 (88/100) and Business #943 (84/100)"
+      - "Confirmed Core PR #231 implementation readiness for BDK/rustls security overlay"
+
   - version: 3.0
     date: 2026-07-31
     changes:
