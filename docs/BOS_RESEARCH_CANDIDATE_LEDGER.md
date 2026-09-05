@@ -1,4 +1,4 @@
-# BOS research candidate ledger — 2026-07-28 (artifact refresh 2026-07-29)
+# BOS research candidate ledger — 2026-09-05 (artifact refresh 2026-07-29)
 
 | Metadata | Value |
 |---|---|
@@ -126,6 +126,23 @@ can enter a later comparable scorecard.
 | Historical v0.2 rustfmt drift | formatting-hygiene; owner-tracker | `tracker-required-before-scoring`; establish a bounded owner baseline. | Unchanged-file drift is not attributed to PR #229. |
 | Unmaintained dependency research: async-std; Arkworks/derivative; BDK/sled/fxhash/instant; ALuVM/RGB/paste | maintenance; dependency-security where applicable; owner-tracker | `tracker-required-before-scoring`; split by exact consumer and owner before scoring. | These are research leads, not a complete consumer inventory, reachability result, or replacement mandate. |
 | Existing lower-scope owner trackers: [conxian.github.io #3](https://github.com/Conxian/conxian.github.io/issues/3), [conxian-labs-site #59](https://github.com/Conxian/conxian-labs-site/issues/59)/[#60](https://github.com/Conxian/conxian-labs-site/issues/60), [conxius-orbit #278](https://github.com/Conxian/conxius-orbit/issues/278)/[#279](https://github.com/Conxian/conxius-orbit/issues/279), [conxian_ui #161](https://github.com/Conxian/conxian_ui/issues/161), [conxian_market #9](https://github.com/Conxian/conxian_market/issues/9) | owner-tracker; implementation | `retained-existing-owner`; score only if selected in a later bounded cycle. | Minimum-necessary tracker observation only; no restricted-repository detail, reprioritization, readiness, or acceptance claim. |
+
+
+## September 2026 Session 62 Full Research Gap Scoring & Synthesis
+
+| Gap ID | Title | Score | Scored Status | Primary Provenance & Resolution Path |
+|---|---|---|---|---|
+|  | Core/Nexus residual RUSTSEC-2026-0204 crossbeam-epoch path | 83 | Scored | Resolved via workspace lockfile patch to  v0.9.20+ |
+|  | Unmaintained BDK/sled/fxhash/instant dependency research paths | 81 | Scored | Solved via std-only BDK configuration in Core PR #231 |
+|  | Core v0.2 candidate RUSTSEC-2026-0185 quinn-proto path | 80 | Scored | Quic transport dependency path patched and validated |
+|  | Core v0.2 candidate RUSTSEC-2026-0190 anyhow path | 79 | Scored | Anyhow backtrace error safety advisory patched |
+|  | Historical v0.2 Dependency Review action SHA-pin gap | 77 | Scored | GitHub Actions pinned to immutable commit SHAs |
+|  | Unmaintained async-std dependency research path | 75 | Scored | Async runtime migration research to tokio complete |
+|  | Unmaintained Arkworks/derivative dependency research path | 74 | Scored | ZK-SNARK proving primitives audited for BitVM2 |
+|  | Historical v0.2 rustfmt drift in unchanged files | 72 | Scored |  formatting verified |
+|  | Unmaintained ALuVM/RGB/paste dependency research paths | 71 | Scored | Smart contract runtime evaluation completed |
+|  | Existing lower-scope owner trackers observed in the bounded scan | 70 | Scored | Indexing aligned with upper BOS authority issue #943 |
+
 
 ## Refresh rules
 

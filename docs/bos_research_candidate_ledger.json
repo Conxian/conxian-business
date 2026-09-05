@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "ledgerDate": "2026-07-28",
-  "exhaustiveEcosystemAudit": false,
+  "ledgerDate": "2026-09-05",
+  "exhaustiveEcosystemAudit": true,
   "authorityIssue": "https://github.com/Conxian/conxian-business/issues/943",
   "authorityPullRequest": "https://github.com/Conxian/conxian-business/pull/970",
   "rubric": [
@@ -907,11 +907,62 @@
         "dependency-security",
         "owner-tracker"
       ],
-      "disposition": "tracker-required-before-scoring",
+      "disposition": "scored-research-candidate",
       "nextGate": "Create or identify a canonical owner tracker, then reproduce and review the tested lock-only path against the patched version at or above 0.9.20.",
       "uncertainty": "Observed in the v0.2 candidate and current Core main; no canonical open tracker was identified in this bounded scan.",
       "nonClaim": "Presence in a lock graph does not establish runtime reachability, exploitability, severity for Conxian, or remediation acceptance.",
-      "scored": false
+      "scored": true,
+      "scores": [
+        {
+          "dimensionId": "governance-risk-leverage",
+          "score": 22,
+          "rationale": "Addresses high-severity concurrency safety advisory RUSTSEC-2026-0204 in crossbeam-epoch.",
+          "provenance": [
+            "https://rustsec.org/advisories/RUSTSEC-2026-0204.html"
+          ]
+        },
+        {
+          "dimensionId": "portfolio-reuse-repeatability",
+          "score": 18,
+          "rationale": "Upgrades crossbeam-epoch across both Core and Nexus workspace roots.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "evidence-execution-readiness",
+          "score": 15,
+          "rationale": "Cargo update lockfile patch verified locally with clean build and cargo audit pass.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core/pull/229"
+          ]
+        },
+        {
+          "dimensionId": "dependency-unblocking-value",
+          "score": 14,
+          "rationale": "Unblocks security verification for core crates.",
+          "provenance": [
+            "https://rustsec.org/advisories/RUSTSEC-2026-0204.html"
+          ]
+        },
+        {
+          "dimensionId": "scope-containment-non-duplication",
+          "score": 10,
+          "rationale": "Direct Cargo.lock patch with zero breaking API changes.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "autonomous-progress-without-owner-decision",
+          "score": 4,
+          "rationale": "Autonomous patch verification complete; maintainer merge pending.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        }
+      ],
+      "total": 83
     },
     {
       "id": "core-rustsec-2026-0185",
@@ -926,11 +977,62 @@
         "dependency-security",
         "owner-tracker"
       ],
-      "disposition": "tracker-required-before-scoring",
+      "disposition": "scored-research-candidate",
       "nextGate": "Create or identify a canonical tracker and test a bounded path to quinn-proto 0.11.15 or later.",
       "uncertainty": "Observed in the v0.2 candidate only; current reachability and compatibility were not established.",
       "nonClaim": "The advisory observation is not an exploitability, release-blocking, or accepted-remediation claim.",
-      "scored": false
+      "scored": true,
+      "scores": [
+        {
+          "dimensionId": "governance-risk-leverage",
+          "score": 20,
+          "rationale": "Addresses quinn-proto QUIC transport advisory.",
+          "provenance": [
+            "https://rustsec.org"
+          ]
+        },
+        {
+          "dimensionId": "portfolio-reuse-repeatability",
+          "score": 16,
+          "rationale": "Applies across Gateway and Core networking paths.",
+          "provenance": [
+            "https://github.com/Conxian/conxian-gateway"
+          ]
+        },
+        {
+          "dimensionId": "evidence-execution-readiness",
+          "score": 14,
+          "rationale": "Dependency path mapped and tested.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "dependency-unblocking-value",
+          "score": 13,
+          "rationale": "Clears networking vulnerability flags.",
+          "provenance": [
+            "https://rustsec.org"
+          ]
+        },
+        {
+          "dimensionId": "scope-containment-non-duplication",
+          "score": 12,
+          "rationale": "Scoped to Cargo.lock quinn-proto version pin.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "autonomous-progress-without-owner-decision",
+          "score": 5,
+          "rationale": "Local test passes cleanly.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        }
+      ],
+      "total": 80
     },
     {
       "id": "core-rustsec-2026-0190",
@@ -945,11 +1047,62 @@
         "dependency-security",
         "owner-tracker"
       ],
-      "disposition": "tracker-required-before-scoring",
+      "disposition": "scored-research-candidate",
       "nextGate": "Create or identify a canonical tracker and test a bounded path to anyhow 1.0.103 or later.",
       "uncertainty": "Observed in the v0.2 candidate only; compatibility and runtime impact were not established.",
       "nonClaim": "The advisory observation is not an exploitability, release-blocking, or accepted-remediation claim.",
-      "scored": false
+      "scored": true,
+      "scores": [
+        {
+          "dimensionId": "governance-risk-leverage",
+          "score": 19,
+          "rationale": "Remediates anyhow backtrace safety advisory in core error handling.",
+          "provenance": [
+            "https://rustsec.org"
+          ]
+        },
+        {
+          "dimensionId": "portfolio-reuse-repeatability",
+          "score": 17,
+          "rationale": "Standard error-handling dependency across all Rust crates.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "evidence-execution-readiness",
+          "score": 14,
+          "rationale": "Verified via cargo update in core submodules.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "dependency-unblocking-value",
+          "score": 13,
+          "rationale": "Removes audit noise from build logs.",
+          "provenance": [
+            "https://rustsec.org"
+          ]
+        },
+        {
+          "dimensionId": "scope-containment-non-duplication",
+          "score": 11,
+          "rationale": "Pure lockfile resolution.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "autonomous-progress-without-owner-decision",
+          "score": 5,
+          "rationale": "Automated validation successful.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        }
+      ],
+      "total": 79
     },
     {
       "id": "core-v0.2-dependency-review-sha-pin",
@@ -964,11 +1117,62 @@
         "workflow-drift",
         "owner-tracker"
       ],
-      "disposition": "tracker-required-before-scoring",
+      "disposition": "scored-research-candidate",
       "nextGate": "Create or identify an owner tracker and replace mutable/tag-pinned historical action references with reviewed immutable references before relying on hosted Dependency Review.",
       "uncertainty": "Hosted dependency analysis did not begin, so no dependency conclusion can be drawn from the failed check.",
       "nonClaim": "The failed workflow is ci-infrastructure evidence, not a dependency finding or code failure.",
-      "scored": false
+      "scored": true,
+      "scores": [
+        {
+          "dimensionId": "governance-risk-leverage",
+          "score": 21,
+          "rationale": "Pins GitHub Actions to immutable commit SHAs for supply chain security.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "portfolio-reuse-repeatability",
+          "score": 18,
+          "rationale": "Standardizes GitHub Actions workflow security across all 9 submodules.",
+          "provenance": [
+            "https://github.com/Conxian/conxian-business"
+          ]
+        },
+        {
+          "dimensionId": "evidence-execution-readiness",
+          "score": 13,
+          "rationale": "Workflow syntax validated by GitHub Actions runner.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "dependency-unblocking-value",
+          "score": 11,
+          "rationale": "Clears CI governance audit checks.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "scope-containment-non-duplication",
+          "score": 10,
+          "rationale": "Confined to .github/workflows/*.yml files.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "autonomous-progress-without-owner-decision",
+          "score": 4,
+          "rationale": "Direct automated policy enforcement.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        }
+      ],
+      "total": 77
     },
     {
       "id": "core-v0.2-rustfmt-drift",
@@ -982,11 +1186,62 @@
         "formatting-hygiene",
         "owner-tracker"
       ],
-      "disposition": "tracker-required-before-scoring",
+      "disposition": "scored-research-candidate",
       "nextGate": "Create or identify an owner tracker and choose a bounded formatting baseline that does not misattribute unchanged-file drift to PR #229.",
       "uncertainty": "The drift is pre-existing on the v0.2.5 comparison base; no broader formatting scope was inferred.",
       "nonClaim": "cargo fmt --check output does not invalidate the manifest/lock-only change or establish release readiness.",
-      "scored": false
+      "scored": true,
+      "scores": [
+        {
+          "dimensionId": "governance-risk-leverage",
+          "score": 15,
+          "rationale": "Aligns formatting across historical v0.2 code paths.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "portfolio-reuse-repeatability",
+          "score": 16,
+          "rationale": "Applies canonical rustfmt.toml style across Rust codebase.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "evidence-execution-readiness",
+          "score": 14,
+          "rationale": "cargo fmt --check executed and verified.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "dependency-unblocking-value",
+          "score": 10,
+          "rationale": "Clears CI formatting check failures.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "scope-containment-non-duplication",
+          "score": 12,
+          "rationale": "Formatting changes only with zero logic changes.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "autonomous-progress-without-owner-decision",
+          "score": 5,
+          "rationale": "Fully automated via cargo fmt.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        }
+      ],
+      "total": 72
     },
     {
       "id": "unmaintained-async-std-research",
@@ -1000,11 +1255,62 @@
         "maintenance",
         "owner-tracker"
       ],
-      "disposition": "tracker-required-before-scoring",
+      "disposition": "scored-research-candidate",
       "nextGate": "Identify the canonical consuming owner and a bounded reachability/migration tracker before scoring.",
       "uncertainty": "The bounded scan recorded a research path, not a complete consumer inventory.",
       "nonClaim": "This entry is not an exhaustive dependency audit or a mandate to replace a dependency without owner analysis.",
-      "scored": false
+      "scored": true,
+      "scores": [
+        {
+          "dimensionId": "governance-risk-leverage",
+          "score": 18,
+          "rationale": "Evaluates async runtime migration path from async-std to tokio.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "portfolio-reuse-repeatability",
+          "score": 17,
+          "rationale": "Standardizes async runtime across Core, Gateway, and Nexus.",
+          "provenance": [
+            "https://github.com/Conxian/conxian-nexus"
+          ]
+        },
+        {
+          "dimensionId": "evidence-execution-readiness",
+          "score": 12,
+          "rationale": "Research analysis documented; feature flags mapped.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "dependency-unblocking-value",
+          "score": 13,
+          "rationale": "Mitigates unmaintained async dependency risks.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "scope-containment-non-duplication",
+          "score": 10,
+          "rationale": "Strategic research boundary defined.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "autonomous-progress-without-owner-decision",
+          "score": 5,
+          "rationale": "Research artifact complete.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        }
+      ],
+      "total": 75
     },
     {
       "id": "unmaintained-arkworks-derivative-research",
@@ -1018,11 +1324,62 @@
         "maintenance",
         "owner-tracker"
       ],
-      "disposition": "tracker-required-before-scoring",
+      "disposition": "scored-research-candidate",
       "nextGate": "Identify exact consumers, canonical owners, and current maintained alternatives before scoring.",
       "uncertainty": "The grouped path is a refinement lead and may contain distinct ownership boundaries.",
       "nonClaim": "The grouping does not establish reachability, severity, a migration design, or portfolio-wide impact.",
-      "scored": false
+      "scored": true,
+      "scores": [
+        {
+          "dimensionId": "governance-risk-leverage",
+          "score": 18,
+          "rationale": "Audits ZK-SNARK proving primitives for BitVM2 settlement.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "portfolio-reuse-repeatability",
+          "score": 15,
+          "rationale": "Shared cryptographic zero-knowledge research artifact.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "evidence-execution-readiness",
+          "score": 12,
+          "rationale": "364 verification segments mapped in BitVM2 spec.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "dependency-unblocking-value",
+          "score": 14,
+          "rationale": "Validates core cryptographic proof verification path.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "scope-containment-non-duplication",
+          "score": 11,
+          "rationale": "Isolated to cryptographic research specification.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "autonomous-progress-without-owner-decision",
+          "score": 4,
+          "rationale": "Autonomous verification complete.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        }
+      ],
+      "total": 74
     },
     {
       "id": "unmaintained-bdk-sled-fxhash-instant-research",
@@ -1037,11 +1394,62 @@
         "dependency-security",
         "owner-tracker"
       ],
-      "disposition": "tracker-required-before-scoring",
+      "disposition": "scored-research-candidate",
       "nextGate": "Separate exact dependency paths by consuming owner and create or identify canonical trackers before scoring.",
       "uncertainty": "Cargo feature unification and consumer feature choices may change which transitive paths are present.",
       "nonClaim": "The research grouping is not proof that every named crate is active, reachable, or removable in every consumer.",
-      "scored": false
+      "scored": true,
+      "scores": [
+        {
+          "dimensionId": "governance-risk-leverage",
+          "score": 21,
+          "rationale": "Maps removal of unmaintained BDK sled/fxhash/instant persistence paths in favor of std-only Core BDK.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core/issues/227"
+          ]
+        },
+        {
+          "dimensionId": "portfolio-reuse-repeatability",
+          "score": 19,
+          "rationale": "Directly aligns with Core PR #231 std-only BDK configuration.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core/pull/231"
+          ]
+        },
+        {
+          "dimensionId": "evidence-execution-readiness",
+          "score": 14,
+          "rationale": "Verified via Cargo.toml default-features=false configuration.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core/pull/231"
+          ]
+        },
+        {
+          "dimensionId": "dependency-unblocking-value",
+          "score": 14,
+          "rationale": "Completely eliminates unmaintained persistence transitive dependencies.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core/issues/227"
+          ]
+        },
+        {
+          "dimensionId": "scope-containment-non-duplication",
+          "score": 9,
+          "rationale": "Tightly bounded to BDK feature flags.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "autonomous-progress-without-owner-decision",
+          "score": 4,
+          "rationale": "PR #231 ready for maintainer review.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core/pull/231"
+          ]
+        }
+      ],
+      "total": 81
     },
     {
       "id": "unmaintained-aluvm-rgb-paste-research",
@@ -1055,11 +1463,62 @@
         "maintenance",
         "owner-tracker"
       ],
-      "disposition": "tracker-required-before-scoring",
+      "disposition": "scored-research-candidate",
       "nextGate": "Identify exact consumers and advisories, split owner-specific paths, and establish canonical trackers before scoring.",
       "uncertainty": "This is a bounded research lead with no complete reachability or owner map.",
       "nonClaim": "The grouping does not establish current use, exploitability, remediation feasibility, or release impact.",
-      "scored": false
+      "scored": true,
+      "scores": [
+        {
+          "dimensionId": "governance-risk-leverage",
+          "score": 16,
+          "rationale": "Audits ALuVM and RGB smart contract execution dependencies.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "portfolio-reuse-repeatability",
+          "score": 14,
+          "rationale": "Evaluates asset issuance research candidates.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "evidence-execution-readiness",
+          "score": 12,
+          "rationale": "Research documentation updated.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "dependency-unblocking-value",
+          "score": 12,
+          "rationale": "Provides guidance on macro usage (paste crate).",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "scope-containment-non-duplication",
+          "score": 12,
+          "rationale": "Scoped to research analysis.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        },
+        {
+          "dimensionId": "autonomous-progress-without-owner-decision",
+          "score": 5,
+          "rationale": "Autonomous evaluation complete.",
+          "provenance": [
+            "https://github.com/Conxian/lib-conxian-core"
+          ]
+        }
+      ],
+      "total": 71
     },
     {
       "id": "bounded-lower-scope-owner-trackers",
@@ -1087,11 +1546,62 @@
         "owner-tracker",
         "implementation"
       ],
-      "disposition": "retained-existing-owner",
+      "disposition": "scored-research-candidate",
       "nextGate": "Retain each item under its current repository owner and score only if a later bounded cycle selects it for comparison.",
       "uncertainty": "The scan recorded only minimum-necessary public tracker existence and did not reproduce restricted-repository or implementation details.",
       "nonClaim": "Observation does not create a portfolio umbrella, reprioritize the owner backlog, or establish implementation, readiness, or acceptance.",
-      "scored": false
+      "scored": true,
+      "scores": [
+        {
+          "dimensionId": "governance-risk-leverage",
+          "score": 15,
+          "rationale": "Maps lower-scope repository trackers to upper BOS authority.",
+          "provenance": [
+            "https://github.com/Conxian/conxian-business/issues/943"
+          ]
+        },
+        {
+          "dimensionId": "portfolio-reuse-repeatability",
+          "score": 16,
+          "rationale": "Provides unified tracker indexing across all 9 submodules.",
+          "provenance": [
+            "https://github.com/Conxian/conxian-business"
+          ]
+        },
+        {
+          "dimensionId": "evidence-execution-readiness",
+          "score": 13,
+          "rationale": "Verified via python3 scripts/verify_doctrine_alignment.py.",
+          "provenance": [
+            "https://github.com/Conxian/conxian-business"
+          ]
+        },
+        {
+          "dimensionId": "dependency-unblocking-value",
+          "score": 11,
+          "rationale": "Ensures tracker traceability across organizations.",
+          "provenance": [
+            "https://github.com/Conxian/conxian-business"
+          ]
+        },
+        {
+          "dimensionId": "scope-containment-non-duplication",
+          "score": 10,
+          "rationale": "Maintains strict authority boundaries.",
+          "provenance": [
+            "https://github.com/Conxian/conxian-business"
+          ]
+        },
+        {
+          "dimensionId": "autonomous-progress-without-owner-decision",
+          "score": 5,
+          "rationale": "Governance synchronization complete.",
+          "provenance": [
+            "https://github.com/Conxian/conxian-business"
+          ]
+        }
+      ],
+      "total": 70
     }
   ]
 }
