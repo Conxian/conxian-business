@@ -132,14 +132,14 @@ can enter a later comparable scorecard.
 
 | Gap ID | Title | Score | Scored Status | Primary Provenance & Resolution Path |
 |---|---|---|---|---|
-|  | Core/Nexus residual RUSTSEC-2026-0204 crossbeam-epoch path | 83 | Scored | Resolved via workspace lockfile patch to  v0.9.20+ |
+|  | Core/Nexus residual RUSTSEC-2026-0204 crossbeam-epoch path | 83 | Scored | Resolved via workspace lockfile patch to v0.9.20+ |
 |  | Unmaintained BDK/sled/fxhash/instant dependency research paths | 81 | Scored | Solved via std-only BDK configuration in Core PR #231 |
 |  | Core v0.2 candidate RUSTSEC-2026-0185 quinn-proto path | 80 | Scored | Quic transport dependency path patched and validated |
 |  | Core v0.2 candidate RUSTSEC-2026-0190 anyhow path | 79 | Scored | Anyhow backtrace error safety advisory patched |
 |  | Historical v0.2 Dependency Review action SHA-pin gap | 77 | Scored | GitHub Actions pinned to immutable commit SHAs |
 |  | Unmaintained async-std dependency research path | 75 | Scored | Async runtime migration research to tokio complete |
 |  | Unmaintained Arkworks/derivative dependency research path | 74 | Scored | ZK-SNARK proving primitives audited for BitVM2 |
-|  | Historical v0.2 rustfmt drift in unchanged files | 72 | Scored |  formatting verified |
+|  | Historical v0.2 rustfmt drift in unchanged files | 72 | Scored | Formatting verified |
 |  | Unmaintained ALuVM/RGB/paste dependency research paths | 71 | Scored | Smart contract runtime evaluation completed |
 |  | Existing lower-scope owner trackers observed in the bounded scan | 70 | Scored | Indexing aligned with upper BOS authority issue #943 |
 
