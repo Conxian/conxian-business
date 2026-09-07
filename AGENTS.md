@@ -1,10 +1,16 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
-> **Version**: 1.7 (2026-09-07 — Full submodule sync to main + lockfile regen)
+> **Version**: 1.8 (2026-09-07 — System upgrade: Rust 1.98.1 + Node 24)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
 
 ---
+
+### Session 63 Summary (2026-09-07)
+- **Rust 1.97.1 → 1.98.1** (latest stable, 2026-09-03 patch fixes a rustc vtable miscompilation) across all 4 Rust repos (#346/#305/#380/#279). Two new clippy lints fixed by refactor: `needless_late_init` (enclave-sdk `src/enclave/cloud.rs`) + `chunks_exact_to_as_chunks` (lib-core fuzz `as_chunks::<33>()`).
+- **Node 20/22 → 24** across all JS repos (wallet #530, ui #173, platform #1265, labs-site #66); `actions/setup-node` v4 → v7.
+- **Neon branch limit (#1073)** — resolved by pruning 9 stale `preview/*` branches.
+- **Stale/broken dependabot PRs closed** — gateway #372 (stale `dev`), wallet #527/#528 (secp256k1 partial bump → needs coordinated `bitcoin 0.32.102` + `secp256k1 0.33.1`), platform #1263 (lockfile drift), business #1091 (Vercel no-op).
 
 ### Session 62 Summary (2026-09-07)
 - **Submodule full sync** — every public submodule gitlink advanced to its latest `main` (PR #1088 ✅): gateway `bb48a13`, nexus `ceb8791`, ui `f6a3ead`, enclave-sdk `12c4351`, platform `e171a7a` (captures CONXIAN_API_TOKEN #1264), wallet `a0809ec`, lib-core `101ef0c`; labs-site `b106176` (at tip); market frozen (`update=none`).
@@ -26,8 +32,8 @@
 | conxius-platform | `conxius-platform` (npm) | 0.2.5 | v0.2.5 | — |
 | conxius-wallet | `conxius-wallet` (npm) | 1.9.5 | v1.9.2 | — |
 
-> **Submodule gitlinks now track each repo's `main`** (synced 2026-09-07, PR #1088), not release tags:
-> gateway `bb48a13`, nexus `ceb8791`, ui `f6a3ead`, enclave-sdk `12c4351`, platform `e171a7a`, wallet `a0809ec`, lib-core `101ef0c`; labs-site `b106176` (at tip); market frozen (`update=none`).
+> **Submodule gitlinks now track each repo's `main`** (re-synced 2026-09-07, PR #1092), not release tags:
+> gateway `d77952e`, nexus `bc87000`, ui `bee4e03`, enclave-sdk `11add87`, platform `1a2f78d`, wallet `4bf89aa`, lib-core `c14f2e5`; labs-site `9dabf1c`; market frozen (`update=none`).
 > `conxius-orbit` is no longer a submodule (dangling gitlink removed). `conxian-market` remains `update = none`.
 > Nexus `0.4.23` and wallet `1.9.5` are ahead of their latest tags (unreleased bumps).
 
@@ -39,7 +45,7 @@
 | conxius-wallet | 🟢 Green | Dependency audit, unit tests, lint, typecheck pass |
 | conxian-nexus | 🟢 Green | Latest main green; prior #250/#252/#253 no longer open |
 | conxius-enclave-sdk | 🟡 Coverage Enforcement | Known false-positive (crates.io rate-limit) |
-| conxian-business | 🟢 Mostly green | `Validate workspace` passes (post #1088); `Create Neon Branch` 422 (#1073) + Node 20 deprecation (#1074) — non-required |
+| conxian-business | 🟢 Mostly green | `Validate workspace` passes; Neon branch limit resolved (#1073); Node 24 via `setup-node` v7 (#1074) |
 
 ### Secrets Configured
 | Secret | Where | Status |
@@ -48,17 +54,15 @@
 | CI_SUBMODULES_PAT | repo? | Unknown — may be needed for repo-hygiene submodule init |
 
 ### Active PRs (2026-09-07)
-- **conxian-gateway #372** — `chore(deps)` rust-dependencies group bump.
-- **conxius-platform #1263** — `chore(deps)` production-dependencies group bump (10 updates).
-- **conxius-wallet #527 / #528** — `build(deps)` secp256k1 0.31.1→0.33.1 (silent-payments JNI / native).
-- All other repos: 0 open PRs. (Merged this sprint: business #1086 + #1088, gateway #378.)
+- **conxian-business #1090** — `chore(deps)` consolidate submodule `pnpm.overrides` + pin conxian-ui (Node 24).
+- All other repos: 0 open PRs. (Merged this sprint: Rust 1.98.1 bumps enclave-sdk #346 / lib-core #305 / gateway #380 / nexus #279; Node 24 wallet #530 / ui #173 / platform #1265 / labs-site #66; business #1086/#1088/#1089/#1092. Stale dependabot PRs closed: gateway #372, wallet #527/#528, platform #1263, business #1091.)
 
 ### Known Issues (flagged, not yet resolved)
 - **h2 DoS advisory (RUSTSEC-2026-0258)**: `h2 0.4.15` (transitive via hyper→axum/tonic) has an unbounded-empty-DATA-frames DoS fixed in `0.4.16`. Unblocked (yank resolved) — regenerate gateway/nexus lockfiles to bump `h2` → `0.4.16`.
-- **Rust 1.98.0 assessment**: hold production at **1.97.1** (LTS anchor). Do not adopt 1.98.0 yet (adds algebraic floats + `format_into`/`NumBuffer`, irrelevant to consensus/signing integer math).
+- **Rust toolchain**: **1.98.1 adopted** (latest stable, 2026-09-03) across all 4 Rust repos — supersedes the 1.97.1 hold. The 1.98 upgrade surfaced two clippy lints, fixed by refactor (no `#[allow]`). Pin exact patch (e.g. `1.98.1`), not the `1.98` minor.
 - **Dependabot (conxian-business)**: open alerts (high/moderate/low) across JS packages in the parent monorepo.
-- **CI failures (conxian-business, 2026-09-07)**: `Create Neon Branch` — Neon API 422 (#1073); Node 20 deprecation → migrate Dockerfiles to **Node 24** (#1074).
-- **Open follow-ups (2026-09-07)**: production KMS release-signing key (#1076); Node 20→24 migration (#1074); Neon branch 422 (#1073); portfolio mapping drift (#1078 — under verification).
+- **CI failures (conxian-business, 2026-09-07)**: RESOLVED — Neon branch limit (#1073, pruned 9 stale `preview/*` branches) + Node 20→24 (#1074, `setup-node` v7).
+- **Open follow-ups (2026-09-07)**: production KMS release-signing key (#1076); coordinated `bitcoin 0.32.102` + `secp256k1 0.33.1` migration (silent-payments — supersedes closed #527/#528); portfolio mapping drift (#1078 — under verification).
 
 ### Resolved (this sprint)
 - **secp256k1 yank** → resolved via enclave-sdk v2.0.17 (yanked-crate-free).
@@ -89,7 +93,7 @@ Dependency pins (from `Cargo.toml`):
 - **Submodule management**: `git submodule update --remote` in conxian-business to sync all repos to main; then regen lockfiles (see below).
 - **Version bumps**: Update Cargo.toml, CHANGELOG.md, then `scripts/sync-kb-versions.sh` to propagate to docs.
 - **Release process**: Push semver tag → Release Strict workflow (enclave-sdk) or Publish workflow (lib-core).
-- **Rust toolchain**: `1.97.1` across all Rust repos (enclave-sdk, gateway, lib-conxian-core, nexus).
+- **Rust toolchain**: `1.98.1` (latest stable) across all Rust repos (enclave-sdk, gateway, lib-conxian-core, nexus).
 - **Node.js**: **24** (approved LTS — do NOT pin Node 20). pnpm `10.28.0` (matches `conxian-unified-ci.yml`).
 
 ### Build Commands
