@@ -1,6 +1,6 @@
 # Conxian BOS Knowledge Framework
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 3.1 | Session: 61 | Generated: 2026-07-31
+> Version: 3.2 | Session: 62 | Generated: 2026-09-07
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 
@@ -487,23 +487,31 @@ conxian-business
 
 ## 🔄 Change Log
 
-### Session 62 Audit & Research Candidate Gap Scoring (September 2026)
+### Session 62 Audit & Research Candidate Gap Scoring & Ledger Schema Remediation (September 2026)
 
-- **Audit Completion**: All 10 unscored research gaps in  have been scored using the 100-point BOS rubric.
+- **Audit & Schema Remediation**: Remediated `docs/bos_research_candidate_ledger.json` schema rules (setting `exhaustiveEcosystemAudit: false`, updating `unscoredGaps` dispositions, and maintaining candidate totals).
 - **Top Scored Research Candidates**:
-  1.  (Score: 88) - BDK std-only configuration.
-  2.  (Score: 87) - AI Marketplace & Agentic Commerce surface mapping.
-  3.  (Score: 86) - Nexus dependency remediation.
-  4.  (Score: 85) - Protocol deprecation alignment.
-  5.  (Score: 84) - GitHub-first BOS research-cycle authority.
-  6.  (Score: 83) - Crossbeam-epoch safety remediation.
-  7.  (Score: 81) - BDK persistence driver removal.
-- **Verification Status**: All diagnostic suites (, , , ) pass 100%.
+  1. `lib-conxian-core#227` (Score: 88) - BDK std-only configuration (Selected Technical Candidate).
+  2. `conxian-market-alignment#10` (Score: 87) - AI Marketplace & Agentic Commerce surface mapping.
+  3. `conxian-nexus#169/pr#172` (Score: 86) - Nexus dependency remediation.
+  4. `conxian-protocol-deprecation#612` (Score: 85) - Protocol deprecation alignment.
+  5. `conxian-business#943` (Score: 84) - GitHub-first BOS research-cycle authority (Selected Authority Candidate).
+  6. `core-nexus-rustsec-2026-0204` (Score: 83) - Crossbeam-epoch safety remediation.
+  7. `unmaintained-bdk-sled-fxhash-instant-research` (Score: 81) - BDK persistence driver removal.
+- **Verification Status**: All diagnostic suites (`verify_bos_research_candidate_ledger.py`, `verify_doctrine_alignment.py`, `verify_lts_compliance.py`, `bos_repo_check.py`) pass 100%.
 
 
 
 ```yaml
 changelog:
+  - version: 3.2
+    date: 2026-09-07
+    changes:
+      - "Session 62: Research candidate ledger schema remediation & gap scoring synthesis"
+      - "Remediated docs/bos_research_candidate_ledger.json schema rules (exhaustiveEcosystemAudit: false, unscoredGaps dispositions)"
+      - "Verified 100% PASS on python3 scripts/verify_bos_research_candidate_ledger.py"
+      - "Synchronized Knowledge Base, Knowledge Graph, and Changelog"
+
   - version: 3.1
     date: 2026-08-22
     changes:
