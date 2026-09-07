@@ -22,6 +22,7 @@
 ### Status & Executive Summary
 - **Research Candidate Ledger Schema Remediation**: Remediated `docs/bos_research_candidate_ledger.json` schema rules (setting `exhaustiveEcosystemAudit: false`, updating `unscoredGaps` dispositions, and maintaining candidate totals).
 - **Verification Status**: Verified 100% PASS on `python3 scripts/verify_bos_research_candidate_ledger.py` and `python3 scripts/bos_repo_check.py`.
+- **Submodule Initialization & Alignment Audit**: Executed `git submodule init` / `update` across all 9 submodules. Confirmed that all 8 active working trees match root release pin SHAs and `conxian-market` respects its intentional `update=none` policy override.
 - **Ecosystem Audit**: Verified 100% PASS across all diagnostic and governance verification scripts.
   OK  CHANGELOG.md
   OK  SECURITY.md

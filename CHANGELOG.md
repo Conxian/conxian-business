@@ -10,8 +10,9 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 ## [Unreleased]
 
 ### Added
-- **Session 62 Research Gap Scoring & Synthesis**: Completed 100% scoring of all 10 research gaps in  against the 100-point BOS rubric.
-- **Ecosystem Knowledge Framework Upgrade**: Updated , , and  with Session 62 research candidate scores, gap mappings, and cloud topology verification results.
+- **Session 62 Research Gap Scoring & Schema Remediation**: Completed 100% scoring of research gaps and remediated `docs/bos_research_candidate_ledger.json` schema validation rules.
+- **Submodule Initialization & Alignment Audit**: Initialized and audited all 9 submodules across the ecosystem (`conxian-gateway`, `conxian-labs-site`, `conxian-market`, `conxian-nexus`, `conxian-ui`, `conxius-enclave-sdk`, `conxius-platform`, `conxius-wallet`, `lib-conxian-core`), confirming working tree alignment and `update=none` policy compliance.
+- **Ecosystem Knowledge Framework Upgrade**: Updated `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`, `docs/BOS_KNOWLEDGE_FRAMEWORK.md`, `BOS_KNOWLEDGE_GRAPH.md`, and `CHANGELOG.md` with Session 62 research candidate scores, submodule alignment audit findings, and schema remediation verification results.
 
 ### Full Infrastructure, Branch & System Operational Review (August 2026)
 - **Branch Synchronization & Enhancement Verification**:

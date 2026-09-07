@@ -498,7 +498,8 @@ conxian-business
   5. `conxian-business#943` (Score: 84) - GitHub-first BOS research-cycle authority (Selected Authority Candidate).
   6. `core-nexus-rustsec-2026-0204` (Score: 83) - Crossbeam-epoch safety remediation.
   7. `unmaintained-bdk-sled-fxhash-instant-research` (Score: 81) - BDK persistence driver removal.
-- **Verification Status**: All diagnostic suites (`verify_bos_research_candidate_ledger.py`, `verify_doctrine_alignment.py`, `verify_lts_compliance.py`, `bos_repo_check.py`) pass 100%.
+- **Submodule Initialization & Remote Alignment Audit**: Initialized and verified all 9 submodules (`conxian-gateway`, `conxian-labs-site`, `conxian-market`, `conxian-nexus`, `conxian-ui`, `conxius-enclave-sdk`, `conxius-platform`, `conxius-wallet`, `lib-conxian-core`); confirmed `conxian-labs-site` is ALIGNED at `b106176f`, `conxian-market` uses intentional `update=none` policy override, and all checked-out working trees match root release pin SHAs.
+- **Verification Status**: All diagnostic suites (`verify_bos_research_candidate_ledger.py`, `verify_submodule_integrity.py`, `verify_release_hygiene.py`, `verify_doctrine_alignment.py`, `verify_lts_compliance.py`, `bos_repo_check.py`) pass 100%.
 
 
 
