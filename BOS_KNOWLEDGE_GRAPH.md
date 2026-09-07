@@ -114,15 +114,15 @@ Found 9 submodule(s) in .gitmodules
   OK  No duplicate tags found
 
 --- Submodule release pin check ---
-  OK  conxian-gateway pinned at 5f9345c8
+  OK  conxian-gateway pinned at bb48a132
   OK  conxian-labs-site pinned at b106176f
   OK  conxian-market pinned at 276d9f4f
-  OK  conxian-nexus pinned at 20c9bd82
-  OK  conxian-ui pinned at b11cb533
-  OK  conxius-enclave-sdk pinned at 7dafe488
-  OK  conxius-platform pinned at 530ec6c9
-  OK  conxius-wallet pinned at 8e05543b
-  OK  lib-conxian-core pinned at cd350d88
+  OK  conxian-nexus pinned at ceb87919
+  OK  conxian-ui pinned at f6a3ead0
+  OK  conxius-enclave-sdk pinned at 12c4351e
+  OK  conxius-platform pinned at e171a7a8
+  OK  conxius-wallet pinned at a0809ec7
+  OK  lib-conxian-core pinned at 101ef0c7
 
 ⚠ 1 warning(s):
   • conxian-nexus: Cargo.toml version 0.4.23 has no tag v0.4.23
