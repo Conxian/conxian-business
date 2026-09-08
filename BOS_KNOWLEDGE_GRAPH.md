@@ -1,5 +1,11 @@
 # Conxian Labs BOS Knowledge Graph
 
+## Session Update (2026-09-08 — Session 64: Client Installation Review, Unified CLI Installer & Research Expansion)
+- Formulated end-to-end client installation review across purchase tiers (Community, Business, Enterprise), component setup across 9 submodules, secret management, and connectivity verification matrix in `docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md`.
+- Recommended and specified the Rust-based **Conxian Unified Installer CLI (`cxn`)** to guarantee Time-To-First-Value (TTFV) under 15 minutes.
+- Expanded research candidate ledger analysis (`docs/bos_research_candidate_ledger.json` and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`) incorporating client onboarding and unified installer gap dispositions.
+- Executed 100% PASS verification across `python3 scripts/bos_repo_check.py` and `python3 scripts/verify_bos_research_candidate_ledger.py`.
+
 ## Session Update (2026-09-08 — Session 63: Client System Onboarding & Unified Installer Specification)
 - Formulated full-spectrum client system review covering purchase tiers (Community, Business, Enterprise), artifact delivery models, component installation, and secret inputs ().
 - Mapped end-to-end component connectivity across UI, Gateway, Nexus, Core/SDK, PostgreSQL/Redis, and Bitcoin/Stacks L1/L2 networks.

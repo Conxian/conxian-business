@@ -1092,6 +1092,24 @@
       "uncertainty": "The scan recorded only minimum-necessary public tracker existence and did not reproduce restricted-repository or implementation details.",
       "nonClaim": "Observation does not create a portfolio umbrella, reprioritize the owner backlog, or establish implementation, readiness, or acceptance.",
       "scored": false
+    },
+    {
+      "id": "client-onboarding-unified-installer-gap",
+      "title": "Client Onboarding, System Installation & Unified Installer Specification Gap",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [],
+      "sourceLinks": [
+        "https://github.com/Conxian/conxian-business/blob/main/docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md"
+      ],
+      "gapClasses": [
+        "implementation",
+        "owner-tracker"
+      ],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Implement the unified cxn binary installer in Rust to standardize client setup, secret management, and connectivity verification under 15 mins TTFV.",
+      "uncertainty": "Specification approved in docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md; binary implementation in conxian-cli repository pending.",
+      "nonClaim": "Approved specification does not constitute completed binary implementation or automated deployment execution.",
+      "scored": false
     }
   ]
 }
