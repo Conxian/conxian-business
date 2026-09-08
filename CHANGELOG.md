@@ -9,6 +9,12 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added (2026-09-08 — Session 64)
+- Formulated end-to-end client installation review across purchase tiers (Community, Business, Enterprise), 9-submodule setup, secret inputs, and connectivity matrix in `docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md`.
+- Recommended and specified the Rust-based **Conxian Unified Installer CLI (`cxn`)** to guarantee Time-To-First-Value (TTFV) under 15 minutes.
+- Expanded research candidate ledger analysis (`docs/bos_research_candidate_ledger.json` and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`) incorporating client onboarding and unified installer gap dispositions.
+- Upgraded `BOS_KNOWLEDGE_FRAMEWORK.md` to Version 3.4 and updated `BOS_KNOWLEDGE_GRAPH.md` with Session 64 knowledge synthesis.
+
 ### Added (2026-09-08 — Session 63)
 - Created canonical  providing a comprehensive walkthrough of client purchase tiers, multi-repo system installation, secret parameters, and connectivity verification.
 - Specified the architecture and CLI flow for the unified  () binary installer to achieve TTFV < 15 minutes.

@@ -1,6 +1,6 @@
 # Conxian BOS Knowledge Framework
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 3.3 | Session: 63 | Generated: 2026-09-08
+> Version: 3.4 | Session: 64 | Generated: 2026-09-08
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 
@@ -828,6 +828,12 @@ codeql-fixes:
   Conxian_UI: pending (CSQL-H003 DOM XSS — file location unclear)
 ```
 
+
+## Session 64 Update (2026-09-08 — Client Onboarding Review, Unified Installer & Research Candidate Scoring Expansion)
+- Conducted full system review of client purchase tiers (Community, Business, Enterprise), 9-submodule setup walkthrough, secret parameters, and connectivity matrix in `docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md`.
+- Recommended and specified the Rust-based **Conxian Unified Installer CLI (`cxn`)** to reduce Time-To-First-Value (TTFV) under 15 minutes.
+- Expanded research candidate ledger analysis (`docs/bos_research_candidate_ledger.json` and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`) incorporating client onboarding and unified installer gap dispositions.
+- Executed 100% PASS verification across `python3 scripts/bos_repo_check.py` and `python3 scripts/verify_bos_research_candidate_ledger.py`.
 
 ## Session 63 Update (2026-09-08 — End-to-End Client Onboarding & System Setup)
 - Created canonical  defining client purchase tiers, component setup, connectivity verification, and the unified  installer specification.
