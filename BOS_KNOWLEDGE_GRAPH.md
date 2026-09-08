@@ -1,4 +1,11 @@
 # Conxian Labs BOS Knowledge Graph
+
+## Session Update (2026-09-08 — Session 63: Client System Onboarding & Unified Installer Specification)
+- Formulated full-spectrum client system review covering purchase tiers (Community, Business, Enterprise), artifact delivery models, component installation, and secret inputs ().
+- Mapped end-to-end component connectivity across UI, Gateway, Nexus, Core/SDK, PostgreSQL/Redis, and Bitcoin/Stacks L1/L2 networks.
+- Proposed and specified the unified  () Rust binary installer targeting a Time-To-First-Value (TTFV) of < 15 minutes.
+- Verified ecosystem stability across 9 submodules and validated candidate ledger compliance with 100% pass rate.
+
 > Clarity-version: 5 | Epoch: latest | Generated: 2026-08-19 | Gate 0 baseline
 
 ## Session Update (2026-08-22)

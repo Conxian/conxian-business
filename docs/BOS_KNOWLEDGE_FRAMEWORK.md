@@ -1,6 +1,6 @@
 # Conxian BOS Knowledge Framework
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 3.2 | Session: 62 | Generated: 2026-09-07
+> Version: 3.3 | Session: 63 | Generated: 2026-09-08
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 
@@ -827,3 +827,9 @@ codeql-fixes:
   conxian-nexus: fixed (CSQL-M005)
   Conxian_UI: pending (CSQL-H003 DOM XSS — file location unclear)
 ```
+
+
+## Session 63 Update (2026-09-08 — End-to-End Client Onboarding & System Setup)
+- Created canonical  defining client purchase tiers, component setup, connectivity verification, and the unified  installer specification.
+- Conducted full system review across all 9 core submodules (, , , , , , , , ).
+- Verified zero submodule drift, release hygiene, and candidate research ledger alignment (Success: BOS research candidate ledger verified (/app/docs/bos_research_candidate_ledger.json).).

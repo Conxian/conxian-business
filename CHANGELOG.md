@@ -9,6 +9,11 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added (2026-09-08 — Session 63)
+- Created canonical  providing a comprehensive walkthrough of client purchase tiers, multi-repo system installation, secret parameters, and connectivity verification.
+- Specified the architecture and CLI flow for the unified  () binary installer to achieve TTFV < 15 minutes.
+- Updated  to v3.3 and updated  with Session 63 onboarding and setup knowledge synthesis.
+
 ### Added
 - **Session 62 Research Gap Scoring & Synthesis**: Completed 100% scoring of all 10 research gaps in  against the 100-point BOS rubric.
 - **Ecosystem Knowledge Framework Upgrade**: Updated , , and  with Session 62 research candidate scores, gap mappings, and cloud topology verification results.
