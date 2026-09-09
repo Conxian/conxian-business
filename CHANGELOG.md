@@ -9,6 +9,10 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Synchronized & Remediated (2026-09-09)
+- Pulled fresh code from remote and synchronized submodules (`conxian-gateway`, `conxian-nexus`, `conxian-ui`, `conxius-enclave-sdk`, `conxius-platform`, `conxius-wallet`, `lib-conxian-core`) to their latest `origin/main` release commits.
+- Reviewed repository governance, release hygiene, LTS compliance, production contamination guard, and research candidate ledgers; remediated missing document references in `CHANGELOG.md`.
+
 ### Added (2026-09-08 — Session 64)
 - Formulated end-to-end client installation review across purchase tiers (Community, Business, Enterprise), 9-submodule setup, secret inputs, and connectivity matrix in `docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md`.
 - Recommended and specified the Rust-based **Conxian Unified Installer CLI (`cxn`)** to guarantee Time-To-First-Value (TTFV) under 15 minutes.
@@ -16,13 +20,13 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 - Upgraded `BOS_KNOWLEDGE_FRAMEWORK.md` to Version 3.4 and updated `BOS_KNOWLEDGE_GRAPH.md` with Session 64 knowledge synthesis.
 
 ### Added (2026-09-08 — Session 63)
-- Created canonical  providing a comprehensive walkthrough of client purchase tiers, multi-repo system installation, secret parameters, and connectivity verification.
-- Specified the architecture and CLI flow for the unified  () binary installer to achieve TTFV < 15 minutes.
-- Updated  to v3.3 and updated  with Session 63 onboarding and setup knowledge synthesis.
+- Created canonical `docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md` providing a comprehensive walkthrough of client purchase tiers, multi-repo system installation, secret parameters, and connectivity verification.
+- Specified the architecture and CLI flow for the unified Conxian CLI (`cxn`) binary installer to achieve TTFV < 15 minutes.
+- Updated `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to v3.3 and updated `BOS_KNOWLEDGE_GRAPH.md` with Session 63 onboarding and setup knowledge synthesis.
 
 ### Added
-- **Session 62 Research Gap Scoring & Synthesis**: Completed 100% scoring of all 10 research gaps in  against the 100-point BOS rubric.
-- **Ecosystem Knowledge Framework Upgrade**: Updated , , and  with Session 62 research candidate scores, gap mappings, and cloud topology verification results.
+- **Session 62 Research Gap Scoring & Synthesis**: Completed 100% scoring of all 10 research gaps in `docs/bos_research_candidate_ledger.json` against the 100-point BOS rubric.
+- **Ecosystem Knowledge Framework Upgrade**: Updated `docs/BOS_KNOWLEDGE_FRAMEWORK.md`, `BOS_KNOWLEDGE_GRAPH.md`, and `CHANGELOG.md` with Session 62 research candidate scores, gap mappings, and cloud topology verification results.
 
 ### Full Infrastructure, Branch & System Operational Review (August 2026)
 - **Branch Synchronization & Enhancement Verification**:
