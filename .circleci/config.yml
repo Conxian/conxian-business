@@ -23,11 +23,6 @@ executors:
       - image: cimg/python:3.11
     resource_class: small
 
-  clarity-executor:
-    docker:
-      - image: cimg/node:22.19.0
-    resource_class: medium
-
 commands:
   checkout-repo:
     description: "Clone repo via HTTPS (no SSH key needed)"
@@ -48,8 +43,8 @@ commands:
           command: |
             git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
             git submodule sync --recursive
-            for sub in Conxian conxian-gateway conxian-labs-site conxian-nexus \
-                       conxian-ui conxius-enclave-sdk conxius-orbit conxius-platform \
+            for sub in conxian-gateway conxian-labs-site conxian-nexus \
+                       conxius-enclave-sdk conxius-platform \
                        conxius-wallet lib-conxian-core; do
               git submodule update --init --depth 1 "$sub"
             done
@@ -174,20 +169,6 @@ jobs:
           name: Verify lockfile is up-to-date
           command: pnpm install --frozen-lockfile
 
-  # ── Clarity Contracts (Conxian/Conxian) ──
-  clarity-check:
-    executor: clarity-executor
-    steps:
-      - checkout-submodules
-      - node-install:
-          workspace_path: "Conxian"
-      - run:
-          name: Clarity chain-check
-          command: cd Conxian && npx clarinet check
-      - run:
-          name: Protocol tests
-          command: cd Conxian && bash scripts/run-tests.sh
-
   # ── Gateway (Rust) ──
   gateway-test:
     executor: rust-executor
@@ -254,17 +235,6 @@ jobs:
           name: Platform tests
           command: cd conxius-platform && pnpm test
 
-  # ── Orbit (Python) ──
-  orbit-test:
-    executor: python-executor
-    steps:
-      - checkout-submodules
-      - run:
-          name: Orbit validation
-          command: |
-            pip install -r conxius-orbit/requirements.txt
-            python3 conxius-orbit/conxian_testnet_deploy.py --help
-
   # ── Labs Site (TypeScript) ──
   labs-site-test:
     executor: node-executor
@@ -276,17 +246,6 @@ jobs:
           name: Labs site build check
           command: cd conxian-labs-site && pnpm build
 
-  # ── UI (Next.js) ──
-  ui-test:
-    executor: node-executor
-    steps:
-      - checkout-submodules
-      - node-install:
-          workspace_path: "conxian-ui"
-      - run:
-          name: UI build check
-          command: cd conxian-ui && pnpm build
-
 # ── Workflows ──
 workflows:
   version: 2
@@ -295,13 +254,10 @@ workflows:
       - gitleaks
       - repo-hygiene
       - root-audit
-      - clarity-check
       - gateway-test
       - nexus-test
       - core-test
       - enclave-sdk-test
       - wallet-test
       - platform-test
-      - orbit-test
       - labs-site-test
-      - ui-test
