@@ -20,7 +20,7 @@ remote default-branch heads is noted where observed.
 | **conxius-orbit** | [`ded4954`](https://github.com/Conxian/conxius-orbit/commit/ded4954) | same | no |
 | **conxius-enclave-sdk** | [`b9b264b`](https://github.com/Conxian/conxius-enclave-sdk/commit/b9b264b7) | same | no |
 | **lib-conxian-core** | [`6f7e037`](https://github.com/Conxian/lib-conxian-core/commit/6f7e037e) | same | no |
-| **conxian-market** | [`369913c`](https://github.com/Conxian/conxian_market/commit/369913c6) (`update = none`) | same | no |
+| **conxian_market** | [`369913c`](https://github.com/Conxian/conxian_market/commit/369913c6) (`update = none`) | same | no |
 | **conxian-labs-site** | [`64e6f2a`](https://github.com/Conxian/conxian-labs-site/commit/64e6f2ab) | — | — |
 
 ## `.gitmodules` branch hints

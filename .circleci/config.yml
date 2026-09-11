@@ -35,7 +35,7 @@ commands:
             git config user.name "CircleCI"
 
   checkout-submodules:
-    description: "Checkout repo with public submodules (conxian-market is private)"
+    description: "Checkout repo with public submodules (conxian_market is private)"
     steps:
       - checkout-repo
       - run:

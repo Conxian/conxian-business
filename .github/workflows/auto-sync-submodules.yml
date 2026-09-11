@@ -22,7 +22,7 @@ jobs:
       - name: Ensure submodules are initialized
         run: |
           git submodule sync --recursive
-          # Init public submodules only. conxian-market is private (update=none).
+          # Init public submodules only. conxian_market is private (update=none).
           git submodule update --init -- \
             conxian-gateway \
             conxian-labs-site \

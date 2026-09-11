@@ -44,7 +44,7 @@
 
 > **Submodule gitlinks now track each repo's `main`** (re-synced 2026-09-07, PR #1092), not release tags:
 > gateway `d77952e`, nexus `bc87000`, ui `bee4e03`, enclave-sdk `11add87`, platform `1a2f78d`, wallet `4bf89aa`, lib-core `c14f2e5`; labs-site `9dabf1c`; market frozen (`update=none`).
-> `conxius-orbit` is no longer a submodule (dangling gitlink removed). `conxian-market` remains `update = none`.
+> `conxius-orbit` is no longer a submodule (dangling gitlink removed). `conxian_market` remains `update = none`.
 > Nexus `0.4.23` and wallet `1.9.5` are ahead of their latest tags (unreleased bumps).
 
 ### CI Status (2026-09-07)

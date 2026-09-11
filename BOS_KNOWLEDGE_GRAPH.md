@@ -85,7 +85,7 @@ BOS production boundary checks: OK
 Found 9 submodule(s) in .gitmodules
 
 --- Checking submodule pin validity ---
-  OK  conxian-market: update=none (intentionally pinned, skip init check)
+  OK  conxian_market: update=none (intentionally pinned, skip init check)
 
 --- Checking update-policy hardening ---
   OK  conxian-gateway: update=checkout
@@ -96,7 +96,7 @@ Found 9 submodule(s) in .gitmodules
   OK  conxian-labs-site: update=checkout
   OK  conxius-enclave-sdk: update=checkout
   OK  lib-conxian-core: update=checkout
-  OK  conxian-market: update=none (matches expected override)
+  OK  conxian_market: update=none (matches expected override)
 
 ✅ All submodule pins and update policies are valid.
 
@@ -129,7 +129,7 @@ Found 9 submodule(s) in .gitmodules
 --- Submodule release pin check ---
   OK  conxian-gateway pinned at bb48a132
   OK  conxian-labs-site pinned at b106176f
-  OK  conxian-market pinned at 276d9f4f
+  OK  conxian_market pinned at 276d9f4f
   OK  conxian-nexus pinned at ceb87919
   OK  conxian-ui pinned at f6a3ead0
   OK  conxius-enclave-sdk pinned at 12c4351e
@@ -260,7 +260,7 @@ The current doctrine relationship is:
 |--------|--------|----------|-------|--------|
 | `conxian-business` | Conxian/conxian-business | Mixed | Governance and specifications | Production intent / Beta; Implemented governance, Target-state proposals |
 | `Conxian` | Conxian/Conxian | Clarity | [Deprecated] Legacy protocol contracts | Deprecated / Archive candidate; active protocol in core/gateway/nexus |
-| `conxian-market` | Conxian/conxian_market | TypeScript/Rust | AI Marketplace & Agentic Commerce | Production intent / Incubating; mapped and integrated in business repo |
+| `conxian_market` | Conxian/conxian_market | TypeScript/Rust | AI Marketplace & Agentic Commerce | Production intent / Incubating; mapped and integrated in business repo |
 | `conxian-gateway` | Conxian/conxian-gateway | Rust | Routing and compliance middleware | Production intent / Beta; Implemented runtime, verification conditional |
 | `conxian-nexus` | Conxian/conxian-nexus | Rust | State and proof node | Production intent / Beta; Implemented code, deployment claims conditional |
 | `conxius-wallet` | Conxian/conxius-wallet | TypeScript | Open-source, provider-agnostic universal self-custody & signing SDK | Production intent / Stable; capability-scoped Implemented claims |
