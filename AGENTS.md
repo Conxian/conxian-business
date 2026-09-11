@@ -1,10 +1,20 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
-> **Version**: 1.8 (2026-09-07 — System upgrade: Rust 1.98.1 + Node 24)
+> **Version**: 1.9 (2026-09-11 — org-wide KB reconciliation + capabilities audit)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
 
 ---
+
+### Session 65 Summary (2026-09-11 — org-wide KB reconciliation + capabilities audit)
+- **Canonical KB is `.github-private`** — `docs/ECOSYSTEM_REGISTRY.json` is the registry source of truth. Reconcile it against `GET /orgs/Conxian/repos?per_page=100&type=all`; `scripts/verify-registry-sync.py` enforces the profile `README.md` ↔ registry sync (exact lowercase repo names + `Archived` marker). Registry-drift fixes land as `.github-private` PRs.
+- **Registry drift fixed**: `conxian_ui`, `Conxian`, and `conxius-orbit` marked `archived`; language/field mismatches corrected to match GitHub (15-repo enumeration).
+- **Archived repos are read-only** — GitHub rejects issue/PR mutations with `403 "Repository was archived so is read-only"`. 10 issues are frozen there: `Conxian` ×9 (#488/#496/#500/#507/#515/#527/#529/#530/#532) + `conxian_ui` ×1 (#161). Closing requires unarchiving or transferring the issues.
+- **Issue-graph alignment**: closed `conxian-business` #1073 (Neon 422 — resolved via `preview/*` prune, 0 remain); status comments on #1078 (registry drift — core resolved) and #1075 (doc↔code audit — superseded by the capabilities audit). PR #1090 flagged stale (pins decoupled `conxian_ui`; the `pnpm.overrides` security consolidation is still wanted).
+- **Decoupling complete** (sprint requirement): `conxian_ui` submodule removed (#1097 → `7fd8be4`) + `conxian-ui` service removed from `conxius-platform/docker-compose.yml` (#1278). `conxius-orbit` gitlink removed. Only `conxian_ui` deprecated among active surfaces (Option A: network-agnostic, no DeFi, reuse protocols — keep protocol-neutral rail/adaptor code).
+- **Repo layer map** (SDK → infra → product → governance): `lib-conxian-core` + `conxius-enclave-sdk` (SDK) → `conxian-gateway` + `conxian-nexus` (infra) → `conxius-wallet` + `conxian_market` + `conxius-platform` + `conxian-labs-site` + `conxian.github.io` (product) → `conxian-business` + `.github` + `.github-private` (governance). Archived: `Conxian` (Clarity protocol), `conxian_ui`, `conxius-orbit`.
+- **Capabilities audit**: `docs/CAPABILITIES_AUDIT_2026_09_11.md` (in `.github-private`) holds the layer map, verified pins (gateway `tag v0.3.3`, nexus `rev b85625f`), and findings.
+
 
 ### Session 63 Summary (2026-09-07)
 - **Rust 1.97.1 → 1.98.1** (latest stable, 2026-09-03 patch fixes a rustc vtable miscompilation) across all 4 Rust repos (#346/#305/#380/#279). Two new clippy lints fixed by refactor: `needless_late_init` (enclave-sdk `src/enclave/cloud.rs`) + `chunks_exact_to_as_chunks` (lib-core fuzz `as_chunks::<33>()`).
@@ -63,6 +73,7 @@
 - **Dependabot (conxian-business)**: open alerts (high/moderate/low) across JS packages in the parent monorepo.
 - **CI failures (conxian-business, 2026-09-07)**: RESOLVED — Neon branch limit (#1073, pruned 9 stale `preview/*` branches) + Node 20→24 (#1074, `setup-node` v7).
 - **Open follow-ups (2026-09-07)**: production KMS release-signing key (#1076); coordinated `bitcoin 0.32.102` + `secp256k1 0.33.1` migration (silent-payments — supersedes closed #527/#528); portfolio mapping drift (#1078 — under verification).
+- **Human-blocked (2026-09-11)**: `conxian-nexus` `rust-version` 1.97.1 vs org 1.98.1 floor; enclave attestation hardware evidence (#241/#242); 10 issues frozen on archived read-only repos (`Conxian` ×9 + `conxian_ui` ×1 — see Session 65).
 
 ### Resolved (this sprint)
 - **secp256k1 yank** → resolved via enclave-sdk v2.0.17 (yanked-crate-free).
@@ -93,7 +104,7 @@ Dependency pins (from `Cargo.toml`):
 - **Submodule management**: `git submodule update --remote` in conxian-business to sync all repos to main; then regen lockfiles (see below).
 - **Version bumps**: Update Cargo.toml, CHANGELOG.md, then `scripts/sync-kb-versions.sh` to propagate to docs.
 - **Release process**: Push semver tag → Release Strict workflow (enclave-sdk) or Publish workflow (lib-core).
-- **Rust toolchain**: `1.98.1` (latest stable) across all Rust repos (enclave-sdk, gateway, lib-conxian-core, nexus).
+- **Rust toolchain**: `1.98.1` (latest stable) across enclave-sdk, gateway, lib-conxian-core; `conxian-nexus` is still pinned `1.97.1` (human-blocked parity — needs owner confirmation to advance).
 - **Node.js**: **24** (approved LTS — do NOT pin Node 20). pnpm `10.28.0` (matches `conxian-unified-ci.yml`).
 
 ### Build Commands
