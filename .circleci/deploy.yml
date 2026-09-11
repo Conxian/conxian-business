@@ -30,7 +30,7 @@ jobs:
             git config user.name "CircleCI"
       - run:
           name: Initialize submodules
-          command: git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/" && git submodule sync --recursive && for sub in Conxian conxian-gateway conxian-labs-site conxian-nexus conxian-ui conxius-enclave-sdk conxius-orbit conxius-platform conxius-wallet lib-conxian-core; do git submodule update --init --depth 1 "$sub"; done && git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
+          command: git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/" && git submodule sync --recursive && for sub in conxian-gateway conxian-labs-site conxian-nexus conxius-enclave-sdk conxius-platform conxius-wallet lib-conxian-core; do git submodule update --init --depth 1 "$sub"; done && git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
       - run:
           name: Authenticate with GCP
           command: |
@@ -81,7 +81,7 @@ jobs:
             git config user.name "CircleCI"
       - run:
           name: Initialize submodules
-          command: git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/" && git submodule sync --recursive && for sub in Conxian conxian-gateway conxian-labs-site conxian-nexus conxian-ui conxius-enclave-sdk conxius-orbit conxius-platform conxius-wallet lib-conxian-core; do git submodule update --init --depth 1 "$sub"; done && git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
+          command: git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/" && git submodule sync --recursive && for sub in conxian-gateway conxian-labs-site conxian-nexus conxius-enclave-sdk conxius-platform conxius-wallet lib-conxian-core; do git submodule update --init --depth 1 "$sub"; done && git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
       - run:
           name: Install Firebase CLI
           command: sudo npm install -g firebase-tools
@@ -105,7 +105,7 @@ jobs:
             git config user.name "CircleCI"
       - run:
           name: Initialize submodules
-          command: git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/" && git submodule sync --recursive && for sub in Conxian conxian-gateway conxian-labs-site conxian-nexus conxian-ui conxius-enclave-sdk conxius-orbit conxius-platform conxius-wallet lib-conxian-core; do git submodule update --init --depth 1 "$sub"; done && git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
+          command: git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/" && git submodule sync --recursive && for sub in conxian-gateway conxian-labs-site conxian-nexus conxius-enclave-sdk conxius-platform conxius-wallet lib-conxian-core; do git submodule update --init --depth 1 "$sub"; done && git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
       - run:
           name: Install Vercel CLI
           command: sudo npm install -g vercel

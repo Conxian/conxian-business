@@ -27,7 +27,6 @@ jobs:
             conxian-gateway \
             conxian-labs-site \
             conxian-nexus \
-            conxian-ui \
             conxius-enclave-sdk \
             conxius-platform \
             conxius-wallet \
