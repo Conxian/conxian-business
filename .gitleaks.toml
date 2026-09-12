@@ -33,7 +33,7 @@ paths = [
   # configs, and documentation that trigger gitleaks false positives.
   # These are not production secrets — they're in version-controlled repos.
   '''Conxian/.*''',
-  '''conxian-market/.*''',
+  '''conxian_market/.*''',
   '''conxian-gateway/.*''',
   '''conxian-labs-site/.*''',
   '''conxian-nexus/.*''',

@@ -143,7 +143,7 @@ This handbook defines the operational structure, revenue streams, deployment rea
 
 #### Stream 6: Marketplace Operations (PLANNED)
 
-**Service**: conxian-market  
+**Service**: conxian_market  
 **Target Market**: Traders, market makers, liquidity providers  
 **Revenue Model**: Commission per transaction (0.1-1%) + Premium features  
 **Status**: ⏳ PLANNED FOR Q3 2026  
