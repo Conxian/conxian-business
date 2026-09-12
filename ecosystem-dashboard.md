@@ -22,7 +22,6 @@
 | `Conxian/conxian.github.io` | — | 1 | 0 | — |
 | `Conxian/.github` | — | — | — | — |
 | `Conxian/.github-private` | — | — | — | — |
-| `Conxian/demo-repository` | — | 0 | 0 | — |
 | **TOTAL** | | **48** | **4** | **~100** |
 
 ---
