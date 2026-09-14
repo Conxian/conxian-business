@@ -9,6 +9,9 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Fixed & Remediated (2026-09-14)
+- Removed deleted/deprecated `Conxian/demo-repository` entry from `scripts/verify_doctrine_alignment.py` to align expected repository count (15) with `docs/PORTFOLIO_DOCTRINE_REGISTER.md`.
+
 ### Synchronized & Remediated (2026-09-09)
 - Pulled fresh code from remote and synchronized submodules (`conxian-gateway`, `conxian-nexus`, `conxian-ui`, `conxius-enclave-sdk`, `conxius-platform`, `conxius-wallet`, `lib-conxian-core`) to their latest `origin/main` release commits.
 - Reviewed repository governance, release hygiene, LTS compliance, production contamination guard, and research candidate ledgers; remediated missing document references in `CHANGELOG.md`.
