@@ -23,7 +23,7 @@ jobs:
         with:
           submodules: recursive
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.28.0
       - name: Set up Node.js
