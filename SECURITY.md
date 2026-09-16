@@ -1,5 +1,7 @@
 # Security Policy
 
+## Reporting a Vulnerability
+
 For information on reporting vulnerabilities and the Conxian security posture, please refer to the Root Security Policy: https://github.com/Conxian/conxian-business/blob/main/SECURITY.md
 
 ---
