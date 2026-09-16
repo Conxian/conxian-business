@@ -1,0 +1,68 @@
+# Conxian Organization SLA Policy
+
+Purpose
+
+This document codifies Conxian's org-level Service Level posture and guidance for repository owners, contributors, and commercial partners. It defines clear boundaries between public, community-maintained protocol surfaces and paid enterprise/managed offerings where formal SLAs may be offered under contract.
+
+Scope
+
+Applies to all public repositories and submodules under the Conxian organization. It defines three tiers:
+
+- Tier 0 — Core Protocols & Public Repos
+  - Policy: No SLA for the public repository. Community-best-effort support via GitHub Issues/Discussions. Public repositories must display the standard SLA disclaimer in their README.
+  - Support: Security disclosures handled via the coordinated disclosure process (see SECURITY.md). No guaranteed remediation windows; acknowledgement timelines apply only to vulnerability reports.
+
+- Tier 1 — Enterprise Integration Wrappers / Paid Support
+  - Policy: SLAs provided only under a signed commercial contract or paid support agreement. Default public repository remains No-SLA. Contracts must explicitly define scope, metrics, exclusions, and liability caps.
+  - Typical scope: configuration support, integration assistance, business-hours response/resolution targets, advisory and patch delivery windows for non-critical defects.
+  - Exclusions: L1/L2 network outages, third-party vendor firmware/API changes (enclave/TEE), customer misconfiguration, force majeure, and upstream consensus delays.
+
+- Tier 2 — Managed / Hosted Service
+  - Policy: SRE-backed SLAs funded by subscription. Requires dedicated on-call rotation, monitoring, incident runbooks, and clear credit/penalty clauses. Only offered where revenue covers operational cost and insurance.
+
+SLA design principles
+
+- Use SLOs internally; convert to SLA only within a contract that funds the operational cost.
+- Guarantee acknowledgement/triage times, not guaranteed fix windows for decentralized or hardware-dependent failures.
+- Define Response vs Resolution: Response = acknowledgement + initial triage; Resolution = fix/mitigation. Contracts should guarantee Response times and target advisory/patch windows for non-critical issues.
+- Always include explicit exclusions and a limitation of liability (cap remedies to credits or limited refunds).
+- Require legal review before offering any monetary or time-bound commitments.
+
+Security reporting & vulnerability handling
+
+- Acknowledgement: Conxian aims to acknowledge receipt of a private vulnerability report within 48–72 hours. This acknowledgement is not a remediation SLA; it confirms receipt and initiation of triage.
+- Remediation: Remediation timelines will be provided after triage and prioritized under the security process. Backports will be provided only to the latest supported release line as defined in SECURITY.md.
+- Public vs Private: Do not report security vulnerabilities via public GitHub issues. Use Security Advisories or the contacts in SECURITY.md.
+
+Repo-level implementation checklist (owners)
+
+- Add the standard SLA disclaimer to repository README (one-line pointing to this policy).
+- Ensure SECURITY.md exists and references the coordinated disclosure process.
+- Add an issue template for SLA/enterprise expectation tickets (.github/ISSUE_TEMPLATE/sla-triage.md) which applies the `org-sla-triage` label.
+- Ensure CODEOWNERS correctly points to the responsible owners for enterprise-facing components.
+- For Tier 1 or Tier 2 services, maintain a published runbook and incident escalation path for contract customers (kept in private/internal repos if required).
+
+Legal & Commercial
+
+- Any SLA offered to a customer must be accompanied by a signed contract that includes:
+  - Scope of services, metrics, exclusions, limitation of liability, remedy structure (credits), and termination clauses.
+  - A requirement that customers use managed or dedicated deployments for production-critical workloads when those workloads depend on L1/L2 network states or hardware enclaves.
+  - Insurance/professional liability review for high-exposure customers.
+
+Change control & adoption
+
+- This policy is effective immediately for public repositories. Repository owners must apply the README disclaimer and ensure SECURITY.md references.
+- Any change to this policy must be approved by governance CODEOWNERS (see .github/CODEOWNERS) and legal counsel.
+
+Contact & escalation
+
+- For enterprise SLA inquiries or contract negotiations, contact admin@conxian-labs.com and include `SLA Inquiry` in the subject.
+- For security disclosures, use the private channels in SECURITY.md.
+
+Notes
+
+- This policy is intentionally conservative to protect protocol integrity and avoid unfunded liabilities. It is designed to enable monetization through well-scoped enterprise/managed offerings while preserving the open-source, community-maintained nature of core protocol artifacts.
+
+---
+
+*Document generated by Conxian governance. LEGAL REVIEW REQUIRED: Do not convert SLOs into contract SLAs without counsel approval.*
