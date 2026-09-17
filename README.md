@@ -43,7 +43,6 @@ The Conxian ecosystem is organized by function to ensure clarity and modularity 
 ### 1. Platform & Governance
 - **[`conxian-business/`](./conxian-business)**: **BOS Governance**. Public-safe specifications, templates, and ZSE pointer stubs.
 - **[`conxius-platform/`](./conxius-platform)**: **Orchestration**. Stack orchestration and local development.
-- **[`conxius-orbit/`](./conxius-orbit)**: **Ops Tooling**. Deployment and operations automation.
 
 ### 2. Core Operating Suite (EXCO Agents)
 - **[`conxian-nexus/`](./conxian-nexus)**: **State Node**. High-level orchestration, state roots (MMR), and decentralized storage.
@@ -59,7 +58,6 @@ The Conxian ecosystem is organized by function to ensure clarity and modularity 
 
 ### 4. User Interfaces
 - **[`conxius-wallet/`](./conxius-wallet)**: **Mobile**. Open-source, provider-agnostic universal self-custody & signing SDK.
-- **[`conxian-ui/`](./conxian-ui)**: **Web**. `conxian_ui` public interaction surface (upstream slug retained).
 - **[`conxian-labs-site/`](./conxian-labs-site)**: **Website**. Public ecosystem landing.
 
 ## Quick start / Next action
