@@ -47,6 +47,10 @@ REQUIRED_DOCS = [
     "docs/ISO_20022_INTEGRATION_SPEC.md",
     "docs/SAB_MIGRATION_READINESS_GATES.md",
     "docs/TECHNICAL_WHITEPAPER_OUTLINE.md",
+    "docs/GAPS.md",
+    "docs/PORTFOLIO.md",
+    "docs/SLA.md",
+    "docs/ALIGNMENT.md",
 ]
 
 GENERATED_DIRS = [

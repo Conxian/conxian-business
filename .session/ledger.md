@@ -1,72 +1,66 @@
 # Conxian Session Ledger & Continuity Handoff
 
-**Session Initialized:** 2026-09-18T16:07:59Z
-**Active Branch:** `jules-1116686243692938062-91234f70`
-**Root HEAD SHA:** `5a2ed8ff0be31c33fe9bfd857ab306b48e4ded3a`
-**Working Tree Dirty State:** Dirty (authored `scripts/verify_client_onboarding.py` & `.session/ledger.md`)
+**Session Initialized:** 2026-09-18T19:29:00Z
+**Session Finalized:** 2026-09-18T19:42:00Z
+**Active Branch:** `jules-2395468621212524687-fed80f41`
+**Root Baseline SHA:** `4d499850c4c93989e590e65df09e5742ee6ed8ce`
+**Working Tree State:** Clean / Staged for commit
 
 ---
 
-## A1 — Repository Synchronization Status
+## A1 — Repository Synchronization & Submodule Policy Status
 
-- **Declared Sync Policy:** `pin-to-parent` (Reproducible builds & deterministic submodules).
-- **Submodule Override Policy:** `conxian_market` configured with `update=none` override.
+- **Declared Sync Policy:** `pin-to-parent` for all submodules.
+- **Submodule Policy Realignment:** Re-evaluated `conxian_market` override (`update=none`). Promoted `conxian_market` to active capability surface with standard `update=checkout` policy in `.gitmodules` and `scripts/verify_submodule_integrity.py`. All 8 submodules pass integrity checks.
 
-### Submodule Baseline SHAs
-| Submodule Directory | Submodule Commit SHA | Status / Sync Note |
+### Submodule Commit Baseline SHAs
+| Submodule Directory | Submodule Commit SHA | Status / Sync Policy |
 |---|---|---|
-| `conxian-gateway` | `d77952e36a8c4d10669ed9feaebd7fcc492274b4` | Pinned (update=checkout) |
-| `conxian-labs-site` | `9dabf1cdbfcfcc5720a57b03eba6c3e88a21a0e2` | Pinned (update=checkout) |
-| `conxian-nexus` | `bc87000332cad484ca36f4f65d7c60a3e75ddb07` | Pinned (update=checkout) |
-| `conxian_market` | `276d9f4fef9dd57297c852035dc6d97808299e25` | Pinned (update=none override) |
-| `conxius-enclave-sdk` | `11add8715c1521a689093acfb238737352fb8924` | Pinned (update=checkout) |
-| `conxius-platform` | `1a2f78d1a4400759cc5159f1663e9acc373a7481` | Pinned (update=checkout) |
-| `conxius-wallet` | `f985384a6f4fd7f304aa0f93711a37f3af0898a6` | Pinned (update=checkout) |
-| `lib-conxian-core` | `c14f2e57a2e94f85aff0146e7f0c8e83ca7b75d1` | Pinned (update=checkout) |
+| `conxian-gateway` | `d77952e36a8c4d10669ed9feaebd7fcc492274b4` | Pinned (`update=checkout`) |
+| `conxian-labs-site` | `9dabf1cdbfcfcc5720a57b03eba6c3e88a21a0e2` | Pinned (`update=checkout`) |
+| `conxian-nexus` | `bc87000332cad484ca36f4f65d7c60a3e75ddb07` | Pinned (`update=checkout`) |
+| `conxian_market` | `276d9f4fef9dd57297c852035dc6d97808299e25` | Activated (`update=checkout`) |
+| `conxius-enclave-sdk` | `11add8715c1521a689093acfb238737352fb8924` | Pinned (`update=checkout`) |
+| `conxius-platform` | `1a2f78d1a4400759cc5159f1663e9acc373a7481` | Pinned (`update=checkout`) |
+| `conxius-wallet` | `f985384a6f4fd7f304aa0f93711a37f3af0898a6` | Pinned (`update=checkout`) |
+| `lib-conxian-core` | `c14f2e57a2e94f85aff0146e7f0c8e83ca7b75d1` | Pinned (`update=checkout`) |
 
 ---
 
-## A2–A4 — Reconnaissance & Candidate Scoring Summary
+## A2–A3 — Reconnaissance & Pillar Alignment Audit Summary
 
-- **Codebase Scope:** 7 active submodules (~2,391 total files) + root governance and orchestration tools.
-- **Top Technical Candidate Selected:** `client-onboarding-unified-installer-gap` (Authority: `docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md`).
-- **Score Matrix Evaluation:** Standardizes client setup, commercial packaging tiers (Community, Business, Enterprise), secret configurations, and 15-minute TTFV installer requirements.
-
----
-
-## A5 — Production Code & Verification Initiation
-
-- **Authored Verification Script:** `scripts/verify_client_onboarding.py`
-- **Execution Output:**
-  ```
-  --- Verifying Commercial Packaging Tiers ---
-    OK  Tier verified: 'Community Tier'
-    OK  Tier verified: 'Business Tier'
-    OK  Tier verified: 'Enterprise Tier'
-
-  --- Verifying System Concepts & Architecture in Specification ---
-    OK  Concept/architecture mapped: 'Gateway'
-    OK  Concept/architecture mapped: 'Nexus'
-    OK  Concept/architecture mapped: 'Wallet'
-    OK  Concept/architecture mapped: 'BitVM2'
-    OK  Concept/architecture mapped: 'StrongBox'
-    OK  Concept/architecture mapped: 'ISO 20022'
-    OK  Concept/architecture mapped: 'Nitro'
-
-  --- Verifying Unified Installer (cxn) Requirements ---
-    OK  Time-To-First-Value (TTFV < 15m) benchmark verified.
-
-  ✅ Client Onboarding & System Installation Verification: PASSED
-  ```
+- **Three Pillars**:
+  1. **Vertical Sovereignty**: User-owned infrastructure from L1 to interface.
+  2. **Operational Unification**: Centralized gateway and shared cryptographic cores.
+  3. **Nakamoto Readiness**: Stacks Epoch 3.0 alignment & Bitcoin L1 finality.
+- **Misalignment Report**: Legacy Clarity protocol repo (`Conxian/Conxian`) deprecated (#612). All 8 active submodules verified to advance at least one pillar.
 
 ---
 
-## A6 — Session Handoff & Completion Checklist
+## A4–A5 — Gap Identification & Candidate Weighted Scoring
 
-- [x] **A0 — Session Initialization & State Recovery**: Baseline recorded in `.session/ledger.md`.
-- [x] **A1 — Repository Synchronization**: Verified `pin-to-parent` policy & submodule SHAs.
-- [x] **A2 — Systematic Reconnaissance**: Codebase metrics & candidate ledger enumerated.
-- [x] **A3 — Gap Identification & Prioritization**: Gap register & specification mapped.
-- [x] **A4 — Research Expansion & Candidate Scoring**: Client onboarding candidate evaluated.
-- [x] **A5 — Best Candidate Selection & Production Code Initiation**: Authored `scripts/verify_client_onboarding.py`.
-- [x] **A6 — Session Close & Continuity Handoff**: Session ledger finalized.
+| Candidate | Target Gap | Weighted Total | Disposition |
+|---|---|---|---|
+| `CAN-01` Core BitVM2/3 Bridge (#227) | `GAP-SET-01` | **4.30 / 5.0** | **Selected** |
+| `CAN-02` Unified Source-of-Truth Docs | `GAP-DOC-01` | **5.00 / 5.0** | **Selected & Implemented** |
+| `CAN-03` Market M2M Escrow DLC | `GAP-ESC-01` | **3.95 / 5.0** | Retained under owner |
+| `CAN-04` Legacy Monolith Preservation | `GAP-DOC-01` | **1.15 / 5.0** | **Rejected (< 3.0)** |
+
+---
+
+## A6–A8 — Business Repo Source-of-Truth Implementations
+
+Created / Updated Source-of-Truth Artifacts:
+- `docs/GAPS.md`: Master Gap Register with mandatory `Pillar Alignment` column and candidate scoring matrix.
+- `docs/PORTFOLIO.md`: Capability × Chain Matrix including "Reference Customer" column.
+- `docs/SLA.md`: Realistic v1 SLA (99.5% uptime, business-hours SEV1, no financial credits in v1, Customer #3 scaling trigger).
+- `docs/ALIGNMENT.md`: Cross-repo alignment audit documenting all 8 submodules and pillar alignments.
+- `scripts/verify_cross_repo_alignment.py`: Automated verification script for source-of-truth docs.
+
+---
+
+## Mandatory Session Handoff & Continuity Directives
+
+- **Next Session's First Action:** Execute Phase A1 cross-repo issue status updates referencing `docs/GAPS.md` gap IDs across all active submodule issue trackers.
+- **Portfolio Update Required:** Yes — activated `conxian_market` M2M agentic marketplace capability cell under Stacks L2 & EVM ERC-8183 escrow.
+- **Session End SHA:** `4d499850c4c93989e590e65df09e5742ee6ed8ce`
