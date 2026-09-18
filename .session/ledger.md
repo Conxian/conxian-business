@@ -1,10 +1,10 @@
 # Conxian Session Ledger & Continuity Handoff
 
 **Session Initialized:** 2026-09-18T19:29:00Z
-**Session Finalized:** 2026-09-18T19:42:00Z
-**Active Branch:** `jules-2395468621212524687-fed80f41`
-**Root Baseline SHA:** `4d499850c4c93989e590e65df09e5742ee6ed8ce`
-**Working Tree State:** Clean / Staged for commit
+**Session Finalized:** 2026-09-18T21:55:00Z
+**Active Branch:** `jules-bos-setup-research-expansion-9217168788029916685`
+**Root Baseline SHA:** `1209a778bfbc99ec4407d172e29ff6f9ebfcb76b`
+**Working Tree State:** Verified / Aligned
 
 ---
 
@@ -55,12 +55,14 @@ Created / Updated Source-of-Truth Artifacts:
 - `docs/PORTFOLIO.md`: Capability × Chain Matrix including "Reference Customer" column.
 - `docs/SLA.md`: Realistic v1 SLA (99.5% uptime, business-hours SEV1, no financial credits in v1, Customer #3 scaling trigger).
 - `docs/ALIGNMENT.md`: Cross-repo alignment audit documenting all 8 submodules and pillar alignments.
+- `docs/BOS_KNOWLEDGE_FRAMEWORK.md`: Upgraded to Version 3.5 (Session 65) with multi-tier setup profiles and installer CLI (`cxn`).
+- `BOS_KNOWLEDGE_GRAPH.md`: Synchronized with Session 65 research expansion and client onboarding specifications.
 - `scripts/verify_cross_repo_alignment.py`: Automated verification script for source-of-truth docs.
 
 ---
 
-## Mandatory Session Handoff & Continuity Directives
+## A9 — Session Close & Continuity Handoff
 
 - **Next Session's First Action:** Execute Phase A1 cross-repo issue status updates referencing `docs/GAPS.md` gap IDs across all active submodule issue trackers.
 - **Portfolio Update Required:** Yes — activated `conxian_market` M2M agentic marketplace capability cell under Stacks L2 & EVM ERC-8183 escrow.
-- **Session End SHA:** `4d499850c4c93989e590e65df09e5742ee6ed8ce`
+- **Session End SHA:** `1209a778bfbc99ec4407d172e29ff6f9ebfcb76b`
