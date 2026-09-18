@@ -1,5 +1,15 @@
 {
   "devDependencies": {
     "@types/react": "^19.2.18"
+  },
+  "pnpm": {
+    "overrides": {
+      "next": "16.2.12",
+      "ip-address": ">=10.1.1",
+      "postcss": ">=8.5.10",
+      "langsmith": ">=0.5.19",
+      "uuid": ">=13.0.1",
+      "vite": "8.2.2"
+    }
   }
 }
