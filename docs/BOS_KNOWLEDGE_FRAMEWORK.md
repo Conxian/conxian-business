@@ -1,6 +1,6 @@
 # Conxian BOS Knowledge Framework
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 3.4 | Session: 64 | Generated: 2026-09-08
+> Version: 3.5 | Session: 65 | Generated: 2026-09-08
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 
@@ -839,3 +839,9 @@ codeql-fixes:
 - Created canonical  defining client purchase tiers, component setup, connectivity verification, and the unified  installer specification.
 - Conducted full system review across all 9 core submodules (, , , , , , , , ).
 - Verified zero submodule drift, release hygiene, and candidate research ledger alignment (Success: BOS research candidate ledger verified (/app/docs/bos_research_candidate_ledger.json).).
+
+## Session 65 Update (2026-09-08 — Optimal BOS Setup, Multi-Tier Topology & Submodule Orchestration)
+- **Optimal BOS Setup & Topology Architecture**: Consolidated multi-tier operational topology spanning Community (open-source/self-hosted), Business (dedicated cloud/SLA), and Enterprise (Nitro enclave/HSM) deployment profiles across the 9 active submodules (`conxian-gateway`, `conxian-nexus`, `lib-conxian-core`, `conxius-enclave-sdk`, `conxius-wallet`, `conxian-ui`, `conxius-platform`, `conxius-orbit`, `conxian_market`).
+- **Unified Installer (`cxn`) Integration**: Integrated specifications for the zero-dependency Rust binary installer targeting Time-To-First-Value (TTFV) < 15 minutes with automated env validation, database schema migration, and enclave attestation verification.
+- **Security & Domain Separation Firewall**: Reinforced strict boundary rules separating Developer Protocol Surface (`conxian.org`) from Corporate Governance Surface (`conxian-labs.com`) and enforced non-custodial hardware attestation standards.
+- **Verification & Integrity**: Passed 100% verification across `python3 scripts/bos_repo_check.py`, `python3 scripts/verify_bos_research_candidate_ledger.py`, and `python3 scripts/verify_client_onboarding.py`.
