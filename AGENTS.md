@@ -1,8 +1,20 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
-> **Version**: 1.9 (2026-09-11 — org-wide KB reconciliation + capabilities audit)
+> **Version**: 1.10 (2026-09-12 — org-wide branch maintenance + protection + full-scope enablement refresh)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
+
+---
+
+### Session 66 Summary (2026-09-12 — org-wide branch maintenance + uniform protection + full-scope enablement refresh)
+- **Switched auth to full-scope PAT** (`repo`, `admin:org`, `project`, `workflow`). Previously 403-blocked surfaces (repo rulesets, org projects v2, classic protection details) are now readable.
+- **Branch protection now uniform**: repo-level `main` ruleset (block deletion + block force-push + require pull-request) applied to the 8 public repos that lacked one (`conxius-wallet`, `conxian-business`, `conxian-gateway`, `lib-conxian-core`, `conxian_market`, `conxian-labs-site`, `.github`, `conxian.github.io`). `conxius-platform` + `conxian-nexus` already active; `conxius-enclave-sdk` retains stricter classic protection. Result: **11/11 public active repos protected**. `.github-private` (private) is plan-limited (no protection API on free plan).
+- **Branch hierarchy now uniform** (`main → staged → dev`): created missing `staged` (platform/business/enclave-sdk/labs-site) + missing `dev` (nexus/gateway/core/business/enclave-sdk/labs-site); deleted stale `master` on `conxian.github.io`.
+- **MSRV disambiguation**: `conxian-nexus` `rust-version = 1.98.1` on `main` (was "human-blocked" at 1.97.1 — resolved via merged PR #286). Org-wide Rust floor is now truly 1.98.1.
+- **PR queue reconciled** 10 → 3 open: merged `.github-private` #25, nexus #286, business #1090, platform #1279; closed business #1098 + platform #1273; open dependabot platform #1271/#1269 + core #306.
+- **Issue updates**: closed `conxian-business` #1075 (superseded) + `conxius-platform` #1223 (rulesets active); evidence comment on `conxius-platform` #854; final-verification comment on `conxian-business` #1078 (residual orphan `demo-repository` refs being removed).
+- **Org-level rulesets unavailable** on current plan (`403 Upgrade to GitHub Team`); repo-level rulesets are the enforced mechanism. Per-repo required CI status checks remain a follow-up (platform #1082) — omitted to avoid blocking merges on non-existent check names.
+- **KB refreshed**: `.github-private` `docs/ORG_WIDE_AUDIT_2026_09_12.md` + `ECOSYSTEM_STATE.md` continuity note.
 
 ---
 
@@ -63,9 +75,11 @@
 | GITLEAKS_LICENSE | repo → Settings → Actions secrets | ✅ Set (license key present) |
 | CI_SUBMODULES_PAT | repo? | Unknown — may be needed for repo-hygiene submodule init |
 
-### Active PRs (2026-09-07)
-- **conxian-business #1090** — `chore(deps)` consolidate submodule `pnpm.overrides` + pin conxian-ui (Node 24).
-- All other repos: 0 open PRs. (Merged this sprint: Rust 1.98.1 bumps enclave-sdk #346 / lib-core #305 / gateway #380 / nexus #279; Node 24 wallet #530 / ui #173 / platform #1265 / labs-site #66; business #1086/#1088/#1089/#1092. Stale dependabot PRs closed: gateway #372, wallet #527/#528, platform #1263, business #1091.)
+### Active PRs (2026-09-12)
+- **conxius-platform #1271** — dependabot nodemailer 9.0.3 → 10.0.0.
+- **conxius-platform #1269** — dependabot grouped production deps.
+- **lib-conxian-core #306** — dependabot secp256k1 0.31.1 → 0.33.1 (needs coordinated `bitcoin 0.32.102` + `secp256k1 0.33.1` migration).
+- Merged 2026-09-11: `.github-private` #25 (capabilities audit), nexus #286 (MSRV), business #1090 (pnpm.overrides), platform #1279 (toolchain floor). Closed: business #1098, platform #1273.
 
 ### Known Issues (flagged, not yet resolved)
 - **h2 DoS advisory (RUSTSEC-2026-0258)**: `h2 0.4.15` (transitive via hyper→axum/tonic) has an unbounded-empty-DATA-frames DoS fixed in `0.4.16`. Unblocked (yank resolved) — regenerate gateway/nexus lockfiles to bump `h2` → `0.4.16`.
@@ -73,7 +87,7 @@
 - **Dependabot (conxian-business)**: open alerts (high/moderate/low) across JS packages in the parent monorepo.
 - **CI failures (conxian-business, 2026-09-07)**: RESOLVED — Neon branch limit (#1073, pruned 9 stale `preview/*` branches) + Node 20→24 (#1074, `setup-node` v7).
 - **Open follow-ups (2026-09-07)**: production KMS release-signing key (#1076); coordinated `bitcoin 0.32.102` + `secp256k1 0.33.1` migration (silent-payments — supersedes closed #527/#528); portfolio mapping drift (#1078 — under verification).
-- **Human-blocked (2026-09-11)**: `conxian-nexus` `rust-version` 1.97.1 vs org 1.98.1 floor; enclave attestation hardware evidence (#241/#242); 10 issues frozen on archived read-only repos (`Conxian` ×9 + `conxian_ui` ×1 — see Session 65).
+- **Human-blocked (2026-09-12)**: enclave attestation hardware evidence (#241/#242); 10 issues frozen on archived read-only repos (`Conxian` ×9 + `conxian_ui` ×1 — see Session 65); external credential values (Jules, Cloudflare); Vercel re-authorization (platform #1280).
 
 ### Resolved (this sprint)
 - **secp256k1 yank** → resolved via enclave-sdk v2.0.17 (yanked-crate-free).
@@ -104,7 +118,7 @@ Dependency pins (from `Cargo.toml`):
 - **Submodule management**: `git submodule update --remote` in conxian-business to sync all repos to main; then regen lockfiles (see below).
 - **Version bumps**: Update Cargo.toml, CHANGELOG.md, then `scripts/sync-kb-versions.sh` to propagate to docs.
 - **Release process**: Push semver tag → Release Strict workflow (enclave-sdk) or Publish workflow (lib-core).
-- **Rust toolchain**: `1.98.1` (latest stable) across enclave-sdk, gateway, lib-conxian-core; `conxian-nexus` is still pinned `1.97.1` (human-blocked parity — needs owner confirmation to advance).
+- **Rust toolchain**: `1.98.1` (latest stable) across all 4 Rust repos (enclave-sdk, gateway, lib-conxian-core, nexus — nexus advanced via merged PR #286, 2026-09-11).
 - **Node.js**: **24** (approved LTS — do NOT pin Node 20). pnpm `10.28.0` (matches `conxian-unified-ci.yml`).
 
 ### Build Commands
