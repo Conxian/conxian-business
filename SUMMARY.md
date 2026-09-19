@@ -118,3 +118,4 @@
 
 * [Conxian Job Card Schema (CJCS)](docs/CJCS_v2.0_SPEC.md)
 * [ERP MCP Handshake Spec](docs/ERP_MCP_HANDSHAKE_SPEC.md)
+  * [Sovereignty and Onboarding Architecture Research](docs/SOVEREIGNTY_AND_ONBOARDING_ARCHITECTURE_RESEARCH.md)
