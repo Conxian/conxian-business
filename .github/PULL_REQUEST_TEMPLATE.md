@@ -56,5 +56,24 @@ Required only for an immutable generated candidate; delete otherwise.
 
 Required for direct and generated routes into `main`. Complete the evidence pack under this heading, or link to a versioned in-repo file per `openspec/specs/mainnet-acceptance-evidence-pack/spec.md`.
 
+#### Promotion metadata
+- Promotion Candidate Source: `jules`
+- Target Branch: `main`
+
+#### Mainnet-only production scope
+- Verified scope: Governance & Session Ledger alignment across active submodules.
+
+#### Contamination and residue proof
+- Verified zero testnet/simnet contamination via `python3 scripts/verify_contamination_guard.py`.
+
+#### Successful production validation
+- All automated verification scripts passed: `bos_repo_check.py`, `verify_cross_repo_alignment.py`, `verify_submodule_integrity.py`.
+
+#### Release-readiness sign-off
+- System aligned to BOS v1.9.5 with zero violations.
+
+#### Owner accountability
+- Signed-off by: Conxian Arch Guardian / Jules
+
 ### Additional Notes
 *Any other relevant information, context, or blocking dependencies for the reviewers.*

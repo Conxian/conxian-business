@@ -28,7 +28,6 @@ EXPECTED_REPOSITORIES = (
     "Conxian/conxian-nexus",
     "Conxian/conxian-business",
     "Conxian/conxius-enclave-sdk",
-    "Conxian/demo-repository",
     "Conxian/conxian.github.io",
     "Conxian/conxian_market",
 )

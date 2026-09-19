@@ -336,3 +336,4 @@ These documents were created during the 2026-07-03 cross-issue boundary and doct
 - `TECHNICAL_WHITEPAPER_OUTLINE.md` ← `DEVELOPER_QUICKSTART.md` ← `CONXIAN_UNIFIED_THEORY_v2.md`
 - `PORTFOLIO_DOCTRINE_REGISTER.md` → `REPO_PORTFOLIO.md` → `PORTFOLIO_BUSINESS_UNIT_MAP.md`
 - All documents cross-reference the central doctrine/register where portfolio role, maturity, claim state, or classification is relevant.
+| `docs/SOVEREIGNTY_AND_ONBOARDING_ARCHITECTURE_RESEARCH.md` | Research & Architecture | Approved | Onboarding & Configurable Sovereignty Dial |

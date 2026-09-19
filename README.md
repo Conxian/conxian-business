@@ -43,7 +43,6 @@ The Conxian ecosystem is organized by function to ensure clarity and modularity 
 ### 1. Platform & Governance
 - **[`conxian-business/`](./conxian-business)**: **BOS Governance**. Public-safe specifications, templates, and ZSE pointer stubs.
 - **[`conxius-platform/`](./conxius-platform)**: **Orchestration**. Stack orchestration and local development.
-- **[`conxius-orbit/`](./conxius-orbit)**: **Ops Tooling**. Deployment and operations automation.
 
 ### 2. Core Operating Suite (EXCO Agents)
 - **[`conxian-nexus/`](./conxian-nexus)**: **State Node**. High-level orchestration, state roots (MMR), and decentralized storage.
@@ -51,15 +50,13 @@ The Conxian ecosystem is organized by function to ensure clarity and modularity 
 - **[`Fiscal-Vault-Oracle/`](./Fiscal-Vault-Oracle)**: **Protocol/reference oracle**. Contract- and tenant-defined policy constraints; not company treasury control.
 - **[`Nakamoto-Guardian/`](./Nakamoto-Guardian)**: **Compliance**. Policy enforcement and anti-fragility monitoring.
 
-### 3. Protocol & SDKs
-- **[`Conxian/`](./Conxian)**: **[Deprecated] Protocol/DAO**. Legacy Clarity smart contracts repository (deprecated; active protocol owned by lib-conxian-core, conxian-gateway, conxian-nexus, conxian-business).
+### 3. Core premitives & SDKs
 - **[`conxian_market/`](./conxian_market)**: **AI Marketplace**. AI Marketplace and Agentic Commerce surface mapped in business repo.
 - **[`conxius-enclave-sdk/`](./conxius-enclave-sdk)**: **Enclave SDK**. Enclave and hardware-attestation primitives.
 - **[`lib-conxian-core/`](./lib-conxian-core)**: **Shared Core**. Common models for BitVM2, CJCS, and Gateway engine.
 
 ### 4. User Interfaces
 - **[`conxius-wallet/`](./conxius-wallet)**: **Mobile**. Open-source, provider-agnostic universal self-custody & signing SDK.
-- **[`conxian-ui/`](./conxian-ui)**: **Web**. `conxian_ui` public interaction surface (upstream slug retained).
 - **[`conxian-labs-site/`](./conxian-labs-site)**: **Website**. Public ecosystem landing.
 
 ## Quick start / Next action
