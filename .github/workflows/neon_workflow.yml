@@ -16,11 +16,19 @@ jobs:
     name: Setup
     outputs:
       branch: ${{ steps.branch_name.outputs.current_branch }}
+      neon_branch: ${{ steps.neon_branch_name.outputs.neon_branch }}
     runs-on: ubuntu-latest
     steps:
-      - name: Get branch name
+- name: Get branch name
         id: branch_name
         uses: tj-actions/branch-names@v8
+
+      - name: Compute safe Neon branch name
+        id: neon_branch_name
+        run: |
+          RAW="preview/pr-${{ github.event.number }}-${{ steps.branch_name.outputs.current_branch }}"
+          CLEAN=$(echo "$RAW" | sed "s/[^a-zA-Z0-9_/-]/-/g" | cut -c1-63)
+          echo "neon_branch=$CLEAN" >> "$GITHUB_OUTPUT"
 
   create_neon_branch:
     name: Create Neon Branch
@@ -52,7 +60,7 @@ jobs:
         uses: neondatabase/create-branch-action@v6
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
-          branch_name: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
+          branch_name: ${{ needs.setup.outputs.neon_branch }}
           api_key: ${{ secrets.NEON_API_KEY }}
           expires_at: ${{ env.EXPIRES_AT }}
 
@@ -89,7 +97,7 @@ jobs:
 #        uses: neondatabase/schema-diff-action@v1
 #        with:
 #          project_id: ${{ vars.NEON_PROJECT_ID }}
-#          compare_branch: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
+#          compare_branch: ${{ needs.setup.outputs.neon_branch }}
 #          api_key: ${{ secrets.NEON_API_KEY }}
 
   delete_neon_branch:
@@ -102,5 +110,5 @@ jobs:
         uses: neondatabase/delete-branch-action@v3
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
-          branch: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
+          branch: ${{ needs.setup.outputs.neon_branch }}
           api_key: ${{ secrets.NEON_API_KEY }}

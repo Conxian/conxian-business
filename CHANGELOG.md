@@ -9,6 +9,17 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added & Synthesized (2026-09-16 — Master Reconnaissance & Architecture Review)
+- Executed org-wide Master Reconnaissance & Architecture Review in `docs/CONXIAN_MASTER_RECONNAISSANCE_AND_ARCHITECTURE_REVIEW.md`.
+- Enforced strict domain separation firewall between Developer Protocol Surface (`conxian.org`: `nexus`, `gateway`, `sdk`, `platform`, `market`) and Corporate Governance Surface (`conxian-labs.com`: `www`, `bos`).
+- Audited platform dependencies against core Rust primitives (`lib-conxian-core`, `conxian-nexus`, `conxian-gateway`, `conxius-enclave-sdk`), confirming pure Bitcoin L1 (BitVM2, MuSig2, DLC) and ISO 20022 focus.
+- Simulated enterprise client onboarding journey and specified deployment parameters for hardware TEE enclaves.
+- Scored architectural gaps and specified the Astro/Starlight static site architecture for `conxian-org-site`.
+- Remediated root `SECURITY.md` compliance heading and updated `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` and `BOS_KNOWLEDGE_GRAPH.md`.
+
+### Fixed & Remediated (2026-09-14)
+- Removed deleted/deprecated `Conxian/demo-repository` entry from `scripts/verify_doctrine_alignment.py` to align expected repository count (15) with `docs/PORTFOLIO_DOCTRINE_REGISTER.md`.
+
 ### Synchronized & Remediated (2026-09-09)
 - Pulled fresh code from remote and synchronized submodules (`conxian-gateway`, `conxian-nexus`, `conxian-ui`, `conxius-enclave-sdk`, `conxius-platform`, `conxius-wallet`, `lib-conxian-core`) to their latest `origin/main` release commits.
 - Reviewed repository governance, release hygiene, LTS compliance, production contamination guard, and research candidate ledgers; remediated missing document references in `CHANGELOG.md`.
