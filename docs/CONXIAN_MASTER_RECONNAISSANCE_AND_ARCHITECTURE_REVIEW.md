@@ -51,7 +51,7 @@ All 9 submodules within the Conxian ecosystem were fetched, recursively initiali
 | `conxian_market` | `conxian_market` | `276d9f4f` | `none` (override)| **ALIGNED** | AI Marketplace & Agentic Commerce surface |
 | `conxian-business` | `conxian-business` | Root Local | Local | **ALIGNED** | Parent governance, SAB controls & SLA verification |
 
-*Note on Legacy Assets:* `Conxian/Conxian` and `stackorbit` are strictly deprecated/deleted legacy assets and are excluded from all active operational reporting.
+*Note on Legacy Assets:* `Conxian/Conxian` and `stackorbit` are strictly deprecated/deleted legacy repositories and are excluded from all active operational reporting.
 
 ---
 
