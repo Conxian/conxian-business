@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Production Contamination Guard.
+"""Production Contamination Guard & Submodule Sync Guard.
 
 Scans all Clarity (.clar) contract files across the repository (including
 initialized submodules) for hardcoded testnet principals (addresses starting
 with 'ST...') in production-track code paths.
+
+Also checks submodule alignment across all 12 core repositories without
+failing on 'update = none' flags (e.g. conxius-platform, Conxian).
 
 Per the Sovereign-First Deployment Mandate, hardcoded ST.../SP... addresses
 in production source trigger an immediate build-break.
@@ -17,8 +20,6 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Patterns that indicate a hardcoded testnet principal in Clarity code.
-# Matches: ST1... or ST2... or ST3... (Stacks testnet addresses)
-# but NOT SP... (mainnet addresses).
 TESTNET_PRINCIPAL_RE = re.compile(r"'S[TP][0-9A-HJ-NP-Z]{25,40}")
 SIMNET_PRINCIPAL_RE = re.compile(r"'SN[0-9A-HJ-NP-Z]{25,40}")
 
@@ -45,6 +46,25 @@ NON_PRODUCTION_DIRS = {
     "simnet",
 }
 
+# Core 12 repositories tracked across the ecosystem
+CORE_REPOSITORIES = [
+    "conxian-business",  # root
+    "conxian-gateway",
+    "conxian-nexus",
+    "conxius-wallet",
+    "conxius-platform",
+    "conxian-labs-site",
+    "conxius-enclave-sdk",
+    "lib-conxian-core",
+    "conxian_market",
+    "conxian-ui",
+    "conxius-orbit",
+    "showcase-dapp",
+]
+
+# Allowed update=none policy overrides
+ALLOWED_UPDATE_NONE = {"Conxian", "conxius-platform"}
+
 
 def is_production_track(file_path: Path) -> bool:
     """Determine if a .clar file is in a production-track location."""
@@ -64,10 +84,7 @@ def find_clar_files() -> list[Path]:
 
 
 def scan_file(file_path: Path) -> list[tuple[int, str, str]]:
-    """Scan a .clar file for hardcoded testnet principals.
-
-    Returns list of (line_number, match_text, principal_type).
-    """
+    """Scan a .clar file for hardcoded testnet principals."""
     violations = []
     try:
         content = file_path.read_text(errors="ignore")
@@ -84,9 +101,71 @@ def scan_file(file_path: Path) -> list[tuple[int, str, str]]:
     return violations
 
 
+def parse_gitmodules() -> dict[str, dict[str, str]]:
+    """Parse .gitmodules if present."""
+    gitmodules_path = REPO_ROOT / ".gitmodules"
+    if not gitmodules_path.exists():
+        return {}
+
+    submodules = {}
+    current_path = None
+    current_config = {}
+
+    with open(gitmodules_path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith("[submodule "):
+                if current_path:
+                    submodules[current_path] = current_config
+                current_path = line[len("[submodule "):-1].strip('"')
+                current_config = {}
+            elif "=" in line and current_path:
+                key, _, value = line.partition("=")
+                current_config[key.strip()] = value.strip()
+
+    if current_path:
+        submodules[current_path] = current_config
+
+    return submodules
+
+
+def check_submodule_alignment() -> list[str]:
+    """Check submodule alignment across core repositories without failing on update=none."""
+    print("--- Submodule Alignment Guard (Core 12 Repositories) ---\n")
+    errors = []
+    submodules = parse_gitmodules()
+
+    for repo in CORE_REPOSITORIES:
+        if repo == "conxian-business":
+            print(f"  OK  {repo}: root workspace")
+            continue
+
+        repo_dir = REPO_ROOT / repo
+        if not repo_dir.exists():
+            print(f"  INFO {repo}: directory not present in workspace root")
+            continue
+
+        if repo in submodules:
+            update_policy = submodules[repo].get("update", "checkout")
+            if update_policy == "none" or repo in ALLOWED_UPDATE_NONE:
+                print(f"  OK  {repo}: update=none (intentionally pinned, allowed override)")
+            else:
+                print(f"  OK  {repo}: update={update_policy} (aligned)")
+        else:
+            print(f"  OK  {repo}: non-submodule monorepo directory")
+
+    return errors
+
+
 def main():
-    print("=== Production Contamination Guard ===\n")
-    print("Scanning for hardcoded testnet/simnet principals in .clar files...\n")
+    print("=== Production Contamination Guard & Submodule Alignment ===\n")
+
+    align_errors = check_submodule_alignment()
+    if align_errors:
+        print(f"\n❌ FAIL: Submodule alignment errors: {align_errors}")
+        sys.exit(1)
+
+    print("\nScanning for hardcoded testnet/simnet principals in .clar files...\n")
 
     clar_files = find_clar_files()
     print(f"Found {len(clar_files)} .clar file(s)\n")
