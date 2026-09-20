@@ -19,7 +19,7 @@ jobs:
       neon_branch: ${{ steps.neon_branch_name.outputs.neon_branch }}
     runs-on: ubuntu-latest
     steps:
-- name: Get branch name
+      - name: Get branch name
         id: branch_name
         uses: tj-actions/branch-names@v8
 
