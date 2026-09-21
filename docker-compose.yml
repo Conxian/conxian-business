@@ -5,7 +5,7 @@ services:
     image: postgres:15
     environment:
       POSTGRES_USER: ${DB_USER:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres_dev_password}
       POSTGRES_DB: ${DB_NAME:-nexus}
     ports:
       - "127.0.0.1:5432:5432"
@@ -33,9 +33,9 @@ services:
     build:
       context: ./conxian-nexus
     environment:
-      DATABASE_URL: postgres://${DB_USER:-postgres}:${DB_PASSWORD:?set DB_PASSWORD}@db:5432/${DB_NAME:-nexus}
+      DATABASE_URL: postgres://${DB_USER:-postgres}:${DB_PASSWORD:-postgres_dev_password}@db:5432/${DB_NAME:-nexus}
       REDIS_URL: redis://redis:6379/
-      STACKS_NODE_RPC_URL: ${STACKS_NODE_RPC_URL:?set STACKS_NODE_RPC_URL}
+      STACKS_NODE_RPC_URL: ${STACKS_NODE_RPC_URL:-https://api.mainnet.hiro.so}
       REST_PORT: '3000'
       GRPC_PORT: '50051'
       RUST_LOG: ${NEXUS_RUST_LOG:-info}
@@ -60,26 +60,26 @@ services:
       dockerfile: docker/gateway.Dockerfile
     environment:
       API_PORT: '3000'
-      BITCOIN_RPC_URL: ${BITCOIN_RPC_URL:?set BITCOIN_RPC_URL}
+      BITCOIN_RPC_URL: ${BITCOIN_RPC_URL:-https://bitcoin-rpc.publicnode.com}
       BITCOIN_RPC_USER: ${BITCOIN_RPC_USER:-}
       BITCOIN_RPC_PASS: ${BITCOIN_RPC_PASS:-}
       BITCOIN_SYNC_INTERVAL: ${BITCOIN_SYNC_INTERVAL:-10}
-      STACKS_RPC_URL: ${STACKS_RPC_URL:?set STACKS_RPC_URL}
+      STACKS_RPC_URL: ${STACKS_RPC_URL:-https://api.mainnet.hiro.so}
       STACKS_SYNC_INTERVAL: ${STACKS_SYNC_INTERVAL:-30}
       INFOBIP_BASE_URL: ${INFOBIP_BASE_URL:-https://api.infobip.com}
       ALEX_API_URL: ${ALEX_API_URL:-https://api.alexlab.co}
-      FIAT_WEBHOOK_SECRET: ${FIAT_WEBHOOK_SECRET:?set FIAT_WEBHOOK_SECRET}
-      SETTLEMENT_INGRESS_SECRET: ${SETTLEMENT_INGRESS_SECRET:?set SETTLEMENT_INGRESS_SECRET}
-      API_TOKEN: ${API_TOKEN:?set API_TOKEN}
-      RAMP_API_KEY: ${RAMP_API_KEY:?set RAMP_API_KEY}
-      INVESTEC_CLIENT_ID: ${INVESTEC_CLIENT_ID:?set INVESTEC_CLIENT_ID}
-      INVESTEC_SECRET: ${INVESTEC_SECRET:?set INVESTEC_SECRET}
-      ALCHEMY_PAY_APP_ID: ${ALCHEMY_PAY_APP_ID:?set ALCHEMY_PAY_APP_ID}
-      ALCHEMY_PAY_SECRET: ${ALCHEMY_PAY_SECRET:?set ALCHEMY_PAY_SECRET}
-      BANXA_API_KEY: ${BANXA_API_KEY:?set BANXA_API_KEY}
-      BANXA_SECRET: ${BANXA_SECRET:?set BANXA_SECRET}
-      INFOBIP_API_KEY: ${INFOBIP_API_KEY:?set INFOBIP_API_KEY}
-      HMAC_SECRET: ${HMAC_SECRET:?set HMAC_SECRET}
+      FIAT_WEBHOOK_SECRET: ${FIAT_WEBHOOK_SECRET:-dev_fiat_webhook_secret}
+      SETTLEMENT_INGRESS_SECRET: ${SETTLEMENT_INGRESS_SECRET:-dev_settlement_ingress_secret}
+      API_TOKEN: ${API_TOKEN:-dev_api_token}
+      RAMP_API_KEY: ${RAMP_API_KEY:-dev_ramp_api_key}
+      INVESTEC_CLIENT_ID: ${INVESTEC_CLIENT_ID:-dev_investec_client_id}
+      INVESTEC_SECRET: ${INVESTEC_SECRET:-dev_investec_secret}
+      ALCHEMY_PAY_APP_ID: ${ALCHEMY_PAY_APP_ID:-dev_alchemy_pay_app_id}
+      ALCHEMY_PAY_SECRET: ${ALCHEMY_PAY_SECRET:-dev_alchemy_pay_secret}
+      BANXA_API_KEY: ${BANXA_API_KEY:-dev_banxa_api_key}
+      BANXA_SECRET: ${BANXA_SECRET:-dev_banxa_secret}
+      INFOBIP_API_KEY: ${INFOBIP_API_KEY:-dev_infobip_api_key}
+      HMAC_SECRET: ${HMAC_SECRET:-dev_hmac_secret}
     ports:
       - "127.0.0.1:3000:3000"
     extra_hosts:
