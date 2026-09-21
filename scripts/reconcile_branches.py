@@ -36,7 +36,9 @@ from dataclasses import dataclass
 ORG = os.environ.get("GITHUB_REPOSITORY_OWNER", "Conxian")
 
 # Repos following the dev -> staged -> main chain. Repos with a single
-# branch (e.g. conxian-org-site) are intentionally omitted.
+# branch (e.g. conxian-org-site) and the governance repos (`.github`,
+# `.github-private`) are intentionally omitted: governance repos flow
+# main-direct via human review and do not use the promotion chain.
 PROMOTION_CHAIN_REPOS = [
     "conxius-wallet",
     "conxian-labs-site",
@@ -48,8 +50,6 @@ PROMOTION_CHAIN_REPOS = [
     "conxius-enclave-sdk",
     "conxian_market",
     "conxian.github.io",
-    ".github",
-    ".github-private",
 ]
 
 # Commit message markers for legitimate forward-promotion merge commits.
@@ -118,10 +118,13 @@ def detect() -> list[ReconcilePlan]:
             if drift:
                 plans.append(ReconcilePlan(repo, "main", "staged", len(drift)))
 
-        # staged -> dev: any staged-side commits need downward re-sync.
+        # staged -> dev: non-promotion staged-side commits need downward re-sync.
+        # Forward promotions (dev->staged squash commits) are filtered — they
+        # carry the same content as dev and are not reverse drift.
         ahead = commits_ahead(repo, "dev", "staged")
-        if ahead:
-            plans.append(ReconcilePlan(repo, "staged", "dev", len(ahead)))
+        drift = [c for c in ahead if not is_promotion_artifact(c)]
+        if drift:
+            plans.append(ReconcilePlan(repo, "staged", "dev", len(drift)))
 
     return plans
 
