@@ -1,0 +1,44 @@
+name: Reconcile Branches (back-merge)
+
+# Detects reverse drift (main ahead of staged, or staged ahead of dev) caused
+# by direct-to-main / direct-to-staged merges that bypassed the promotion chain,
+# and opens back-merge PRs to re-sync the lower branch.
+#
+# Complements auto-promotion.yml (forward: dev -> staged -> main) with the
+# downward direction (main -> staged -> dev) so the chain stays self-managing.
+
+on:
+  schedule:
+    # Daily at 06:17 UTC.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  reconcile:
+    name: Detect and reconcile reverse drift
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout orchestration repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Report detected drift
+        id: detect
+        env:
+          GH_TOKEN: ${{ secrets.ORG_RECONCILE_PAT }}
+          GITHUB_REPOSITORY_OWNER: Conxian
+        run: python3 scripts/reconcile_branches.py --detect
+
+      - name: Open back-merge PRs
+        env:
+          GH_TOKEN: ${{ secrets.ORG_RECONCILE_PAT }}
+          GITHUB_REPOSITORY_OWNER: Conxian
+        run: python3 scripts/reconcile_branches.py --reconcile
