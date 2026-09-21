@@ -1,8 +1,19 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
-> **Version**: 1.11 (2026-09-20 — oracle/drift hardening + registry reconciliation + branch-divergence map)
+> **Version**: 1.12 (2026-09-21 — org-wide branch reconciliation completed + self-managing back-merge automation)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
+
+---
+
+### Session 68 Summary (2026-09-21 — org-wide branch reconciliation + self-managing back-merge automation)
+- **Branch divergence resolved org-wide** (the Session 67 "human-blocked" map is now cleared): `main → staged` back-merge for all drifted repos, then `staged → dev` downward re-sync for all 12 chain repos. Final: `main-ahead-of-staged = 0` and `main-ahead-of-dev = 0` across all repos; `staged` branch present everywhere (re-created in 5 repos where GitHub auto-deleted it after a head-branch merge).
+- **Resolution policy established**: the higher branch is authoritative. On conflict, sync the lower branch to the higher branch exactly (lockfiles/manifests taken wholesale, never per-file merged). Root-cause pattern: `dev` was *stale* (earlier/simpler impls, older deps) vs `staged`/`main` (productionized) — e.g. nexus FROST/ROAST `dev` 103/80-line stubs vs `staged` 297/542-line productionized verifiers; core `dev` 0.3.1/rust 1.91 vs `staged` 0.3.3/rust 1.98.1.
+- **Preserved genuine dev-side forward work** where it existed: `conxian_market` ZSE CI + `.gitignore` + `.env.example`; `conxius-platform` G-64..G-67 gap scoring. All other divergence was stale and sync-cleared.
+- **New self-managing automation** (in `conxian-business`): `scripts/reconcile_branches.py` + `.github/workflows/reconcile-branches.yml` detect reverse drift (`main→staged`, `staged→dev`) and open back-merge PRs automatically (daily cron + `workflow_dispatch`). Requires an org-scoped `ORG_RECONCILE_PAT` secret. Complements the existing forward `auto-promotion.yml` so the chain is fully self-managing.
+- **Rust toolchain** installed in agent env: cargo/rustc 1.98.1 (matches org MSRV).
+- **Security advisory resolved**: h2 RUSTSEC-2026-0258 already fixed (gateway h2 0.4.16, nexus 0.4.19). Dependabot: 0 open PRs org-wide.
+- **Merged SHAs** (staged→dev): business #1150 = `55fbeb4`, core #331 = `199c5c5`, gateway #425 = `6f321bf`, market #64 = `1b05d52`, platform #1306 = `1662e27`, nexus #322 = `1715721`.
 
 ---
 
