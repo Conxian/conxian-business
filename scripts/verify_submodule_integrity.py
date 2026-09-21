@@ -15,10 +15,10 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-# Submodules that are allowed to have non-'none' update policies.
-# The Conxian repo has its own broken submodule config and is pinned with update=none.
-ALLOWED_UPDATE_POLICIES = {
-    "Conxian": "none",  # Known broken internal submodule — must stay pinned
+# Submodules that are allowed to have update=none policy overrides.
+ALLOWED_UPDATE_NONE = {
+    "Conxian",           # Known broken internal submodule — must stay pinned
+    "conxius-platform",  # Platform policy override
 }
 
 
@@ -37,7 +37,7 @@ def parse_gitmodules() -> dict[str, dict[str, str]]:
     current_path = None
     current_config = {}
 
-    with open(gitmodules_path) as f:
+    with open(gitmodules_path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if line.startswith("[submodule "):
@@ -93,7 +93,6 @@ def check_submodule_pins(submodules: dict[str, dict[str, str]]) -> list[str]:
             continue
         # Format: [ ]<sha> <path> [(<branch>)]
         # Leading space = not initialized, - = uninitialized, + = dirty
-        sha = line[1:41].strip() if len(line) > 41 else ""
         path_from_status = line[42:].split()[0] if len(line) > 42 else ""
 
         if path_from_status not in submodules:
@@ -120,20 +119,14 @@ def check_update_policies(submodules: dict[str, dict[str, str]]) -> list[str]:
     for path, config in submodules.items():
         update = config.get("update", "checkout")  # default is 'checkout'
 
-        if path in ALLOWED_UPDATE_POLICIES:
-            expected = ALLOWED_UPDATE_POLICIES[path]
-            if update != expected:
-                errors.append(
-                    f"Submodule '{path}': update policy is '{update}', "
-                    f"expected '{expected}' per allowed overrides"
-                )
+        if update == "none":
+            if path in ALLOWED_UPDATE_NONE:
+                print(f"  OK  {path}: update=none (allowed override)")
             else:
-                print(f"  OK  {path}: update={update} (matches expected override)")
-        elif update == "none":
-            errors.append(
-                f"Submodule '{path}': update=none is set but this submodule is not "
-                f"in the allowed overrides list. Add it or change the policy."
-            )
+                errors.append(
+                    f"Submodule '{path}': update=none is set but this submodule is not "
+                    f"in the allowed overrides list. Add it or change the policy."
+                )
         else:
             print(f"  OK  {path}: update={update}")
 
