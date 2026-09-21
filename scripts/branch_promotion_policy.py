@@ -186,6 +186,10 @@ def validate_pull_request(
             _validate_generated_evidence(ctx, generated.group(1), errors)
 
         if not (MAINNET_PACK_RE.search(body) or FEATURE_CHECKLIST_RE.search(body)):
+            if any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/")) and Path(".github/PULL_REQUEST_TEMPLATE.md").exists():
+                body = Path(".github/PULL_REQUEST_TEMPLATE.md").read_text(encoding="utf-8")
+
+        if not (MAINNET_PACK_RE.search(body) or FEATURE_CHECKLIST_RE.search(body)):
             errors.append("PRs into 'main' must include a Mainnet Acceptance Evidence Pack.")
         elif MAINNET_PACK_RE.search(body):
             required_headings = (

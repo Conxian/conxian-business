@@ -1,8 +1,18 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
-> **Version**: 1.10 (2026-09-12 — org-wide branch maintenance + protection + full-scope enablement refresh)
+> **Version**: 1.11 (2026-09-20 — oracle/drift hardening + registry reconciliation + branch-divergence map)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
+
+---
+
+### Session 67 Summary (2026-09-20 — oracle/drift hardening + registry reconciliation + branch-divergence map)
+- **Oracle worker hardening landed** (`conxian-nexus` #313, approved by `admin-conxian-labs`): `Wallet::from_private_key_bytes` rejects empty/zeroed keys + `Wallet::is_mock()`; Oracle startup rejects mock/ephemeral signers unless `ORACLE_ALLOW_MOCK_KEY=1`; logs verified non-ephemeral signer pubkey + Stacks address (`signer_public_key()`/`signer_stacks_address()` on `OracleAggregator`/`OracleService`). Added `MAX_DRIFT_BLOCKS`/`drift_exceeded()` (>2 blocks) + `tests/safety_drift_test.rs`. CI green (rustfmt, clippy `-D warnings`, `cargo test --workspace`, Lightning ≥90%, Bitcoin ≥92%).
+- **Registry reconciliation** (`.github-private` #30 merged): org is now **13 active repos, 0 archived** (was 15/3). `Conxian`, `conxius-orbit`, `conxian_ui` were **deleted from GitHub** → moved to `deprecated[]`; added missing `conxian-org-site` (MDX). `verify-registry-sync.py` → Success.
+- **Branch-divergence map** (new finding, human-blocked): `main` has been receiving direct PR merges while `staged`/`dev` carry large unpromoted backlogs. **Diverged** (ahead/behind `main`): nexus +266/−7, core +138/−1, platform dev +154/−3, business +23/−2, market +70/−1, gateway dev +42/−5. Ahead-only (clean backlog): enclave-sdk, wallet, labs-site, github.io, `.github`. Root cause = direct-to-`main` merges bypassing `dev→staged→main` promotion. Fix = reviewed manual promotion PRs (auto-promotion.yml refuses bulk sync on diverged lineage).
+- **KB continuity**: `.github-private` #31 (`ECOSYSTEM_STATE.md` 2026-09-20 note + divergence map + reconciliation plan).
+- **Stale-branch cleanup**: deleted 2 fully-merged `jules-*` branches (`conxius-platform/jules-musig2-…`, `conxian_market/jules-1205…`).
+- **Open/human-blocked**: 15 dependabot PRs all red (nodemailer-10 TS migration, secp256k1 0.33, bls12_381 0.9, next 16.3, actions bumps); Strategic Triad "Engine"/"UI" replacement (owner decision); Vercel re-auth (platform #1280); external credentials.
 
 ---
 
