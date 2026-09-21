@@ -83,6 +83,11 @@ def commits_ahead(repo: str, base: str, head: str) -> list[dict]:
     return data.get("commits", [])
 
 
+def tree_sha(repo: str, ref: str) -> str:
+    data = json.loads(_gh("api", f"repos/{ORG}/{repo}/branches/{ref}"))
+    return data["commit"]["commit"]["tree"]["sha"]
+
+
 def is_promotion_artifact(commit: dict) -> bool:
     msg = commit.get("commit", {}).get("message", "")
     return any(m in msg for m in PROMOTION_MARKERS)
@@ -111,8 +116,10 @@ def detect() -> list[ReconcilePlan]:
         if "dev" not in branches or "staged" not in branches:
             continue
 
-        # main -> staged: only non-promotion drift matters.
-        if "main" in branches:
+        # main -> staged: only non-promotion drift matters. Skip entirely when
+        # the two branches already have identical content (e.g. a promotion was
+        # squash/merge-committed, leaving no real diff).
+        if "main" in branches and tree_sha(repo, "main") != tree_sha(repo, "staged"):
             ahead = commits_ahead(repo, "staged", "main")
             drift = [c for c in ahead if not is_promotion_artifact(c)]
             if drift:
@@ -120,11 +127,13 @@ def detect() -> list[ReconcilePlan]:
 
         # staged -> dev: non-promotion staged-side commits need downward re-sync.
         # Forward promotions (dev->staged squash commits) are filtered — they
-        # carry the same content as dev and are not reverse drift.
-        ahead = commits_ahead(repo, "dev", "staged")
-        drift = [c for c in ahead if not is_promotion_artifact(c)]
-        if drift:
-            plans.append(ReconcilePlan(repo, "staged", "dev", len(drift)))
+        # carry the same content as dev and are not reverse drift. Content-equal
+        # branches are skipped (no real diff to reconcile).
+        if tree_sha(repo, "staged") != tree_sha(repo, "dev"):
+            ahead = commits_ahead(repo, "dev", "staged")
+            drift = [c for c in ahead if not is_promotion_artifact(c)]
+            if drift:
+                plans.append(ReconcilePlan(repo, "staged", "dev", len(drift)))
 
     return plans
 
