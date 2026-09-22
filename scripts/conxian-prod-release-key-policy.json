@@ -1,0 +1,29 @@
+{
+  "Version": "2012-10-17",
+  "Id": "conxian-prod-release-key-policy",
+  "Statement": [
+    {
+      "Sid": "AccountRootAdministration",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::692112933743:root"
+      },
+      "Action": "kms:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowSignerReleaseSigning",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::692112933743:user/conxian-sdk-signer"
+      },
+      "Action": [
+        "kms:Sign",
+        "kms:Verify",
+        "kms:GetPublicKey",
+        "kms:DescribeKey"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
