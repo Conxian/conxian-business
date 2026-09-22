@@ -69,6 +69,11 @@ def context(
 
 
 class BranchPromotionPolicyTests(unittest.TestCase):
+    def test_agent_branch_fallback_template_acceptance(self) -> None:
+        self.assertAccepted(context("jules-1234", "dev", ""))
+        self.assertAccepted(context("jules-1234", "staged", ""))
+        self.assertAccepted(context("jules-1234", "main", ""))
+
     def assertAccepted(self, ctx: PullRequestContext, exception: BootstrapException | None = None) -> None:
         errors = validate_pull_request(ctx, exception or BootstrapException(0))
         self.assertEqual([], errors)
@@ -218,6 +223,7 @@ class BranchPromotionWorkflowTrustBoundaryTests(unittest.TestCase):
         self.assertEqual(1, len(uses))
         self.assertTrue(uses[0].startswith("actions/checkout@"))
         self.assertNotIn("path:", self.workflow)
+
 
 
 if __name__ == "__main__":
