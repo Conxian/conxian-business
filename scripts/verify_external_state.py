@@ -24,6 +24,10 @@ Usage (from conxian-business root):
   python3 scripts/verify_external_state.py
 
 Exit code is non-zero when any verified claim fails.
+
+Security note: the expected IAM identity is the scoped ``conxian-sdk-signer``
+user, NOT the account root. Running this (or CI) as the account root is a
+least-privilege violation and is reported as a FAIL.
 """
 
 from __future__ import annotations
@@ -51,8 +55,10 @@ GITHUB_REPOS = {
 }
 
 AWS_ACCOUNT = "692112933743"
-AWS_IAM_USER = "botshelo"
+# CI/signing identity — the scoped user, never the account root.
+AWS_IAM_USER = "conxian-sdk-signer"
 AWS_KMS_ALIAS = "alias/conxian-nitro-release"
+AWS_KMS_PROD_ALIAS = "alias/conxian-prod-release"
 AWS_KMS_REGION = "eu-central-1"
 
 NEON_EXPECTED = {
@@ -178,16 +184,21 @@ def check_aws() -> None:
         return
     acct = ident["Account"]
     user = ident["Arn"].split("/")[-1]
+    arn = ident["Arn"]
     if acct == AWS_ACCOUNT:
         record(PASS, f"AWS account", acct)
     else:
         record(FAIL, f"AWS account", f"{acct} (expected {AWS_ACCOUNT})")
-    if user == AWS_IAM_USER:
-        record(PASS, f"IAM identity", user)
-    else:
-        record(WARN, f"IAM identity", f"{user} (expected {AWS_IAM_USER})")
 
-    # KMS release key
+    # Least-privilege: root is a hard fail; the scoped signer is the only PASS.
+    if arn.endswith(":root"):
+        record(FAIL, "IAM identity", f"{arn} is the account root — CI must use {AWS_IAM_USER}")
+    elif user == AWS_IAM_USER:
+        record(PASS, "IAM identity", user)
+    else:
+        record(WARN, "IAM identity", f"{user} (expected {AWS_IAM_USER})")
+
+    # KMS release key (dev)
     kms = boto3.client("kms", region_name=AWS_KMS_REGION,
                        aws_access_key_id=ak, aws_secret_access_key=sk)
     try:
@@ -203,6 +214,22 @@ def check_aws() -> None:
         record(PASS, "KMS encrypt", f"RSAES_OAEP_SHA_256 ok ({len(enc['CiphertextBlob'])} bytes)")
     except Exception as exc:  # noqa: BLE001
         record(FAIL, "KMS", str(exc)[:200])
+
+    # Production release-signing key (conxian-business #1076). Unprovisioned is
+    # a WARN (tracked gap), not a FAIL, until the key is created.
+    try:
+        pmd = kms.describe_key(KeyId=AWS_KMS_PROD_ALIAS)["KeyMetadata"]
+        record(
+            PASS if pmd["KeyState"] == "Enabled" else FAIL,
+            f"KMS {AWS_KMS_PROD_ALIAS}",
+            f"{pmd['KeySpec']} / {pmd['KeyUsage']} / {pmd['KeyState']}",
+        )
+    except Exception as exc:  # noqa: BLE001
+        code = getattr(exc, "response", {}).get("Error", {}).get("Code", "")
+        if code == "NotFoundException":
+            record(WARN, f"KMS {AWS_KMS_PROD_ALIAS}", "not provisioned yet (#1076)")
+        else:
+            record(FAIL, f"KMS {AWS_KMS_PROD_ALIAS}", str(exc)[:200])
 
     # EC2: describe is read-only; RunInstances DryRun proves authorization
     ec2 = boto3.client("ec2", region_name=AWS_KMS_REGION,
