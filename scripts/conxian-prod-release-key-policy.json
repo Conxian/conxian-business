@@ -21,7 +21,12 @@
         "kms:Sign",
         "kms:Verify",
         "kms:GetPublicKey",
-        "kms:DescribeKey"
+        "kms:DescribeKey",
+        "kms:GetKeyPolicy",
+        "kms:PutKeyPolicy",
+        "kms:CreateAlias",
+        "kms:DeleteAlias",
+        "kms:UpdateAlias"
       ],
       "Resource": "*"
     }

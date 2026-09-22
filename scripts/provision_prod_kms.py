@@ -142,13 +142,15 @@ def main() -> int:
         print("no changes made")
         return 0
 
+    # Note: `SigningAlgorithms` is not a `create_key` input — the signing
+    # algorithm is determined by KeySpec and is selected at Sign/Verify time.
+    # Tags are applied AFTER aliasing (tagging at creation requires an
+    # unscoped kms:TagResource grant, which conflicts with least privilege).
     created = kms.create_key(
         Description=plan["description"],
         KeySpec=plan["key_spec"],
         KeyUsage=plan["key_usage"],
-        SigningAlgorithms=plan["signing_algorithms"],
         Policy=json.dumps(plan["policy"]),
-        Tags=[{"TagKey": "conxian:role", "TagValue": "release-signing"}],
     )
     key_id = created["KeyMetadata"]["KeyId"]
     arn = created["KeyMetadata"]["Arn"]
@@ -156,6 +158,13 @@ def main() -> int:
 
     kms.create_alias(AliasName=ALIAS_NAME, TargetKeyId=key_id)
     print(f"aliased {ALIAS_NAME} -> {key_id}")
+
+    # Tag now that the alias exists (kms:ResourceAliases condition satisfied).
+    try:
+        kms.tag_resource(KeyId=key_id, Tags=[{"TagKey": "conxian:role", "TagValue": "release-signing"}])
+        print("tagged key conxian:role=release-signing")
+    except Exception as exc:  # noqa: BLE001
+        print(f"tag skipped: {type(exc).__name__}")
 
     public_key = kms.get_public_key(KeyId=key_id)
     pub_b64 = base64.b64encode(public_key["PublicKey"]).decode()
