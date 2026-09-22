@@ -226,6 +226,42 @@ def _existing_access_keys(iam) -> list:
     return iam.list_access_keys(UserName=USER_NAME).get("AccessKeyMetadata", [])
 
 
+def _ensure_managed_policy(iam) -> str:
+    """Create/update the customer-managed policy and attach it to the user."""
+    policy_arn = None
+    for p in iam.get_paginator("list_policies").paginate(Scope="Local").build_full_result()["Policies"]:
+        if p["PolicyName"] == POLICY_NAME:
+            policy_arn = p["Arn"]
+            break
+
+    document = json.dumps(POLICY_DOC)
+    if policy_arn is None:
+        policy_arn = iam.create_policy(
+            PolicyName=POLICY_NAME,
+            PolicyDocument=document,
+            Description="Least-privilege policy for conxian-sdk-signer",
+        )["Policy"]["Arn"]
+        print(f"created managed policy {POLICY_NAME}")
+    else:
+        iam.create_policy_version(PolicyArn=policy_arn, PolicyDocument=document, SetAsDefault=True)
+        print(f"updated managed policy {POLICY_NAME} (new default version)")
+
+    try:
+        iam.attach_user_policy(UserName=USER_NAME, PolicyArn=policy_arn)
+        print(f"attached managed policy to {USER_NAME}")
+    except iam.exceptions.EntityAlreadyExistsException:
+        print("managed policy already attached")
+
+    # Migrate off any legacy inline policy with the same name.
+    try:
+        iam.delete_user_policy(UserName=USER_NAME, PolicyName=POLICY_NAME)
+        print(f"removed legacy inline policy {POLICY_NAME}")
+    except iam.exceptions.NoSuchEntityException:
+        pass
+
+    return policy_arn
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -249,13 +285,10 @@ def main() -> int:
         print(f"CreateUser failed: {type(exc).__name__} {exc}")
         return 1
 
-    # 2. Attach the inline policy (replace if drift).
-    iam.put_user_policy(
-        UserName=USER_NAME,
-        PolicyName=POLICY_NAME,
-        PolicyDocument=json.dumps(POLICY_DOC),
-    )
-    print(f"attached inline policy {POLICY_NAME}")
+    # 2. Attach the customer-managed policy (replace if drift). Inline user
+    #    policies are capped at 2048 bytes; this policy exceeds that, so it
+    #    must be a customer-managed policy (6144-byte limit).
+    _ensure_managed_policy(iam)
 
     # 3. Programmatic access key (idempotent by default; --rotate replaces).
     existing = _existing_access_keys(iam)
