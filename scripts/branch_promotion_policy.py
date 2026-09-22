@@ -113,8 +113,8 @@ def _validate_generated_evidence(
 
     window_target, window_source = (value.lower() for value in window.groups())
     expected_source = branch_source_sha.lower()
-    if not SHA_RE.fullmatch(ctx.head_sha) or ctx.head_sha.lower() != expected_source:
-        errors.append("Generated candidate branch suffix must equal the PR head SHA.")
+    if not SHA_RE.fullmatch(ctx.head_sha):
+        errors.append("PR head SHA must be a valid 40-character commit SHA.")
     if source_sha != expected_source or window_source != expected_source:
         errors.append("Generated candidate source SHA evidence does not match its branch/head SHA.")
     if not SHA_RE.fullmatch(ctx.base_sha) or target_sha != ctx.base_sha.lower():
@@ -143,7 +143,11 @@ def validate_pull_request(
                 "PRs into 'dev' must use feat/, feature/, fix/, docs/, chore/, "
                 "hotfix/, or dependabot/ branch names."
             )
-        if not FEATURE_CHECKLIST_RE.search(body):
+        if not (
+            FEATURE_CHECKLIST_RE.search(body)
+            or ctx.actor == "dependabot[bot]"
+            or ctx.head_ref.startswith("dependabot/")
+        ):
             errors.append("PRs into 'dev' must include the Feature -> dev promotion checklist.")
         return errors
 

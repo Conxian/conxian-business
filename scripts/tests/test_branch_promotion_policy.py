@@ -102,6 +102,20 @@ class BranchPromotionPolicyTests(unittest.TestCase):
         self.assertAccepted(
             context(f"promotion/dev-to-staged-{SOURCE_SHA}", "staged", STAGED_BODY + GENERATED_EVIDENCE)
         )
+        # Accepts candidate branches where head SHA is a merge/updated commit
+        self.assertAccepted(
+            context(
+                f"promotion/dev-to-staged-{SOURCE_SHA}",
+                "staged",
+                STAGED_BODY + GENERATED_EVIDENCE,
+                head_sha="c" * 40,
+            )
+        )
+
+    def test_dependabot_prs_to_dev_accepted_without_checklist(self) -> None:
+        self.assertAccepted(
+            context("dependabot/cargo/dev/reqwest-0.13.5", "dev", "", actor="dependabot[bot]")
+        )
 
     def test_staged_routes_to_main(self) -> None:
         self.assertAccepted(context("staged", "main", MAIN_BODY))
