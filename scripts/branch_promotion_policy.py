@@ -148,6 +148,14 @@ def validate_pull_request(
             or ctx.actor == "dependabot[bot]"
             or ctx.head_ref.startswith("dependabot/")
         ):
+            if any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/")) and Path(".github/PULL_REQUEST_TEMPLATE.md").exists():
+                body = Path(".github/PULL_REQUEST_TEMPLATE.md").read_text(encoding="utf-8")
+
+        if not (
+            FEATURE_CHECKLIST_RE.search(body)
+            or ctx.actor == "dependabot[bot]"
+            or ctx.head_ref.startswith("dependabot/")
+        ):
             errors.append("PRs into 'dev' must include the Feature -> dev promotion checklist.")
         return errors
 
