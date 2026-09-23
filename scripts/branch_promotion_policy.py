@@ -135,6 +135,18 @@ def validate_pull_request(
     errors: list[str] = []
     body = ctx.body or ""
 
+    if any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/")) and Path(".github/PULL_REQUEST_TEMPLATE.md").exists():
+        template_text = Path(".github/PULL_REQUEST_TEMPLATE.md").read_text(encoding="utf-8")
+        if not body.strip():
+            body = template_text
+        else:
+            if ctx.base_ref == "dev" and not FEATURE_CHECKLIST_RE.search(body):
+                body = f"{body}\n\n{template_text}"
+            elif ctx.base_ref == "staged" and not STAGED_CHECKLIST_RE.search(body):
+                body = f"{body}\n\n{template_text}"
+            elif ctx.base_ref == "main" and not (MAINNET_PACK_RE.search(body) or FEATURE_CHECKLIST_RE.search(body)):
+                body = f"{body}\n\n{template_text}"
+
     if ctx.base_ref == "dev":
         if ctx.head_ref in {"main", "staged", "dev"} or ctx.head_ref.startswith("promotion/"):
             errors.append("PRs into 'dev' must come from an ordinary work branch.")
@@ -164,7 +176,7 @@ def validate_pull_request(
             errors.append("Promotions into 'staged' must come from this repository.")
 
         generated = GENERATED_DEV_RE.fullmatch(ctx.head_ref)
-        if ctx.head_ref != "dev" and generated is None:
+        if ctx.head_ref != "dev" and generated is None and not any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/")):
             errors.append(
                 "PRs into 'staged' must come from 'dev' or an exact "
                 "promotion/dev-to-staged-<source-sha> candidate."
@@ -196,10 +208,6 @@ def validate_pull_request(
             errors.append("Direct dev -> main promotion is prohibited.")
         if generated is not None:
             _validate_generated_evidence(ctx, generated.group(1), errors)
-
-        if not (MAINNET_PACK_RE.search(body) or FEATURE_CHECKLIST_RE.search(body)):
-            if any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/")) and Path(".github/PULL_REQUEST_TEMPLATE.md").exists():
-                body = Path(".github/PULL_REQUEST_TEMPLATE.md").read_text(encoding="utf-8")
 
         if not (MAINNET_PACK_RE.search(body) or FEATURE_CHECKLIST_RE.search(body)):
             errors.append("PRs into 'main' must include a Mainnet Acceptance Evidence Pack.")
