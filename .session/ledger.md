@@ -1,9 +1,9 @@
 # Conxian Session Ledger & Continuity Handoff — ATS v2.0 Cycle
 
-**Session Initialized:** 2026-09-25T22:15:00Z
-**Session Finalized:** 2026-09-25T22:25:00Z
-**Active Branch:** `jules-13779264013846864387-5fe1fd8a`
-**Root Baseline SHA:** `6744bb0b695475bf5895019d15cf269286bfe187`
+**Session Initialized:** 2026-09-26T06:00:00Z
+**Session Finalized:** 2026-09-26T06:15:00Z
+**Active Branch:** `jules-8330980386299081557-e507ff00`
+**Root Baseline SHA:** `d182ed3f2b450508608ed11ea06ce06dfebdc2b8`
 **Working Tree State:** Clean / Ready for submission
 
 ---
@@ -17,8 +17,8 @@
 
 ## A1 — Repository Synchronization & Submodule Policy Status
 
-- **Declared Sync Policy:** `pin-to-parent` for all submodules.
-- **Submodule Policy Realignment:** Re-evaluated `conxian_market` override (`update=none`). Promoted `conxian_market` to active capability surface with standard `update=checkout` policy in `.gitmodules` and `scripts/verify_submodule_integrity.py`. All 8 submodules pass integrity checks.
+- **Declared Sync Policy:** `pin-to-parent` for all submodules (`update=checkout`).
+- **Fresh Code Sync:** Fetched origin main recursively (`git fetch origin main -p --recurse-submodules && git submodule update --init --recursive`). All 8 submodules clean and aligned.
 
 ### Submodule Commit Baseline SHAs
 | Submodule Directory | Submodule Commit SHA | Status / Sync Policy |
@@ -26,7 +26,7 @@
 | `conxian-gateway` | `d77952e36a8c4d10669ed9feaebd7fcc492274b4` | Pinned (`update=checkout`) |
 | `conxian-labs-site` | `9dabf1cdbfcfcc5720a57b03eba6c3e88a21a0e2` | Pinned (`update=checkout`) |
 | `conxian-nexus` | `bc87000332cad484ca36f4f65d7c60a3e75ddb07` | Pinned (`update=checkout`) |
-| `conxian_market` | `276d9f4fef9dd57297c852035dc6d97808299e25` | Activated (`update=checkout`) |
+| `conxian_market` | `276d9f4fef9dd57297c852035dc6d97808299e25` | Pinned (`update=checkout`) |
 | `conxius-enclave-sdk` | `11add8715c1521a689093acfb238737352fb8924` | Pinned (`update=checkout`) |
 | `conxius-platform` | `1a2f78d1a4400759cc5159f1663e9acc373a7481` | Pinned (`update=checkout`) |
 | `conxius-wallet` | `f985384a6f4fd7f304aa0f93711a37f3af0898a6` | Pinned (`update=checkout`) |
@@ -40,8 +40,7 @@
   1. **Vertical Sovereignty**: Advances user-owned infrastructure from L1 to interface.
   2. **Operational Unification**: Advances centralized gateway and shared cryptographic cores.
   3. **Nakamoto Readiness**: Advances Stacks Epoch 3.0 alignment & Bitcoin L1 finality.
-- **Read Log Verification**: Evaluated Business Repo Intent Surface, Master Registry directives, Gateway/Nexus Layer 1 specs, Wallet/Market Layer 2 surfaces, Core/SDK Layer 3 runtimes, Platform Control Plane, and external specs (ISO 20022 pacs.008, BIP-345, BitVM3, x402).
-- **Misalignment Report**: Legacy Clarity protocol repo (`Conxian/Conxian`) explicitly deprecated (#612). All 8 active submodules verified to advance at least one pillar.
+- **SLA & Commercial Pricing Realignment**: Re-aligned organization-wide SLA positioning and support boundaries. Enforced strict open-source disclaimers (NO SLA, community best-effort) on public protocol surfaces (`conxian` org), and restricted contractual SLAs to B2B Enterprise Gateway deployments. Formulated 3-layer Business-as-a-Platform (BaaP) commercial pricing architecture.
 
 ---
 
@@ -49,6 +48,7 @@
 
 | Candidate | Target Gap | Weighted Total | Disposition |
 |---|---|---|---|
+| `CAN-05` Org-Wide SLA & BaaP Pricing | `GAP-SLA-01` | **5.00 / 5.0** | **Selected & Implemented** |
 | `CAN-01` Core BitVM2/3 Bridge (#227) | `GAP-SET-01` | **4.30 / 5.0** | **Selected** |
 | `CAN-02` Unified Source-of-Truth Docs | `GAP-DOC-01` | **5.00 / 5.0** | **Selected & Implemented** |
 | `CAN-03` Market M2M Escrow DLC | `GAP-ESC-01` | **3.95 / 5.0** | Retained under owner |
@@ -58,17 +58,18 @@
 
 ## A6–A8 — Business Repo Source-of-Truth Implementations
 
-Source-of-Truth Governance Documents Verified:
-- `docs/GAPS.md`: Master Gap Register with mandatory `Pillar Alignment` column and candidate scoring matrix.
-- `docs/PORTFOLIO.md`: Capability × Chain Matrix including "Reference Customer" column.
-- `docs/SLA.md`: Realistic v1 SLA (99.5% uptime, business-hours SEV1, no financial credits in v1, Customer #3 scaling trigger).
-- `docs/ALIGNMENT.md`: Cross-repo alignment audit documenting all 8 submodules and pillar alignments.
-- `scripts/verify_cross_repo_alignment.py`: Automated verification script for source-of-truth docs.
+Source-of-Truth Governance Documents & Validators Verified:
+- `docs/SLA.md`: Risk-Bounded Support Matrix, 99.5% uptime target, SEV1 1-hour business hours acknowledgment, 0% financial credit liability, Force Majeure exclusions.
+- `docs/SLA_POLICY.md`: Org-wide policy separating public open-source repos (NO SLA) from B2B Gateway contracts.
+- `docs/COMMERCIAL_PACKAGING_DOCTRINE.md`: BaaP 3-layer monetization model (Escrow split 80/10/10 with decay schedule, SaaS node licensing, metered x402 edge compute), Retention scenarios ($400k - $4.0M), and Financial Projections.
+- `docs/GAPS.md`: Master Gap Register with `GAP-SLA-01`.
+- `docs/PORTFOLIO.md`: Capability × Chain Matrix with BaaP support tiers.
+- `scripts/verify_cross_repo_alignment.py`: Automated cross-repo alignment validator.
 
 ---
 
 ## Mandatory Session Handoff & Continuity Directives
 
-- **Next Session's First Action:** Execute Phase A1 cross-repo issue status updates referencing `docs/GAPS.md` gap IDs across all active submodule issue trackers.
-- **Portfolio Update Required:** Yes — activated `conxian_market` M2M agentic marketplace capability cell under Stacks L2 & EVM ERC-8183 escrow.
-- **Session End SHA:** `6744bb0b695475bf5895019d15cf269286bfe187`
+- **Next Session's First Action:** Implement `cxn` binary installer core in `conxian-cli` repository per `docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md`.
+- **Portfolio Update Required:** Yes — updated SLA support tiers and BaaP commercial pricing architecture across all portfolio documents.
+- **Session End SHA:** `d182ed3f2b450508608ed11ea06ce06dfebdc2b8`
