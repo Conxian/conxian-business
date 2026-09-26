@@ -69,6 +69,11 @@ def context(
 
 
 class BranchPromotionPolicyTests(unittest.TestCase):
+    def test_agent_branch_fallback_template_acceptance(self) -> None:
+        self.assertAccepted(context("jules-1234", "dev", ""))
+        self.assertAccepted(context("jules-1234", "staged", ""))
+        self.assertAccepted(context("jules-1234", "main", ""))
+
     def assertAccepted(self, ctx: PullRequestContext, exception: BootstrapException | None = None) -> None:
         errors = validate_pull_request(ctx, exception or BootstrapException(0))
         self.assertEqual([], errors)
@@ -101,6 +106,20 @@ class BranchPromotionPolicyTests(unittest.TestCase):
     def test_exact_generated_dev_candidate_routes_to_staged(self) -> None:
         self.assertAccepted(
             context(f"promotion/dev-to-staged-{SOURCE_SHA}", "staged", STAGED_BODY + GENERATED_EVIDENCE)
+        )
+        # Accepts candidate branches where head SHA is a merge/updated commit
+        self.assertAccepted(
+            context(
+                f"promotion/dev-to-staged-{SOURCE_SHA}",
+                "staged",
+                STAGED_BODY + GENERATED_EVIDENCE,
+                head_sha="c" * 40,
+            )
+        )
+
+    def test_dependabot_prs_to_dev_accepted_without_checklist(self) -> None:
+        self.assertAccepted(
+            context("dependabot/cargo/dev/reqwest-0.13.5", "dev", "", actor="dependabot[bot]")
         )
 
     def test_staged_routes_to_main(self) -> None:
@@ -218,6 +237,7 @@ class BranchPromotionWorkflowTrustBoundaryTests(unittest.TestCase):
         self.assertEqual(1, len(uses))
         self.assertTrue(uses[0].startswith("actions/checkout@"))
         self.assertNotIn("path:", self.workflow)
+
 
 
 if __name__ == "__main__":
