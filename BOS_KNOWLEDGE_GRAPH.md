@@ -1,5 +1,13 @@
 # Conxian Labs BOS Knowledge Graph
 
+## Session Update (2026-09-26 — Session 66: Organization-Wide SLA Positioning, Support Matrix & BaaP Commercial Pricing Architecture)
+- Re-aligned organization-wide SLA positioning and support boundaries across the entire Conxian GitHub ecosystem (`conxian` org vs `conxian-labs.com`).
+- Enforced strict open-source disclaimers (NO SLA, community best-effort support) on public protocol surfaces (`lib-conxian-core`, `conxius-enclave-sdk`, `conxius-wallet`, `conxian-nexus`), protecting core maintainers from liability traps and PagerDuty fatigue.
+- Codified contractual SLA parameters for B2B Enterprise Gateway deployments (99.5% target uptime, SEV1 1-hour business-hours acknowledgment, 0% financial credit liability in v1, 5-day RCA SLA).
+- Formulated complete Business-as-a-Platform (BaaP) monetization model across 3 layers: Protocol Escrow Settlement (2.0% volume fee decay, 80/10/10 split), Enterprise SaaS Node Licensing ($2,500–$40,000/mo), and Metered Edge Compute & x402 Attestations ($0.005–$0.020 TEE proofs, $0.010–$0.050 ZKC proofs, $0.002 ISO 20022 payloads).
+- Updated source-of-truth governance docs (`docs/SLA.md`, `docs/SLA_POLICY.md`, `docs/COMMERCIAL_PACKAGING_DOCTRINE.md`, `docs/GAPS.md`, `docs/PORTFOLIO.md`, `docs/bos_research_candidate_ledger.json`, `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`).
+- Enhanced automated validator `scripts/verify_cross_repo_alignment.py` and verified 100% PASS rate across all repository check suites.
+
 ## Session Update (2026-09-08 — Session 65: Optimal BOS Setup, Multi-Tier Topology & Submodule Orchestration)
 - Expanded research on optimal Business Operations System (BOS) setup across multi-tier deployment profiles (Community, Business, Enterprise) spanning all 9 active submodules (`conxian-gateway`, `conxian-nexus`, `lib-conxian-core`, `conxius-enclave-sdk`, `conxius-wallet`, `conxian-ui`, `conxius-platform`, `conxius-orbit`, `conxian_market`).
 - Codified deployment topology, secret/parameter management, and component connectivity matrix linking Bitcoin/Stacks L1/L2, ISO 20022 banking rails, and TEE enclaves (AWS Nitro / Android StrongBox / Apple Secure Enclave).

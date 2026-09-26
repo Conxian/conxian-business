@@ -1110,6 +1110,27 @@
       "uncertainty": "Specification approved in docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md; binary implementation in conxian-cli repository pending.",
       "nonClaim": "Approved specification does not constitute completed binary implementation or automated deployment execution.",
       "scored": false
+    },
+    {
+      "id": "org-wide-sla-positioning-commercial-pricing-gap",
+      "title": "Organization-Wide SLA Positioning, Risk-Bounded Support Matrix & BaaP Commercial Pricing Architecture Gap",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [],
+      "sourceLinks": [
+        "https://github.com/Conxian/conxian-business/blob/main/docs/SLA.md",
+        "https://github.com/Conxian/conxian-business/blob/main/docs/SLA_POLICY.md",
+        "https://github.com/Conxian/conxian-business/blob/main/docs/COMMERCIAL_PACKAGING_DOCTRINE.md"
+      ],
+      "gapClasses": [
+        "implementation",
+        "governance",
+        "owner-tracker"
+      ],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Enforce strict open-source disclaimers on public protocol surfaces (no SLA) while restricting formal SLAs to signed B2B enterprise gateway contracts backed by 3-layer BaaP pricing architecture.",
+      "uncertainty": "Core protocol layers depend on external network states (Bitcoin/Stacks) and hardware enclave firmware (Nitro/StrongBox), precluding absolute uptime guarantees.",
+      "nonClaim": "Public-safe SLA policy and BaaP commercial doctrine do not constitute a 24/7 NOC commitment or financially backed service credit liability.",
+      "scored": false
     }
   ]
 }
