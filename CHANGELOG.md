@@ -9,6 +9,9 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Fixed & Aligned (2026-09-27)
+- Aligned module README release version markers (`v1.9.2` → `v1.9.5`) across `Fiscal-Vault-Oracle`, `Nakamoto-Guardian`, `Sovereign-Ops-Orchestrator`, `Sovereign-Strategy-Nexus`, and `cxn-grid-oracle` to match current BOS system-wide release baseline (`v1.9.5`).
+
 ### Added & Synthesized (2026-09-16 — Master Reconnaissance & Architecture Review)
 - Executed org-wide Master Reconnaissance & Architecture Review in `docs/CONXIAN_MASTER_RECONNAISSANCE_AND_ARCHITECTURE_REVIEW.md`.
 - Enforced strict domain separation firewall between Developer Protocol Surface (`conxian.org`: `nexus`, `gateway`, `sdk`, `platform`, `market`) and Corporate Governance Surface (`conxian-labs.com`: `www`, `bos`).
