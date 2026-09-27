@@ -1,9 +1,16 @@
 # Conxian Session Ledger & Continuity Handoff — ATS v2.0 Cycle
 
+<<<<<<< HEAD
 **Session Initialized:** 2026-09-26T06:00:00Z
 **Session Finalized:** 2026-09-26T06:15:00Z
 **Active Branch:** `jules-8330980386299081557-e507ff00`
 **Root Baseline SHA:** `d182ed3f2b450508608ed11ea06ce06dfebdc2b8`
+=======
+**Session Initialized:** 2026-09-18T20:00:00Z
+**Session Finalized:** 2026-09-27T08:32:21Z
+**Active Branch:** `jules-8680509383124192596-3d9bbfc3`
+**Root Baseline SHA:** `ba6c18f4fbf26216b7c4d437f62a6ea6369e28d6`
+>>>>>>> staged
 **Working Tree State:** Clean / Ready for submission
 
 ---
