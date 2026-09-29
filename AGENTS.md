@@ -6,6 +6,18 @@
 
 ---
 
+### Session 69 Summary (2026-09-29 — conxius-enclave-sdk production enablement: Nitro attestation + OIDC federation + decentralized signing)
+- **Nitro attestation qualified end-to-end** (#242 → PR #392 merged `680addc`): fixed CBOR indefinite-length handling in `src/enclave/nitro.rs` + repaired the vsock probe/Dockerfile; captured real PCRs; offline verification passed (COSE + Nitro root-CA + PCR0/1/2 + nonce + recipient-key + release binding). 18 Nitro tests + full 615-suite green; clippy/fmt clean.
+- **Production-enablement audit redo** (PR #393 merged): capability-by-capability review of `v2.0.17`; verdict = Stable (conditional) non-signing surface, value-bearing signing conditional pending #240 + independent review.
+- **AWS root de-risking**: both root access keys deactivated/deleted; `conxian-agent` (admin group) created then key deleted; session-only root key `AKIA2CJJFINX2UOKC4ZN` to be deleted by owner.
+- **OIDC federation** (PR #394 merged): `scripts/nitro/iam/oidc-federation.yaml` → `token.actions.githubusercontent.com` provider + `github-actions-provision-nitro` role; `provision-nitro.yml` switched to `role-to-assume`. Deleted `conxian-sdk-signer` user + `conxian-sdk-signer-policy` + CI secrets.
+- **Decentralized signing** (PR #395 merged + #396 open): Phase 1 = KMS 2-of-3 quorum (3 ECC_NIST_P256 keys `alias/conxian-release-1/2/3` + `scripts/release/quorum-sign.sh`/`quorum-verify.sh`, tested live). Phase 2 = FROST/MuSig2 threshold (crypto ALREADY implemented behind `frost-crypto`; 621 tests pass `--features frost-crypto`; CI `--all-features`). Old single-signer keys `conxian-nitro-release`/`conxian-prod-release` scheduled 7-day deletion.
+- **Phase 2 remaining**: wire `ThresholdEnclaveManager` into `EnclaveManager::sign_value_bearing_provider` + composed threshold `DeviceIntegrityReport` attestation + DKG ceremony + audit. Design: `docs/architecture/THRESHOLD_ATTESTATION_DESIGN.md`.
+- **Done (2026-09-29)**: AWS Agent Toolkit — OAuth login (`conxian-agent` profile, root acct `692112933743`), AWS MCP Server wired (`~/.openhands/mcp.json` → `https://aws-mcp.eu-central-1.api.aws/mcp`, OAuth), 7 core skills installed (`aws-iam`, `aws-auth`, `aws-security`, `aws-serverless`, `aws-cdk`, `aws-cloudformation`, `aws-well-architected-review`). Org triage: closed enclave-sdk #242 (Nitro), commented business #1076 (KMS quorum) + enclave-sdk #240 (attestation roots).
+- **Open**: retire old KMS keys after 7-day window; Phase 2 implementation (threshold attestation + DKG + audit); PR #396 merge (CI green 26/26, awaiting review); delete session root key `AKIA2CJJFINX2UOKC4ZN`.
+
+---
+
 ### Session 68 Summary (2026-09-21 — org-wide branch reconciliation + self-managing back-merge automation)
 - **Branch divergence resolved org-wide** (the Session 67 "human-blocked" map is now cleared): `main → staged` back-merge for all drifted repos, then `staged → dev` downward re-sync for all 12 chain repos. Final: `main-ahead-of-staged = 0` and `main-ahead-of-dev = 0` across all repos; `staged` branch present everywhere (re-created in 5 repos where GitHub auto-deleted it after a head-branch merge).
 - **Resolution policy established**: the higher branch is authoritative. On conflict, sync the lower branch to the higher branch exactly (lockfiles/manifests taken wholesale, never per-file merged). Root-cause pattern: `dev` was *stale* (earlier/simpler impls, older deps) vs `staged`/`main` (productionized) — e.g. nexus FROST/ROAST `dev` 103/80-line stubs vs `staged` 297/542-line productionized verifiers; core `dev` 0.3.1/rust 1.91 vs `staged` 0.3.3/rust 1.98.1.
