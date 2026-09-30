@@ -122,6 +122,10 @@ class BranchPromotionPolicyTests(unittest.TestCase):
             context("dependabot/cargo/dev/reqwest-0.13.5", "dev", "", actor="dependabot[bot]")
         )
 
+    def test_backmerge_branches_accepted_without_checklist(self) -> None:
+        self.assertAccepted(context("backmerge/main-to-staged", "staged", ""))
+        self.assertAccepted(context("backmerge/staged-to-dev", "dev", ""))
+
     def test_staged_routes_to_main(self) -> None:
         self.assertAccepted(context("staged", "main", MAIN_BODY))
 
