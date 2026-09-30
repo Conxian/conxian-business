@@ -16,10 +16,10 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Submodules that are allowed to have update=none policy overrides.
-ALLOWED_UPDATE_NONE = {
-    "Conxian",           # Known broken internal submodule — must stay pinned
-    "conxius-platform",  # Platform policy override
-}
+# None remain: every submodule now tracks `branch = main`. The historical
+# "Conxian" (repo deleted) and "conxius-platform" (un-frozen to branch=main)
+# overrides are gone.
+ALLOWED_UPDATE_NONE: set[str] = set()
 
 
 def run(cmd: list[str], cwd=None) -> subprocess.CompletedProcess:
