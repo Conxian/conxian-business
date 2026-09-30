@@ -147,6 +147,12 @@ def validate_pull_request(
             elif ctx.base_ref == "main" and not (MAINNET_PACK_RE.search(body) or FEATURE_CHECKLIST_RE.search(body)):
                 body = f"{body}\n\n{template_text}"
 
+    # Reverse-drift back-merge PRs (reconcile automation) target staged/dev with a
+    # `backmerge/<source>-to-<target>` branch and are exempt from the forward
+    # promotion checklist requirements.
+    if ctx.head_ref.startswith("backmerge/") and ctx.base_ref in {"staged", "dev"}:
+        return errors
+
     if ctx.base_ref == "dev":
         if ctx.head_ref in {"main", "staged", "dev"} or ctx.head_ref.startswith("promotion/"):
             errors.append("PRs into 'dev' must come from an ordinary work branch.")
