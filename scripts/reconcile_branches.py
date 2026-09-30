@@ -144,7 +144,19 @@ def _clone(repo: str, workdir: str) -> str:
         ["git", "clone", "--quiet", url, repo],
         check=True, capture_output=True, text=True, cwd=workdir,
     )
-    return os.path.join(workdir, repo)
+    repo_dir = os.path.join(workdir, repo)
+    # A temp clone has no author identity (the checkout action sets it per-repo,
+    # not globally). Without this, `git commit` below fails with exit 128
+    # ("Author identity unknown"), which broke the daily reconcile for 7+ days.
+    for key, value in (
+        ("user.name", "conxian-reconcile[bot]"),
+        ("user.email", "conxian-reconcile[bot]@users.noreply.github.com"),
+    ):
+        subprocess.run(
+            ["git", "config", key, value],
+            check=True, capture_output=True, text=True, cwd=repo_dir,
+        )
+    return repo_dir
 
 
 def reconcile(plan: ReconcilePlan, dry_run: bool) -> dict:
@@ -168,18 +180,26 @@ def reconcile(plan: ReconcilePlan, dry_run: bool) -> dict:
             check=True, capture_output=True, text=True, cwd=repo_dir,
         )
         subprocess.run(["git", "add", "-A"], check=True, capture_output=True, text=True, cwd=repo_dir)
-        subprocess.run(
+        commit_proc = subprocess.run(
             ["git", "commit", "-m", f"chore: back-merge {plan.source} -> {plan.target} (downward re-sync)"],
-            check=True, capture_output=True, text=True, cwd=repo_dir,
+            capture_output=True, text=True, cwd=repo_dir,
         )
+        if commit_proc.returncode != 0:
+            if "nothing to commit" in (commit_proc.stdout + commit_proc.stderr):
+                # Race: source and target already have identical trees.
+                result["status"] = "already_synced"
+                return result
+            commit_proc.check_returncode()
 
         if dry_run:
             result["status"] = "dry_run"
             result["branch"] = branch_name
             return result
 
+        # --force because the branch name is stable per lane; a prior run may
+        # have left it behind, and the content is deterministic (source tree).
         subprocess.run(
-            ["git", "push", "-u", "origin", branch_name],
+            ["git", "push", "-uf", "origin", branch_name],
             check=True, capture_output=True, text=True, cwd=repo_dir,
         )
 
@@ -197,8 +217,21 @@ def reconcile(plan: ReconcilePlan, dry_run: bool) -> dict:
             "--title", title,
             "--body", body,
         )
+        pr_url = out.strip()
         result["status"] = "opened"
-        result["pr_url"] = out.strip()
+        result["pr_url"] = pr_url
+
+        # Best-effort auto-merge: a downward back-merge is a deterministic
+        # re-sync where the higher branch is authoritative, so it needs no
+        # human review. Enable auto-merge so GitHub merges it once required
+        # checks pass; this closes the loop and prevents PR accumulation.
+        try:
+            _gh("pr", "merge", pr_url, "--auto", "--squash")
+            result["status"] = "auto_merge_enabled"
+        except RuntimeError:
+            # Auto-merge may be disabled on some repos; leave the PR open
+            # for manual merge instead of failing the whole run.
+            pass
     return result
 
 
