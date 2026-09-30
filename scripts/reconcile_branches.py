@@ -169,26 +169,21 @@ def reconcile(plan: ReconcilePlan, dry_run: bool) -> dict:
         repo_dir = _clone(plan.repo, tmp)
         _git("checkout", "-q", "-b", branch_name, f"origin/{plan.target}", cwd=repo_dir)
 
-        # Deterministic exact sync: replace the target tree with the source
-        # tree. Lockfiles and manifests are taken wholesale from the
-        # authoritative branch; no per-file merge is attempted.
-        subprocess.run(
-            ["git", "rm", "-rfq", "."], check=True, capture_output=True, text=True, cwd=repo_dir,
+        # Merge the higher branch down, preserving the lower branch's genuine
+        # forward work. "-X theirs" resolves conflicting hunks in favor of the
+        # authoritative higher branch while keeping non-conflicting lower work.
+        before = _git("rev-parse", "HEAD", cwd=repo_dir).strip()
+        merge = subprocess.run(
+            ["git", "merge", f"origin/{plan.source}", "-X", "theirs", "--no-edit"],
+            capture_output=True, text=True, cwd=repo_dir,
         )
-        subprocess.run(
-            ["git", "checkout", f"origin/{plan.source}", "--", "."],
-            check=True, capture_output=True, text=True, cwd=repo_dir,
-        )
-        subprocess.run(["git", "add", "-A"], check=True, capture_output=True, text=True, cwd=repo_dir)
-        # If the trees are already identical (e.g. a promotion squash-merged the
-        # same content) there is nothing to commit; skip instead of failing.
-        if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=repo_dir).returncode == 0:
+        if merge.returncode != 0:
+            result["status"] = "conflict"
+            result["detail"] = merge.stderr.strip()[-300:]
+            return result
+        if _git("rev-parse", "HEAD", cwd=repo_dir).strip() == before:
             result["status"] = "skipped_equal"
             return result
-        subprocess.run(
-            ["git", "commit", "-m", f"chore: back-merge {plan.source} -> {plan.target} (downward re-sync)"],
-            check=True, capture_output=True, text=True, cwd=repo_dir,
-        )
 
         if dry_run:
             result["status"] = "dry_run"
