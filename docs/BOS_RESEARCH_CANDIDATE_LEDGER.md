@@ -163,3 +163,10 @@ An August 2026 workspace-wide Dependabot audit and remediation pass was executed
 - **Root workspace overrides:** Enforced in `pnpm-workspace.yaml` for `next@^16.2.11`, `postcss@^8.5.18`, `sharp@^0.35.0`, `nanoid@^3.3.18`, `tar@^7.5.0`, `brace-expansion@^2.0.2`, `undici@^7.21.0`, `js-yaml@^4.1.1`, `fast-uri@^3.1.0`, `bigint-buffer@^1.1.5`, `vite@^6.2.1`, `ws@^8.18.1`, and `form-data@^4.0.2`.
 - **Audit Verification:** `pnpm audit` verified that all 8 fixable high/critical severity security alerts across `conxian-ui`, `conxius-platform`, `conxian-gateway`, and workspace applications are resolved.
 - **Unfixable upstream dependencies:** `elliptic` and `bigint-buffer` maintain unpatched status (`<0.0.0` upstream fixes available), mitigated via input validation boundary checks and workspace isolation.
+
+## September 2026 SLA Realignment & Commercial Pricing Architecture Refresh
+
+A September 2026 ecosystem-wide SLA and commercial architecture realignment pass was executed:
+- **Organization-Wide SLA Positioning (`org-wide-sla-positioning-commercial-pricing-gap`)**: Enforced a strict structural boundary between public open-source protocol surfaces (Conxian org — NO SLA, community best-effort) and paid B2B Enterprise Gateway deployments (99.5% uptime SLA, 1-hour SEV1 acknowledgment during business hours, zero financial credit liabilities in v1, RCA delivery within 5 business days).
+- **Business-as-a-Platform (BaaP) Monetization**: Codified 3-layer monetization model: Layer 1 Protocol Escrow Volume Settlement (2.0% base gross escrow fee with decay schedule down to 0.5% for >$500M; 80/10/10 split), Layer 2 Enterprise SaaS Node Licensing ($2,500–$40,000/mo), Layer 3 Metered Edge Compute & x402 Attestations ($0.005–$0.020 TEE proofs, $0.010–$0.050 ZKC proofs, $0.002 ISO 20022 payloads).
+- **Unified Installer Specification (`client-onboarding-unified-installer-gap`)**: Specified Rust-based `cxn` CLI installer targeting Time-To-First-Value (TTFV) < 15 minutes across 9 ecosystem submodules.

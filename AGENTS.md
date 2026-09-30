@@ -1,8 +1,31 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
-> **Version**: 1.12 (2026-09-21 — org-wide branch reconciliation completed + self-managing back-merge automation)
+> **Version**: 1.13 (2026-09-30 — core SDK-surface propagation + DKG ceremony CI + branch-policy realignment)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
+
+---
+
+### Session 69 Summary (2026-09-29 — conxius-enclave-sdk production enablement: Nitro attestation + OIDC federation + decentralized signing)
+- **Nitro attestation qualified end-to-end** (#242 → PR #392 merged `680addc`): fixed CBOR indefinite-length handling in `src/enclave/nitro.rs` + repaired the vsock probe/Dockerfile; captured real PCRs; offline verification passed (COSE + Nitro root-CA + PCR0/1/2 + nonce + recipient-key + release binding). 18 Nitro tests + full 615-suite green; clippy/fmt clean.
+- **Production-enablement audit redo** (PR #393 merged): capability-by-capability review of `v2.0.17`; verdict = Stable (conditional) non-signing surface, value-bearing signing conditional pending #240 + independent review.
+- **AWS root de-risking**: both root access keys deactivated/deleted; `conxian-agent` (admin group) created then key deleted; session-only root key `AKIA2CJJFINX2UOKC4ZN` to be deleted by owner.
+- **OIDC federation** (PR #394 merged): `scripts/nitro/iam/oidc-federation.yaml` → `token.actions.githubusercontent.com` provider + `github-actions-provision-nitro` role; `provision-nitro.yml` switched to `role-to-assume`. Deleted `conxian-sdk-signer` user + `conxian-sdk-signer-policy` + CI secrets.
+- **Decentralized signing** (PR #395 merged + #396 open): Phase 1 = KMS 2-of-3 quorum (3 ECC_NIST_P256 keys `alias/conxian-release-1/2/3` + `scripts/release/quorum-sign.sh`/`quorum-verify.sh`, tested live). Phase 2 = FROST/MuSig2 threshold (crypto ALREADY implemented behind `frost-crypto`; 621 tests pass `--features frost-crypto`; CI `--all-features`). Old single-signer keys `conxian-nitro-release`/`conxian-prod-release` scheduled 7-day deletion.
+- **Phase 2 remaining**: wire `ThresholdEnclaveManager` into `EnclaveManager::sign_value_bearing_provider` + composed threshold `DeviceIntegrityReport` attestation + DKG ceremony + audit. Design: `docs/architecture/THRESHOLD_ATTESTATION_DESIGN.md`. DKG ceremony rehearsal DONE (enclave-sdk PR #408: full 3-round FROST 2-of-3 + signing, 627 tests green).
+- **Done (2026-09-29)**: AWS Agent Toolkit — OAuth login (`conxian-agent` profile, root acct `692112933743`), AWS MCP Server wired (`~/.openhands/mcp.json` → `https://aws-mcp.eu-central-1.api.aws/mcp`, OAuth), 7 core skills installed (`aws-iam`, `aws-auth`, `aws-security`, `aws-serverless`, `aws-cdk`, `aws-cloudformation`, `aws-well-architected-review`). Org triage: closed enclave-sdk #242 (Nitro), commented business #1076 (KMS quorum) + enclave-sdk #240 (attestation roots).
+- **AWS Agent Toolkit re-est. (2026-09-30)**: sandbox is ephemeral -> re-run each session. Install AWS CLI v2 to `~/.local`; `aws login --profile conxian-agent --remote --region eu-central-1` (headless: keep alive via `tail -f` stdin, then append the browser code); set `AWS_PAGER=` (no `less`); `mkdir -p ~/.kiro/skills` so `aws configure agent-toolkit --yes --region us-east-1 --profile conxian-agent` detects an agent (OpenHands NOT supported); add `env.AWS_MCP_PROXY_PROFILES=conxian-agent`; rules (advanced) -> `~/.kiro/steering/aws-agent-rules.md`. MCP: `https://aws-mcp.us-east-1.api.aws/mcp`. Verified: KMS 2-of-3 quorum OK; old keys PendingDeletion; root keys none; no EC2; $5.55 Sept.
+- **Open**: retire old KMS keys after 7-day window; Phase 2 implementation (threshold attestation + DKG + audit); PR #396 merge (CI green 26/26, awaiting review); delete session root key `AKIA2CJJFINX2UOKC4ZN`.
+
+---
+
+### Session 70 Summary (2026-09-30 — core SDK-surface propagation + DKG ceremony CI + branch-policy realignment)
+- **lib-conxian-core full SDK surface** (PR #345, 14/14 green): the core could not use the SDK's `enclave::threshold` (`ThresholdEnclaveManager`, Phase 2 value-bearing threshold signing). Re-exported it as `conxian_core::sdk::enclave_sdk::threshold` (gated by `sdk-frost-crypto`, mirroring the SDK's own gate); advanced the SDK pin from `tag v2.0.17` to pinned `rev b3d79d9` (the tag predates the Phase 2 modules); added `sdk-development-simulators` / `sdk-mock-cloud-enclave` dev-only opt-ins. SDK coverage 83→77 modules (only `protocol::rails`, pub(crate), remains). `cargo test --features full-sdk --lib` 158 passed.
+- **DKG ceremony CI** (enclave-sdk PR #408, merged `b3d79d9`): always-on `.github/workflows/dkg-ceremony.yml` closes Session 69's "DKG ceremony" open item — 2-of-3 FROST rehearsal with machine-readable evidence (90-day artifact + R2 `dkg-ceremony/latest/` + job summary) + auto-validation of real-operator `ceremony/round1|round2/*.pkg`.
+- **Branch-policy realignment**: `conxian-business/scripts/branch_promotion_policy.py` enforces `dev → staged → main`; `kb/*` is not a valid prefix. Renamed `kb/aws-toolkit-record` → `docs/aws-toolkit-record` (closed #1201, opened #1204 with evidence pack). Policy recorded in `.github-private` KB.
+- **Dependency-propagation survey** (SDK → core → gateway/nexus): gateway v0.1.5 → core `tag v0.3.3`; nexus v0.4.23 → core `rev b85625f` (both pre-#345). Plan: merge #345 → bump core to v0.3.4 (+tag) → bump gateway/nexus core pins → optionally enable `sdk-*`/`full-sdk` passthrough → product repos follow.
+- **Auto-sync**: full fetch refspec + `fetch.prune` + a 120s background fetch loop across working repos.
+- **Open / human-gated**: SDK release (recommend 2.1.0; value-bearing signing still gated on #202/#240/#241/#242 + independent review); org-wide auto-merge enablement; `lib-conxian-core#342` (ERC-7683/FDC3) rebase (clean local rebase ready); `conxian-business#1202` (reconcile fix → dev) approval; merge #345 then propagate the core bump to gateway/nexus.
 
 ---
 
