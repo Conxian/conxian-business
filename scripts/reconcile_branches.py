@@ -8,9 +8,14 @@ going through the chain (e.g. direct-to-main `docs`/`chore`/`feat` merges, or
 direct-to-staged merges). This script detects that drift and opens a
 back-merge PR to re-sync the lower branch.
 
-Resolution policy (learned from the 2026-09-20 org-wide reconciliation):
-the higher branch is authoritative. On conflict, take the higher branch's
-version and drop lower-branch-only files, so the result is an exact sync.
+Resolution policy:
+- ``main -> staged``: ``main`` is authoritative (``-X theirs``). Direct-to-main
+  work must flow down, so ``main``'s version wins conflicts.
+- ``staged -> dev``: the lower branch ``dev`` is authoritative on conflict
+  (``-X ours``). Forward work lands on ``dev`` first and can be newer than
+  ``staged`` (e.g. an unpromoted dependency upgrade); ``-X theirs`` would revert
+  that forward work by taking ``staged``'s stale version. Non-conflicting
+  staged-side changes still merge down cleanly.
 
 Forward-promotion artifacts (``PROMOTION:STAGED->MAIN`` / ``PROMOTION:DEV->STAGED``
 merge commits) are legitimate and are excluded from drift detection.
@@ -170,11 +175,15 @@ def reconcile(plan: ReconcilePlan, dry_run: bool) -> dict:
         _git("checkout", "-q", "-b", branch_name, f"origin/{plan.target}", cwd=repo_dir)
 
         # Merge the higher branch down, preserving the lower branch's genuine
-        # forward work. "-X theirs" resolves conflicting hunks in favor of the
-        # authoritative higher branch while keeping non-conflicting lower work.
+        # forward work. For main -> staged, main is authoritative ("-X theirs").
+        # For staged -> dev, dev must win conflicts ("-X ours"): dev can be
+        # content-ahead of staged when forward work is stuck unpromoted, and
+        # "-X theirs" would revert it. Non-conflicting higher-branch changes
+        # still merge in either direction.
+        merge_strategy = "theirs" if plan.source == "main" else "ours"
         before = _git("rev-parse", "HEAD", cwd=repo_dir).strip()
         merge = subprocess.run(
-            ["git", "merge", f"origin/{plan.source}", "-X", "theirs", "--no-edit"],
+            ["git", "merge", f"origin/{plan.source}", "-X", merge_strategy, "--no-edit"],
             capture_output=True, text=True, cwd=repo_dir,
         )
         if merge.returncode != 0:
