@@ -9,6 +9,19 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+<<<<<<< HEAD
+### Added & Realigned (2026-09-26 — Organization-Wide SLA Positioning & BaaP Pricing Architecture)
+- **Organization-Wide SLA Positioning**: Re-aligned SLA posture across the Conxian GitHub ecosystem in `docs/SLA.md` and `docs/SLA_POLICY.md`. Enforced strict open-source disclaimers (NO SLA, community best-effort) on public protocol surfaces (`conxian` org) while restricting contractual SLAs (99.5% target uptime, SEV1 1-hour business hours acknowledgment, 0% financial credit liability, 5-day RCA SLA) exclusively to B2B Enterprise Gateway deployments.
+- **Business-as-a-Platform (BaaP) Monetization**: Formulated complete 3-layer commercial pricing model in `docs/COMMERCIAL_PACKAGING_DOCTRINE.md`: Layer 1 Protocol Escrow Volume Settlement (2.0% gross escrow fee with Tier 1-4 decay schedule down to 0.5% for >$500M; 80/10/10 split), Layer 2 Enterprise SaaS Node Licensing ($2,500–$40,000/mo), and Layer 3 Metered Edge Compute & x402 Attestations ($0.005–$0.020 TEE proofs, $0.010–$0.050 ZKC proofs, $0.002 ISO 20022 payloads).
+- **Governance & Verification Alignment**: Updated `docs/GAPS.md` with `GAP-SLA-01`, `docs/PORTFOLIO.md`, `docs/bos_research_candidate_ledger.json`, `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`, `docs/BOS_KNOWLEDGE_FRAMEWORK.md` (v3.6), and `BOS_KNOWLEDGE_GRAPH.md`.
+- **Automated Validation**: Enhanced `scripts/verify_cross_repo_alignment.py` to validate Tiered SLA exclusions, BaaP monetization layers, 80/10/10 split structure, and Force Majeure terms.
+
+### Added & Realigned (2026-09-26 — Organization-Wide SLA Positioning & BaaP Pricing Architecture)
+- **Organization-Wide SLA Positioning**: Re-aligned SLA posture across the Conxian GitHub ecosystem in  and . Enforced strict open-source disclaimers (NO SLA, community best-effort) on public protocol surfaces ( org) while restricting contractual SLAs (99.5% target uptime, SEV1 1-hour business hours acknowledgment, 0% financial credit liability, 5-day RCA SLA) exclusively to B2B Enterprise Gateway deployments.
+- **Business-as-a-Platform (BaaP) Monetization**: Formulated complete 3-layer commercial pricing model in : Layer 1 Protocol Escrow Volume Settlement (2.0% gross escrow fee with Tier 1-4 decay schedule down to 0.5% for >00M; 80/10/10 split), Layer 2 Enterprise SaaS Node Licensing (,500–0,000/mo), and Layer 3 Metered Edge Compute & x402 Attestations (-bash.005–-bash.020 TEE proofs, -bash.010–-bash.050 ZKC proofs, -bash.002 ISO 20022 payloads).
+- **Governance & Verification Alignment**: Updated  with , , , ,  (v3.6), and .
+- **Automated Validation**: Enhanced === Cross-Repo Alignment & Source-of-Truth Verification ===
+=======
 ### Added & Synthesized (2026-09-18 — Multi-Repo Research & End-To-End Alignment)
 - Executed multi-repo git synchronization and fetched fresh code across all 8 active submodules.
 - Audited repository health, release hygiene, LTS compliance, cross-repo alignment, and research candidate ledger.
@@ -25,6 +38,7 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 - Executed multi-repo git synchronization and fetched fresh code across all 8 active submodules (, , , , , , , ).
 - Audited repository health, release hygiene, LTS compliance, cross-repo alignment, and research candidate ledger ().
 - Verified 100% pass status across , === Cross-Repo Alignment & Source-of-Truth Verification ===
+>>>>>>> staged
 
 
 --- Verifying docs/GAPS.md ---
@@ -64,6 +78,9 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
   OK  ALIGNMENT.md contains 'conxian-labs-site'
   OK  ALIGNMENT.md contains 'Three Pillars'
 
+<<<<<<< HEAD
+✅ Business Repo Source-of-Truth & Cross-Repo Alignment: PASSED to validate Tiered SLA exclusions, BaaP monetization layers, 80/10/10 split structure, and Force Majeure terms.
+=======
 ✅ Business Repo Source-of-Truth & Cross-Repo Alignment: PASSED, --- Verifying Commercial Packaging Tiers ---
   OK  Tier verified: 'Community Tier'
   OK  Tier verified: 'Business Tier'
@@ -87,6 +104,7 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ### Fixed & Aligned (2026-09-27)
 - Aligned module README release version markers (`v1.9.2` → `v1.9.5`) across `Fiscal-Vault-Oracle`, `Nakamoto-Guardian`, `Sovereign-Ops-Orchestrator`, `Sovereign-Strategy-Nexus`, and `cxn-grid-oracle` to match current BOS system-wide release baseline (`v1.9.5`).
+>>>>>>> staged
 
 ### Added & Synthesized (2026-09-16 — Master Reconnaissance & Architecture Review)
 - Executed org-wide Master Reconnaissance & Architecture Review in `docs/CONXIAN_MASTER_RECONNAISSANCE_AND_ARCHITECTURE_REVIEW.md`.

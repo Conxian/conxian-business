@@ -2,12 +2,12 @@
 """Verify Business Repo Source-of-Truth & Cross-Repo Alignment.
 
 Validates that:
-1. Source-of-truth governance docs (GAPS.md, PORTFOLIO.md, SLA.md, ALIGNMENT.md) exist.
+1. Source-of-truth governance docs (GAPS.md, PORTFOLIO.md, SLA.md, ALIGNMENT.md, COMMERCIAL_PACKAGING_DOCTRINE.md) exist.
 2. GAPS.md contains Pillar Alignment and candidate score matrix with 3.0 rejection threshold.
-3. PORTFOLIO.md contains Capability x Chain matrix with Reference Customer column.
-4. SLA.md contains 99.5% uptime, SEV1 response parameters, no credits in v1, and scaling trigger.
+3. PORTFOLIO.md contains Capability x Chain matrix with Reference Customer column and BaaP pricing tiers.
+4. SLA.md contains Tiered Support Matrix, 99.5% uptime, SEV1 response parameters, Force Majeure, no credits in v1, and scaling trigger.
 5. ALIGNMENT.md lists all active submodules with pillar alignment.
-6. .gitmodules enforces update=checkout across active submodules.
+6. COMMERCIAL_PACKAGING_DOCTRINE.md contains 3-layer BaaP monetization engine (Escrow split 80/10/10, SaaS licensing, x402 edge compute).
 """
 
 import sys
@@ -46,7 +46,8 @@ def verify_gaps():
         "Operational Unification",
         "Nakamoto Readiness",
         "Weighted Total",
-        "Rejected (< 3.0)"
+        "Rejected (< 3.0)",
+        "GAP-SLA-01"
     ]
     return check_file_content(path, required)
 
@@ -64,7 +65,8 @@ def verify_portfolio():
         "conxius-wallet",
         "conxian_market",
         "lib-conxian-core",
-        "conxius-enclave-sdk"
+        "conxius-enclave-sdk",
+        "Business-as-a-Platform (BaaP)"
     ]
     return check_file_content(path, required)
 
@@ -73,10 +75,30 @@ def verify_sla():
     print("\n--- Verifying docs/SLA.md ---")
     path = REPO_ROOT / "docs" / "SLA.md"
     required = [
+        "Tiered Support & SLA Matrix",
+        "NO SLA",
+        "Contractual SLA",
         "99.5% monthly uptime percentage",
         "SEV1 — Critical",
+        "Force Majeure",
         "no financial service credits are issued",
         "Customer #3"
+    ]
+    return check_file_content(path, required)
+
+
+def verify_commercial_packaging():
+    print("\n--- Verifying docs/COMMERCIAL_PACKAGING_DOCTRINE.md ---")
+    path = REPO_ROOT / "docs" / "COMMERCIAL_PACKAGING_DOCTRINE.md"
+    required = [
+        "Business-as-a-Platform (BaaP)",
+        "2.0% gross market fee",
+        "80% Developer Pool",
+        "10% Operations Pool",
+        "10% Network Pool",
+        "Tiered Volume Fee Decay",
+        "Enterprise BaaP Node Licensing",
+        "HTTP 402"
     ]
     return check_file_content(path, required)
 
@@ -105,6 +127,7 @@ def main():
     errors.extend(verify_gaps())
     errors.extend(verify_portfolio())
     errors.extend(verify_sla())
+    errors.extend(verify_commercial_packaging())
     errors.extend(verify_alignment())
 
     if errors:
