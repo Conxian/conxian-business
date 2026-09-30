@@ -120,8 +120,8 @@
 | CI_SUBMODULES_PAT | repo? | Unknown — may be needed for repo-hygiene submodule init |
 
 ### Capabilities & Connections (agent runtime, audited 2026-09-30)
-- ✅ **Connected**: GitHub PAT (`botshelomokoka`, admin) · GitHub token · Neon (6 projects) · Render · CircleCI
-- ⚠️ **Connected but unused**: Supabase (0 projects — DBs on Neon); Crates.io (token present, `/api/v1/me` → 403, verify via publish); Jules + Typesafe (endpoints undocumented)
+- ✅ **Connected**: GitHub PAT (`botshelomokoka`, admin) · GitHub token · Neon (6 projects) · Render · CircleCI · Supabase (2 projects: `Conxian-platform`, `Conxian BOS`)
+- ⚠️ **Notes**: Supabase MCP tools resolve empty (token mismatch — use REST API with `SUPABASE_ACCESS_TOKEN`); Crates.io (token present, `/api/v1/me` → 403, verify via publish); Jules + Typesafe (endpoints undocumented)
 - ❌ **Blocked**: AWS (stale keys + no `aws` CLI → blocks Nitro #242 + KMS #1076); Cloudflare (wrong account → blocks platform #1280 / Vercel); `OPENHANDS_API_KEY` (unset)
 - **Toolchain**: `git gh python3 node cargo rustc docker` present; `aws` CLI + `pnpm` missing
 - **Full log**: `.github-private` → `ECOSYSTEM_STATE.md` → newest "Session Note" → "Human-blocked items"
