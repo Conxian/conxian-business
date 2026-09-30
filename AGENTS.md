@@ -2,6 +2,7 @@
 
 ## BOS Operational Standards
 > **Version**: 1.14 (2026-09-30 — M2M ops remediation sweep: wire contracts, treasury reporting, Neon idempotency CI, imapflow 2.x, CI script coverage)
+> **Version**: 1.13 (2026-09-30 — core SDK-surface propagation + DKG ceremony CI + branch-policy realignment)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
 
 ---
