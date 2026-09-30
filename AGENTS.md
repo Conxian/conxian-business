@@ -1,8 +1,18 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
-> **Version**: 1.13 (2026-09-30 — core SDK-surface propagation + DKG ceremony CI + branch-policy realignment)
+> **Version**: 1.14 (2026-09-30 — M2M ops remediation sweep: wire contracts, treasury reporting, Neon idempotency CI, imapflow 2.x, CI script coverage)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
+
+---
+
+### Session 71 Summary (2026-09-30 — M2M ops remediation sweep across market / nexus / platform)
+- **conxian_market #37 (runtime settlement wire contracts)**: `src/wire_contract.ts` zod schemas + `settleJobCard` runtime validation → PR #76 **merged**.
+- **conxian_market #8 (treasury transparency)**: `src/treasury_report.ts` (KPI threshold bands 12/6 runway, 33k/15k volume, 20k/10k revenue, 40/25 stablecoin; 40/30/20/10 allocation; 50/30/20 fees; ASCII dashboard) → PR #77 **merged**.
+- **conxian-nexus #251 (IdempotencyStore → Neon)**: verified the three idempotency migrations apply cleanly to Neon `Conxian Nexus` (`nexus_idempotency_test`); fixed the dangling `create_neon_branch_encode` output ref + added a live-DB conformance CI job in `neon_workflow.yml` → PR #339 **open**.
+- **conxius-platform #1327 (imapflow 1.x→2.x)**: `fetchOne()` now returns `| undefined`; guard `refetched && refetched.source`; `package.json` ^2.0.7 (resolves 2.1.2) + lockfile → PR #1328 **merged**.
+- **conxius-platform #1082 (missing CI scripts)**: implemented `verify_knowledge_retention.py`, `verify_compose_env_templates.py`, `verify_submodule_secret_filenames.py`, `verify_pr_bos_classification.py`; completed `.env.example` (7 compose-only vars); wired into `run-lifecycle-control-gates.sh` (11/11 pass) → PR #1329 **open**.
+- **Still human/hardware/legal-gated (not self-remediable)**: business #1200 (AWS+Cloudflare cred rotation), #1076 (prod KMS release-signing key), #989 (position research), #940 (FIBO/trademark), #938 (BOS-001 Gate 6 mainnet handoff + post-state readback), #937 (feed title truncation); enclave-sdk #240/#241 (real-device evidence + independent review); submodule gitlink drift (nexus/market) in conxian-business.
 
 ---
 
