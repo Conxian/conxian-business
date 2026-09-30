@@ -5,7 +5,7 @@
 > **Maturity / claim state:** Incubating; protocol/reference interfaces are **Implemented** where code evidence exists, while broader orchestration remains **Target-state**.
 > **Doctrine boundary:** This repository describes a protocol/reference oracle and policy surface. It is not a Conxian-Labs custodian, company treasury, discretionary fund controller, market operator, or user-data extraction system.
 
-> Current workspace release: **v1.9.2** (see [`CHANGELOG.md`](../CHANGELOG.md))
+> Current workspace release: **v1.9.5** (see [`CHANGELOG.md`](../CHANGELOG.md))
 
 The **Fiscal Vault Oracle** is a public reference surface for policy coordination, oracle inputs, and contract-level financial state in the Conxian Business Operations System (BOS). Detailed operational, vendor, legal, and financial strategy material remains in the authorized GitHub organization under ZSE.
 
