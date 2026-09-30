@@ -5,8 +5,8 @@ Scans all Clarity (.clar) contract files across the repository (including
 initialized submodules) for hardcoded testnet principals (addresses starting
 with 'ST...') in production-track code paths.
 
-Also checks submodule alignment across all 12 core repositories without
-failing on 'update = none' flags (e.g. conxius-platform, Conxian).
+Also checks submodule alignment across the core repositories without
+failing on 'update = none' flags.
 
 Per the Sovereign-First Deployment Mandate, hardcoded ST.../SP... addresses
 in production source trigger an immediate build-break.
@@ -62,8 +62,9 @@ CORE_REPOSITORIES = [
     "showcase-dapp",
 ]
 
-# Allowed update=none policy overrides
-ALLOWED_UPDATE_NONE = {"Conxian", "conxius-platform"}
+# Allowed update=none policy overrides. None remain: every submodule now
+# tracks `branch = main`.
+ALLOWED_UPDATE_NONE: set[str] = set()
 
 
 def is_production_track(file_path: Path) -> bool:
