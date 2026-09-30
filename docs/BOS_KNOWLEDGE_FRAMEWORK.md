@@ -1,6 +1,6 @@
 # Conxian BOS Knowledge Framework
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 3.5 | Session: 65 | Generated: 2026-09-08
+> Version: 3.6 | Session: 66 | Generated: 2026-09-26
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 

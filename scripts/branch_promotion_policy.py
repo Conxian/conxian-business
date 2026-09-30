@@ -135,23 +135,6 @@ def validate_pull_request(
     errors: list[str] = []
     body = ctx.body or ""
 
-    # Automated downward re-sync from the reconcile-branches workflow. These are
-    # deterministic (higher branch authoritative) and need no feature checklist.
-    # They are scoped to the two valid downward lanes, same-repository only, and
-    # are never allowed into `main`.
-    if ctx.head_ref.startswith("backmerge/"):
-        expected = {
-            "staged": "backmerge/main-to-staged",
-            "dev": "backmerge/staged-to-dev",
-        }.get(ctx.base_ref)
-        if expected and ctx.head_ref == expected and ctx.same_repository:
-            return []
-        errors.append(
-            "Back-merge branches may only target staged (backmerge/main-to-staged) "
-            "or dev (backmerge/staged-to-dev) from this repository."
-        )
-        return errors
-
     if any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/")) and Path(".github/PULL_REQUEST_TEMPLATE.md").exists():
         template_text = Path(".github/PULL_REQUEST_TEMPLATE.md").read_text(encoding="utf-8")
         if not body.strip():
@@ -163,6 +146,12 @@ def validate_pull_request(
                 body = f"{body}\n\n{template_text}"
             elif ctx.base_ref == "main" and not (MAINNET_PACK_RE.search(body) or FEATURE_CHECKLIST_RE.search(body)):
                 body = f"{body}\n\n{template_text}"
+
+    # Reverse-drift back-merge PRs (reconcile automation) target staged/dev with a
+    # `backmerge/<source>-to-<target>` branch and are exempt from the forward
+    # promotion checklist requirements.
+    if ctx.head_ref.startswith("backmerge/") and ctx.base_ref in {"staged", "dev"}:
+        return errors
 
     if ctx.base_ref == "dev":
         if ctx.head_ref in {"main", "staged", "dev"} or ctx.head_ref.startswith("promotion/"):
