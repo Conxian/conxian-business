@@ -69,10 +69,10 @@ def context(
 
 
 class BranchPromotionPolicyTests(unittest.TestCase):
-    def test_agent_branch_fallback_template_acceptance(self) -> None:
+    def test_agent_branch_routes_to_dev_only(self) -> None:
         self.assertAccepted(context("jules-1234", "dev", ""))
-        self.assertAccepted(context("jules-1234", "staged", ""))
-        self.assertAccepted(context("jules-1234", "main", ""))
+        self.assertRejected(context("jules-1234", "staged", ""))
+        self.assertRejected(context("jules-1234", "main", ""))
 
     def assertAccepted(self, ctx: PullRequestContext, exception: BootstrapException | None = None) -> None:
         errors = validate_pull_request(ctx, exception or BootstrapException(0))
@@ -153,6 +153,24 @@ class BranchPromotionPolicyTests(unittest.TestCase):
         self.assertRejected(
             context("dependabot/pip/pyyaml-7", "main", MAIN_BODY, actor="dependabot[bot]")
         )
+
+    def test_direct_work_branch_to_main_is_rejected(self) -> None:
+        for head in (
+            "fix/governance",
+            "feature/governance",
+            "feat/governance",
+            "docs/governance",
+            "chore/governance",
+            "jules-1234",
+            "jules/discovery-report",
+        ):
+            with self.subTest(head=head):
+                self.assertRejected(context(head, "main", MAIN_BODY))
+
+    def test_direct_work_branch_to_staged_is_rejected(self) -> None:
+        for head in ("feature/governance", "fix/governance", "jules-1234", "jules/discovery-report"):
+            with self.subTest(head=head):
+                self.assertRejected(context(head, "staged", STAGED_BODY))
 
     def test_missing_checklist_or_evidence_is_rejected(self) -> None:
         self.assertRejected(context("fix/no-checklist", "dev", ""))
