@@ -22,7 +22,7 @@ jobs:
       - name: Ensure submodules are initialized
         run: |
           git submodule sync --recursive
-          # Init public submodules only. conxian_market is private (update=none).
+          # All 8 submodules are public and track `branch = main`.
           git submodule update --init -- \
             conxian-gateway \
             conxian-labs-site \
@@ -30,8 +30,8 @@ jobs:
             conxius-enclave-sdk \
             conxius-platform \
             conxius-wallet \
-            lib-conxian-core
-          git -c submodule.conxius-platform.update=checkout submodule update --init conxius-platform
+            lib-conxian-core \
+            conxian_market
 
       - name: Setup Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # ratchet:actions/setup-python@v7.0.0
