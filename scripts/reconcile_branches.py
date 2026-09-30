@@ -144,7 +144,19 @@ def _clone(repo: str, workdir: str) -> str:
         ["git", "clone", "--quiet", url, repo],
         check=True, capture_output=True, text=True, cwd=workdir,
     )
-    return os.path.join(workdir, repo)
+    repo_dir = os.path.join(workdir, repo)
+    # A fresh `git clone` does not inherit the runner's commit identity, so the
+    # back-merge `git commit` below would fail with "unable to auto-detect email
+    # address" (exit 128). Pin an explicit identity on every clone.
+    for key, val in (
+        ("user.name", "github-actions[bot]"),
+        ("user.email", "41898282+github-actions[bot]@users.noreply.github.com"),
+    ):
+        subprocess.run(
+            ["git", "config", key, val],
+            check=True, capture_output=True, text=True, cwd=repo_dir,
+        )
+    return repo_dir
 
 
 def reconcile(plan: ReconcilePlan, dry_run: bool) -> dict:
@@ -168,6 +180,11 @@ def reconcile(plan: ReconcilePlan, dry_run: bool) -> dict:
             check=True, capture_output=True, text=True, cwd=repo_dir,
         )
         subprocess.run(["git", "add", "-A"], check=True, capture_output=True, text=True, cwd=repo_dir)
+        # If the trees are already identical (e.g. a promotion squash-merged the
+        # same content) there is nothing to commit; skip instead of failing.
+        if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=repo_dir).returncode == 0:
+            result["status"] = "skipped_equal"
+            return result
         subprocess.run(
             ["git", "commit", "-m", f"chore: back-merge {plan.source} -> {plan.target} (downward re-sync)"],
             check=True, capture_output=True, text=True, cwd=repo_dir,
