@@ -106,7 +106,7 @@ jobs:
         if: steps.details.outputs.skip != 'true'
         id: existing
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.ORG_RECONCILE_PAT }}
           TARGET: ${{ steps.branches.outputs.target }}
           PROMO_BRANCH: ${{ steps.details.outputs.promo_branch }}
         run: |
@@ -227,7 +227,7 @@ jobs:
       - name: Open draft promotion PR
         if: steps.details.outputs.skip != 'true' && steps.existing.outputs.number == ''
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.ORG_RECONCILE_PAT }}
           TARGET: ${{ steps.branches.outputs.target }}
           PROMO_BRANCH: ${{ steps.details.outputs.promo_branch }}
         run: |
@@ -242,6 +242,29 @@ jobs:
             echo "::error::Automatic PR creation is unavailable. The immutable candidate ref remains published; open a manual promotion PR from ${PROMO_BRANCH} to ${TARGET} using pr_body.md without rewriting the ref."
             exit 1
           fi
+
+      - name: Enable auto-merge on promotion PR
+        if: steps.details.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.ORG_RECONCILE_PAT }}
+          TARGET: ${{ steps.branches.outputs.target }}
+          PROMO_BRANCH: ${{ steps.details.outputs.promo_branch }}
+        run: |
+          set -euo pipefail
+          PR_NUMBER=$(gh pr list \
+            --repo "${{ github.repository }}" \
+            --base "$TARGET" \
+            --head "$PROMO_BRANCH" \
+            --state open \
+            --json number \
+            --jq '.[0].number // ""')
+          if [ -z "$PR_NUMBER" ]; then
+            echo "::error::Promotion PR not found for ${PROMO_BRANCH} -> ${TARGET}."
+            exit 1
+          fi
+          gh pr ready "$PR_NUMBER" --repo "${{ github.repository }}"
+          gh pr merge "$PR_NUMBER" --repo "${{ github.repository }}" --squash --auto --delete-branch
+          echo "::notice::Auto-merge enabled for promotion PR #${PR_NUMBER} (merges on green required checks)."
 
       - name: Report nothing to promote
         if: steps.details.outputs.skip == 'true'
