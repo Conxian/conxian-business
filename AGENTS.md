@@ -1,9 +1,20 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
+> **Version**: 1.15 (2026-10-02 — market ADR-004 productionization + org-wide capabilities/production audit)
 > **Version**: 1.14 (2026-09-30 — M2M ops remediation sweep: wire contracts, treasury reporting, Neon idempotency CI, imapflow 2.x, CI script coverage)
 > **Version**: 1.13 (2026-09-30 — core SDK-surface propagation + DKG ceremony CI + branch-policy realignment)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
+
+---
+
+### Session 72 Summary (2026-10-02 — market ADR-004 productionization + org-wide capabilities/production audit)
+- **conxian_market #94 (ADR-004)**: implemented the dynamic hybrid fee floor end-to-end (`calculateDynamicFee`, `calculateVolumeDecayedBps`, `getRailDefaultFlatFloor`, `projectDynamicRevenueScenario`) + types + SDK bridge + tests (166, 19 files) + `ADR_004` / `SESSION_71_RESEARCH` docs; merged + auto-promoted `dev → staged → main`.
+- **conxian-nexus #350**: Rust 1.82 → 1.98.1 toolchain standardization merged (reverted an out-of-scope policy auto-fill weakening; the tightened policy is preserved).
+- **.github-private**: CODEOWNERS repointed `@conxian/core-devs` → `@conxian/conxian-admin` (PR #48); branch protection remains Free-plan-gated.
+- **Capabilities/production audit** → `.github-private/docs/CAPABILITIES_AUDIT_2026_10_02.md`: `@conxian/market-sdk` is **implemented but isolated** — unpublished, unconsumed (0 downstream imports), version drift (0.2.0 vs 0.2.3), and no canonical fee/settlement model in the Rust core (duplicated vs nexus `api/billing`).
+- **Gap register G1–G8 → 9 issues on org "Change Backlog" project**: G1 version drift (market #97), G2 publish (market #98), G3 wire into wallet/platform (wallet #597, platform #1347), G4 canonical fee model in core (core #367), G5 fee↔billing alignment (nexus #353), G6 rail ontology (enclave-sdk #422), G7 Strategic Triad Engine+UI replacement (business #1242), G8 ADR-004 hardening (market #99).
+- **State**: all 9 repos `main == staged == dev`, drift `[]`; 0 open PRs.
 
 ---
 
