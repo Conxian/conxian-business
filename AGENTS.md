@@ -1,10 +1,21 @@
 # Conxian AGENTS.md
 
 ## BOS Operational Standards
+> **Version**: 1.16 (2026-10-02 — G4 canonical fee model + conformance binding, G6 rail ontology rename, G7 Strategic Triad repoint)
 > **Version**: 1.15 (2026-10-02 — market ADR-004 productionization + org-wide capabilities/production audit)
 > **Version**: 1.14 (2026-09-30 — M2M ops remediation sweep: wire contracts, treasury reporting, Neon idempotency CI, imapflow 2.x, CI script coverage)
 > **Version**: 1.13 (2026-09-30 — core SDK-surface propagation + DKG ceremony CI + branch-policy realignment)
 > **Archive**: `docs/archive/AGENTS_archive_session_58.md` (historical session log)
+
+---
+
+### Session 73 Summary (2026-10-02 — G4 canonical fee model + conformance binding, G6 rail ontology rename, G7 Strategic Triad repoint)
+- **G4 canonical fee model (closed core #367)**: `lib-conxian-core/src/fee.rs` — `SettlementRail` (8), `VolumeDecayTier` (4), rail flat floors, volume decay, load clamp + 2-dp quantisation, `calculate_dynamic_fee` (ObserverOnly rejection + 50/30/20 split) → PR #368. **Rust↔TS behavioral binding** via shared `fixtures/fee_conformance.json` (8 vectors): core `fee_conformance_vectors` (#371) + market `tests/fee_conformance.test.ts` (#103). Deprecation plan `docs/FEE_MODEL_BINDING_AND_DEPRECATION.md`.
+- **G8 hysteresis (core #373)**: `VolumeDecayTier::from_monthly_volume` + `suggest_with_hysteresis` (0.1/1/10 BTC thresholds + 5% band, one-tier-per-call). Rail-floor calibration + load oracle parked (need telemetry/oracle).
+- **G6 rail ontology (approved rename)**: enclave-sdk `protocol/rails` → `protocol/bridges` + `TrustTier` (T1–T4) → `RailTrustTier` — **v2.1.0** breaking API rename (#423; 617 tests + clippy green). core `sdk-rails` feature → `sdk-bridges` + `docs/RAIL_ONTOLOGY.md` (#375). Disambiguates from core `TrustTier` (Strict/Managed/Expedient/ObserverOnly); 1:1 map via `control_model_adapter`.
+- **G7 Strategic Triad (approved)**: Engine = `conxian-nexus`, UI = `conxius-platform` (`.github-private` #51 — registry + profile README repointed; `verify-registry-sync.py` green).
+- **Gap expansion** `.github-private/docs/GAP_EXPANSION_2026_10_02.md` (#50) + sub-tasks posted to all gap issues (#99/#353/#422/#1242/#597/#1347).
+- **Remaining**: G2 publish (blocked — NPM_TOKEN), G3 wire wallet/platform (blocked on G2), G5 nexus billing ↔ ADR-004 mapping (actionable), G8 rail calibration + load oracle (parked).
 
 ---
 
