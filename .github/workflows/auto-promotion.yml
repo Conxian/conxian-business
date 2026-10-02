@@ -263,7 +263,7 @@ jobs:
             exit 1
           fi
           gh pr ready "$PR_NUMBER" --repo "${{ github.repository }}"
-          gh pr merge "$PR_NUMBER" --repo "${{ github.repository }}" --squash --auto --delete-branch
+          gh pr merge "$PR_NUMBER" --repo "${{ github.repository }}" --merge --auto --delete-branch
           echo "::notice::Auto-merge enabled for promotion PR #${PR_NUMBER} (merges on green required checks)."
 
       - name: Report nothing to promote

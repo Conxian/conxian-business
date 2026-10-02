@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Deterministic branch-promotion policy shared by CI and focused tests."""
+"""Deterministic branch-promotion policy shared by CI and focused tests.
+
+Promotion PRs (dev->staged and staged->main) merge as merge commits, so the
+exact source revision recorded in the PR body remains a parent of the target
+branch's history. This module validates the promotion route and the recorded
+source/target/window evidence only; it is independent of the merge strategy
+applied at merge time.
+"""
 
 from __future__ import annotations
 
