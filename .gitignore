@@ -142,3 +142,6 @@ gha-creds-*.json
 .jules/
 .Jules/
 .github/.action-version-cache.json
+
+# OpenHands agent memory (local only)
+.openhands/
