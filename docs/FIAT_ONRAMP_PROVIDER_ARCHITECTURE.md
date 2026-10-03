@@ -93,6 +93,36 @@ This is exactly how each fiat provider should behave:
 - `active` → its secrets are **mandatory** (fail closed);
 - `disabled|shadow` → its secrets are **optional/ignored** (provider absent, no startup panic).
 
+## 5.5 Duplication audit — what we actually have (gateway `internal/api`)
+
+Before gating, audit the current shape so we don't re-duplicate.
+
+### `fiat.rs` — `FiatRouter` (4 providers, duplicated in code)
+- `OnRampSessionRequest.provider` is a **`String`** (`"ramp"|"investec"|"alchemypay"|"banxa"`) — no type safety.
+- `FiatRouter::new()` takes **7 positional secret args**, all mandatory, no gating.
+- `create_session()` does `match provider.as_str()` → **4 near-identical `create_*_session()` methods**; the only difference is the redirect URL template + which secret is embedded.
+- `verify_webhook()` does a second `match` → **4 near-identical HMAC branches**.
+
+| Provider | Redirect URL | Secret used | Distinct rail/region |
+|----------|--------------|-------------|----------------------|
+| Ramp | `buy.ramp.network?...&apiKey=` | `ramp_api_key` | EU/UK bank (SEPA/open-banking) + card |
+| Investec | `investec.com/banking/pay?ref=...` | none (redirect only) | South Africa bank transfer (ZAR) |
+| Alchemy Pay | `ramp.alchemypay.org?...&appId=` | `alchemy_pay_app_id` | APAC/LATAM + card |
+| Banxa | `conxian-labs.banxa.com/?...` | none (hosted checkout) | global card/bank |
+
+The four are **distinct regions/rails, not redundant** — but they are **duplicated in code** (4 parallel methods instead of one trait + 4 adapters).
+
+### `a2p.rs` — `A2pRouter` (1 provider, not duplicated)
+Single provider (Infobip) for OTP/A2P SMS (`send_otp`/`verify_otp`, HMAC via `hmac_secret`).
+Not duplicated, but should sit behind a `MessagingProvider` trait to allow Twilio/Vonage/Sinch later.
+
+### "Only connect to what we need"
+- `Strict` (sovereign/community): needs **none** of fiat/A2P — currently *forced* to supply 7 fiat + infobip + hmac secrets.
+- `Managed` (business): needs the **subset** matching its region (EU→Ramp, ZA→Investec, APAC→Alchemy).
+- `Expedient` (enterprise): needs the **mandated** set (commercial SLA).
+
+So the fix is not just "make secrets optional" — it is "collapse the 4 duplicated methods into a trait, then gate each provider by mode so a lane wires only what it needs."
+
 ## 6. Options
 
 ### Option A — keep unconditional mandatory (status quo)
@@ -127,6 +157,28 @@ logic.
 - Is an **aggregator** (Onramper/OnMeta) in scope as a first-class provider, or direct-only?
 - For `Strict` (sovereign) lane: should fiat rails be **unavailable by design** (BTC-native), or
   optional-but-off?
+
+## 7.5 Refined recommendation (expanded B)
+
+**B (expanded) now, full C later.** The expanded B does two things at once:
+
+1. **Removes the code duplication** — `FiatRouter`'s 4 parallel `create_*_session()` methods and
+   4 webhook branches collapse into a `trait FiatOnRampAdapter { build_redirect_url();
+   verify_webhook(); }` with 4 small adapters (Ramp/Investec/AlchemyPay/Banxa). `provider: String`
+   becomes `enum FiatOnRampProvider`. This is a *scoped* C — no routing/aggregation engine yet.
+2. **Gates providers per lane** — add `*_MODE` (`disabled|shadow|active`) per provider, mirroring
+   RGB `RolloutMode`. Secrets are `get_mandatory_env` only when `active`; otherwise the adapter is
+   simply not constructed (`Option<...>`), so a lane connects only to the providers it needs.
+
+Concrete shape:
+- `enum FiatOnRampProvider { Ramp, Investec, AlchemyPay, Banxa }`
+- `trait FiatOnRampAdapter { fn build_redirect_url(&self, req) -> String; fn verify_webhook(...) -> bool; }`
+- `FiatRouter { ramp: Option<RampAdapter>, investec: Option<...>, ... }` — only enabled ones.
+- `A2pRouter` stays a single provider today, behind a `MessagingProvider` trait for future Twilio/Vonage/Sinch.
+
+Lane defaults via `TrustTier`: `Strict` → all fiat/A2P disabled (BTC-native); `Managed` → configured
+subset; `Expedient` → mandated set. No provider is "the only choice" — leaders are named first-class
+variants behind a provider-agnostic trait, and switching = mode flag + adapter.
 
 ## Sources
 
