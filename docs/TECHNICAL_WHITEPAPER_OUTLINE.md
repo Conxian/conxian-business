@@ -1,8 +1,10 @@
 # Conxian: A Sovereign-First Financial Operating System for Bitcoin
 
+> **Superseded by [`TECHNICAL_WHITEPAPER.md`](./TECHNICAL_WHITEPAPER.md).** This was the drafting outline; the finished, code-verified paper is now the authoritative technical artifact.
+
 > **Technical Whitepaper Outline**
 > **Issue**: [#827](https://github.com/Conxian/conxian-business/issues/827)
-> **Status**: Outline (draft)
+> **Status**: Superseded (outline → paper written)
 > **Version**: 1.0-draft
 > **Last updated**: 2026-07-28
 
