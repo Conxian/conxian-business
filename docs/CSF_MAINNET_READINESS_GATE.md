@@ -1,5 +1,7 @@
 # CSF mainnet readiness gate (CON-129)
 
+> **RETIRED (2026-10-03).** ConxianCSF is retired by design — Conxian is universal, protocol-agnostic, non-custodial infrastructure and does not own/launch a protocol. The mainnet-launch gate and the ALEX-funding path described in this document are **void**. Retained for historical context only.
+
 This is the single canonical gate artifact for deciding **Go / Conditional Go / No-Go** for ConxianCSF mainnet launch, plus an explicit **payout-readiness** decision tied to the ALEX funding path.
 
 Canonical trackers:
