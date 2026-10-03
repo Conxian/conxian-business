@@ -18,7 +18,7 @@
 |---------|------|------|------|----------------|--------|
 | admin-dashboard | `conxius-platform` | Next.js + M2M key store | **Render** | persistent disk (M2M key store) | Render build fixed #1370; env vars TBD |
 | public site | `conxian-labs-site` | Express | Render | stateless | live (`conxian-labs-site-xhqq.onrender.com`) |
-| org site | `conxian-org-site` | Astro | Vercel | stateless | **undeployed** |
+| org site | `conxian-org-site` | Astro | Vercel | stateless | **live** (`conxian.org`, deployed 2026-10-03) |
 | gateway | `conxian-gateway` | Rust | Render | persistent disk + Redis + RPC conns | undeployed (needs 11 secrets) |
 | nexus | `conxian-nexus` | Rust | Render | Neon Postgres + RPC conns | undeployed |
 | market / wallet / enclave-sdk | — | libs/SDK | — | — | published/npm/crates |
@@ -29,7 +29,8 @@
 |--------|-----------|------|-----|
 | `www.conxian-labs.com` (canonical) | admin-dashboard | Vercel (today) / Render (target) | CNAME `cname.vercel-dns.com` |
 | `conxian-labs.com` (redirect) | admin-dashboard | same | A `76.76.21.21` |
-| `conxian.org` (apex) | org-site | Vercel (target) | TBD (org-site undeployed) |
+| `conxian.org` (apex) | org-site | Vercel | A `76.76.21.21` (deployed 2026-10-03) |
+| `www.conxian.org` | org-site | Vercel | CNAME `cname.vercel-dns.com` |
 | `nexus/gateway/sdk/platform/market.conxian.org` | services | Render | TBD |
 | `pages.conxian-labs.com` | legacy GH Pages | retired | **dead — no DNS record** |
 
@@ -48,7 +49,7 @@
 
 - admin-dashboard deployed **twice** (Vercel live + Render build-broken) — de-duplicate.
 - `conxian.github.io` CNAME is `pages.conxian-labs.com` with no DNS record — retire.
-- `conxian.org` apex/www still point at GitHub Pages → 404 — repoint after org-site deploy.
+- ~~`conxian.org` apex/www point at GitHub Pages → 404~~ — **resolved 2026-10-03**: org-site deployed to Vercel + DNS repointed (A `76.76.21.21` / CNAME `cname.vercel-dns.com`), now 200.
 - Toolchain drift: platform `node:22` (fixed #1370) / `pnpm@9.15.5` (org std 10.28);
   gateway `rust:1.96` (fixed #459 → 1.98.1).
 

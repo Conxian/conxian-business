@@ -33,12 +33,16 @@ import urllib.request
 EXPECTED_DNS = {
     "conxian-labs.com": ("A", "76.76.21.21", "conxian-labs.com"),          # Vercel apex
     "www.conxian-labs.com": ("CNAME", "cname.vercel-dns.com", "conxian-labs.com"),  # Vercel www
+    "conxian.org": ("A", "76.76.21.21", "conxian.org"),                    # Vercel apex (org-site)
+    "www.conxian.org": ("CNAME", "cname.vercel-dns.com", "conxian.org"),   # Vercel www
 }
 
 # url -> (expected status, description)
 EXPECTED_URLS = {
     "https://www.conxian-labs.com": (200, "admin-dashboard (Vercel)"),
     "https://conxian-labs.com": (200, "admin-dashboard apex redirect"),
+    "https://conxian.org": (200, "org-site (Vercel)"),
+    "https://www.conxian.org": (200, "org-site www"),
 }
 
 CF_API = "https://api.cloudflare.com/client/v4"
