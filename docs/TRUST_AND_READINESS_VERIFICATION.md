@@ -141,9 +141,9 @@ The following are explicitly **not claimed** on any public surface. This section
 | "Third-party audited" | No public third-party audit report exists. Security posture is self-assessed with CI enforcement. |
 | "SOC 2 / ISO 27001 certified" | Not applicable at current stage. Conxian-Labs is a non-custodial software vendor. |
 | "Production SLA" | No uptime or latency SLA is offered for any component. |
-| "Bug bounty program" | Bounty workflow exists (BOUNTY_WORKFLOW.md) but payouts are gated on ConxianCSF mainnet + ALEX funding. No payable bounties are currently open. |
+| "Bug bounty program" | Bounty workflow exists (BOUNTY_WORKFLOW.md). No payable bounties are currently open. |
 | "Fully decentralized" | The BOS uses on-chain truth for critical state, but some components (Nexus, Gateway) are operated by Conxian-Labs. Community sovereign-node lane is target-state (see THREE_LANE_RUNTIME_DEPLOYMENT_ARCHITECTURE.md). |
-| "Production-ready" for all components | Only Conxius Wallet is classified as Production-ready. Nexus is Beta. Gateway is Beta. ConxianCSF is gated on ALEX funding. |
+| "Production-ready" for all components | Wallet is Beta (partial); Nexus is Beta; Gateway is Beta (code-complete, undeployed); ConxianCSF is retired by design (universal infra). |
 | "Value-bearing production signing or settlement from `conxius-enclave-sdk`" | **Not claimed.** The July 20 audit says not to enable these operations from the audited tree while the Beta / conditional acceptance gates remain open. |
 
 ---
