@@ -180,27 +180,25 @@ Three layers: secrets → restricted vault/Supabase; on-chain → state-proof pr
 
 ---
 
-## 5. Protocol Layer: ConxianCSF
+## 5. Protocol Layer: Universal (Protocol-Agnostic)
 
-### 5.1 Smart Contract Architecture
+Conxian is **universal, non-custodial infrastructure** — not a DeFi protocol. It does not build or own smart contracts, does not custody user funds, and does not touch user data or DeFi logic. Any DeFi, platform, network, or token can route through Conxian's rail/engine/vault without Conxian becoming a counterparty.
 
-> **Status: Target-state / re-architecting.** The original ConxianCSF Clarity contract set (16+ contracts: `bridge-nft`, `yield-optimizer`, `payment-forge`, `operational-treasury`, …) lived in the `Conxian` repository, which has been deprecated and removed from GitHub. The surviving on-chain surface is smaller and is being re-architected under the **Sovereign Redesign (2026)**.
+### 5.1 No Own Protocol (ConxianCSF retired by design)
 
-Currently present in-tree: two Clarity contracts (`dlc-bond` — a SIP-010 DLC bond token with subscribe/coupon/claim/redeem/default lifecycle; `jurisdictional-sharding`) plus `lib-conxian-core`'s `contract_bridge.rs`, `control_model/`, and `fee.rs` primitives. *(Evidence: `Fiscal-Vault-Oracle/dlc-bond.clar`, `Sovereign-Strategy-Nexus/contracts/jurisdictional-sharding.clar`, `lib-conxian-core/src/contract_bridge.rs`.)*
+The original ConxianCSF Clarity contract set (16+ contracts: `bridge-nft`, `yield-optimizer`, `payment-forge`, `operational-treasury`, …) has been **retired by design**. Conxian's neutrality is the product: it connects to Bitcoin, Stacks, Lightning, RGB, EVM, Cosmos, and any other chain — it does not compete with them by owning contracts.
 
-### 5.2 Oracle System
+The two surviving in-tree contracts (`dlc-bond`, `jurisdictional-sharding`) are reference/integration artifacts, not a Conxian protocol. Protocol connectivity is provided by `lib-conxian-core` adapters (`chain/`, `adapters/`, `contract_bridge.rs`) and the Nexus execution layer (§6) — all non-custodial. *(Evidence: `Fiscal-Vault-Oracle/dlc-bond.clar`, `Sovereign-Strategy-Nexus/contracts/jurisdictional-sharding.clar`, `lib-conxian-core/src/contract_bridge.rs`.)*
 
-Nexus publishes a **Purchasing-Power-Parity (PPP) FX oracle**: it fetches universal FX rates and pushes signed state updates to a Stacks contract via `ContractBridge::create_signed_call`, signed by a real (non-ephemeral) wallet. *(Evidence: `conxian-nexus/src/oracle/aggregator.rs` — `PppState`, `update-fx-rates`, `signer_stacks_address`.)*
+### 5.2 Oracle System (neutral price data)
 
-> **Correction vs. earlier wording.** The vision whitepaper described a "Decentralized Risk Oracle" emitting cryptographically signed "Risk Proofs." The implemented oracle is a **PPP FX price oracle**; risk-scoring as a first-class signed artifact is not implemented. This paper does not claim it is.
+Nexus publishes a **Purchasing-Power-Parity (PPP) FX oracle**: neutral price data (no user data, no counterparty risk-scoring), signed and pushed to a Stacks contract via `ContractBridge::create_signed_call`. *(Evidence: `conxian-nexus/src/oracle/aggregator.rs` — `PppState`, `update-fx-rates`, `signer_stacks_address`.)*
 
-### 5.3 Fiscal Vault & Treasury
+> **Scope note.** Conxian's oracle is *data infrastructure*, not a "risk oracle." Signed risk-scoring of counterparties/positions is DeFi/credit logic and is out of scope by design.
 
-Sovereign treasury with yield optimization and compliance gating, following the no-dashboard-to-contract-coupling invariant. *(Evidence: `docs/architecture/BOS_TREASURY_AND_YIELD_INTEGRATION_ARCHITECTURE.md`.)*
+### 5.3 No Custody, No Treasury
 
-### 5.4 Mainnet Readiness
-
-**Conditional Go** — pending ALEX funding verification; all P0 blockers (admin centralization, ST→SP, secret cleanup) remediated. No payout-ready commitments until ConxianCSF deploys via the ALEX path. *(Evidence: `docs/CSF_MAINNET_READINESS_GATE.md`.)*
+Conxian is non-custodial: it does not hold user funds and does not operate a user-facing treasury or yield product. The BOS's own operational treasury is an internal control-plane concern, not a public protocol surface.
 
 ---
 
@@ -277,16 +275,16 @@ The "CXN Guardian" is currently an AI assistant persona (`services/gemini.ts`), 
 | conxian-gateway | **Beta** | camt ISO 20022 + ZKC + Sentinel + trust_policy implemented |
 | lib-conxian-core | **Stable** | fee model (`fee.rs`), ERC-7683, crypto, control_model implemented |
 | conxius-enclave-sdk | **Beta/conditional** | Nitro attestation + FROST/MuSig2 verified; StrongBox software-only; TPM unavailable |
-| ConxianCSF (protocol) | **Target-state / re-architecting** | original `Conxian` repo removed; 2 contracts + core primitives survive |
+| ConxianCSF (protocol) | **Retired (universal infra)** | Conxian owns no protocol; retired by design — no custody/DeFi |
 | conxian_market | **Implemented but isolated** | 19-module SDK, unpublished/unconsumed |
 
 ### 9.2 Known Limitations & Open Problems
 
-1. **Protocol layer re-architecture.** The Clarity contract set is being rebuilt; the "16+ contracts" of prior docs no longer reflect a live repository.
+1. **Protocol layer retired (by design).** Conxian owns no protocol/contracts; the old "16+ contracts" narrative is superseded by the universal-infra position.
 2. **Wallet protocol depth.** Lightning/RGB/Ark/Babylon are fail-closed stubs; production support requires the native backends.
 3. **Enclave software paths.** `SOFTWARE_ONLY` StrongBox and `unavailable.v1` TPM are development stand-ins; they are not security boundaries.
-4. **Risk oracle** (signed risk scoring) is not implemented; only the PPP FX oracle is.
-5. **Global Liquidity Mesh** (HTLC atomic swaps) is research, not code.
+4. **Risk scoring is out of scope.** Signed counterparty/position risk-scoring is DeFi/credit logic; Conxian provides only neutral price data (the PPP FX oracle).
+5. **Atomic-swap "mesh" is out of scope.** Cross-chain HTLC swaps are DeFi built by others; Conxian provides the neutral rail, not the DeFi.
 6. **ISO 20022 scope** is camt, not the full pacs family.
 7. **Third-party audit gap.** No independent security audit is claimed; the enclave SDK's independent review and real-device evidence remain open.
 
