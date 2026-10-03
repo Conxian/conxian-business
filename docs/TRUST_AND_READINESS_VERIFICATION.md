@@ -3,7 +3,7 @@
 > **Issue**: [#830](https://github.com/Conxian/conxian-business/issues/830) — Re-verify governance and buyer-trust standards across public repos after docs rollout
 > **Status**: Canonical
 > **Last verified**: 2026-07-28 (public trust wording and hosted-Actions blocker; component evidence remains dated where stated)
-> **2026-10-03 code-audit correction**: wallet "Production-ready", protocol "Production-ready (gated)", and gateway "Beta" labels were found to overstate code. Wallet = Beta (partial), protocol = target-state/re-architecting (repo deleted), gateway = code-complete/undeployed. See issues #1283, #1282, #466.
+> **2026-10-03 code-audit correction**: wallet "Production-ready", protocol "Production-ready (gated)", and gateway "Beta" labels were found to overstate code. Wallet = Beta (partial), protocol = retired by design (universal infra — no own protocol), gateway = code-complete/undeployed. See issues #1283, #1282, #466.
 > **Review cadence**: On every major release, docs rollout, or trust-surface change
 
 ## Purpose
@@ -68,12 +68,12 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | `Conxian` repo **deleted** (2026-10-03); 2 .clar survive | Sovereign Redesign 2026 in progress; old "16 contracts / mainnet Conditional Go" claim unsupported | **Target-state / re-architecting** | Was "Production-ready (gated)" — repo deleted (see #1282) |
-| **Scope** | Core protocol + on-chain contracts; sovereign treasury | Correct. Contracts use dynamic principals via operational-treasury.clar | **Implemented** | None |
+| **Status** | `Conxian` repo **deleted** (2026-10-03); 2 .clar survive | Retired **by design** — Conxian is universal, protocol-agnostic infra (no own contracts; does not touch DeFi/funds/user-data) | **Retired (universal infra)** | Not a gap — retirement is intentional (see #1282) |
+| **Scope** | (Retired — no Conxian-owned protocol) | Conxian is protocol-agnostic universal infra; no owned contracts or custody | **Retired** | Not a gap — by design |
 | **Security** | CON-61 (admin centralization), CON-371 (ST→SP) remediated | ZSE + Contamination Guard active; all P0 blockers closed | **Verified** | None |
 | **Governance** | CON-389 branch/promotion policy is checked in | Exact route policy is implemented in Git; live default-branch/protection state is not administrator-verified in this record | **Implemented** | Administrator verification remains required |
 
-**Verdict**: ✅ Trust language backed by gate evidence. Mainnet readiness: Conditional Go. Explicit about ALEX funding gate.
+**Verdict**: ✅ Corrected — ConxianCSF is retired by design (universal infra). The prior "Conditional Go" mainnet gate is void (no owned protocol to launch).
 
 ### 2.5 Conxian Labs Site (`conxian-labs-site`)
 
@@ -170,7 +170,7 @@ The Conxian BOS is a **sovereign-first, non-custodial** financial infrastructure
 - **CI evidence boundary**: Historical successful pipeline evidence exists, but as of 2026-07-28 current hosted Actions are blocked before steps by the account billing/spend state and are not re-verified
 - **Zero Secret Egress**: No secrets in Git; contamination guard enforces production principal hygiene
 - **Verifiable state**: Cryptographic MMR proofs and BitVM2 Groth16 verification for cross-chain state
-- **Honest maturity labeling**: Conxius Wallet is Beta (partial — send path incomplete); Nexus is Beta (approaching Stable); Gateway is Beta (code-complete, undeployed); `conxius-enclave-sdk` is Beta / conditional with no value-bearing production signing or settlement; ConxianCSF is target-state / re-architecting (repo deleted)
+- **Honest maturity labeling**: Conxius Wallet is Beta (partial — send path incomplete); Nexus is Beta (approaching Stable); Gateway is Beta (code-complete, undeployed); `conxius-enclave-sdk` is Beta / conditional with no value-bearing production signing or settlement; ConxianCSF is retired by design (Conxian is universal, protocol-agnostic infra — no own protocol)
 - **Clear boundary model**: Public-safe architecture docs; internal-only operational detail on GitHub per ZSE
 
 **What we do not claim**: third-party audits, production SLAs, full decentralization, or payable bug bounties. See [Section 4](#4-what-is-not-claimed-trust-boundary) for the complete non-claim boundary.
