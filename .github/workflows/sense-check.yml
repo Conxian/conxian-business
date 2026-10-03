@@ -1,17 +1,17 @@
-name: Production Surface Check
+name: Sense Loop
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "37 */6 * * *"
+    - cron: "0 */6 * * *"
 
 permissions:
   contents: read
   issues: write
 
 jobs:
-  verify:
-    name: Verify domain topology + liveness
+  sense:
+    name: Sense production surface
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,15 +22,22 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run domain topology + liveness check
-        id: check
+      - name: Domain topology + liveness
+        id: domain
         continue-on-error: true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: python3 scripts/verify_domain_topology.py
 
+      - name: Render deploy health
+        id: render
+        continue-on-error: true
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: python3 scripts/verify_render_deploys.py
+
       - name: Open outage issue on failure
-        if: steps.check.outcome == 'failure'
+        if: always() && (steps.domain.outcome == 'failure' || steps.render.outcome == 'failure')
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
