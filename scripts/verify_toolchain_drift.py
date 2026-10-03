@@ -22,12 +22,17 @@ import sys
 import urllib.parse
 import urllib.request
 
-# stale pattern -> expected replacement (org standard: Node 24, Rust 1.98.1, pnpm 10.28)
+# stale pattern -> expected replacement (org standard: Node 24, Rust 1.98.1, pnpm 10.28).
+# Patterns are image-reference scoped (cimg/node:, FROM node:, …) so a bare version
+# can't false-positive on unrelated strings like `stacks-node:20443` (an RPC port).
 STALE = {
-    "node:22": "node:24",
-    "node:20": "node:24",
-    "rust:1.96": "rust:1.98.1",
-    "rust:1.97": "rust:1.98.1",
+    "cimg/node:22": "cimg/node:24.13.0",
+    "cimg/node:20": "cimg/node:24.13.0",
+    "FROM node:22": "FROM node:24",
+    "FROM node:20": "FROM node:24",
+    "cimg/rust:1.96": "cimg/rust:1.98.1",
+    "cimg/rust:1.97": "cimg/rust:1.98.1",
+    "FROM rust:1.96": "FROM rust:1.98.1",
     "pnpm@9": "pnpm@10.28",
 }
 

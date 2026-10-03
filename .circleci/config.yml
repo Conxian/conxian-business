@@ -7,7 +7,7 @@ version: 2.1
 executors:
   rust-executor:
     docker:
-      - image: cimg/rust:1.96.0
+      - image: cimg/rust:1.98.1
     resource_class: medium
     environment:
       CARGO_TERM_COLOR: always
@@ -15,7 +15,7 @@ executors:
 
   node-executor:
     docker:
-      - image: cimg/node:22.19.0
+      - image: cimg/node:24.13.0
     resource_class: medium
 
   python-executor:
@@ -93,7 +93,7 @@ commands:
     steps:
       - run:
           name: Install pnpm
-          command: sudo npm install -g pnpm@9
+          command: sudo npm install -g pnpm@10.28
       - restore_cache:
           keys:
             - pnpm-{{ arch }}-{{ checksum "<< parameters.workspace_path >>/pnpm-lock.yaml" }}
@@ -161,7 +161,7 @@ jobs:
       - checkout-repo
       - run:
           name: Install pnpm
-          command: sudo npm install -g pnpm@9
+          command: sudo npm install -g pnpm@10.28
       - run:
           name: Audit root dependencies
           command: pnpm audit || true

@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -45,7 +46,8 @@ def main() -> int:
         print("GITHUB_TOKEN not set.")
         return 1
 
-    branch = f"fix/toolchain-drift-{args.old.replace(':', '-').replace('@', '-')}"
+    slug = re.sub(r"[^A-Za-z0-9._-]+", "-", args.old).strip("-")
+    branch = f"fix/toolchain-drift-{slug}"
 
     with tempfile.TemporaryDirectory(prefix="drift-") as tmp:
         clone_url = f"https://x-access-token:{token}@github.com/{args.repo}.git"
