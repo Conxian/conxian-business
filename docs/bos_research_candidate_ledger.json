@@ -1131,6 +1131,26 @@
       "uncertainty": "Core protocol layers depend on external network states (Bitcoin/Stacks) and hardware enclave firmware (Nitro/StrongBox), precluding absolute uptime guarantees.",
       "nonClaim": "Public-safe SLA policy and BaaP commercial doctrine do not constitute a 24/7 NOC commitment or financially backed service credit liability.",
       "scored": false
+    },
+    {
+      "id": "strategic-analysis-issue-1317-gap",
+      "title": "Strategic Analysis of the Conxian Ecosystem: Long-Term Viability, Financial Models, and Enterprise Integration Model (Issue #1317)",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [],
+      "sourceLinks": [
+        "https://github.com/Conxian/conxian-business/issues/1317",
+        "https://github.com/Conxian/conxian-business/blob/main/docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md"
+      ],
+      "gapClasses": [
+        "governance",
+        "implementation",
+        "owner-tracker"
+      ],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Formalize Conxian Gateway Business Tier (,500-,500/mo) managed API documentation and execute enterprise outreach for ISO 20022 integration.",
+      "uncertainty": "Strategic analysis and client integration model approved in docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md; commercial SLA contracts depend on individual B2B client execution.",
+      "nonClaim": "Strategic analysis report and client integration path do not constitute binding commercial guarantees or financial forecasts.",
+      "scored": false
     }
   ]
 }
