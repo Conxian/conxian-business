@@ -9,6 +9,12 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added & Synthesized (2026-10-02 — Strategic Analysis, BaaP Viability & Enterprise Gateway Model)
+- **Strategic Research Report (Issue #1317)**: Authored  analyzing long-term ecosystem viability, repository taxonomy, financial models, and turnkey enterprise integration.
+- **Enterprise Gateway Outreach Strategy**: Evaluated all 4 business pillars (, , , ), identifying **Conxian Gateway** as the single most immediate enterprise outreach opportunity due to ISO 20022 (/) compatibility with commercial banking networks.
+- **Turnkey Integration Model ("NexusPay Global")**: Detailed a 5-phase institutional client integration path stepping through Gateway ISO 20022 XML parsing and normalization, Enclave SDK hardware-attested FROST threshold signing, Market programmable escrow settlement (80/10/10 yield splitter + ADR-004 fee decay), and Nexus zero-knowledge state proof confirmation.
+- **Ecosystem Index Alignment**: Indexed the report across , , , , and .
+
 ### Added & Realigned (2026-09-28 — Organization-Wide SLA Positioning & BaaP Pricing Architecture)
 - **Organization-Wide SLA Positioning**: Re-aligned SLA posture across the Conxian GitHub ecosystem in `docs/SLA.md` and `docs/SLA_POLICY.md`. Enforced strict open-source disclaimers (NO SLA, community best-effort) on public protocol surfaces (`conxian` org) while restricting contractual SLAs (99.5% target uptime, SEV1 1-hour business hours acknowledgment, 0% financial credit liability, 5-day RCA SLA) exclusively to B2B Enterprise Gateway deployments.
 - **Business-as-a-Platform (BaaP) Monetization**: Formulated complete 3-layer commercial pricing model in `docs/COMMERCIAL_PACKAGING_DOCTRINE.md`: Layer 1 Protocol Escrow Volume Settlement (2.0% gross escrow fee with Tier 1-4 decay schedule down to 0.5% for >$500M; 80/10/10 split), Layer 2 Enterprise SaaS Node Licensing ($2,500–$40,000/mo), and Layer 3 Metered Edge Compute & x402 Attestations ($0.005–$0.020 TEE proofs, $0.010–$0.050 ZKC proofs, $0.002 ISO 20022 payloads).
