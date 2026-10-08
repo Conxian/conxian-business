@@ -63,5 +63,7 @@ Virality in the B2B sector occurs when one lab's output is another lab's input. 
 
 The `referral_node` and `yield_distribution` fields enable the **Sovereign Swarm** virality flywheel. Every job card acts as an incentive anchor for agents on Twitter/X and Farcaster.
 
+> **Note (2026-10-08).** The original SIDL was expressed as Clarity contracts; the own protocol is deprecated under the network-agnostic pivot (see [ADR-007](../architecture/adrs/ADR-007-network-agnostic-pivot.md)). The incentive *fields* (`referral_node`, `yield_distribution`) and the 95/5 yield split remain valid as a protocol-neutral job-card schema; only the `.clar` implementation is superseded.
+
 ---
 🛡️ **SOVEREIGN. INDUSTRIAL. BTC-NATIVE.**
