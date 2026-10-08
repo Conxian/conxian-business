@@ -40,7 +40,7 @@ Every claim in the audit below uses one of these classifications:
 | **Governance** | "Maintained by Conxian-Labs as public infrastructure" | CODEOWNERS and CONTRIBUTING.md present | **Implemented** | None |
 | **Release discipline** | v1.9.2 tag | CHANGELOG.md present; versioned releases | **Verified** | None |
 
-**Verdict**: ✅ Trust language matches implementation. Minor: adopt "Stable" status label per TRUST_AND_PROOF_MESSAGING.md taxonomy.
+**Verdict**: ⚠️ Previously overstated ("Production-ready"). Downgraded to **Beta (partial)** — the send path is incomplete (`BdkManager` has no broadcast, `SecureEnclave.signBatch` is a stub, native protocol Managers are fail-closed). See #1283.
 
 ### 2.2 Conxian Nexus (`conxian-nexus`)
 
@@ -62,7 +62,7 @@ Every claim in the audit below uses one of these classifications:
 | **Scope** | ISO 20022 compliance pipe; cross-layer state aggregation | Implemented per CI coverage | **Implemented** | None known |
 | **Security** | — | ZSE compliant; contamination guard enforced | **Verified** | None known |
 
-**Verdict**: ⚠️ Cannot fully verify — submodule not initialized in current workspace. Historical CI evidence supports the Beta classification, but current hosted checks do not re-verify it. Schedule full audit when submodule accessible.
+**Verdict**: ⚠️ **Beta (code-complete, undeployed)** — camt/ZKC/Sentinel verified in source, `render.yaml` merged (#459), but the service is not deployed (~11 owner secrets). See #466.
 
 ### 2.4 Conxian Core Protocol (`Conxian`)
 
@@ -143,7 +143,7 @@ The following are explicitly **not claimed** on any public surface. This section
 | "Production SLA" | No uptime or latency SLA is offered for any component. |
 | "Bug bounty program" | Bounty workflow exists (BOUNTY_WORKFLOW.md) but payouts are gated on ConxianCSF mainnet + ALEX funding. No payable bounties are currently open. |
 | "Fully decentralized" | The BOS uses on-chain truth for critical state, but some components (Nexus, Gateway) are operated by Conxian-Labs. Community sovereign-node lane is target-state (see THREE_LANE_RUNTIME_DEPLOYMENT_ARCHITECTURE.md). |
-| "Production-ready" for all components | Only Conxius Wallet is classified as Production-ready. Nexus is Beta. Gateway is Beta. ConxianCSF is gated on ALEX funding. |
+| "Production-ready" for all components | **No component is classified "Production-ready".** Wallet is Beta (partial), Nexus is Beta, Gateway is Beta (code-complete, undeployed), and ConxianCSF is target-state / re-architecting (repo deleted). |
 | "Value-bearing production signing or settlement from `conxius-enclave-sdk`" | **Not claimed.** The July 20 audit says not to enable these operations from the audited tree while the Beta / conditional acceptance gates remain open. |
 
 ---
@@ -152,7 +152,7 @@ The following are explicitly **not claimed** on any public surface. This section
 
 | Priority | Action | Issue |
 |----------|--------|-------|
-| P0 | Adopt "Stable" status label for conxius-wallet per trust taxonomy | #830 |
+| P0 | Complete wallet send path (native broadcast + signing) before any "Stable"/"Production" relabel | #1283 |
 | P1 | Add explicit "Beta" status label to conxian-nexus README | #830 |
 | P1 | Audit conxian-gateway and conxian-labs-site READMEs when submodules accessible | #830 |
 | P2 | Regenerate OpenAPI spec for conxian-nexus | #830 |
