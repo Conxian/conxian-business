@@ -1,5 +1,11 @@
 # Conxian Labs BOS Knowledge Graph
 
+## Session Update (2026-10-08 — Network-agnostic pivot: own protocol deprecated)
+- Confirmed the strategic decision to go **network-agnostic**: the own Clarity protocol is deprecated and `Conxian/Conxian` was deleted intentionally (not archived). See [ADR-007](docs/architecture/adrs/ADR-007-network-agnostic-pivot.md).
+- The canonical cross-network model is now `lib-conxian-core`'s `SettlementRail` (8 rails) + `TrustTier` (Strict/Managed/Expedient/ObserverOnly), with `conxius-enclave-sdk` signing/attestation. "Mainnet" = Bitcoin L1 via Stacks (already live); there is no own-protocol mainnet.
+- BOS-001 own-protocol gates (2/3/6) are superseded; hardware-signing + independent-review gates (4/5) are re-homed to the enclave-sdk domain. Recorded in `.github-private/docs/CAPABILITY_GATES.json` (PR #58).
+- Superseded own-protocol docs (`MAINNET_READINESS_CONXIAN_PROTOCOL`, `DAO_GOVERNANCE_SPEC`, `INTEGRATED_SYSTEM_TESTNET_GATE`, `TECHNICAL_READINESS_CERTIFICATION`); re-scoped `TECHNICAL_WHITEPAPER`, `CONXIAN_UNIFIED_THEORY_v2`, and `CJCS_v2.0_SPEC`. Remaining `.clar`/Clarity references below are historical.
+
 ## Session Update (2026-10-02 — Session 74: Strategic Analysis, BaaP Viability & Enterprise Gateway Integration Model)
 - Authored canonical research report [`STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md`](docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md) addressing Issue #1317.
 - Evaluated long-term commercial viability and repository taxonomy across all 4 pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`).

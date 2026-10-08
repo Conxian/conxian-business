@@ -52,7 +52,7 @@ The runtime is decomposed into five planes with distinct trust roles. This is th
 
 | Plane | Role | Trust authority |
 |---|---|---|
-| **Settlement + policy** | Bitcoin L1 (settlement), Stacks (execution), Conxian protocol contracts (policy/timelocks/state roots) | On-chain — canonical truth |
+| **Settlement + policy** | Bitcoin L1 (settlement), Stacks (execution), protocol-neutral rails/adaptors (policy/timelocks/state roots via `lib-conxian-core` `SettlementRail`/`TrustTier`) | On-chain — canonical truth |
 | **Proof** | `lib-conxian-core` SNARK/state-proof verification (BitVM bridge verification, MMR commitments) | Cryptographic |
 | **Data** | BOS orchestrator, Gateway (ingress/broadcast boundary), Nexus (indexing/projection), oracle publishers | Derived, non-authoritative |
 | **Control** | deploy/upgrade, key rotation, identity/authorization, policy gates | Operator root (MS/HSM/DAO/SAB signer boundary) |
@@ -105,7 +105,7 @@ The BOS turns "how the business runs" into a programmatic state machine with cry
 
 The deployment of capital, time, and code is governed by four variables (plus network effects). *(Evidence: `docs/CONXIAN_UNIFIED_THEORY_v2.md`.)*
 
-- **C_R (Cost of Reproduction)** — structural moat: TEE/StrongBox coverage, Clarity complexity, compliance integration, ERP stickiness.
+- **C_R (Cost of Reproduction)** — structural moat: TEE/StrongBox coverage, protocol-neutral rail/adaptor complexity, compliance integration, ERP stickiness.
 - **O_C (Opportunity Cost)** — founder/operator manual hours on critical-path workflows.
 - **V_X (Execution Velocity)** — AI/tooling leverage on shipped scope.
 - **A_S (System Autonomy)** — fraction of recurring operations run by the BOS without human intervention.
@@ -129,7 +129,7 @@ The operational target is driving $O_C \to 0$: any recurring workflow that requi
 
 The variables are instrumented with defined formulas and data contracts. *(Evidence: `docs/operations/CON-682_APPROVED_METRIC_SPEC.md`.)*
 
-- **C_R** = `0.35·TEE + 0.25·Clarity + 0.20·Compliance + 0.20·IntegrationStickiness` (0–100).
+- **C_R** = `0.35·TEE + 0.25·ProtocolComplexity + 0.20·Compliance + 0.20·IntegrationStickiness` (0–100).
 - **O_C** = sum of manual hours on founder-critical paths.
 - **V_X** = completed weighted scope / median cycle time.
 - **A_S** = automated recurring runs / total recurring runs (guardrail: ≥99.5% reconciliation, ≤15m autonomous recovery).

@@ -1,5 +1,7 @@
 # Mainnet Readiness Checklist — Conxian Protocol (CON-140)
 
+> **SUPERSEDED (2026-10-08) — network-agnostic pivot.** The own Clarity protocol was deprecated (`Conxian/Conxian` deleted intentionally). See [ADR-007](../architecture/adrs/ADR-007-network-agnostic-pivot.md). This document is retained for historical reference only.
+
 ## Status: READY FOR MAINNET (v0.6.2)
 
 This checklist tracks the mainnet readiness for the core `Conxian` protocol repository.

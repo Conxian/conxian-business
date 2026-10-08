@@ -1,4 +1,6 @@
 # Conxian DAO Governance Specification
+
+> **SUPERSEDED (2026-10-08) — network-agnostic pivot.** The own Clarity protocol was deprecated (`Conxian/Conxian` deleted intentionally). See [ADR-007](../architecture/adrs/ADR-007-network-agnostic-pivot.md). This document is retained for historical reference only.
 > Clarity-version: 4 | For: Conxian Protocol | Generated: 2026-07-06
 
 ## Overview

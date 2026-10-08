@@ -1,4 +1,6 @@
 # Conxian Ecosystem — Technical Readiness Certification
+
+> **SUPERSEDED (2026-10-08) — network-agnostic pivot.** The own Clarity protocol was deprecated (`Conxian/Conxian` deleted intentionally). See [ADR-007](../architecture/adrs/ADR-007-network-agnostic-pivot.md). This document is retained for historical reference only.
 ## Market-Operational Proof of Viability
 **Date:** 2026-05-29 | **Scope:** Full Ecosystem Audit | **Status:** VERIFIED
 
