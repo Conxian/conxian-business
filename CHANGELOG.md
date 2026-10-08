@@ -9,103 +9,23 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
-<<<<<<< HEAD
-### Added & Realigned (2026-09-26 — Organization-Wide SLA Positioning & BaaP Pricing Architecture)
-- **Organization-Wide SLA Positioning**: Re-aligned SLA posture across the Conxian GitHub ecosystem in `docs/SLA.md` and `docs/SLA_POLICY.md`. Enforced strict open-source disclaimers (NO SLA, community best-effort) on public protocol surfaces (`conxian` org) while restricting contractual SLAs (99.5% target uptime, SEV1 1-hour business hours acknowledgment, 0% financial credit liability, 5-day RCA SLA) exclusively to B2B Enterprise Gateway deployments.
+### Added & Synthesized (2026-10-02 — Strategic Analysis, BaaP Viability & Enterprise Gateway Model)
+- **Strategic Research Report (Issue #1317)**: Authored [`STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md`](docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md) analyzing long-term ecosystem viability, repository taxonomy, financial models, and turnkey enterprise integration.
+- **Enterprise Gateway Outreach Strategy**: Evaluated all 4 business pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), identifying **`conxian-gateway`** as the single most immediate enterprise outreach opportunity due to ISO 20022 (`pacs.008`/`pacs.002`/`camt.053`) compatibility with commercial banking networks.
+- **Turnkey Integration Model ("NexusPay Global")**: Detailed a 5-phase institutional client integration path stepping through Gateway ISO 20022 XML parsing and normalization, Enclave SDK hardware-attested FROST threshold signing, Market programmable escrow settlement (80/10/10 yield splitter + ADR-004 fee decay), and Nexus zero-knowledge state proof confirmation.
+- **Ecosystem Index Alignment**: Indexed the report across `SUMMARY.md`, `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`, `docs/bos_research_candidate_ledger.json`, `BOS_KNOWLEDGE_GRAPH.md`, and `CHANGELOG.md`.
+
+### Added & Realigned (2026-09-28 — Organization-Wide SLA Positioning & BaaP Pricing Architecture)- **Organization-Wide SLA Positioning**: Re-aligned SLA posture across the Conxian GitHub ecosystem in `docs/SLA.md` and `docs/SLA_POLICY.md`. Enforced strict open-source disclaimers (NO SLA, community best-effort) on public protocol surfaces (`conxian` org) while restricting contractual SLAs (99.5% target uptime, SEV1 1-hour business hours acknowledgment, 0% financial credit liability, 5-day RCA SLA) exclusively to B2B Enterprise Gateway deployments.
 - **Business-as-a-Platform (BaaP) Monetization**: Formulated complete 3-layer commercial pricing model in `docs/COMMERCIAL_PACKAGING_DOCTRINE.md`: Layer 1 Protocol Escrow Volume Settlement (2.0% gross escrow fee with Tier 1-4 decay schedule down to 0.5% for >$500M; 80/10/10 split), Layer 2 Enterprise SaaS Node Licensing ($2,500–$40,000/mo), and Layer 3 Metered Edge Compute & x402 Attestations ($0.005–$0.020 TEE proofs, $0.010–$0.050 ZKC proofs, $0.002 ISO 20022 payloads).
 - **Governance & Verification Alignment**: Updated `docs/GAPS.md` with `GAP-SLA-01`, `docs/PORTFOLIO.md`, `docs/bos_research_candidate_ledger.json`, `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`, `docs/BOS_KNOWLEDGE_FRAMEWORK.md` (v3.6), and `BOS_KNOWLEDGE_GRAPH.md`.
 - **Automated Validation**: Enhanced `scripts/verify_cross_repo_alignment.py` to validate Tiered SLA exclusions, BaaP monetization layers, 80/10/10 split structure, and Force Majeure terms.
+- **Module Version Marker Alignment**: Aligned module README release version markers (`v1.9.2` → `v1.9.5`) across `Fiscal-Vault-Oracle`, `Nakamoto-Guardian`, `Sovereign-Ops-Orchestrator`, `Sovereign-Strategy-Nexus`, and `cxn-grid-oracle` to match current BOS system-wide release baseline (`v1.9.5`).
 
-### Added & Realigned (2026-09-26 — Organization-Wide SLA Positioning & BaaP Pricing Architecture)
-- **Organization-Wide SLA Positioning**: Re-aligned SLA posture across the Conxian GitHub ecosystem in  and . Enforced strict open-source disclaimers (NO SLA, community best-effort) on public protocol surfaces ( org) while restricting contractual SLAs (99.5% target uptime, SEV1 1-hour business hours acknowledgment, 0% financial credit liability, 5-day RCA SLA) exclusively to B2B Enterprise Gateway deployments.
-- **Business-as-a-Platform (BaaP) Monetization**: Formulated complete 3-layer commercial pricing model in : Layer 1 Protocol Escrow Volume Settlement (2.0% gross escrow fee with Tier 1-4 decay schedule down to 0.5% for >00M; 80/10/10 split), Layer 2 Enterprise SaaS Node Licensing (,500–0,000/mo), and Layer 3 Metered Edge Compute & x402 Attestations (-bash.005–-bash.020 TEE proofs, -bash.010–-bash.050 ZKC proofs, -bash.002 ISO 20022 payloads).
-- **Governance & Verification Alignment**: Updated  with , , , ,  (v3.6), and .
-- **Automated Validation**: Enhanced === Cross-Repo Alignment & Source-of-Truth Verification ===
-=======
 ### Added & Synthesized (2026-09-18 — Multi-Repo Research & End-To-End Alignment)
-- Executed multi-repo git synchronization and fetched fresh code across all 8 active submodules.
-- Audited repository health, release hygiene, LTS compliance, cross-repo alignment, and research candidate ledger.
+- Executed multi-repo git synchronization and fetched fresh code across all 8 active submodules (`conxian-gateway`, `conxian-labs-site`, `conxian-nexus`, `conxian_market`, `conxius-enclave-sdk`, `conxius-platform`, `conxius-wallet`, `lib-conxian-core`).
+- Audited repository health, release hygiene, LTS compliance, cross-repo alignment, and research candidate ledger (`docs/bos_research_candidate_ledger.json`).
 - Verified 100% pass status across system validation scripts.
-- Re-confirmed top technical candidate selection (lib-conxian-core#227) and authority issue (conxian-business#943) for production readiness.
-
-### Added & Synthesized (2026-09-18 — Multi-Repo Research & End-To-End Alignment)
-- Executed multi-repo git synchronization and fetched fresh code across all 8 active submodules.
-- Audited repository health, release hygiene, LTS compliance, cross-repo alignment, and research candidate ledger.
-- Verified 100% pass status across system validation scripts.
-- Re-confirmed top technical candidate selection (lib-conxian-core#227) and authority issue (conxian-business#943) for production readiness.
-
-### Added & Synthesized (2026-09-18 — Multi-Repo Research & End-To-End Alignment)
-- Executed multi-repo git synchronization and fetched fresh code across all 8 active submodules (, , , , , , , ).
-- Audited repository health, release hygiene, LTS compliance, cross-repo alignment, and research candidate ledger ().
-- Verified 100% pass status across , === Cross-Repo Alignment & Source-of-Truth Verification ===
->>>>>>> staged
-
-
---- Verifying docs/GAPS.md ---
-  OK  GAPS.md contains 'Pillar Alignment'
-  OK  GAPS.md contains 'Vertical Sovereignty'
-  OK  GAPS.md contains 'Operational Unification'
-  OK  GAPS.md contains 'Nakamoto Readiness'
-  OK  GAPS.md contains 'Weighted Total'
-  OK  GAPS.md contains 'Rejected (< 3.0)'
-
---- Verifying docs/PORTFOLIO.md ---
-  OK  PORTFOLIO.md contains 'Capability × Chain Matrix'
-  OK  PORTFOLIO.md contains 'Reference Customer / Lead Target'
-  OK  PORTFOLIO.md contains 'Bitcoin L1'
-  OK  PORTFOLIO.md contains 'Stacks L2'
-  OK  PORTFOLIO.md contains 'conxian-gateway'
-  OK  PORTFOLIO.md contains 'conxian-nexus'
-  OK  PORTFOLIO.md contains 'conxius-wallet'
-  OK  PORTFOLIO.md contains 'conxian_market'
-  OK  PORTFOLIO.md contains 'lib-conxian-core'
-  OK  PORTFOLIO.md contains 'conxius-enclave-sdk'
-
---- Verifying docs/SLA.md ---
-  OK  SLA.md contains '99.5% monthly uptime percentage'
-  OK  SLA.md contains 'SEV1 — Critical'
-  OK  SLA.md contains 'no financial service credits are issued'
-  OK  SLA.md contains 'Customer #3'
-
---- Verifying docs/ALIGNMENT.md ---
-  OK  ALIGNMENT.md contains 'conxian-gateway'
-  OK  ALIGNMENT.md contains 'conxian-nexus'
-  OK  ALIGNMENT.md contains 'conxius-wallet'
-  OK  ALIGNMENT.md contains 'conxian_market'
-  OK  ALIGNMENT.md contains 'lib-conxian-core'
-  OK  ALIGNMENT.md contains 'conxius-enclave-sdk'
-  OK  ALIGNMENT.md contains 'conxius-platform'
-  OK  ALIGNMENT.md contains 'conxian-labs-site'
-  OK  ALIGNMENT.md contains 'Three Pillars'
-
-<<<<<<< HEAD
-✅ Business Repo Source-of-Truth & Cross-Repo Alignment: PASSED to validate Tiered SLA exclusions, BaaP monetization layers, 80/10/10 split structure, and Force Majeure terms.
-=======
-✅ Business Repo Source-of-Truth & Cross-Repo Alignment: PASSED, --- Verifying Commercial Packaging Tiers ---
-  OK  Tier verified: 'Community Tier'
-  OK  Tier verified: 'Business Tier'
-  OK  Tier verified: 'Enterprise Tier'
-
---- Verifying System Concepts & Architecture in Specification ---
-  OK  Concept/architecture mapped: 'Gateway'
-  OK  Concept/architecture mapped: 'Nexus'
-  OK  Concept/architecture mapped: 'Wallet'
-  OK  Concept/architecture mapped: 'BitVM2'
-  OK  Concept/architecture mapped: 'StrongBox'
-  OK  Concept/architecture mapped: 'ISO 20022'
-  OK  Concept/architecture mapped: 'Nitro'
-
---- Verifying Unified Installer (cxn) Requirements ---
-  OK  Time-To-First-Value (TTFV < 15m) benchmark verified.
-
-✅ Client Onboarding & System Installation Verification: PASSED, and Success: BOS research candidate ledger verified (/app/docs/bos_research_candidate_ledger.json)..
-- Re-confirmed top technical candidate selection () and authority issue () for production readiness.
-
-
-### Fixed & Aligned (2026-09-27)
-- Aligned module README release version markers (`v1.9.2` → `v1.9.5`) across `Fiscal-Vault-Oracle`, `Nakamoto-Guardian`, `Sovereign-Ops-Orchestrator`, `Sovereign-Strategy-Nexus`, and `cxn-grid-oracle` to match current BOS system-wide release baseline (`v1.9.5`).
->>>>>>> staged
-
+- Re-confirmed top technical candidate selection (`lib-conxian-core#227`) and authority issue (`conxian-business#943`) for production readiness.
 ### Added & Synthesized (2026-09-16 — Master Reconnaissance & Architecture Review)
 - Executed org-wide Master Reconnaissance & Architecture Review in `docs/CONXIAN_MASTER_RECONNAISSANCE_AND_ARCHITECTURE_REVIEW.md`.
 - Enforced strict domain separation firewall between Developer Protocol Surface (`conxian.org`: `nexus`, `gateway`, `sdk`, `platform`, `market`) and Corporate Governance Surface (`conxian-labs.com`: `www`, `bos`).

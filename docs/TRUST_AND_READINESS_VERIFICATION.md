@@ -3,6 +3,7 @@
 > **Issue**: [#830](https://github.com/Conxian/conxian-business/issues/830) — Re-verify governance and buyer-trust standards across public repos after docs rollout
 > **Status**: Canonical
 > **Last verified**: 2026-07-28 (public trust wording and hosted-Actions blocker; component evidence remains dated where stated)
+> **2026-10-03 code-audit correction**: wallet "Production-ready", protocol "Production-ready (gated)", and gateway "Beta" labels were found to overstate code. Wallet = Beta (partial), protocol = target-state/re-architecting (repo deleted), gateway = code-complete/undeployed. See issues #1283, #1282, #466.
 > **Review cadence**: On every major release, docs rollout, or trust-surface change
 
 ## Purpose
@@ -33,7 +34,7 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | "Production (v1.9.2)" | v1.9.2 is current release tag; versioned release and historical B2C Wallet Suite evidence exist, but current hosted Actions are blocked before steps and not re-verified as of 2026-07-28 | **Production-ready** | Minor: "Production" should be "Stable" per trust taxonomy |
+| **Status** | "Production (v1.9.2)" | v1.9.2 is current release tag; **2026-10-03 code audit**: 19 native protocol Managers are `failClosed` stubs, `BdkManager` has no broadcast, `SecureEnclave.signBatch` is a stub | **Beta (partial)** | Was "Production-ready"; downgraded — send path incomplete (see #1283) |
 | **Scope** | "Wallet app code, signer UX, reference client flows." | Correct. No protocol logic or infrastructure duplicated. | **Implemented** | None |
 | **Security** | "CXN Guardian" badge | SECURITY.md exists; StrongBox/TEE boundary documented | **Verified** | None |
 | **Governance** | "Maintained by Conxian-Labs as public infrastructure" | CODEOWNERS and CONTRIBUTING.md present | **Implemented** | None |
@@ -49,7 +50,7 @@ Every claim in the audit below uses one of these classifications:
 | **Scope** | "Glass Node implementation, multi-chain state normalization, verifiable service interfaces" | Correct. 8 protocol adapters, MMR proofs, REST + gRPC APIs | **Implemented** | None |
 | **Security** | SECURITY.md present | Real cryptographic signatures via lib-conxian-core; bitVM2 Groth16 verification; ZSE compliant | **Verified** | None |
 | **Governance** | "Maintained by Conxian-Labs as public infrastructure" | CODEOWNERS, CONTRIBUTING.md, CHANGELOG.md present | **Implemented** | None |
-| **API** | REST + gRPC surfaces | 18 routes + admin API documented in source; OpenAPI spec referenced | **Implemented** | OpenAPI spec may need regeneration |
+| **API** | REST + gRPC surfaces | 53 routes + admin API documented in source (2026-10-03 count); OpenAPI spec referenced | **Implemented** | OpenAPI spec may need regeneration |
 
 **Verdict**: ✅ Trust language matches implementation. Honest about "active development" status. Upgrade to "Beta" label explicit.
 
@@ -57,7 +58,7 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | README not accessible (submodule not initialized in workspace) | Historical Gateway Suite and local `cargo check` / `cargo test` evidence exists; current hosted Actions are blocked before steps and not re-verified as of 2026-07-28 | **Beta** | README needs trust section audit when submodule initialized |
+| **Status** | "Beta" | camt/ZKC/Sentinel verified in source (2026-10-03); render.yaml merged (#459) but service **undeployed** (~11 secrets) | **Beta (code-complete, undeployed)** | Deploy blocked on owner secrets (see #466) |
 | **Scope** | ISO 20022 compliance pipe; cross-layer state aggregation | Implemented per CI coverage | **Implemented** | None known |
 | **Security** | — | ZSE compliant; contamination guard enforced | **Verified** | None known |
 
@@ -67,7 +68,7 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | Pinned submodule (update=none); mainnet deployment plan exists | CSF mainnet readiness gate: "Go (pending ALEX funding)"; 16 Clarity contracts with clarity-version=4 | **Production-ready** (gated) | Pending ALEX funding verification |
+| **Status** | `Conxian` repo **deleted** (2026-10-03); 2 .clar survive | Sovereign Redesign 2026 in progress; old "16 contracts / mainnet Conditional Go" claim unsupported | **Target-state / re-architecting** | Was "Production-ready (gated)" — repo deleted (see #1282) |
 | **Scope** | Core protocol + on-chain contracts; sovereign treasury | Correct. Contracts use dynamic principals via operational-treasury.clar | **Implemented** | None |
 | **Security** | CON-61 (admin centralization), CON-371 (ST→SP) remediated | ZSE + Contamination Guard active; all P0 blockers closed | **Verified** | None |
 | **Governance** | CON-389 branch/promotion policy is checked in | Exact route policy is implemented in Git; live default-branch/protection state is not administrator-verified in this record | **Implemented** | Administrator verification remains required |
@@ -169,7 +170,7 @@ The Conxian BOS is a **sovereign-first, non-custodial** financial infrastructure
 - **CI evidence boundary**: Historical successful pipeline evidence exists, but as of 2026-07-28 current hosted Actions are blocked before steps by the account billing/spend state and are not re-verified
 - **Zero Secret Egress**: No secrets in Git; contamination guard enforces production principal hygiene
 - **Verifiable state**: Cryptographic MMR proofs and BitVM2 Groth16 verification for cross-chain state
-- **Honest maturity labeling**: Conxius Wallet is Stable/Production-ready; Nexus and Gateway are Beta; `conxius-enclave-sdk` is Beta / conditional with no value-bearing production signing or settlement; ConxianCSF mainnet is gated on ALEX funding
+- **Honest maturity labeling**: Conxius Wallet is Beta (partial — send path incomplete); Nexus is Beta (approaching Stable); Gateway is Beta (code-complete, undeployed); `conxius-enclave-sdk` is Beta / conditional with no value-bearing production signing or settlement; ConxianCSF is target-state / re-architecting (repo deleted)
 - **Clear boundary model**: Public-safe architecture docs; internal-only operational detail on GitHub per ZSE
 
 **What we do not claim**: third-party audits, production SLAs, full decentralization, or payable bug bounties. See [Section 4](#4-what-is-not-claimed-trust-boundary) for the complete non-claim boundary.
