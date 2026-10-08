@@ -10,10 +10,10 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 ## [Unreleased]
 
 ### Added & Synthesized (2026-10-02 — Strategic Analysis, BaaP Viability & Enterprise Gateway Model)
-- **Strategic Research Report (Issue #1317)**: Authored  analyzing long-term ecosystem viability, repository taxonomy, financial models, and turnkey enterprise integration.
-- **Enterprise Gateway Outreach Strategy**: Evaluated all 4 business pillars (, , , ), identifying **Conxian Gateway** as the single most immediate enterprise outreach opportunity due to ISO 20022 (/) compatibility with commercial banking networks.
+- **Strategic Research Report (Issue #1317)**: Authored [`STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md`](docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md) analyzing long-term ecosystem viability, repository taxonomy, financial models, and turnkey enterprise integration.
+- **Enterprise Gateway Outreach Strategy**: Evaluated all 4 business pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), identifying **`conxian-gateway`** as the single most immediate enterprise outreach opportunity due to ISO 20022 (`pacs.008`/`pacs.002`/`camt.053`) compatibility with commercial banking networks.
 - **Turnkey Integration Model ("NexusPay Global")**: Detailed a 5-phase institutional client integration path stepping through Gateway ISO 20022 XML parsing and normalization, Enclave SDK hardware-attested FROST threshold signing, Market programmable escrow settlement (80/10/10 yield splitter + ADR-004 fee decay), and Nexus zero-knowledge state proof confirmation.
-- **Ecosystem Index Alignment**: Indexed the report across , , , , and .
+- **Ecosystem Index Alignment**: Indexed the report across `SUMMARY.md`, `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`, `docs/bos_research_candidate_ledger.json`, `BOS_KNOWLEDGE_GRAPH.md`, and `CHANGELOG.md`.
 
 ### Added & Realigned (2026-09-28 — Organization-Wide SLA Positioning & BaaP Pricing Architecture)
 - **Organization-Wide SLA Positioning**: Re-aligned SLA posture across the Conxian GitHub ecosystem in `docs/SLA.md` and `docs/SLA_POLICY.md`. Enforced strict open-source disclaimers (NO SLA, community best-effort) on public protocol surfaces (`conxian` org) while restricting contractual SLAs (99.5% target uptime, SEV1 1-hour business hours acknowledgment, 0% financial credit liability, 5-day RCA SLA) exclusively to B2B Enterprise Gateway deployments.
