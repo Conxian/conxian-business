@@ -9,7 +9,7 @@ The foundational mathematical framework governing the deployment of capital, tim
 
 ## I. The Variables
 
-- **$C_R$ (Cost of Reproduction)**: The Structural Moat. How difficult is it for a competitor to fork or replicate the system? Driven by specialized architecture (Hardware TEE/StrongBox, Clarity smart contracts, sticky SAP/Oracle ERP integrations).
+- **$C_R$ (Cost of Reproduction)**: The Structural Moat. How difficult is it for a competitor to fork or replicate the system? Driven by specialized architecture (Hardware TEE/StrongBox, protocol-neutral rails/adaptors, sticky SAP/Oracle ERP integrations).
 - **$O_C$ (Opportunity Cost)**: The Founder's Tax. The manual hours, physical labor, and cognitive bandwidth required to build and maintain the system.
 - **$V_X$ (Execution Velocity)**: AI & Tooling Leverage. The speed at which code is shipped, driven entirely by utilizing agentic suites (Windsurf, Jules AI, GitHub, MCPs).
 - **$A_S$ (System Autonomy)**: Programmatic Independence. The percentage of operations handled by the Business Operations System (BOS) and cxn-arch-guardian without human intervention.
@@ -47,7 +47,7 @@ $$Total Value = (C_R \times A_S)^{N_E}$$
 
 ## 🚀 THE JOURNEY: Stress-Testing the Conxian Ecosystem
 
-Now we map the actual roadmap for the Conxius Wallet and Conxian Protocol through the framework to identify where the bottlenecks are right now.
+Now we map the actual roadmap for the Conxius Wallet and the protocol-neutral rails through the framework to identify where the bottlenecks are right now.
 
 ### Phase 1 Check: Genesis
 - **The Test**: Does a sovereign, non-custodial wallet with a Web5 Enclave and a BME Stacks L2 protocol pass the $V_{base}$ filter?
@@ -55,7 +55,7 @@ Now we map the actual roadmap for the Conxius Wallet and Conxian Protocol throug
 
 ### Phase 2 Check: The Forge (Current Execution Phase)
 - **The Test**: You are actively building M1-M16. Is $O_C$ bleeding you dry? Yes, especially with external distractions (the helpdesk).
-- **The Fix ($V_X$ injection)**: We must weaponize your MCP tools. cxn-arch-guardian needs to manage the GitHub tickets autonomously. You deploy Windsurf to generate the boilerplate ZK-STARK verification and Clarity contracts. You do not write from scratch what Jules AI can scaffold for you. We maximize $V_X$ to crush these milestones in record time.
+- **The Fix ($V_X$ injection)**: We must weaponize your MCP tools. cxn-arch-guardian needs to manage the GitHub tickets autonomously. You deploy Windsurf to generate the boilerplate ZK-STARK verification and protocol adaptors. You do not write from scratch what Jules AI can scaffold for you. We maximize $V_X$ to crush these milestones in record time.
 
 ### Phase 3 Check: The Transition (The Upcoming Bottleneck)
 - **The Test**: Let's say SVN 1.5 is fully live. How is reconciliation handled with enterprise clients?
@@ -63,7 +63,7 @@ Now we map the actual roadmap for the Conxius Wallet and Conxian Protocol throug
 
 ### Phase 4 Check: Sovereign State (The End Game)
 - **The Test**: The system is live, autonomous, and the BME tokenomics are burning/minting perfectly. How do we trigger the exponential growth ($N_E$)?
-- **The Fix ($N_E$ trigger)**: We design the Conxian Protocol so that every new enterprise that adopts the standard reduces the transaction cost or increases the liquidity for the existing users. The Section 42 Asset-for-Share Swap finalizes the IP transfer into Conxian-Labs, cementing the legacy structure.
+- **The Fix ($N_E$ trigger)**: We design the protocol-neutral rail standard so that every new enterprise that adopts it reduces the transaction cost or increases the liquidity for the existing users. The Section 42 Asset-for-Share Swap finalizes the IP transfer into Conxian-Labs, cementing the legacy structure.
 
 ---
 🛡️ **SOVEREIGN. AUTONOMOUS. EXPONENTIAL.**
