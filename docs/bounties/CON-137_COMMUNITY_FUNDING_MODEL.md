@@ -1,5 +1,7 @@
 # CON-137: Community funding model for system delivery
 
+> **RETIRED (2026-10-03).** ConxianCSF is retired by design — Conxian is universal, protocol-agnostic, non-custodial infrastructure and does not own/launch a protocol. The mainnet-launch gate and the ALEX-funding path described in this document are **void**. Retained for historical context only.
+
 This document is the policy artifact for [CON-137](https://github.com/Conxian/conxian-business/issues?q=CON-137).
 
 It defines which work can be community-funded, which work must remain internal-only, and how to size bounties in a consistent, reviewable way.

@@ -1,5 +1,7 @@
 # Conxian-Labs bounty workflow (stricter)
 
+> **Note (2026-10-03).** ConxianCSF is retired by design (Conxian is universal, protocol-agnostic infra). Any ConxianCSF mainnet-launch / ALEX-funding gate referenced in this document is **void**; the rest of this document remains in force.
+
 This document defines the **Conxian-Labs** GitHub bounty workflow and the operational rules that keep bounties claimable, reviewable, and non-confusing (especially before payouts are enabled).
 
 ## Goals

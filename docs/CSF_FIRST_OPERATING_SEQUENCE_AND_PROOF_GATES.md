@@ -1,5 +1,7 @@
 # CSF-first operating sequence and proof gates (CON-426)
 
+> **RETIRED (2026-10-03).** ConxianCSF is retired by design — Conxian is universal, protocol-agnostic, non-custodial infrastructure and does not own/launch a protocol. The mainnet-launch gate and the ALEX-funding path described in this document are **void**. Retained for historical context only.
+
 This document locks the operating order:
 
 1. **ConxianCSF first** (launch + proof discipline)

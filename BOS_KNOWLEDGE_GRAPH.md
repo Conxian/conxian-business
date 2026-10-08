@@ -1,5 +1,19 @@
 # Conxian Labs BOS Knowledge Graph
 
+## Session Update (2026-10-08 — Network-agnostic pivot: own protocol deprecated)
+- Confirmed the strategic decision to go **network-agnostic**: the own Clarity protocol is deprecated and `Conxian/Conxian` was deleted intentionally (not archived). See [ADR-007](docs/architecture/adrs/ADR-007-network-agnostic-pivot.md).
+- The canonical cross-network model is now `lib-conxian-core`'s `SettlementRail` (8 rails) + `TrustTier` (Strict/Managed/Expedient/ObserverOnly), with `conxius-enclave-sdk` signing/attestation. "Mainnet" = Bitcoin L1 via Stacks (already live); there is no own-protocol mainnet.
+- BOS-001 own-protocol gates (2/3/6) are superseded; hardware-signing + independent-review gates (4/5) are re-homed to the enclave-sdk domain. Recorded in `.github-private/docs/CAPABILITY_GATES.json` (PR #58).
+- Superseded own-protocol docs (`MAINNET_READINESS_CONXIAN_PROTOCOL`, `DAO_GOVERNANCE_SPEC`, `INTEGRATED_SYSTEM_TESTNET_GATE`, `TECHNICAL_READINESS_CERTIFICATION`); re-scoped `TECHNICAL_WHITEPAPER`, `CONXIAN_UNIFIED_THEORY_v2`, and `CJCS_v2.0_SPEC`. Remaining `.clar`/Clarity references below are historical.
+
+## Session Update (2026-10-02 — Session 74: Strategic Analysis, BaaP Viability & Enterprise Gateway Integration Model)
+- Authored canonical research report [`STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md`](docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md) addressing Issue #1317.
+- Evaluated long-term commercial viability and repository taxonomy across all 4 pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`).
+- Identified **`conxian-gateway`** as the primary enterprise outreach opportunity, bridging legacy banking ISO 20022 (`pacs.008`/`pacs.002`/`camt.053`) messaging with zero-custody Bitcoin/Stacks settlement intents.
+- Detailed the 80/10/10 yield splitter, dynamic fee decay (ADR-004), cost-plus rail floors, dynamic load oracle clamping, and Neon PostgreSQL 12-month runway analytics.
+- Modeled an end-to-end institutional integration path ("NexusPay Global") stepping through Gateway ISO 20022 ingestion, Enclave SDK hardware-attested FROST threshold signing, Market programmable escrow settlement, and Nexus state proof confirmation.
+- Indexed the report in `SUMMARY.md`, `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`, `docs/bos_research_candidate_ledger.json`, and `CHANGELOG.md`.
+
 ## Session Update (2026-09-26 — Session 66: Organization-Wide SLA Positioning, Support Matrix & BaaP Commercial Pricing Architecture)
 - Re-aligned organization-wide SLA positioning and support boundaries across the entire Conxian GitHub ecosystem (`conxian` org vs `conxian-labs.com`).
 - Enforced strict open-source disclaimers (NO SLA, community best-effort support) on public protocol surfaces (`lib-conxian-core`, `conxius-enclave-sdk`, `conxius-wallet`, `conxian-nexus`), protecting core maintainers from liability traps and PagerDuty fatigue.

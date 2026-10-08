@@ -9,3 +9,4 @@ This directory contains the current architecture decision records for the BOS co
 - [ADR-004: Control plane consumes runtime services instead of re-implementing them](./ADR-004-admin-runtime-boundary.md)
 - [ADR-005: Admin/runtime API contract canonicalization](./ADR-005-admin-runtime-api-contract-canonicalization.md)
 - [ADR-006: Tier 1 chain families for Nexus/Gateway execution](./ADR-006-tier-1-chain-families-for-nexus-gateway-execution.md)
+- [ADR-007: Network-agnostic architecture — own protocol deprecated](./ADR-007-network-agnostic-pivot.md)

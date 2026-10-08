@@ -1,5 +1,7 @@
 # BOS wallet control model (bounded protocol controls + DAO-aligned governance)
 
+> **Note (2026-10-03).** ConxianCSF is retired by design (Conxian is universal, protocol-agnostic infra). Any ConxianCSF mainnet-launch / ALEX-funding gate referenced in this document is **void**; the rest of this document remains in force.
+
 This document defines the canonical wallet-control model for BOS and related ConxianCSF system operations so automation stays **bounded and system-operated** (SAB-approved signers + contract principals) rather than **person-controlled**, with policy changes delegated to DAO-aligned governance (DAO = decentralized autonomous organization).
 
 > **Non-custody boundary:** Conxian-Labs does not take custody of user or customer assets. The signer classes below describe temporary deployment, protocol execution, emergency, or governance controls; they do not grant company discretion over user funds. User keys remain user-controlled, protocol balances remain in contract principals where applicable, DAO governance controls protocol policy, and regulated partners remain responsible for regulated custody.

@@ -1,5 +1,9 @@
 # Integrated system testnet gate (dev) (CON-487)
 
+> **SUPERSEDED (2026-10-08) — network-agnostic pivot.** The own Clarity protocol was deprecated (`Conxian/Conxian` deleted intentionally). See [ADR-007](../architecture/adrs/ADR-007-network-agnostic-pivot.md). This document is retained for historical reference only.
+
+> **Note (2026-10-03).** ConxianCSF is retired by design (Conxian is universal, protocol-agnostic infra). Any ConxianCSF mainnet-launch / ALEX-funding gate referenced in this document is **void**; the rest of this document remains in force.
+
 This document defines the **full-system public-testnet gate** for the `dev` lane.
 
 Goal: before any change is treated as eligible for **Mainnet promotion** (via `dev` -> `staged` -> `main`), we must be able to prove that the **integrated Conxian system** works end-to-end on public testnet.
