@@ -34,13 +34,13 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | "Production (v1.9.2)" | v1.9.2 is current release tag; **2026-10-03 code audit**: 19 native protocol Managers are `failClosed` stubs, `BdkManager` has no broadcast, `SecureEnclave.signBatch` is a stub | **Beta (partial)** | Was "Production-ready"; downgraded — send path incomplete (see #1283) |
+| **Status** | "Production (v1.9.2)" | v1.9.2 is current release tag; native L1 sign+broadcast implemented (`SecureEnclavePlugin.signBatch`/`broadcastTransaction`), `BdkManager` is sync/getBalance-only (no direct broadcast), 12 non-L1 Managers remain fail-closed | **Beta (partial)** | Was "Production-ready"; downgraded — L1 send path present, BDK broadcast + non-L1 managers incomplete (see #1283) |
 | **Scope** | "Wallet app code, signer UX, reference client flows." | Correct. No protocol logic or infrastructure duplicated. | **Implemented** | None |
 | **Security** | "CXN Guardian" badge | SECURITY.md exists; StrongBox/TEE boundary documented | **Verified** | None |
 | **Governance** | "Maintained by Conxian-Labs as public infrastructure" | CODEOWNERS and CONTRIBUTING.md present | **Implemented** | None |
 | **Release discipline** | v1.9.2 tag | CHANGELOG.md present; versioned releases | **Verified** | None |
 
-**Verdict**: ⚠️ Previously overstated ("Production-ready"). Downgraded to **Beta (partial)** — the send path is incomplete (`BdkManager` has no broadcast, `SecureEnclave.signBatch` is a stub, native protocol Managers are fail-closed). See #1283.
+**Verdict**: ⚠️ Previously overstated ("Production-ready"). Downgraded to **Beta (partial)** — native L1 sign+broadcast exists, but `BdkManager` has no direct broadcast and 12 non-L1 Managers remain fail-closed. See #1283.
 
 ### 2.2 Conxian Nexus (`conxian-nexus`)
 
@@ -152,7 +152,7 @@ The following are explicitly **not claimed** on any public surface. This section
 
 | Priority | Action | Issue |
 |----------|--------|-------|
-| P0 | Complete wallet send path (native broadcast + signing) before any "Stable"/"Production" relabel | #1283 |
+| P0 | Complete BDK broadcast path + un-stub the 12 remaining non-L1 Managers before any "Stable"/"Production" relabel | #1283 |
 | P1 | Add explicit "Beta" status label to conxian-nexus README | #830 |
 | P1 | Audit conxian-gateway and conxian-labs-site READMEs when submodules accessible | #830 |
 | P2 | Regenerate OpenAPI spec for conxian-nexus | #830 |
