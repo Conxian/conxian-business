@@ -70,7 +70,7 @@ To maintain competitiveness against legacy bridges on institutional volumes whil
 
 ### Layer 2: Enterprise BaaP Node Licensing (Recurring SaaS)
 
-For institutions and fintechs requiring deployment of the Conxian Gateway and Nexus behind their own corporate firewall:
+For institutions and fintechs requiring deployment of the `conxian-gateway` and Nexus behind their own corporate firewall:
 
 1. **Community / Sandbox Node ($0/month)**:
    - Public endpoint routing (`gateway.conxian.org`).

@@ -16,7 +16,7 @@ The global financial infrastructure is undergoing a tectonic shift driven by the
 
 Conxian-Labs sits at the epicenter of this shift. By enforcing a strict architectural firewall between its open-source decentralized protocol layer (`conxian.org`) and its commercial entity (`conxian-labs.com`), Conxian establishes a secure, modular Business-as-a-Platform (BaaP) ecosystem.
 
-This strategic analysis interrogates the long-term viability, quantitative financial models, and pillar taxonomy of the Conxian stack. It identifies **Conxian Gateway** as the single most immediate enterprise outreach opportunity and delivers an end-to-end, production-grade client integration model for institutional partners.
+This strategic analysis interrogates the long-term viability, quantitative financial models, and pillar taxonomy of the Conxian stack. It identifies **`conxian-gateway`** as the single most immediate enterprise outreach opportunity and delivers an end-to-end, production-grade client integration model for institutional partners.
 
 ---
 
@@ -33,7 +33,7 @@ The Conxian ecosystem operates a modular, open-source repository architecture. T
             ┌──────────────────┬─────────────────┴────────────────┬──────────────────┐
             ▼                  ▼                                  ▼                  ▼
   ┌──────────────────┐┌──────────────────┐              ┌──────────────────┐┌──────────────────┐
-  │ conxian-gateway  ││  conxian_market  │              │  conxian-nexus   ││conxius-enclave-sdk│
+  │ `conxian-gateway`││  `conxian_market`│              │ `conxian-nexus`  ││`conxius-enclave-sdk`│
   │  (B2B Bridge)    ││ (Revenue Engine) │              │  (Proof Oracle)  ││ (Security Moat)  │
   └─────────┬────────┘└────────┬─────────┘              └────────┬─────────┘└────────┬─────────┘
             │                  │                                 │                  │
@@ -50,7 +50,7 @@ The Conxian ecosystem operates a modular, open-source repository architecture. T
 ### Core Repository Taxonomy
 
 1. **`conxian-gateway` (The B2B Bridge)**:
-   - **Role**: High-throughput middleware bridging Bitcoin L1 / Stacks L2 settlement logic with legacy banking networks via ISO 20022 (`pacs.008`, `pacs.002`) messaging.
+   - **Role**: High-throughput middleware bridging Bitcoin L1 / Stacks L2 settlement logic with legacy banking networks via ISO 20022 (`pacs.008`, `pacs.002`, `camt.053`) messaging.
    - **License & SLA**: GPL-3.0 / Managed SaaS with 99.5% monthly uptime SLA ($2,500 – $7,500/mo).
 
 2. **`conxian_market` (The Revenue Engine & Escrow Layer)**:
@@ -75,41 +75,41 @@ Conxian transitions from a neutral protocol into an enterprise Business-as-a-Pla
 
 Revenue generated through programmable escrow, x402 HTTP payment facades, and agentic commerce is routed deterministically through an **80 / 10 / 10 split**:
 
-$$	ext{Total Fee} = S_{	ext{gross}} 	imes 	ext{DecayedBps}$$
+$$\text{Total Fee} = S_{\text{gross}} \times \text{DecayedBps}$$
 
-$$	ext{Allocations} = egin{cases}
-80\% & 	ext{Builder / Agent Developer Pool} \
-10\% & 	ext{Platform Treasury (Conxian Labs Profit Center)} \
-10\% & 	ext{Ecosystem Stakeholders / Network Reserve}
+$$\text{Allocations} = \begin{cases}
+80\% & \text{Builder / Agent Developer Pool} \\
+10\% & \text{Platform Operating Reserve (Non-Custodial Fee Pool)} \\
+10\% & \text{Ecosystem Stakeholders / Network Reserve}
 \end{cases}$$
 
 ### 2.2 Dynamic Fee Structure & Decay (ADR-004)
 
 To incentivize early ecosystem adoption while maintaining long-term sustainability, fees decay on a fixed timeline subject to cost-plus flat floors and volume-tier hysteresis:
 
-$$	ext{Decay Timeline}: egin{cases}
-2.0\% & 	ext{Months } 0 - 12 \
-1.5\% & 	ext{Months } 12 - 36 \
-1.0\% & 	ext{Terminal Rate (Months } 36+	ext{)}
+$$\text{Decay Timeline}: \begin{cases}
+2.0\% & \text{Months } 0 - 12 \\
+1.5\% & \text{Months } 12 - 36 \\
+1.0\% & \text{Terminal Rate (Months } 36+\text{)}
 \end{cases}$$
 
 #### Cost-Plus Rail Floor & Load Oracle Clamping
 
 To protect against network fee volatility on underlying settlement rails (Bitcoin L1, Lightning, EVM), the fee calculator enforces a dynamic cost-plus floor:
 
-$$	ext{FlatFloor} = 	ext{RailCostEstimate} 	imes (1 + 	ext{RAIL\_FLOOR\_MARGIN\_BPS})$$
+$$\text{FlatFloor} = \text{RailCostEstimate} \times (1 + \text{RAIL\_FLOOR\_MARGIN\_BPS})$$
 
 where `RAIL_FLOOR_MARGIN_BPS` = 25% (250 bps). Under peak mempool congestion, the dynamic load oracle clamps the final fee:
 
-$$	ext{CalculatedFee} = \max\left(	ext{FlatFloor}, 	ext{CalculatedBpsFee}ight) 	imes 	ext{LoadFactor}$$
+$$\text{CalculatedFee} = \max\left(\text{FlatFloor}, \text{CalculatedBpsFee}\right) \times \text{LoadFactor}$$
 
-### 2.3 Treasury & 12-Month Runway Analytics
+### 2.3 Operating Reserve & 12-Month Runway Analytics
 
 The Business Operations System (BOS) continuously ingests operational telemetry and financial transactions into an analytical Neon PostgreSQL data store (`nexus_idempotency` & `treasury_report`).
 
 The analytical engine computes real-time 12-month runway projections:
 
-$$	ext{Runway}_{	ext{months}} = rac{	ext{TreasuryBalance}_{	ext{USD}}}{	ext{MonthlyOpEx}_{	ext{burn}} - 	ext{MonthlyBaaP}_{	ext{revenue}}}$$
+$$\text{Runway}_{\text{months}} = \frac{\text{ReserveBalance}_{\text{USD}}}{\text{MonthlyOpEx}_{\text{burn}} - \text{MonthlyBaaP}_{\text{revenue}}}$$
 
 When threshold bands fall below 12 months (warning) or 6 months (critical), automated BOS triggers alert governance guardians.
 
@@ -119,17 +119,17 @@ When threshold bands fall below 12 months (warning) or 6 months (critical), auto
 
 | Pillar | Commercial Target | Value Proposition | Outreach Friction | Enterprise Opportunity Rank |
 |---|---|---|---|---|
-| **Conxian Gateway** | Commercial Banks, Institutional FinTechs, Cross-Border PSPs | ISO 20022 (`pacs.008`) to Bitcoin/Stacks settlement bridge | **Lowest** (standard REST/gRPC API & ISO XML) | **Rank 1 (Most Immediate)** |
-| **Conxian Market** | AI Agent Developers, Autonomous M2M Networks | ERC-8183 programmable escrow & x402 payment facade | Low-Medium (SDK integration) | **Rank 2** |
-| **Conxian Nexus** | Institutional Custodians, Cloud Marketplaces | Universal multi-chain state proof & Glass Node-as-a-Service | Medium (Node deployment) | **Rank 3** |
-| **Conxius Enclave SDK** | Mobile App Developers, Institutional Funds | Biometric hardware TEE signing & zero-secret egress | Medium-High (Embedded C/Rust SDK) | **Rank 4** |
+| **`conxian-gateway`** | Commercial Banks, Institutional FinTechs, Cross-Border PSPs | ISO 20022 (`pacs.008`) to Bitcoin/Stacks settlement bridge | **Lowest** (standard REST/gRPC API & ISO XML) | **Rank 1 (Most Immediate)** |
+| **`conxian_market`** | AI Agent Developers, Autonomous M2M Networks | ERC-8183 programmable escrow & x402 payment facade | Low-Medium (SDK integration) | **Rank 2** |
+| **`conxian-nexus`** | Institutional Custodians, Cloud Marketplaces | Universal multi-chain state proof & Glass Node-as-a-Service | Medium (Node deployment) | **Rank 3** |
+| **`conxius-enclave-sdk`** | Mobile App Developers, Institutional Funds | Biometric hardware TEE signing & zero-secret egress | Medium-High (Embedded C/Rust SDK) | **Rank 4** |
 
-### Strategic Recommendation: Primary Focus on Conxian Gateway
+### Strategic Recommendation: Primary Focus on `conxian-gateway`
 
-**Conxian Gateway presents the single most immediate enterprise outreach opportunity.**
+**`conxian-gateway` presents the single most immediate enterprise outreach opportunity.**
 
 **Rationale**:
-1. **Industry Standardization**: Tier-1 commercial banks and FinTechs are mandated to support ISO 20022 messaging (`pacs.008` customer credit transfer, `pacs.002` payment status report). They cannot directly handle raw Bitcoin UTXOs or Stacks Clarity smart contracts.
+1. **Industry Standardization**: Tier-1 commercial banks and FinTechs are mandated to support ISO 20022 messaging (`pacs.008` customer credit transfer, `pacs.002` payment status report, `camt.053` bank statement). They cannot directly handle raw Bitcoin UTXOs or Stacks Clarity smart contracts.
 2. **Zero-Custody Compliance**: Financial institutions cannot take on balance-sheet risk or regulatory custody overhead of un-vetted crypto assets. The Gateway provides a zero-custody, zero-raw-data bridge.
 3. **Turnkey Monetization**: Institutions readily accept monthly SaaS retainers ($2,500 – $7,500/mo) for managed, high-availability ISO 20022 translation bridges with SLA contracts.
 
@@ -137,11 +137,11 @@ When threshold bands fall below 12 months (warning) or 6 months (critical), auto
 
 ## 4. End-to-End Client Integration Model: Enterprise Gateway ("NexusPay Global")
 
-Below is the production-grade integration model for an Enterprise FinTech Partner ("NexusPay Global") executing cross-border B2B transactions using the Conxian Gateway, Enclave SDK, Market Escrow, and Nexus Proof Oracle.
+Below is the production-grade integration model for an Enterprise FinTech Partner ("NexusPay Global") executing cross-border B2B transactions using `conxian-gateway`, `conxius-enclave-sdk`, `conxian_market`, and `conxian-nexus`.
 
 ```
 ┌─────────────────┐       ┌─────────────────┐       ┌─────────────────┐       ┌─────────────────┐       ┌─────────────────┐
-│ NexusPay Global │       │ Conxian Gateway │       │ Enclave SDK TEE │       │ Conxian Market  │       │  Conxian Nexus  │
+│ NexusPay Global │       │ `conxian-gateway` │       │`conxius-enclave-sdk`│    │ `conxian_market`│       │ `conxian-nexus` │
 │  (Core Banking) │       │   (B2B Bridge)  │       │  (Nitro Signer) │       │ (Escrow / x402) │       │  (State Proof)  │
 └────────┬────────┘       └────────┬────────┘       └────────┬────────┘       └────────┬────────┘       └────────┬────────┘
          │                         │                         │                         │                         │
@@ -163,9 +163,25 @@ Below is the production-grade integration model for an Enterprise FinTech Partne
          │ 7. ISO pacs.002 (ACCC)  │                         │                         │                         │
          │◄────────────────────────┤                         │                         │                         │
          │                         │                         │                         │                         │
+         │ 8. ISO camt.053 Stmt    │                         │                         │                         │
+         │◄────────────────────────┤                         │                         │                         │
+         │                         │                         │                         │                         │
 ```
 
-### 4.1 Phase 1: Ingestion & ISO 20022 Normalization (`conxian-gateway`)
+### 4.1 Field-Level ISO 20022 to CJCS v2.0 Mapping Matrix
+
+`conxian-gateway` executes bidirectional deterministic translation between ISO 20022 XML fields and Conxian Job Card Schema (CJCS v2.0) payment intents:
+
+| ISO 20022 XML Tag | ISO Field Description | CJCS v2.0 Attribute | Canonical Type / Format |
+|---|---|---|---|
+| `<GrpHdr/MsgId>` | Group Header Message ID | `intent_id` | `String` (UUID / Hash) |
+| `<CdtTrfTxInf/PmtId/UETR>` | Unique End-to-End Transaction Ref | `uetr` | `UUIDv4` |
+| `<IntrBkSttlmAmt>` | Settlement Amount & Currency | `amount_sats` / `currency` | `u64` (Sats) / `ISO 4217` |
+| `<Dbtr/Nm>` | Debtor Name | `debtor_identity` | `String` (Base58 / DID) |
+| `<Cdtr/Nm>` | Creditor Name | `creditor_identity` | `String` (Base58 / DID) |
+| `<CdtrAgt/FinInstnId/BICFI>` | Creditor Agent BIC Code | `rail_type` | `Enum` (`BitcoinL1`, `StacksL2`) |
+
+### 4.2 Phase 1: Ingestion & ISO 20022 Normalization (`conxian-gateway`)
 
 1. **Client Request**: NexusPay Global submits an ISO 20022 `pacs.008.001.10` Financial Payment Message via mTLS to `https://gateway.conxian-labs.com/v1/iso20022/pacs008`.
 
@@ -195,27 +211,28 @@ Below is the production-grade integration model for an Enterprise FinTech Partne
 
 2. **Gateway Parsing**: Gateway validates XML against ISO schemas, extracts debtor, creditor, UETR, and amount, and normalizes it into a Conxian Job Card Schema (CJCS v2.0) payment intent.
 
-### 4.2 Phase 2: Hardware-Attested Signing (`conxius-enclave-sdk`)
+### 4.3 Phase 2: Hardware-Attested Signing (`conxius-enclave-sdk`)
 
 1. The normalized CJCS v2.0 intent is routed to an isolated AWS Nitro Enclave running `conxius-enclave-sdk` (v2.1.0).
 2. The enclave verifies its hardware attestation document (PCR0/PCR1/PCR2 COSE proof bound to `alias/conxian-prod-release`) and signs the settlement transaction using a 2-of-3 FROST threshold signature.
 3. **Zero Secret Egress**: Private key material remains strictly inside TEE memory.
 
-### 4.3 Phase 3: Programmable Escrow Settlement (`conxian_market`)
+### 4.4 Phase 3: Programmable Escrow Settlement (`conxian_market`)
 
 1. The signed settlement intent triggers an x402 HTTP payment request with header `WWW-Authenticate: X402-Payment`.
 2. `conxian_market` locks funds into an ERC-8183 / DLC escrow contract on Stacks L2 / Bitcoin L1.
-3. **Fee Execution**: Fee is calculated using ADR-004 logic (2.0% decay rate + flat floor margin + load clamp), routing 80% to the liquidity agent, 10% to Conxian Labs Treasury, and 10% to network reserve.
+3. **Fee Execution**: Fee is calculated using ADR-004 logic (2.0% decay rate + flat floor margin + load clamp), routing 80% to the liquidity agent, 10% to Platform Protocol Reserve, and 10% to network reserve.
 
-### 4.4 Phase 4: State Proof Verification (`conxian-nexus`)
+### 4.5 Phase 4: State Proof Verification (`conxian-nexus`)
 
 1. `conxian-nexus` monitors chain state, indexes the block containing the settlement transaction, and verifies state proofs across Bitcoin and Stacks.
 2. Nexus generates a zero-knowledge cryptographic state proof verifying settlement completion.
 
-### 4.5 Phase 5: Confirmation & ISO Reconciliation (`conxian-gateway`)
+### 4.6 Phase 5: Confirmation & ISO Reconciliation (`conxian-gateway`)
 
 1. Upon receiving the Nexus proof, Gateway generates an ISO 20022 `pacs.002.001.12` Payment Status Report with status `ACCC` (Accepted Settlement Completed).
-2. The message is signed and returned to NexusPay Global's core banking webhooks.
+2. For end-of-day bank balance reconciliation, `conxian-gateway` compiles state proof roots into an ISO 20022 `camt.053.001.10` Bank-to-Customer Statement.
+3. The messages are signed and returned to NexusPay Global's core banking webhooks.
 
 **Outgoing ISO 20022 `pacs.002` Confirmation (Snippet)**:
 ```xml
@@ -231,7 +248,7 @@ Below is the production-grade integration model for an Enterprise FinTech Partne
       <TxSts>ACCC</TxSts>
       <StsRsnInf>
         <Rsn><Cd>G000</Cd></Rsn>
-        <AddtlInf>Settlement Finalized on Bitcoin/Stacks via Conxian Gateway (Proof Root: 0x8f2a...39e)</AddtlInf>
+        <AddtlInf>Settlement Finalized on Bitcoin/Stacks via `conxian-gateway` (Proof Root: 0x8f2a...39e)</AddtlInf>
       </StsRsnInf>
     </TxInfAndSts>
   </FIToFIPmtStsRpt>
@@ -245,6 +262,6 @@ Below is the production-grade integration model for an Enterprise FinTech Partne
 The strategic analysis confirms that Conxian's BaaP transition is structurally viable and profit-optimized.
 
 ### Key Next Steps
-1. **Packaging**: Formalize the Conxian Gateway Business Tier ($2,500 – $7,500/mo) managed API documentation on `conxian-labs.com`.
+1. **Packaging**: Formalize the `conxian-gateway` Business Tier ($2,500 – $7,500/mo) managed API documentation on `conxian-labs.com`.
 2. **SDK Drop-in Widgets**: Build drop-in React/UI widgets in `conxius-platform` for 1-click x402 payment facade embedding.
 3. **Nexus Cloud Marketplace**: Release AWS AMI and Render 1-click templates for Nexus Sovereign Nodes.
