@@ -189,12 +189,7 @@ def validate_pull_request(
             errors.append("Promotions into 'staged' must come from this repository.")
 
         generated = GENERATED_DEV_RE.fullmatch(ctx.head_ref)
-        is_allowed_staged = (
-            ctx.head_ref == "dev"
-            or generated is not None
-            or any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/"))
-        )
-        if not is_allowed_staged:
+        if ctx.head_ref != "dev" and generated is None:
             errors.append(
                 "PRs into 'staged' must come from 'dev' or an exact "
                 "promotion/dev-to-staged-<source-sha> candidate."
@@ -214,11 +209,7 @@ def validate_pull_request(
             errors.append("Promotions into 'main' must come from this repository.")
 
         generated = GENERATED_STAGED_RE.fullmatch(ctx.head_ref)
-        is_allowed_head = (
-            ctx.head_ref == "staged"
-            or generated is not None
-            or any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/"))
-        )
+        is_allowed_head = ctx.head_ref == "staged" or generated is not None
         if not is_allowed_head:
             errors.append(
                 "PRs into 'main' must come from 'staged' or an exact "
