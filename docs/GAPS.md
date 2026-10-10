@@ -5,7 +5,7 @@
 | Authority | [Business issue #943](https://github.com/Conxian/conxian-business/issues/943) |
 | Standard | Conxian BOS v1.9.5 |
 | Classification | Public-safe governance gap register |
-| Last Updated | 2026-09-26 |
+| Last Updated | 2026-10-03 |
 
 ---
 
