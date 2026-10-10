@@ -3,7 +3,7 @@
 | Metadata | Value |
 |---|---|
 | Classification | Public-safe alignment audit |
-| Audit Date | 2026-09-18 |
+| Audit Date | 2026-10-03 |
 | Target Release | Conxian BOS v1.9.5 |
 | Authority | [Business Issue #943](https://github.com/Conxian/conxian-business/issues/943) |
 
@@ -19,14 +19,14 @@ An ecosystem-wide alignment audit was executed across all 8 submodules and root 
 
 | Repository | Pinned SHA | Update Policy | Pillar Alignment | Audit Status | Notes |
 |---|---|---|---|---|---|
-| `conxian-gateway` | `d77952e3` | `checkout` | Operational Unification | **PASS** | Settlement bridge & ISO 20022 message routing aligned |
-| `conxian-nexus` | `bc870003` | `checkout` | Operational Unification | **PASS** | Universal chain sync & MMR state proofs aligned |
-| `conxius-wallet` | `f985384a` | `checkout` | Vertical Sovereignty | **PASS** | Non-custodial mobile wallet reference client aligned |
-| `conxian_market` | `276d9f4f` | `checkout` | Vertical Sovereignty | **PASS** | M2M marketplace & DLC escrow surface activated |
-| `lib-conxian-core` | `c14f2e57` | `checkout` | Nakamoto Readiness | **PASS** | Bitcoin L1 & Stacks primitives aligned |
-| `conxius-enclave-sdk` | `11add871` | `checkout` | Vertical Sovereignty | **PASS** | Nitro TEE hardware signing SDK aligned |
-| `conxius-platform` | `1a2f78d1` | `checkout` | Operational Unification | **PASS** | Platform compose & environment scaffolding aligned |
-| `conxian-labs-site` | `9dabf1cd` | `checkout` | Operational Unification | **PASS** | Public site & corporate governance surface aligned |
+| `conxian-gateway` | `e33f6e5d` | `checkout` | Operational Unification | **PASS** | Settlement bridge & ISO 20022 message routing aligned |
+| `conxian-nexus` | `907d729d` | `checkout` | Operational Unification | **PASS** | Universal chain sync & MMR state proofs aligned |
+| `conxius-wallet` | `19e7394e` | `checkout` | Vertical Sovereignty | **PASS** | Non-custodial mobile wallet reference client aligned |
+| `conxian_market` | `bcfecbf9` | `checkout` | Vertical Sovereignty | **PASS** | M2M marketplace & DLC escrow surface activated |
+| `lib-conxian-core` | `e1d8d2c8` | `checkout` | Nakamoto Readiness | **PASS** | Bitcoin L1 & Stacks primitives aligned |
+| `conxius-enclave-sdk` | `62f34c39` | `checkout` | Vertical Sovereignty | **PASS** | Nitro TEE hardware signing SDK & v2.1.0 changelog aligned |
+| `conxius-platform` | `643253c1` | `checkout` | Operational Unification | **PASS** | Platform compose & environment scaffolding aligned |
+| `conxian-labs-site` | `3a1eb75d` | `checkout` | Operational Unification | **PASS** | Public site & corporate governance surface aligned |
 
 ---
 

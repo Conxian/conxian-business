@@ -31,11 +31,52 @@ STAGED_BODY = """<!-- PROMOTION:DEV->STAGED -->
 """
 MAIN_BODY = """### Mainnet acceptance evidence pack
 #### Promotion metadata
+- Source: staged
+- Operator: conxian-admin
+
+#### Mainnet-only production scope
+- Gateway release v0.1.5
+
+#### Contamination and residue proof
+- No testnet residue
+
+#### Successful production validation
+- Smoke tests green
+
+#### Release-readiness sign-off
+- Signed by owner
+
+#### Owner accountability
+- Owner owns this promotion
+"""
+
+EMPTY_MAIN_BODY = """### Mainnet acceptance evidence pack
+#### Promotion metadata
 #### Mainnet-only production scope
 #### Contamination and residue proof
 #### Successful production validation
 #### Release-readiness sign-off
 #### Owner accountability
+"""
+
+PLACEHOLDER_MAIN_BODY = """### Mainnet acceptance evidence pack
+#### Promotion metadata
+Complete all fields required by `openspec/specs/mainnet-acceptance-evidence-pack/spec.md`.
+
+#### Mainnet-only production scope
+Complete before review.
+
+#### Contamination and residue proof
+Complete before review.
+
+#### Successful production validation
+Complete before review.
+
+#### Release-readiness sign-off
+Complete before review.
+
+#### Owner accountability
+Complete before review.
 """
 GENERATED_EVIDENCE = f"""
 - Promotion source SHA: `{SOURCE_SHA}`
@@ -176,6 +217,10 @@ class BranchPromotionPolicyTests(unittest.TestCase):
         self.assertRejected(context("fix/no-checklist", "dev", ""))
         self.assertRejected(context("dev", "staged", ""))
         self.assertRejected(context("staged", "main", ""))
+
+    def test_empty_or_placeholder_evidence_pack_is_rejected(self) -> None:
+        self.assertRejected(context("staged", "main", EMPTY_MAIN_BODY))
+        self.assertRejected(context("staged", "main", PLACEHOLDER_MAIN_BODY))
 
     def test_sha_body_mismatch_is_rejected(self) -> None:
         bad = GENERATED_EVIDENCE.replace(SOURCE_SHA, "c" * 40)
