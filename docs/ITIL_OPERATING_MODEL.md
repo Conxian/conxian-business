@@ -80,18 +80,24 @@ change/release/incident/knowledge end-to-end.
 
 ---
 
-## 4. Service Value Chain (Integrated Product & Service Lifecycle)
+## 4. Product & Service Lifecycle Model (PSLM) — the ITIL 5 lifecycle
 
-The end-to-end lifecycle: strategy → design → delivery → continual improvement.
+ITIL 5 replaces the ITIL 4 Service Value Chain with the **Product & Service
+Lifecycle Model (PSLM)**: eight iterative activities — **Discover, Design,
+Acquire, Build, Transition, Operate, Deliver, Support**. Technical delivery is
+embedded in the lifecycle (no separate "technical management" silo). Change
+Enablement sits within **Build & Transition**.
 
-| Activity | Conxian mapping | Artifacts / tools |
+| PSLM activity | Conxian mapping | Artifacts / tools |
 |---|---|---|
-| **Plan** (strategy) | Portfolio & roadmapping, gap register, capacity/fee forecasting | Projects "Portfolio—Ecosystem", "Change Backlog"; gap register G1–G8 |
-| **Engage** (co-creation) | Customer/agent onboarding, MoR webhook, support intake, x402 | Issues, `conxian-agent-init`, M2M key store, `/verify-payment` |
-| **Design & Transition** | Specs, ADRs, promotion + evidence packs | ADRs, `docs/`, branch_promotion_policy.py, immutable candidates |
-| **Obtain / Build** (delivery) | Implementation + CI gates | `dev` PRs, rust.yml, license-governance, hygiene/contamination guards |
-| **Deliver & Support** | Deploy, monitoring, incident response, SLA | Render/Cloudflare/Neon, SLA enforcer, rate-limit sentinel, runbooks |
-| **Improve** (continual) | Audits, retrospectives, root-cause → durable lessons | gap register lifecycle, full-portfolio audit, MEMORY.md |
+| **Discover** | market/customer/agent discovery, gap identification | Projects "Portfolio—Ecosystem", "Change Backlog"; gap register |
+| **Design** | specs, ADRs, architecture decisions | ADRs, `docs/`, design docs |
+| **Acquire** | dependencies, partners, fiat rails (Stitch/Ozow/PAPSS), keys | Cargo.toml/pnpm, M2M key store, Neon |
+| **Build** | implementation + CI gates | `dev` PRs, rust.yml, license-governance, hygiene guards |
+| **Transition** | promotion pipeline + evidence packs (Change Enablement) | branch_promotion_policy.py, immutable candidates |
+| **Operate** | run / monitor / SLA / load / rate-limit | SLA enforcer, load oracle, sentinel, treasury KPIs |
+| **Deliver** | deploy to customers | Render/Cloudflare/Neon deploy workflows |
+| **Support** | incident / request / desk | runbooks, issues, `conxian-agent-init` |
 
 ---
 
@@ -139,14 +145,14 @@ The end-to-end lifecycle: strategy → design → delivery → continual improve
 
 ## 6. Operational Mapping (the "working model" — tool ↔ practice)
 
-| GitHub Projects v2 | Value-chain activity | Primary practices |
+| GitHub Projects v2 | PSLM activity | Primary practices |
 |---|---|---|
-| Portfolio—Ecosystem | Plan / Engage | SLM, Supplier, Risk |
-| Change Backlog | Plan | Risk, Improvement |
-| Sprint—Nexus | Obtain/Build | Change, Release |
-| Build & Test | Obtain/Build | Change, Deployment |
-| Release Management | Deliver | Release, Deployment |
-| Service Operations | Deliver & Support | Incident, Problem, Request, Capacity |
+| Portfolio—Ecosystem | Discover / Acquire | SLM, Supplier, Risk |
+| Change Backlog | Discover | Risk, Improvement |
+| Sprint—Nexus | Build | Change, Release |
+| Build & Test | Build / Transition | Change, Deployment |
+| Release Management | Transition / Deliver | Release, Deployment |
+| Service Operations | Operate / Support | Incident, Problem, Request, Capacity |
 
 **Label taxonomy (ITIL-aligned)**: `change`, `release`, `deploy`, `incident`,
 `problem`, `request`, `risk`, `security`, `knowledge`, `improvement`, `supplier`
