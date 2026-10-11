@@ -851,13 +851,6 @@ codeql-fixes:
 - **BaaP 3-Layer Pricing Architecture**: Codified 3-layer Business-as-a-Platform (BaaP) commercial monetization model covering Protocol Escrow Settlement (2.0% volume fee, 80/10/10 split, Tier 1-4 volume fee decay), Enterprise SaaS Node Licensing ($2,500–$40,000/mo), and Metered Edge Compute & x402 Attestation Fees.
 - **Source-of-Truth Governance**: Updated `docs/SLA.md`, `docs/SLA_POLICY.md`, `docs/COMMERCIAL_PACKAGING_DOCTRINE.md`, `docs/GAPS.md`, and `docs/PORTFOLIO.md`.
 
-## Session 67 Update (2026-10-11 — Evidence-Backed Business Systems Expansion)
-- **Research-to-implementation map**: [`BOS_BUSINESS_SYSTEMS_EXPANSION_2026-10.md`](research/BOS_BUSINESS_SYSTEMS_EXPANSION_2026-10.md) records current parent-pinned code evidence, implementation ownership, open integration gates, and bounded verification results for all four research phases.
-- **Commercial and protocol fee separation**: ADR-004's 50/30/20 settlement-fee distribution is distinct from the commercial 80/10/10 allocation. Nexus exposes an Enterprise fee-cap mapping with conformance tests; Gateway billing remains separate pending an owner-approved shared contract.
-- **Interop and agent capability status**: Gateway has ISO 20022 message-generation/ingress code and Market exposes a tested MCP-402 SDK facade. Those sources do not by themselves prove complete message conformance, end-to-end `pacs.002` finality, production deployment, or tenant isolation.
-- **Research candidate gate**: The business-systems candidate remains unscored until a canonical owner tracker exists; no owner or commercial decision is inferred.
-- **Verification**: Pin integrity, cross-repo alignment, doctrine alignment, and candidate-ledger validation pass. Release hygiene and `bos_repo_check.py` fail on the refreshed SDK's `Cargo.toml` 2.1.0 versus latest changelog release 2.0.17 mismatch; no `v2.1.0` tag exists.
-
 ## Session 67 Update (2026-10-11 — Phased Research & Org-Wide Business Operations System Expansion)
 - **Phased Strategic Research Architecture**: Established a canonical 4-phase research methodology to structure BOS business logic, intelligence, and operations research:
   - *Phase 1: Strategic Intelligence & Business Systems Reconnaissance*: Comprehensive org-wide repository taxonomy across 4 business unit pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), strict domain boundary separation (`conxian.org` developer protocol surface vs `conxian-labs.com` corporate surface), and submodule pin-to-parent alignment.
