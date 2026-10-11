@@ -24,7 +24,7 @@ digraph {
     rankdir=LR;
     SENSE -> DECIDE -> ACT -> LEARN;
     LEARN -> SENSE;
-  
+}
 ```
 
 1. **Sense** — scheduled probes: production URLs, DNS, CI status, published
@@ -40,7 +40,7 @@ digraph {
 1. **Sense (observability as code)** — a single scheduled `sense` loop that probes
    everything and auto-opens issues on any red. *Seed: `uptime-check.yml`.*
 2. **State-of-truth (one registry)** — one machine-readable registry (repos + versions
-   - domains + topology + secrets-map); every verify script reads it and reconciles
+   + domains + topology + secrets-map); every verify script reads it and reconciles
    drift, not just reports it. *Seed: `domain-service-map.json` + `DEPLOYMENT_TOPOLOGY.md`.*
 3. **Act (drift → PR → merge engine)** — generalize the branch-drift loop to every
    surface: version drift, domain drift, lockfile drift, template drift.
