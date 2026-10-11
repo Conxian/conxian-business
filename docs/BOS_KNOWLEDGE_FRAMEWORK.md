@@ -1,6 +1,6 @@
 # Conxian BOS Knowledge Framework
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 3.6 | Session: 66 | Generated: 2026-09-26
+> Version: 3.7 | Session: 67 | Generated: 2026-10-11
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 
@@ -845,3 +845,16 @@ codeql-fixes:
 - **Unified Installer (`cxn`) Integration**: Integrated specifications for the zero-dependency Rust binary installer targeting Time-To-First-Value (TTFV) < 15 minutes with automated env validation, database schema migration, and enclave attestation verification.
 - **Security & Domain Separation Firewall**: Reinforced strict boundary rules separating Developer Protocol Surface (`conxian.org`) from Corporate Governance Surface (`conxian-labs.com`) and enforced non-custodial hardware attestation standards.
 - **Verification & Integrity**: Passed 100% verification across `python3 scripts/bos_repo_check.py`, `python3 scripts/verify_bos_research_candidate_ledger.py`, and `python3 scripts/verify_client_onboarding.py`.
+
+## Session 66 Update (2026-09-26 — Organization-Wide SLA Positioning, Support Matrix & BaaP Commercial Pricing Architecture)
+- **Organization-Wide SLA Realignment**: Re-aligned SLA positioning across the entire Conxian GitHub ecosystem. Enforced open-source community disclaimers (NO SLA, community best-effort) on public protocol surfaces (`conxian` org) while establishing contractual SLAs (99.5% uptime target, SEV1 1h ack) for B2B Enterprise Gateway deployments.
+- **BaaP 3-Layer Pricing Architecture**: Codified 3-layer Business-as-a-Platform (BaaP) commercial monetization model covering Protocol Escrow Settlement (2.0% volume fee, 80/10/10 split, Tier 1-4 volume fee decay), Enterprise SaaS Node Licensing ($2,500–$40,000/mo), and Metered Edge Compute & x402 Attestation Fees.
+- **Source-of-Truth Governance**: Updated `docs/SLA.md`, `docs/SLA_POLICY.md`, `docs/COMMERCIAL_PACKAGING_DOCTRINE.md`, `docs/GAPS.md`, and `docs/PORTFOLIO.md`.
+
+## Session 67 Update (2026-10-11 — Phased Research & Org-Wide Business Operations System Expansion)
+- **Phased Strategic Research Architecture**: Established a canonical 4-phase research methodology to structure BOS business logic, intelligence, and operations research:
+  - *Phase 1: Strategic Intelligence & Business Systems Reconnaissance*: Comprehensive org-wide repository taxonomy across 4 business unit pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), strict domain boundary separation (`conxian.org` developer protocol surface vs `conxian-labs.com` corporate surface), and submodule pin-to-parent alignment.
+  - *Phase 2: BaaP Commercial Monetization & Financial Engineering*: Deepened 3-layer BaaP commercial financial model, 80/10/10 yield splitter (80% developer pool, 10% operations pool, 10% network pool), ADR-004 volume-based fee decay, cost-plus rail floors, and 12-month runway analytics.
+  - *Phase 3: ISO 20022 / CJCS v2.0 Operational Integration & AI Agentic Commerce*: Field-level translation of legacy banking messages (`pacs.008`, `pacs.002`, `camt.053`) into Conxian Job Card Schema (CJCS) v2.0 intents, multi-chain settlement routing (BTC L1, Stacks L2, RGB, Babylon, Lightning, EVM), Model Model Protocol (MCP) inter-agent execution, and AI Marketplace rate/pricing controls.
+  - *Phase 4: Knowledge Base & Research Candidate Scoring Ledger Synthesis*: Upgraded Knowledge Framework to Version 3.7, expanded research candidate ledger (`docs/bos_research_candidate_ledger.json`), updated `BOS_KNOWLEDGE_GRAPH.md`, and passed 100% of repository verification checks (`bos_repo_check.py`, `verify_bos_research_candidate_ledger.py`, `verify_cross_repo_alignment.py`, `verify_doctrine_alignment.py`, `verify_client_onboarding.py`).
+- **Release Hygiene Remediation**: Resolved `conxius-enclave-sdk` CHANGELOG version mismatch, bringing all 8 core submodules into full release hygiene compliance.

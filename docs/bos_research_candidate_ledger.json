@@ -1151,6 +1151,26 @@
       "uncertainty": "Strategic analysis and client integration model approved in docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md; commercial SLA contracts depend on individual B2B client execution.",
       "nonClaim": "Strategic analysis report and client integration path do not constitute binding commercial guarantees or financial forecasts.",
       "scored": false
+    },
+    {
+      "id": "bos-business-systems-expansion-gap",
+      "title": "BOS Business Logic, Intelligence, and Org-Wide Operations Research Expansion Gap",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [],
+      "sourceLinks": [
+        "https://github.com/Conxian/conxian-business/blob/main/docs/BOS_KNOWLEDGE_FRAMEWORK.md",
+        "https://github.com/Conxian/conxian-business/blob/main/BOS_KNOWLEDGE_GRAPH.md"
+      ],
+      "gapClasses": [
+        "governance",
+        "implementation",
+        "owner-tracker"
+      ],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Implement the 4-phase research roadmap for BOS business systems expansion, integrating BaaP monetization models, ISO 20022/CJCS v2.0 operational bridges, and AI agentic commerce controls.",
+      "uncertainty": "Research roadmap and business framework approved in Session 67; continuous evolution requires ongoing multi-repo synchronization and B2B partner engagement.",
+      "nonClaim": "Approved research expansion and business intelligence framework do not constitute binding commercial guarantees or immediate protocol code deployments.",
+      "scored": false
     }
   ]
 }
