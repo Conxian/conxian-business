@@ -5,7 +5,10 @@ import { Pool } from "pg";
 import { db } from "./db";
 import { user } from "./db/schema";
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({
+  connectionString: process.env.NEON_POSTGRES_URL || process.env.DATABASE_URL,
+  password: process.env.NEON_POSTGRES_PASSWORD,
+});
 const productionOrigins = [
   process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`,
   process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
