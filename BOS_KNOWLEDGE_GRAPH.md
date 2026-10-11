@@ -1,5 +1,13 @@
 # Conxian Labs BOS Knowledge Graph
 
+## Session Update (2026-10-11 — Session 67: Phased Research & Org-Wide Business Operations System Expansion)
+- **Phased Strategic Research Methodology**: Codified canonical 4-phase research architecture for Business Operations System (BOS) intelligence, logic, and operational enhancements:
+  - *Phase 1: Strategic Intelligence & Business Systems Reconnaissance*: Comprehensive org-wide repository taxonomy across 4 business unit pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), domain boundary firewall separation (`conxian.org` developer protocol vs `conxian-labs.com` corporate governance), and submodule pin-to-parent alignment.
+  - *Phase 2: BaaP Commercial Monetization & Financial Engineering*: Deepened 3-layer BaaP commercial financial model, 80/10/10 yield splitter (80% developer pool, 10% operations pool, 10% network pool), ADR-004 volume-based fee decay, cost-plus rail floors, and 12-month runway analytics.
+  - *Phase 3: ISO 20022 / CJCS v2.0 Operational Integration & AI Agentic Commerce*: Ingestion of legacy financial messages (`pacs.008`, `pacs.002`, `camt.053`), CJCS v2.0 intent translation, multi-chain settlement routing (BTC L1, Stacks L2, RGB, Babylon, Lightning, EVM), Model Model Protocol (MCP) inter-agent execution, and AI Marketplace rate/pricing controls.
+  - *Phase 4: Knowledge Base & Research Candidate Scoring Ledger Synthesis*: Upgraded Knowledge Framework to Version 3.7 (`docs/BOS_KNOWLEDGE_FRAMEWORK.md`), expanded research candidate ledger (`docs/bos_research_candidate_ledger.json`), updated `BOS_KNOWLEDGE_GRAPH.md`, and passed 100% of repository verification checks (`bos_repo_check.py`, `verify_bos_research_candidate_ledger.py`, `verify_cross_repo_alignment.py`, `verify_doctrine_alignment.py`, `verify_client_onboarding.py`).
+- **Release Hygiene Remediation**: Updated `conxius-enclave-sdk` CHANGELOG version entry, restoring 100% release hygiene compliance across all submodules.
+
 ## Session Update (2026-10-08 — Network-agnostic pivot: own protocol deprecated)
 - Confirmed the strategic decision to go **network-agnostic**: the own Clarity protocol is deprecated and `Conxian/Conxian` was deleted intentionally (not archived). See [ADR-007](docs/architecture/adrs/ADR-007-network-agnostic-pivot.md).
 - The canonical cross-network model is now `lib-conxian-core`'s `SettlementRail` (8 rails) + `TrustTier` (Strict/Managed/Expedient/ObserverOnly), with `conxius-enclave-sdk` signing/attestation. "Mainnet" = Bitcoin L1 via Stacks (already live); there is no own-protocol mainnet.
