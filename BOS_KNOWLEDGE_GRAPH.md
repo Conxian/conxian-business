@@ -1,5 +1,10 @@
 # Conxian Labs BOS Knowledge Graph
 
+## Session Update (2026-10-12 — Session 68: UX Surface Mapping & Domain Alignment)
+- **UX Surface Inventory & Domain Topology**: Formulated canonical research report `docs/research/UX_SURFACE_AND_DOMAIN_ALIGNMENT_RESEARCH_2026.md` mapping all active UX applications (`conxian-labs-site`, `conxius-wallet`, `apps/control-plane`, `showcase-dapp`, `conxius-platform/services/admin-dashboard`) and confirming that no active `conxian-ui` repository exists following its explicit deletion and deprecation.
+- **Domain Separation Firewall**: Enforced strict boundary rules separating Developer Protocol Surface (`conxian.org`: `nexus`, `gateway`, `sdk`, `platform`, `market`, `wallet`) from Corporate Governance Surface (`conxian-labs.com`: `www`, `bos`, `api`, `status`).
+- **Knowledge Base Upgrade**: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 3.8 and expanded candidate ledger `docs/bos_research_candidate_ledger.json` with `ease-of-use-ux-domain-alignment-gap`.
+
 ## Session Update (2026-10-11 — Session 67: Phased Research & Org-Wide Business Operations System Expansion)
 - **Phased Strategic Research Methodology**: Codified canonical 4-phase research architecture for Business Operations System (BOS) intelligence, logic, and operational enhancements:
   - *Phase 1: Strategic Intelligence & Business Systems Reconnaissance*: Comprehensive org-wide repository taxonomy across 4 business unit pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), domain boundary firewall separation (`conxian.org` developer protocol vs `conxian-labs.com` corporate governance), and submodule pin-to-parent alignment.
