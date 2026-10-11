@@ -21,7 +21,7 @@ from typing import Any
 
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 ORDINARY_DEV_HEAD_RE = re.compile(
-    r"^(?:feat(?:ure)?|fix|docs|chore|hotfix|dependabot|jules)/[A-Za-z0-9._/-]+$|^(?:jules-[A-Za-z0-9._-]+)$"
+    r"^(?:feat(?:ure)?|fix|docs|chore|hotfix|dependabot|jules)/[A-Za-z0-9._/-]+$|^(?:jules-[A-Za-z0-9._-]+)$|^(?:dev-[A-Za-z0-9._-]+)$"
 )
 GENERATED_DEV_RE = re.compile(r"^promotion/dev-to-staged-([0-9a-f]{40})$")
 GENERATED_STAGED_RE = re.compile(r"^promotion/staged-to-main-([0-9a-f]{40})$")
@@ -157,7 +157,7 @@ def validate_pull_request(
     errors: list[str] = []
     body = ctx.body or ""
 
-    if any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/")) and Path(".github/PULL_REQUEST_TEMPLATE.md").exists():
+    if any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/", "dev-")) and Path(".github/PULL_REQUEST_TEMPLATE.md").exists():
         template_text = Path(".github/PULL_REQUEST_TEMPLATE.md").read_text(encoding="utf-8")
         if not body.strip():
             body = template_text
@@ -188,7 +188,7 @@ def validate_pull_request(
             or ctx.actor == "dependabot[bot]"
             or ctx.head_ref.startswith("dependabot/")
         ):
-            if any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/")) and Path(".github/PULL_REQUEST_TEMPLATE.md").exists():
+            if any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/", "dev-")) and Path(".github/PULL_REQUEST_TEMPLATE.md").exists():
                 body = Path(".github/PULL_REQUEST_TEMPLATE.md").read_text(encoding="utf-8")
 
         if not (

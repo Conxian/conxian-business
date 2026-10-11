@@ -9,6 +9,14 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added & Synthesized (2026-10-11 — Phased Research & Org-Wide Business Operations System Expansion)
+- **Phased Strategic Research Architecture**: Formulated a canonical 4-phase research methodology for BOS business systems expansion:
+  - *Phase 1: Strategic Intelligence & Business Systems Reconnaissance*: Org-wide taxonomy across 4 business unit pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), strict domain boundary firewall separation (`conxian.org` developer protocol surface vs `conxian-labs.com` corporate surface), and submodule pin-to-parent alignment.
+  - *Phase 2: BaaP Commercial Monetization & Financial Engineering*: Codified 3-layer BaaP commercial financial model, 80/10/10 yield splitter (80% developer pool, 10% operations pool, 10% network pool), ADR-004 volume-based fee decay, cost-plus rail floors, and 12-month runway analytics.
+  - *Phase 3: ISO 20022 / CJCS v2.0 Operational Integration & AI Agentic Commerce*: Ingestion of legacy banking messages (`pacs.008`, `pacs.002`, `camt.053`), CJCS v2.0 intent translation, multi-chain settlement routing (BTC L1, Stacks L2, RGB, Babylon, Lightning, EVM), Model Model Protocol (MCP) inter-agent execution, and AI Marketplace rate/pricing controls.
+  - *Phase 4: Knowledge Base & Candidate Scoring Ledger Synthesis*: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 3.7, expanded `docs/bos_research_candidate_ledger.json` and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md` with `bos-business-systems-expansion-gap`, updated `BOS_KNOWLEDGE_GRAPH.md`, and passed 100% of repository verification checks.
+- **Submodule Release Hygiene Remediation**: Updated `conxius-enclave-sdk/CHANGELOG.md` version entry to `2.1.0` matching `Cargo.toml` version `2.1.0`, restoring 100% release hygiene compliance across all submodules in `python3 scripts/bos_repo_check.py`.
+
 ### Added & Synthesized (2026-10-02 — Strategic Analysis, BaaP Viability & Enterprise Gateway Model)
 - **Strategic Research Report (Issue #1317)**: Authored [`STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md`](docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md) analyzing long-term ecosystem viability, repository taxonomy, financial models, and turnkey enterprise integration.
 - **Enterprise Gateway Outreach Strategy**: Evaluated all 4 business pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), identifying **`conxian-gateway`** as the single most immediate enterprise outreach opportunity due to ISO 20022 (`pacs.008`/`pacs.002`/`camt.053`) compatibility with commercial banking networks.
