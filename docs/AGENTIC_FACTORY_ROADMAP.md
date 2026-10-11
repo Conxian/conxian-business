@@ -19,10 +19,12 @@ one surface (branches) and nothing else. That is the gap this roadmap closes.
 
 ## The loop (target architecture)
 
-```
-  SENSE ──► DECIDE ──► ACT ──► LEARN
-    ▲                           │
-    └───────────────────────────┘
+```graphviz
+digraph {
+    rankdir=LR;
+    SENSE -> DECIDE -> ACT -> LEARN;
+    LEARN -> SENSE;
+}
 ```
 
 1. **Sense** — scheduled probes: production URLs, DNS, CI status, published
@@ -51,7 +53,7 @@ one surface (branches) and nothing else. That is the gap this roadmap closes.
 ## Trust tiers (what autonomy is allowed to do)
 
 | Tier | Scope | Action | Guardrail |
-|------|-------|--------|-----------|
+| ------ | ------- | -------- | ----------- |
 | **0 — auto** | drift fixes, lockfile bumps, doc/registry updates, DNS verify | fix → PR → auto-merge → deploy | none (reversible, low-risk) |
 | **1 — auto + evidence** | anything touching `staged`/`main` | fix → PR → merge | Mainnet Acceptance Evidence Pack (enforced today) |
 | **2 — human** | secrets rotation, KMS release signing, AWS root creds, trademarks, hardware attestation, npm-scope claims | open + escalate ticket | SLA + auto-reminder; never auto |
@@ -59,23 +61,28 @@ one surface (branches) and nothing else. That is the gap this roadmap closes.
 ## Phases
 
 ### Phase 1 — Close the sense loop (now)
+
 - Consolidate `verify_*.py` into one scheduled `sense` workflow.
 - Auto-open a deduplicated issue on any red.
 - **Exit**: an outage can never go silent again.
 
 ### Phase 2 — One state-of-truth registry
+
 - `ecosystem-registry.json` (repos/versions/domains/topology/secrets-map).
 - Verify scripts read from it and *reconcile* drift.
 
 ### Phase 3 — Drift → PR → merge engine
+
 - Generic detector→fix→PR→merge pipeline for versions, domains, lockfiles, templates.
 - **Exit**: a `node:22`→`node:24` fix like #1370 happens with zero human touch.
 
 ### Phase 4 — Secrets & config hygiene
+
 - SOPS single store; generate `.env.example`/`render.yaml`/`docker-compose.yml` from source.
 - Required-secret detector fails CI on absence.
 
 ### Phase 5 — Orchestration layer
+
 - Job cards + scheduler + SLA enforcer + budget guardrail on top of 1–4.
 - **Exit**: the gap register + detectors run as a self-dispatching queue.
 
