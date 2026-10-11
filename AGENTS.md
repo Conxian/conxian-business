@@ -126,16 +126,17 @@
 
 | Repo | Crate/Package | Version | Tag | Published |
 |------|-------|---------|-----|-----------|
-| conxius-enclave-sdk | `conxius-enclave-sdk` | 2.0.17 | v2.0.17 | ✅ crates.io |
+| conxius-enclave-sdk | `conxius-enclave-sdk` | 2.1.0 (manifest; unreleased) | v2.0.17 | ✅ crates.io (v2.0.17) |
 | lib-conxian-core | `lib-conxian-core` | 0.3.3 | v0.3.3 | ✅ crates.io |
 | conxian-gateway | `conxian-gateway` | 0.1.5 | v0.1.5 | — |
 | conxian-nexus | `conxian-nexus` | 0.4.23 | v0.4.22 | — |
 | conxius-platform | `conxius-platform` (npm) | 0.2.5 | v0.2.5 | — |
 | conxius-wallet | `conxius-wallet` (npm) | 1.9.5 | v1.9.2 | — |
 
-> **Submodule gitlinks now track each repo's `main`** (re-synced 2026-09-07, PR #1092), not release tags:
-> gateway `d77952e`, nexus `bc87000`, ui `bee4e03`, enclave-sdk `11add87`, platform `1a2f78d`, wallet `4bf89aa`, lib-core `c14f2e5`; labs-site `9dabf1c`; market frozen (`update=none`).
-> `conxius-orbit` is no longer a submodule (dangling gitlink removed). `conxian_market` remains `update = none`.
+> **Submodule gitlinks track each configured `main` branch**, not release tags. Refreshed 2026-10-11:
+> gateway `d84c2a5`, labs-site `86e6fcd`, nexus `6d2a339`, market `581383c`, enclave-sdk `2917c3c`, platform `2f4acde`, wallet `1310955`, lib-core `fb2807f`.
+> All eight entries in `.gitmodules` use `branch = main`; no `update=none` override remains. `conxius-orbit` is no longer a submodule (dangling gitlink removed).
+> The enclave SDK pin declares manifest version 2.1.0, but its latest changelog release heading is 2.0.17 and no v2.1.0 tag exists; release hygiene is not clean.
 > Nexus `0.4.23` and wallet `1.9.5` are ahead of their latest tags (unreleased bumps).
 
 ### CI Status (2026-09-07)
@@ -213,24 +214,24 @@ cargo build --workspace --locked
 cargo test --workspace --locked
 
 # JS workspace (conxian-business root, pnpm 10.28 + Node 24)
-pnpm install --frozen-lockfile --ignore-scripts
-pnpm --filter control-plane build
+corepack pnpm install --frozen-lockfile --ignore-scripts
+corepack pnpm --filter control-plane build
 ```
 
 ### Submodule-sync + lockfile-regen runbook
 ```bash
-# 1. Sync all submodules to main (market is frozen via update=none)
-git submodule update --init --remote
+# 1. Sync all configured submodules to main
+git submodule update --init --remote --recursive
 
 # 2. Regen Rust lockfile for a specific dep bump (e.g. sha3)
 cargo update -p <crate>
 
 # 3. Regen pnpm lockfile for JS dep changes
-pnpm install --ignore-scripts
+corepack pnpm install --ignore-scripts
 
 # 4. Verify no regression
 cargo check --locked --workspace && cargo test --locked --workspace
-pnpm install --frozen-lockfile --ignore-scripts && pnpm --filter control-plane build
+corepack pnpm install --frozen-lockfile --ignore-scripts && corepack pnpm --filter control-plane build
 
 # 5. Commit gitlinks + lockfiles, then open PR with Mainnet evidence pack
 git add <submodules> Cargo.lock pnpm-lock.yaml && git commit
@@ -255,7 +256,7 @@ git add <submodules> Cargo.lock pnpm-lock.yaml && git commit
 | `cargo generate-lockfile` fails on yanked version | Audit the committed `Cargo.lock` (drop `generate-lockfile`); no stable `bitcoin 0.33.0` exists yet |
 | Submodule pin drift | `git submodule update --init --remote` + regen lockfiles + PR |
 | Branch promotion "Mainnet Acceptance Evidence Pack" missing | Add the 6 required `####` headings (Promotion metadata, Mainnet-only production scope, Contamination and residue proof, Successful production validation, Release-readiness sign-off, Owner accountability) |
-| pnpm lockfile drift | `pnpm install --ignore-scripts` (Node 24 + pnpm 10.28.0) |
+| pnpm lockfile drift | `corepack pnpm install --ignore-scripts` (Node 24 + pnpm 10.28.0) |
 | conxian-business: runner unavailable | Admin → Settings → Actions → Runners: verify GitHub-hosted runners |
 | enclave-sdk: Coverage Enforcement | Known false-positive (crates.io rate-limit after publish) |
 
@@ -270,5 +271,5 @@ done
 git push origin --delete vX.Y.Z && sleep 5 && git push origin vX.Y.Z
 
 # Sync all submodules to main + regen lockfiles
-git submodule update --init --remote && cargo update -p <crate> && pnpm install --ignore-scripts && git add -A && git commit -m "chore: sync submodules"
+git submodule update --init --remote --recursive && cargo update -p <crate> && corepack pnpm install --ignore-scripts && git add -A && git commit -m "chore: sync submodules"
 ```
