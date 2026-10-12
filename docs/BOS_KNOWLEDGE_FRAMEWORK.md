@@ -1,6 +1,6 @@
 # Conxian BOS Knowledge Framework
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 3.7 | Session: 67 | Generated: 2026-10-11
+> Version: 3.9 | Session: 69 | Generated: 2026-10-12
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 
@@ -858,3 +858,9 @@ codeql-fixes:
   - *Phase 3: ISO 20022 / CJCS v2.0 Operational Integration & AI Agentic Commerce*: Field-level translation of legacy banking messages (`pacs.008`, `pacs.002`, `camt.053`) into Conxian Job Card Schema (CJCS) v2.0 intents, multi-chain settlement routing (BTC L1, Stacks L2, RGB, Babylon, Lightning, EVM), Model Model Protocol (MCP) inter-agent execution, and AI Marketplace rate/pricing controls.
   - *Phase 4: Knowledge Base & Research Candidate Scoring Ledger Synthesis*: Upgraded Knowledge Framework to Version 3.7, expanded research candidate ledger (`docs/bos_research_candidate_ledger.json`), updated `BOS_KNOWLEDGE_GRAPH.md`, and passed 100% of repository verification checks (`bos_repo_check.py`, `verify_bos_research_candidate_ledger.py`, `verify_cross_repo_alignment.py`, `verify_doctrine_alignment.py`, `verify_client_onboarding.py`).
 - **Release Hygiene Remediation**: Resolved `conxius-enclave-sdk` CHANGELOG version mismatch, bringing all 8 core submodules into full release hygiene compliance.
+
+## Session 69 Update (2026-10-12 — Corporate Email Identity & Alert Routing Firewall Specification)
+- **Corporate Email Boundary Specification**: Authored canonical specification `docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md` defining strict architectural and legal separation between `conxian.org` (public open-source protocol developer surface) and `conxian-labs.com` (corporate governance/commercial surface).
+- **Centralized Identity Anchor (SSO)**: Enforced Zoho Mail directory usage strictly as SAML 2.0 / OAuth 2.0 Single Sign-On (SSO) source for team member logins to private operational tooling (Plane, Outline, private GitHub Organization). Account deactivation instantly cascades to revoke all private operational access.
+- **Centralized Alert Sink Routing**: Designated inbound-only email aliases (`security@conxian-labs.com`, `devops@conxian-labs.com`, `support@conxian-labs.com`, `info@conxian-labs.com`) for security disclosures, build alerts, and customer support ticket ingestion.
+- **Runtime & Secret Egress Isolation**: Prohibited connecting corporate email to cloud runtime infrastructure, automated CI/CD runners, API key storage, or public protocol execution loops. Verified non-custodial hardware enclave attestation (AWS Nitro / StrongBox), Fusion API JWTs, and Sentinel secret filters.

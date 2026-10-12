@@ -181,3 +181,14 @@ An October 2026 (Session 67) org-wide business operations systems and research e
   3. *ISO 20022 / CJCS v2.0 Operational Integration & AI Agentic Commerce*: Ingestion of legacy banking messages (`pacs.008`, `pacs.002`, `camt.053`), CJCS v2.0 intent translation, multi-chain settlement routing (BTC L1, Stacks L2, RGB, Babylon, Lightning, EVM), Model Model Protocol (MCP) inter-agent execution, and AI Marketplace rate/pricing controls.
   4. *Knowledge Base & Research Candidate Scoring Ledger Synthesis*: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 3.7, expanded candidate scoring ledger `docs/bos_research_candidate_ledger.json`, updated `BOS_KNOWLEDGE_GRAPH.md`, and passed 100% of repository verification checks (`bos_repo_check.py`, `verify_bos_research_candidate_ledger.py`, `verify_cross_repo_alignment.py`, `verify_doctrine_alignment.py`, `verify_client_onboarding.py`).
 - **Release Hygiene Compliance**: Restored 100% release hygiene compliance across all submodules by synchronizing version entries in `conxius-enclave-sdk/CHANGELOG.md`.
+
+
+## October 2026 Corporate Email Identity & Alert Routing Firewall Refresh
+
+An October 2026 (Session 69) corporate security and domain isolation firewall refresh was executed:
+- **Corporate Email Identity Provider (SSO) & Alert Routing Firewall (`zoho-mail-identity-alert-firewall-gap`)**:
+  - Authored canonical specification `docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md` defining strict architectural and legal separation between `conxian.org` (public open-source protocol developer surface) and `conxian-labs.com` (corporate governance/commercial surface).
+  - Enforced Zoho Mail user directory strictly as Single Sign-On (SSO / OAuth) source for human team member logins to private operational tooling (Plane, Outline, private GitHub Organization).
+  - Designated centralized inbound-only email alert aliases (`security@conxian-labs.com`, `devops@conxian-labs.com`, `support@conxian-labs.com`, `info@conxian-labs.com`) for security disclosure, build failure, and customer support ticket routing.
+  - Prohibited connecting corporate email to cloud runtime infrastructure, automated CI/CD runners, API key storage, or public protocol execution loops.
+  - Verified non-custodial hardware enclave attestation (AWS Nitro / StrongBox), Fusion API JWTs, and Sentinel secret filters.

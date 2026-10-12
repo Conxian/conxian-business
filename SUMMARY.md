@@ -120,3 +120,4 @@
 * [ERP MCP Handshake Spec](docs/ERP_MCP_HANDSHAKE_SPEC.md)
   * [Sovereignty and Onboarding Architecture Research](docs/SOVEREIGNTY_AND_ONBOARDING_ARCHITECTURE_RESEARCH.md)
   * [Strategic Analysis of Conxian Ecosystem (Issue #1317)](docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md)
+  * [Corporate Email Identity & Alert Routing Firewall Specification](docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md)

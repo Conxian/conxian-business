@@ -1,5 +1,11 @@
 # Conxian Labs BOS Knowledge Graph
 
+## Session Update (2026-10-12 — Session 69: Corporate Email Identity & Alert Routing Firewall Specification)
+- **Corporate Email Boundary Specification**: Authored canonical specification `docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md` defining strict architectural and legal separation between `conxian.org` (public open-source protocol developer surface) and `conxian-labs.com` (corporate governance/commercial surface).
+- **Centralized Identity Anchor (SSO)**: Enforced Zoho Mail directory usage strictly as SAML 2.0 / OAuth 2.0 Single Sign-On (SSO) source for team member logins to private operational tooling (Plane, Outline, private GitHub Organization). Disabling a user directory account instantly cascades to revoke all private platform access.
+- **Centralized Alert Sink Routing**: Designated inbound-only email aliases (`security@conxian-labs.com`, `devops@conxian-labs.com`, `support@conxian-labs.com`, `info@conxian-labs.com`) for security disclosures, build alerts, and customer support ticket ingestion without granting system permissions.
+- **Runtime & Secret Egress Isolation**: Prohibited connecting corporate email to cloud runtime infrastructure, automated CI/CD runners, API key storage, or public protocol execution loops. Enforced non-custodial hardware enclave attestation (AWS Nitro / StrongBox), Fusion API JWTs, and Sentinel secret filters.
+
 ## Session Update (2026-10-11 — Session 67: Phased Research & Org-Wide Business Operations System Expansion)
 - **Phased Strategic Research Methodology**: Codified canonical 4-phase research architecture for Business Operations System (BOS) intelligence, logic, and operational enhancements:
   - *Phase 1: Strategic Intelligence & Business Systems Reconnaissance*: Comprehensive org-wide repository taxonomy across 4 business unit pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), domain boundary firewall separation (`conxian.org` developer protocol vs `conxian-labs.com` corporate governance), and submodule pin-to-parent alignment.

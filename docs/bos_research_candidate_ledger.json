@@ -1171,6 +1171,25 @@
       "uncertainty": "Research roadmap and business framework approved in Session 67; continuous evolution requires ongoing multi-repo synchronization and B2B partner engagement.",
       "nonClaim": "Approved research expansion and business intelligence framework do not constitute binding commercial guarantees or immediate protocol code deployments.",
       "scored": false
+    },
+    {
+      "id": "zoho-mail-identity-alert-firewall-gap",
+      "title": "Corporate Email Identity Provider (SSO) and Alert Sink Routing Firewall Specification Gap",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [],
+      "sourceLinks": [
+        "https://github.com/Conxian/conxian-business/blob/main/docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md"
+      ],
+      "gapClasses": [
+        "governance",
+        "implementation",
+        "owner-tracker"
+      ],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Enforce strict SAML/OAuth SSO for team authentication and inbound alert sink routing via Zoho Mail while keeping runtime infrastructure and public protocol workflows completely isolated.",
+      "uncertainty": "Corporate email integration relies on external Zoho Mail directory configuration and SAML/OAuth policy enforcement across third-party tools (Plane, Outline, GitHub).",
+      "nonClaim": "Approved architectural firewall specification does not constitute automated SAML configuration or third-party OAuth tenant provisioning.",
+      "scored": false
     }
   ]
 }

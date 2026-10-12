@@ -9,6 +9,13 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added & Specified (2026-10-12 — Corporate Email Identity Provider (SSO) & Alert Routing Firewall Specification)
+- **Corporate Email Boundary Specification**: Authored canonical specification [`ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md`](docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md) defining strict architectural and legal separation between `conxian.org` (public open-source protocol developer surface) and `conxian-labs.com` (corporate governance/commercial surface).
+- **Centralized Identity Provider (SSO)**: Enforced Zoho Mail directory usage strictly as Single Sign-On (SSO / OAuth) source for human team member logins to private operational tooling (Plane, Outline, private GitHub Organization). Disabling a user directory account instantly cascades to revoke all private operational access.
+- **Centralized Alert Sink Routing**: Designated inbound-only email alert aliases (`security@conxian-labs.com`, `devops@conxian-labs.com`, `support@conxian-labs.com`, `info@conxian-labs.com`) for security disclosures, build failure alerts, and customer support ticket ingestion.
+- **Runtime & Secret Egress Isolation**: Prohibited connecting corporate email to cloud runtime infrastructure, automated CI/CD runners, API key storage, or public protocol execution loops. Enforced non-custodial hardware enclave attestation (AWS Nitro / StrongBox), Fusion API JWTs, and Sentinel secret filters.
+- **Knowledge Base & Candidate Ledger Indexing**: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` (v3.9), `BOS_KNOWLEDGE_GRAPH.md`, `SUMMARY.md`, `docs/bos_research_candidate_ledger.json`, and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md` (`zoho-mail-identity-alert-firewall-gap`).
+
 ### Added & Synthesized (2026-10-11 — Phased Research & Org-Wide Business Operations System Expansion)
 - **Phased Strategic Research Architecture**: Formulated a canonical 4-phase research methodology for BOS business systems expansion:
   - *Phase 1: Strategic Intelligence & Business Systems Reconnaissance*: Org-wide taxonomy across 4 business unit pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), strict domain boundary firewall separation (`conxian.org` developer protocol surface vs `conxian-labs.com` corporate surface), and submodule pin-to-parent alignment.
