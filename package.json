@@ -1,4 +1,6 @@
 {
+  "packageManager": "pnpm@10.28.0",
+  "engines": { "node": "24.x" },
   "devDependencies": {
     "@types/react": "^19.2.18"
   }
