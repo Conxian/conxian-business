@@ -1,14 +1,18 @@
 import {
-  configureAdminRuntimeClient,
-  requestReleaseApprovalV1,
-  submitGovernanceDecisionV1,
-  submitReleaseDecisionV1,
+  requestReleaseApprovalV1 as requestApproval,
+  submitGovernanceDecisionV1 as submitGovernance,
+  submitReleaseDecisionV1 as submitRelease,
 } from "@conxian/client-sdk";
+import { runtimeRequestOptions } from "./runtime-requests";
 
-const configuredRuntimeBaseUrl =
-  process.env.CONXIAN_ADMIN_RUNTIME_BASE_URL?.trim() ||
-  process.env.ADMIN_RUNTIME_BASE_URL?.trim();
+export function requestReleaseApprovalV1(input: Parameters<typeof requestApproval>[0]) {
+  return requestApproval(input, runtimeRequestOptions("write"));
+}
 
-configureAdminRuntimeClient({ runtimeBaseUrl: configuredRuntimeBaseUrl });
+export function submitReleaseDecisionV1(input: Parameters<typeof submitRelease>[0]) {
+  return submitRelease(input, runtimeRequestOptions("write"));
+}
 
-export { requestReleaseApprovalV1, submitReleaseDecisionV1, submitGovernanceDecisionV1 };
+export function submitGovernanceDecisionV1(input: Parameters<typeof submitGovernance>[0]) {
+  return submitGovernance(input, runtimeRequestOptions("write"));
+}
