@@ -2,9 +2,9 @@ name: Conxian Unified CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, staged, dev]
   pull_request:
-    branches: [main, develop]
+    branches: [main, staged, dev]
 
 permissions:
   contents: read
@@ -34,4 +34,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Build control plane
-        run: pnpm --filter control-plane build
+        run: pnpm --filter @conxian/control-plane build
+      - name: Test control-plane runtime boundary
+        run: pnpm --filter @conxian/control-plane test
