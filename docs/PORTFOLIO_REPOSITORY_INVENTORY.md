@@ -29,7 +29,7 @@ For the current doctrine dimensions—role, audience, operating label, maturity,
 | `lib-conxian-core` | Shared Runtime | Shared Cryptographic & State Logic | @botshelomokoka | P0 |
 | `conxius-enclave-sdk` | Shared Runtime | Enclave and attestation SDK | @botshelomokoka | P0 |
 | `conxius-orbit` | Shared Runtime | Contract deployment and operations tooling | @botshelomokoka | P0 |
-| `conxian_ui` (checkout `conxian-ui`; upstream slug retained) | User Surface | Public web interaction layer | @botshelomokoka | P1 |
+| `conxian_ui` (deprecated) | User Surface | Deprecated web UI (replaced by apps/control-plane & conxius-wallet) | @botshelomokoka | Deprecated |
 | `conxius-platform` | Shared Runtime | Developer Platform & Orchestration | @conxian/core-devs | P1 |
 | `conxian-labs-site` | User Surface | Public Communication Surface | @botshelomokoka | P2 |
 | `Fiscal-Vault-Oracle` | Governance | Protocol/reference policy and oracle surface; not company treasury control | @botshelomokoka | P0 |

@@ -1,12 +1,11 @@
 import { betterAuth } from "better-auth";
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
-import { Pool } from "pg";
-import { db } from "./db";
+import { db, pool } from "./db";
 import { user } from "./db/schema";
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const productionOrigins = [
+  process.env.BETTER_AUTH_URL,
   process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`,
   process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
 ].filter((origin): origin is string => Boolean(origin));
@@ -23,8 +22,8 @@ export const auth = betterAuth({
   emailAndPassword: { enabled: true },
   baseURL:
     process.env.BETTER_AUTH_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
     (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
     process.env.V0_RUNTIME_URL,
   trustedOrigins: process.env.NODE_ENV === "development" ? developmentOrigins : productionOrigins,
   ...(process.env.NODE_ENV === "development"

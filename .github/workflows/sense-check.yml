@@ -43,6 +43,11 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 scripts/verify_toolchain_drift.py
 
+      - name: Workflow credential reference audit
+        id: secret_inventory
+        continue-on-error: true
+        run: python3 scripts/verify_workflow_secret_inventory.py
+
       - name: Open outage issue on failure
         if: always() && (steps.domain.outcome == 'failure' || steps.render.outcome == 'failure' || steps.drift.outcome == 'failure')
         env:
@@ -55,4 +60,18 @@ jobs:
             gh issue create \
               --title "$title" \
               --body "The production surface check failed on $(date -u +%Y-%m-%dT%H:%M:%SZ). See run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          fi
+
+      - name: Open credential inventory issue
+        if: always() && (steps.secret_inventory.outcome == 'failure' || steps.secret_inventory.outputs.has_findings == 'true')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="[ops] Workflow credential inventory needs review"
+          if gh issue list --state open --search '"[ops] Workflow credential inventory needs review" in:title' --json title --jq 'any(.[]; .title == "[ops] Workflow credential inventory needs review")' | grep -q true; then
+            echo "Open credential inventory issue already exists; see this run's workflow summary."
+          else
+            gh issue create \
+              --title "$title" \
+              --body "A scheduled source-reference audit found undocumented workflow secret names or stale catalog entries. It does not read secret values or verify live secret configuration. Review the workflow summary and run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           fi

@@ -1,5 +1,29 @@
 # Conxian Labs BOS Knowledge Graph
 
+## Session Update (2026-10-13 — Nexus contract deployment gate)
+- Handler review found missing release/governance list routes, hard-coded readiness/evidence, noncanonical environment responses, and workflow success without durable audit writes.
+- Recorded the concrete runtime acceptance criteria in the deployment audit. Provisioning a URL alone cannot fix these gaps; production binding remains blocked pending Nexus implementation and staging evidence.
+
+## Session Update (2026-10-13 — Render provider evidence)
+- Inspected the explicitly selected Conxian-Business workspace: four services, no Nexus/Gateway/platform-dashboard runtime. Three latest deployments failed; Labs static deployment is live.
+- Recorded confirmed missing Dockerfile and org-site esbuild approval failures, static publication risks, and the resulting runtime provisioning sequence in the deployment readiness audit. No live configuration changed.
+
+## Session Update (2026-10-12 — Deployment alignment refresh)
+- Refreshed parent main/dev/staged and all eight submodule development/promotion heads. Rebased local runtime fixes onto dev `19a60f14`, preserving Neon configuration and schema changes.
+- Twelve runtime tests and the production build pass; local auth credentials are absent, so live sign-in and runtime readiness remain unverified. No deployment, DNS cutover, submodule-pin update, or remote Git write occurred.
+- Updated the deployment readiness audit with current branch evidence, the unresolved control/bos hostname conflict, and provider access prerequisites.
+
+## Session Update (2026-10-12 — Session 68: UX Surface Mapping & Domain Alignment)
+- **UX Surface Inventory & Domain Topology**: Formulated canonical research report `docs/research/UX_SURFACE_AND_DOMAIN_ALIGNMENT_RESEARCH_2026.md` mapping all active UX applications (`conxian-labs-site`, `conxius-wallet`, `apps/control-plane`, `showcase-dapp`, `conxius-platform/services/admin-dashboard`) and confirming that no active `conxian-ui` repository exists following its explicit deletion and deprecation.
+- **Domain Separation Firewall**: Enforced strict boundary rules separating Developer Protocol Surface (`conxian.org`: `nexus`, `gateway`, `sdk`, `platform`, `market`, `wallet`) from Corporate Governance Surface (`conxian-labs.com`: `www`, `bos`, `api`, `status`).
+- **Knowledge Base Upgrade**: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 3.8 and expanded candidate ledger `docs/bos_research_candidate_ledger.json` with `ease-of-use-ux-domain-alignment-gap`.
+
+## Session Update (2026-10-11 — Control-plane deployment readiness)
+- Reviewed current deployment code, all eight pinned submodule agent guides, the domain map, ADR-007, and central governance continuity context.
+- Verified Cloudflare zone/DNS inventory and website reachability. The control hostname currently serves the platform dashboard title and returns 404 for the business control-plane routes; Vercel domain binding remains unverified due to connection permissions.
+- Prepared control-plane runtime authentication, fail-closed error handling, emulator retirement, and CI/toolchain corrections. These are local source changes, not a production deployment.
+- Tracked remaining runtime provisioning, host-binding, durable-storage, and provider-access tasks in [`docs/audits/2026-10-11-deployment-readiness.md`](docs/audits/2026-10-11-deployment-readiness.md). Historical infrastructure status is not current readiness evidence.
+
 ## Session Update (2026-10-11 — Session 67: Phased Research & Org-Wide Business Operations System Expansion)
 - **Phased Strategic Research Methodology**: Codified canonical 4-phase research architecture for Business Operations System (BOS) intelligence, logic, and operational enhancements:
   - *Phase 1: Strategic Intelligence & Business Systems Reconnaissance*: Comprehensive org-wide repository taxonomy across 4 business unit pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), domain boundary firewall separation (`conxian.org` developer protocol vs `conxian-labs.com` corporate governance), and submodule pin-to-parent alignment.

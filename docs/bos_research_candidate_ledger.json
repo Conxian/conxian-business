@@ -1171,6 +1171,26 @@
       "uncertainty": "Research roadmap and business framework approved in Session 67; continuous evolution requires ongoing multi-repo synchronization and B2B partner engagement.",
       "nonClaim": "Approved research expansion and business intelligence framework do not constitute binding commercial guarantees or immediate protocol code deployments.",
       "scored": false
+    },
+    {
+      "id": "ease-of-use-ux-domain-alignment-gap",
+      "title": "UX Surface Inventory & Domain Topology Alignment Gap",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [],
+      "sourceLinks": [
+        "https://github.com/Conxian/conxian-business/issues/943",
+        "https://github.com/Conxian/conxian-business/issues/1317"
+      ],
+      "gapClasses": [
+        "governance",
+        "implementation",
+        "owner-tracker"
+      ],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Map all active UX assets and align domain boundaries across conxian.org developer protocol and conxian-labs.com corporate governance surfaces.",
+      "uncertainty": "Legacy references to conxian-ui in documentation require removal following deletion of the standalone UI repository.",
+      "nonClaim": "Deprecation of conxian-ui does not eliminate frontend capabilities, as UX applications exist in conxian-labs-site, conxius-wallet, and control-plane.",
+      "scored": false
     }
   ]
 }
