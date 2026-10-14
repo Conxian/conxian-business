@@ -9,6 +9,12 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added & Synthesized (2026-10-24 — System-Wide Evaluation & Agentic Transformation Blueprint)
+- **Agentic Transformation Blueprint (`docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md`)**: Authored canonical specification detailing Conxian's architectural elevation from deterministic rails into an Agentic, AI-First Autonomous Business Stack across all 6 core pillars.
+- **CXIP Proposal Taxonomy**: Established unified improvement proposal taxonomy across workspace repositories: CXBIP (`conxian-business`), CXPIP (`conxius-platform`), CXMIP (`conxian_market`), CXWIP (`conxius-wallet`), CXCIP (`lib-conxian-core`), CXGIP (`conxian-gateway`), CXNIP (`conxian-nexus`).
+- **Release Hygiene Alignment**: Synchronized `conxius-enclave-sdk/CHANGELOG.md` version heading `[2.1.0]` with `Cargo.toml` v2.1.0, restoring 100% PASS status across all release hygiene audits.
+- **Knowledge Base & Candidate Ledger Upgrade**: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 4.1 (Session 71), expanded candidate ledger `docs/bos_research_candidate_ledger.json` (`agentic-system-wide-evaluation-blueprint-gap`), updated `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`, `BOS_KNOWLEDGE_GRAPH.md`, and indexed in `SUMMARY.md`.
+
 ### Added & Synthesized (2026-10-12 — Org-Wide Strategic Boundary & Research Expansion)
 - **Dependency Purge & Boundary Audit (`docs/research/DEPENDENCY_PURGE_AND_BOUNDARY_AUDIT_2026.md`)**: Conducted an exhaustive org-wide codebase audit confirming zero custom tokenomics or speculative token dependencies across `conxian-nexus`, `conxian-gateway`, `conxius-enclave-sdk`, and `conxius-platform`. Enforced Bitcoin L1 anchoring.
 - **Target A — `conxian-nexus` (ZK Proving Expansion)**: Added `src/verification/zkvm.rs` supporting SP1 and RISC Zero 2026 zkVM proof environment adapters for Bitcoin L1 state verification, re-exported in `src/verification/mod.rs`, created `conxian-nexus/ARCHITECTURE.md`, and updated `README.md`.
