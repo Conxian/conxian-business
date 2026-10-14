@@ -1098,3 +1098,23 @@ Linear has been retired as the system-of-record for Conxian. All tracking is now
 - All issue and project references are maintained natively on GitHub
 - Some closed issues may reference GitHub issue IDs (CON-XXXX) — these are historical references, not active dependencies
 - Session tracker workflow may need to be updated if it references Linear
+
+---
+## Session 71 Update — Agentic System-Wide Evaluation & Transformation Blueprint (2026-10-24)
+
+### Architecture & Governance Nodes
+
+- **Agentic Blueprint Spec**: `docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md`
+- **CXIP Taxonomy**: CXBIP (`conxian-business`), CXPIP (`conxius-platform`), CXMIP (`conxian_market`), CXWIP (`conxius-wallet`), CXCIP (`lib-conxian-core`), CXGIP (`conxian-gateway`), CXNIP (`conxian-nexus`)
+- **Ledger Gap**: `agentic-system-wide-evaluation-blueprint-gap` (`docs/bos_research_candidate_ledger.json`)
+- **Knowledge Framework**: Version 4.1 / Session 71 (`docs/BOS_KNOWLEDGE_FRAMEWORK.md`)
+
+### Entity Graph Additions
+
+| Source Entity | Target Entity | Relationship Type | Description |
+|---------------|---------------|-------------------|-------------|
+| Agentic Blueprint Spec | `@conxian/market-sdk` | ELEVATES_TO_MCP | Exposes 33 SDK capabilities as native MCP tools |
+| Agentic Blueprint Spec | `conxian-gateway` | INTRODUCES_NL_ISO20022 | Enables natural-language to ISO 20022 synthesis |
+| Agentic Blueprint Spec | `conxius-enclave-sdk` | ENFORCES_SPEND_LIMITS | Enforces EIP-7710 autonomous spending guardrails in TEE |
+| Agentic Blueprint Spec | `conxian-nexus` | AUTOMATES_REORG_RECOVERY | Enables self-healing multi-chain drift monitor & BitVM3 proofs |
+| Agentic Blueprint Spec | `conxius-wallet` | DELEGATES_AGENT_COMMAND | Provides ERC-7710 agent delegation dashboard with ZSE privacy |
