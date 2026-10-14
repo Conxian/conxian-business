@@ -1191,6 +1191,26 @@
       "uncertainty": "Legacy references to conxian-ui in documentation require removal following deletion of the standalone UI repository.",
       "nonClaim": "Deprecation of conxian-ui does not eliminate frontend capabilities, as UX applications exist in conxian-labs-site, conxius-wallet, and control-plane.",
       "scored": false
+    },
+    {
+      "id": "agentic-system-wide-evaluation-blueprint-gap",
+      "title": "System-Wide Evaluation & Agentic Transformation Blueprint Gap",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [],
+      "sourceLinks": [
+        "https://github.com/Conxian/conxian-business/issues/943",
+        "https://github.com/Conxian/conxian-business/issues/1317"
+      ],
+      "gapClasses": [
+        "governance",
+        "implementation",
+        "owner-tracker"
+      ],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Implement Phase 1 MCP server packaging for @conxian/market-sdk and dynamic x402 negotiation headers in Gateway middleware.",
+      "uncertainty": "Dynamic M2M pricing negotiations require strict bounded fee ranges to prevent agentic spiraling.",
+      "nonClaim": "Architectural blueprint provides agentic transformation specifications across all 6 pillars without altering non-custodial hardware enclave guarantees.",
+      "scored": false
     }
   ]
 }
