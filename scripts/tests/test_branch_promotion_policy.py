@@ -148,8 +148,8 @@ class BranchPromotionPolicyTests(unittest.TestCase):
         self.assertAccepted(
             context(f"promotion/dev-to-staged-{SOURCE_SHA}", "staged", STAGED_BODY + GENERATED_EVIDENCE)
         )
-        # Accepts candidate branches where head SHA is a merge/updated commit
-        self.assertAccepted(
+        # Updating an immutable candidate requires a new branch and evidence.
+        self.assertRejected(
             context(
                 f"promotion/dev-to-staged-{SOURCE_SHA}",
                 "staged",
