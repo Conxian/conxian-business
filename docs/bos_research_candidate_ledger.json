@@ -1173,12 +1173,13 @@
       "scored": false
     },
     {
-      "id": "zoho-mail-identity-alert-firewall-gap",
-      "title": "Corporate Email Identity Provider (SSO) and Alert Sink Routing Firewall Specification Gap",
+      "id": "ease-of-use-ux-domain-alignment-gap",
+      "title": "UX Surface Inventory & Domain Topology Alignment Gap",
       "ownerRepository": "Conxian/conxian-business",
       "trackers": [],
       "sourceLinks": [
-        "https://github.com/Conxian/conxian-business/blob/main/docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md"
+        "https://github.com/Conxian/conxian-business/issues/943",
+        "https://github.com/Conxian/conxian-business/issues/1317"
       ],
       "gapClasses": [
         "governance",
@@ -1186,9 +1187,53 @@
         "owner-tracker"
       ],
       "disposition": "tracker-required-before-scoring",
-      "nextGate": "Enforce strict SAML/OAuth SSO for team authentication and inbound alert sink routing via Zoho Mail while keeping runtime infrastructure and public protocol workflows completely isolated.",
-      "uncertainty": "Corporate email integration relies on external Zoho Mail directory configuration and SAML/OAuth policy enforcement across third-party tools (Plane, Outline, GitHub).",
-      "nonClaim": "Approved architectural firewall specification does not constitute automated SAML configuration or third-party OAuth tenant provisioning.",
+      "nextGate": "Map all active UX assets and align domain boundaries across conxian.org developer protocol and conxian-labs.com corporate governance surfaces.",
+      "uncertainty": "Legacy references to conxian-ui in documentation require removal following deletion of the standalone UI repository.",
+      "nonClaim": "Deprecation of conxian-ui does not eliminate frontend capabilities, as UX applications exist in conxian-labs-site, conxius-wallet, and control-plane.",
+      "scored": false
+    },
+    {
+      "id": "agentic-system-wide-evaluation-blueprint-gap",
+      "title": "System-Wide Evaluation & Agentic Transformation Blueprint Gap",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [],
+      "sourceLinks": [
+        "https://github.com/Conxian/conxian-business/issues/943",
+        "https://github.com/Conxian/conxian-business/issues/1317"
+      ],
+      "gapClasses": [
+        "governance",
+        "implementation",
+        "owner-tracker"
+      ],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Implement Phase 1 MCP server packaging for @conxian/market-sdk and dynamic x402 negotiation headers in Gateway middleware.",
+      "uncertainty": "Dynamic M2M pricing negotiations require strict bounded fee ranges to prevent agentic spiraling.",
+      "nonClaim": "Architectural blueprint provides agentic transformation specifications across all 6 pillars without altering non-custodial hardware enclave guarantees.",
+      "scored": false
+    },
+    {
+      "id": "zoho-mail-identity-alert-firewall-gap",
+      "title": "Corporate identity, offboarding and alert routing evidence gap",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [
+        "https://github.com/Conxian/conxian-business/issues/1390",
+        "https://github.com/Conxian/conxian-business/pull/1364"
+      ],
+      "sourceLinks": [
+        "https://www.zoho.com/mail/help/adminconsole/saml-authentication.html",
+        "https://help.zoho.com/portal/en/kb/directory/admin-guide/users-1/users/articles/deactivate-activate",
+        "https://help.zoho.com/portal/en/kb/directory/admin-guide/applications/provisioning/articles/overview-provisioning"
+      ],
+      "gapClasses": [
+        "governance",
+        "implementation",
+        "evidence"
+      ],
+      "disposition": "retained-existing-owner",
+      "nextGate": "Record selected identity provider and per-application provisioning, session/token revocation, recovery and alert-routing tests before operational acceptance.",
+      "uncertainty": "External tenant configuration, supported application provisioning and measured revocation behavior have not been verified.",
+      "nonClaim": "Research does not configure SSO or mail routing, establish automatic global deactivation, legal isolation, or production hardware signing qualification.",
       "scored": false
     }
   ]

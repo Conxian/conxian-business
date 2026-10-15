@@ -183,12 +183,18 @@ An October 2026 (Session 67) org-wide business operations systems and research e
 - **Release Hygiene Compliance**: Restored 100% release hygiene compliance across all submodules by synchronizing version entries in `conxius-enclave-sdk/CHANGELOG.md`.
 
 
-## October 2026 Corporate Email Identity & Alert Routing Firewall Refresh
+## October 2026 Agentic System-Wide Evaluation & Transformation Blueprint Refresh
 
-An October 2026 (Session 69) corporate security and domain isolation firewall refresh was executed:
-- **Corporate Email Identity Provider (SSO) & Alert Routing Firewall (`zoho-mail-identity-alert-firewall-gap`)**:
-  - Authored canonical specification `docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md` defining strict architectural and legal separation between `conxian.org` (public open-source protocol developer surface) and `conxian-labs.com` (corporate governance/commercial surface).
-  - Enforced Zoho Mail user directory strictly as Single Sign-On (SSO / OAuth) source for human team member logins to private operational tooling (Plane, Outline, private GitHub Organization).
-  - Designated centralized inbound-only email alert aliases (`security@conxian-labs.com`, `devops@conxian-labs.com`, `support@conxian-labs.com`, `info@conxian-labs.com`) for security disclosure, build failure, and customer support ticket routing.
-  - Prohibited connecting corporate email to cloud runtime infrastructure, automated CI/CD runners, API key storage, or public protocol execution loops.
-  - Verified non-custodial hardware enclave attestation (AWS Nitro / StrongBox), Fusion API JWTs, and Sentinel secret filters.
+An October 2026 (Session 71) system-wide evaluation and agentic transformation pass was executed:
+- **Agentic System-Wide Evaluation Blueprint (`agentic-system-wide-evaluation-blueprint-gap`)**: Authored canonical specification `docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md` detailing Conxian's shift from deterministic rails into an Agentic, AI-First Autonomous Business Stack across all 6 core pillars:
+  1. *Market & Labor Layer (`conxian_market` / `@conxian/market-sdk` - CXMIP)*: Dynamic M2M agent bargaining protocol, TEE-isolated LLM dispute arbiters, and native MCP server exposing 33 SDK capabilities.
+  2. *Governance & Operations (`conxian-business` - CXBIP)*: Autonomous OpenSpec resolvers, active TEE executive agents, and automated 80/10/10 yield splits.
+  3. *Middleware & Gateway (`conxian-gateway` - CXGIP)*: AI-first liquidity & rail router, natural language to ISO 20022 (`pacs.008`/`pacs.002`/`camt.053`) synthesizer.
+  4. *Cryptographic Security & Hardware Trust (`conxius-enclave-sdk` - CXCIP)*: Ephemeral self-provisioning enclave keyrings and delegated EIP-7710 spending guardrails.
+  5. *Universal Proof & Observation Layer (`conxian-nexus` - CXNIP)*: Self-healing multi-chain state reorg monitor, automated RBF/CPFP fee bumping, and BitVM3 fraud proof challenges.
+  6. *Client & Wallet Surface (`conxius-wallet` - CXWIP / CXPIP)*: Delegated ERC-7710 agent command center and zero-secret-egress (ZSE) privacy filters.
+- **Verification & Compliance**: Updated `docs/bos_research_candidate_ledger.json`, `docs/BOS_KNOWLEDGE_FRAMEWORK.md` (v4.1), `BOS_KNOWLEDGE_GRAPH.md`, and `SUMMARY.md`.
+
+## Corporate identity and alert research — 2026-10-15
+- `zoho-mail-identity-alert-firewall-gap` remains unscored and is retained under [business #1390](https://github.com/Conxian/conxian-business/issues/1390), with [PR #1364](https://github.com/Conxian/conxian-business/pull/1364) as the documentation change.
+- [Research](research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md) defines proposed authentication, provisioning, offboarding, mail routing, and workload boundaries. Tenant configuration and application-specific revocation tests are required before any operational acceptance claim. This does not establish SSO deployment, immediate global revocation, legal isolation, or production signing qualification.

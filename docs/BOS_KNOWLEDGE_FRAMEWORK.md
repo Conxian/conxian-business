@@ -1,6 +1,6 @@
 # Conxian BOS Knowledge Framework
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 3.9 | Session: 69 | Generated: 2026-10-12
+> Version: 4.1 | Session: 71 | Generated: 2026-10-24
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 
@@ -859,8 +859,18 @@ codeql-fixes:
   - *Phase 4: Knowledge Base & Research Candidate Scoring Ledger Synthesis*: Upgraded Knowledge Framework to Version 3.7, expanded research candidate ledger (`docs/bos_research_candidate_ledger.json`), updated `BOS_KNOWLEDGE_GRAPH.md`, and passed 100% of repository verification checks (`bos_repo_check.py`, `verify_bos_research_candidate_ledger.py`, `verify_cross_repo_alignment.py`, `verify_doctrine_alignment.py`, `verify_client_onboarding.py`).
 - **Release Hygiene Remediation**: Resolved `conxius-enclave-sdk` CHANGELOG version mismatch, bringing all 8 core submodules into full release hygiene compliance.
 
-## Session 69 Update (2026-10-12 — Corporate Email Identity & Alert Routing Firewall Specification)
-- **Corporate Email Boundary Specification**: Authored canonical specification `docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md` defining strict architectural and legal separation between `conxian.org` (public open-source protocol developer surface) and `conxian-labs.com` (corporate governance/commercial surface).
-- **Centralized Identity Anchor (SSO)**: Enforced Zoho Mail directory usage strictly as SAML 2.0 / OAuth 2.0 Single Sign-On (SSO) source for team member logins to private operational tooling (Plane, Outline, private GitHub Organization). Account deactivation instantly cascades to revoke all private operational access.
-- **Centralized Alert Sink Routing**: Designated inbound-only email aliases (`security@conxian-labs.com`, `devops@conxian-labs.com`, `support@conxian-labs.com`, `info@conxian-labs.com`) for security disclosures, build alerts, and customer support ticket ingestion.
-- **Runtime & Secret Egress Isolation**: Prohibited connecting corporate email to cloud runtime infrastructure, automated CI/CD runners, API key storage, or public protocol execution loops. Verified non-custodial hardware enclave attestation (AWS Nitro / StrongBox), Fusion API JWTs, and Sentinel secret filters.
+## Session 71 Update (2026-10-24 — System-Wide Evaluation & Agentic Transformation Blueprint)
+- **Agentic Transformation Blueprint Synthesis**: Formulated canonical specification `docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md` detailing Conxian's architectural transition from deterministic infrastructure into an AI-First Autonomous Business Stack.
+- **CXIP Proposal Taxonomy Alignment**: Established unified improvement proposal taxonomy across all 8 active workspace repositories:
+  - *CXMIP (`conxian_market`)*: Dynamic M2M agent bargaining protocol, TEE-isolated LLM dispute arbiters, and native MCP server exposing 33 SDK capabilities.
+  - *CXBIP (`conxian-business`)*: Autonomous OpenSpec resolvers, active TEE executive agents, and automated 80/10/10 yield splits.
+  - *CXGIP (`conxian-gateway`)*: AI-first liquidity & rail router, natural language to ISO 20022 (`pacs.008`/`pacs.002`/`camt.053`) synthesizer.
+  - *CXCIP (`lib-conxian-core` / `conxius-enclave-sdk`)*: Ephemeral self-provisioning enclave keyrings and delegated EIP-7710 spending guardrails.
+  - *CXNIP (`conxian-nexus`)*: Self-healing multi-chain state reorg monitor, automated RBF/CPFP fee bumping, and BitVM3 fraud proof challenges.
+  - *CXWIP / CXPIP (`conxius-wallet` / `conxius-platform`)*: Delegated ERC-7710 agent command center and zero-secret-egress (ZSE) privacy filters.
+- **3-Phase Execution Roadmap**: Defined actionable prioritization roadmap spanning Phase 1 (MCP & Agent Discovery, 1-30 Days), Phase 2 (Enclave Guardrails & Self-Provisioning, 30-90 Days), and Phase 3 (Autonomous Operations & Dispute Arbitration, 90+ Days).
+- **Candidate Ledger & Indexing**: Expanded `docs/bos_research_candidate_ledger.json` (`agentic-system-wide-evaluation-blueprint-gap`), updated `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`, `BOS_KNOWLEDGE_GRAPH.md`, and `SUMMARY.md`. Passed 100% of repository verification checks (`bos_repo_check.py`, `verify_bos_research_candidate_ledger.py`, `verify_cross_repo_alignment.py`, `verify_doctrine_alignment.py`, `verify_client_onboarding.py`).
+
+## Evidence addendum (2026-10-15 — corporate identity and alert boundaries)
+- [Corporate identity and alert routing research](research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md) distinguishes corporate correspondence, identity-provider authentication, application provisioning, workload authorization, and signing custody.
+- These are proposed controls. No external SSO tenant, automatic application deactivation, session revocation, alert alias, or hardware qualification is established by this research. Keep implementation and evidence under business #1390; PR #1364 enters through dev with existing promotion policy and tests intact.

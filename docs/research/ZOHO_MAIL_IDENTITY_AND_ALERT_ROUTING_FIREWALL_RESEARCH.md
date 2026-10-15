@@ -1,128 +1,94 @@
-# Corporate Email Identity & Alert Routing Firewall Specification
+# Corporate identity and alert routing boundaries
 
-> **Document Status**: Canonical Research Specification
-> **Classification**: Public-Safe / Architectural Policy
-> **Date**: 2026-10-12 | Session 69
-> **Authority**: [Business Issue #943](https://github.com/Conxian/conxian-business/issues/943)
+Status: researched policy proposal; external configuration and operational acceptance are not verified.
 
----
+Reviewed: 2026-10-15. Work: [PR #1364](https://github.com/Conxian/conxian-business/pull/1364), [sprint #1390](https://github.com/Conxian/conxian-business/issues/1390). Historical context: [#943](https://github.com/Conxian/conxian-business/issues/943).
 
-##  EXECUTIVE SUMMARY & DOCTRINAL PRINCIPLE
+## Scope and ownership
 
-The Conxian ecosystem enforces a strict architectural, security, and legal firewall separating the public open-source protocol developer surface (`conxian.org`) from the corporate governance and commercial entity surface (`conxian-labs.com`).
+Conxian serves universal chains, networks, layers and assets with Bitcoin L1 as its canonical trust/finality root. It introduces no native Conxian token or speculative tokenomics. External-chain and external-asset adapters remain in scope.
 
-Corporate email systems (specifically Zoho Mail under `@conxian-labs.com`) **MUST NOT** be connected directly to runtime infrastructure, public protocol workflows, or automated deployment pipelines. Connecting corporate email directly to runtime systems or public protocol loops introduces severe security vulnerabilities, creates secret egress vector risks, violates non-custodial operating guarantees, and breaches the domain separation boundary between `conxian.org` and `conxian-labs.com`.
+`conxian.org` is the public protocol and developer boundary; `conxian-labs.com` is the managed service, commercial and internal operations boundary. Repository licenses govern distribution: public visibility does not make every repository OSI open source. Domain separation documents ownership and credential boundaries; it does not itself prove legal isolation, non-custody or deployed security enforcement.
 
-### Core Directive: "Don't Trust, Verify"
-1. **Centralized Identity Provider (SSO) Only**: Corporate email is strictly an authentication anchor (SSO/OAuth) for human team members accessing internal operational tooling.
-2. **Inbound-Only Alert Sink**: Corporate email aliases route notifications, vulnerabilities, and operational alerts into designated team channels without holding system permissions.
-3. **Complete Runtime Isolation**: All service accounts, automated CI/CD runners, public protocol services, smart contracts, and cloud runtime infrastructure remain completely decoupled from corporate email accounts and credentials.
+Corporate identities may authenticate authorized humans to company tools and cloud administration consoles. Workload authentication, signing authority and customer funds require independently scoped identities and evidence. A corporate email address used as an account identifier is not a runtime credential and is not evidence of a boundary violation.
 
----
+## Separate identity products and responsibilities
 
-## 1. WHAT SHOULD BE CONNECTED TO ZOHO MAIL
+| Surface | Intended role | Required evidence before claiming operational support |
+| --- | --- | --- |
+| Zoho Mail | Company correspondence and selected redacted alert delivery | Domain/alias ownership, membership, mail routing and incident handoff tests |
+| Zoho Directory or another approved IdP | Human authentication and application assignment | Explicit IdP/service-provider roles, supported integration, MFA, application configuration and operator approval |
+| Application provisioning | Create, disable or remove app accounts | App-specific SCIM/API capability, configured provisioning, failure handling and tested deactivation |
+| Application sessions and tokens | Bound continuing access after sign-in | App-specific session expiry/revocation and personal-token/key retirement tests |
+| CI and runtime workloads | Service authentication to necessary APIs only | Scoped workload identity, audience/subject policy, short lifetime, rotation/revocation and audit evidence |
+| Signing providers | Exact authorized cryptographic operation | Qualified provider/device, key/policy binding and independent acceptance; an SSO login grants no signing authority |
 
-Corporate Zoho Mail handles **human identity verification** and **centralized notification aggregation**.
+Zoho Mail's SAML documentation describes Mail consuming assertions from a configured identity provider. Mail ownership alone does not establish that Zoho Directory is deployed or that it authenticates GitHub, Plane, Outline or any other application. Each application needs its own supported federation configuration.
 
-```
-                       +-----------------------------------+
-                       |    Zoho Domain Directory (SSO)    |
-                       |    (@conxian-labs.com Directory)   |
-                       +-----------------------------------+
-                                         |
-               +-------------------------+-------------------------+
-               |                                                   |
-               v                                                   v
-  [ Team Authentication Anchor ]                        [ Centralized Alert Aliases ]
-   • Single Sign-On (SSO / OAuth)                       (Inbound-Only Notification Routing)
-   • Private Tools Access:                               • security@conxian-labs.com
-     - Plane (Project Management)                         • devops@conxian-labs.com
-     - Outline (Knowledge Base)                           • support@conxian-labs.com
-     - Private GitHub Org                                 • info@conxian-labs.com
-   • Immediate Offboarding Cascade:
-     Disabling directory account
-     revokes access across all tools.
-```
+## Offboarding is an application-specific workflow
 
-### 1.1 Team Authentication (Identity Anchor)
-- **Single Sign-On (SSO / OAuth)**: Use the Zoho Mail / Domain directory as the SAML 2.0 / OAuth 2.0 Single Sign-On source for team member logins to private operational software (e.g., Plane, Outline, private GitHub Organization).
-- **Automated Revocation Cascade**: When onboarding or offboard team members, disabling their `@conxian-labs.com` user directory account instantly terminates their session and revokes access across all integrated company platforms.
+Zoho explicitly documents that Directory deactivation does not propagate to assigned SAML applications by itself. Zoho's provisioning documentation separately describes app lifecycle management through supported SCIM or management APIs. These are different controls.
 
-### 1.2 Centralized Alert Aliases (Inbound-Only)
-Infrastructure and platform notifications must route into dedicated, role-based inbound email aliases rather than individual personal inboxes:
+The proposed offboarding workflow is:
 
-| Email Alias | Purpose & Source Routing | Inbound Policy |
-|---|---|---|
-| `security@conxian-labs.com` | Gitleaks, GitHub vulnerability alerts, security disclosures, and CVE triage routing | Inbound-only, encrypted triage, PGP/S-MIME supported |
-| `devops@conxian-labs.com` | Build failures, Render deployment status, Supabase/Neon database alerts, and uptime checks | Inbound-only, automated triage to internal monitoring channels |
-| `support@conxian-labs.com` | External customer support, managed gateway inquiries, and client SLA ticket ingestion | Inbound ticket ingestion into B2B support desk |
-| `info@conxian-labs.com` | General corporate, partnership, and enterprise B2B inquiries | Inbound marketing/sales triage |
+1. Disable the human identity and revoke IdP sessions using the configured provider's controls.
+2. Disable application assignments and accounts through a qualified SCIM/API integration or an accountable manual step.
+3. Revoke application sessions, personal API tokens, recovery access and delegated grants according to each application's capabilities.
+4. Transfer owned resources and remove unnecessary cloud/GitHub permissions without deleting shared workload identities.
+5. Test fresh and existing sessions, record completion or failures, and escalate incomplete revocation.
 
----
+No instantaneous cascade or universal session invalidation is claimed. The operator must define and measure the maximum revocation delay per application. Account deactivation alone is not proof that an existing session or token has stopped working.
 
-## 2. WHAT MUST BE KEPT ISOLATED FROM ZOHO MAIL
+## Alert delivery policy
 
-Corporate email systems **MUST NEVER** intersect with runtime credentials, automated service logic, or protocol execution boundaries.
+The following role aliases are proposed destinations. Their existence, memberships, delivery and encryption configuration are not verified by this PR.
 
-```
-       [ Public Protocol & Cloud Runtime Surface ]
-  ┌─────────────────────────────────────────────────────────┐
-  │  • Multi-Cloud: Render / Supabase / Neon PostgreSQL     │
-  │  • Protocol Stack: `conxian-gateway`, `conxian-nexus`   │
-  │  • Hardware Enclave Attestations (AWS Nitro / StrongBox)│
-  │  • Fusion JWTs & Sentinel Secret Filtering              │
-  └─────────────────────────────────────────────────────────┘
-                                ▲
-                                │ STRICT ISOLATION FIREWALL
-                                │ (Zero Secret Egress Boundary)
-                                ▼
-  ┌─────────────────────────────────────────────────────────┐
-  │  • Corporate Email Directory (Zoho Mail)                 │
-  │  • Human Personal Inboxes                               │
-  │  • Private Team Communication Channels                  │
-  └─────────────────────────────────────────────────────────┘
-```
+| Alias | Proposed use | Content boundary |
+| --- | --- | --- |
+| `security@conxian-labs.com` | Security disclosures and vulnerability triage | Redacted event summary and access-controlled incident reference |
+| `devops@conxian-labs.com` | CI, deployment and availability incidents | Service/event identifiers and triage references; no credentials or raw sensitive logs |
+| `support@conxian-labs.com` | Customer support intake | Minimum necessary support context and controlled ticket handoff |
+| `info@conxian-labs.com` | General business inquiries | Public business correspondence |
 
-### 2.1 Service Accounts & Automation Isolation
-- **Dedicated System Service Accounts**: API keys, database connection strings, cloud endpoints, and deployment automation scripts must never be tied to personal employee email addresses or human user accounts.
-- **Bot Accounts**: System-level automation uses dedicated service accounts (e.g., `bot@conxian-labs.com` or `admin-conxian-labs` GitHub machine user) with least-privilege scoped permissions.
-- **Key Storage**: Production API keys and secrets reside in hardware-attested secret managers (AWS Nitro KMS, Neon secret store) and are never transmitted via email loops.
+For automated operational alerts, use one-way notification delivery into the triage workflow. Normal authorized human correspondence is not prohibited. Mailbox receipt, message content or an email reply must never authorize a deployment, payment, policy approval or signing operation. Validate provider webhooks independently and keep any automation credentials out of messages.
 
-### 2.2 Public Protocol & Public GitHub Surface (`conxian.org`)
-- **Protocol Decoupling**: Public repositories (`conxian-gateway`, `conxian-nexus`, `conxian_market`), smart contracts, and decentralized services must never depend on or expose corporate Zoho Mail credentials or internal email loops.
-- **Non-Custodial Cryptographic Authentication**: All backend authentication uses hardware enclave attestations, API JWTs (Fusion Auth), or secret filters (Sentinel).
-- **Public Domain Separation**: Protocol surfaces on `conxian.org` operate independently of corporate governance infrastructure on `conxian-labs.com`.
+Never send private keys, recovery phrases, signing shares, credentials, full connection strings or sensitive customer payloads to email. Use redacted summaries and an access-controlled system of record for investigation. Do not claim that encrypted mail or automated DLP is configured without delivery and filtering evidence.
 
-### 2.3 Zero Secret Egress Boundary
-- **Non-Custodial Posture**: To maintain a strict non-custodial operating posture, no runtime data, user secrets, private keys, database connection strings, or operational logs may ever flow into corporate email streams.
-- **Automated DLP & Filtering**: Pre-commit hooks, Sentinel scanners, and Gitleaks rules actively block email-based key transmission and prevent credential leakage.
+## Workload and public-protocol boundaries
 
----
+- CI/runtime services use explicit workload identities and least-privilege authorization. Prefer qualified short-lived federation where available; do not copy a human mailbox password or OAuth session into a runner.
+- Human cloud administration remains permitted through reviewed roles. Separate ordinary administration from workload credentials and use an accountable recovery process.
+- Public protocol interfaces must not depend on a corporate mailbox session or an inbound email loop for correctness, finality, custody or signer authorization.
+- Managed services may use their separately authenticated corporate control plane; deployment, tenant, runtime and signer permissions remain distinct.
+- Hardware attestation, custody, algorithm support and threshold enforcement retain their independent SDK/device gates. Mail/SSO configuration does not establish Nitro/StrongBox qualification.
 
-## 3. RECOMMENDED ARCHITECTURE TOPOLOGY
+This proposal does not provision or select a new identity provider, modify any cloud permissions, configure mailboxes, rotate credentials or enable a signer.
 
-```
-[ Team Members ] ──────────► [ Zoho Domain SSO ] ──────────► [ Private Tools: Plane / Outline / Private GitHub ]
-                                                                      │
-                                                                      │ (Isolated Operations)
-                                                                      ▼
-[ Public Ecosystem ] ──────► [ Gateway / Fusion Auth ] ───► [ Multi-Cloud: Render / Supabase / Neon ]
-```
+## What repository checks establish
 
----
+| Evidence | What it establishes | Additional operational acceptance |
+| --- | --- | --- |
+| Branch-promotion policy and negative tests | Ordinary work routes to `dev`; no special agent-to-`main` bypass | Exact-head CI, review and later promotion evidence |
+| Research-ledger validation | Required fields, references and scoring-state consistency | Accountable owner, acceptance evidence and prioritization |
+| Doctrine/documentation checks | The content and structural assertions actually inspected by those scripts | Current provider, deployment and identity configuration |
+| Secret/contamination checks | Detection of the patterns covered by the configured scanner | Runtime mail filtering, secret-manager access controls and incident handling |
+| Submodule integrity checks | Committed references satisfy the implemented repository checks | Compatibility, deployment status and independent runtime qualification |
 
-## 4. VERIFICATION & ENFORCEMENT ("DON'T TRUST, VERIFY")
+Passing these checks does not verify a Zoho tenant, SSO session, app offboarding, mail alias, DLP policy, cloud identity or production service. Record each operational check as unverified until evidence exists.
 
-To ensure strict compliance with this firewall specification, automated verification guardrails enforce the following checks across the repository:
+## Acceptance before operational activation
 
-1. **Static Secret Scanning**: `gitleaks` and `scripts/verify_contamination_guard.py` run on every PR to verify no corporate email credentials or secret keys are committed.
-2. **Doctrine Alignment**: `scripts/verify_doctrine_alignment.py` enforces domain separation rules (`conxian.org` vs `conxian-labs.com`) and validates that public protocol docs contain no corporate credential dependencies.
-3. **Submodule Integrity**: `scripts/verify_submodule_integrity.py` ensures that all 8 core submodules (`conxian-gateway`, `conxian-nexus`, `conxius-wallet`, `conxius-platform`, `conxian-labs-site`, `conxius-enclave-sdk`, `lib-conxian-core`, `conxian_market`) remain pinned to parent release commits without external configuration drift.
+- Record the identity provider, application, accountable operator, supported federation/provisioning method and approved role map without publishing secrets.
+- Test allowed and denied sign-in, MFA/recovery, disabled-user behavior, existing-session revocation and personal-token retirement for every selected application.
+- Verify role-alias membership and delivery with non-sensitive test notifications, including failure and escalation paths.
+- Confirm workload authentication is independent of human mailbox sessions and privileges are limited to the declared workload.
+- Preserve existing independent capability gates, universal-chain scope, Bitcoin-rooted trust and the zero-native-token boundary.
+- Attach a reviewed change/rollback record before changing external configuration. This document is the design input, not the acceptance result.
 
----
+## Primary research sources
 
-## 5. SUMMARY OF BENEFITS
+Accessed 2026-10-15; these describe provider capabilities, not Conxian's tenant configuration.
 
-- **Minimal Software Costs**: Reusing Zoho Mail solely for SSO and inbound alert routing keeps enterprise SaaS license fees predictable and low.
-- **Clean Security Boundaries**: Decoupling runtime execution from human email accounts eliminates email-based credential compromise vectors for production infrastructure.
-- **Non-Custodial Integrity**: Zero secret egress guarantees that private corporate communication channels remain completely segregated from the public open-source stack.
+- [Zoho Mail SAML authentication](https://www.zoho.com/mail/help/adminconsole/saml-authentication.html): Mail's identity-provider/service-provider relationship.
+- [Zoho Directory user deactivation](https://help.zoho.com/portal/en/kb/directory/admin-guide/users-1/users/articles/deactivate-activate): deactivation and the assigned-SAML-app limitation.
+- [Zoho Directory provisioning overview](https://help.zoho.com/portal/en/kb/directory/admin-guide/applications/provisioning/articles/overview-provisioning): supported SCIM/API application lifecycle management.
