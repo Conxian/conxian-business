@@ -1,5 +1,9 @@
 # Conxian Labs BOS Knowledge Graph
 
+## Evidence update (2026-10-15 — corporate identity and alert boundaries)
+- [Identity and alert routing research](docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md) records a proposal, with external tenant configuration and revocation behavior still unverified. Zoho Mail, an identity provider, application provisioning, workload credentials, and signing custody have distinct roles.
+- PR #1364 follows feature → dev → staged → main. Repository checks do not establish deployed SSO, automatic offboarding, mail routing, or production hardware qualification. Existing owner work remains under business #1390.
+
 ## Session Update (2026-10-13 — Nexus contract deployment gate)
 - Handler review found missing release/governance list routes, hard-coded readiness/evidence, noncanonical environment responses, and workflow success without durable audit writes.
 - Recorded the concrete runtime acceptance criteria in the deployment audit. Provisioning a URL alone cannot fix these gaps; production binding remains blocked pending Nexus implementation and staging evidence.

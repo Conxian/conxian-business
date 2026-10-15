@@ -9,6 +9,10 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Clarified (2026-10-15 — corporate identity and alert research)
+- Added [corporate identity and alert routing research](docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md) separating proposed controls from verified implementation, including application-specific offboarding and session/token revocation evidence.
+- Retained current development knowledge and the existing promotion policy and negative tests. This documentation change does not configure an identity provider, mail alias, runtime credential, or signing provider.
+
 ### Added & Synthesized (2026-10-24 — System-Wide Evaluation & Agentic Transformation Blueprint)
 - **Agentic Transformation Blueprint (`docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md`)**: Authored canonical specification detailing Conxian's architectural elevation from deterministic rails into an Agentic, AI-First Autonomous Business Stack across all 6 core pillars.
 - **CXIP Proposal Taxonomy**: Established unified improvement proposal taxonomy across workspace repositories: CXBIP (`conxian-business`), CXPIP (`conxius-platform`), CXMIP (`conxian_market`), CXWIP (`conxius-wallet`), CXCIP (`lib-conxian-core`), CXGIP (`conxian-gateway`), CXNIP (`conxian-nexus`).

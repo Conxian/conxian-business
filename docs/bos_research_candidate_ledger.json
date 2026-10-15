@@ -1211,6 +1211,30 @@
       "uncertainty": "Dynamic M2M pricing negotiations require strict bounded fee ranges to prevent agentic spiraling.",
       "nonClaim": "Architectural blueprint provides agentic transformation specifications across all 6 pillars without altering non-custodial hardware enclave guarantees.",
       "scored": false
+    },
+    {
+      "id": "zoho-mail-identity-alert-firewall-gap",
+      "title": "Corporate identity, offboarding and alert routing evidence gap",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [
+        "https://github.com/Conxian/conxian-business/issues/1390",
+        "https://github.com/Conxian/conxian-business/pull/1364"
+      ],
+      "sourceLinks": [
+        "https://www.zoho.com/mail/help/adminconsole/saml-authentication.html",
+        "https://help.zoho.com/portal/en/kb/directory/admin-guide/users-1/users/articles/deactivate-activate",
+        "https://help.zoho.com/portal/en/kb/directory/admin-guide/applications/provisioning/articles/overview-provisioning"
+      ],
+      "gapClasses": [
+        "governance",
+        "implementation",
+        "evidence"
+      ],
+      "disposition": "retained-existing-owner",
+      "nextGate": "Record selected identity provider and per-application provisioning, session/token revocation, recovery and alert-routing tests before operational acceptance.",
+      "uncertainty": "External tenant configuration, supported application provisioning and measured revocation behavior have not been verified.",
+      "nonClaim": "Research does not configure SSO or mail routing, establish automatic global deactivation, legal isolation, or production hardware signing qualification.",
+      "scored": false
     }
   ]
 }

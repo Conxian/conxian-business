@@ -121,3 +121,4 @@
   * [Sovereignty and Onboarding Architecture Research](docs/SOVEREIGNTY_AND_ONBOARDING_ARCHITECTURE_RESEARCH.md)
   * [Strategic Analysis of Conxian Ecosystem (Issue #1317)](docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md)
   * [System-Wide Evaluation & Agentic Transformation Blueprint](docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md)
+  * [Corporate identity and alert routing research — proposed controls](docs/research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md)

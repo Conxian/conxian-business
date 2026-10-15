@@ -194,3 +194,7 @@ An October 2026 (Session 71) system-wide evaluation and agentic transformation p
   5. *Universal Proof & Observation Layer (`conxian-nexus` - CXNIP)*: Self-healing multi-chain state reorg monitor, automated RBF/CPFP fee bumping, and BitVM3 fraud proof challenges.
   6. *Client & Wallet Surface (`conxius-wallet` - CXWIP / CXPIP)*: Delegated ERC-7710 agent command center and zero-secret-egress (ZSE) privacy filters.
 - **Verification & Compliance**: Updated `docs/bos_research_candidate_ledger.json`, `docs/BOS_KNOWLEDGE_FRAMEWORK.md` (v4.1), `BOS_KNOWLEDGE_GRAPH.md`, and `SUMMARY.md`.
+
+## Corporate identity and alert research — 2026-10-15
+- `zoho-mail-identity-alert-firewall-gap` remains unscored and is retained under [business #1390](https://github.com/Conxian/conxian-business/issues/1390), with [PR #1364](https://github.com/Conxian/conxian-business/pull/1364) as the documentation change.
+- [Research](research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md) defines proposed authentication, provisioning, offboarding, mail routing, and workload boundaries. Tenant configuration and application-specific revocation tests are required before any operational acceptance claim. This does not establish SSO deployment, immediate global revocation, legal isolation, or production signing qualification.

@@ -870,3 +870,7 @@ codeql-fixes:
   - *CXWIP / CXPIP (`conxius-wallet` / `conxius-platform`)*: Delegated ERC-7710 agent command center and zero-secret-egress (ZSE) privacy filters.
 - **3-Phase Execution Roadmap**: Defined actionable prioritization roadmap spanning Phase 1 (MCP & Agent Discovery, 1-30 Days), Phase 2 (Enclave Guardrails & Self-Provisioning, 30-90 Days), and Phase 3 (Autonomous Operations & Dispute Arbitration, 90+ Days).
 - **Candidate Ledger & Indexing**: Expanded `docs/bos_research_candidate_ledger.json` (`agentic-system-wide-evaluation-blueprint-gap`), updated `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`, `BOS_KNOWLEDGE_GRAPH.md`, and `SUMMARY.md`. Passed 100% of repository verification checks (`bos_repo_check.py`, `verify_bos_research_candidate_ledger.py`, `verify_cross_repo_alignment.py`, `verify_doctrine_alignment.py`, `verify_client_onboarding.py`).
+
+## Evidence addendum (2026-10-15 — corporate identity and alert boundaries)
+- [Corporate identity and alert routing research](research/ZOHO_MAIL_IDENTITY_AND_ALERT_ROUTING_FIREWALL_RESEARCH.md) distinguishes corporate correspondence, identity-provider authentication, application provisioning, workload authorization, and signing custody.
+- These are proposed controls. No external SSO tenant, automatic application deactivation, session revocation, alert alias, or hardware qualification is established by this research. Keep implementation and evidence under business #1390; PR #1364 enters through dev with existing promotion policy and tests intact.
