@@ -1,5 +1,9 @@
 # GitHub-first BOS research-cycle operating model
 
+<!-- RESEARCH-RECONCILIATION-2026-10-15:BEGIN -->
+> Current dated coordination: [research, implementation and phases — 15 October 2026](RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md). It maps all current issues and preserves the historical scores/decisions below. Closed legacy trackers and code-presence labels do not establish current runtime, custody, commercial or release acceptance. Current cycle: Business #1317; delivery parent: #1390.
+<!-- RESEARCH-RECONCILIATION-2026-10-15:END -->
+
 | Metadata | Value |
 |---|---|
 | Classification | Public-safe canonical operating model |
