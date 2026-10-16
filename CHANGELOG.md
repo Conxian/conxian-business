@@ -9,6 +9,9 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added (2026-10-16 — Billing and capability continuity)
+- Added source-pinned billing propagation conformance and the #1390/#1343 takeover checkpoint; separated sprint-exit economics/pricing/upstream-support research into #1419. Existing commercial configuration and production/review gates remain unchanged.
+
 ### Added & Synthesized (2026-10-24 — System-Wide Evaluation & Agentic Transformation Blueprint)
 - **Agentic Transformation Blueprint (`docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md`)**: Authored canonical specification detailing Conxian's architectural elevation from deterministic rails into an Agentic, AI-First Autonomous Business Stack across all 6 core pillars.
 - **CXIP Proposal Taxonomy**: Established unified improvement proposal taxonomy across workspace repositories: CXBIP (`conxian-business`), CXPIP (`conxius-platform`), CXMIP (`conxian_market`), CXWIP (`conxius-wallet`), CXCIP (`lib-conxian-core`), CXGIP (`conxian-gateway`), CXNIP (`conxian-nexus`).
