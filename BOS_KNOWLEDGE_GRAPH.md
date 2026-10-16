@@ -1122,3 +1122,5 @@ Linear has been retired as the system-of-record for Conxian. All tracking is now
 | Agentic Blueprint Spec | `conxius-enclave-sdk` | ENFORCES_SPEND_LIMITS | Enforces EIP-7710 autonomous spending guardrails in TEE |
 | Agentic Blueprint Spec | `conxian-nexus` | AUTOMATES_REORG_RECOVERY | Enables self-healing multi-chain drift monitor & BitVM3 proofs |
 | Agentic Blueprint Spec | `conxius-wallet` | DELEGATES_AGENT_COMMAND | Provides ERC-7710 agent delegation dashboard with ZSE privacy |
+
+- **Multi-Dimensional Scoring, Live Telemetry, & BitVM3 Research (CXB-RES-2026-072)**: [docs/research/MULTI_DIMENSIONAL_SCORING_TELEMETRY_AND_BITVM3_EXPANSION_RESEARCH_2026.md](docs/research/MULTI_DIMENSIONAL_SCORING_TELEMETRY_AND_BITVM3_EXPANSION_RESEARCH_2026.md) (CON-1437/1440/1436, CON-1329/1600, CXIP-1317)
