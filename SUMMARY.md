@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
+* [Research, implementation and phased work — 15 October 2026](docs/RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md)
 * [Archive Migration (authorized GitHub organization; ZSE)](ARCHIVE_MIGRATION.md)
 * [Conxian: one-page market narrative](docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md)
 * [Documentation Alignment Index](docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
