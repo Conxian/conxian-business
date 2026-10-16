@@ -1,5 +1,9 @@
 # Conxian Labs BOS Knowledge Graph
 
+<!-- RESEARCH-RECONCILIATION-2026-10-15:BEGIN -->
+> Current dated coordination: [research, implementation and phases — 15 October 2026](docs/RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md). It maps all current issues and preserves the historical scores/decisions below. Closed legacy trackers and code-presence labels do not establish current runtime, custody, commercial or release acceptance. Current cycle: Business #1317; delivery parent: #1390.
+<!-- RESEARCH-RECONCILIATION-2026-10-15:END -->
+
 ## Session Update (2026-10-13 — Nexus contract deployment gate)
 - Handler review found missing release/governance list routes, hard-coded readiness/evidence, noncanonical environment responses, and workflow success without durable audit writes.
 - Recorded the concrete runtime acceptance criteria in the deployment audit. Provisioning a URL alone cannot fix these gaps; production binding remains blocked pending Nexus implementation and staging evidence.
