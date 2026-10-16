@@ -1,5 +1,7 @@
 # Research, implementation and phased work reconciliation — 15 October 2026
 
+> Current operational overlay: [16 October organization state](audits/2026-10-16-current-org-state.md). The original inventory and scores below remain dated evidence.
+
 Status: proposed current coordination checkpoint. Parent: [Business #1390](https://github.com/Conxian/conxian-business/issues/1390); research authority: [Business #1317](https://github.com/Conxian/conxian-business/issues/1317). Repository owners retain implementation and acceptance authority.
 
 This record reconciles the knowledge-base/audit/research inventory with current source and existing work. Historical scores and evidence are retained. It does not authorize production, redefine fees or custody, replace independent review, or claim that every historical source was independently audited.
