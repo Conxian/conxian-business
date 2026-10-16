@@ -14,6 +14,8 @@ Portfolio doctrine is defined centrally in [`DOCTRINE_ALIGNMENT_STANDARD.md`](./
 
 For the separate dimensions of claim state, operating label, maturity, and document classification, follow the [Doctrine Alignment Standard](./DOCTRINE_ALIGNMENT_STANDARD.md) and the [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md).
 
+Current supporting public-safe checkpoint: [billing/capability takeover, 16 October 2026](audits/2026-10-16-billing-takeover.md), with [immutable propagation inputs](billing-propagation-2026-10-16.json). Core owns the shared configuration contract; the Business record coordinates consumer evidence and open work. It grants no paid entitlement, commercial or release acceptance. Sprint-exit economics research is tracked separately in [#1419](https://github.com/Conxian/conxian-business/issues/1419); restricted financial inputs/models remain outside Git.
+
 Notes:
 
 - Treat this repo as public for boundary purposes; hosting visibility may differ by deployment. "Internal-only" material should not be stored here; when we preserve link targets we use public-safe ZSE stubs (see authorized GitHub organization issue CON-256).
