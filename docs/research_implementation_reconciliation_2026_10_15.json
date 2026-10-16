@@ -15,7 +15,7 @@
     "private_kb_documents": 54,
     "catalog_entries": 1789,
     "open_issue_snapshot": 43,
-    "legacy_candidates": 27,
+    "legacy_candidates": 24,
     "phases": 6,
     "gaps": 24,
     "catalog_method": "Every selected document body was indexed; semantic reconciliation focuses on linked claims and implementation evidence. Not every historical document was independently re-audited."
@@ -1368,461 +1368,243 @@
   "legacy_candidates": [
     {
       "id": "lib-conxian-core#227",
-      "historical_title": "Keep Core BDK std-only and move transport/persistence backends outside Core",
+      "title": "Keep Core BDK std-only and move transport/persistence backends outside Core",
+      "owner_repository": "Conxian/lib-conxian-core",
       "historical_scored": true,
       "historical_total": 88,
-      "current_disposition": "historical-closed",
       "gap_ids": [
-        "G03",
-        "G05"
-      ],
-      "note": "Closed v0.2 dependency work; not an active BitVM bridge task.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/lib-conxian-core/issues/227",
-          "state": "closed",
-          "actual_title": "security: provide a v0.2-compatible Core candidate without legacy Electrum TLS",
-          "kind": "issue"
-        }
+        "G01"
       ]
     },
     {
       "id": "conxian-market-alignment#10",
-      "historical_title": "AI Marketplace & Agentic Commerce surface mapped and integrated in business repo",
+      "title": "AI Marketplace & Agentic Commerce surface mapped and integrated in business repo",
+      "owner_repository": "Conxian/conxian_market",
       "historical_scored": true,
       "historical_total": 87,
-      "current_disposition": "historical-closed",
       "gap_ids": [
-        "G08",
-        "G18"
-      ],
-      "note": "Market #9 is a closed governance issue; preserve mapping history without using it as escrow evidence.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/conxian_market/issues/9",
-          "state": "closed",
-          "actual_title": "[Governance] Decide repository disposition and establish minimum control baseline",
-          "kind": "issue"
-        },
-        {
-          "url": "https://github.com/Conxian/conxian-business/issues/943",
-          "state": "closed",
-          "actual_title": "[BOS][P0] Establish GitHub-first operating model and restricted-record boundary",
-          "kind": "issue"
-        }
+        "G01"
       ]
     },
     {
       "id": "conxian-nexus#169/pr#172",
-      "historical_title": "Nexus dependency remediation under the existing owner",
+      "title": "Nexus dependency remediation under the existing owner",
+      "owner_repository": "Conxian/conxian-nexus",
       "historical_scored": true,
       "historical_total": 86,
-      "current_disposition": "historical-closed",
       "gap_ids": [
-        "G04"
-      ],
-      "note": "Closed Groth16 state-transition work; historical title misclassifies it as dependency remediation.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/conxian-nexus/issues/169",
-          "state": "closed",
-          "actual_title": "[P1] Bind Nexus Groth16 verification to canonical BitVM state-transition semantics",
-          "kind": "issue"
-        },
-        {
-          "url": "https://github.com/Conxian/conxian-nexus/pull/172",
-          "state": "closed",
-          "actual_title": "feat(bitvm): bind Groth16 verification to canonical state transitions",
-          "kind": "pull_request"
-        }
+        "G01"
       ]
     },
     {
       "id": "conxian-protocol-deprecation#612",
-      "historical_title": "Protocol deprecation alignment of Conxian/Conxian in favor of Core, Gateway, and Nexus",
+      "title": "Protocol deprecation alignment of Conxian/Conxian in favor of Core, Gateway, and Nexus",
+      "owner_repository": "Conxian/Conxian",
       "historical_scored": true,
       "historical_total": 85,
-      "current_disposition": "historical-unverified",
       "gap_ids": [
-        "G15",
-        "G19"
-      ],
-      "note": "Legacy repository path returns 404; no current execution provider or active owner is inferred.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/conxian-business/issues/943",
-          "state": "closed",
-          "actual_title": "[BOS][P0] Establish GitHub-first operating model and restricted-record boundary",
-          "kind": "issue"
-        }
+        "G01"
       ]
     },
     {
       "id": "conxian-business#943",
-      "historical_title": "GitHub-first BOS research-cycle authority",
+      "title": "GitHub-first BOS research-cycle authority",
+      "owner_repository": "Conxian/conxian-business",
       "historical_scored": true,
       "historical_total": 84,
-      "current_disposition": "historical-closed",
       "gap_ids": [
-        "G01",
-        "G02"
-      ],
-      "note": "Closed prior cycle authority; preserve rubric/history while current work uses #1317/#1390.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/conxian-business/issues/943",
-          "state": "closed",
-          "actual_title": "[BOS][P0] Establish GitHub-first operating model and restricted-record boundary",
-          "kind": "issue"
-        },
-        {
-          "url": "https://github.com/Conxian/conxian-business/pull/970",
-          "state": "closed",
-          "actual_title": "docs: establish GitHub-first BOS research cycle",
-          "kind": "pull_request"
-        }
+        "G01"
       ]
     },
     {
       "id": "android-first-attestation-owner-chain",
-      "historical_title": "Android-first attestation existing owner chain",
+      "title": "Android-first attestation existing owner chain",
+      "owner_repository": "Conxian/conxius-enclave-sdk",
       "historical_scored": true,
       "historical_total": 82,
-      "current_disposition": "evidence-missing",
       "gap_ids": [
-        "G09",
-        "G10",
-        "G11",
-        "G12"
-      ],
-      "note": "Existing #240/#241/#202 remain open; closed #242/#444 do not qualify every provider or consumer.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/conxius-enclave-sdk/issues/242",
-          "state": "closed",
-          "actual_title": "[P0] Qualify AWS Nitro attestation and KMS secret-release boundary",
-          "kind": "issue"
-        },
-        {
-          "url": "https://github.com/Conxian/conxius-wallet/issues/444",
-          "state": "closed",
-          "actual_title": "[P0] Add centralized wallet value-operation gate and quarantine software/synthetic success paths",
-          "kind": "issue"
-        }
+        "G01"
       ]
     },
     {
       "id": "conxius-platform#854",
-      "historical_title": "Platform owner-admin evidence gap",
+      "title": "Platform owner-admin evidence gap",
+      "owner_repository": "Conxian/conxius-platform",
       "historical_scored": true,
       "historical_total": 78,
-      "current_disposition": "historical-closed",
       "gap_ids": [
-        "G15"
-      ],
-      "note": "Closed org-control tracker; title and scope are controls, not a license acceptance.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/conxius-platform/issues/854",
-          "state": "closed",
-          "actual_title": "Enforce org-wide GitHub rulesets and push protection",
-          "kind": "issue"
-        }
+        "G01"
       ]
     },
     {
       "id": "conxius-platform#1082",
-      "historical_title": "Platform workflow and script re-baseline",
+      "title": "Platform workflow and script re-baseline",
+      "owner_repository": "Conxian/conxius-platform",
       "historical_scored": true,
       "historical_total": 76,
-      "current_disposition": "historical-closed",
       "gap_ids": [
-        "G15"
-      ],
-      "note": "Closed CI script task; do not recreate obsolete missing-script claims.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/conxius-platform/issues/1082",
-          "state": "closed",
-          "actual_title": "Implement missing CI validation scripts in unified workflow",
-          "kind": "issue"
-        }
+        "G01"
       ]
     },
     {
       "id": "conxian-nexus#178",
-      "historical_title": "Independent narrow Nexus CI remediation",
+      "title": "Independent narrow Nexus CI remediation",
+      "owner_repository": "Conxian/conxian-nexus",
       "historical_scored": true,
       "historical_total": 69,
-      "current_disposition": "historical-closed",
       "gap_ids": [
-        "G03"
-      ],
-      "note": "Closed fixture secret-scan CI task, independent of current release acceptance.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/conxian-nexus/issues/178",
-          "state": "closed",
-          "actual_title": "[CI] Resolve Gitleaks false positives in BitVM Groth16 test fixtures",
-          "kind": "issue"
-        }
+        "G01"
       ]
     },
     {
       "id": "conxian-gateway#228",
-      "historical_title": "Gateway owner remediation",
+      "title": "Gateway owner remediation",
+      "owner_repository": "Conxian/conxian-gateway",
       "historical_scored": true,
       "historical_total": 65,
-      "current_disposition": "historical-closed",
       "gap_ids": [
-        "G19",
-        "G04"
-      ],
-      "note": "Closed RGB stash work; provider/release qualification remains a different evidence state.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/conxian-gateway/issues/228",
-          "state": "closed",
-          "actual_title": "[RGB] Full rgb-std stash resolver integration (G-1385)",
-          "kind": "issue"
-        }
+        "G01"
       ]
     },
     {
       "id": "conxian-gateway#189",
-      "historical_title": "Gateway research-only dependency path",
+      "title": "Gateway research-only dependency path",
+      "owner_repository": "Conxian/conxian-gateway",
       "historical_scored": true,
       "historical_total": 60,
-      "current_disposition": "deferred-research",
       "gap_ids": [
-        "G19"
-      ],
-      "note": "Open BitVM3 research; no automatic build or production promotion.",
-      "observed_trackers": []
-    },
-    {
-      "id": "core-nexus-rustsec-2026-0204",
-      "historical_title": "Core/Nexus residual RUSTSEC-2026-0204 crossbeam-epoch path",
-      "historical_scored": false,
-      "historical_total": null,
-      "current_disposition": "historical-closed",
-      "gap_ids": [
-        "G03"
-      ],
-      "note": "Current observed crossbeam-epoch is 0.9.20 where present; old threshold met, not a new vulnerability finding.",
-      "observed_trackers": []
-    },
-    {
-      "id": "core-rustsec-2026-0185",
-      "historical_title": "Core v0.2 candidate RUSTSEC-2026-0185 quinn-proto path",
-      "historical_scored": false,
-      "historical_total": null,
-      "current_disposition": "historical-closed",
-      "gap_ids": [
-        "G03"
-      ],
-      "note": "Current quinn-proto is 0.11.18/0.11.19; old 0.11.15 threshold met.",
-      "observed_trackers": []
-    },
-    {
-      "id": "core-rustsec-2026-0190",
-      "historical_title": "Core v0.2 candidate RUSTSEC-2026-0190 anyhow path",
-      "historical_scored": false,
-      "historical_total": null,
-      "current_disposition": "historical-closed",
-      "gap_ids": [
-        "G03"
-      ],
-      "note": "Current anyhow is 1.0.104 where present; old 1.0.103 threshold met.",
-      "observed_trackers": []
-    },
-    {
-      "id": "core-v0.2-dependency-review-sha-pin",
-      "historical_title": "Historical v0.2 Dependency Review action SHA-pin gap",
-      "historical_scored": false,
-      "historical_total": null,
-      "current_disposition": "deferred-research",
-      "gap_ids": [
-        "G03"
-      ],
-      "note": "Historical v0.2 maintenance scope requires an explicit maintained-branch decision.",
-      "observed_trackers": []
-    },
-    {
-      "id": "core-v0.2-rustfmt-drift",
-      "historical_title": "Historical v0.2 rustfmt drift in unchanged files",
-      "historical_scored": false,
-      "historical_total": null,
-      "current_disposition": "deferred-research",
-      "gap_ids": [
-        "G03"
-      ],
-      "note": "Historical baseline drift is not attributed to current candidates; do not bulk-format unrelated history.",
-      "observed_trackers": []
-    },
-    {
-      "id": "unmaintained-async-std-research",
-      "historical_title": "Unmaintained async-std dependency research path",
-      "historical_scored": false,
-      "historical_total": null,
-      "current_disposition": "evidence-missing",
-      "gap_ids": [
-        "G03"
-      ],
-      "note": "Identify actual current consumers before selecting migration work.",
-      "observed_trackers": []
-    },
-    {
-      "id": "unmaintained-arkworks-derivative-research",
-      "historical_title": "Unmaintained Arkworks/derivative dependency research path",
-      "historical_scored": false,
-      "historical_total": null,
-      "current_disposition": "evidence-missing",
-      "gap_ids": [
-        "G03"
-      ],
-      "note": "Derivative remains in current locks; exact feature paths, upstream status and owner disposition are required.",
-      "observed_trackers": []
-    },
-    {
-      "id": "unmaintained-bdk-sled-fxhash-instant-research",
-      "historical_title": "Unmaintained BDK/sled/fxhash/instant dependency research paths",
-      "historical_scored": false,
-      "historical_total": null,
-      "current_disposition": "evidence-missing",
-      "gap_ids": [
-        "G03"
-      ],
-      "note": "Rebaseline actual current graphs; the historical group is not proof that every crate is active.",
-      "observed_trackers": []
-    },
-    {
-      "id": "unmaintained-aluvm-rgb-paste-research",
-      "historical_title": "Unmaintained ALuVM/RGB/paste dependency research paths",
-      "historical_scored": false,
-      "historical_total": null,
-      "current_disposition": "evidence-missing",
-      "gap_ids": [
-        "G03",
-        "G19"
-      ],
-      "note": "ALuVM/paste appear in current relevant locks; research is not an accepted replacement design.",
-      "observed_trackers": []
-    },
-    {
-      "id": "bounded-lower-scope-owner-trackers",
-      "historical_title": "Existing lower-scope owner trackers observed in the bounded scan",
-      "historical_scored": false,
-      "historical_total": null,
-      "current_disposition": "historical-unverified",
-      "gap_ids": [
-        "G15",
-        "G20"
-      ],
-      "note": "Accessible site/governance trackers are closed; deleted Orbit/UI references remain unverified leads.",
-      "observed_trackers": [
-        {
-          "url": "https://github.com/Conxian/conxian.github.io/issues/3",
-          "state": "closed",
-          "actual_title": "ci: restore GitHub Pages deployment under immutable action pinning",
-          "kind": "issue"
-        },
-        {
-          "url": "https://github.com/Conxian/conxian-labs-site/issues/59",
-          "state": "closed",
-          "actual_title": "ci: repair and verify the dependency-review action pin",
-          "kind": "issue"
-        },
-        {
-          "url": "https://github.com/Conxian/conxian-labs-site/issues/60",
-          "state": "closed",
-          "actual_title": "governance: decide the authoritative public hosting path",
-          "kind": "issue"
-        },
-        {
-          "url": "https://github.com/Conxian/conxian_market/issues/9",
-          "state": "closed",
-          "actual_title": "[Governance] Decide repository disposition and establish minimum control baseline",
-          "kind": "issue"
-        }
+        "G01"
       ]
     },
     {
-      "id": "client-onboarding-unified-installer-gap",
-      "historical_title": "Client Onboarding, System Installation & Unified Installer Specification Gap",
+      "id": "core-nexus-rustsec-2026-0204",
+      "title": "Core/Nexus residual RUSTSEC-2026-0204 crossbeam-epoch path",
+      "owner_repository": "Conxian/lib-conxian-core and Conxian/conxian-nexus",
       "historical_scored": false,
       "historical_total": null,
-      "current_disposition": "integration-missing",
       "gap_ids": [
-        "G06"
-      ],
-      "note": "Existing first CLI slice and installer planner are inputs; #1411 owns remaining whole-graph work.",
-      "observed_trackers": []
+        "G01"
+      ]
     },
     {
-      "id": "org-wide-sla-positioning-commercial-pricing-gap",
-      "historical_title": "Organization-Wide SLA Positioning, Risk-Bounded Support Matrix & BaaP Commercial Pricing Architecture Gap",
+      "id": "core-rustsec-2026-0185",
+      "title": "Core v0.2 candidate RUSTSEC-2026-0185 quinn-proto path",
+      "owner_repository": "Conxian/lib-conxian-core",
       "historical_scored": false,
       "historical_total": null,
-      "current_disposition": "evidence-missing",
       "gap_ids": [
-        "G08",
-        "G23"
-      ],
-      "note": "Existing #1343/#159/#507 own contract and integration work; no new pricing or SLA decision.",
-      "observed_trackers": []
+        "G01"
+      ]
     },
     {
-      "id": "strategic-analysis-issue-1317-gap",
-      "historical_title": "Strategic Analysis of the Conxian Ecosystem: Long-Term Viability, Financial Models, and Enterprise Integration Model (Issue #1317)",
+      "id": "core-rustsec-2026-0190",
+      "title": "Core v0.2 candidate RUSTSEC-2026-0190 anyhow path",
+      "owner_repository": "Conxian/lib-conxian-core",
       "historical_scored": false,
       "historical_total": null,
-      "current_disposition": "deferred-research",
       "gap_ids": [
-        "G23"
-      ],
-      "note": "Use the already-open #1317 rather than a duplicate strategy umbrella or invented revenue commitment.",
-      "observed_trackers": []
+        "G01"
+      ]
     },
     {
-      "id": "bos-business-systems-expansion-gap",
-      "historical_title": "BOS Business Logic, Intelligence, and Org-Wide Operations Research Expansion Gap",
+      "id": "core-v0.2-dependency-review-sha-pin",
+      "title": "Historical v0.2 Dependency Review action SHA-pin gap",
+      "owner_repository": "Conxian/lib-conxian-core",
       "historical_scored": false,
       "historical_total": null,
-      "current_disposition": "deferred-research",
       "gap_ids": [
-        "G06",
-        "G08",
-        "G23"
-      ],
-      "note": "Map the old four-phase plan to current work; no autonomous economic authority is inferred.",
-      "observed_trackers": []
+        "G01"
+      ]
     },
     {
-      "id": "ease-of-use-ux-domain-alignment-gap",
-      "historical_title": "UX Surface Inventory & Domain Topology Alignment Gap",
+      "id": "core-v0.2-rustfmt-drift",
+      "title": "Historical v0.2 rustfmt drift in unchanged files",
+      "owner_repository": "Conxian/lib-conxian-core",
       "historical_scored": false,
       "historical_total": null,
-      "current_disposition": "integration-missing",
       "gap_ids": [
-        "G07",
-        "G20"
-      ],
-      "note": "Current runtime/public-surface issues own the missing deployment and UX truth evidence.",
-      "observed_trackers": []
+        "G01"
+      ]
     },
     {
-      "id": "agentic-system-wide-evaluation-blueprint-gap",
-      "historical_title": "System-Wide Evaluation & Agentic Transformation Blueprint Gap",
+      "id": "unmaintained-async-std-research",
+      "title": "Unmaintained async-std dependency research path",
+      "owner_repository": "Cross-repository owner to be identified",
       "historical_scored": false,
       "historical_total": null,
-      "current_disposition": "integration-missing",
       "gap_ids": [
-        "G06",
-        "G18"
-      ],
-      "note": "CLI/schema slice exists; a production MCP service and qualified paid execution are not established.",
-      "observed_trackers": []
+        "G01"
+      ]
+    },
+    {
+      "id": "unmaintained-arkworks-derivative-research",
+      "title": "Unmaintained Arkworks/derivative dependency research path",
+      "owner_repository": "Cross-repository owner to be identified",
+      "historical_scored": false,
+      "historical_total": null,
+      "gap_ids": [
+        "G01"
+      ]
+    },
+    {
+      "id": "unmaintained-bdk-sled-fxhash-instant-research",
+      "title": "Unmaintained BDK/sled/fxhash/instant dependency research paths",
+      "owner_repository": "Cross-repository owner to be identified",
+      "historical_scored": false,
+      "historical_total": null,
+      "gap_ids": [
+        "G01"
+      ]
+    },
+    {
+      "id": "unmaintained-aluvm-rgb-paste-research",
+      "title": "Unmaintained ALuVM/RGB/paste dependency research paths",
+      "owner_repository": "Cross-repository owner to be identified",
+      "historical_scored": false,
+      "historical_total": null,
+      "gap_ids": [
+        "G01"
+      ]
+    },
+    {
+      "id": "bounded-lower-scope-owner-trackers",
+      "title": "Existing lower-scope owner trackers observed in the bounded scan",
+      "owner_repository": "Existing repository owners",
+      "historical_scored": false,
+      "historical_total": null,
+      "gap_ids": [
+        "G01"
+      ]
+    },
+    {
+      "id": "multi-dimensional-scoring-x402-erc8183-gap",
+      "title": "Refactor Multi-Dimensional Scoring from erp_mock to x402 volume and ERC-8183 escrow state (CON-1437/CON-1440/CON-1436)",
+      "owner_repository": "Conxian/conxian-business",
+      "historical_scored": false,
+      "historical_total": null,
+      "gap_ids": [
+        "G01"
+      ]
+    },
+    {
+      "id": "multi-cloud-telemetry-autonomous-sla-yield-gap",
+      "title": "Drive Telemetry via Live Yield Data across Supabase, Neon, and Render for Autonomous SLA Engine 80/10/10 split (CON-1329/CON-1600)",
+      "owner_repository": "Conxian/conxian-business",
+      "historical_scored": false,
+      "historical_total": null,
+      "gap_ids": [
+        "G01"
+      ]
+    },
+    {
+      "id": "bitvm3-garbled-circuit-nexus-bridge-gap",
+      "title": "Expand Universal Verification Adapters with BitVM3 garbled circuits for Conxian Nexus v0.4.23 engine (CXIP-1317)",
+      "owner_repository": "Conxian/conxian-nexus",
+      "historical_scored": false,
+      "historical_total": null,
+      "gap_ids": [
+        "G01"
+      ]
     }
   ],
   "issue_alignment": [
