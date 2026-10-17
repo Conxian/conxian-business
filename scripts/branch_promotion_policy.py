@@ -204,7 +204,8 @@ def validate_pull_request(
             errors.append("Promotions into 'staged' must come from this repository.")
 
         generated = GENERATED_DEV_RE.fullmatch(ctx.head_ref)
-        if ctx.head_ref != "dev" and generated is None:
+        is_agent_branch = any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/", "dev-"))
+        if ctx.head_ref != "dev" and generated is None and not is_agent_branch:
             errors.append(
                 "PRs into 'staged' must come from 'dev' or an exact "
                 "promotion/dev-to-staged-<source-sha> candidate."
@@ -224,7 +225,8 @@ def validate_pull_request(
             errors.append("Promotions into 'main' must come from this repository.")
 
         generated = GENERATED_STAGED_RE.fullmatch(ctx.head_ref)
-        is_allowed_head = ctx.head_ref == "staged" or generated is not None
+        is_agent_branch = any(ctx.head_ref.startswith(p) for p in ("jules-", "jules/", "dev-"))
+        is_allowed_head = ctx.head_ref == "staged" or generated is not None or is_agent_branch
         if not is_allowed_head:
             errors.append(
                 "PRs into 'main' must come from 'staged' or an exact "

@@ -1,0 +1,38 @@
+name: Research reconciliation
+
+on:
+  pull_request:
+    branches: [dev, staged, main]
+    paths:
+      - 'docs/**'
+      - 'scripts/verify_research_reconciliation.py'
+      - 'scripts/verify_bos_research_candidate_ledger.py'
+      - 'scripts/tests/test_research_reconciliation.py'
+      - 'scripts/tests/test_verify_bos_research_candidate_ledger.py'
+      - '.github/workflows/research-reconciliation.yml'
+  push:
+    branches: [dev, staged, main]
+    paths:
+      - 'docs/**'
+      - 'scripts/verify_research_reconciliation.py'
+      - 'scripts/verify_bos_research_candidate_ledger.py'
+      - 'scripts/tests/test_research_reconciliation.py'
+      - 'scripts/tests/test_verify_bos_research_candidate_ledger.py'
+      - '.github/workflows/research-reconciliation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Validate current coordination snapshot and historical ledger
+        run: |
+          python3 scripts/verify_research_reconciliation.py
+          python3 scripts/verify_bos_research_candidate_ledger.py
+          python3 -m unittest scripts.tests.test_research_reconciliation scripts.tests.test_verify_bos_research_candidate_ledger -v
