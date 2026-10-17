@@ -1,5 +1,17 @@
 # Billing & Pricing Strategy — Compete & Grow Fast (issue #1343)
 
+> Dated implementation correction — 16 October 2026: this remains a historical
+> commercial proposal, not an approved rate card or payment-backed entitlement.
+> Current work uses Core's versioned legacy configuration and immutable consumer
+> pins; see [the billing/capability takeover checkpoint](audits/2026-10-16-billing-takeover.md).
+> Nexus Enterprise settlement-cap eligibility does not automatically change
+> Gateway service charges or establish a paid cross-product entitlement. The
+> website's unsupported subscription offer has been disabled. New pricing,
+> competitor/cost/retention research and upstream sustainability are separated
+> into [Business #1419](https://github.com/Conxian/conxian-business/issues/1419).
+> x402 is a payment protocol; its name is not an asset, and protocol fees alone
+> do not establish the end-to-end cost of a payment.
+
 Status: proposal — implementation pending owner sign-off on tier changes.
 
 ## Competitive thesis

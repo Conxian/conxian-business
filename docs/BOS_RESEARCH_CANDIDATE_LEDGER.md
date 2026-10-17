@@ -1,5 +1,9 @@
 # BOS research candidate ledger — 2026-09-05 (artifact refresh 2026-07-29)
 
+<!-- RESEARCH-RECONCILIATION-2026-10-15:BEGIN -->
+> Current dated coordination: [research, implementation and phases — 15 October 2026](RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md). It maps all current issues and preserves the historical scores/decisions below. Closed legacy trackers and code-presence labels do not establish current runtime, custody, commercial or release acceptance. Current cycle: Business #1317; delivery parent: #1390.
+<!-- RESEARCH-RECONCILIATION-2026-10-15:END -->
+
 | Metadata | Value |
 |---|---|
 | Classification | Public-safe bounded evidence ledger |
@@ -194,3 +198,11 @@ An October 2026 (Session 71) system-wide evaluation and agentic transformation p
   5. *Universal Proof & Observation Layer (`conxian-nexus` - CXNIP)*: Self-healing multi-chain state reorg monitor, automated RBF/CPFP fee bumping, and BitVM3 fraud proof challenges.
   6. *Client & Wallet Surface (`conxius-wallet` - CXWIP / CXPIP)*: Delegated ERC-7710 agent command center and zero-secret-egress (ZSE) privacy filters.
 - **Verification & Compliance**: Updated `docs/bos_research_candidate_ledger.json`, `docs/BOS_KNOWLEDGE_FRAMEWORK.md` (v4.1), `BOS_KNOWLEDGE_GRAPH.md`, and `SUMMARY.md`.
+
+
+## October 2026 Multi-Dimensional Scoring, Live Telemetry, and BitVM3 Research Expansion
+
+An October 2026 (Session 72) multi-dimensional scoring, telemetry, and BitVM3 research expansion pass was executed:
+- **Multi-Dimensional Scoring Refactoring (`multi-dimensional-scoring-x402-erc8183-gap`)**: Refactored WPS scoring model away from `erp_mock` static benchmarks toward live x402 payment volume ingestion and ERC-8183 escrow fulfillment state tracking (`CON-1437/CON-1440/CON-1436`).
+- **Live Telemetry & Autonomous SLA Engine (`multi-cloud-telemetry-autonomous-sla-yield-gap`)**: Integrated real-time telemetry pipelines across Supabase BOS, Neon Postgres, and Render web services into the Autonomous SLA Engine to validate 80/10/10 yield splitting calculations (`CON-1329/CON-1600`).
+- **BitVM3 Garbled-Circuit Universal Verification Adapter (`bitvm3_adapter.rs`) (`bitvm3-garbled-circuit-nexus-bridge-gap`)**: Upgraded CXIP-1317 org-wide proposal with sub-200,000 cycle recursive Groth16 circuit folding for Conxian Nexus v0.4.23 light-client bridges.

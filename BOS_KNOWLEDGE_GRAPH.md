@@ -1,5 +1,9 @@
 # Conxian Labs BOS Knowledge Graph
 
+<!-- RESEARCH-RECONCILIATION-2026-10-15:BEGIN -->
+> Current dated coordination: [research, implementation and phases — 15 October 2026](docs/RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md). It maps all current issues and preserves the historical scores/decisions below. Closed legacy trackers and code-presence labels do not establish current runtime, custody, commercial or release acceptance. Current cycle: Business #1317; delivery parent: #1390.
+<!-- RESEARCH-RECONCILIATION-2026-10-15:END -->
+
 ## Session Update (2026-10-13 — Nexus contract deployment gate)
 - Handler review found missing release/governance list routes, hard-coded readiness/evidence, noncanonical environment responses, and workflow success without durable audit writes.
 - Recorded the concrete runtime acceptance criteria in the deployment audit. Provisioning a URL alone cannot fix these gaps; production binding remains blocked pending Nexus implementation and staging evidence.
@@ -1118,3 +1122,5 @@ Linear has been retired as the system-of-record for Conxian. All tracking is now
 | Agentic Blueprint Spec | `conxius-enclave-sdk` | ENFORCES_SPEND_LIMITS | Enforces EIP-7710 autonomous spending guardrails in TEE |
 | Agentic Blueprint Spec | `conxian-nexus` | AUTOMATES_REORG_RECOVERY | Enables self-healing multi-chain drift monitor & BitVM3 proofs |
 | Agentic Blueprint Spec | `conxius-wallet` | DELEGATES_AGENT_COMMAND | Provides ERC-7710 agent delegation dashboard with ZSE privacy |
+
+- **Multi-Dimensional Scoring, Live Telemetry, & BitVM3 Research (CXB-RES-2026-072)**: [docs/research/MULTI_DIMENSIONAL_SCORING_TELEMETRY_AND_BITVM3_EXPANSION_RESEARCH_2026.md](docs/research/MULTI_DIMENSIONAL_SCORING_TELEMETRY_AND_BITVM3_EXPANSION_RESEARCH_2026.md) (CON-1437/1440/1436, CON-1329/1600, CXIP-1317)

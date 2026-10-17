@@ -1,0 +1,61 @@
+name: Billing propagation conformance
+
+on:
+  pull_request:
+    branches: [dev, staged, main]
+    paths:
+      - 'docs/billing-propagation-2026-10-16.json'
+      - 'scripts/verify_billing_propagation.py'
+      - 'scripts/tests/test_billing_propagation.py'
+      - '.github/workflows/billing-propagation-conformance.yml'
+  push:
+    branches: [dev, staged, main]
+    paths:
+      - 'docs/billing-propagation-2026-10-16.json'
+      - 'scripts/verify_billing_propagation.py'
+      - 'scripts/tests/test_billing_propagation.py'
+      - '.github/workflows/billing-propagation-conformance.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
+        with:
+          path: control
+          persist-credentials: false
+      # These are deliberately immutable snapshot inputs. The checker rejects
+      # a changed ref or repository, including disagreement with the JSON record.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
+        with:
+          repository: Conxian/conxius-enclave-sdk
+          ref: cb6b9c69752b7082d71b0ea7431a40a498ae8a6e
+          path: sources/conxius-enclave-sdk
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
+        with:
+          repository: Conxian/lib-conxian-core
+          ref: 9dd3676bb64a5ba327cc2717d9e9d32bd09a2c95
+          path: sources/lib-conxian-core
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
+        with:
+          repository: Conxian/conxian-gateway
+          ref: 5b15b715c1b63e577197aaa76620c783ed7f7956
+          path: sources/conxian-gateway
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
+        with:
+          repository: Conxian/conxian-nexus
+          ref: 1a4e73e1a249e44a31e7e989cdeb61327b72170c
+          path: sources/conxian-nexus
+          persist-credentials: false
+      - name: Verify the source snapshot and failure boundaries
+        run: |
+          python3 control/scripts/verify_billing_propagation.py --source-root sources
+          cd control
+          python3 -m unittest scripts.tests.test_billing_propagation -v

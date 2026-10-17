@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "kind": "billing-propagation",
+  "date": "2026-10-16",
+  "parent_issue": "https://github.com/Conxian/conxian-business/issues/1390",
+  "billing_issue": "https://github.com/Conxian/conxian-business/issues/1343",
+  "sprint_exit_research": "https://github.com/Conxian/conxian-business/issues/1419",
+  "production_accepted": false,
+  "runtime_entitlement_implemented": false,
+  "new_prices_authorized": false,
+  "projects_updated": false,
+  "sdk_resolution": {"core": true, "gateway": true, "nexus": false},
+  "catalog_sha256": "b38c5b25249759709c782c0cc70c13b9972fe12dbd634cf785ed861e676e8b07",
+  "sources": {
+    "sdk": {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "cb6b9c69752b7082d71b0ea7431a40a498ae8a6e"
+    },
+    "core": {
+      "repository": "Conxian/lib-conxian-core",
+      "commit": "9dd3676bb64a5ba327cc2717d9e9d32bd09a2c95",
+      "pull_request": "https://github.com/Conxian/lib-conxian-core/pull/462"
+    },
+    "gateway": {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5b15b715c1b63e577197aaa76620c783ed7f7956",
+      "pull_request": "https://github.com/Conxian/conxian-gateway/pull/536"
+    },
+    "nexus": {
+      "repository": "Conxian/conxian-nexus",
+      "commit": "1a4e73e1a249e44a31e7e989cdeb61327b72170c",
+      "pull_request": "https://github.com/Conxian/conxian-nexus/pull/423"
+    }
+  }
+}
