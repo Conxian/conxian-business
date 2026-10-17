@@ -1,0 +1,31 @@
+name: Render deployment metadata audit
+
+on:
+  schedule:
+    - cron: '23 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: render-deployment-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Audit explicit workspace and intended runtime inventory
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_OWNER_ID: ${{ vars.RENDER_OWNER_ID }}
+        # This repository's Actions logs are public. Detailed observations stay
+        # in the approved restricted operating record, not logs or artifacts.
+        run: python3 scripts/verify_render_deploys.py --summary-only

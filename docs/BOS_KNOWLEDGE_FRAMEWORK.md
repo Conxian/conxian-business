@@ -1,6 +1,10 @@
 # Conxian BOS Knowledge Framework
+
+<!-- RESEARCH-RECONCILIATION-2026-10-15:BEGIN -->
+> Current dated coordination: [research, implementation and phases — 15 October 2026](RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md). It maps all current issues and preserves the historical scores/decisions below. Closed legacy trackers and code-presence labels do not establish current runtime, custody, commercial or release acceptance. Current cycle: Business #1317; delivery parent: #1390.
+<!-- RESEARCH-RECONCILIATION-2026-10-15:END -->
 > **Agentic-First Multi-Dimensional Knowledge Architecture**
-> Version: 3.7 | Session: 67 | Generated: 2026-10-11
+> Version: 4.2 | Session: 72 | Generated: 2026-10-24
 > **Design**: Machine-ingestible, AI-first, structured patterns
 > **Upgradeable**: YES - See `## Knowledge Base Upgrade Guide`
 
@@ -858,3 +862,15 @@ codeql-fixes:
   - *Phase 3: ISO 20022 / CJCS v2.0 Operational Integration & AI Agentic Commerce*: Field-level translation of legacy banking messages (`pacs.008`, `pacs.002`, `camt.053`) into Conxian Job Card Schema (CJCS) v2.0 intents, multi-chain settlement routing (BTC L1, Stacks L2, RGB, Babylon, Lightning, EVM), Model Model Protocol (MCP) inter-agent execution, and AI Marketplace rate/pricing controls.
   - *Phase 4: Knowledge Base & Research Candidate Scoring Ledger Synthesis*: Upgraded Knowledge Framework to Version 3.7, expanded research candidate ledger (`docs/bos_research_candidate_ledger.json`), updated `BOS_KNOWLEDGE_GRAPH.md`, and passed 100% of repository verification checks (`bos_repo_check.py`, `verify_bos_research_candidate_ledger.py`, `verify_cross_repo_alignment.py`, `verify_doctrine_alignment.py`, `verify_client_onboarding.py`).
 - **Release Hygiene Remediation**: Resolved `conxius-enclave-sdk` CHANGELOG version mismatch, bringing all 8 core submodules into full release hygiene compliance.
+
+## Session 71 Update (2026-10-24 — System-Wide Evaluation & Agentic Transformation Blueprint)
+- **Agentic Transformation Blueprint Synthesis**: Formulated canonical specification `docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md` detailing Conxian's architectural transition from deterministic infrastructure into an AI-First Autonomous Business Stack.
+- **CXIP Proposal Taxonomy Alignment**: Established unified improvement proposal taxonomy across all 8 active workspace repositories:
+  - *CXMIP (`conxian_market`)*: Dynamic M2M agent bargaining protocol, TEE-isolated LLM dispute arbiters, and native MCP server exposing 33 SDK capabilities.
+  - *CXBIP (`conxian-business`)*: Autonomous OpenSpec resolvers, active TEE executive agents, and automated 80/10/10 yield splits.
+  - *CXGIP (`conxian-gateway`)*: AI-first liquidity & rail router, natural language to ISO 20022 (`pacs.008`/`pacs.002`/`camt.053`) synthesizer.
+  - *CXCIP (`lib-conxian-core` / `conxius-enclave-sdk`)*: Ephemeral self-provisioning enclave keyrings and delegated EIP-7710 spending guardrails.
+  - *CXNIP (`conxian-nexus`)*: Self-healing multi-chain state reorg monitor, automated RBF/CPFP fee bumping, and BitVM3 fraud proof challenges.
+  - *CXWIP / CXPIP (`conxius-wallet` / `conxius-platform`)*: Delegated ERC-7710 agent command center and zero-secret-egress (ZSE) privacy filters.
+- **3-Phase Execution Roadmap**: Defined actionable prioritization roadmap spanning Phase 1 (MCP & Agent Discovery, 1-30 Days), Phase 2 (Enclave Guardrails & Self-Provisioning, 30-90 Days), and Phase 3 (Autonomous Operations & Dispute Arbitration, 90+ Days).
+- **Candidate Ledger & Indexing**: Expanded `docs/bos_research_candidate_ledger.json` (`agentic-system-wide-evaluation-blueprint-gap`), updated `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`, `BOS_KNOWLEDGE_GRAPH.md`, and `SUMMARY.md`. Passed 100% of repository verification checks (`bos_repo_check.py`, `verify_bos_research_candidate_ledger.py`, `verify_cross_repo_alignment.py`, `verify_doctrine_alignment.py`, `verify_client_onboarding.py`).
