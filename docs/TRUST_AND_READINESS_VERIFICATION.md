@@ -58,11 +58,11 @@ Every claim in the audit below uses one of these classifications:
 
 | Attribute | Claimed | Actual | Classification | Gap? |
 |-----------|---------|--------|---------------|------|
-| **Status** | "Beta" | camt/ZKC/Sentinel verified in source (2026-10-03); render.yaml merged (#459) but service **undeployed** (~11 secrets) | **Beta (code-complete, undeployed)** | Deploy blocked on owner secrets (see #466) |
-| **Scope** | ISO 20022 compliance pipe; cross-layer state aggregation | Implemented per CI coverage | **Implemented** | None known |
-| **Security** | — | ZSE compliant; contamination guard enforced | **Verified** | None known |
+| **Status** | "Beta" | Historical source/CI observations exist; current hosted artifact and permitted operations require deployment-bound receipts | **Implementation and deployment qualification separate** | Reconcile exact source, startup requirements, protected provisioning and live read-back under Gateway #466 |
+| **Scope** | ISO 20022 compliance pipe; cross-layer state aggregation | Source/tests do not establish live provider/network/operation support | **Operation-specific qualification pending** | Verify each intended route/provider and failure/recovery boundary |
+| **Security** | — | Contamination/source guards cover bounded checks, not an exhaustive security or release decision | **Bounded evidence only** | Keep independent security/release acceptance gates |
 
-**Verdict**: ⚠️ **Beta (code-complete, undeployed)** — camt/ZKC/Sentinel verified in source, `render.yaml` merged (#459), but the service is not deployed (~11 owner secrets). See #466.
+**Current Gateway checkpoint — 19 October 2026:** the historical fixed secret count is not a current startup contract. Use the selected source revision's [runtime initialization](https://github.com/Conxian/conxian-gateway/blob/dev/docs/RUNTIME_INITIALIZATION.md) and startup preflight; disabled-provider credentials, optional managed authentication and actual production qualification are distinct. Secret declarations do not establish provisioned values, valid entitlement, network connectivity or accepted deployment. See Gateway #466 and [work/evidence tracking](WORK_AND_EVIDENCE_TRACKING.md).
 
 ### 2.4 Conxian Core Protocol (`Conxian`)
 
