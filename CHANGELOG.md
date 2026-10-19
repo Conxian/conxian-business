@@ -9,6 +9,13 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+- Fail closed on incomplete organization source inventory: paginate visible repositories, remove the submodule fallback, pin scanned revisions and distinguish heuristic source coverage from runtime/security acceptance (#1390/#1423).
+
+- Require the public Core billing export in pinned propagation evidence, covering the staged missing-export regression; document independent service-packaging review dimensions without changing rates or entitlement (Business #1343/#1390).
+
+### Fixed (2026-10-19 — Candidate preservation)
+- Preserve immutable promotion refs when source, target or candidate heads move. Reconciliation checks existing PRs before publishing, retains existing branches, uses create-only ref leases and leaves new candidates for checks and review. Refs #1415 / #1390.
+
 ### Added & Synthesized (2026-10-24 — Multi-Dimensional Scoring, Live Telemetry, & BitVM3 Expansion)
 - **Multi-Dimensional Scoring, Live Telemetry, & BitVM3 Research (`docs/research/MULTI_DIMENSIONAL_SCORING_TELEMETRY_AND_BITVM3_EXPANSION_RESEARCH_2026.md`)**: Authored canonical specification detailing WPS refactoring from erp_mock to x402 volume & ERC-8183 escrow state (CON-1437/1440/1436), multi-cloud live telemetry aggregation feeding Autonomous SLA Engine for 80/10/10 yield splitting (CON-1329/1600), and BitVM3 garbled circuits for Conxian Nexus v0.4.23 light-client bridges (CXIP-1317).
 - **Candidate Scoring Ledger & Knowledge Base Upgrade**: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 4.2 (Session 72), expanded `docs/bos_research_candidate_ledger.json` and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md` with unscored gaps, updated `BOS_KNOWLEDGE_GRAPH.md`, and indexed in `SUMMARY.md`.
