@@ -19,7 +19,7 @@
 | admin-dashboard | `conxius-platform` | Next.js + M2M key store | **Render** | persistent disk (M2M key store) | Render build fixed #1370; env vars TBD |
 | public site | `conxian-labs-site` | Express | Render | stateless | live (`conxian-labs-site-xhqq.onrender.com`) |
 | org site | `conxian-org-site` | Astro | Vercel | stateless | **live** (`conxian.org`, deployed 2026-10-03) |
-| gateway | `conxian-gateway` | Rust | Render | persistent disk + Redis + RPC conns | undeployed (needs 11 secrets) |
+| gateway | `conxian-gateway` | Rust | Render | intended lane's persistence and RPC dependencies; managed-auth storage separately scoped | deployment unverified; reconcile the exact candidate's [startup contract](https://github.com/Conxian/conxian-gateway/blob/dev/docs/RUNTIME_INITIALIZATION.md) and #466 receipts |
 | nexus | `conxian-nexus` | Rust | Render | Neon Postgres + RPC conns | undeployed |
 | market / wallet / enclave-sdk | — | libs/SDK | — | — | published/npm/crates |
 

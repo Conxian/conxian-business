@@ -9,6 +9,8 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+- Correct stale Gateway secret-count/readiness mirrors and document distinct issue, task, PR, project and operational evidence boundaries (#1390/#1423; Gateway #466).
+
 - Fail closed on incomplete organization source inventory: paginate visible repositories, remove the submodule fallback, pin scanned revisions and distinguish heuristic source coverage from runtime/security acceptance (#1390/#1423).
 
 - Require the public Core billing export in pinned propagation evidence, covering the staged missing-export regression; document independent service-packaging review dimensions without changing rates or entitlement (Business #1343/#1390).
