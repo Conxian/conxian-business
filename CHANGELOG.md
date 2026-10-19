@@ -11,6 +11,8 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+- Reconcile staged ancestry while preserving the exact tested dev runtime and complete packaging/knowledge work; regenerate immutable promotion candidates after review (#1390/#1415/#1448).
+
 - Extend the service review method to prepare/policy/sign/verify/transmit/observe contracts and primary-source examples; reuse the documentation alignment index and preserve historical packaging/signing/KB content behind current context notices (#1390/#1317/#1419).
 
 - Correct stale Gateway secret-count/readiness mirrors and document distinct issue, task, PR, project and operational evidence boundaries (#1390/#1423; Gateway #466).
