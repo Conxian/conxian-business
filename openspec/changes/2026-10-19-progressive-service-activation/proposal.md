@@ -1,0 +1,5 @@
+# Stage service activation within the existing packaging model
+
+Extend the existing service packaging review method with a researched activation model for the three established deployment lanes. Keep package identity, operation authorization, cryptographic trust, infrastructure readiness and measured service commitments independent. A supported base surface may be accepted while unselected integrations remain unavailable; required security and persistence cannot be bypassed to present the whole estate as healthy.
+
+Map foundational and optional dependencies by operation, including the existing Gateway startup contract, Nexus state dependencies, Platform M2M registry and Business auth/audit persistence. Use primary Docker, Kubernetes, GitLab and Stripe documentation as design comparisons, not vendor mandates or Conxian compliance/availability evidence. Preserve all existing price proposals and custody/legal ownership decisions; no new pricing engine, provider subscription or paid offer is introduced. Link the work to existing #1390/#1349/#1423/#1343 and keep measured economics under #1419's accepted-exit prerequisites.
