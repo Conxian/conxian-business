@@ -1,5 +1,9 @@
 # Conxian BOS Knowledge Framework
 
+<!-- KNOWLEDGE-ROUTING-2026-10-19:BEGIN -->
+> Current navigation: use the [documentation alignment index](DOCUMENTATION_ALIGNMENT_INDEX.md), [work/evidence model](WORK_AND_EVIDENCE_TRACKING.md) and [service review method](SERVICE_PACKAGING_REVIEW_METHOD.md). Historical/generated dates, counts and green labels below do not establish current source, runtime, commercial or release acceptance; verify their provenance rather than treating a later-looking date as authority.
+<!-- KNOWLEDGE-ROUTING-2026-10-19:END -->
+
 <!-- RESEARCH-RECONCILIATION-2026-10-15:BEGIN -->
 > Current dated coordination: [research, implementation and phases — 15 October 2026](RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md). It maps all current issues and preserves the historical scores/decisions below. Closed legacy trackers and code-presence labels do not establish current runtime, custody, commercial or release acceptance. Current cycle: Business #1317; delivery parent: #1390.
 <!-- RESEARCH-RECONCILIATION-2026-10-15:END -->
