@@ -4,6 +4,33 @@ This page is a practical index of the documentation already present in this repo
 
 Portfolio doctrine is defined centrally in [`DOCTRINE_ALIGNMENT_STANDARD.md`](./DOCTRINE_ALIGNMENT_STANDARD.md) and [`PORTFOLIO_DOCTRINE_REGISTER.md`](./PORTFOLIO_DOCTRINE_REGISTER.md). This index is navigation and document disposition only; it must not introduce a competing role, maturity, claim-state, or classification taxonomy.
 
+
+## Current work and knowledge-source routing — 19 October 2026
+
+Coordination: #1390 / #1317. This is a navigation index, not a replacement registry, architecture decision, pricing policy or runtime authority. The canonical organization registry remains in `.github-private`; runtime owners retain implementation and acceptance contracts.
+
+| Question | Existing entry point | How to use it |
+| --- | --- | --- |
+| Which repository/asset owns this? | Canonical private registry; repository AGENTS and owned contracts | Resolve conflicts through the existing authority issue; access, name or a graph edge is not ownership transfer. |
+| How is work/evidence tracked? | [Work and evidence tracking](WORK_AND_EVIDENCE_TRACKING.md) | GitHub issues own problem/owner/acceptance; tasks are bounded actions; PRs are candidates; Projects are optional views. |
+| Which research/candidate/issue already exists? | [Research and implementation reconciliation](RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md) | Use dated source references and existing trackers; refresh status instead of creating a competing backlog. |
+| How should packaging be reviewed? | [Service packaging review method](SERVICE_PACKAGING_REVIEW_METHOD.md) | Separate operation, interface, trust, entitlement, commercial configuration and service-level evidence. |
+| Where is historical commercial doctrine? | [Commercial packaging doctrine](COMMERCIAL_PACKAGING_DOCTRINE.md) | Preserve offer history; revalidate claims/rates/SLA against accepted evidence and owning policy. |
+| Where is billing coordinated? | [Billing unification design](BILLING_UNIFICATION_DESIGN.md) and #1343 | Distinguish proposal from implemented configuration and paid entitlement; no duplicate engine. |
+| Where is signing research? | [Partner research](research/SIGNING_PARTNER_RESEARCH_AND_ETHOS_ALIGNMENT.md) and [phase-two deepening](research/SIGNING_PARTNER_RESEARCH_PHASE2_DEEPENING.md) | Preserve provenance; check current provider, algorithm, key lifecycle and independent acceptance. |
+| What deployment/readiness claims are supported? | [Deployment topology](DEPLOYMENT_TOPOLOGY.md) and [trust/readiness verification](TRUST_AND_READINESS_VERIFICATION.md) | Inspect exact source/artifact and current operator receipts; no static document proves live health. |
+| Where are historical KB entities? | [BOS knowledge framework](BOS_KNOWLEDGE_FRAMEWORK.md) | Dates, counts and implementation statements remain dated claims until independently reconciled. |
+
+### Deduplication and preservation rules
+
+1. Classify each apparent duplicate as owner contract, scoped consumer view, generated mirror, reusable template, historical evidence or unresolved conflict. Equal blob hashes show identical bytes, not that a copy is unnecessary.
+2. Keep repository-local policy/security templates and historical OpenSpec decisions where consumers or audit history require them. Centralized templates still need pinned provenance, local availability and drift checks.
+3. Prefer a context notice and relative link over copying current rates, capability counts or deployment status. Research notes should link source/date/target version, assumptions and an existing implementation issue.
+4. Resolve conflicting claims with source/acceptance evidence and the owning decision. Do not deduplicate into unapproved authority or rewrite research as accomplished delivery.
+5. Before moving/removing content, prove retention/provenance, migrate inbound links and consumers, and validate retention. Preserve beneficial unique material. Never move restricted inventory or financial/security records into this public index.
+
+Current rollout adds routing/context to selected packaging/signing/KB documents first, then reconciles other repositories under their owners and existing phases. This index does not assert that all KBs are semantically reconciled or GitHub Project boards updated.
+
 ## Classification rules
 
 - **Canonical**: the current “source of truth” for a domain. If two docs disagree, update the non-canonical doc to match the canonical one.

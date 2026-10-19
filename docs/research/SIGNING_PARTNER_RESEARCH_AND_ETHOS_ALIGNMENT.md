@@ -1,5 +1,9 @@
 # Signing Partner Research & Ethos Alignment
 
+<!-- KNOWLEDGE-ROUTING-2026-10-19:BEGIN -->
+> Research context: preserve the dated partner/algorithm findings below. They do not establish current qualified signing, custody, provider availability or commercial acceptance. Review each operation with the [packaging review method](../SERVICE_PACKAGING_REVIEW_METHOD.md); use the [existing documentation index](../DOCUMENTATION_ALIGNMENT_INDEX.md) for source/issue routing.
+<!-- KNOWLEDGE-ROUTING-2026-10-19:END -->
+
 > **Session 52.5.3 | 2026-08-03**
 > **Scope**: Full ecosystem audit of signing partners for Conxian hosted signing,
 > Nexus, Gateway, and enclave-based solutions.
