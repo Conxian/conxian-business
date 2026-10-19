@@ -82,3 +82,29 @@ Environment changes require a new Vercel deployment.
 
 See `docs/audits/2026-10-11-deployment-readiness.md` for outstanding provider and
 cross-repository verification tasks.
+
+## Container runtime
+
+The repository-root `Dockerfile` builds this control plane using Node 24,
+pnpm 10.28.0 and the committed lockfile. The Dockerfile-specific ignore file
+limits its context to this app and the two shared packages; the existing
+Gateway Dockerfile/context remains separate. Next.js standalone tracing includes
+the workspace root, and the final image runs as the unprivileged `node` user.
+
+```sh
+docker build -t conxian-control-plane .
+docker run --env-file /protected/control-plane.env -p 127.0.0.1:10000:10000 conxian-control-plane
+```
+
+Supply the protected server-side settings listed above at runtime. The container
+binds `0.0.0.0` and respects `PORT` (default 10000). It does not provision database
+tables, users, credentials, Nexus or migrations. CI builds the actual image and
+checks sign-in, static assets and an anonymous session on an overridden port;
+these are process/HTTP checks, not authenticated backend acceptance.
+
+A Render service using this repository root and `./Dockerfile` must deploy a
+normally promoted, reviewed commit containing these files. Verify the intended
+origin, database identity/schema, authenticated session, authorized and denied
+Nexus requests and durable audit read-back before attaching a production domain.
+Do not publish the repository root as a static site or substitute a diagnostic
+server for the authenticated control plane.
