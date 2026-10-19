@@ -5,12 +5,16 @@ on:
     branches: [dev, staged, main]
     paths:
       - 'scripts/branch_promotion_policy.py'
+      - 'scripts/reconcile_branches.py'
+      - '.github/workflows/reconcile-branches.yml'
       - 'scripts/tests/*promotion*.py'
       - '.github/workflows/*promotion*'
   push:
     branches: [dev, staged, main]
     paths:
       - 'scripts/branch_promotion_policy.py'
+      - 'scripts/reconcile_branches.py'
+      - '.github/workflows/reconcile-branches.yml'
       - 'scripts/tests/*promotion*.py'
       - '.github/workflows/*promotion*'
 
