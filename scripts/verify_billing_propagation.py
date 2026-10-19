@@ -64,7 +64,7 @@ def git(directory: Path, *args: str) -> str:
 def read_sources(record: dict, source_root: Path) -> dict[str, str]:
     files = {}
     paths = {"sdk": ["Cargo.toml"],
-             "core": ["Cargo.toml", "Cargo.lock", "spec/billing_conformance.v1.json"],
+             "core": ["Cargo.toml", "Cargo.lock", "src/lib.rs", "spec/billing_conformance.v1.json"],
              "gateway": ["Cargo.toml", "Cargo.lock", "internal/engine/src/billing.rs"],
              "nexus": ["Cargo.toml", "Cargo.lock", "src/api/billing/mod.rs"]}
     for key, repo in REPOS.items():
@@ -86,6 +86,12 @@ def validate_contents(record: dict, files: dict[str, str]) -> list[str]:
     if errors:
         return errors
     try:
+        # A catalog file and valid consumer pins are insufficient if the crate
+        # no longer exports billing (the staged #466 regression).
+        # This is a source declaration check, not a substitute for Cargo/CI.
+        core_root = re.sub(r"/\*.*?\*/|//[^\n]*", "", files["core/src/lib.rs"], flags=re.S)
+        if not re.search(r"^\s*pub\s+mod\s+billing\s*;\s*$", core_root, re.M):
+            errors.append("core: public billing module declaration missing")
         catalog_text = files["core/spec/billing_conformance.v1.json"]
         catalog = json.loads(catalog_text)
         if hashlib.sha256(catalog_text.encode()).hexdigest() != record["catalog_sha256"]:
