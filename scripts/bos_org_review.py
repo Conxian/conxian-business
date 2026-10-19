@@ -4,7 +4,9 @@ import argparse
 import datetime as dt
 import json
 import os
+import re
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -15,56 +17,64 @@ def run(command: list[str], cwd: Path | None = None) -> tuple[int, str]:
 
 
 def repos(org: str) -> list[dict[str, object]]:
-    # Use the authenticated gh repo surface, which is available in CI and local
-    # operator sessions even when the raw API credential is not exported.
+    # Enumerate every page visible to this credential. Submodules are a pinned
+    # dependency subset, never an authoritative substitute for organization access.
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9-]{0,38}", org):
+        raise ValueError("invalid organization name")
     code, output = run([
-        "gh", "repo", "list", org, "--limit", "100",
-        "--json", "name,url,isArchived,defaultBranchRef,description",
+        "gh", "api", "--paginate", "--slurp",
+        f"/orgs/{org}/repos?per_page=100&type=all",
     ])
     if code:
-        # A checked-out conxian-business clone may have repository access through
-        # mounted submodules while gh API credentials are intentionally absent.
-        path_code, path_output = run(["git", "config", "--file", ".gitmodules", "--get-regexp", r"^submodule\..*\.path$"])
-        url_code, url_output = run(["git", "config", "--file", ".gitmodules", "--get-regexp", r"^submodule\..*\.url$"])
-        if path_code or url_code:
-            raise RuntimeError(f"Unable to enumerate {org}: {output}")
-        paths = {line.split(" ", 1)[0].removeprefix("submodule.").removesuffix(".path"): line.split(" ", 1)[1] for line in path_output.splitlines()}
-        urls = {line.split(" ", 1)[0].removeprefix("submodule.").removesuffix(".url"): line.split(" ", 1)[1] for line in url_output.splitlines()}
-        return [
-            {
-                "name": path.split("/")[-1],
-                "html_url": urls[key],
-                "clone_url": urls[key],
-                "archived": False,
-            }
-            for key, path in paths.items()
-            if key in urls
-        ]
-    data = json.loads(output)
-    return [
-        {
-            "name": item["name"],
-            "html_url": item["url"],
-            "clone_url": f"https://github.com/{org}/{item['name']}.git",
-            "archived": item.get("isArchived", False),
-            "default_branch": (item.get("defaultBranchRef") or {}).get("name"),
-            "description": item.get("description"),
-        }
-        for item in data
-        if not item.get("isArchived")
-    ]
+        raise RuntimeError("authenticated repository enumeration failed")
+    pages = json.loads(output)
+    if not isinstance(pages, list) or not pages or any(not isinstance(p, list) for p in pages):
+        raise ValueError("paginated repository list required")
+    result, seen = [], set()
+    for page in pages:
+        for item in page:
+            if not isinstance(item, dict):
+                raise ValueError("invalid repository metadata")
+            name = item.get("name")
+            owner = item.get("owner")
+            if (not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_.-]+", name)
+                    or name in {".", ".."} or name.casefold() in seen
+                    or not isinstance(owner, dict)
+                    or not isinstance(owner.get("login"), str)
+                    or owner["login"].casefold() != org.casefold()
+                    or type(item.get("archived")) is not bool
+                    or type(item.get("disabled")) is not bool):
+                raise ValueError("duplicate, unscoped or incomplete repository metadata")
+            seen.add(name.casefold())
+            if item["archived"]:
+                continue
+            # Construct trusted GitHub URLs; never clone an arbitrary API value.
+            url = f"https://github.com/{org}/{name}"
+            result.append({"name": name, "html_url": url, "clone_url": url + ".git",
+                           "archived": False, "disabled": item["disabled"],
+                           "default_branch": item.get("default_branch"),
+                           "description": item.get("description"),
+                           "language": item.get("language")})
+    if not result:
+        raise ValueError("no visible active repositories; coverage is unknown")
+    return result
 
 
 def inspect(repo: dict[str, object], checkout: Path) -> dict[str, object]:
-    files = [p for p in checkout.rglob("*") if p.is_file() and ".git" not in p.parts]
+    code, revision = run(["git", "rev-parse", "HEAD"], cwd=checkout)
+    if code or not re.fullmatch(r"[0-9a-f]{40}", revision):
+        raise RuntimeError("source revision unavailable")
+    files = [p for p in checkout.rglob("*") if not p.is_symlink() and p.is_file() and ".git" not in p.parts]
     names = {p.name for p in files}
     text_files = [p for p in files if p.suffix.lower() in {".js", ".jsx", ".ts", ".tsx", ".py", ".rs", ".go", ".java", ".yml", ".yaml", ".json", ".md"}]
     secret_hits: list[str] = []
     unsafe_hits: list[str] = []
+    unreadable: list[str] = []
     for path in text_files:
         try:
             text = path.read_text(encoding="utf-8", errors="ignore")
         except OSError:
+            unreadable.append(path.relative_to(checkout).as_posix())
             continue
         if any(marker in text for marker in ("BEGIN PRIVATE KEY", "AKIA", "ghp_", "sk_live_")):
             secret_hits.append(path.relative_to(checkout).as_posix())
@@ -75,6 +85,7 @@ def inspect(repo: dict[str, object], checkout: Path) -> dict[str, object]:
         "name": repo["name"],
         "url": repo["html_url"],
         "default_branch": repo.get("default_branch"),
+        "source_revision": revision,
         "languages": repo.get("language"),
         "file_count": len(files),
         "has_readme": "README.md" in names,
@@ -83,37 +94,61 @@ def inspect(repo: dict[str, object], checkout: Path) -> dict[str, object]:
         "kb_candidates": kb,
         "secret_suspects": secret_hits,
         "unsafe_suspects": unsafe_hits,
-        "status": "attention" if secret_hits or unsafe_hits or "README.md" not in names else "reviewed",
+        "unreadable_text_files": unreadable,
+        "status": "attention" if secret_hits or unsafe_hits or unreadable or "README.md" not in names else "source-scan-complete",
     }
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Review every non-archived repository in a GitHub organization.")
+    parser = argparse.ArgumentParser(description="Scan visible non-archived repositories; no runtime or security acceptance.")
     parser.add_argument("--org", default=os.environ.get("BOS_GITHUB_ORG", "Conxian"))
     parser.add_argument("--output", default="audit/bos-org-review.json")
     parser.add_argument("--markdown", default="audit/bos-org-review.md")
     args = parser.parse_args()
     root = Path.cwd()
-    report = {"generated_at": dt.datetime.now(dt.UTC).isoformat(), "organization": args.org, "repositories": []}
+    report = {"generated_at": dt.datetime.now(dt.UTC).isoformat(), "organization": args.org,
+              "coverage_scope": "authenticated-visible-non-archived-default-branches",
+              "exhaustive_security_audit": False, "runtime_qualification": False,
+              "repositories": []}
+    try:
+        inventory = repos(args.org)
+    except (OSError, RuntimeError, ValueError) as error:
+        # Provider/process errors can contain credentials or private endpoints.
+        print(f"Repository enumeration unavailable ({type(error).__name__}); no audit completed.", file=sys.stderr)
+        return 1
+    failed = False
     with tempfile.TemporaryDirectory(prefix="bos-org-review-") as temp:
         base = Path(temp)
-        for repo in repos(args.org):
+        for repo in inventory:
             target = base / str(repo["name"])
-            code, output = run(["git", "clone", "--depth", "1", str(repo["clone_url"]), str(target)])
-            if code:
-                report["repositories"].append({"name": repo["name"], "url": repo["html_url"], "status": "clone_failed", "error": output[:500]})
-                continue
-            report["repositories"].append(inspect(repo, target))
+            try:
+                if repo["disabled"]:
+                    raise RuntimeError("disabled repository")
+                code, _ = run(["git", "clone", "--depth", "1", str(repo["clone_url"]), str(target)])
+                if code:
+                    raise RuntimeError("clone failed")
+                observation = inspect(repo, target)
+                if observation["unreadable_text_files"]:
+                    failed = True
+                report["repositories"].append(observation)
+            except (OSError, RuntimeError, ValueError):
+                failed = True
+                report["repositories"].append({"name": repo["name"], "url": repo["html_url"], "status": "source_unavailable"})
+    report["inventory_count"] = len(inventory)
+    report["source_scan_complete"] = not failed
     output_path = root / args.output
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     rows = [f"# BOS organization review\n\nGenerated: `{report['generated_at']}`\n\n| Repository | Status | README | Security | CODEOWNERS | KB candidates |\n|---|---|---:|---:|---:|---:|"]
     for item in report["repositories"]:
         rows.append(f"| [{item['name']}]({item.get('url', '')}) | {item['status']} | {'yes' if item.get('has_readme') else 'no'} | {'yes' if item.get('has_security') else 'no'} | {'yes' if item.get('has_codeowners') else 'no'} | {len(item.get('kb_candidates', []))} |")
-    rows.append("\nThis report is evidence and proposal input. It does not modify repositories, open PRs, or merge changes.")
-    (root / args.markdown).write_text("\n".join(rows) + "\n", encoding="utf-8")
-    print(f"Reviewed {len(report['repositories'])} repositories; wrote {args.output} and {args.markdown}")
-    return 0
+    rows.append("\nScope: authenticated-visible, non-archived default-branch source snapshots only. Other identities, branches, open PRs, dependencies, runtime connections and security acceptance require separate evidence. Findings are heuristic leads, not verified vulnerabilities. Keep reports restricted pending disclosure review.")
+    rows.append(f"\nSource scan complete: {report['source_scan_complete']}. No repository, PR or merge was modified.")
+    markdown_path = root / args.markdown
+    markdown_path.parent.mkdir(parents=True, exist_ok=True)
+    markdown_path.write_text("\n".join(rows) + "\n", encoding="utf-8")
+    print(f"Source scan {'incomplete' if failed else 'complete'} for {len(inventory)} visible repositories; reports require restricted review.")
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":
