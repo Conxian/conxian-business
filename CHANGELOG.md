@@ -13,6 +13,8 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 - Preserve the staged merge parent after squash integration removed ancestry from #1449; require merge-commit integration and post-merge ancestry verification for this repair (#1450).
 
+- Extend service-packaging research with progressive operation activation, existing sovereign/managed/private-cloud lane boundaries, required versus optional infrastructure and primary-source health/entitlement comparisons; preserve pricing, custody and acceptance authorities.
+
 - Reconcile staged ancestry while preserving the exact tested dev runtime and complete packaging/knowledge work; regenerate immutable promotion candidates after review (#1390/#1415/#1448).
 
 - Extend the service review method to prepare/policy/sign/verify/transmit/observe contracts and primary-source examples; reuse the documentation alignment index and preserve historical packaging/signing/KB content behind current context notices (#1390/#1317/#1419).

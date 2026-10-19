@@ -7,3 +7,7 @@ Reconcile both histories through an ordinary reviewed fix into dev. Prove that t
 ## Preserve the merge parents during integration
 
 PR #1449 was squash-merged: its resulting tree matches the reviewed reconciliation tree, but the staged parent was removed. The next promotion #1450 remains conflicted. Restore the already-reviewed staged parent using a new two-parent reconciliation commit based on current dev, with only this explanatory proposal and changelog updated. Integrate this repair with a merge commit; squash and rebase discard the ancestry that this repair exists to retain. Verify after integration that staged is an ancestor of dev and the regenerated immutable promotion is mergeable. Keep runtime files, submodule pins, research, credentials and acceptance gates unchanged.
+
+## Refresh against the current dev head
+
+Merge current dev `6af4451af3bdf5561d7bd7ff45749e4c374a20ef` into the existing repair head, preserving both histories and all newly integrated activation/hosting research. Resolve only the CHANGELOG overlap by retaining the full current dev changelog plus the existing ancestry-repair note. Verify that only this proposal and the changelog differ from current dev and that staged remains an ancestor. The changed source requires fresh independent review and checks; merge-commit integration remains mandatory.

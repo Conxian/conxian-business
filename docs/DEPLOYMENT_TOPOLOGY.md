@@ -1,4 +1,19 @@
-# Deployment Topology (single source of truth)
+# Deployment topology and hosting qualification
+
+## Current qualification rules — 19 October 2026
+
+This is deployment design context, not a live service inventory. The domain map below remains an intended mapping requiring owner resolution and actual DNS/host/source read-back; a source declaration, successful build or provider connector does not prove a running authorized service. Preserve ownership decisions under Platform #1167 and deployment acceptance under Business #1349/#1390.
+
+- Choose hosts from the selected runtime's state and process requirements, independently of commercial package or cryptographic trust tier. Use the established [three deployment lanes](architecture/THREE_LANE_RUNTIME_DEPLOYMENT_ARCHITECTURE.md) and [service activation method](SERVICE_PACKAGING_REVIEW_METHOD.md#progressive-activation-within-existing-packages).
+- A free plan is appropriate only when it meets the actual runtime contract. Durable disk, required database/cache, backup and recovery are launch prerequisites where required; do not substitute ephemeral storage or omit controls until revenue arrives. Actual provisioning and ongoing costs belong to the approved deployment record.
+- Platform has both file and Neon M2M registry implementations. File mode requires durable writable storage and the qualified writer topology. Neon mode requires the intended database/role/schema, configuration and independently tested readiness/recovery; its presence in source alone does not validate a Vercel deployment. Never point file mode at ephemeral `/tmp` to satisfy health.
+- Gateway's selected exclusive-local-writer lane requires durable state/queue storage and one writer. Redis is not a universal prerequisite of that lane; qualify separate managed/distributed operations by their real call paths. Use the exact release's startup contract, including currently mandatory secrets and conditional providers.
+- Nexus requires its actual SQL/Redis and selected RPC/provider contracts. A stateless frontend or local SDK/verification operation need not wait for unrelated optional backends, but any operation using them must remain unavailable until qualified.
+- Deploy and accept exact promoted artifacts with identity, state, network and rollback read-back. Retire duplicates only after ownership, unique traffic/work and recovery are reconciled. The dated tables below are retained as migration context; their “live,” “undeployed” and provider counts require fresh evidence.
+
+[Render's current disk contract](https://render.com/docs/disks) requires paid compute, persists only the mount subtree, limits a disk to one service instance and prevents zero-downtime deployments. Account for restart/deploy interruption and tested backups before promising availability. A larger commercial plan does not remove these architectural constraints.
+
+## Historical placement snapshot — 3 October 2026
 
 > Supersedes the host mapping in `conxian-labs-site/DOMAIN_CUTOVER.md` (stale: says
 > `www → Render`). The authoritative machine-readable map is
