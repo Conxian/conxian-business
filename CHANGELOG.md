@@ -1,5 +1,7 @@
 # Changelog
 
+- Add a root Node 24 control-plane container with frozen workspace dependencies, non-root standalone runtime and hosted HTTP/static/session smoke checks; protected runtime configuration and release acceptance remain required.
+
 All notable changes to the Conxian Business Operations System (BOS) will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
