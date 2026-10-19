@@ -9,6 +9,8 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+- Require the public Core billing export in pinned propagation evidence, covering the staged missing-export regression; document independent service-packaging review dimensions without changing rates or entitlement (Business #1343/#1390).
+
 ### Fixed (2026-10-19 — Candidate preservation)
 - Preserve immutable promotion refs when source, target or candidate heads move. Reconciliation checks existing PRs before publishing, retains existing branches, uses create-only ref leases and leaves new candidates for checks and review. Refs #1415 / #1390.
 

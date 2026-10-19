@@ -26,6 +26,7 @@ class BillingPropagationTests(unittest.TestCase):
                    "confers_entitlement": False, "cross_product_entitlement": "unavailable",
                    "gateway": {"unit": "usd_cents"}, "nexus": {"upgrade_unit": "satoshis"}}
         self.files = {"core/spec/billing_conformance.v1.json": json.dumps(catalog),
+                      "core/src/lib.rs": "pub mod billing;\n",
                       "sdk/Cargo.toml": '[package]\nversion = "2.1.0"\n',
                       "core/Cargo.toml": '[package]\nversion = "0.3.3"\n[dependencies]\n'
                       'conxius-enclave-sdk = { git = "https://github.com/Conxian/conxius-enclave-sdk", '
@@ -42,6 +43,20 @@ class BillingPropagationTests(unittest.TestCase):
 
     def test_valid_configuration_is_not_authority(self):
         self.assertEqual(MODULE.validate_contents(self.record, self.files), [])
+
+    def test_catalog_and_pins_do_not_hide_a_missing_public_export(self):
+        for source in ["", "mod billing;\n", "// pub mod billing;\n",
+                       "/*\npub mod billing;\n*/\n", "pub mod billing_disabled;\n"]:
+            with self.subTest(source=source):
+                files = dict(self.files)
+                files["core/src/lib.rs"] = source
+                self.assertIn("core: public billing module declaration missing",
+                              MODULE.validate_contents(self.record, files))
+
+    def test_core_root_source_is_required(self):
+        files = dict(self.files)
+        del files["core/src/lib.rs"]
+        self.assertTrue(MODULE.validate_contents(self.record, files))
 
     def test_nonobject_records_and_boolean_versions_are_rejected(self):
         for value in [None, [], "", 0]:
