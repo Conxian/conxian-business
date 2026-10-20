@@ -36,6 +36,11 @@ The recorded values must match the pull request refs and SHAs.
   Acceptance Evidence Pack.
 - Generated candidate creation is idempotent for one source SHA and never
   rewrites an immutable candidate with a bare force push.
+- The generator skips obsolete push events after fetching the current source.
+  It requires target ancestry in the exact source before publishing a candidate.
+  Shared merge bases and equal file trees are insufficient. Reconcile missing
+  history through a reviewed merge commit that retains the target parent, then
+  verify ancestry after integration; squash/rebase cannot preserve that parent.
 
 ## Enforcement boundary
 
