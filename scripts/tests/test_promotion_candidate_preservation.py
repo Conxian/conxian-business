@@ -73,7 +73,67 @@ class ReconciliationPreservationTests(unittest.TestCase):
         head = git(self.remote, "rev-parse", f"refs/heads/{self.branch}")
         self.assertEqual(git(self.remote, "rev-parse", "refs/heads/dev"), self.base)
         self.assertEqual(git(self.remote, "rev-parse", f"{head}^{{tree}}"), git(self.repo, "rev-parse", f"{self.source}^{{tree}}"))
+        self.assertEqual(git(self.remote, "show", "-s", "--format=%P", head).split(), [self.base, self.source])
         self.assertEqual([c.args[:2] for c in calls], [("pr", "list"), ("pr", "create")])
+
+    def conflicting_lane(self, source, target):
+        if source == "main":
+            git(self.repo, "checkout", "-qb", "main", "staged")
+        else:
+            git(self.repo, "checkout", "-q", source)
+        (self.repo / "base").write_text("higher branch version\n")
+        git(self.repo, "commit", "-qam", "higher conflicting change")
+        source_head = git(self.repo, "rev-parse", "HEAD")
+        git(self.repo, "checkout", "-q", target)
+        (self.repo / "base").write_text("lower branch hardened version\n")
+        git(self.repo, "commit", "-qam", "lower conflicting change")
+        target_head = git(self.repo, "rev-parse", "HEAD")
+        git(self.repo, "push", "-q", "origin", source, target)
+        git(self.repo, "fetch", "-q", "origin")
+        self.branch = f"backmerge/{source}-to-{target}"
+        self.plan = module.ReconcilePlan("fixture", source, target, 1)
+        result, calls = self.invoke()
+        self.assertEqual(result["status"], "conflict")
+        self.assertEqual(result["conflict_paths"], ["base"])
+        self.assertEqual(git(self.remote, "rev-parse", f"refs/heads/{target}"), target_head)
+        self.assertEqual(git(self.remote, "rev-parse", f"refs/heads/{source}"), source_head)
+        self.assertEqual(git(self.remote, "for-each-ref", f"refs/heads/{self.branch}"), "")
+        self.assertEqual(len(calls), 1)  # lookup only; no PR or merge
+
+    def test_main_conflict_cannot_overwrite_newer_staged_hardening(self):
+        self.conflicting_lane("main", "staged")
+
+    def test_staged_conflict_cannot_silently_discard_staged_fix(self):
+        self.conflicting_lane("staged", "dev")
+
+    def test_independent_changes_merge_with_both_real_parents(self):
+        git(self.repo, "checkout", "-q", "dev")
+        (self.repo / "target").write_text("lower independent work\n")
+        git(self.repo, "add", "target")
+        git(self.repo, "commit", "-qm", "target addition")
+        target_head = git(self.repo, "rev-parse", "HEAD")
+        git(self.repo, "push", "-q", "origin", "dev")
+        git(self.repo, "fetch", "-q", "origin")
+        result, _ = self.invoke()
+        self.assertEqual(result["status"], "opened")
+        head = git(self.remote, "rev-parse", f"refs/heads/{self.branch}")
+        self.assertEqual(git(self.remote, "show", "-s", "--format=%P", head).split(), [target_head, self.source])
+        self.assertEqual(git(self.remote, "show", f"{head}:source"), "higher branch addition")
+        self.assertEqual(git(self.remote, "show", f"{head}:target"), "lower independent work")
+
+    def test_conflicted_reconciliation_exits_nonzero(self):
+        with patch.object(sys, "argv", ["reconcile_branches.py", "--reconcile"]), patch.object(
+            module, "detect", return_value=[self.plan]
+        ), patch.object(module, "reconcile", return_value={"status": "conflict"}), patch("sys.stdout"):
+            self.assertEqual(module.main(), 1)
+
+    def test_missing_target_stops_before_merge_or_publication(self):
+        self.plan.target = "missing"
+        self.branch = "backmerge/staged-to-missing"
+        with self.assertRaises(subprocess.CalledProcessError):
+            self.invoke()
+        self.assertEqual(git(self.remote, "for-each-ref", f"refs/heads/{self.branch}"), "")
+        self.assertEqual(git(self.remote, "rev-parse", "refs/heads/dev"), self.base)
 
     def test_dry_run_does_not_publish_or_open_pr(self):
         result, calls = self.invoke(dry=True)
