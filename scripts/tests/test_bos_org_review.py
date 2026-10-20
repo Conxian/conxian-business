@@ -54,6 +54,16 @@ class InventoryTests(unittest.TestCase):
 
 
 class ReportTests(unittest.TestCase):
+    def test_kb_discovery_retains_candidates_beyond_one_hundred(self):
+        with tempfile.TemporaryDirectory() as temp, \
+                patch.object(audit, "run", return_value=(0, "a" * 40)):
+            root = Path(temp)
+            for index in range(125):
+                (root / f"knowledge-{index:03}.md").write_text("documentation")
+            result = audit.inspect(repository(), root)
+        self.assertEqual(len(result["kb_candidates"]), 125)
+        self.assertEqual(result["kb_candidates"][-1], "knowledge-124.md")
+
     def execute(self, root, *, clone_error=False, disabled=False, unreadable=False):
         def run(command, cwd=None):
             if command[:2] == ["gh", "api"]:
