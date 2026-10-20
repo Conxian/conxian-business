@@ -8,14 +8,11 @@ going through the chain (e.g. direct-to-main `docs`/`chore`/`feat` merges, or
 direct-to-staged merges). This script detects that drift and opens a
 back-merge PR to re-sync the lower branch.
 
-Resolution policy:
-- ``main -> staged``: ``main`` is authoritative (``-X theirs``). Direct-to-main
-  work must flow down, so ``main``'s version wins conflicts.
-- ``staged -> dev``: the lower branch ``dev`` is authoritative on conflict
-  (``-X ours``). Forward work lands on ``dev`` first and can be newer than
-  ``staged`` (e.g. an unpromoted dependency upgrade); ``-X theirs`` would revert
-  that forward work by taking ``staged``'s stale version. Non-conflicting
-  staged-side changes still merge down cleanly.
+Resolution policy: automatically prepare only conflict-free merges. Neither
+branch name establishes which conflicting implementation is correct: a higher
+branch can contain older content after squash promotions. Conflicts require a
+reviewed manual reconciliation preserving both histories and qualified changes.
+Never select one side globally with ``-X ours`` or ``-X theirs``.
 
 Forward-promotion artifacts (``PROMOTION:STAGED->MAIN`` / ``PROMOTION:DEV->STAGED``
 merge commits) are legitimate and are excluded from drift detection.
@@ -73,7 +70,7 @@ def _gh(*args: str) -> str:
 
 
 def _git(*args: str, cwd: str | None = None) -> str:
-    proc = subprocess.run(["git", *args], capture_output=True, text=True, cwd=cwd)
+    proc = subprocess.run(["git", *args], check=True, capture_output=True, text=True, cwd=cwd)
     return proc.stdout
 
 
@@ -101,7 +98,7 @@ def is_promotion_artifact(commit: dict) -> bool:
 @dataclass
 class ReconcilePlan:
     repo: str
-    source: str  # higher, authoritative branch
+    source: str  # higher branch, not automatic content authority
     target: str  # lower branch to re-sync
     n_drift: int  # non-promotion commits to re-sync
 
@@ -195,21 +192,19 @@ def reconcile(plan: ReconcilePlan, dry_run: bool) -> dict:
             raise RuntimeError("Could not verify reconciliation branch availability")
         _git("checkout", "-q", "-b", branch_name, f"origin/{plan.target}", cwd=repo_dir)
 
-        # Merge the higher branch down, preserving the lower branch's genuine
-        # forward work. For main -> staged, main is authoritative ("-X theirs").
-        # For staged -> dev, dev must win conflicts ("-X ours"): dev can be
-        # content-ahead of staged when forward work is stuck unpromoted, and
-        # "-X theirs" would revert it. Non-conflicting higher-branch changes
-        # still merge in either direction.
-        merge_strategy = "theirs" if plan.source == "main" else "ours"
+        # Do not turn a text conflict into a silent semantic rollback. A plain
+        # merge preserves independent changes and stops on ambiguous content.
         before = _git("rev-parse", "HEAD", cwd=repo_dir).strip()
         merge = subprocess.run(
-            ["git", "merge", f"origin/{plan.source}", "-X", merge_strategy, "--no-edit"],
+            ["git", "merge", "--no-ff", f"origin/{plan.source}", "--no-edit"],
             capture_output=True, text=True, cwd=repo_dir,
         )
         if merge.returncode != 0:
             result["status"] = "conflict"
-            result["detail"] = merge.stderr.strip()[-300:]
+            result["detail"] = "Merge did not complete; manual reconciliation is required. No candidate was published."
+            result["conflict_paths"] = _git(
+                "diff", "--name-only", "--diff-filter=U", cwd=repo_dir
+            ).splitlines()
             return result
         if _git("rev-parse", "HEAD", cwd=repo_dir).strip() == before:
             result["status"] = "skipped_equal"
@@ -241,7 +236,7 @@ def reconcile(plan: ReconcilePlan, dry_run: bool) -> dict:
         )
         result["status"] = "opened"
         result["pr_url"] = out.strip()
-        # A merge strategy may still introduce a regression. Leave the PR open
+        # A conflict-free merge may still introduce a regression. Leave the PR open
         # for exact-head CI and applicable review; never use admin bypass.
     return result
 
@@ -268,7 +263,7 @@ def main() -> int:
     results = [reconcile(p, dry_run=args.dry_run) for p in plans]
     json.dump(results, sys.stdout, indent=2)
     print()
-    return 0
+    return 1 if any(result["status"] == "conflict" for result in results) else 0
 
 
 if __name__ == "__main__":
