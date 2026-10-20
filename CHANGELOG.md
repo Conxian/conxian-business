@@ -1,5 +1,7 @@
 # Changelog
 
+- Retain every discovered KB candidate in source-pinned organization reviews instead of silently truncating each repository at 100 paths.
+
 - Add a root Node 24 control-plane container with frozen workspace dependencies, non-root standalone runtime and hosted HTTP/static/session smoke checks; protected runtime configuration and release acceptance remain required.
 
 All notable changes to the Conxian Business Operations System (BOS) will be documented in this file.

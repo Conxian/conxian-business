@@ -80,7 +80,7 @@ def inspect(repo: dict[str, object], checkout: Path) -> dict[str, object]:
             secret_hits.append(path.relative_to(checkout).as_posix())
         if any(marker in text for marker in ("dangerouslySetInnerHTML", "eval(", "child_process.exec(", "os.system(")):
             unsafe_hits.append(path.relative_to(checkout).as_posix())
-    kb = sorted(str(p.relative_to(checkout)) for p in files if any(token in p.name.lower() for token in ("readme", "knowledge", "changelog", "governance", "architecture")))[:100]
+    kb = sorted(str(p.relative_to(checkout)) for p in files if any(token in p.name.lower() for token in ("readme", "knowledge", "changelog", "governance", "architecture")))
     return {
         "name": repo["name"],
         "url": repo["html_url"],
