@@ -14,3 +14,5 @@ Existing Business lineage repair still requires a reviewed merge commit retainin
 
 ## Hosted validation follow-up
 The full workspace check builds the upgraded container but its anonymous sign-in HTTP smoke returns 500. Its failure handler discards container stderr, hiding the application cause. Retain a bounded final 100 lines from both container streams for this isolated synthetic CI container; retain the failing HTTP assertion. This diagnostic adjustment grants no runtime access and does not claim that the startup failure is fixed.
+
+Retained diagnostics establish PostgreSQL connection refusal at the implicit loopback default. The upgraded auth adapter initializes its database even for the anonymous smoke path. Supply an isolated PostgreSQL 17 CI service with synthetic fixture credentials and an explicit container-to-host connection; wait for database readiness. Do not disable auth checks, catch the error as an anonymous success, or reuse any deployed/customer database. Retain sign-in, static assets, null anonymous session, PORT and non-root assertions. This does not qualify authenticated login or production schema migration.

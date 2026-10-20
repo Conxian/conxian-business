@@ -17,6 +17,20 @@ jobs:
   validate:
     name: Validate workspace
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: control_plane_ci
+          POSTGRES_PASSWORD: synthetic-ci-only
+          POSTGRES_DB: control_plane_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U control_plane_ci -d control_plane_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
     steps:
       - name: Checkout repository with submodules
         uses: actions/checkout@v4
@@ -42,9 +56,11 @@ jobs:
       - name: Verify control-plane container HTTP boundary
         run: |
           docker run --detach --name control-plane-ci --publish 127.0.0.1:18080:18080 \
+            --add-host host.docker.internal:host-gateway \
             --env PORT=18080 \
             --env BETTER_AUTH_URL=https://control-plane.invalid \
             --env BETTER_AUTH_SECRET=ci-fixture-only-never-use-in-a-deployment \
+            --env DATABASE_URL=postgresql://control_plane_ci:synthetic-ci-only@host.docker.internal:5432/control_plane_ci \
             conxian-control-plane:ci
           trap 'docker stop control-plane-ci >/dev/null' EXIT
           python3 - <<'PY'
