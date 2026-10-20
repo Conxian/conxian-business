@@ -92,9 +92,19 @@ jobs:
           git fetch --no-tags origin "$SOURCE" "$TARGET"
 
           SOURCE_SHA=$(git rev-parse HEAD)
+          LATEST_SOURCE_SHA=$(git rev-parse "origin/${SOURCE}")
           TARGET_SHA=$(git rev-parse "origin/${TARGET}")
+          if [ "$SOURCE_SHA" != "$LATEST_SOURCE_SHA" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Obsolete source event ${SOURCE}@${SOURCE_SHA}; current source is ${LATEST_SOURCE_SHA}. No candidate will be published for this event."
+            exit 0
+          fi
           if ! git merge-base "$SOURCE_SHA" "$TARGET_SHA" >/dev/null; then
             echo "::error::Source and target have no merge base. Refusing bulk synchronization; open a reviewed manual promotion PR after lineage reconciliation."
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor "$TARGET_SHA" "$SOURCE_SHA"; then
+            echo "::error::Target ${TARGET}@${TARGET_SHA} is not an ancestor of ${SOURCE}@${SOURCE_SHA}. Reconcile target history through a reviewed merge commit before promotion; an equal tree or squash does not retain ancestry. Existing candidates are preserved."
             exit 1
           fi
 
