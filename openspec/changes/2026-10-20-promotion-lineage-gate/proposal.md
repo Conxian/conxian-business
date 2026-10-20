@@ -11,3 +11,6 @@ Execute the actual workflow capture shell against real temporary Git repositorie
 
 ## Remaining work
 Existing Business lineage repair still requires a reviewed merge commit retaining the staged parent, integrated validation and normal promotion evidence. Use an explicit merge method and exact-head guard when eligible; do not use repository-default squash/auto-merge for ancestry-bearing reconciliation. This generator fix does not repair refs or qualify deployment. No current candidate or source branch is deleted.
+
+## Hosted validation follow-up
+The full workspace check builds the upgraded container but its anonymous sign-in HTTP smoke returns 500. Its failure handler discards container stderr, hiding the application cause. Retain a bounded final 100 lines from both container streams for this isolated synthetic CI container; retain the failing HTTP assertion. This diagnostic adjustment grants no runtime access and does not claim that the startup failure is fixed.

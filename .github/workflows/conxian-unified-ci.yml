@@ -77,4 +77,4 @@ jobs:
           test "$(docker inspect --format '{{.Config.User}}' control-plane-ci)" = node
       - name: Container logs on failure
         if: failure()
-        run: docker logs control-plane-ci 2>/dev/null || true
+        run: docker logs --tail 100 control-plane-ci || true
