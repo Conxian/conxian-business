@@ -4,6 +4,8 @@
 Requires RENDER_API_KEY and RENDER_OWNER_ID (or --owner-id). Missing access,
 services, deployment records and non-live states fail closed. Pagination follows
 https://api-docs.render.com/reference/pagination.
+Use --expected-deployments with a release-specific manifest to bind service,
+repository and full source SHA. Metadata alone never grants runtime acceptance.
 """
 from __future__ import annotations
 
@@ -80,6 +82,57 @@ def repository_name(value: object) -> str | None:
     return match[1] if match else None
 
 
+def _unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate manifest key")
+        result[key] = value
+    return result
+
+
+def load_expected_deployments(path: Path, required: list[str]) -> list[dict]:
+    with path.open("rb") as handle:
+        raw = handle.read(MAX_BYTES + 1)
+    if len(raw) > MAX_BYTES:
+        raise ValueError("release manifest exceeds limit")
+    manifest = json.loads(raw.decode("utf-8"), object_pairs_hook=_unique_object)
+    if (not isinstance(manifest, dict) or set(manifest) != {"schema_version", "deployments"}
+            or type(manifest["schema_version"]) is not int or manifest["schema_version"] != 1
+            or not isinstance(manifest["deployments"], list) or not manifest["deployments"]):
+        raise ValueError("invalid release manifest")
+    seen, repos = set(), set()
+    for entry in manifest["deployments"]:
+        if (not isinstance(entry, dict) or set(entry) != {"service_id", "repository", "commit"}
+                or not isinstance(entry["service_id"], str)
+                or not SERVICE_ID.fullmatch(entry["service_id"])
+                or entry["service_id"] in seen
+                or not isinstance(entry["repository"], str)
+                or repository_name(f'https://github.com/{entry["repository"]}') != entry["repository"]
+                or not isinstance(entry["commit"], str)
+                or not re.fullmatch(r"[0-9a-f]{40}", entry["commit"])):
+            raise ValueError("invalid release deployment entry")
+        seen.add(entry["service_id"])
+        repos.add(entry["repository"])
+    if not set(required).issubset(repos):
+        raise ValueError("release manifest omits required repository")
+    return manifest["deployments"]
+
+
+def bind_expected_deployments(observations: list[dict], expected: list[dict]) -> list[str]:
+    observed = {entry["service_id"]: entry for entry in observations}
+    errors = []
+    for entry in expected:
+        actual = observed.get(entry["service_id"])
+        if actual is None:
+            errors.append(f'{entry["service_id"]}: expected service missing from scoped inventory')
+        elif (actual["repository"] != entry["repository"]
+              or actual["commit"] != entry["commit"]
+              or actual["deployment_status"] != "live"):
+            errors.append(f'{entry["service_id"]}: expected live repository/source binding not established')
+    return errors
+
+
 def audit_services(services: list[dict], required: list[str], token: str,
                    fetch=_http_json) -> tuple[list[dict], list[str]]:
     errors, observations = [], []
@@ -123,11 +176,14 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--owner-id", default=os.environ.get("RENDER_OWNER_ID"))
     parser.add_argument("--scope", type=Path, default=DEFAULT_SCOPE)
+    parser.add_argument("--expected-deployments", type=Path,
+                        help="Release manifest of exact service/repository/commit bindings")
     parser.add_argument("--summary-only", action="store_true",
                         help="Omit infrastructure observations from public CI logs")
     args = parser.parse_args(argv)
     token = os.environ.get("RENDER_API_KEY")
-    errors, observations = [], []
+    errors, observations, expected = [], [], None
+    source_binding_passed = False if args.expected_deployments is not None else None
     if not token:
         errors.append("RENDER_API_KEY missing; provider audit unavailable")
     if not isinstance(args.owner_id, str) or not OWNER_ID.fullmatch(args.owner_id):
@@ -142,13 +198,25 @@ def main(argv=None) -> int:
             raise ValueError("invalid required repository scope")
     except (OSError, ValueError, TypeError, KeyError):
         errors.append("required repository scope unavailable or malformed")
+    if not errors and args.expected_deployments is not None:
+        try:
+            expected = load_expected_deployments(args.expected_deployments, required)
+        except (OSError, ValueError, TypeError, KeyError):
+            errors.append("expected deployment manifest unavailable or malformed")
     if not errors:
         try:
             services = list_services(args.owner_id, token)
             observations, errors = audit_services(services, required, token)
         except (OSError, ValueError, TypeError, KeyError) as exc:
             errors = [f"scoped provider inventory unavailable ({_failure(exc)})"]
-    output = {"metadata_checks_passed": not errors, "runtime_or_release_authority": False}
+    metadata_passed = not errors
+    if expected is not None:
+        binding_errors = bind_expected_deployments(observations, expected)
+        source_binding_passed = metadata_passed and not binding_errors
+        errors.extend(binding_errors)
+    output = {"metadata_checks_passed": metadata_passed,
+              "expected_source_checks_passed": source_binding_passed,
+              "runtime_or_release_authority": False}
     if args.summary_only:
         output["error_count"] = len(errors)
     else:
