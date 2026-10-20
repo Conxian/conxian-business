@@ -11,6 +11,8 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+- Skip obsolete promotion events and reject sources omitting target ancestry before publishing refs/PRs; preserve existing candidates and require reviewed history reconciliation.
+
 - Preserve the staged merge parent after squash integration removed ancestry from #1449; require merge-commit integration and post-merge ancestry verification for this repair (#1450).
 
 - Extend service-packaging research with progressive operation activation, existing sovereign/managed/private-cloud lane boundaries, required versus optional infrastructure and primary-source health/entitlement comparisons; preserve pricing, custody and acceptance authorities.
