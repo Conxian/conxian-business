@@ -11,6 +11,10 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+- Carry the staged target as a real parent in #1479 while preserving the tested current source; require merge-commit integration and actual post-merge ancestry verification before accepting the repair (#1415/#1390).
+
+- Add opt-in Render service/repository/commit read-back against a restricted release manifest; reject stale live sources and incomplete evidence while keeping source binding distinct from metadata and runtime acceptance (#1479/#1349/#1423).
+
 - Skip obsolete promotion events and reject sources omitting target ancestry before publishing refs/PRs; preserve existing candidates and require reviewed history reconciliation.
 
 - Preserve the staged merge parent after squash integration removed ancestry from #1449; require merge-commit integration and post-merge ancestry verification for this repair (#1450).
