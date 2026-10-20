@@ -1,4 +1,8 @@
 # Signing Partner Research — Phase 2: Deepening & Unexplored Areas
+
+<!-- KNOWLEDGE-ROUTING-2026-10-19:BEGIN -->
+> Research context: the dated algorithm, implementation and effort statements below are historical research inputs. Revalidate the exact library/provider version, ceremony and acceptance evidence before implementation or service claims. See the [operation-level review method](../SERVICE_PACKAGING_REVIEW_METHOD.md) and [documentation index](../DOCUMENTATION_ALIGNMENT_INDEX.md).
+<!-- KNOWLEDGE-ROUTING-2026-10-19:END -->
 > **Session 52.5.4+ | 2026-08-03**
 > **Complements**: `SIGNING_PARTNER_RESEARCH_AND_ETHOS_ALIGNMENT.md`
 > **Scope**: DKG, ROAST, post-quantum, federated signing, intents, TEE evolution

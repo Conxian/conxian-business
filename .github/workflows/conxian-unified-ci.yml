@@ -17,6 +17,20 @@ jobs:
   validate:
     name: Validate workspace
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: control_plane_ci
+          POSTGRES_PASSWORD: synthetic-ci-only
+          POSTGRES_DB: control_plane_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U control_plane_ci -d control_plane_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
     steps:
       - name: Checkout repository with submodules
         uses: actions/checkout@v4
@@ -37,3 +51,50 @@ jobs:
         run: pnpm --filter @conxian/control-plane build
       - name: Test control-plane runtime boundary
         run: pnpm --filter @conxian/control-plane test
+      - name: Build control-plane container
+        run: docker build --tag conxian-control-plane:ci .
+      - name: Prepare isolated CI auth schema
+        env:
+          DATABASE_URL: postgresql://control_plane_ci:synthetic-ci-only@127.0.0.1:5432/control_plane_ci
+        run: pnpm --filter @conxian/control-plane exec node scripts/prepare-ci-auth-db.mjs
+      - name: Verify control-plane container HTTP boundary
+        run: |
+          docker run --detach --name control-plane-ci --publish 127.0.0.1:18080:18080 \
+            --add-host host.docker.internal:host-gateway \
+            --env PORT=18080 \
+            --env BETTER_AUTH_URL=https://control-plane.invalid \
+            --env BETTER_AUTH_SECRET=ci-fixture-only-never-use-in-a-deployment \
+            --env DATABASE_URL=postgresql://control_plane_ci:synthetic-ci-only@host.docker.internal:5432/control_plane_ci \
+            conxian-control-plane:ci
+          trap 'docker stop control-plane-ci >/dev/null' EXIT
+          python3 - <<'PY'
+          import re
+          import time
+          import urllib.request
+
+          origin = "http://127.0.0.1:18080"
+          for attempt in range(30):
+              try:
+                  with urllib.request.urlopen(origin + "/sign-in", timeout=2) as response:
+                      html = response.read().decode()
+                      assert response.status == 200
+                  break
+              except OSError:
+                  if attempt == 29:
+                      raise
+                  time.sleep(1)
+          assets = re.findall(r'(?:src|href)="([^"?]+\.(?:css|js))(?:\?[^" ]*)?"', html)
+          assets = [asset for asset in assets if asset.startswith("/_next/static/")]
+          assert assets, "No static assets in sign-in response"
+          for asset in assets:
+              with urllib.request.urlopen(origin + asset, timeout=5) as response:
+                  assert response.status == 200
+                  assert response.read(1), "Empty static asset"
+          with urllib.request.urlopen(origin + "/api/auth/get-session", timeout=5) as response:
+              assert response.status == 200
+              assert response.read().strip() == b"null", "Unexpected anonymous session"
+          PY
+          test "$(docker inspect --format '{{.Config.User}}' control-plane-ci)" = node
+      - name: Container logs on failure
+        if: failure()
+        run: docker logs --tail 100 control-plane-ci || true

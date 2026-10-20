@@ -4,6 +4,7 @@ import io
 import json
 import os
 from pathlib import Path
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -121,11 +122,93 @@ class RenderDeployTests(unittest.TestCase):
             with contextlib.redirect_stdout(output):
                 self.assertEqual(MODULE.main(["--summary-only"]), 1)
             result = json.loads(output.getvalue())
-            self.assertEqual(set(result), {"metadata_checks_passed", "runtime_or_release_authority", "error_count"})
+            self.assertEqual(set(result), {"metadata_checks_passed", "expected_source_checks_passed",
+                                           "runtime_or_release_authority", "error_count"})
+            self.assertIsNone(result["expected_source_checks_passed"])
             self.assertGreater(result["error_count"], 0)
 
     def test_authentication_redirect_is_not_followed(self):
         self.assertIsNone(MODULE.NoRedirect().redirect_request(None, None, 302, "", {}, "https://other.test"))
+
+    def run_manifest(self, text, services=None, response=None, summary=False):
+        with tempfile.TemporaryDirectory() as directory:
+            manifest = Path(directory) / "release.json"
+            manifest.write_text(text)
+            scope = Path(directory) / "scope.json"
+            scope.write_text(json.dumps({"schema_version": 1, "required_repositories": [REPO]}))
+            output = io.StringIO()
+            with patch.dict(os.environ, {"RENDER_API_KEY": "private-test-token",
+                                        "RENDER_OWNER_ID": OWNER}, clear=True), \
+                    patch.object(MODULE, "list_services", return_value=[service()] if services is None else services) as inventory, \
+                    patch.object(MODULE, "_http_json", return_value=live() if response is None else response), \
+                    contextlib.redirect_stdout(output):
+                # audit_services binds its default fetch at import; patch it explicitly.
+                original = MODULE.audit_services
+                with patch.object(MODULE, "audit_services", side_effect=lambda s, r, t:
+                                  original(s, r, t, MODULE._http_json)):
+                    code = MODULE.main(["--scope", str(scope), "--expected-deployments", str(manifest)]
+                                       + (["--summary-only"] if summary else []))
+            return code, json.loads(output.getvalue()), inventory.call_count
+
+    def manifest(self, **updates):
+        entry = {"service_id": "srv-one", "repository": REPO, "commit": "a" * 40}
+        entry.update(updates)
+        return {"schema_version": 1, "deployments": [entry]}
+
+    def test_release_cli_accepts_exact_live_binding_without_granting_authority(self):
+        code, result, _ = self.run_manifest(json.dumps(self.manifest()))
+        self.assertEqual(code, 0)
+        self.assertTrue(result["expected_source_checks_passed"])
+        self.assertFalse(result["runtime_or_release_authority"])
+
+    def test_old_live_source_fails_even_when_metadata_is_valid(self):
+        code, result, _ = self.run_manifest(json.dumps(self.manifest(commit="b" * 40)))
+        self.assertEqual(code, 1)
+        self.assertTrue(result["metadata_checks_passed"])
+        self.assertFalse(result["expected_source_checks_passed"])
+
+    def test_missing_service_and_repository_substitution_fail(self):
+        for manifest in [self.manifest(service_id="srv-other"),
+                         {"schema_version": 1, "deployments": [self.manifest()["deployments"][0],
+                          {"service_id": "srv-other", "repository": "Conxian/conxian-nexus", "commit": "a" * 40}]}]:
+            code, result, _ = self.run_manifest(json.dumps(manifest))
+            self.assertEqual(code, 1)
+            self.assertFalse(result["expected_source_checks_passed"])
+        changed = service()
+        changed["repo"] = "https://github.com/Conxian/conxian-nexus"
+        code, result, _ = self.run_manifest(json.dumps(self.manifest()), services=[changed])
+        self.assertEqual(code, 1)
+        self.assertFalse(result["expected_source_checks_passed"])
+
+    def test_manifest_rejects_partial_duplicate_malformed_and_mutable_evidence_before_network(self):
+        duplicate = self.manifest()
+        duplicate["deployments"] *= 2
+        cases = [None, [], {}, {"schema_version": True, "deployments": []}, duplicate,
+                 self.manifest(commit="main"), self.manifest(commit="a" * 7),
+                 self.manifest(service_id="../other"), self.manifest(repository="Conxian/other"),
+                 self.manifest(repository="Conxian/conxian-gateway/extra"), self.manifest(extra=True)]
+        for value in cases:
+            with self.subTest(value=value):
+                code, result, calls = self.run_manifest(json.dumps(value))
+                self.assertEqual(code, 1)
+                self.assertFalse(result["expected_source_checks_passed"])
+                self.assertEqual(calls, 0)
+        code, _, calls = self.run_manifest('{"schema_version":1,"schema_version":1,"deployments":[]}')
+        self.assertEqual((code, calls), (1, 0))
+
+    def test_failed_deploy_cannot_pass_exact_source_binding(self):
+        response = live()
+        response[0]["deploy"]["status"] = "build_failed"
+        code, result, _ = self.run_manifest(json.dumps(self.manifest()), response=response)
+        self.assertEqual(code, 1)
+        self.assertFalse(result["expected_source_checks_passed"])
+
+    def test_release_summary_redacts_manifest_and_infrastructure(self):
+        code, result, _ = self.run_manifest(json.dumps(self.manifest(commit="b" * 40)), summary=True)
+        self.assertEqual(code, 1)
+        self.assertFalse(result["expected_source_checks_passed"])
+        for private in ["srv-one", REPO, "b" * 40, "private-test-token"]:
+            self.assertNotIn(private, json.dumps(result))
 
 
 if __name__ == "__main__":

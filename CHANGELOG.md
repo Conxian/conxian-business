@@ -1,5 +1,7 @@
 # Changelog
 
+- Add a root Node 24 control-plane container with frozen workspace dependencies, non-root standalone runtime and hosted HTTP/static/session smoke checks; protected runtime configuration and release acceptance remain required.
+
 All notable changes to the Conxian Business Operations System (BOS) will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
@@ -8,6 +10,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.md](docs/RELEASE_NOTES_AND_CHANGELOG.md).
 
 ## [Unreleased]
+
+- Carry the staged target as a real parent in #1479 while preserving the tested current source; require merge-commit integration and actual post-merge ancestry verification before accepting the repair (#1415/#1390).
+
+- Add opt-in Render service/repository/commit read-back against a restricted release manifest; reject stale live sources and incomplete evidence while keeping source binding distinct from metadata and runtime acceptance (#1479/#1349/#1423).
+
+- Skip obsolete promotion events and reject sources omitting target ancestry before publishing refs/PRs; preserve existing candidates and require reviewed history reconciliation.
+
+- Preserve the staged merge parent after squash integration removed ancestry from #1449; require merge-commit integration and post-merge ancestry verification for this repair (#1450).
+
+- Extend service-packaging research with progressive operation activation, existing sovereign/managed/private-cloud lane boundaries, required versus optional infrastructure and primary-source health/entitlement comparisons; preserve pricing, custody and acceptance authorities.
+
+- Reconcile staged ancestry while preserving the exact tested dev runtime and complete packaging/knowledge work; regenerate immutable promotion candidates after review (#1390/#1415/#1448).
+
+- Extend the service review method to prepare/policy/sign/verify/transmit/observe contracts and primary-source examples; reuse the documentation alignment index and preserve historical packaging/signing/KB content behind current context notices (#1390/#1317/#1419).
+
+- Correct stale Gateway secret-count/readiness mirrors and document distinct issue, task, PR, project and operational evidence boundaries (#1390/#1423; Gateway #466).
 
 - Fail closed on incomplete organization source inventory: paginate visible repositories, remove the submodule fallback, pin scanned revisions and distinguish heuristic source coverage from runtime/security acceptance (#1390/#1423).
 

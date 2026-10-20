@@ -1,5 +1,13 @@
 # Conxian AGENTS.md
 
+## Current owner execution direction — 20 October 2026
+
+Business coordinates the portfolio through #1390, with research #1317, billing #1343 and lifecycle/operations #1423. Use the current overlay in `docs/RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md`; preserve repository runtime/security/legal/release ownership and existing issue acceptance. Historical session summaries below are dated evidence, not current deployment or capability proof.
+
+Continue authorized work in P0 → P1 → P2 order through the existing ITIL 5 phases and KBs. Install task-required software when needed, prefer official sources and repo-pinned toolchains, isolate task tooling, verify actual usability and record versions. Distinguish missing executables, runtime/kernel restrictions, network, credentials, permissions, resources and operation qualification. Use a capable approved hosted runner when local execution is restricted; do not claim a local test. Installation does not establish service access or authorize changing provider/release controls.
+
+GitHub issues and PRs are the sole engineering work records; tasks are bounded actions and Projects are optional views. Preserve beneficial code/research and verify retention before superseding candidates. Refresh exact-source checks, genuine independent review and normal promotion/acceptance evidence for changed heads. Keep restricted findings, credentials, customer records and financial strategy out of public Git.
+
 ## BOS Operational Standards
 > **Version**: 1.16 (2026-10-02 — fee model G4/G5/G8 + benchmark, G6 rail ontology rename, G7 Strategic Triad repoint)
 > **Version**: 1.15 (2026-10-02 — market ADR-004 productionization + org-wide capabilities/production audit)
