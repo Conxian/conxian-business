@@ -85,8 +85,10 @@ cross-repository verification tasks.
 
 ## Container runtime
 
-The repository-root `Dockerfile` builds this control plane using Node 24,
-pnpm 10.28.0 and the committed lockfile. The Dockerfile-specific ignore file
+The repository-root `Dockerfile` builds this control plane using its declared Node
+image, pnpm 10.28.0 and the committed lockfile. The current image is Node 26 while
+the package engine and host CI remain Node 24; this toolchain difference needs a
+coordinated qualification decision under #1414. The Dockerfile-specific ignore file
 limits its context to this app and the two shared packages; the existing
 Gateway Dockerfile/context remains separate. Next.js standalone tracing includes
 the workspace root, and the final image runs as the unprivileged `node` user.
@@ -98,9 +100,13 @@ docker run --env-file /protected/control-plane.env -p 127.0.0.1:10000:10000 conx
 
 Supply the protected server-side settings listed above at runtime. The container
 binds `0.0.0.0` and respects `PORT` (default 10000). It does not provision database
-tables, users, credentials, Nexus or migrations. CI builds the actual image and
-checks sign-in, static assets and an anonymous session on an overridden port;
-these are process/HTTP checks, not authenticated backend acceptance.
+tables, users, credentials, Nexus or migrations. The #1478 CI correction supplies
+an isolated synthetic PostgreSQL service and prepares only that fixture's auth
+schema with the installed Better Auth migrator, guarded to its exact CI target.
+CI builds the actual image and checks sign-in, static assets and an anonymous
+session on an overridden port. These are process/HTTP checks, not authenticated
+backend or production-migration acceptance. Production schema, user-role and
+audit-table migration remain independently reviewed operational work.
 
 A Render service using this repository root and `./Dockerfile` must deploy a
 normally promoted, reviewed commit containing these files. Verify the intended

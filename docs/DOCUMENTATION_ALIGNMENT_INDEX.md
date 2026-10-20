@@ -7,6 +7,8 @@ Portfolio doctrine is defined centrally in [`DOCTRINE_ALIGNMENT_STANDARD.md`](./
 
 ## Current work and knowledge-source routing — 19 October 2026
 
+Current work overlay: [20 October Business-led issue/PR and capability routing](RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md#current-business-led-work-map--20-october-2026). It maps the complete current public issue set and all current org PRs while preserving the original research register and restricted evidence boundary.
+
 Coordination: #1390 / #1317. This is a navigation index, not a replacement registry, architecture decision, pricing policy or runtime authority. The canonical organization registry remains in `.github-private`; runtime owners retain implementation and acceptance contracts.
 
 | Question | Existing entry point | How to use it |
