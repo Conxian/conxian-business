@@ -41,7 +41,7 @@ The task plan permits five active tasks. Pricing research, the final whitepaper
 and safe sprint-cleanup follow-ups are consolidated into delivery operations with
 their original sprint-exit acceptance conditions. Their duplicate standalone
 schedules are paused; their work is not canceled. Operations must not pause itself
-when a consolidated child finishes. There are four active execution paths above.
+when a consolidated child finishes. There are five active execution paths including the standards research below.
 
 At each run, read task health and the latest Business #1390 checkpoint. Detect a
 paused delivery task while authorized work remains. Resume only under the current
@@ -90,3 +90,16 @@ creates that acceptance. Unknown or incomplete observations are not passing data
 Do not store credentials, provider secrets, raw private KB records or customer and
 financial information in a public snapshot. Keep the detailed collection in its
 authorized boundary and publish only sanitized action/evidence records.
+
+## Institutional standards research
+
+The fifth active task runs Thursdays around 14:00 SAST, starting 22 October 2026.
+Inventory standards actually used, claimed and planned across current code and
+compare them with the current official FINOS landscape. Keep specifications,
+reference implementations, controls and frameworks distinct. Verify release
+maturity, licences/IP, provenance, compatibility and conformance tooling. Prefer
+maintained compatible components and thin tested adapters; justify new code where
+there is a real unmet requirement. The full source-dated compatibility register
+and work items live under Business #1423/#1424/#1390 and the canonical KB.
+Recommendations are not adopted policy, certification or production acceptance.
+Accepted findings feed weekly repo implementation and fortnightly alignment.
