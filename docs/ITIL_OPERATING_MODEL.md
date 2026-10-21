@@ -171,11 +171,20 @@ pack → CI (rustfmt/clippy/build/test/coverage) → license-governance → hygi
 
 | Rhythm | What |
 |---|---|
-| **Continuous** | CI + auto-promotion + reconcile-branches + SLA enforcer |
+| **Continuous / event-driven** | CI + auto-promotion + reconcile-branches + SLA enforcer; PR events trigger focused review/remediation and next-hop delivery |
+| **Hourly operational reconciliation** | Follow pending CI, qualified promotions, actual soak expiry, stale candidates, missed reviews and task health; no repeated deep portfolio audit |
 | **Per-change** | PR → evidence pack → promotion (reject if any gate fails) |
 | **Daily** | memory log, open PR/issue triage, dependabot/advisory triage |
-| **Weekly** | KB refresh, gap-register review, stale-branch/prune sweep |
+| **Weekly per repository** | Dependency-ordered repo review and bounded implementation; PR/issue/security/dependency/KB/deployment evidence; existing change/release follow-through; safe cleanup only under existing acceptance rules |
+| **Fortnightly organization alignment** | Every two weeks: reconcile dependency/deployed graph, weekly review coverage, systemic problems/risks, release bottlenecks and measured improvement outcomes; implement the next evidenced systemic improvement |
 | **On-demand (P0)** | incident runbook (secure → diagnose → fix → root-cause → durable lesson) |
+
+Owner-adopted cadence (21 October 2026): weekly repo groups run Monday–Friday
+around 09:00 SAST; org alignment begins Friday 23 October around 14:00 SAST and
+repeats every two weeks. Full group coverage, execution boundaries and sprint-exit
+follow-up consolidation are in [Organization delivery follow-through](operations/ORG_DELIVERY_FOLLOWTHROUGH.md).
+These operating reviews do not change CI, independent approvals, release gates
+or the 24-hour staged dwell. A change is still shipped only under §9 below.
 
 ---
 
