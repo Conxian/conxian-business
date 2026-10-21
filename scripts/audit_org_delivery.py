@@ -110,8 +110,17 @@ def audit(snapshot: dict[str, Any], now: datetime) -> dict[str, Any]:
             if pr.get("review_gate") != "satisfied":
                 add("COMPLETE_REQUIRED_REVIEW", name, number)
             if pr.get("base_ref") == "main" and repo.get("promotion_chain") is True:
+                if repo.get("soak_satisfied") is not True:
+                    add("FOLLOW_SOAK_AND_PREPARE_ACCEPTANCE", name, number)
                 if pr.get("acceptance_head_sha") != pr.get("head_sha") or pr.get("main_acceptance") != "accepted":
                     add("COMPLETE_EXACT_MAIN_ACCEPTANCE", name, number)
+        # Services without a promotion chain still need a source-bound deploy.
+        if repo.get("deployment_required") is True:
+            main_sha = refs.get("main")
+            if not isinstance(main_sha, str) or not SHA.fullmatch(main_sha):
+                add("REFRESH_BRANCH_HEADS", name)
+            elif repo.get("deployment_source_sha") != main_sha:
+                add("VERIFY_OR_REMEDIATE_DEPLOYED_SOURCE", name)
         if repo.get("promotion_chain") is not True or not refs:
             continue
         # A merged dev PR is still unfinished while its content is absent on main.
@@ -130,8 +139,6 @@ def audit(snapshot: dict[str, Any], now: datetime) -> dict[str, Any]:
                     add("GENERATE_CURRENT_MAIN_CANDIDATE" if soak is True else "FOLLOW_SOAK_AND_PREPARE_ACCEPTANCE", name)
                 else:
                     add("GENERATE_CURRENT_STAGED_CANDIDATE", name)
-        if repo.get("deployment_required") is True and repo.get("deployment_source_sha") != refs.get("main"):
-            add("VERIFY_OR_REMEDIATE_DEPLOYED_SOURCE", name)
     incomplete = {"COMPLETE_ORG_INVENTORY", "REFRESH_SNAPSHOT", "COMPLETE_REPOSITORY_PR_READ", "REFRESH_BRANCH_HEADS", "READ_FULL_DIFF", "REFRESH_CHECK_EVIDENCE", "REFRESH_REVIEW_EVIDENCE"}
     return {"coverage_complete": not any(a["action"] in incomplete for a in actions),
             "repositories_read": len(names), "prs_read": len(processed), "actions": actions}

@@ -141,6 +141,29 @@ class DeliveryAuditTests(unittest.TestCase):
         self.r.update(deployment_required=True, deployment_source_sha=S)
         self.assertIn("VERIFY_OR_REMEDIATE_DEPLOYED_SOURCE", self.actions())
 
+    def test_existing_main_candidate_still_requires_soak(self):
+        p = self.with_pr()
+        p.update(head_ref="promotion/staged-to-main-" + S, head_sha=S,
+                 source_sha=S, target_base_sha=M, base_sha=M, base_ref="main",
+                 main_acceptance="accepted", acceptance_head_sha=S,
+                 checks=[{"head_sha": S, "status": "completed", "conclusion": "success"}])
+        self.r["soak_satisfied"] = False
+        self.assertIn("FOLLOW_SOAK_AND_PREPARE_ACCEPTANCE", self.actions())
+        self.r["soak_satisfied"] = True
+        self.assertNotIn("FOLLOW_SOAK_AND_PREPARE_ACCEPTANCE", self.actions())
+
+    def test_non_chain_service_deployment_is_still_checked(self):
+        self.r.update(promotion_chain=False, refs={"main": M},
+                      deployment_required=True, deployment_source_sha=S)
+        self.assertIn("VERIFY_OR_REMEDIATE_DEPLOYED_SOURCE", self.actions())
+        self.r["deployment_source_sha"] = M
+        self.assertNotIn("VERIFY_OR_REMEDIATE_DEPLOYED_SOURCE", self.actions())
+
+    def test_non_chain_deployment_cannot_hide_missing_main(self):
+        self.r.update(promotion_chain=False, refs={}, deployment_required=True)
+        self.assertIn("REFRESH_BRANCH_HEADS", self.actions())
+        self.assertFalse(audit(self.s, NOW)["coverage_complete"])
+
     def test_every_pr_needs_concrete_owner_and_next_action(self):
         self.with_pr().pop("next_action")
         self.assertIn("RECORD_NEXT_ACTION_AND_OWNER", self.actions())
