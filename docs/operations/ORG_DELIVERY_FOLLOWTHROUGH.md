@@ -4,15 +4,44 @@ Owner instruction: 21 October 2026. Engineering remains GitHub-only. This
 operating procedure adds no merge exemption and changes no existing workflow,
 validator, review, branch-protection, soak or release requirement.
 
-## Two execution paths
+## Managed cadence
 
-- The owner-authorized hourly Conxian org delivery task reconciles every accessible
-  repository, PR, issue, KB and deployed/source state. It covers CI completion,
-  issue changes, soak expiry and new repositories.
+- The hourly delivery operations task is a lightweight operational reconciliation,
+  not a deep portfolio audit. It follows CI completion, incidents, ready merges,
+  soak expiry, stale candidates, missed reviews, new repositories and task health.
 - The Conxian PR delivery event task handles opened, ready-for-review, closed,
   commit-update and submitted-review events for the 13 currently accessible repos.
   PR comments are excluded to avoid a self-generated comment loop. These events
   do not cover arbitrary issue or CI-completion events.
+- Weekly repo work runs in weekday groups around 09:00 Africa/Johannesburg,
+  starting 22 October 2026. Each repository has one planned full weekly review
+  and bounded implementation, with overdue work carried by delivery operations.
+- Organization alignment runs every two weeks on Friday afternoon around 14:00
+  Africa/Johannesburg, starting 23 October 2026. It reconciles the dependency and
+  deployed graphs, risk/problem backlog, weekly coverage and improvement outcomes.
+
+| Day | Weekly repository group |
+|---|---|
+| Monday | Enclave SDK, Core |
+| Tuesday | Gateway, Nexus |
+| Wednesday | Platform, Wallet, Market |
+| Thursday | Labs Site, Org Site, conxian.github.io |
+| Friday | Business, .github, .github-private |
+
+Times are flexible scheduled windows, not a guaranteed job start. P0 response and
+per-change delivery do not wait for a weekly or fortnightly review. The operating
+mapping is `docs/ITIL_OPERATING_MODEL.md`: discover/design/acquire/build/transition/
+operate/deliver/support. Each review records exact state, a bounded next action,
+owner, gate and evidence under existing GitHub issues. Measured lead time, change
+failure/rework, old PR/change age and deployed-state drift remain unknown unless
+supported by actual observations. Limit implementation WIP to one coherent item
+per repo and finish release follow-through before optional feature expansion.
+
+The task plan permits five active tasks. Pricing research, the final whitepaper
+and safe sprint-cleanup follow-ups are consolidated into delivery operations with
+their original sprint-exit acceptance conditions. Their duplicate standalone
+schedules are paused; their work is not canceled. Operations must not pause itself
+when a consolidated child finishes. There are four active execution paths above.
 
 At each run, read task health and the latest Business #1390 checkpoint. Detect a
 paused delivery task while authorized work remains. Resume only under the current
