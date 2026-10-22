@@ -17,6 +17,14 @@ SHA = re.compile(r"[0-9a-f]{40}")
 CANDIDATE = re.compile(r"promotion/(dev-to-staged|staged-to-main)-([0-9a-f]{40})")
 
 
+def is_sha(value: Any) -> bool:
+    return isinstance(value, str) and SHA.fullmatch(value) is not None
+
+
+def records(value: Any) -> bool:
+    return isinstance(value, list) and all(isinstance(item, dict) for item in value)
+
+
 def timestamp(value: Any) -> datetime:
     result = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if result.tzinfo is None:
@@ -46,9 +54,12 @@ def audit(snapshot: dict[str, Any], now: datetime) -> dict[str, Any]:
         add("COMPLETE_ORG_INVENTORY")
     expected = snapshot.get("expected_repositories", [])
     repos = snapshot.get("repositories", [])
-    if not isinstance(expected, list) or not expected or not isinstance(repos, list):
+    if (not isinstance(expected, list) or not expected
+            or not all(isinstance(name, str) and name.strip() for name in expected)
+            or not isinstance(repos, list)):
         return {"coverage_complete": False, "actions": [{"action": "COMPLETE_ORG_INVENTORY"}]}
-    names = [r.get("name") for r in repos if isinstance(r, dict)]
+    names = [r["name"] for r in repos
+             if isinstance(r, dict) and isinstance(r.get("name"), str) and r["name"].strip()]
     if (len(names) != len(repos) or len(set(names)) != len(names)
             or len(set(expected)) != len(expected) or set(names) != set(expected)):
         add("COMPLETE_ORG_INVENTORY")
@@ -63,36 +74,52 @@ def audit(snapshot: dict[str, Any], now: datetime) -> dict[str, Any]:
             add("COMPLETE_REPOSITORY_PR_READ", name)
             continue
         refs = repo.get("refs", {})
+        if not isinstance(refs, dict):
+            refs = {}
         if repo.get("promotion_chain") is True:
-            if not all(isinstance(refs.get(b), str) and SHA.fullmatch(refs[b]) for b in ("dev", "staged", "main")):
+            if not all(is_sha(refs.get(b)) for b in ("dev", "staged", "main")):
                 add("REFRESH_BRANCH_HEADS", name)
                 refs = {}
         for pr in repo["prs"]:
+            if not isinstance(pr, dict):
+                add("COMPLETE_REPOSITORY_PR_READ", name)
+                continue
             number = pr.get("number")
-            if type(number) is not int or (name, number) in processed:
+            if type(number) is not int or number <= 0 or (name, number) in processed:
                 add("COMPLETE_REPOSITORY_PR_READ", name)
                 continue
             processed.add((name, number))
+            base_ref, head_ref = pr.get("base_ref"), pr.get("head_ref")
+            if (not is_sha(pr.get("head_sha")) or not is_sha(pr.get("base_sha"))
+                    or not isinstance(head_ref, str) or not head_ref
+                    or not isinstance(base_ref, str) or not base_ref
+                    or pr.get("base_sha") != refs.get(base_ref)):
+                add("REFRESH_PR_IDENTITY", name, number)
             if not pr.get("next_action") or not pr.get("owner_issue"):
                 add("RECORD_NEXT_ACTION_AND_OWNER", name, number)
             if pr.get("files_complete") is not True:
                 add("READ_FULL_DIFF", name, number)
             if pr.get("protected_control_changes") and pr.get("separate_owner_workflow_request") is not True:
                 add("SEPARATE_WORKFLOW_CHANGES_FROM_IMPLEMENTATION", name, number)
-            match = CANDIDATE.fullmatch(pr.get("head_ref", ""))
+            match = CANDIDATE.fullmatch(head_ref) if isinstance(head_ref, str) else None
+            if isinstance(head_ref, str) and head_ref.startswith("promotion/") and not match:
+                add("REPAIR_PROMOTION_ROUTE", name, number)
             if match:
                 lane, source = match.groups()
                 source_branch, target = ("dev", "staged") if lane == "dev-to-staged" else ("staged", "main")
+                if base_ref != target or repo.get("promotion_chain") is not True:
+                    add("REPAIR_PROMOTION_ROUTE", name, number)
                 if pr.get("head_sha") != source or pr.get("source_sha") != source:
                     add("REPAIR_MUTATED_IMMUTABLE_CANDIDATE", name, number)
                 if pr.get("target_base_sha") != pr.get("base_sha") or pr.get("base_sha") != refs.get(target):
                     add("REPLACE_STALE_TARGET_CANDIDATE", name, number)
                 if source != refs.get(source_branch):
                     add("VERIFY_REPLACEMENT_AND_RETENTION", name, number)
-            if pr.get("checks_complete") is not True or pr.get("statuses_complete") is not True or not pr.get("checks"):
+            checks, statuses = pr.get("checks"), pr.get("statuses")
+            if pr.get("checks_complete") is not True or not records(checks) or not checks:
                 add("REFRESH_CHECK_EVIDENCE", name, number)
             else:
-                for check in pr["checks"]:
+                for check in checks:
                     if check.get("head_sha") != pr.get("head_sha"):
                         add("REFRESH_CHECK_EVIDENCE", name, number)
                     elif check.get("status") != "completed":
@@ -100,9 +127,12 @@ def audit(snapshot: dict[str, Any], now: datetime) -> dict[str, Any]:
                     elif check.get("conclusion") not in {"success", "skipped", "neutral"}:
                         add("REMEDIATE_FAILED_CHECKS", name, number)
                 # Neutral/skipped are preserved as observations, never called passes.
-                if not any(c.get("conclusion") == "success" for c in pr["checks"]):
+                if not any(c.get("conclusion") == "success" for c in checks):
                     add("OBTAIN_APPLICABLE_SUCCESSFUL_CHECKS", name, number)
-                for status in pr.get("statuses", []):
+            if pr.get("statuses_complete") is not True or not records(statuses):
+                add("REFRESH_CHECK_EVIDENCE", name, number)
+            else:
+                for status in statuses:
                     if status.get("head_sha") != pr.get("head_sha") or status.get("state") != "success":
                         add("RESOLVE_COMMIT_STATUS", name, number)
             if pr.get("reviews_complete") is not True:
@@ -133,13 +163,14 @@ def audit(snapshot: dict[str, Any], now: datetime) -> dict[str, Any]:
                 continue
             if repo.get("trees", {}).get(source) == repo.get("trees", {}).get(target) and repo.get("trees", {}).get(source):
                 continue
-            if not any(p.get("base_ref") == target and p.get("head_sha") == refs[source] for p in repo["prs"]):
+            if not any(isinstance(p, dict) and p.get("base_ref") == target
+                       and p.get("head_sha") == refs[source] for p in repo["prs"]):
                 if target == "main":
                     soak = repo.get("soak_satisfied")
                     add("GENERATE_CURRENT_MAIN_CANDIDATE" if soak is True else "FOLLOW_SOAK_AND_PREPARE_ACCEPTANCE", name)
                 else:
                     add("GENERATE_CURRENT_STAGED_CANDIDATE", name)
-    incomplete = {"COMPLETE_ORG_INVENTORY", "REFRESH_SNAPSHOT", "COMPLETE_REPOSITORY_PR_READ", "REFRESH_BRANCH_HEADS", "READ_FULL_DIFF", "REFRESH_CHECK_EVIDENCE", "REFRESH_REVIEW_EVIDENCE"}
+    incomplete = {"COMPLETE_ORG_INVENTORY", "REFRESH_SNAPSHOT", "COMPLETE_REPOSITORY_PR_READ", "REFRESH_BRANCH_HEADS", "REFRESH_PR_IDENTITY", "READ_FULL_DIFF", "REFRESH_CHECK_EVIDENCE", "REFRESH_REVIEW_EVIDENCE"}
     return {"coverage_complete": not any(a["action"] in incomplete for a in actions),
             "repositories_read": len(names), "prs_read": len(processed), "actions": actions}
 

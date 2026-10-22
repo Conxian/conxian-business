@@ -87,6 +87,16 @@ by general implementation approval. Main acceptance must be separately recorded
 as `main_acceptance: accepted` bound to `acceptance_head_sha`; this planner never
 creates that acceptance. Unknown or incomplete observations are not passing data.
 
+The actual PR head and base must be full lowercase commit SHAs, and the observed
+base must match the current target ref. Refresh moving or missing identity before
+acting. An immutable promotion name must parse completely and its encoded lane
+must match the actual target branch; a malformed `promotion/` name is never
+ordinary feature work. `checks` and `statuses` must both be explicit arrays of
+objects, even when their completeness flags are true. An observed empty status
+collection is `statuses: []`; an omitted collection is missing evidence. Malformed
+PR entries produce an incomplete-read action while other valid PRs remain in the
+plan. Coverage completeness describes the supplied reads, not release approval.
+
 Do not store credentials, provider secrets, raw private KB records or customer and
 financial information in a public snapshot. Keep the detailed collection in its
 authorized boundary and publish only sanitized action/evidence records.
