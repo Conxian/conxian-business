@@ -168,6 +168,63 @@ class DeliveryAuditTests(unittest.TestCase):
         self.with_pr().pop("next_action")
         self.assertIn("RECORD_NEXT_ACTION_AND_OWNER", self.actions())
 
+    def test_missing_status_collection_is_incomplete_even_when_flag_is_true(self):
+        self.with_pr().pop("statuses")
+        self.assertIn("REFRESH_CHECK_EVIDENCE", self.actions())
+        self.assertFalse(audit(self.s, NOW)["coverage_complete"])
+
+    def test_invalid_status_collection_is_incomplete(self):
+        for value in (None, {}, "success", [None]):
+            with self.subTest(value=value):
+                self.with_pr()["statuses"] = value
+                self.assertIn("REFRESH_CHECK_EVIDENCE", self.actions())
+
+    def test_invalid_check_collection_is_incomplete(self):
+        for value in ({"conclusion": "success"}, "success", [None]):
+            with self.subTest(value=value):
+                self.with_pr()["checks"] = value
+                self.assertIn("REFRESH_CHECK_EVIDENCE", self.actions())
+
+    def test_promotion_lane_must_match_actual_target(self):
+        self.with_pr()["base_ref"] = "dev"
+        self.assertIn("REPAIR_PROMOTION_ROUTE", self.actions())
+
+    def test_malformed_immutable_name_is_not_ordinary_work(self):
+        for ref in ("promotion/dev-to-staged-short", "promotion/staged-to-main-" + D.upper()):
+            with self.subTest(ref=ref):
+                self.with_pr()["head_ref"] = ref
+                self.assertIn("REPAIR_PROMOTION_ROUTE", self.actions())
+
+    def test_missing_or_malformed_actual_head_requires_refresh(self):
+        for value in (None, "short", 123):
+            with self.subTest(value=value):
+                self.with_pr()["head_sha"] = value
+                self.assertIn("REFRESH_PR_IDENTITY", self.actions())
+                self.assertFalse(audit(self.s, NOW)["coverage_complete"])
+
+    def test_actual_base_must_match_current_target_for_feature_pr(self):
+        p = self.with_pr()
+        p.update(head_ref="fix/example", base_ref="dev", base_sha=M)
+        self.assertIn("REFRESH_PR_IDENTITY", self.actions())
+
+    def test_invalid_pr_entry_does_not_hide_other_candidates(self):
+        p = self.with_pr()
+        p["review_gate"] = "blocked"
+        self.r["prs"].insert(0, None)
+        self.assertTrue({"COMPLETE_REPOSITORY_PR_READ", "COMPLETE_REQUIRED_REVIEW"} <= self.actions())
+
+    def test_nonpositive_or_boolean_pr_number_is_invalid(self):
+        for number in (0, -1, True):
+            with self.subTest(number=number):
+                self.with_pr()["number"] = number
+                self.assertIn("COMPLETE_REPOSITORY_PR_READ", self.actions())
+
+    def test_invalid_inventory_name_is_not_complete_coverage(self):
+        for value in (None, {}, ""):
+            with self.subTest(value=value):
+                self.s["expected_repositories"] = [value]
+                self.assertFalse(audit(self.s, NOW)["coverage_complete"])
+
 
 if __name__ == "__main__":
     unittest.main()
