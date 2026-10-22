@@ -22,6 +22,7 @@
 * [External semantic-source intake policy](docs/governance/EXTERNAL_SEMANTIC_SOURCE_INTAKE_POLICY.md)
 * [FIBO provenance research note (no adoption)](docs/governance/FIBO_PROVENANCE_RESEARCH_NOTE.md)
 * [Deployment verification matrix (runtime lanes)](docs/DEPLOYMENT_VERIFICATION_MATRIX.md)
+* [AWS diagnostic identity boundary regressions](scripts/tests/test_verify_external_state_aws.py)
 * [Integrated system testnet gate (dev)](docs/INTEGRATED_SYSTEM_TESTNET_GATE.md)
 * [Mainnet acceptance evidence pack (staged -> main)](openspec/specs/mainnet-acceptance-evidence-pack/spec.md)
 * [Release hygiene — conxian-nexus](docs/RELEASE_HYGIENE_CONXIAN_NEXUS.md)
