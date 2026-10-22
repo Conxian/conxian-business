@@ -1,5 +1,9 @@
 # Commercial Packaging Doctrine — Offer Structure, Pricing, and Customer Journey
 
+<!-- KNOWLEDGE-ROUTING-2026-10-19:BEGIN -->
+> Current review context: [service packaging review method](SERVICE_PACKAGING_REVIEW_METHOD.md) separates operation, trust, entitlement and acceptance. The history below is retained; its rates, maturity labels, revenue scenarios and SLA descriptions are not current provider, payment or contractual evidence. Revalidate through existing owners and #1343/#1419 before external use. See [source routing](DOCUMENTATION_ALIGNMENT_INDEX.md).
+<!-- KNOWLEDGE-ROUTING-2026-10-19:END -->
+
 > **Issue**: [#829](https://github.com/Conxian/conxian-business/issues/829) — Maintain canonical packaging, customer journey, and pricing doctrine set
 > **Status**: Canonical Business-as-a-Platform (BaaP) Doctrine
 > **Last updated**: 2026-09-26

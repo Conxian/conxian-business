@@ -92,9 +92,19 @@ jobs:
           git fetch --no-tags origin "$SOURCE" "$TARGET"
 
           SOURCE_SHA=$(git rev-parse HEAD)
+          LATEST_SOURCE_SHA=$(git rev-parse "origin/${SOURCE}")
           TARGET_SHA=$(git rev-parse "origin/${TARGET}")
+          if [ "$SOURCE_SHA" != "$LATEST_SOURCE_SHA" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Obsolete source event ${SOURCE}@${SOURCE_SHA}; current source is ${LATEST_SOURCE_SHA}. No candidate will be published for this event."
+            exit 0
+          fi
           if ! git merge-base "$SOURCE_SHA" "$TARGET_SHA" >/dev/null; then
             echo "::error::Source and target have no merge base. Refusing bulk synchronization; open a reviewed manual promotion PR after lineage reconciliation."
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor "$TARGET_SHA" "$SOURCE_SHA"; then
+            echo "::error::Target ${TARGET}@${TARGET_SHA} is not an ancestor of ${SOURCE}@${SOURCE_SHA}. Reconcile target history through a reviewed merge commit before promotion; an equal tree or squash does not retain ancestry. Existing candidates are preserved."
             exit 1
           fi
 
@@ -163,16 +173,15 @@ jobs:
           set -euo pipefail
           git branch "$PROMO_BRANCH" "$SOURCE_SHA"
           REMOTE_SHA=$(git ls-remote --heads origin "refs/heads/${PROMO_BRANCH}" | awk '{print $1}')
-          if [ -n "$REMOTE_SHA" ] && [ "$REMOTE_SHA" != "$SOURCE_SHA" ]; then
-            # This step runs only when no open PR exists for this branch (the
-            # existing-PR step gates it), so a ref at a different SHA is stale
-            # residue from a previously merged/closed candidate. Delete it and
-            # republish rather than refusing, so re-promotion after a drift
-            # shift proceeds instead of deadlocking on a ghost ref.
-            echo "::notice::Stale immutable candidate ref ${PROMO_BRANCH}@${REMOTE_SHA} (no open PR); deleting and republishing at ${SOURCE_SHA}."
-            git push origin --delete "$PROMO_BRANCH"
+          if [ -n "$REMOTE_SHA" ]; then
+            if [ "$REMOTE_SHA" != "$SOURCE_SHA" ]; then
+              echo "::error::Existing candidate ref differs from its source; retain it for review."
+              exit 1
+            fi
+            echo "::notice::Exact immutable candidate ref already published."
+            exit 0
           fi
-          git push -u origin "$PROMO_BRANCH"
+          git push -u --force-with-lease="refs/heads/${PROMO_BRANCH}:" origin "$PROMO_BRANCH"
 
       - name: Build promotion PR body
         if: steps.details.outputs.skip != 'true' && steps.existing.outputs.number == ''
@@ -302,20 +311,22 @@ jobs:
             exit 1
           fi
 
-          # Autopull: re-check the latest source/target before merging. If the
-          # source advanced, this candidate is stale and a newer promotion
-          # supersedes it; if the target advanced, pull it into the candidate.
-          git fetch --no-tags origin "$SOURCE" "$TARGET"
+          # Immutable candidates must never absorb later branch changes.
+          git fetch --no-tags origin "$SOURCE" "$TARGET" "$PROMO_BRANCH"
           LATEST_SOURCE=$(git rev-parse "origin/${SOURCE}")
           LATEST_TARGET=$(git rev-parse "origin/${TARGET}")
+          LATEST_CANDIDATE=$(git rev-parse "origin/${PROMO_BRANCH}")
+          if [ "${LATEST_CANDIDATE}" != "${SOURCE_SHA}" ]; then
+            echo "::error::Candidate head changed; preserve the ref and prepare a fresh reviewed candidate."
+            exit 1
+          fi
           if [ "${LATEST_SOURCE}" != "${SOURCE_SHA}" ]; then
-            echo "::notice::Source ${SOURCE} advanced past ${SOURCE_SHA}; closing stale candidate (newer promotion supersedes it)."
-            gh pr close "$PR_NUMBER" --repo "${{ github.repository }}" --delete-branch
-            exit 0
+            echo "::error::Source advanced; retain this candidate and prepare fresh source-bound evidence."
+            exit 1
           fi
           if [ "${LATEST_TARGET}" != "${TARGET_SHA}" ]; then
-            echo "::notice::Target ${TARGET} advanced past ${TARGET_SHA}; updating candidate branch before merge."
-            gh pr update-branch "$PR_NUMBER" --repo "${{ github.repository }}" || echo "::notice::Could not auto-update branch; proceeding."
+            echo "::error::Target advanced; retain this candidate unchanged and reconcile acceptance evidence."
+            exit 1
           fi
 
           gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "Promotion candidate left as DRAFT. Manual review required before merge: fill the evidence pack and confirm all required CI checks are green."

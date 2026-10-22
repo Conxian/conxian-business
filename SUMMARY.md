@@ -1,9 +1,12 @@
 # Table of contents
 
 * [Introduction](README.md)
+* [Research, implementation and phased work — 15 October 2026](docs/RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md)
 * [Archive Migration (authorized GitHub organization; ZSE)](ARCHIVE_MIGRATION.md)
 * [Conxian: one-page market narrative](docs/CONXIAN_MARKET_NARRATIVE_ONE_PAGER.md)
 * [Documentation Alignment Index](docs/DOCUMENTATION_ALIGNMENT_INDEX.md)
+* [Billing and capability takeover checkpoint (2026-10-16)](docs/audits/2026-10-16-billing-takeover.md)
+* [Immutable billing propagation inputs](docs/billing-propagation-2026-10-16.json)
 * [BOS business buildout (this repo)](docs/BOS_BUSINESS_BUILDOUT.md)
 * [Conxian-business parent-control alignment baseline (CON-694)](docs/CONXIAN_BUSINESS_PARENT_CONTROL_ALIGNMENT.md)
 * [Repo Portfolio (Flagship vs Supporting)](docs/REPO_PORTFOLIO.md)
@@ -120,3 +123,6 @@
 * [ERP MCP Handshake Spec](docs/ERP_MCP_HANDSHAKE_SPEC.md)
   * [Sovereignty and Onboarding Architecture Research](docs/SOVEREIGNTY_AND_ONBOARDING_ARCHITECTURE_RESEARCH.md)
   * [Strategic Analysis of Conxian Ecosystem (Issue #1317)](docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md)
+  * [System-Wide Evaluation & Agentic Transformation Blueprint](docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md)
+
+  * [Multi-Dimensional Scoring & BitVM3 Expansion](docs/research/MULTI_DIMENSIONAL_SCORING_TELEMETRY_AND_BITVM3_EXPANSION_RESEARCH_2026.md)

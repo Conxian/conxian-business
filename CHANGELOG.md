@@ -1,5 +1,9 @@
 # Changelog
 
+- Retain every discovered KB candidate in source-pinned organization reviews instead of silently truncating each repository at 100 paths.
+
+- Add a root Node 24 control-plane container with frozen workspace dependencies, non-root standalone runtime and hosted HTTP/static/session smoke checks; protected runtime configuration and release acceptance remain required.
+
 All notable changes to the Conxian Business Operations System (BOS) will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
@@ -9,108 +13,53 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+- Carry the staged target as a real parent in #1479 while preserving the tested current source; require merge-commit integration and actual post-merge ancestry verification before accepting the repair (#1415/#1390).
+
+- Add opt-in Render service/repository/commit read-back against a restricted release manifest; reject stale live sources and incomplete evidence while keeping source binding distinct from metadata and runtime acceptance (#1479/#1349/#1423).
+
+- Skip obsolete promotion events and reject sources omitting target ancestry before publishing refs/PRs; preserve existing candidates and require reviewed history reconciliation.
+
+- Preserve the staged merge parent after squash integration removed ancestry from #1449; require merge-commit integration and post-merge ancestry verification for this repair (#1450).
+
+- Extend service-packaging research with progressive operation activation, existing sovereign/managed/private-cloud lane boundaries, required versus optional infrastructure and primary-source health/entitlement comparisons; preserve pricing, custody and acceptance authorities.
+
+- Reconcile staged ancestry while preserving the exact tested dev runtime and complete packaging/knowledge work; regenerate immutable promotion candidates after review (#1390/#1415/#1448).
+
+- Extend the service review method to prepare/policy/sign/verify/transmit/observe contracts and primary-source examples; reuse the documentation alignment index and preserve historical packaging/signing/KB content behind current context notices (#1390/#1317/#1419).
+
+- Correct stale Gateway secret-count/readiness mirrors and document distinct issue, task, PR, project and operational evidence boundaries (#1390/#1423; Gateway #466).
+
+- Fail closed on incomplete organization source inventory: paginate visible repositories, remove the submodule fallback, pin scanned revisions and distinguish heuristic source coverage from runtime/security acceptance (#1390/#1423).
+
+- Require the public Core billing export in pinned propagation evidence, covering the staged missing-export regression; document independent service-packaging review dimensions without changing rates or entitlement (Business #1343/#1390).
+
+### Fixed (2026-10-19 — Candidate preservation)
+- Preserve immutable promotion refs when source, target or candidate heads move. Reconciliation checks existing PRs before publishing, retains existing branches, uses create-only ref leases and leaves new candidates for checks and review. Refs #1415 / #1390.
+
+### Added & Synthesized (2026-10-24 — Multi-Dimensional Scoring, Live Telemetry, & BitVM3 Expansion)
+- **Multi-Dimensional Scoring, Live Telemetry, & BitVM3 Research (`docs/research/MULTI_DIMENSIONAL_SCORING_TELEMETRY_AND_BITVM3_EXPANSION_RESEARCH_2026.md`)**: Authored canonical specification detailing WPS refactoring from erp_mock to x402 volume & ERC-8183 escrow state (CON-1437/1440/1436), multi-cloud live telemetry aggregation feeding Autonomous SLA Engine for 80/10/10 yield splitting (CON-1329/1600), and BitVM3 garbled circuits for Conxian Nexus v0.4.23 light-client bridges (CXIP-1317).
+- **Candidate Scoring Ledger & Knowledge Base Upgrade**: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 4.2 (Session 72), expanded `docs/bos_research_candidate_ledger.json` and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md` with unscored gaps, updated `BOS_KNOWLEDGE_GRAPH.md`, and indexed in `SUMMARY.md`.
+
+### Added (2026-10-16 — Billing and capability continuity)
+- Added source-pinned billing propagation conformance and the #1390/#1343 takeover checkpoint; separated sprint-exit economics/pricing/upstream-support research into #1419. Existing commercial configuration and production/review gates remain unchanged.
+
+### Added & Synthesized (2026-10-24 — System-Wide Evaluation & Agentic Transformation Blueprint)
+- **Agentic Transformation Blueprint (`docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md`)**: Authored canonical specification detailing Conxian's architectural elevation from deterministic rails into an Agentic, AI-First Autonomous Business Stack across all 6 core pillars.
+- **CXIP Proposal Taxonomy**: Established unified improvement proposal taxonomy across workspace repositories: CXBIP (`conxian-business`), CXPIP (`conxius-platform`), CXMIP (`conxian_market`), CXWIP (`conxius-wallet`), CXCIP (`lib-conxian-core`), CXGIP (`conxian-gateway`), CXNIP (`conxian-nexus`).
+- **Release Hygiene Alignment**: Synchronized `conxius-enclave-sdk/CHANGELOG.md` version heading `[2.1.0]` with `Cargo.toml` v2.1.0, restoring 100% PASS status across all release hygiene audits.
+- **Knowledge Base & Candidate Ledger Upgrade**: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 4.1 (Session 71), expanded candidate ledger `docs/bos_research_candidate_ledger.json` (`agentic-system-wide-evaluation-blueprint-gap`), updated `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`, `BOS_KNOWLEDGE_GRAPH.md`, and indexed in `SUMMARY.md`.
+
+### Added & Synthesized (2026-10-12 — Org-Wide Strategic Boundary & Research Expansion)
+- **Dependency Purge & Boundary Audit (`docs/research/DEPENDENCY_PURGE_AND_BOUNDARY_AUDIT_2026.md`)**: Conducted an exhaustive org-wide codebase audit confirming zero custom tokenomics or speculative token dependencies across `conxian-nexus`, `conxian-gateway`, `conxius-enclave-sdk`, and `conxius-platform`. Enforced Bitcoin L1 anchoring.
+- **Target A — `conxian-nexus` (ZK Proving Expansion)**: Added `src/verification/zkvm.rs` supporting SP1 and RISC Zero 2026 zkVM proof environment adapters for Bitcoin L1 state verification, re-exported in `src/verification/mod.rs`, created `conxian-nexus/ARCHITECTURE.md`, and updated `README.md`.
+- **Target B — `conxian-gateway` (ISO 20022 Enterprise Gateway)**: Created ISO 20022 translation engine (`internal/compliance/src/iso20022.rs` converting `pacs.008`, `pacs.002`, `camt.053` to CJCS v2.0 tokenless routing events), added commercial API key authentication middleware (`internal/api/src/middleware.rs`), created `conxian-gateway/ARCHITECTURE.md`, and updated `README.md`.
+- **Target C — `conxius-enclave-sdk` (Hardware Security & StrongBox TEE)**: Created Android StrongBox Keymaster/KeyMint TEE driver (`src/enclave/strongbox_tee.rs`) for hardware-isolated signing, re-exported in `src/enclave/mod.rs`, created `conxius-enclave-sdk/ARCHITECTURE.md`, updated `README.md`, and aligned release hygiene version to `[2.1.0]` in `CHANGELOG.md`.
+- **Target D — `conxius-platform` (Enterprise SLA Orchestration)**: Created multi-tenant SLA node deployment schema (`platform/sla_node_orchestrator.json`), TypeScript orchestrator client (`services/admin-dashboard/src/lib/sla_orchestration.ts`), `conxius-platform/ARCHITECTURE.md`, and updated `README.md`.
+- **Knowledge Framework Upgrade**: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 4.0 (Session 70), updated `BOS_KNOWLEDGE_GRAPH.md` and candidate scoring ledger (`docs/bos_research_candidate_ledger.json`).
+
+### Added & Synthesized (2026-10-12 — UX Surface Mapping & Domain Alignment)
+- **UX Asset Mapping & Verification (`no ui repo`)**: Formulated canonical research report `docs/research/UX_SURFACE_AND_DOMAIN_ALIGNMENT_RESEARCH_2026.md` capturing the full empirical UX inventory (`conxian-labs-site`, `conxius-wallet`, `apps/control-plane`, `showcase-dapp`, `conxius-platform/services/admin-dashboard`) and confirming that no active `conxian-ui` repository exists following its explicit deletion and deprecation.
+- **Domain Separation Firewall**: Reinforced strict boundary rules separating Developer Protocol Surface (`conxian.org`: `nexus`, `gateway`, `sdk`, `platform`, `market`, `wallet`) from Corporate Governance Surface (`conxian-labs.com`: `www`, `bos`, `api`, `status`).
+- **Ecosystem Governance & Knowledge Base Upgrade**: Updated portfolio docs (`PORTFOLIO_REPOSITORY_INVENTORY.md`), candidate ledger (`docs/bos_research_candidate_ledger.json`), upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 3.8, and updated `BOS_KNOWLEDGE_GRAPH.md`.
+
 ### Added & Synthesized (2026-10-11 — Phased Research & Org-Wide Business Operations System Expansion)
-- **Phased Strategic Research Architecture**: Formulated a canonical 4-phase research methodology for BOS business systems expansion:
-  - *Phase 1: Strategic Intelligence & Business Systems Reconnaissance*: Org-wide taxonomy across 4 business unit pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), strict domain boundary firewall separation (`conxian.org` developer protocol surface vs `conxian-labs.com` corporate surface), and submodule pin-to-parent alignment.
-  - *Phase 2: BaaP Commercial Monetization & Financial Engineering*: Codified 3-layer BaaP commercial financial model, 80/10/10 yield splitter (80% developer pool, 10% operations pool, 10% network pool), ADR-004 volume-based fee decay, cost-plus rail floors, and 12-month runway analytics.
-  - *Phase 3: ISO 20022 / CJCS v2.0 Operational Integration & AI Agentic Commerce*: Ingestion of legacy banking messages (`pacs.008`, `pacs.002`, `camt.053`), CJCS v2.0 intent translation, multi-chain settlement routing (BTC L1, Stacks L2, RGB, Babylon, Lightning, EVM), Model Model Protocol (MCP) inter-agent execution, and AI Marketplace rate/pricing controls.
-  - *Phase 4: Knowledge Base & Candidate Scoring Ledger Synthesis*: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 3.7, expanded `docs/bos_research_candidate_ledger.json` and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md` with `bos-business-systems-expansion-gap`, updated `BOS_KNOWLEDGE_GRAPH.md`, and passed 100% of repository verification checks.
-- **Submodule Release Hygiene Remediation**: Updated `conxius-enclave-sdk/CHANGELOG.md` version entry to `2.1.0` matching `Cargo.toml` version `2.1.0`, restoring 100% release hygiene compliance across all submodules in `python3 scripts/bos_repo_check.py`.
-
-### Added & Synthesized (2026-10-02 — Strategic Analysis, BaaP Viability & Enterprise Gateway Model)
-- **Strategic Research Report (Issue #1317)**: Authored [`STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md`](docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md) analyzing long-term ecosystem viability, repository taxonomy, financial models, and turnkey enterprise integration.
-- **Enterprise Gateway Outreach Strategy**: Evaluated all 4 business pillars (`conxian-gateway`, `conxian_market`, `conxian-nexus`, `conxius-enclave-sdk`), identifying **`conxian-gateway`** as the single most immediate enterprise outreach opportunity due to ISO 20022 (`pacs.008`/`pacs.002`/`camt.053`) compatibility with commercial banking networks.
-- **Turnkey Integration Model ("NexusPay Global")**: Detailed a 5-phase institutional client integration path stepping through Gateway ISO 20022 XML parsing and normalization, Enclave SDK hardware-attested FROST threshold signing, Market programmable escrow settlement (80/10/10 yield splitter + ADR-004 fee decay), and Nexus zero-knowledge state proof confirmation.
-- **Ecosystem Index Alignment**: Indexed the report across `SUMMARY.md`, `docs/DOCUMENTATION_ALIGNMENT_INDEX.md`, `docs/bos_research_candidate_ledger.json`, `BOS_KNOWLEDGE_GRAPH.md`, and `CHANGELOG.md`.
-
-### Added & Realigned (2026-09-28 — Organization-Wide SLA Positioning & BaaP Pricing Architecture)
-- **Organization-Wide SLA Positioning**: Re-aligned SLA posture across the Conxian GitHub ecosystem in `docs/SLA.md` and `docs/SLA_POLICY.md`. Enforced strict open-source disclaimers (NO SLA, community best-effort) on public protocol surfaces (`conxian` org) while restricting contractual SLAs (99.5% target uptime, SEV1 1-hour business hours acknowledgment, 0% financial credit liability, 5-day RCA SLA) exclusively to B2B Enterprise Gateway deployments.
-- **Business-as-a-Platform (BaaP) Monetization**: Formulated complete 3-layer commercial pricing model in `docs/COMMERCIAL_PACKAGING_DOCTRINE.md`: Layer 1 Protocol Escrow Volume Settlement (2.0% gross escrow fee with Tier 1-4 decay schedule down to 0.5% for >$500M; 80/10/10 split), Layer 2 Enterprise SaaS Node Licensing ($2,500–$40,000/mo), and Layer 3 Metered Edge Compute & x402 Attestations ($0.005–$0.020 TEE proofs, $0.010–$0.050 ZKC proofs, $0.002 ISO 20022 payloads).
-- **Governance & Verification Alignment**: Updated `docs/GAPS.md` with `GAP-SLA-01`, `docs/PORTFOLIO.md`, `docs/bos_research_candidate_ledger.json`, `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`, `docs/BOS_KNOWLEDGE_FRAMEWORK.md` (v3.6), and `BOS_KNOWLEDGE_GRAPH.md`.
-- **Automated Validation**: Enhanced `scripts/verify_cross_repo_alignment.py` to validate Tiered SLA exclusions, BaaP monetization layers, 80/10/10 split structure, and Force Majeure terms.
-- **Module Version Marker Alignment**: Aligned module README release version markers (`v1.9.2` → `v1.9.5`) across `Fiscal-Vault-Oracle`, `Nakamoto-Guardian`, `Sovereign-Ops-Orchestrator`, `Sovereign-Strategy-Nexus`, and `cxn-grid-oracle` to match current BOS system-wide release baseline (`v1.9.5`).
-
-### Added & Synthesized (2026-09-18 — Multi-Repo Research & End-To-End Alignment)
-- Executed multi-repo git synchronization and fetched fresh code across all 8 active submodules (`conxian-gateway`, `conxian-labs-site`, `conxian-nexus`, `conxian_market`, `conxius-enclave-sdk`, `conxius-platform`, `conxius-wallet`, `lib-conxian-core`).
-- Audited repository health, release hygiene, LTS compliance, cross-repo alignment, and research candidate ledger (`docs/bos_research_candidate_ledger.json`).
-- Verified 100% pass status across system validation scripts.
-- Re-confirmed top technical candidate selection (`lib-conxian-core#227`) and authority issue (`conxian-business#943`) for production readiness.
-
-### Added & Synthesized (2026-09-16 — Master Reconnaissance & Architecture Review)
-- Executed org-wide Master Reconnaissance & Architecture Review in `docs/CONXIAN_MASTER_RECONNAISSANCE_AND_ARCHITECTURE_REVIEW.md`.
-- Enforced strict domain separation firewall between Developer Protocol Surface (`conxian.org`: `nexus`, `gateway`, `sdk`, `platform`, `market`) and Corporate Governance Surface (`conxian-labs.com`: `www`, `bos`).
-- Audited platform dependencies against core Rust primitives (`lib-conxian-core`, `conxian-nexus`, `conxian-gateway`, `conxius-enclave-sdk`), confirming pure Bitcoin L1 (BitVM2, MuSig2, DLC) and ISO 20022 focus.
-- Simulated enterprise client onboarding journey and specified deployment parameters for hardware TEE enclaves.
-- Scored architectural gaps and specified the Astro/Starlight static site architecture for `conxian-org-site`.
-- Remediated root `SECURITY.md` compliance heading and updated `docs/DOCUMENTATION_ALIGNMENT_INDEX.md` and `BOS_KNOWLEDGE_GRAPH.md`.
-
-### Fixed & Remediated (2026-09-14)
-- Removed deleted/deprecated `Conxian/demo-repository` entry from `scripts/verify_doctrine_alignment.py` to align expected repository count (15) with `docs/PORTFOLIO_DOCTRINE_REGISTER.md`.
-
-### Synchronized & Remediated (2026-09-09)
-- Pulled fresh code from remote and synchronized submodules (`conxian-gateway`, `conxian-nexus`, `conxian-ui`, `conxius-enclave-sdk`, `conxius-platform`, `conxius-wallet`, `lib-conxian-core`) to their latest `origin/main` release commits.
-- Reviewed repository governance, release hygiene, LTS compliance, production contamination guard, and research candidate ledgers; remediated missing document references in `CHANGELOG.md`.
-
-### Added (2026-09-08 — Session 64)
-- Formulated end-to-end client installation review across purchase tiers (Community, Business, Enterprise), 9-submodule setup, secret inputs, and connectivity matrix in `docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md`.
-- Recommended and specified the Rust-based **Conxian Unified Installer CLI (`cxn`)** to guarantee Time-To-First-Value (TTFV) under 15 minutes.
-- Expanded research candidate ledger analysis (`docs/bos_research_candidate_ledger.json` and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`) incorporating client onboarding and unified installer gap dispositions.
-- Upgraded `BOS_KNOWLEDGE_FRAMEWORK.md` to Version 3.4 and updated `BOS_KNOWLEDGE_GRAPH.md` with Session 64 knowledge synthesis.
-
-### Added (2026-09-08 — Session 63)
-- Created canonical `docs/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_SPEC.md` providing a comprehensive walkthrough of client purchase tiers, multi-repo system installation, secret parameters, and connectivity verification.
-- Specified the architecture and CLI flow for the unified Conxian CLI (`cxn`) binary installer to achieve TTFV < 15 minutes.
-- Updated `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to v3.3 and updated `BOS_KNOWLEDGE_GRAPH.md` with Session 63 onboarding and setup knowledge synthesis.
-
-### Added
-- **Session 62 Research Gap Scoring & Synthesis**: Completed 100% scoring of all 10 research gaps in `docs/bos_research_candidate_ledger.json` against the 100-point BOS rubric.
-- **Ecosystem Knowledge Framework Upgrade**: Updated `docs/BOS_KNOWLEDGE_FRAMEWORK.md`, `BOS_KNOWLEDGE_GRAPH.md`, and `CHANGELOG.md` with Session 62 research candidate scores, gap mappings, and cloud topology verification results.
-
-### Full Infrastructure, Branch & System Operational Review (August 2026)
-- **Branch Synchronization & Enhancement Verification**:
-  - Conducted full commit history audit across all remote branches (`main`, `dev`, `staged`, `jules-*`, `jules/*`, `promotion/*`).
-  - Confirmed all code enhancements, CI fixes, and promotion policies from PRs #1035, #1037, #1038, #1040, and #1045 are fully merged into `main`.
-  - Verified `dev` and `staged` branch alignment with `main`.
-  - Categorized 8 stale feature and promotion branches for deletion while preserving `main`, `dev`, and `staged`.
-- **Deployed Cloud Infrastructure & Production System Audit**:
-  - Audited all 6 Neon Postgres projects (`corelibs`, `Software dev kit`, `Business Operating System`, `market`, `Gateway`, `Conxian Nexus`), confirming active state and PG 17/18 compatibility.
-  - Audited all 2 Supabase database projects (`Conxian BOS`, `Conxian-platform`), confirming `ACTIVE_HEALTHY` status on PG 17.6.
-  - Audited Render web service (`conxian-labs-site`), confirming active non-suspended status tracking `main` auto-deploy.
-- **System-Wide Compliance & Release Verification**:
-  - Executed static governance, release hygiene, submodule integrity, production contamination guard, knowledge retention, LTS compliance, and promotion control verifiers with 100% pass rate.
-
-### Governance & Submodule Alignment (August 2026)
-- **Protocol Deprecation & AI Marketplace Mapping**:
-  - Explicitly marked legacy `Conxian/Conxian` Clarity protocol repository as deprecated in favor of active `lib-conxian-core`, `conxian-gateway`, `conxian-nexus`, and `conxian-business` across all ecosystem docs (`PORTFOLIO_BUSINESS_UNIT_MAP.md`, `PORTFOLIO_DOCTRINE_REGISTER.md`, `REPO_PORTFOLIO.md`, `DOCUMENTATION_ALIGNMENT_INDEX.md`, `README.md`, `BOS_KNOWLEDGE_GRAPH.md`).
-  - Mapped and integrated `conxian-market` as the active AI Marketplace and Agentic Commerce surface seen directly by `conxian-business`.
-  - Expanded `docs/bos_research_candidate_ledger.json`, `scripts/verify_bos_research_candidate_ledger.py`, and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md` with scored candidates `conxian-market-alignment#10` (score 87) and `conxian-protocol-deprecation#612` (score 85).
-
-### Security & Dependency Hardening (August 2026)
-- **LTS Compliance Verification Script Hardening**:
-  - Hardened `scripts/verify_lts_compliance.py` to handle missing Python `packaging` module gracefully by implementing a fallback version range comparator.
-  - Verified `python3 scripts/verify_lts_compliance.py` runs and passes cleanly across environments without external dependency failures.
-- **Workspace Security Overrides & Dependabot Remediation**:
-  - Enforced root workspace overrides in `pnpm-workspace.yaml` for `next@^16.2.11`, `postcss@^8.5.18`, `sharp@^0.35.0`, `nanoid@^3.3.18`, `tar@^7.5.0`, `brace-expansion@^2.0.2`, `undici@^7.21.0`, `js-yaml@^4.1.1`, `fast-uri@^3.1.0`, `bigint-buffer@^1.1.5`, `vite@^6.2.1`, `ws@^8.18.1`, and `form-data@^4.0.2`.
-  - Executed `pnpm audit` verifying zero fixable high/critical severity security alerts across all workspace submodules.
-  - Updated `dependabot-fixes.md` and `docs/SECURITY_PATTERNS.md` to document workspace dependency security override rules.
-- **BOS Research Candidate Implementation & Core Decoupling**:
-  - Implemented top technical candidate `lib-conxian-core#227` (CON-1573 BDK std-only decoupling) in `lib-conxian-core/Cargo.toml`, ensuring transport and persistence drivers (Electrum, Esplora, RPC, Sled) are decoupled from Core.
-  - Expanded research mappings in `docs/bos_research_candidate_ledger.json` and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md` and verified with `python3 scripts/verify_bos_research_candidate_ledger.py`.
-
-### Fixed & Hardened (Session - 2026-08-18)
-- **Promotion Controls Verification Script Hardening**:
-  - Hardened scripts/verify_promotion_controls.py to check for shutil.which("gh") before running GitHub CLI commands, enabling 100% static verification pass when gh CLI is absent.
-- **Ecosystem Research Expansion & Candidate Scoring Audit**:
-  - Audited docs/bos_research_candidate_ledger.json and verified lib-conxian-core#227 (std-only BDK decoupling) as top technical candidate (score 88) and conxian-business#943 as authority issue (score 84).
-  - Executed cargo test in lib-conxian-core verifying all 124 unit/integration/doc tests pass cleanly.
-
-### Fixed
-- **Release Hygiene Verification for Submodules**:
-  - Updated `scripts/verify_release_hygiene.py` to query git tags within submodule directories (`crate_dir`) instead of root repository scope.
-  - Enhanced version parsing in `parse_changelog_versions` to recognize version headers formatted as `## [vX.Y.Z]`.
-  - Allowed released submodule pins whose version matches `Cargo.toml` to satisfy CHANGELOG hygiene checks.
-
-### Changed (Session 58 — 2026-08-07)
-- **BOS Research Candidate Scoring & Ledger System**:
-  - Introduced authoritative research candidate scoring ledger (`docs/bos_research_candidate_ledger.json`) and human-readable ledger (`docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`) following the 6-dimension rubric.
-  - Implemented validation script `scripts/verify_bos_research_candidate_ledger.py` enforcing strict JSON schema compliance.

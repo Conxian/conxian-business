@@ -4,6 +4,35 @@ This page is a practical index of the documentation already present in this repo
 
 Portfolio doctrine is defined centrally in [`DOCTRINE_ALIGNMENT_STANDARD.md`](./DOCTRINE_ALIGNMENT_STANDARD.md) and [`PORTFOLIO_DOCTRINE_REGISTER.md`](./PORTFOLIO_DOCTRINE_REGISTER.md). This index is navigation and document disposition only; it must not introduce a competing role, maturity, claim-state, or classification taxonomy.
 
+
+## Current work and knowledge-source routing — 19 October 2026
+
+Current work overlay: [20 October Business-led issue/PR and capability routing](RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md#current-business-led-work-map--20-october-2026). It preserves the dated issue/PR intake inventory and adds phased exit criteria plus executable Render service/source read-back under the expanded delivery contract. Refresh live state before acting; the original research register and restricted evidence boundary remain preserved.
+
+Coordination: #1390 / #1317. This is a navigation index, not a replacement registry, architecture decision, pricing policy or runtime authority. The canonical organization registry remains in `.github-private`; runtime owners retain implementation and acceptance contracts.
+
+| Question | Existing entry point | How to use it |
+| --- | --- | --- |
+| Which repository/asset owns this? | Canonical private registry; repository AGENTS and owned contracts | Resolve conflicts through the existing authority issue; access, name or a graph edge is not ownership transfer. |
+| How is work/evidence tracked? | [Work and evidence tracking](WORK_AND_EVIDENCE_TRACKING.md) | GitHub issues own problem/owner/acceptance; tasks are bounded actions; PRs are candidates; Projects are optional views. |
+| Which research/candidate/issue already exists? | [Research and implementation reconciliation](RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md) | Use dated source references and existing trackers; refresh status instead of creating a competing backlog. |
+| How should packaging be reviewed? | [Service packaging review method](SERVICE_PACKAGING_REVIEW_METHOD.md) | Separate operation, interface, trust, entitlement, commercial configuration and service-level evidence. |
+| Where is historical commercial doctrine? | [Commercial packaging doctrine](COMMERCIAL_PACKAGING_DOCTRINE.md) | Preserve offer history; revalidate claims/rates/SLA against accepted evidence and owning policy. |
+| Where is billing coordinated? | [Billing unification design](BILLING_UNIFICATION_DESIGN.md) and #1343 | Distinguish proposal from implemented configuration and paid entitlement; no duplicate engine. |
+| Where is signing research? | [Partner research](research/SIGNING_PARTNER_RESEARCH_AND_ETHOS_ALIGNMENT.md) and [phase-two deepening](research/SIGNING_PARTNER_RESEARCH_PHASE2_DEEPENING.md) | Preserve provenance; check current provider, algorithm, key lifecycle and independent acceptance. |
+| What deployment/readiness claims are supported? | [Deployment topology](DEPLOYMENT_TOPOLOGY.md) and [trust/readiness verification](TRUST_AND_READINESS_VERIFICATION.md) | Inspect exact source/artifact and current operator receipts; no static document proves live health. |
+| Where are historical KB entities? | [BOS knowledge framework](BOS_KNOWLEDGE_FRAMEWORK.md) | Dates, counts and implementation statements remain dated claims until independently reconciled. |
+
+### Deduplication and preservation rules
+
+1. Classify each apparent duplicate as owner contract, scoped consumer view, generated mirror, reusable template, historical evidence or unresolved conflict. Equal blob hashes show identical bytes, not that a copy is unnecessary.
+2. Keep repository-local policy/security templates and historical OpenSpec decisions where consumers or audit history require them. Centralized templates still need pinned provenance, local availability and drift checks.
+3. Prefer a context notice and relative link over copying current rates, capability counts or deployment status. Research notes should link source/date/target version, assumptions and an existing implementation issue.
+4. Resolve conflicting claims with source/acceptance evidence and the owning decision. Do not deduplicate into unapproved authority or rewrite research as accomplished delivery.
+5. Before moving/removing content, prove retention/provenance, migrate inbound links and consumers, and validate retention. Preserve beneficial unique material. Never move restricted inventory or financial/security records into this public index.
+
+Current rollout adds routing/context to selected packaging/signing/KB documents first, then reconciles other repositories under their owners and existing phases. This index does not assert that all KBs are semantically reconciled or GitHub Project boards updated.
+
 ## Classification rules
 
 - **Canonical**: the current “source of truth” for a domain. If two docs disagree, update the non-canonical doc to match the canonical one.
@@ -13,6 +42,8 @@ Portfolio doctrine is defined centrally in [`DOCTRINE_ALIGNMENT_STANDARD.md`](./
 - **Internal-only (canonical in authorized GitHub organization only)**: operational, security, financial, legal, and strategic material whose canonical document must live only in the authorized GitHub organization. If a repo link target must be preserved, use a **Public-safe stub (canonical in authorized GitHub organization)** (see [ZSE stub template](./templates/ZSE_STUB_TEMPLATE.md)) so existing links continue to resolve.
 
 For the separate dimensions of claim state, operating label, maturity, and document classification, follow the [Doctrine Alignment Standard](./DOCTRINE_ALIGNMENT_STANDARD.md) and the [Portfolio Doctrine Register](./PORTFOLIO_DOCTRINE_REGISTER.md).
+
+Current supporting public-safe checkpoint: [billing/capability takeover, 16 October 2026](audits/2026-10-16-billing-takeover.md), with [immutable propagation inputs](billing-propagation-2026-10-16.json). Core owns the shared configuration contract; the Business record coordinates consumer evidence and open work. It grants no paid entitlement, commercial or release acceptance. Sprint-exit economics research is tracked separately in [#1419](https://github.com/Conxian/conxian-business/issues/1419); restricted financial inputs/models remain outside Git.
 
 Notes:
 

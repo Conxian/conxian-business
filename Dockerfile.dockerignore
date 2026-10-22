@@ -1,0 +1,21 @@
+# Control-plane context only. The existing .dockerignore remains Gateway-specific.
+**
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+!apps/
+!apps/control-plane/
+!apps/control-plane/**
+!packages/
+!packages/client-sdk/
+!packages/client-sdk/**
+!packages/schemas/
+!packages/schemas/**
+**/node_modules
+**/.next
+**/.git
+**/.env*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
