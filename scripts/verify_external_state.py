@@ -28,6 +28,9 @@ Exit code is non-zero when any verified claim fails.
 Security note: the expected IAM identity is the scoped ``conxian-sdk-signer``
 user, NOT the account root. Running this (or CI) as the account root is a
 least-privilege violation and is reported as a FAIL.
+Rejected, unavailable or malformed identity evidence stops this AWS diagnostic
+before any KMS or EC2 client is created. The legacy expected user is not a grant
+to recreate a retired signer or an assertion of production release acceptance.
 """
 
 from __future__ import annotations
@@ -166,37 +169,42 @@ def check_aws() -> None:
     ak = os.environ.get("AWS_ACCESS_KEY_ID")
     sk = os.environ.get("AWS_SECRET_ACCESS_KEY")
     if not ak or not sk:
-        record(WARN, "AWS", "AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY not set — skipping")
+        record(FAIL, "AWS", "credentials unavailable; downstream AWS checks stopped")
         return
     try:
         import boto3
     except ImportError:
-        record(WARN, "AWS", "boto3 not installed — skipping")
+        record(FAIL, "AWS", "boto3 unavailable; downstream AWS checks stopped")
         return
 
     # STS identity
-    sts = boto3.client("sts", region_name="us-east-1",
-                       aws_access_key_id=ak, aws_secret_access_key=sk)
     try:
+        sts = boto3.client("sts", region_name="us-east-1",
+                           aws_access_key_id=ak, aws_secret_access_key=sk)
         ident = sts.get_caller_identity()
     except Exception as exc:  # noqa: BLE001
-        record(FAIL, "AWS STS", str(exc))
+        record(FAIL, "AWS STS", f"identity unavailable ({type(exc).__name__})")
         return
-    acct = ident["Account"]
-    user = ident["Arn"].split("/")[-1]
-    arn = ident["Arn"]
+    if (not isinstance(ident, dict) or not isinstance(ident.get("Account"), str)
+            or not isinstance(ident.get("Arn"), str) or not ident["Arn"]):
+        record(FAIL, "IAM identity", "malformed STS identity; downstream AWS checks stopped")
+        return
+    acct, arn = ident["Account"], ident["Arn"]
     if acct == AWS_ACCOUNT:
         record(PASS, f"AWS account", acct)
     else:
-        record(FAIL, f"AWS account", f"{acct} (expected {AWS_ACCOUNT})")
+        record(FAIL, "AWS account", "unexpected account; downstream AWS checks stopped")
+        return
 
-    # Least-privilege: root is a hard fail; the scoped signer is the only PASS.
+    # Bind the full identity, not a user-controlled assumed-role session name.
     if arn.endswith(":root"):
-        record(FAIL, "IAM identity", f"{arn} is the account root — CI must use {AWS_IAM_USER}")
-    elif user == AWS_IAM_USER:
-        record(PASS, "IAM identity", user)
+        record(FAIL, "IAM identity", "account root rejected; downstream AWS checks stopped")
+        return
+    elif arn == f"arn:aws:iam::{AWS_ACCOUNT}:user/{AWS_IAM_USER}":
+        record(PASS, "IAM identity", AWS_IAM_USER)
     else:
-        record(WARN, "IAM identity", f"{user} (expected {AWS_IAM_USER})")
+        record(FAIL, "IAM identity", "unexpected principal; downstream AWS checks stopped")
+        return
 
     # KMS release key (dev)
     kms = boto3.client("kms", region_name=AWS_KMS_REGION,
