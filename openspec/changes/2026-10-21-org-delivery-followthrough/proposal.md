@@ -12,6 +12,12 @@ regressions for incomplete inventory, paused execution, immutable-head/base drif
 missing diff/check/review evidence, workflow deltas, missed promotions, real soak,
 candidate-bound acceptance and deployed-source mismatch.
 
+22 October hardening: reproduce absent-status false completeness, malformed
+collection crashes, invalid PR identity and promotion lane/target mismatch. Require
+explicit typed evidence collections and current actual head/base observations;
+retain actionable findings for other candidates after an invalid PR entry. Keep
+the planner read-only and retain all existing release controls.
+
 Preserve every existing CI/promotion/review/production gate. This proposal does
 not change workflow files, grant approval authority, invent independent acceptance
 or promise production qualification from a schedule or a green planner result.
