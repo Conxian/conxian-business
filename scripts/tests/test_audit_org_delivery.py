@@ -225,6 +225,112 @@ class DeliveryAuditTests(unittest.TestCase):
                 self.s["expected_repositories"] = [value]
                 self.assertFalse(audit(self.s, NOW)["coverage_complete"])
 
+    def test_promotion_requires_separate_exact_dependency_validation(self):
+        p = self.with_pr()
+        action = "COLLECT_EXACT_DEPENDENCY_VALIDATION"
+        self.assertIn(action, self.actions())
+        p["dependency_validation"] = {
+            "head_sha": D, "dependency_files_changed": True,
+            "frozen_or_locked": True, "result": "success", "evidence_ref": "ci/run/1"}
+        self.assertNotIn(action, self.actions())
+        for key, value in (("head_sha", M), ("result", "skipped"),
+                           ("result", "failure"), ("result", "pending"),
+                           ("frozen_or_locked", False), ("evidence_ref", ""),
+                           ("dependency_files_changed", None)):
+            with self.subTest(key=key, value=value):
+                original = copy.deepcopy(p["dependency_validation"])
+                p["dependency_validation"][key] = value
+                self.assertIn(action, self.actions())
+                p["dependency_validation"] = original
+
+    def test_dependency_nonapplicability_requires_bound_explicit_diff_rationale(self):
+        p = self.with_pr()
+        action = "COLLECT_EXACT_DEPENDENCY_VALIDATION"
+        p["dependency_validation"] = {
+            "head_sha": D, "dependency_files_changed": False,
+            "result": "not_applicable", "rationale": "Full diff contains documentation only"}
+        self.assertNotIn(action, self.actions())
+        p["dependency_validation"]["rationale"] = " "
+        self.assertIn(action, self.actions())
+
+    def deployment(self):
+        target = {"provider": "provider", "scope": "private-scope", "service": "private-service",
+                  "environment": "production", "source_sha": M,
+                  "artifact_digest": "sha256:" + "a" * 64}
+        observed = dict(target, deployment_id="private-deploy", state="live",
+                        observed_at="2026-10-21T07:00:00Z")
+        self.r.update(deployment_required=True, deployment_source_sha=M,
+                      deployments_complete=True, deployment_targets=[target],
+                      deployment_observations=[observed])
+        return target, observed
+
+    def test_deployment_requires_more_than_matching_commit(self):
+        self.r.update(deployment_required=True, deployment_source_sha=M)
+        self.assertIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+        self.deployment()
+        self.assertNotIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+
+    def test_matching_source_does_not_hide_wrong_artifact_or_target(self):
+        for key, value in (("artifact_digest", "sha256:" + "b" * 64),
+                           ("provider", "other"), ("scope", "other"),
+                           ("service", "other"), ("environment", "preview"),
+                           ("source_sha", S), ("deployment_id", " ")):
+            with self.subTest(key=key):
+                _, observed = self.deployment()
+                observed[key] = value
+                self.assertIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+
+    def test_deployment_unknown_failed_or_pending_is_not_live(self):
+        for state in (None, "", "unknown", "build_failed", "queued", "building"):
+            with self.subTest(state=state):
+                _, observed = self.deployment()
+                observed["state"] = state
+                self.assertIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+
+    def test_provider_observation_age_is_independent_of_snapshot_age(self):
+        for observed_at in (None, "bad", "2026-10-21T07:00:00",
+                            "2026-10-21T05:59:59Z", "2026-10-21T07:00:01Z"):
+            with self.subTest(observed_at=observed_at):
+                _, observed = self.deployment()
+                observed["observed_at"] = observed_at
+                self.assertIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+
+    def test_incomplete_empty_duplicate_or_malformed_deployments_fail_closed(self):
+        for key in ("deployment_targets", "deployment_observations"):
+            for value in (None, [], {}, [None]):
+                with self.subTest(key=key, value=value):
+                    self.deployment()
+                    self.r[key] = value
+                    self.assertIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+            self.deployment()
+            self.r[key] *= 2
+            self.assertIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+        self.deployment()
+        self.r["deployments_complete"] = False
+        self.assertIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+
+    def test_every_intended_service_must_be_observed(self):
+        target, _ = self.deployment()
+        self.r["deployment_targets"].append(dict(target, service="second-service"))
+        self.assertIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+
+    def test_mutable_or_malformed_intended_digest_is_rejected(self):
+        for value in (None, "latest", "sha256:short", "sha256:" + "A" * 64):
+            with self.subTest(value=value):
+                target, observed = self.deployment()
+                target["artifact_digest"] = observed["artifact_digest"] = value
+                self.assertIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+
+    def test_action_plan_does_not_disclose_private_deployment_identifiers(self):
+        _, observed = self.deployment()
+        observed["state"] = "build_failed"
+        result = str(audit(self.s, NOW))
+        for private in ("private-scope", "private-service", "private-deploy", "sha256:"):
+            self.assertNotIn(private, result)
+
+    def test_governance_repo_does_not_require_invented_hosting(self):
+        self.assertNotIn("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", self.actions())
+
 
 if __name__ == "__main__":
     unittest.main()
