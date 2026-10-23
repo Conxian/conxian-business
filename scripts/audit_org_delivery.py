@@ -15,6 +15,7 @@ from typing import Any
 
 SHA = re.compile(r"[0-9a-f]{40}")
 CANDIDATE = re.compile(r"promotion/(dev-to-staged|staged-to-main)-([0-9a-f]{40})")
+DIGEST = re.compile(r"sha256:[0-9a-f]{64}")
 
 
 def is_sha(value: Any) -> bool:
@@ -30,6 +31,71 @@ def timestamp(value: Any) -> datetime:
     if result.tzinfo is None:
         raise ValueError("timezone required")
     return result.astimezone(timezone.utc)
+
+
+def dependency_preflight(pr: dict[str, Any]) -> bool:
+    """Require an exact-source frozen/locked install observation, not green CI alone."""
+    evidence = pr.get("dependency_validation")
+    if not isinstance(evidence, dict) or evidence.get("head_sha") != pr.get("head_sha"):
+        return False
+    if not is_sha(evidence.get("head_sha")):
+        return False
+    changed = evidence.get("dependency_files_changed")
+    if changed is False:
+        return evidence.get("result") == "not_applicable" and bool(
+            isinstance(evidence.get("rationale"), str) and evidence["rationale"].strip())
+    return (changed is True and evidence.get("result") == "success"
+            and evidence.get("frozen_or_locked") is True
+            and isinstance(evidence.get("evidence_ref"), str)
+            and bool(evidence["evidence_ref"].strip()))
+
+
+def deployment_binding(repo: dict[str, Any], now: datetime) -> bool:
+    """Compare intended release targets with fresh terminal provider observations.
+
+    These are collector assertions, not signed provenance or runtime acceptance.
+    Never emit target identifiers or raw observations in the public action plan.
+    """
+    targets, observed = repo.get("deployment_targets"), repo.get("deployment_observations")
+    if (not records(targets) or not targets or not records(observed)
+            or repo.get("deployments_complete") is not True):
+        return False
+    refs = repo.get("refs")
+    main = refs.get("main") if isinstance(refs, dict) else None
+    if not is_sha(main):
+        return False
+    keys = ("provider", "scope", "service", "environment")
+
+    def identity(item):
+        if not all(isinstance(item.get(k), str) and item[k].strip() for k in keys):
+            return None
+        return tuple(item[k] for k in keys)
+
+    intended, actual = {}, {}
+    for items, index in ((targets, intended), (observed, actual)):
+        for item in items:
+            key = identity(item)
+            if key is None or key in index:
+                return False
+            digest = item.get("artifact_digest")
+            if (item.get("source_sha") != main or not isinstance(digest, str)
+                    or not DIGEST.fullmatch(digest)):
+                return False
+            index[key] = item
+    if set(intended) != set(actual):
+        return False
+    for key, target in intended.items():
+        observation = actual[key]
+        try:
+            age = (now - timestamp(observation.get("observed_at"))).total_seconds()
+        except (TypeError, ValueError, AttributeError):
+            return False
+        if (age < 0 or age > 3600 or observation.get("state") != "live"
+                or observation.get("artifact_digest") != target["artifact_digest"]
+                or not isinstance(observation.get("deployment_id"), str)
+                or not observation["deployment_id"].strip()):
+            return False
+    return True
 
 
 def audit(snapshot: dict[str, Any], now: datetime) -> dict[str, Any]:
@@ -105,6 +171,8 @@ def audit(snapshot: dict[str, Any], now: datetime) -> dict[str, Any]:
             if isinstance(head_ref, str) and head_ref.startswith("promotion/") and not match:
                 add("REPAIR_PROMOTION_ROUTE", name, number)
             if match:
+                if not dependency_preflight(pr):
+                    add("COLLECT_EXACT_DEPENDENCY_VALIDATION", name, number)
                 lane, source = match.groups()
                 source_branch, target = ("dev", "staged") if lane == "dev-to-staged" else ("staged", "main")
                 if base_ref != target or repo.get("promotion_chain") is not True:
@@ -146,6 +214,8 @@ def audit(snapshot: dict[str, Any], now: datetime) -> dict[str, Any]:
                     add("COMPLETE_EXACT_MAIN_ACCEPTANCE", name, number)
         # Services without a promotion chain still need a source-bound deploy.
         if repo.get("deployment_required") is True:
+            if not deployment_binding(repo, now):
+                add("VERIFY_DEPLOYMENT_ARTIFACT_BINDING", name)
             main_sha = refs.get("main")
             if not isinstance(main_sha, str) or not SHA.fullmatch(main_sha):
                 add("REFRESH_BRANCH_HEADS", name)
