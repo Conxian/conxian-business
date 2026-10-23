@@ -15,7 +15,7 @@
     "private_kb_documents": 54,
     "catalog_entries": 1789,
     "open_issue_snapshot": 43,
-    "legacy_candidates": 24,
+    "legacy_candidates": 25,
     "phases": 6,
     "gaps": 24,
     "catalog_method": "Every selected document body was indexed; semantic reconciliation focuses on linked claims and implementation evidence. Not every historical document was independently re-audited."
@@ -1600,6 +1600,16 @@
       "id": "bitvm3-garbled-circuit-nexus-bridge-gap",
       "title": "Expand Universal Verification Adapters with BitVM3 garbled circuits for Conxian Nexus v0.4.23 engine (CXIP-1317)",
       "owner_repository": "Conxian/conxian-nexus",
+      "historical_scored": false,
+      "historical_total": null,
+      "gap_ids": [
+        "G01"
+      ]
+    },
+    {
+      "id": "ma-engine-upgrades-real-data-valuation-gap",
+      "title": "M&A Engine Architecture, Real-Data Valuation Multiples & Post-Merger Integration Accelerator (ADR/ITIL5/CXIP::MA-ENGINE-2026)",
+      "owner_repository": "Conxian/conxian-business",
       "historical_scored": false,
       "historical_total": null,
       "gap_ids": [

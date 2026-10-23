@@ -13,6 +13,14 @@ Release note and changelog guidance lives in [docs/RELEASE_NOTES_AND_CHANGELOG.m
 
 ## [Unreleased]
 
+### Added & Synthesized (2026-10-24 — M&A Engine Architecture, Real-Data Valuation & Post-Merger Accelerator)
+- **M&A Engine Architecture Specification (`docs/research/MA_ENGINE_UPGRADES_AND_REAL_DATA_VALUATION_ACCELERATOR_2026.md`)**: Authored canonical specification evaluating and elevating Conxian's M&A Valuation, Deal Execution, and Post-Merger Integration Engine against industry benchmark reference architectures (`aws-samples/mergers-and-acquisitions-integration-accelerator` and `nickcals/multiples`).
+- **Real-Data-First Valuation Principle**: Replaced ungrounded Monte Carlo synthetic simulations with empirical SEC EDGAR XBRL filings, LSEG market feeds, and verified CJCS v2.0 oracle data to drive valuation multiples (EV/EBITDA, EV/Revenue, P/E, P/B, Debt/EBITDA).
+- **Enterprise Post-Merger Integration Accelerator**: Integrated ISO 20022 `camt.053` bank statement harmonization, `pacs.008` inter-company transaction settlement, and Zero-Secret-Egress (ZSE) IT identity federation pipelines.
+- **Non-Custodial Escrow & TEE Attestation Settlement**: Combined Conxian's 80/10/10 escrow yield splitter with AWS Nitro TEE hardware attestation (`NitroVerifier` in `conxius-enclave-sdk`) and x402 payment headers (`WWW-Authenticate: X402-Payment`) for milestone-based earn-out disbursements.
+- **Candidate Scoring Ledger & Knowledge Base Upgrade**: Upgraded `docs/BOS_KNOWLEDGE_FRAMEWORK.md` to Version 4.2 (Session 72), expanded `docs/bos_research_candidate_ledger.json` (`ma-engine-upgrades-real-data-valuation-gap`) and `docs/BOS_RESEARCH_CANDIDATE_LEDGER.md`, updated `BOS_KNOWLEDGE_GRAPH.md`, and indexed in `SUMMARY.md`.
+
+
 - Carry the staged target as a real parent in #1479 while preserving the tested current source; require merge-commit integration and actual post-merge ancestry verification before accepting the repair (#1415/#1390).
 
 - Add opt-in Render service/repository/commit read-back against a restricted release manifest; reject stale live sources and incomplete evidence while keeping source binding distinct from metadata and runtime acceptance (#1479/#1349/#1423).

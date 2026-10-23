@@ -1149,6 +1149,25 @@
       "uncertainty": "Upstream BitVM3/GC protocol specifications remain pre-release in ePrint 2026/933.",
       "nonClaim": "Adapter research does not imply live production BitVM3 bridge deployment on Bitcoin mainnet.",
       "scored": false
+    },
+    {
+      "id": "ma-engine-upgrades-real-data-valuation-gap",
+      "title": "M&A Engine Architecture, Real-Data Valuation Multiples & Post-Merger Integration Accelerator (ADR/ITIL5/CXIP::MA-ENGINE-2026)",
+      "ownerRepository": "Conxian/conxian-business",
+      "trackers": [],
+      "sourceLinks": [
+        "https://github.com/aws-samples/mergers-and-acquisitions-integration-accelerator",
+        "https://github.com/nickcals/multiples"
+      ],
+      "gapClasses": [
+        "implementation",
+        "owner-tracker"
+      ],
+      "disposition": "tracker-required-before-scoring",
+      "nextGate": "Deploy SEC EDGAR XBRL valuation worker and ISO 20022 camt.053 statement harmonizer in conxian_market and conxian-gateway.",
+      "uncertainty": "Live SEC EDGAR API rate-limiting and external financial market oracle feed latency.",
+      "nonClaim": "Valuation engine and M&A integration specification do not constitute live financial advisory, SEC filing endorsement, or guaranteed M&A closing claims.",
+      "scored": false
     }
   ],
   "currentReconciliation": {
