@@ -1,4 +1,4 @@
-FROM node:26-bookworm-slim AS build
+FROM node:24-bookworm-slim AS build
 WORKDIR /workspace
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm install --global pnpm@10.28.0
@@ -10,7 +10,7 @@ RUN pnpm --filter @conxian/control-plane... install --frozen-lockfile --ignore-s
 RUN pnpm --filter @conxian/control-plane test
 RUN pnpm --filter @conxian/control-plane build
 
-FROM node:26-bookworm-slim AS runtime
+FROM node:24-bookworm-slim AS runtime
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 HOSTNAME=0.0.0.0 PORT=10000
 WORKDIR /app
 COPY --from=build --chown=node:node /workspace/apps/control-plane/.next/standalone ./

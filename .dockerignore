@@ -1,8 +1,23 @@
 **
 
+!Dockerfile
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+!apps/
+!apps/control-plane/
+!apps/control-plane/**
+!packages/
+!packages/client-sdk/
+!packages/client-sdk/**
+!packages/schemas/
+!packages/schemas/**
 !conxian-gateway/**
 !docker/gateway.Dockerfile
 !.dockerignore
 
+**/node_modules
+**/.next
+**/.git
 conxian-gateway/target
 conxian-gateway/.git

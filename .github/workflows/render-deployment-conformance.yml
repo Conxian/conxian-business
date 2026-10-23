@@ -4,16 +4,22 @@ on:
   pull_request:
     branches: [dev, staged, main]
     paths:
+      - 'Dockerfile'
+      - '.dockerignore'
       - 'scripts/verify_render_deploys.py'
       - 'scripts/tests/test_render_deploys.py'
+      - 'scripts/tests/test_render_control_plane_container.py'
       - 'docs/operations/render-monitor-scope.json'
       - '.github/workflows/render-deployment-conformance.yml'
       - '.github/workflows/render-deployment-audit.yml'
   push:
     branches: [dev, staged, main]
     paths:
+      - 'Dockerfile'
+      - '.dockerignore'
       - 'scripts/verify_render_deploys.py'
       - 'scripts/tests/test_render_deploys.py'
+      - 'scripts/tests/test_render_control_plane_container.py'
       - 'docs/operations/render-monitor-scope.json'
       - '.github/workflows/render-deployment-conformance.yml'
       - '.github/workflows/render-deployment-audit.yml'
@@ -30,4 +36,8 @@ jobs:
         with:
           persist-credentials: false
       - name: Exercise failure, pagination, scope and public-summary boundaries
-        run: python3 -m unittest scripts.tests.test_render_deploys -v
+        run: >-
+          python3 -m unittest
+          scripts.tests.test_render_deploys
+          scripts.tests.test_render_control_plane_container
+          -v

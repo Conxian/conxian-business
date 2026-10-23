@@ -86,9 +86,7 @@ cross-repository verification tasks.
 ## Container runtime
 
 The repository-root `Dockerfile` builds this control plane using its declared Node
-image, pnpm 10.28.0 and the committed lockfile. The current image is Node 26 while
-the package engine and host CI remain Node 24; this toolchain difference needs a
-coordinated qualification decision under #1414. The Dockerfile-specific ignore file
+24 image, pnpm 10.28.0 and the committed lockfile. The Dockerfile-specific ignore file
 limits its context to this app and the two shared packages; the existing
 Gateway Dockerfile/context remains separate. Next.js standalone tracing includes
 the workspace root, and the final image runs as the unprivileged `node` user.
