@@ -101,6 +101,39 @@ Do not store credentials, provider secrets, raw private KB records or customer a
 financial information in a public snapshot. Keep the detailed collection in its
 authorized boundary and publish only sanitized action/evidence records.
 
+### Exact dependency and deployment preflight
+
+Immutable promotion candidates additionally supply `dependency_validation` bound
+to their actual `head_sha`. Where the promotion diff changes dependency inputs,
+record `dependency_files_changed: true`, `frozen_or_locked: true`, `result: success`
+and an `evidence_ref` to the actual source-bound frozen install or locked resolver
+check. Pending, skipped, failed, absent and previous-head results request
+`COLLECT_EXACT_DEPENDENCY_VALIDATION`. A documentation-only diff may instead use
+`dependency_files_changed: false`, `result: not_applicable` and a nonempty
+`rationale` derived from the complete diff. This is a separate observation, not an
+inference from a green summary. Use the repository's pinned package manager; never
+rewrite a lockfile automatically to make a promotion pass.
+
+For every `deployment_required` repository, a matching commit alone is insufficient.
+Supply `deployments_complete: true`, `deployment_targets` from the intended release
+manifest and `deployment_observations` from provider reads. Each target has
+`provider`, `scope`, `service`, `environment`, `source_sha` (current main) and an
+immutable lowercase `sha256:` plus 64-hex-character `artifact_digest`. Observations
+have those same fields plus `deployment_id`, `state: live` and timezone-qualified
+`observed_at`. The collector normalizes provider terminal-success states to `live`
+only when actually observed. All intended targets must appear exactly once; unknown,
+duplicate, missing, extra or substituted targets fail. Observations older than one
+hour or in the future, wrong source/digest and non-live states request
+`VERIFY_DEPLOYMENT_ARTIFACT_BINDING`. Metadata unavailable from a provider stays
+unknown; do not hash a commit string or invent an artifact digest as a substitute.
+
+The planner compares supplied observations; it does not authenticate the collector,
+verify signed provenance, measure a live user journey or confer release authority.
+Keep intended manifests and raw observations restricted. The output includes only
+repository/action identifiers, not provider account/service/deploy IDs or digests.
+Existing snapshots remain readable but receive follow-up actions when new evidence
+is absent. Existing check, review, soak and main acceptance requirements are unchanged.
+
 ## Institutional standards research
 
 The fifth active task runs Thursdays around 14:00 SAST, starting 22 October 2026.

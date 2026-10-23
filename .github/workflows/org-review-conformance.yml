@@ -6,12 +6,16 @@ on:
     paths:
       - 'scripts/bos_org_review.py'
       - 'scripts/tests/test_bos_org_review.py'
+      - 'scripts/audit_org_delivery.py'
+      - 'scripts/tests/test_audit_org_delivery.py'
       - '.github/workflows/org-review-conformance.yml'
   push:
     branches: [dev, staged, main]
     paths:
       - 'scripts/bos_org_review.py'
       - 'scripts/tests/test_bos_org_review.py'
+      - 'scripts/audit_org_delivery.py'
+      - 'scripts/tests/test_audit_org_delivery.py'
       - '.github/workflows/org-review-conformance.yml'
 
 permissions:
@@ -26,4 +30,4 @@ jobs:
         with:
           persist-credentials: false
       - name: Verify paginated inventory and incomplete-audit failure paths
-        run: python3 -m unittest scripts.tests.test_bos_org_review -v
+        run: python3 -m unittest scripts.tests.test_bos_org_review scripts.tests.test_audit_org_delivery -v
