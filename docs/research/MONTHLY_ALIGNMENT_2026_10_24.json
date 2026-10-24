@@ -1,0 +1,3685 @@
+{
+  "schema_version": 1,
+  "kind": "monthly-research-delivery-alignment",
+  "period": {
+    "start": "2026-09-24",
+    "end": "2026-10-24",
+    "timezone": "Africa/Johannesburg"
+  },
+  "scope_authorized": true,
+  "production_acceptance": false,
+  "independent_acceptance": false,
+  "exhaustive_semantic_audit": false,
+  "public_safe": true,
+  "authority": {
+    "portfolio": "https://github.com/Conxian/conxian-business/issues/1390",
+    "research": "https://github.com/Conxian/conxian-business/issues/1317",
+    "whitepaper": "https://github.com/Conxian/conxian-business/issues/1422",
+    "operating_model": "https://github.com/Conxian/.github/issues/43"
+  },
+  "coverage": {
+    "public_repositories": 12,
+    "public_open_issues": 56,
+    "public_document_catalog": 205,
+    "project_v2": "unverified-connector-unsupported",
+    "private_records_included": false
+  },
+  "phases": [
+    {
+      "id": "R0",
+      "name": "Evidence and authority"
+    },
+    {
+      "id": "R1",
+      "name": "Contracts and bounded implementation"
+    },
+    {
+      "id": "R2",
+      "name": "Provider, hardware and custody evidence"
+    },
+    {
+      "id": "R3",
+      "name": "Runtime and commercial integration"
+    },
+    {
+      "id": "R4",
+      "name": "Release and independent acceptance"
+    },
+    {
+      "id": "R5",
+      "name": "Deferred research and experiments"
+    }
+  ],
+  "groups": [
+    {
+      "id": "G01",
+      "title": "Reconcile KB authority and capability claims",
+      "phase": "R0",
+      "priority": "P0",
+      "depends_on": [],
+      "next_action": "Trace every enabled claim to its own current artifact, provider proof and accountable acceptance; publish the current navigation overlay."
+    },
+    {
+      "id": "G02",
+      "title": "Correct stale tracker and artifact mappings",
+      "phase": "R0",
+      "priority": "P1",
+      "depends_on": [],
+      "next_action": "Use the dated current overlay; keep the 11 scored and 16 unscored historical rows intact."
+    },
+    {
+      "id": "G03",
+      "title": "Rebaseline deferred dependency maintenance",
+      "phase": "R1",
+      "priority": "P2",
+      "depends_on": [],
+      "next_action": "Identify exact feature/reachability paths and upstream maintenance evidence before selecting owner-specific changes."
+    },
+    {
+      "id": "G04",
+      "title": "Propagate qualified operation contracts to consumers",
+      "phase": "R1",
+      "priority": "P1",
+      "depends_on": [],
+      "next_action": "Add cross-repo contract fixtures and qualified operation producers; preserve the implemented diagnostic registrations."
+    },
+    {
+      "id": "G05",
+      "title": "Coordinate dependency pins and release propagation",
+      "phase": "R1",
+      "priority": "P1",
+      "depends_on": [
+        "G04"
+      ],
+      "next_action": "Choose immutable compatible SDK/Core candidates and validate each downstream consumer before repinning."
+    },
+    {
+      "id": "G06",
+      "title": "Complete the system graph CLI and installer contract",
+      "phase": "R1",
+      "priority": "P1",
+      "depends_on": [
+        "G04"
+      ],
+      "next_action": "Continue versioned schemas, transport/errors and bounded authenticated diagnostics from the existing tested first slice."
+    },
+    {
+      "id": "G07",
+      "title": "Verify the admin and service runtime",
+      "phase": "R3",
+      "priority": "P0",
+      "depends_on": [
+        "G04"
+      ],
+      "next_action": "Verify an actual HTTPS admin/runtime origin and scoped read/write authorization before configuration or deployment."
+    },
+    {
+      "id": "G08",
+      "title": "Implement real billing, entitlement and provisioning",
+      "phase": "R3",
+      "priority": "P1",
+      "depends_on": [
+        "G07",
+        "G18"
+      ],
+      "next_action": "Wire the owner-approved billing contract, signed/idempotent webhook, durable key lifecycle and actual subscription resolver."
+    },
+    {
+      "id": "G09",
+      "title": "Remove root dependence and prove independent custody",
+      "phase": "R2",
+      "priority": "P0",
+      "depends_on": [],
+      "next_action": "Obtain current least-privilege identity, independently controlled custodians and exact operation/release proof."
+    },
+    {
+      "id": "G10",
+      "title": "Qualify actual hardware providers and client authorization",
+      "phase": "R2",
+      "priority": "P0",
+      "depends_on": [
+        "G04"
+      ],
+      "next_action": "Follow the existing provider matrix and obtain real device/firmware/driver, key-confinement and operation-binding evidence."
+    },
+    {
+      "id": "G11",
+      "title": "Operationalize collateral, revocation and durable replay",
+      "phase": "R2",
+      "priority": "P0",
+      "depends_on": [
+        "G10"
+      ],
+      "next_action": "Bind authenticated fresh collateral and atomic consume-once behavior to real provider operations and recovery tests."
+    },
+    {
+      "id": "G12",
+      "title": "Complete independent security and release acceptance",
+      "phase": "R4",
+      "priority": "P0",
+      "depends_on": [
+        "G04"
+      ],
+      "next_action": "Arrange distinct authorized reviewers for exact artifacts and keep restricted details outside Git/GitHub."
+    },
+    {
+      "id": "G13",
+      "title": "Implement qualified KMaaS and challenge execution",
+      "phase": "R2",
+      "priority": "P1",
+      "depends_on": [
+        "G10",
+        "G11"
+      ],
+      "next_action": "Implement typed amount/asset/network policy and actual provider execution only after the recorded acceptance contracts are met."
+    },
+    {
+      "id": "G14",
+      "title": "Reconcile licenses and semantic-source provenance",
+      "phase": "R0",
+      "priority": "P1",
+      "depends_on": [],
+      "next_action": "Retain current repository licenses and obtain owner/counsel decisions for notices, policy and semantic-source intake."
+    },
+    {
+      "id": "G15",
+      "title": "Verify organization controls and current repository roles",
+      "phase": "R0",
+      "priority": "P1",
+      "depends_on": [],
+      "next_action": "Verify owner-controlled settings and presentation against current visibility; retain inaccessible historical repositories as unverified leads."
+    },
+    {
+      "id": "G16",
+      "title": "Complete federated authentication cutovers",
+      "phase": "R3",
+      "priority": "P1",
+      "depends_on": [],
+      "next_action": "Validate provider-owned federated role/canary/cutover evidence for each real workflow without copying credentials."
+    },
+    {
+      "id": "G17",
+      "title": "Supply measured cost and congestion inputs to fee policy",
+      "phase": "R3",
+      "priority": "P2",
+      "depends_on": [],
+      "next_action": "Connect measured input provenance/freshness outside Core; preserve configured floors as configured policy."
+    },
+    {
+      "id": "G18",
+      "title": "Qualify versioned agent/payment protocol compatibility",
+      "phase": "R1",
+      "priority": "P1",
+      "depends_on": [],
+      "next_action": "Select and test explicit x402 HTTP/MCP schemas and distinguish semantic identity adapters from ERC-8004 wire/deployed-registry compatibility."
+    },
+    {
+      "id": "G19",
+      "title": "Revalidate research-only protocol and sovereignty proposals",
+      "phase": "R5",
+      "priority": "P2",
+      "depends_on": [],
+      "next_action": "Revalidate primary sources and bounded adapter hypotheses before promoting BitVM3, RGB fork, Stacks/sBTC, ZKML or sovereignty pilots."
+    },
+    {
+      "id": "G20",
+      "title": "Maintain mobile, UX and public-surface truth",
+      "phase": "R1",
+      "priority": "P2",
+      "depends_on": [],
+      "next_action": "Continue concrete mobile/debt work and verify public/deployed surfaces against accepted capability evidence."
+    },
+    {
+      "id": "G21",
+      "title": "Bind promotion policy to actual immutable heads",
+      "phase": "R1",
+      "priority": "P1",
+      "depends_on": [],
+      "next_action": "Add actual PR-head binding for immutable dev/staged candidates and test missing/mismatched head evidence."
+    },
+    {
+      "id": "G22",
+      "title": "Complete phased rollout with exact acceptance evidence",
+      "phase": "R4",
+      "priority": "P0",
+      "depends_on": [
+        "G01",
+        "G04",
+        "G12"
+      ],
+      "next_action": "Accept and release each capability only when its own exact artifact, checks, relevant provider/runtime proof and owner/reviewer gates pass."
+    },
+    {
+      "id": "G23",
+      "title": "Revalidate positioning and economic research",
+      "phase": "R5",
+      "priority": "P2",
+      "depends_on": [],
+      "next_action": "Separate owner decisions, historical projections and primary-source observations before scoring or commercial adoption."
+    },
+    {
+      "id": "G24",
+      "title": "Complete institutional custody provider integration",
+      "phase": "R2",
+      "priority": "P1",
+      "depends_on": [
+        "G09",
+        "G10"
+      ],
+      "next_action": "Obtain an actual institution/provider account and qualified adapter contract with audited authorization and recovery behavior."
+    }
+  ],
+  "repository_baselines": [
+    {
+      "repository": "Conxian/.github",
+      "refs": {
+        "main": "6ea349db071303381eec954d9840406eb87da0d0"
+      },
+      "inspected_ref": "6ea349db071303381eec954d9840406eb87da0d0",
+      "tree_sha": "6ea349db071303381eec954d9840406eb87da0d0"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "refs": {
+        "dev": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+        "main": "d84c2a50e4882c4a979e5fabc08df63d96b2780c",
+        "staged": "af6fc1db7ff6924880fa2d362d9c4a5df48e9964"
+      },
+      "inspected_ref": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "tree_sha": "5f551e15ea6a2a13732e7928cd7692aaee1a655d"
+    },
+    {
+      "repository": "Conxian/conxian-nexus",
+      "refs": {
+        "dev": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d",
+        "main": "6d2a339a910dbfed632d920d5600a3ec420471b1",
+        "staged": "79606c4044eb0da0fd23f07bbec90ad3b4975f74"
+      },
+      "inspected_ref": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d",
+      "tree_sha": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d"
+    },
+    {
+      "repository": "Conxian/lib-conxian-core",
+      "refs": {
+        "dev": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+        "main": "d41a12a2b88605fb96717eba87f0ae28d193c90d",
+        "staged": "d294bf9d2b6e50988d7dd41af6636919657924eb"
+      },
+      "inspected_ref": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "tree_sha": "bf60a83473f7def42ad0a6d39d98ca026ec24a86"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "refs": {
+        "dev": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+        "main": "2f4acde575233ca1fcc6916a97763656ec1e06b7",
+        "staged": "c857379c4aa6febd6856bbf15c6ac2b486e2a105"
+      },
+      "inspected_ref": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "tree_sha": "fe063542b16a612cc2375c7f1c219d1364c0a79e"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "refs": {
+        "dev": "566e32ad719868eba34b59f2056a181c5917b61c",
+        "main": "1310955daec71f91f0df58417ccac6ac9ceae768",
+        "staged": "3f6fe4d3b9ac62ccc63b42df10afa0c50720b421"
+      },
+      "inspected_ref": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "tree_sha": "566e32ad719868eba34b59f2056a181c5917b61c"
+    },
+    {
+      "repository": "Conxian/conxian-labs-site",
+      "refs": {
+        "dev": "7bdece931d82505771101b1ef59011771abecf90",
+        "main": "86e6fcd04b7ad0da2e100d87ef48a8bf727ca28e",
+        "staged": "93f4b99f747decbf57f1203d253c73436bbc9917"
+      },
+      "inspected_ref": "7bdece931d82505771101b1ef59011771abecf90",
+      "tree_sha": "7bdece931d82505771101b1ef59011771abecf90"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "refs": {
+        "dev": "265960e38354d16b4aaf767447735c4260f8ab91",
+        "main": "cc718d59b5d12cddc6973948f75022807a24992f",
+        "staged": "900bb4de8cf78a9fe0e0765c17c4b7136cf67b51"
+      },
+      "inspected_ref": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "tree_sha": "265960e38354d16b4aaf767447735c4260f8ab91"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "refs": {
+        "dev": "1472d65181eb063a8ae07eff8971808cb665303d",
+        "main": "fbaa77a8f9057f0a7d5e8ba22bfa20a869394a3d",
+        "staged": "3887e7006d30c3941af707da53cb1c34c15b7b1e"
+      },
+      "inspected_ref": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "tree_sha": "1472d65181eb063a8ae07eff8971808cb665303d"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "refs": {
+        "dev": "1003f1af8faf57d39e0724006201227174ec2dfc",
+        "main": "581383c6e8a28aaa0f3a25829da1adbbb94c8766",
+        "staged": "e41e8edfd7166aa1cb1c7a269b0fac17c6a34dfa"
+      },
+      "inspected_ref": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "tree_sha": "1003f1af8faf57d39e0724006201227174ec2dfc"
+    },
+    {
+      "repository": "Conxian/conxian.github.io",
+      "refs": {
+        "main": "677d5ccadc27073cf0e6105669a6e58f85561014"
+      },
+      "inspected_ref": "677d5ccadc27073cf0e6105669a6e58f85561014",
+      "tree_sha": "677d5ccadc27073cf0e6105669a6e58f85561014"
+    },
+    {
+      "repository": "Conxian/conxian-org-site",
+      "refs": {
+        "main": "c7549a4cafdec3a07e0df9a7ac4678e4b6fd609c"
+      },
+      "inspected_ref": "c7549a4cafdec3a07e0df9a7ac4678e4b6fd609c",
+      "tree_sha": "c7549a4cafdec3a07e0df9a7ac4678e4b6fd609c"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "repository",
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/architecture/adrs/ADR-007-network-agnostic-pivot.md",
+      "blob": "e5fb3014b63f17cfbc04f1dbaa117ea75a74fa93",
+      "url": "https://github.com/Conxian/conxian-business/blob/265960e38354d16b4aaf767447735c4260f8ab91/docs/architecture/adrs/ADR-007-network-agnostic-pivot.md"
+    },
+    {
+      "id": "S02",
+      "kind": "repository",
+      "repository": "Conxian/lib-conxian-core",
+      "commit": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "path": "docs/CAPABILITY_CONTRACT.md",
+      "blob": "892f184b7eed3d045c007e86d962fee38134b0e9",
+      "url": "https://github.com/Conxian/lib-conxian-core/blob/bf60a83473f7def42ad0a6d39d98ca026ec24a86/docs/CAPABILITY_CONTRACT.md"
+    },
+    {
+      "id": "S03",
+      "kind": "repository",
+      "repository": "Conxian/conxian-nexus",
+      "commit": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d",
+      "path": "docs/CAPABILITY_DISCOVERY.md",
+      "blob": "94c8bcb7f46a98764fc153799eb17471d17e1e7f",
+      "url": "https://github.com/Conxian/conxian-nexus/blob/b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d/docs/CAPABILITY_DISCOVERY.md"
+    },
+    {
+      "id": "S04",
+      "kind": "repository",
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/CAPABILITY_DISCOVERY.md",
+      "blob": "f1174e2d8eb21bdb4bbd4ba58682ff54f5cfc837",
+      "url": "https://github.com/Conxian/conxian-gateway/blob/5f551e15ea6a2a13732e7928cd7692aaee1a655d/docs/CAPABILITY_DISCOVERY.md"
+    },
+    {
+      "id": "S05",
+      "kind": "repository",
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/operations/CAPABILITY_TRUTH.md",
+      "blob": "da2c2636df13362c20a5e525b04c9f1e16185d1b",
+      "url": "https://github.com/Conxian/conxius-wallet/blob/566e32ad719868eba34b59f2056a181c5917b61c/docs/operations/CAPABILITY_TRUTH.md"
+    },
+    {
+      "id": "S06",
+      "kind": "repository",
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "docs/architecture/capability-evidence.json",
+      "blob": "b858e98ed2a6361f8af9e41547d482e0aea8c6e2",
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/blob/1472d65181eb063a8ae07eff8971808cb665303d/docs/architecture/capability-evidence.json"
+    },
+    {
+      "id": "S07",
+      "kind": "repository",
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "scripts/verify_public_ipfs_release.py",
+      "blob": "44864607370592fcf8e608c005380b9ba7316cb5",
+      "url": "https://github.com/Conxian/conxian-business/blob/265960e38354d16b4aaf767447735c4260f8ab91/scripts/verify_public_ipfs_release.py"
+    },
+    {
+      "id": "S08",
+      "kind": "repository",
+      "repository": "Conxian/conxian-nexus",
+      "commit": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d",
+      "path": "src/storage/admin_workflows.rs",
+      "blob": "320583b0ae7f3810295a2648447b2306fbf5a0d8",
+      "url": "https://github.com/Conxian/conxian-nexus/blob/b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d/src/storage/admin_workflows.rs"
+    },
+    {
+      "id": "S09",
+      "kind": "workflow",
+      "url": "https://github.com/Conxian/conxian-nexus/actions/runs/40084035836",
+      "observed_on": "2026-10-24",
+      "tested_source_sha": "41b1c0f33ad65768a2204a388a77aa580b7ca32b",
+      "claim_scope": "disposable workflow recovery only"
+    },
+    {
+      "id": "S10",
+      "kind": "primary-documentation",
+      "url": "https://www.itil.com/Itil-News-and-Announcements/itil-version-5-foundation-whats-new-guide",
+      "observed_on": "2026-10-24"
+    },
+    {
+      "id": "S11",
+      "kind": "primary-documentation",
+      "url": "https://akash.network/docs/learn/core-concepts/confidential-compute/",
+      "observed_on": "2026-10-24"
+    },
+    {
+      "id": "S12",
+      "kind": "primary-documentation",
+      "url": "https://docs.ipfs.tech/concepts/persistence/",
+      "observed_on": "2026-10-24"
+    },
+    {
+      "id": "S13",
+      "kind": "primary-documentation",
+      "url": "https://docs.ipfs.tech/concepts/privacy-and-encryption/",
+      "observed_on": "2026-10-24"
+    },
+    {
+      "id": "S14",
+      "kind": "primary-documentation",
+      "url": "https://sia.tech/roadmap",
+      "observed_on": "2026-10-24",
+      "source_updated_on": "2026-06-26"
+    },
+    {
+      "id": "S15",
+      "kind": "primary-specification",
+      "url": "https://eips.ethereum.org/EIPS/eip-8004",
+      "observed_on": "2026-10-24"
+    },
+    {
+      "id": "S16",
+      "kind": "repository",
+      "repository": "Mesh-LLM/mesh-llm",
+      "commit": "45659de8ea57137d0c991395c8de55f535f1b4ce",
+      "path": "mesh/docs/specs/lightning-payments.md",
+      "blob": "7540a0932167fad86d75565605bd0d01392a1bc6",
+      "url": "https://github.com/Mesh-LLM/mesh-llm/blob/45659de8ea57137d0c991395c8de55f535f1b4ce/mesh/docs/specs/lightning-payments.md"
+    },
+    {
+      "id": "S17",
+      "kind": "repository",
+      "repository": "Mesh-LLM/mesh-llm",
+      "commit": "45659de8ea57137d0c991395c8de55f535f1b4ce",
+      "path": "mesh/docs/MESHES.md",
+      "blob": "6ae88bd1247a90a3e3cf3cb3c091a5a16300893a",
+      "url": "https://github.com/Mesh-LLM/mesh-llm/blob/45659de8ea57137d0c991395c8de55f535f1b4ce/mesh/docs/MESHES.md"
+    },
+    {
+      "id": "S18",
+      "kind": "repository",
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_76_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "b234cd72196a88966399567a4e1e98487dd6d98c",
+      "url": "https://github.com/Conxian/conxian_market/blob/1003f1af8faf57d39e0724006201227174ec2dfc/docs/research/SESSION_76_RESEARCH_EXPANSION_AND_GAP_MATRIX.md"
+    },
+    {
+      "id": "S19",
+      "kind": "repository",
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research_implementation_reconciliation_2026_10_15.json",
+      "blob": "1a3aa09723c87a240810ca2e7fa86f2a56d4a9ab",
+      "url": "https://github.com/Conxian/conxian-business/blob/265960e38354d16b4aaf767447735c4260f8ab91/docs/research_implementation_reconciliation_2026_10_15.json"
+    },
+    {
+      "id": "S20",
+      "kind": "access-observation",
+      "url": "https://api.github.com/orgs/Conxian/projects?state=open",
+      "observed_on": "2026-10-24",
+      "result": "connector rejected unsupported endpoint; board content unknown"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C01",
+      "classification": "fact",
+      "state": "architecture-decision",
+      "text": "Conxian reuses external networks and has no own L1 or native Conxian token; Bitcoin remains the canonical trust/finality root.",
+      "source_ids": [
+        "S01",
+        "S02"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "C02",
+      "classification": "fact",
+      "state": "implemented-bounded",
+      "text": "Nexus observes/verifies; Gateway owns routing/ingress execution boundaries. Diagnostic registrations are not qualified chain/network/operation support.",
+      "source_ids": [
+        "S03",
+        "S04"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "C03",
+      "classification": "fact",
+      "state": "implemented-bounded",
+      "text": "Capability contract validation is structural and does not authenticate providers or authorize signing.",
+      "source_ids": [
+        "S02"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "C04",
+      "classification": "fact",
+      "state": "evidence-gap",
+      "text": "Wallet/provider and SDK hardware support remain operation-specific; no fleet-wide production qualification is inferred.",
+      "source_ids": [
+        "S05",
+        "S06"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "C05",
+      "classification": "fact",
+      "state": "tested-bounded",
+      "text": "Public CAR intake verifies pinned source offline; live replication/operator independence remain unproven by that test.",
+      "source_ids": [
+        "S07"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "C06",
+      "classification": "fact",
+      "state": "tested-bounded",
+      "text": "Workflow state/audit rows persist transactionally; a fixture restored 34 rows across 18 tables on a second instance after stopping its source.",
+      "source_ids": [
+        "S08",
+        "S09"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "C07",
+      "classification": "fact",
+      "state": "specification",
+      "text": "ITIL Version 5 defines eight lifecycle activities. Conxian R0\u2013R5 are internal coordination workstreams, not the ITIL lifecycle.",
+      "source_ids": [
+        "S10",
+        "S19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "C08",
+      "classification": "inference",
+      "state": "recommendation",
+      "text": "Prefer portable recovery and workload-qualified independent operators before promoting decentralized providers to primary.",
+      "source_ids": [
+        "S07",
+        "S09",
+        "S11",
+        "S12",
+        "S13",
+        "S14"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "C09",
+      "classification": "fact",
+      "state": "research-only",
+      "text": "MeshLLM contains a Lightning payment proof of concept; unpublished mesh status alone does not enforce admission or attest runtime.",
+      "source_ids": [
+        "S16",
+        "S17"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "C10",
+      "classification": "fact",
+      "state": "research-only",
+      "text": "ERC-8004 discovery/reputation and BitVM3 result envelopes do not themselves establish payment settlement or cryptographic verification.",
+      "source_ids": [
+        "S15",
+        "S18"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "C11",
+      "classification": "missing_evidence",
+      "state": "evidence-gap",
+      "text": "Project-v2 board contents, production recovery, actual commercial economics and independent release acceptance are not established by this snapshot.",
+      "source_ids": [
+        "S09",
+        "S19",
+        "S20"
+      ],
+      "confidence": "unknown"
+    }
+  ],
+  "issues": [
+    {
+      "repo": "Conxian/.github",
+      "number": 81,
+      "title": "[WORK] Review org config repo \u2014 identify Rust tooling prototype candidates",
+      "url": "https://github.com/Conxian/.github/issues/81",
+      "labels": [
+        "status:triage"
+      ],
+      "assignees": [
+        "botshelomokoka",
+        "admin-conxian-labs"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:41Z",
+      "id": "Conxian/.github#81",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G15"
+      ],
+      "next_action": "Profile a bounded tool first; implement Rust only if distribution/performance benefits exceed maintenance cost.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 1,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/.github",
+      "number": 60,
+      "title": "chore(licenses): implement approved portfolio metadata, notices, and CI controls",
+      "url": "https://github.com/Conxian/.github/issues/60",
+      "labels": [],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:57Z",
+      "id": "Conxian/.github#60",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G14"
+      ],
+      "next_action": "Use G14 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 34
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/.github",
+      "number": 53,
+      "title": "Resolve residual public repository presentation metadata from control matrix",
+      "url": "https://github.com/Conxian/.github/issues/53",
+      "labels": [
+        "governance",
+        "type:improvement",
+        "priority:P2",
+        "status:blocked",
+        "scope:org-wide",
+        "escalation:required"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:52Z",
+      "id": "Conxian/.github#53",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G15"
+      ],
+      "next_action": "Use G15 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 7
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/.github",
+      "number": 47,
+      "title": "Verify security boundary and secret-prevention baseline",
+      "url": "https://github.com/Conxian/.github/issues/47",
+      "labels": [
+        "governance",
+        "type:control",
+        "priority:P1",
+        "status:blocked",
+        "scope:org-wide",
+        "escalation:required"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:51Z",
+      "id": "Conxian/.github#47",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G15"
+      ],
+      "next_action": "Use G15 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/.github",
+      "number": 43,
+      "title": "Run org-wide GitHub operating model alignment using issue-only control",
+      "url": "https://github.com/Conxian/.github/issues/43",
+      "labels": [
+        "governance",
+        "type:control",
+        "priority:P1",
+        "status:blocked",
+        "scope:org-wide",
+        "escalation:required"
+      ],
+      "assignees": [
+        "botshelomokoka",
+        "CharlieHelps"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:09Z",
+      "id": "Conxian/.github#43",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G15"
+      ],
+      "next_action": "Use G15 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 551,
+      "title": "Add WireMock integration scenarios and Toxiproxy chaos tests",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/551",
+      "labels": [
+        "enhancement"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:22Z",
+      "id": "Conxian/conxian-gateway#551",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G07"
+      ],
+      "next_action": "Run isolated transport/timeout/retry/chaos cases and preserve the required scenario counts; mocks remain test-only.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 550,
+      "title": "Create Kubernetes Helm chart and production manifests",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/550",
+      "labels": [
+        "enhancement"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:21Z",
+      "id": "Conxian/conxian-gateway#550",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G07"
+      ],
+      "next_action": "Produce deployable manifests only after verifying single-writer state, secrets, probes and recovery; replicas must not invent state concurrency.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 549,
+      "title": "Implement reference docker-compose dev stack (regtest)",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/549",
+      "labels": [
+        "enhancement"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:19Z",
+      "id": "Conxian/conxian-gateway#549",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G07"
+      ],
+      "next_action": "Qualify the existing Compose/regtest lane, runnable smoke journeys and host failure behavior; keep dev from production.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 548,
+      "title": ".env mapping, secrets guidance, and SBOM/licensing matrix",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/548",
+      "labels": [
+        "enhancement"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:38Z",
+      "id": "Conxian/conxian-gateway#548",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G14",
+        "G07"
+      ],
+      "next_action": "Bind environment variables, secret ownership, exact image/source rights and SBOM metadata before deploying the selected stack.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 547,
+      "title": "Select & document fully open-source plug-and-play integration stack",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/547",
+      "labels": [
+        "enhancement"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-24T05:10:12Z",
+      "id": "Conxian/conxian-gateway#547",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G07",
+        "G19"
+      ],
+      "next_action": "Compare portable maintained components per capability; implement only the smallest fit-for-purpose integration.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 544,
+      "title": "Standardize API token env name: accept API_TOKEN and CONXIAN_GATEWAY_AUTH_TOKEN (compat shim)",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/544",
+      "labels": [],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:24Z",
+      "id": "Conxian/conxian-gateway#544",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G06",
+        "G07"
+      ],
+      "next_action": "Verify token alias compatibility through runtime, installer and missing/conflicting-value tests.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 531,
+      "title": "P2: Bind fee-policy inputs to measured rail cost and congestion evidence",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/531",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:15Z",
+      "id": "Conxian/conxian-gateway#531",
+      "phase": "R3",
+      "existing_gap_ids": [
+        "G17"
+      ],
+      "next_action": "Use G17 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P2",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 6
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 526,
+      "title": "P1: Replace supported_chains count claims with runtime capability negotiation",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/526",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:08Z",
+      "id": "Conxian/conxian-gateway#526",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G04"
+      ],
+      "next_action": "Use G04 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 507,
+      "title": "Implement MoR billing webhook handler + Neon-backed key store (turnkey core)",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/507",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:02Z",
+      "id": "Conxian/conxian-gateway#507",
+      "phase": "R3",
+      "existing_gap_ids": [
+        "G08"
+      ],
+      "next_action": "Use G08 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 500,
+      "title": "Integrate Fireblocks/BitGo institutional custody adapter (shrink value-bearing audit surface)",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/500",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:01Z",
+      "id": "Conxian/conxian-gateway#500",
+      "phase": "R2",
+      "existing_gap_ids": [
+        "G24"
+      ],
+      "next_action": "Use G24 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 466,
+      "title": "P0: Qualify and deploy Gateway through ZSE-protected provisioning",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/466",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:14Z",
+      "id": "Conxian/conxian-gateway#466",
+      "phase": "R3",
+      "existing_gap_ids": [
+        "G07"
+      ],
+      "next_action": "Use G07 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 6
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 189,
+      "title": "[RESEARCH] G-1/G-20: BitVM3 adapter \u2014 garbled circuits & recursive proof verification",
+      "url": "https://github.com/Conxian/conxian-gateway/issues/189",
+      "labels": [
+        "adapter",
+        "research",
+        "bitvm"
+      ],
+      "assignees": [
+        "botshelomokoka",
+        "CharlieHelps"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:47Z",
+      "id": "Conxian/conxian-gateway#189",
+      "phase": "R5",
+      "existing_gap_ids": [
+        "G19"
+      ],
+      "next_action": "Use G19 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-nexus",
+      "number": 439,
+      "title": "P0 prerequisite: isolate and require real PostgreSQL replay conformance evidence",
+      "url": "https://github.com/Conxian/conxian-nexus/issues/439",
+      "labels": [],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:10Z",
+      "id": "Conxian/conxian-nexus#439",
+      "phase": "R2",
+      "existing_gap_ids": [
+        "G11",
+        "G07"
+      ],
+      "next_action": "Retain isolated PostgreSQL conformance and separate-instance restore evidence; qualify distributed replay/provider recovery independently.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 5,
+        "unchecked": 1
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-nexus",
+      "number": 418,
+      "title": "P1: Align Nexus observation manifest with canonical chain capability evidence",
+      "url": "https://github.com/Conxian/conxian-nexus/issues/418",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-24T05:10:11Z",
+      "id": "Conxian/conxian-nexus#418",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G04"
+      ],
+      "next_action": "Use G04 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-nexus",
+      "number": 174,
+      "title": "Governance: restore license policy and complete source/dependency licensing",
+      "url": "https://github.com/Conxian/conxian-nexus/issues/174",
+      "labels": [
+        "dependencies",
+        "governance",
+        "status:blocked"
+      ],
+      "assignees": [
+        "botshelomokoka",
+        "CharlieHelps"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:56Z",
+      "id": "Conxian/conxian-nexus#174",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G14"
+      ],
+      "next_action": "Use G14 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 4,
+        "unchecked": 4
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/lib-conxian-core",
+      "number": 440,
+      "title": "P0: Publish canonical universal-chain capability contract for downstream negotiation",
+      "url": "https://github.com/Conxian/lib-conxian-core/issues/440",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:07Z",
+      "id": "Conxian/lib-conxian-core#440",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G04",
+        "G05"
+      ],
+      "next_action": "Use G04, G05 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-platform",
+      "number": 1450,
+      "title": "Reconcile static capability catalog and Orbit claims with provider evidence",
+      "url": "https://github.com/Conxian/conxius-platform/issues/1450",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:28Z",
+      "id": "Conxian/conxius-platform#1450",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G04",
+        "G20"
+      ],
+      "next_action": "Reconcile static capability/Orbit catalog with source-bound provider evidence and preserve useful historical prototypes.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-platform",
+      "number": 1426,
+      "title": "P1: Ingest provider capability manifests into the control plane fail closed",
+      "url": "https://github.com/Conxian/conxius-platform/issues/1426",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:17Z",
+      "id": "Conxian/conxius-platform#1426",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G04"
+      ],
+      "next_action": "Use G04 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-platform",
+      "number": 1168,
+      "title": "[RESEARCH] Conxian Protocol Founder Rights & Revenue Routing (2026-07-15)",
+      "url": "https://github.com/Conxian/conxius-platform/issues/1168",
+      "labels": [
+        "revenue",
+        "protocol-handoff",
+        "research",
+        "founder-rights",
+        "legal"
+      ],
+      "assignees": [
+        "CharlieHelps"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:48Z",
+      "id": "Conxian/conxius-platform#1168",
+      "phase": "R5",
+      "existing_gap_ids": [
+        "G23"
+      ],
+      "next_action": "Use G23 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 5
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-platform",
+      "number": 1167,
+      "title": "[ORG-WIDE] Protocol Handoff & Routing Layer Alignment (2026-07-15)",
+      "url": "https://github.com/Conxian/conxius-platform/issues/1167",
+      "labels": [
+        "enhancement",
+        "protocol-handoff",
+        "routing-layer",
+        "org-wide"
+      ],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:45Z",
+      "id": "Conxian/conxius-platform#1167",
+      "phase": "R4",
+      "existing_gap_ids": [
+        "G23"
+      ],
+      "next_action": "Use G23 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 6,
+        "unchecked": 9
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-wallet",
+      "number": 727,
+      "title": "P1: Replace static SDK coverage claims with negotiated wallet capability status",
+      "url": "https://github.com/Conxian/conxius-wallet/issues/727",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:10Z",
+      "id": "Conxian/conxius-wallet#727",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G04"
+      ],
+      "next_action": "Use G04 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-wallet",
+      "number": 357,
+      "title": "Reduce technical debt and enforce code-quality / mobile-delivery efficiency hardening",
+      "url": "https://github.com/Conxian/conxius-wallet/issues/357",
+      "labels": [],
+      "assignees": [
+        "botshelomokoka",
+        "CharlieHelps"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:27Z",
+      "id": "Conxian/conxius-wallet#357",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G20"
+      ],
+      "next_action": "Use G20 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 19,
+        "unchecked": 4
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-labs-site",
+      "number": 80,
+      "title": "pricing page contradicts server.js managed pricing",
+      "url": "https://github.com/Conxian/conxian-labs-site/issues/80",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:42Z",
+      "id": "Conxian/conxian-labs-site#80",
+      "phase": "R3",
+      "existing_gap_ids": [
+        "G08",
+        "G20"
+      ],
+      "next_action": "Use G08, G20 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1491,
+      "title": "End-of-sprint: qualify real-data M&A evidence engine upgrades",
+      "url": "https://github.com/Conxian/conxian-business/issues/1491",
+      "labels": [
+        "enhancement",
+        "P1",
+        "priority:P1",
+        "bos"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": {
+        "title": "BOS Phase 2 \u2014 Control baseline",
+        "number": 1
+      },
+      "updated_at": "2026-10-23T14:42:44Z",
+      "id": "Conxian/conxian-business#1491",
+      "phase": "R5",
+      "existing_gap_ids": [
+        "G19",
+        "G23"
+      ],
+      "next_action": "At accepted sprint exit, admit the real-data M&A source/provenance pilot; retain code/data rights, missing-data and human decision gates.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [
+        "accepted-sprint-exit"
+      ],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 30
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1429,
+      "title": "P1: Qualify market-backed scoring and multi-cloud SLA evidence before financial automation",
+      "url": "https://github.com/Conxian/conxian-business/issues/1429",
+      "labels": [],
+      "assignees": [
+        "botshelomokoka",
+        "admin-conxian-labs"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:26Z",
+      "id": "Conxian/conxian-business#1429",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G17",
+        "G18"
+      ],
+      "next_action": "Version source-backed scoring/telemetry input contracts; reject simulated or stale financial evidence before automation.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 14
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1424,
+      "title": "P1: Convert South African enterprise research into gated implementation work",
+      "url": "https://github.com/Conxian/conxian-business/issues/1424",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:44Z",
+      "id": "Conxian/conxian-business#1424",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G14",
+        "G15"
+      ],
+      "next_action": "Resolve applicability, source provenance and accountable advisers before implementing obligation/workflow controls.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 4
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1423,
+      "title": "P1: Verify ITIL 5 operations and applicable ISO controls across repos",
+      "url": "https://github.com/Conxian/conxian-business/issues/1423",
+      "labels": [],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-24T09:58:38Z",
+      "id": "Conxian/conxian-business#1423",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G15",
+        "G22"
+      ],
+      "next_action": "Map the eight ITIL 5 lifecycle activities to current owner evidence; measure operating effectiveness separately.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 7
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1422,
+      "title": "Sprint exit: rewrite the technical whitepaper from accepted operational evidence",
+      "url": "https://github.com/Conxian/conxian-business/issues/1422",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:17Z",
+      "id": "Conxian/conxian-business#1422",
+      "phase": "R4",
+      "existing_gap_ids": [
+        "G22",
+        "G23"
+      ],
+      "next_action": "Prepare an evidence-labelled candidate now; final authoritative whitepaper requires accepted sprint-exit evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [
+        "accepted-sprint-exit"
+      ],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 7
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1419,
+      "title": "Sprint-exit research: evidence-led pricing, unit economics, retention and ecosystem reinvestment",
+      "url": "https://github.com/Conxian/conxian-business/issues/1419",
+      "labels": [
+        "enhancement",
+        "Feature",
+        "priority-critical"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:39Z",
+      "id": "Conxian/conxian-business#1419",
+      "phase": "R5",
+      "existing_gap_ids": [
+        "G17",
+        "G23"
+      ],
+      "next_action": "Collect authorised actual costs, customer demand and support evidence; do not activate projections or new fees.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 10
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1415,
+      "title": "P1: Bind immutable promotion candidates to actual PR heads in policy validation",
+      "url": "https://github.com/Conxian/conxian-business/issues/1415",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:16Z",
+      "id": "Conxian/conxian-business#1415",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G21"
+      ],
+      "next_action": "Use G21 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 6
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1414,
+      "title": "P2: Rebaseline deferred dependency research by current owner and lock graph",
+      "url": "https://github.com/Conxian/conxian-business/issues/1414",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:22Z",
+      "id": "Conxian/conxian-business#1414",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G02",
+        "G03"
+      ],
+      "next_action": "Use G02, G03 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P2",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 5
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1411,
+      "title": "P1: Review and upgrade the AI-native CLI across the system graph",
+      "url": "https://github.com/Conxian/conxian-business/issues/1411",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:36Z",
+      "id": "Conxian/conxian-business#1411",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G06"
+      ],
+      "next_action": "Use G06 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 6
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1399,
+      "title": "P0: Remove AWS root integration and decentralize release signer control",
+      "url": "https://github.com/Conxian/conxian-business/issues/1399",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:13Z",
+      "id": "Conxian/conxian-business#1399",
+      "phase": "R2",
+      "existing_gap_ids": [
+        "G09"
+      ],
+      "next_action": "Use G09 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1390,
+      "title": "P0 Epic: Universal capability propagation and deployment readiness",
+      "url": "https://github.com/Conxian/conxian-business/issues/1390",
+      "labels": [],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-24T10:00:04Z",
+      "id": "Conxian/conxian-business#1390",
+      "phase": "R4",
+      "existing_gap_ids": [
+        "G05",
+        "G22"
+      ],
+      "next_action": "Use G05, G22 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 2,
+        "unchecked": 12
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1349,
+      "title": "[ops] Production surface check failed",
+      "url": "https://github.com/Conxian/conxian-business/issues/1349",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-24T10:02:12Z",
+      "id": "Conxian/conxian-business#1349",
+      "phase": "R3",
+      "existing_gap_ids": [
+        "G07",
+        "G20"
+      ],
+      "next_action": "Use G07, G20 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 2,
+        "unchecked": 4
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1343,
+      "title": "Unify 3 disjoint billing schemes (gateway/labs-site/nexus/market)",
+      "url": "https://github.com/Conxian/conxian-business/issues/1343",
+      "labels": [
+        "enhancement",
+        "Feature",
+        "priority-critical"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": {
+        "title": "BOS Phase 2 \u2014 Control baseline",
+        "number": 1
+      },
+      "updated_at": "2026-10-23T09:34:31Z",
+      "id": "Conxian/conxian-business#1343",
+      "phase": "R3",
+      "existing_gap_ids": [
+        "G08",
+        "G17"
+      ],
+      "next_action": "Use G08, G17 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1336,
+      "title": "CXIP-1317 Phase C: security-proof, turnkey & fully-online rollout (phased)",
+      "url": "https://github.com/Conxian/conxian-business/issues/1336",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:04Z",
+      "id": "Conxian/conxian-business#1336",
+      "phase": "R4",
+      "existing_gap_ids": [
+        "G22"
+      ],
+      "next_action": "Use G22 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 1,
+        "unchecked": 10
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1317,
+      "title": "CXIP-1317: Ecosystem upgrades, production realignment and verified evidence",
+      "url": "https://github.com/Conxian/conxian-business/issues/1317",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-24T05:09:21Z",
+      "id": "Conxian/conxian-business#1317",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G02",
+        "G19",
+        "G23"
+      ],
+      "next_action": "Use G02, G19, G23 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 5
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 989,
+      "title": "[STRATEGY]: conxian position research ",
+      "url": "https://github.com/Conxian/conxian-business/issues/989",
+      "labels": [
+        "enhancement"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:58Z",
+      "id": "Conxian/conxian-business#989",
+      "phase": "R5",
+      "existing_gap_ids": [
+        "G23"
+      ],
+      "next_action": "Use G23 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 940,
+      "title": "[Research][FIBO] Pin ontology provenance, notices, and trademark boundary",
+      "url": "https://github.com/Conxian/conxian-business/issues/940",
+      "labels": [
+        "bos"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:54Z",
+      "id": "Conxian/conxian-business#940",
+      "phase": "R0",
+      "existing_gap_ids": [
+        "G14"
+      ],
+      "next_action": "Use G14 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 3,
+        "unchecked": 20
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 937,
+      "title": "[BOS-001][Gate 5] Independent security/release acceptance",
+      "url": "https://github.com/Conxian/conxian-business/issues/937",
+      "labels": [
+        "bos",
+        "handoff",
+        "priority-critical"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-24T05:10:13Z",
+      "id": "Conxian/conxian-business#937",
+      "phase": "R4",
+      "existing_gap_ids": [
+        "G12"
+      ],
+      "next_action": "Use G12 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 936,
+      "title": "[BOS-001][Gate 4] Hardware-backed signing/attestation and accountable owner",
+      "url": "https://github.com/Conxian/conxian-business/issues/936",
+      "labels": [
+        "bos",
+        "handoff",
+        "priority-critical"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:53Z",
+      "id": "Conxian/conxian-business#936",
+      "phase": "R2",
+      "existing_gap_ids": [
+        "G09",
+        "G10"
+      ],
+      "next_action": "Use G09, G10 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-enclave-sdk",
+      "number": 583,
+      "title": "P0: Qualify live hardware provider collateral and StrongBox offline boundaries (Hole 2.1)",
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/issues/583",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:14Z",
+      "id": "Conxian/conxius-enclave-sdk#583",
+      "phase": "R2",
+      "existing_gap_ids": [
+        "G10",
+        "G11"
+      ],
+      "next_action": "Qualify one actual hardware/provider/operation profile, including roots, collateral, freshness and recovery.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 9
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-enclave-sdk",
+      "number": 559,
+      "title": "P0: Qualify decentralized signing with community-verifiable evidence",
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/issues/559",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:11Z",
+      "id": "Conxian/conxius-enclave-sdk#559",
+      "phase": "R2",
+      "existing_gap_ids": [
+        "G09"
+      ],
+      "next_action": "Use G09 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-enclave-sdk",
+      "number": 558,
+      "title": "P0: Restore fail-closed PR #552 and publish truthful support inventory",
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/issues/558",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:05Z",
+      "id": "Conxian/conxius-enclave-sdk#558",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G04"
+      ],
+      "next_action": "Use G04 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-enclave-sdk",
+      "number": 509,
+      "title": "Turnkey KMaaS: pre-attested TEE compute + hardware-enforced threshold signing",
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/issues/509",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:35:00Z",
+      "id": "Conxian/conxius-enclave-sdk#509",
+      "phase": "R2",
+      "existing_gap_ids": [
+        "G13"
+      ],
+      "next_action": "Use G13 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-enclave-sdk",
+      "number": 241,
+      "title": "[P0] Qualify Android KeyMint/StrongBox authorization and Play Integrity verification",
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/issues/241",
+      "labels": [
+        "enhancement",
+        "cryptography",
+        "priority-critical"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:49Z",
+      "id": "Conxian/conxius-enclave-sdk#241",
+      "phase": "R2",
+      "existing_gap_ids": [
+        "G10"
+      ],
+      "next_action": "Use G10 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 8
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-enclave-sdk",
+      "number": 240,
+      "title": "[P0] Operationalize attestation roots, collateral, revocation, and distributed replay",
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/issues/240",
+      "labels": [
+        "enhancement",
+        "cryptography",
+        "priority-critical"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:19Z",
+      "id": "Conxian/conxius-enclave-sdk#240",
+      "phase": "R2",
+      "existing_gap_ids": [
+        "G10",
+        "G11"
+      ],
+      "next_action": "Use G10, G11 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 7
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxius-enclave-sdk",
+      "number": 202,
+      "title": "[P0] Complete independent security review and release acceptance evidence",
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/issues/202",
+      "labels": [
+        "documentation",
+        "release",
+        "provenance",
+        "quality",
+        "priority-critical"
+      ],
+      "assignees": [
+        "botshelomokoka"
+      ],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:32Z",
+      "id": "Conxian/conxius-enclave-sdk#202",
+      "phase": "R4",
+      "existing_gap_ids": [
+        "G12"
+      ],
+      "next_action": "Use G12 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P0",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian_market",
+      "number": 176,
+      "title": "P1: Define and verify x402 v2 and agent identity conformance contracts",
+      "url": "https://github.com/Conxian/conxian_market/issues/176",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:40Z",
+      "id": "Conxian/conxian_market#176",
+      "phase": "R1",
+      "existing_gap_ids": [
+        "G18"
+      ],
+      "next_action": "Use G18 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 6
+      },
+      "production_acceptance": false
+    },
+    {
+      "repo": "Conxian/conxian_market",
+      "number": 159,
+      "title": "Real x402 subscription payment pointer + non-zero demand (managed tier)",
+      "url": "https://github.com/Conxian/conxian_market/issues/159",
+      "labels": [],
+      "assignees": [],
+      "milestone": null,
+      "updated_at": "2026-10-23T09:34:34Z",
+      "id": "Conxian/conxian_market#159",
+      "phase": "R3",
+      "existing_gap_ids": [
+        "G08",
+        "G18"
+      ],
+      "next_action": "Use G08, G18 acceptance criteria; record exact artifact and unresolved owner evidence.",
+      "owner_role": "Owning repository maintainer; named acceptance owner remains required",
+      "acceptance": "Retain the owning issue's full acceptance; attach exact source, operation-specific test/runtime evidence, limitations and independent release decision.",
+      "recommended_priority": "P1",
+      "dependencies": [],
+      "observed_acceptance_checkboxes": {
+        "checked": 0,
+        "unchecked": 0
+      },
+      "production_acceptance": false
+    }
+  ],
+  "open_prs": [
+    {
+      "url": "https://github.com/Conxian/conxian-nexus/pull/454",
+      "number": 454,
+      "title": "PROMOTION:DEV->STAGED \u2014 2026-10-24 \u2014 b8d43a4b305b",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/lib-conxian-core/pull/492",
+      "number": 492,
+      "title": "chore: back-merge staged -> dev (downward re-sync)",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxian-gateway/pull/580",
+      "number": 580,
+      "title": "PROMOTION:STAGED->MAIN \u2014 2026-10-24 \u2014 af6fc1db7ff6",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxian-nexus/pull/451",
+      "number": 451,
+      "title": "PROMOTION:STAGED->MAIN \u2014 2026-10-24 \u2014 900cb0c21857",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/lib-conxian-core/pull/491",
+      "number": 491,
+      "title": "PROMOTION:DEV->STAGED \u2014 2026-10-24 \u2014 bf60a83473f7",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxius-wallet/pull/792",
+      "number": 792,
+      "title": "PROMOTION:DEV->STAGED \u2014 2026-10-24 \u2014 566e32ad7198",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/pull/610",
+      "number": 610,
+      "title": "PROMOTION:DEV->STAGED \u2014 2026-10-24 \u2014 1472d65181eb",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/pull/609",
+      "number": 609,
+      "title": "PROMOTION:DEV->STAGED \u2014 2026-10-24 \u2014 ead3e18b021d",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxius-wallet/pull/791",
+      "number": 791,
+      "title": "chore: retain staged ancestry without losing policy security repair",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxius-wallet/pull/790",
+      "number": 790,
+      "title": "build(deps-dev): bump the development-routine group with 2 updates",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxius-wallet/pull/785",
+      "number": 785,
+      "title": "PROMOTION:STAGED->MAIN \u2014 2026-10-23 \u2014 53581a2c3f63",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/lib-conxian-core/pull/489",
+      "number": 489,
+      "title": "PROMOTION:STAGED->MAIN \u2014 2026-10-23 \u2014 d294bf9d2b6e",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxian-business/pull/1490",
+      "number": 1490,
+      "title": "PROMOTION:STAGED->MAIN \u2014 2026-10-22 \u2014 900bb4de8cf7",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxian_market/pull/195",
+      "number": 195,
+      "title": "PROMOTION:STAGED->MAIN \u2014 2026-10-22 \u2014 e41e8edfd716",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/pull/606",
+      "number": 606,
+      "title": "PROMOTION:STAGED->MAIN \u2014 2026-10-20 \u2014 3887e7006d30",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    },
+    {
+      "url": "https://github.com/Conxian/conxius-platform/pull/1470",
+      "number": 1470,
+      "title": "PROMOTION:STAGED->MAIN \u2014 2026-10-20 \u2014 c857379c4aa6",
+      "disposition": "Retain; recheck current source/head, all checks, actual owner acceptance and unique-work retention before merge or closure."
+    }
+  ],
+  "document_catalog": [
+    {
+      "repository": "Conxian/.github",
+      "commit": "6ea349db071303381eec954d9840406eb87da0d0",
+      "path": "docs/research/bitvm3-and-groth16-readiness.md",
+      "blob": "b1305c11707641c163221ffd1af93bfa50c29d30"
+    },
+    {
+      "repository": "Conxian/.github",
+      "commit": "6ea349db071303381eec954d9840406eb87da0d0",
+      "path": "docs/research/cicd-failures-and-gaps.md",
+      "blob": "fd78686cdd38b0b8bca76660bfc32f6fb2401e91"
+    },
+    {
+      "repository": "Conxian/.github",
+      "commit": "6ea349db071303381eec954d9840406eb87da0d0",
+      "path": "docs/research/hardening-best-practices.md",
+      "blob": "d03fe999ffe373102add4af778dc4434e64faf11"
+    },
+    {
+      "repository": "Conxian/.github",
+      "commit": "6ea349db071303381eec954d9840406eb87da0d0",
+      "path": "docs/research/institutional-treasury-iso20022.md",
+      "blob": "cacbaf67c62eb6944f0df72efe22ed5891522987"
+    },
+    {
+      "repository": "Conxian/.github",
+      "commit": "6ea349db071303381eec954d9840406eb87da0d0",
+      "path": "docs/research/ldk-node-and-dlc-integration.md",
+      "blob": "951dfcd93b73fb0cdac069600d2c7cc0140ad82f"
+    },
+    {
+      "repository": "Conxian/.github",
+      "commit": "6ea349db071303381eec954d9840406eb87da0d0",
+      "path": "docs/research/nexus-holistic-alignment.md",
+      "blob": "fbf5863375b267661b22db3e140f9504b72bb1cd"
+    },
+    {
+      "repository": "Conxian/.github",
+      "commit": "6ea349db071303381eec954d9840406eb87da0d0",
+      "path": "docs/research/rgb-protocol-fork-analysis.md",
+      "blob": "affbc9efe208217cbb46e4e5392e9f2c268eccab"
+    },
+    {
+      "repository": "Conxian/.github",
+      "commit": "6ea349db071303381eec954d9840406eb87da0d0",
+      "path": "docs/research/source-and-gap-map.md",
+      "blob": "e0105758ca4a75d338cfd227f13e678f14db7d6e"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/CAPABILITY_DISCOVERY.md",
+      "blob": "f1174e2d8eb21bdb4bbd4ba58682ff54f5cfc837"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/GAP_ANALYSIS_2026-07-14.md",
+      "blob": "8b0e3978cd9a12e75ae175d64e36f687fea65c96"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/GAP_ANALYSIS_2026-07-22.md",
+      "blob": "7668183390883af1b87074287ecd033c4add56e9"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/audit/GAP_ANALYSIS_AND_SCORING.md",
+      "blob": "df7c08371863b6e8f142166b40593b8e47cb2ada"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/ADAPTER_FAMILY_STRATEGY.md",
+      "blob": "ae3fc07c8945bef801d15cac55e270b7ad0906af"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/ALEX_SETTLEMENT_EVIDENCE_AND_GATE_2026-07-22.md",
+      "blob": "1aa48625cd51384f5053097d537f410c160b986c"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/BABYLON_ADAPTER_RESEARCH.md",
+      "blob": "946a150de49e35ce4f3f2442997a74fe394a17bb"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/BIP110_FEE_MARKET_AND_ROUTING_2026-07-22.md",
+      "blob": "a7bb20125cb022ee6158b5364076dd3fb394123b"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/BITVM3_BITVMX_EVIDENCE_AND_TRIAGE_2026-07-22.md",
+      "blob": "e4030fc41d7c0b0d5eb0e73a91c71e6688365851"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/BITVM3_BITVMX_RESEARCH_EXPANSION.md",
+      "blob": "be0894843b5483ec38811ebec5368ab27fc46641"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/BITVM3_GAP_ANALYSIS_2026-08-06.md",
+      "blob": "9c498d6766b37c9aeb37146f53f47a092f1a126f"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/BITVMX_EVAL.md",
+      "blob": "a34bcf8bfdbc339b5539d68eeee28922be994e09"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/BITVM_VERIFICATION_FAMILY_RESEARCH.md",
+      "blob": "20c92596a874dd9b17c1709d3e7ca44fa182c9d7"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/BRICS_FINANCIAL_SYSTEMS_RESEARCH.md",
+      "blob": "21cc34264ef24e2b77a83eb67fcbe2699410e6d3"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/CANDIDATE_MATRIX.md",
+      "blob": "4ee9e31c2a11a4cde5978d718dfff2a88d8deed5"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/CANTON_NETWORK_AND_MACHINE_ECONOMY_RESEARCH.md",
+      "blob": "a7166fead10e34012bdf4d99339c6b5b3fbc4d0b"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/CLIENT_INSTALLATION_AND_DEPLOYMENT_BLUEPRINT.md",
+      "blob": "44b716b50f366e71f92e66ccd44c02ad73cc50bd"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/CXIP_ORG_WIDE_UPGRADE_PROPOSAL.md",
+      "blob": "2cc38a2211297e203b671bca5e039e1e14fd2b9c"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/DECENTRALIZED_FEDERATION_ARCHITECTURE.md",
+      "blob": "225ceee47158d190ad859a447ae0185265adf3e9"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/DLC_ECOSYSTEM_AND_MAINNET_EVIDENCE.md",
+      "blob": "e60764d29b859dcbbb206072c8bc21e757afb63c"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/DLC_SETTLEMENT_RAIL_RESEARCH.md",
+      "blob": "267ded90cf59aa305e7c76d30482d9912fb9b030"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/DLC_STAGE0_SDK_COMPARISON_2026-07-22.md",
+      "blob": "04391da987b911734cee9f56ea6496843d3d6264"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/DLC_STAGE1_CONFORMANCE_2026-07-22.md",
+      "blob": "11ac32beecec74109b3f04fd4fe528e621fd49e5"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/DLC_STAGE1_FIXTURE_2026-07-22.md",
+      "blob": "03b02cf324aca2f236231c50fc24cd0b59f95dc5"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/ENHANCEMENT_PLAN.md",
+      "blob": "591178aaa16e9578490271441cffb1a91239ead4"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/FEDIMINT_ADAPTER_RESEARCH.md",
+      "blob": "bcdc67cbceca4d628b711574bbfd3697c6a39089"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/FIAT_ISO20022_SETTLEMENT_RAIL_RESEARCH.md",
+      "blob": "06edc8a85fb20d045faefd396fe12b05742cc691"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/GAP_ANALYSIS_2026-08-07.md",
+      "blob": "5da1bacaf411523c9b05849145835837c35e9c7d"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/GAP_ANALYSIS_2026-09-06.md",
+      "blob": "74de4cba19e35b3cfccae4551ad7dc626f6b575a"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/IDENTITY_RESOLUTION_WORLDID.md",
+      "blob": "c25945cad10c32ee4d44e663c8e036f65b6113fe"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/KNOWLEDGE_MAP.md",
+      "blob": "5d8c63f3cdf60f79bb9e649422c22d49860b0bf6"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/LIGHTNING_SETTLEMENT_RAIL_RESEARCH.md",
+      "blob": "6146abcdc9c8057350376312b7f92d75c19365ba"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/MANAGED_GATEWAY_PRICING_RESEARCH_2026-10-10.md",
+      "blob": "fc18930db69edfa55679a7951acf6cd4320dc470"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/NOSTR_WALLET_CONNECT_NWC.md",
+      "blob": "4906529444ac49becdfb96401bc5c18f6c9bb0b1"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/NTT_SOVEREIGN_BRIDGE_RESEARCH.md",
+      "blob": "1fced7edb20f4416b9d2f30844d0d728093a71f2"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/OPPORTUNITY_MAP_AND_EXPANSION.md",
+      "blob": "aaab27a489ee399b7d43270ddb2a8186b8203b89"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/PARTNER_LANE_ADAPTERS.md",
+      "blob": "d0190f2d2025141c8a5093ebead0febeb54b242e"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/PRODUCTION_ENABLEMENT_RESEARCH_2026-09-11.md",
+      "blob": "0fe69acb240dcbea51d3a84b29a825018967644b"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/RGB_BIP340_ISSUER_POLICY_2026-07-26.md",
+      "blob": "1d5fbb578f7a1d4a5b557819ee9fe554f6e73d95"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/RGB_SETTLEMENT_RAIL_RESEARCH.md",
+      "blob": "81922c9cd746db2367ed9722d21e49f6171b23d7"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/SBTC_SETTLEMENT_RAIL_RESEARCH.md",
+      "blob": "50cb333b14108ca89dddc111f46673a5c20837c5"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/SLA_POSITIONING_AND_GOVERNANCE_RESEARCH.md",
+      "blob": "8e8e9f3756b202574b594a3a0793bf6fc91da3c4"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/SOVEREIGN_SETTLEMENT_ORCHESTRATION.md",
+      "blob": "e1fb9db974a48f8e97fc0ee79dc924d1db3f3688"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/SOVEREIGN_SHARDING_VERIFICATION.md",
+      "blob": "5026fba9063f74df8d187ff48e883df53fdb0e4d"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/SOVEREIGN_YIELD_INDEX_RESEARCH.md",
+      "blob": "1b94a312621c087e269f47610aea71b0ecf06450"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/UNIVERSAL_CHAIN_RESEARCH.md",
+      "blob": "5037984f7f353649ee9d91ff3cf0299a8441e180"
+    },
+    {
+      "repository": "Conxian/conxian-gateway",
+      "commit": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "path": "docs/research/VERIFICATION_IMPROVEMENT_PROPOSAL.md",
+      "blob": "c58690823ef81a20fd69c524bd0ca3776fdcda19"
+    },
+    {
+      "repository": "Conxian/conxian-nexus",
+      "commit": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d",
+      "path": "docs/CAPABILITY_DISCOVERY.md",
+      "blob": "94c8bcb7f46a98764fc153799eb17471d17e1e7f"
+    },
+    {
+      "repository": "Conxian/conxian-nexus",
+      "commit": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d",
+      "path": "docs/GAP_ANALYSIS.md",
+      "blob": "204918dbf51ce4ed42b3145506d8fb9eefa276f5"
+    },
+    {
+      "repository": "Conxian/conxian-nexus",
+      "commit": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d",
+      "path": "docs/PRODUCTION_ENABLEMENT_RESEARCH_2026-09-11.md",
+      "blob": "90ee8904868342c1cabffe0ae8be9491573242a6"
+    },
+    {
+      "repository": "Conxian/conxian-nexus",
+      "commit": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d",
+      "path": "docs/RESEARCH.md",
+      "blob": "e556498c07129e147bde71c1de88b65d1aabbf46"
+    },
+    {
+      "repository": "Conxian/lib-conxian-core",
+      "commit": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "path": "docs/CAPABILITY_CONTRACT.md",
+      "blob": "892f184b7eed3d045c007e86d962fee38134b0e9"
+    },
+    {
+      "repository": "Conxian/lib-conxian-core",
+      "commit": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "path": "docs/GAP_ANALYSIS_AND_SCORING.md",
+      "blob": "e9659651d442c054bc2392e9eaa5eac9e425eef3"
+    },
+    {
+      "repository": "Conxian/lib-conxian-core",
+      "commit": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "path": "docs/PHASE1_ISSUES_ROADMAP.md",
+      "blob": "39d1e7d7f6c9d88105e8403f06b3216091338def"
+    },
+    {
+      "repository": "Conxian/lib-conxian-core",
+      "commit": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "path": "docs/SESSION_RESEARCH_LOG.md",
+      "blob": "f0d875c7dcc7399630ce948fe928f180555d5667"
+    },
+    {
+      "repository": "Conxian/lib-conxian-core",
+      "commit": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "path": "docs/UNIVERSAL_SUPPORT_RESEARCH.md",
+      "blob": "681c7aeb525424f355aaa6e963fd769bf5c0c088"
+    },
+    {
+      "repository": "Conxian/lib-conxian-core",
+      "commit": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "path": "docs/architecture/CONTROL_PLANE_ROADMAP.md",
+      "blob": "2dafd5de4179663e385adc381c4c4773a6ce9c8e"
+    },
+    {
+      "repository": "Conxian/lib-conxian-core",
+      "commit": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "path": "docs/signing/HARDWARE_CHIPSET_DRIVERS_AND_ENCLAVE_RESEARCH.md",
+      "blob": "2b790c88468f4ba6520357170ad0b22018617346"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "docs/BITCOIN_STANDARD_RESEARCH.md",
+      "blob": "4b99f941f691066bcd78d912b5895f94a073a637"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "docs/CI_CD_BASELINE_GAP_ANALYSIS.md",
+      "blob": "7a6178d1fcd705a54767ebe5794ce18f49162329"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "docs/GAPS.md",
+      "blob": "e8ae1fa2c28b2f338bfd8241bfdf6c75fa143d00"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "docs/WHITEPAPER.md",
+      "blob": "82b348310232eae642ca1c23a941c6ab002fb943"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "docs/architecture/ARK_RESEARCH.md",
+      "blob": "0c521a438e51f8c171c9ad417f56f351d6944ea7"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "docs/architecture/BITVMX_RESEARCH.md",
+      "blob": "c86d154574dc9a0d1c104f2e5ba3898534bb0683"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "docs/architecture/CONXIAN_STRATEGIC_ANALYSIS_RESEARCH_1317.md",
+      "blob": "f4f24d0cb68edcd4950b9f6782ee85f0cb2aeec5"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "docs/architecture/ENTERPRISE_ERP_SIMULATION_RESEARCH.md",
+      "blob": "46c9106d0b92fa0cb330ebdf0e88753d8fab4a19"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "docs/architecture/FULL_STACK_BITCOIN_RESEARCH.md",
+      "blob": "040a7fbb090c2380230b9f24c50c7d2d58c361b7"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "docs/audits/2026-08-26-organization-service-capability-review.md",
+      "blob": "a0e227dc6bbce159f32d6605fe75a0c69b073627"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "openspec/changes/2026-08-26-platform-gap-remediation/proposal.md",
+      "blob": "a5169081609b3d822c7eee8f15244f9b9dcd0951"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "openspec/changes/archive/2026-04-12-gaps-endpoint-corrections/proposal.md",
+      "blob": "719f9044d13a29ce9f486267f3ccd28d24181548"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "openspec/changes/archive/2026-04-12-gaps-ubi-endpoint-docfix/proposal.md",
+      "blob": "77c6b7e8dadf07d60e7f96528dff133e4e9ada85"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "openspec/changes/archive/2026-04-12-lockfile-drift-gaps-endpoints/proposal.md",
+      "blob": "b9baf6c51579da1821eddc4ce8db3a9f75fbf9db"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "platform/wallet-capability-sdk.contract.json",
+      "blob": "0c42392c64fe6fce44c011e7169ff4cd53cc5cac"
+    },
+    {
+      "repository": "Conxian/conxius-platform",
+      "commit": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "path": "schemas/capabilities.json",
+      "blob": "2bbe8479ff2a9e6c5b9058db4df1e441a8feb3ff"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/archive/GAPS_AND_RECOMMENDATIONS.md",
+      "blob": "9a49ed8b12ed37635d07ce59e360f7c3df5c1e5a"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/archive/GAPS_AND_RECOMMENDATIONS_ROUND_2.md",
+      "blob": "ae7118fcfd113c2414bb3c1693b31920b001b10f"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/business/WHITEPAPER.md",
+      "blob": "2621765691eabacda87702bdd8c568f6080894b8"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/operations/CAPABILITY_TRUTH.md",
+      "blob": "da2c2636df13362c20a5e525b04c9f1e16185d1b"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/operations/ROADMAP.md",
+      "blob": "219a664176f2b66f788acc12b9215e5891343de4"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/protocols/NATIVE_BRIDGE_RESEARCH.md",
+      "blob": "ce3d255632c7a977c3cbf40decd0d0656d59ff32"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/reports/GAP_MATRIX_2026.md",
+      "blob": "b98d5fbc04e98f005518baf34377ec5cebbc2d1c"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/reports/SDK_RESEARCH.md",
+      "blob": "25f67606edfc8d8664419e194370303459b844a4"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/reports/v1.9.5_CODE_GAP_MAPPING.md",
+      "blob": "1abae1859c7860156795784f490701c788a669e9"
+    },
+    {
+      "repository": "Conxian/conxius-wallet",
+      "commit": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "path": "docs/reports/v1.9.5_RESEARCH_EXPANSION_REPORT.md",
+      "blob": "5125378e12e55a86e04d6a8e334076265e321839"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "audit/CI_STATUS_AND_ADVISORY_GAP_ANALYSIS.md",
+      "blob": "95996d19f94cabd47a76c3f095d853e9ce902612"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "conxian-business/BOS_BAAP_RESEARCH_SUMMARY.md",
+      "blob": "ea5013db55c83306fce7c5ce3ecb58a701069d36"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/AGENTIC_FACTORY_ROADMAP.md",
+      "blob": "38588ff5444acc981aa9191d49047d4b6bc7c54d"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/BOS_RESEARCH_CANDIDATE_LEDGER.md",
+      "blob": "63464091e220befbd3a66ace8f0b43b6dc3ba709"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/GAPS.md",
+      "blob": "4b438e32a5a4cf1d9165dd89daa5c5dbb9b5a694"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/GITHUB_TECHNICAL_RESEARCH_AND_REMEDIATION_PLAN.md",
+      "blob": "05a82e9c493766e98de3db2675607d49c6d71d2f"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/KNOWLEDGE_GAP_ANALYSIS.md",
+      "blob": "93e2fee3a6f013eeea2456753cd9a151aa6cb632"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/MANAGED_GATEWAY_PRICING_RESEARCH.md",
+      "blob": "ed52e11384cd377796a540273a55a375ace73b77"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/REMAINING_UNIVERSAL_SUPPORT_RESEARCH.md",
+      "blob": "50c86cae087ba5da7e51a2b2732ac7f0fd684d46"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/REPO_GAP_AND_SUPPORT_REVIEW_2026_10_19.md",
+      "blob": "abe9848ca02ca49a2e47b284f931717806e228e0"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/RESEARCH_BTC_L2_2026.md",
+      "blob": "f55ad7a4095385cb810ac53b66a1f26cd1f0ed27"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/RESEARCH_FINDINGS_2026-05-29.md",
+      "blob": "83cb2b6ae465ae0325fd8fd1d1b3c2cb3d62821c"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md",
+      "blob": "2bad1b5d447f1c231ac878628c27cc4f85dcd6c7"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/SOVEREIGNTY_AND_ONBOARDING_ARCHITECTURE_RESEARCH.md",
+      "blob": "31dccdc14e8bcc8c24402bcab23a163322411d16"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/TECHNICAL_WHITEPAPER.md",
+      "blob": "e2679504b8db9a133f3772f39cf6a3aced2fc151"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/TECHNICAL_WHITEPAPER_OUTLINE.md",
+      "blob": "278d4d6821b514340b0236671650eb2f97c9061f"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/TURNKEY_SELF_SERVE_GAP_ANALYSIS.md",
+      "blob": "be07d16213d14bc1c3266d96125a30cea4cb5844"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/UNIFIED_PRODUCTION_READINESS_GAP_REPORT.md",
+      "blob": "dc3028be0e46f5ab8d385f27be669b6a684dde31"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/architecture/BOS_PRESERVE_ENHANCE_REPLACE_GAP_MATRIX.md",
+      "blob": "4385f4a9622ffb549aa30adf36395776590c9a5a"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/architecture/ROADMAP_12_MONTH_CONTROL_PLANE.md",
+      "blob": "40a1b7531582ecba79d8e667d7e2df29b4649ba7"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/architecture/adrs/ADR-007-network-agnostic-pivot.md",
+      "blob": "e5fb3014b63f17cfbc04f1dbaa117ea75a74fa93"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/bos_research_candidate_ledger.json",
+      "blob": "c16ee3f478439b97d1ed513b2f1576f106846b2a"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/governance/FIBO_PROVENANCE_RESEARCH_NOTE.md",
+      "blob": "eadcdeabe741b5323ad354280d40f92387df0d14"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/AGENTIC_SYSTEM_WIDE_EVALUATION_AND_TRANSFORMATION_BLUEPRINT_2026.md",
+      "blob": "24f36a97ac5a3412fcbd77be2389b6f2fc192cbe"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/CROSS_REPO_SDK_CAPABILITY_AUDIT_SESSION52.md",
+      "blob": "d541a488d2b930f5189a85889a34a3369f918573"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/DEPENDENCY_PURGE_AND_BOUNDARY_AUDIT_2026.md",
+      "blob": "fea5417a9244f534b0dc5913dd3b374ce5614aef"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/ISSUE_989_POSITION_EVIDENCE_RECORD.md",
+      "blob": "5297280e62e035942bf6a9e479dd63b8fd9fe141"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/MULTI_DIMENSIONAL_SCORING_TELEMETRY_AND_BITVM3_EXPANSION_RESEARCH_2026.md",
+      "blob": "66f699b6b926e46c837e88d21fdba5acefbd6e65"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/PHASE3_ENHANCEMENT_ROADMAP_SESSION54.md",
+      "blob": "f0423b3f9042cbb00e13e3b4c71c08320d943fba"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/SDK_CAPABILITY_AUDIT_SESSION57.md",
+      "blob": "123b80885b89c707c5609f2ca5d9973d0b57699a"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/SIGNING_PARTNER_RESEARCH_AND_ETHOS_ALIGNMENT.md",
+      "blob": "83772072df7c50b063eeb6d777c7f3732f0bf548"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/SIGNING_PARTNER_RESEARCH_PHASE2_DEEPENING.md",
+      "blob": "b112173b75ad0ec3384c28474d83dcc1330da3e0"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/STRATEGIC_ANALYSIS_CONXIAN_ECOSYSTEM_ISSUE_1317.md",
+      "blob": "4fd0fb7f851839c6fb74f016c181ef275dc03ea5"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research/UX_SURFACE_AND_DOMAIN_ALIGNMENT_RESEARCH_2026.md",
+      "blob": "74d0e8d9fa2319c80e5e6b50e83bc552264c9fa6"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "docs/research_implementation_reconciliation_2026_10_15.json",
+      "blob": "1a3aa09723c87a240810ca2e7fa86f2a56d4a9ab"
+    },
+    {
+      "repository": "Conxian/conxian-business",
+      "commit": "265960e38354d16b4aaf767447735c4260f8ab91",
+      "path": "research/bounty-onchain-gaps.md",
+      "blob": "a162f8b87234d5a050db8649c3cb53aec519305f"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "RESEARCH_LOG.md",
+      "blob": "e4f0d167e8393a7da46c0720a76390fc6e25b90c"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "docs/PHASE1_ISSUES_ROADMAP.md",
+      "blob": "4ef32f56735b3388ec59e0c29267d803f33a94a0"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "docs/architecture/BITVM2_ARK_RESEARCH.md",
+      "blob": "d79c5221e082c3d2a66f6fab8544af677967128c"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "docs/architecture/CAPABILITY_MATRIX.md",
+      "blob": "d4df7a106c11ecbe7e084574bfd9f1caa91061e9"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "docs/architecture/GAP_SCORECARD.md",
+      "blob": "82b56da33d79514a38f511bd065552e68ffe50f6"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "docs/architecture/PROTOCOL_IMPLEMENTATION_ROADMAP.md",
+      "blob": "c3dab39e2a7977bc21c5606e8cbf58e2a1f1e9de"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "docs/architecture/UNIVERSAL_SUPPORT_RESEARCH.md",
+      "blob": "62a00e5d3eed88f8be66fbc70e1adc5d9213f44d"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "docs/architecture/capability-evidence.json",
+      "blob": "b858e98ed2a6361f8af9e41547d482e0aea8c6e2"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "docs/audits/PR-237_HARDWARE_ATTESTATION_RESEARCH_2026-07-22.md",
+      "blob": "d247cb336ce71a7a83e70d094c60ca09f7628cd0"
+    },
+    {
+      "repository": "Conxian/conxius-enclave-sdk",
+      "commit": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "path": "docs/salvage/PR-237_HARDWARE_ATTESTATION_RESEARCH_2026-07-22.md",
+      "blob": "6ac81f72d6bd87cae80141e1eb26c4e79f934614"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "ROADMAP.md",
+      "blob": "05f060d407edaf7ad8ab59140f75bc26537ee342"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/CLI_CAPABILITY_PROTOCOL_CONFORMANCE_2026_10_15.md",
+      "blob": "6160cccfb86d31c345e465d363a7a2213bc0a66c"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/ATS_SOURCE_LEVEL_VERIFICATION.md",
+      "blob": "0920fb25ab193babeb8a89aaa11e25f11d3fc501"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/CLIENT_ONBOARDING_AND_UNIFIED_INSTALLER_ARCHITECTURE.md",
+      "blob": "df96823d6bcb22909b42cf88eb0e7a494bb29311"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/CON1427_IMPLEMENTATION_PLAN.md",
+      "blob": "30a293a095ebd0f6bde0c3c46a661b5bd95d8361"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/CROSS_REPO_GAP_ANALYSIS_SESSION_48.md",
+      "blob": "b6e6487e95814484218a1b869b504f4f20c8433d"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/CXIP1317_ORG_WIDE_UPGRADE_PROPOSAL_ANALYSIS.md",
+      "blob": "0aefc97b2c35eb5aa8f04ec366c6afe9bcd8843d"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/ECOSYSTEM_GRAPH.md",
+      "blob": "428a026ef8a26dd75e8767d35fddda2a4ddf66eb"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/ECOSYSTEM_INTEGRATION_RESEARCH.md",
+      "blob": "d81fbf6aa558a4cfbb09be0cfb9e25b874bae76b"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/EXPANSION_II_SCHEMA_DEFINITION.md",
+      "blob": "1975268ed65e06ab4501b8773c241aca4fc8b1f7"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/EXPANSION_I_FEASIBILITY_AUDIT_SCOPE.md",
+      "blob": "3003013ebb2afc2c4b30934ec9fcb76edbdaee94"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/FEE_MODEL_COMPETITIVE_BENCHMARK_AND_G8_COST.md",
+      "blob": "be9b280a49b5689248335456b24ba705ef6e9644"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/FULL_SYSTEM_ARCHITECTURE.md",
+      "blob": "f7c6b0c59959be3993d32ee7384a13cac3732d79"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/FUNDING_AND_ECONOMICS.md",
+      "blob": "20760d39aa360c06010960776a0a1198ac6f5a2b"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/MARKET_UNIFIED_POSITIONING.md",
+      "blob": "9bb61d42b07ad6a1f5d20529ee14c1aef44bdf07"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/MASTER_RECONNAISSANCE_AND_ARCHITECTURE_REVIEW.md",
+      "blob": "d56b9c50c8d7cf4f64643b7f9139dcea5b16b3e8"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_49_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "96a027f9845ef30ece232c21fc0d23754f9a8b6b"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_50_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "f986f1417e3dd0ce4055596306ae135ecbc64a9a"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_51_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "82623434e1a63a706ec1dd31ee7eebfa7cbb04f5"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_52_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "e7f0513415ee32b508e3248f20aa3db024c11995"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_53_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "ae29144be30bb45b8c3635f4064c66e5ef933572"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_54_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "cb1293ed66c4b270f4eb6467d7d03909b9933692"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_55_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "1df464003597d1f36e6a5eddbfbb99e55fbd4d84"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_56_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "4599a81b092676f77b28bd174f0e30c2b273c09b"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_57_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "05ae037ab9f9f4e83082cde26217b46bb67a3bbc"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_58_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "54ad9ed10a03d61b3416cd34b461a107a4c2338c"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_59_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "4f180d10fd91843d064b4c0543ac4709e59041e5"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_60_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "001aa44c82e6fc4118e2c894b61530b92c242867"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_61_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "bbd9ca5b69c35a15a9dcd294e27c3da26d5bf61e"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_62_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "16ce7d2bda8459158d0194c8aab6ac37706c4b0e"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_63_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "8d42dd02ff61887e621e5e2da0af727008fb9c64"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_64_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "dd39fe654048e2d474a4f52ed69bb71030c28b68"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_65_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "ea0e883ff139c8b2415f4af6e7bb518eb32fe999"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_66_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "443f396c4c9fd24fc09446c4518d7191c6ca755a"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_68_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "d2dea8248aa8e8f1ceb6d2ce11c499436fa24bf7"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_69_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "f328184684f04850a32018dbdc9c3f0a7f07abd6"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_70_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "09a35e916198822f2cc200694d8114435e18e82b"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_71_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "97e91b2de3375fd3090602030e0fde1bce5327dd"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_72_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "98fa31e7044dc5d57a85f53e1d34cf3883cdbc9d"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_73_G8_IMPLEMENTATION.md",
+      "blob": "78a99c7c6678c98a757eb19c1e216120dc5d1764"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_73_RESEARCH_FEE_MODEL_GAP_ANALYSIS.md",
+      "blob": "d5b87b1c66c215c505d2a1f88baeb60c3375247e"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_74_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "d0857d2f02d9c36fec92aa5f3faa0fe93aac0f41"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_75_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "3a8e7915211bf1772cc489838ba8027c3450d10f"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SESSION_76_RESEARCH_EXPANSION_AND_GAP_MATRIX.md",
+      "blob": "b234cd72196a88966399567a4e1e98487dd6d98c"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/SETTLEMENT_RAILS.md",
+      "blob": "ad15bd13ee5934337c8500bb89c93e00acee1fc8"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/TREASURY_DEPLOYMENT_GUIDE.md",
+      "blob": "c0bd9874b52299ae4feea96b04b4700b04b1f586"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/WALLET_TREASURY_FEASIBILITY.md",
+      "blob": "12a5c200f11c7ab1fd3be060a3d5926f368b60e1"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/ai_office_operating_system.md",
+      "blob": "ff8b5956124c922c0c9807bcb8a4b144c251c6ac"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/china_ai_ecosystem_deep_dive.md",
+      "blob": "c4f74670242c457cb7e8ae8860139dd4449e2d4c"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/conxian_business_logic_analysis.md",
+      "blob": "d30c0f5c4e63b633e852aba61114142b1cef5ac7"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/conxian_org_audit.md",
+      "blob": "6cf96ff2ef6e8709215b258169b2b6e7b9dfa70e"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/cross_repo_structural_mapping.md",
+      "blob": "83360fd961f928a1d8d76de3b61dc406f32958de"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/daemon_dynamics_analysis.md",
+      "blob": "7322b82a995a79930e4b47c6b8da4815b6284605"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/daemon_dynamics_component_breakdown.md",
+      "blob": "6bf145383333d3fe3077ec298429ca6bc444a91a"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/data_driven_insights.md",
+      "blob": "af666fd608949536d2ca3b6c17cc36b81fa3060b"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/deep_dive_ai_profitability_and_masking.md",
+      "blob": "5b4ea62fc76bdebd91fe23d797efb9de43b1c12b"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/deep_dive_china_productive_ai.md",
+      "blob": "b2876191296f5e819fad53c9bf7b2fa476c9060b"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/federated_agent_network_strategy.md",
+      "blob": "76fd1379a9391302b5dcbf011af47cea06c3e855"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/full_stack_alignment_strategy.md",
+      "blob": "c879945a179379db5f81c451e84ee2657a5fcb45"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/global_ai_industry_analysis.md",
+      "blob": "11ee8812c5b46a5e1d39168265a2bc92a751c913"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/global_vs_org_synthesis.md",
+      "blob": "1da670b4de1ec8890cad7ddfd680197d66c3b350"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/market_enhancement_strategy.md",
+      "blob": "8f3ec4b56a71a6d8590bc9caed272b22902adeb7"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/org_reality_issue_audit.md",
+      "blob": "429b8e7c2601fe5d03de0153a46c6ee535988788"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/strategic_business_analysis_report.md",
+      "blob": "aaf7fdd28f711bb5c4994c684c55093585e83429"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/strategic_business_recommendations.md",
+      "blob": "0f6930f6437b81112778dae3c2ceb3f616a7fedd"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "docs/research/vision_alignment_check.md",
+      "blob": "a07de80316f737a78874ca7d8f9cfff5ffe2b66e"
+    },
+    {
+      "repository": "Conxian/conxian_market",
+      "commit": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "path": "openspec/changes/2026-10-15-capability-protocol-conformance/proposal.md",
+      "blob": "7a6c68a0fc360c0f3133c6f452e33113afc22fd9"
+    }
+  ],
+  "recovery_fixture": {
+    "archive_sha256": "1ee4108c16f00c120fa04a50b2722c3bc4348bc9ea2d005f11a5283b875b0cd1",
+    "fixture_backup_seconds": 0.14,
+    "fixture_only": true,
+    "fixture_recovery_seconds": 1.008,
+    "operator_independence_verified": false,
+    "production_acceptance": false,
+    "schema_version": 1,
+    "separate_instance_restore_verified": true,
+    "source_instance_stopped": true,
+    "source_sha": "41b1c0f33ad65768a2204a388a77aa580b7ca32b",
+    "workflow_rows": 34,
+    "workflow_rows_sha256": "c7c5783b9107b3fcbae2afd0f725c6e5bfe84395a68b04a64834eaddb263e737",
+    "workflow_tables": 18
+  },
+  "project_alignment": {
+    "status": "unverified",
+    "mutation_performed": false,
+    "authority": "GitHub issues and PRs; Projects are optional views",
+    "verification_attempt": "Organization projects fetch rejected as unsupported; no board enumeration or mutation claimed."
+  },
+  "itil5_activities": [
+    "Discover",
+    "Design",
+    "Acquire",
+    "Build",
+    "Transition",
+    "Operate",
+    "Deliver",
+    "Support"
+  ],
+  "observed_issue_inventory": [
+    "https://github.com/Conxian/.github/issues/43",
+    "https://github.com/Conxian/.github/issues/47",
+    "https://github.com/Conxian/.github/issues/53",
+    "https://github.com/Conxian/.github/issues/60",
+    "https://github.com/Conxian/.github/issues/81",
+    "https://github.com/Conxian/conxian-business/issues/1317",
+    "https://github.com/Conxian/conxian-business/issues/1336",
+    "https://github.com/Conxian/conxian-business/issues/1343",
+    "https://github.com/Conxian/conxian-business/issues/1349",
+    "https://github.com/Conxian/conxian-business/issues/1390",
+    "https://github.com/Conxian/conxian-business/issues/1399",
+    "https://github.com/Conxian/conxian-business/issues/1411",
+    "https://github.com/Conxian/conxian-business/issues/1414",
+    "https://github.com/Conxian/conxian-business/issues/1415",
+    "https://github.com/Conxian/conxian-business/issues/1419",
+    "https://github.com/Conxian/conxian-business/issues/1422",
+    "https://github.com/Conxian/conxian-business/issues/1423",
+    "https://github.com/Conxian/conxian-business/issues/1424",
+    "https://github.com/Conxian/conxian-business/issues/1429",
+    "https://github.com/Conxian/conxian-business/issues/1491",
+    "https://github.com/Conxian/conxian-business/issues/936",
+    "https://github.com/Conxian/conxian-business/issues/937",
+    "https://github.com/Conxian/conxian-business/issues/940",
+    "https://github.com/Conxian/conxian-business/issues/989",
+    "https://github.com/Conxian/conxian-gateway/issues/189",
+    "https://github.com/Conxian/conxian-gateway/issues/466",
+    "https://github.com/Conxian/conxian-gateway/issues/500",
+    "https://github.com/Conxian/conxian-gateway/issues/507",
+    "https://github.com/Conxian/conxian-gateway/issues/526",
+    "https://github.com/Conxian/conxian-gateway/issues/531",
+    "https://github.com/Conxian/conxian-gateway/issues/544",
+    "https://github.com/Conxian/conxian-gateway/issues/547",
+    "https://github.com/Conxian/conxian-gateway/issues/548",
+    "https://github.com/Conxian/conxian-gateway/issues/549",
+    "https://github.com/Conxian/conxian-gateway/issues/550",
+    "https://github.com/Conxian/conxian-gateway/issues/551",
+    "https://github.com/Conxian/conxian-labs-site/issues/80",
+    "https://github.com/Conxian/conxian-nexus/issues/174",
+    "https://github.com/Conxian/conxian-nexus/issues/418",
+    "https://github.com/Conxian/conxian-nexus/issues/439",
+    "https://github.com/Conxian/conxian_market/issues/159",
+    "https://github.com/Conxian/conxian_market/issues/176",
+    "https://github.com/Conxian/conxius-enclave-sdk/issues/202",
+    "https://github.com/Conxian/conxius-enclave-sdk/issues/240",
+    "https://github.com/Conxian/conxius-enclave-sdk/issues/241",
+    "https://github.com/Conxian/conxius-enclave-sdk/issues/509",
+    "https://github.com/Conxian/conxius-enclave-sdk/issues/558",
+    "https://github.com/Conxian/conxius-enclave-sdk/issues/559",
+    "https://github.com/Conxian/conxius-enclave-sdk/issues/583",
+    "https://github.com/Conxian/conxius-platform/issues/1167",
+    "https://github.com/Conxian/conxius-platform/issues/1168",
+    "https://github.com/Conxian/conxius-platform/issues/1426",
+    "https://github.com/Conxian/conxius-platform/issues/1450",
+    "https://github.com/Conxian/conxius-wallet/issues/357",
+    "https://github.com/Conxian/conxius-wallet/issues/727",
+    "https://github.com/Conxian/lib-conxian-core/issues/440"
+  ]
+}

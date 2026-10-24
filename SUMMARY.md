@@ -1,6 +1,9 @@
 # Table of contents
 
 * [Introduction](README.md)
+* [Monthly research and delivery alignment (2026-10-24)](docs/research/MONTHLY_RESEARCH_REVIEW_2026_10_24.md)
+* [Capability-based roadmap](docs/architecture/ROADMAP_12_MONTH_CONTROL_PLANE.md)
+* [Whitepaper evidence draft (2026-10-24)](docs/whitepaper/TECHNICAL_WHITEPAPER_EVIDENCE_DRAFT_2026_10_24.md)
 * [Sovereign recovery execution and outcome evidence (2026-10-24)](docs/operations/SOVEREIGN_RECOVERY_EXECUTION_2026_10_24.md)
 * [Decentralised workspace allocation and implementation (2026-10-24)](docs/operations/DECENTRALISED_WORKSPACE_ALLOCATION_2026_10_24.md)
 * [Public artifact allowlist](docs/public-artifact.json)

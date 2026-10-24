@@ -1,5 +1,7 @@
 # Documentation alignment index (conxian-business)
 
+Current monthly entry: [24 September–24 October evidence and issue review](research/MONTHLY_RESEARCH_REVIEW_2026_10_24.md), [capability roadmap](architecture/ROADMAP_12_MONTH_CONTROL_PLANE.md), and [whitepaper evidence draft](whitepaper/TECHNICAL_WHITEPAPER_EVIDENCE_DRAFT_2026_10_24.md). These preserve earlier research and route to existing owners; final whitepaper publication remains under #1422.
+
 This page is a practical index of the documentation already present in this repository, focused on helping active work reference existing material instead of recreating it.
 
 Portfolio doctrine is defined centrally in [`DOCTRINE_ALIGNMENT_STANDARD.md`](./DOCTRINE_ALIGNMENT_STANDARD.md) and [`PORTFOLIO_DOCTRINE_REGISTER.md`](./PORTFOLIO_DOCTRINE_REGISTER.md). This index is navigation and document disposition only; it must not introduce a competing role, maturity, claim-state, or classification taxonomy.
