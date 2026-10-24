@@ -7,7 +7,9 @@ Portfolio doctrine is defined centrally in [`DOCTRINE_ALIGNMENT_STANDARD.md`](./
 
 ## Current work and knowledge-source routing — 19 October 2026
 
-Current work overlay: [20 October Business-led issue/PR and capability routing](RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md#current-business-led-work-map--20-october-2026). It preserves the dated issue/PR intake inventory and adds phased exit criteria plus executable Render service/source read-back under the expanded delivery contract. Refresh live state before acting; the original research register and restricted evidence boundary remain preserved.
+Current work overlay: [20 October Business-led issue/PR and capability routing](RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md#current-business-led-work-map-20-october-2026). It preserves the dated issue/PR intake inventory and adds phased exit criteria plus executable Render service/source read-back under the expanded delivery contract. Refresh live state before acting; the original research register and restricted evidence boundary remain preserved.
+
+Implementation entry: [24 October decentralised workspace allocation](operations/DECENTRALISED_WORKSPACE_ALLOCATION_2026_10_24.md) links the public artifact boundary, offline IPFS export and isolated managed staging candidates. It does not grant provider or production acceptance.
 
 Coordination: #1390 / #1317. This is a navigation index, not a replacement registry, architecture decision, pricing policy or runtime authority. The canonical organization registry remains in `.github-private`; runtime owners retain implementation and acceptance contracts.
 
