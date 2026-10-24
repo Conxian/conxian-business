@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "files": [
+    {"source": "public-docs/index.html", "destination": "index.html"},
+    {"source": "public-docs/deployment-lanes.html", "destination": "deployment-lanes.html"}
+  ]
+}

@@ -1,0 +1,47 @@
+# Public-surface candidates; do not sync before review and normal main promotion.
+# Existing docs service is adopted; org static candidate is additive. The live
+# org Docker service, domains and Labs onboarding service are left in place.
+previews:
+  generation: "off"
+projects:
+  - name: conxian-public-surfaces
+    environments:
+      - name: production
+        permissions:
+          protection: enabled
+        networking:
+          isolation: enabled
+        services:
+          - type: web
+            name: conxian-business-static-docs
+            runtime: static
+            repo: https://github.com/Conxian/conxian-business
+            branch: main
+            autoDeployTrigger: "off"
+            buildCommand: bash scripts/build_pages_artifact_public_safe.sh _pages
+            staticPublishPath: ./_pages
+            headers:
+              - path: /*
+                name: X-Content-Type-Options
+                value: nosniff
+              - path: /*
+                name: Referrer-Policy
+                value: no-referrer
+              - path: /*
+                name: Content-Security-Policy
+                value: "default-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"
+          - type: web
+            name: conxian-org-static-candidate
+            runtime: static
+            repo: https://github.com/Conxian/conxian-org-site
+            branch: main
+            autoDeployTrigger: "off"
+            buildCommand: npm exec --yes --package=pnpm@10.28.0 -- pnpm install --frozen-lockfile && DEPLOY_TARGET=static npm exec --yes --package=pnpm@10.28.0 -- pnpm build
+            staticPublishPath: ./dist
+            headers:
+              - path: /*
+                name: X-Content-Type-Options
+                value: nosniff
+              - path: /*
+                name: Referrer-Policy
+                value: no-referrer

@@ -1,0 +1,60 @@
+name: Public artifact conformance
+
+on:
+  pull_request:
+    branches: [dev, staged, main]
+    paths:
+      - 'public-docs/**'
+      - 'docs/public-artifact.json'
+      - 'deploy/render/**'
+      - 'scripts/build_public_artifact.py'
+      - 'scripts/build_pages_artifact_public_safe.sh'
+      - 'scripts/export_public_ipfs.py'
+      - 'scripts/tests/test_public_artifact.py'
+      - 'scripts/tests/test_public_ipfs_roundtrip.py'
+      - '.github/workflows/public-artifact-conformance.yml'
+  push:
+    branches: [dev, staged, main]
+    paths:
+      - 'public-docs/**'
+      - 'docs/public-artifact.json'
+      - 'deploy/render/**'
+      - 'scripts/build_public_artifact.py'
+      - 'scripts/build_pages_artifact_public_safe.sh'
+      - 'scripts/export_public_ipfs.py'
+      - 'scripts/tests/test_public_artifact.py'
+      - 'scripts/tests/test_public_ipfs_roundtrip.py'
+      - '.github/workflows/public-artifact-conformance.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Test public export boundary
+        run: python3 -m unittest scripts.tests.test_public_artifact -v
+      - name: Build and compare deterministic artifacts
+        run: |
+          bash scripts/build_pages_artifact_public_safe.sh _pages
+          bash scripts/build_pages_artifact_public_safe.sh /tmp/conxian-public-repeat
+          diff --recursive _pages /tmp/conxian-public-repeat
+      - name: Verify Python and shell entry points
+        run: |
+          python3 -m py_compile scripts/build_public_artifact.py scripts/export_public_ipfs.py
+          bash -n scripts/build_pages_artifact_public_safe.sh
+      - name: Install checksum-pinned Kubo for offline restoration test
+        run: |
+          curl --fail --location --retry 2 --max-time 60 --output /tmp/kubo.tar.gz https://github.com/ipfs/kubo/releases/download/v0.43.1/kubo_v0.43.1_linux-amd64.tar.gz
+          printf '%s  %s\n' ff53b2428794fc8cca39505d28c15b4cceaef4b90a09284f291f611fcdc8c06399690575fc89cbd4d85ef71f3652581296c6f2e710386f887c8edf36b6e89d71 /tmp/kubo.tar.gz | sha512sum --check --strict
+          mkdir /tmp/conxian-kubo
+          tar --extract --gzip --file /tmp/kubo.tar.gz --directory /tmp/conxian-kubo kubo/ipfs
+      - name: Reproduce and independently restore the offline CAR
+        env:
+          CONXIAN_KUBO_BIN: /tmp/conxian-kubo/kubo/ipfs
+        run: python3 -m unittest scripts.tests.test_public_ipfs_roundtrip -v

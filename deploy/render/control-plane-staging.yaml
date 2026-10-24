@@ -1,0 +1,42 @@
+# Additive staging only. Existing production Business service is not adopted.
+# Isolation requires a Pro-or-higher workspace. Secret values are supplied out
+# of band; do not reuse production auth schemas or runtime credentials.
+previews:
+  generation: "off"
+projects:
+  - name: conxian-managed-runtime
+    environments:
+      - name: staging
+        networking:
+          isolation: enabled
+        permissions:
+          protection: enabled
+        services:
+          - type: web
+            name: conxian-business-staging
+            repo: https://github.com/Conxian/conxian-business
+            branch: staged
+            runtime: docker
+            dockerfilePath: ./Dockerfile
+            dockerContext: .
+            region: oregon
+            plan: 0.5c-512mb
+            numInstances: 1
+            autoDeployTrigger: "off"
+            # HTTP liveness only. Runtime contract and DB checks are separate.
+            healthCheckPath: /sign-in
+            envVars:
+              - key: NODE_ENV
+                value: production
+              - key: BETTER_AUTH_URL
+                sync: false
+              - key: BETTER_AUTH_SECRET
+                sync: false
+              - key: DATABASE_URL
+                sync: false
+              - key: CONXIAN_ADMIN_RUNTIME_BASE_URL
+                sync: false
+              - key: CONXIAN_ADMIN_RUNTIME_READ_TOKEN
+                sync: false
+              - key: CONXIAN_ADMIN_RUNTIME_WRITE_TOKEN
+                sync: false
