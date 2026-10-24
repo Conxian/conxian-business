@@ -22,6 +22,22 @@ This application is the internal UI for the Conxian BOS control plane. Deploy it
 - Runtime integration helpers should come from `packages/client-sdk`.
 - Admin/runtime boundaries are documented in `docs/architecture/CONTROL_PLANE_ADMIN_RUNTIME_API_CONTRACT.md`.
 
+## Readiness
+
+`GET /api/health` returns only `{"status":"healthy"}` (200) or
+`{"status":"unhealthy"}` (503), with `Cache-Control: no-store`. It checks the
+configured pool's required authentication/audit tables, columns, effective search
+path and table privileges. Pool acquisition and health queries are bounded. It
+does not create schemas, accounts or sessions, and never returns database errors.
+
+A healthy result establishes this narrow persistence prerequisite only. It does
+not establish an authorized operator journey, configured admin-runtime access,
+provider readiness, release acceptance or recovery. A rendered sign-in page and
+an anonymous `get-session` response of `null` do not exercise authentication SQL.
+Verify the source-bound deployment, approved schema and an authorized journey
+before routing the control domain. Do not initialize an empty replacement store
+or redirect to another database merely to obtain a green result.
+
 ## Deployment prerequisites
 
 Use Node 24 and pnpm 10.28.0 (pinned in the parent package manifest). For Vercel,
