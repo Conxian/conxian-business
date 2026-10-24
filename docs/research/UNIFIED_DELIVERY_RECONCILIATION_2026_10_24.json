@@ -1,0 +1,880 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-24T13:13:16.216Z",
+  "scope": "All 15 open Conxian PRs at capture; one delivery scope under Business #1390/#1415, not a claim of main convergence.",
+  "acceptance": {
+    "all_work_in_scope": true,
+    "main_convergence_complete": false,
+    "production_acceptance": false,
+    "independent_review_preserved": true
+  },
+  "method": "PR metadata; every check/status/review/file page from prior queue freeze; current dev commit/tree; actual candidate Git object parents/tree; candidate...dev comparison. Comparisons are merge-base-relative and do not prove tree equality; equality is checked independently using Git tree SHAs.",
+  "items": [
+    {
+      "repo": "Conxian/lib-conxian-core",
+      "number": 492,
+      "head": "1b9ac5d1836a09f355f2bccf6f4a7701fa83a94b",
+      "checks": [
+        {
+          "name": "sbom-provenance",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/40087802636/job/120855144380"
+        },
+        {
+          "name": "Delete Neon Branch",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/40087802619/job/120854201514"
+        },
+        {
+          "name": "audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/40087802658/job/120854184392"
+        }
+      ],
+      "statuses": [],
+      "reviews": [],
+      "files": 0,
+      "missingPatches": [],
+      "branch": "backmerge/staged-to-dev",
+      "target": "dev",
+      "target_sha": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "head_tree": "6704e7b8b1218fd05e3ff1452b5b703d7e8ad945",
+      "head_parents": [
+        "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+        "d294bf9d2b6e50988d7dd41af6636919657924eb"
+      ],
+      "dev_sha": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "dev_tree": "6704e7b8b1218fd05e3ff1452b5b703d7e8ad945",
+      "same_tree_as_dev": true,
+      "named_source_sha": null,
+      "head_matches_named_source": null,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "behind",
+        "dev_ahead": 0,
+        "dev_behind": 8,
+        "merge_base": "bf60a83473f7def42ad0a6d39d98ca026ec24a86"
+      },
+      "url": "https://github.com/Conxian/lib-conxian-core/pull/492",
+      "next_action": "Retain the zero-diff, parent-preserving backmerge; patch current dependency graph, refresh checks and obtain independent review. Preserve both parents when integrating."
+    },
+    {
+      "repo": "Conxian/conxian-gateway",
+      "number": 580,
+      "head": "af6fc1db7ff6924880fa2d362d9c4a5df48e9964",
+      "checks": [
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxian-gateway/actions/runs/40084325239/job/120844029699"
+        },
+        {
+          "name": "Delete Neon Branch",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/conxian-gateway/actions/runs/40084160487/job/120843588388"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxian-gateway/actions/runs/40084160550/job/120843570820"
+        },
+        {
+          "name": "audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxian-gateway/actions/runs/40084160665/job/120843569155"
+        }
+      ],
+      "statuses": [],
+      "reviews": [
+        {
+          "user": "github-code-quality[bot]",
+          "state": "COMMENTED",
+          "commit": "af6fc1db7ff6924880fa2d362d9c4a5df48e9964"
+        }
+      ],
+      "files": 78,
+      "missingPatches": [],
+      "branch": "promotion/staged-to-main-af6fc1db7ff6924880fa2d362d9c4a5df48e9964",
+      "target": "main",
+      "target_sha": "d84c2a50e4882c4a979e5fabc08df63d96b2780c",
+      "head_tree": "90453b516cce7a3e4f7997daaa38b5f04b20200d",
+      "head_parents": [
+        "c32839cc291c3d1ff6988b6df9569b10da6ed8c2",
+        "1bf7010159ec61648defae57380f48f64bcdcb19"
+      ],
+      "dev_sha": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+      "dev_tree": "90453b516cce7a3e4f7997daaa38b5f04b20200d",
+      "same_tree_as_dev": true,
+      "named_source_sha": "af6fc1db7ff6924880fa2d362d9c4a5df48e9964",
+      "head_matches_named_source": true,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "diverged",
+        "dev_ahead": 2,
+        "dev_behind": 2,
+        "merge_base": "c32839cc291c3d1ff6988b6df9569b10da6ed8c2"
+      },
+      "url": "https://github.com/Conxian/conxian-gateway/pull/580",
+      "next_action": "Preserve staged/main ancestry and source tree; patch dependency audit on dev, integrate through ordinary reconciliation, then create a fresh immutable promotion with real production evidence."
+    },
+    {
+      "repo": "Conxian/conxian-nexus",
+      "number": 451,
+      "head": "e45b9b4a315345d70cdc3ba33f76030adcf573f6",
+      "checks": [
+        {
+          "name": "Delete Neon Branch",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/conxian-nexus/actions/runs/40080697326/job/120833464658"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxian-nexus/actions/runs/40080702560/job/120833461217"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxian-nexus/actions/runs/40080697410/job/120833446038"
+        },
+        {
+          "name": "audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxian-nexus/actions/runs/40080697203/job/120833444706"
+        }
+      ],
+      "statuses": [],
+      "reviews": [
+        {
+          "user": "github-code-quality[bot]",
+          "state": "COMMENTED",
+          "commit": "900cb0c21857ea58b79a5b47c839e1d497a835b9"
+        },
+        {
+          "user": "admin-conxian-labs",
+          "state": "APPROVED",
+          "commit": "e45b9b4a315345d70cdc3ba33f76030adcf573f6"
+        }
+      ],
+      "files": 66,
+      "missingPatches": [],
+      "branch": "promotion/staged-to-main-900cb0c21857ea58b79a5b47c839e1d497a835b9",
+      "target": "main",
+      "target_sha": "6d2a339a910dbfed632d920d5600a3ec420471b1",
+      "head_tree": "49e5eb838d395aca678ee058ea41e452a41ab7d2",
+      "head_parents": [
+        "900cb0c21857ea58b79a5b47c839e1d497a835b9",
+        "6d2a339a910dbfed632d920d5600a3ec420471b1"
+      ],
+      "dev_sha": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d",
+      "dev_tree": "2ece83f3ed28ff67d36aa7ad2339725cc864e79f",
+      "same_tree_as_dev": false,
+      "named_source_sha": "900cb0c21857ea58b79a5b47c839e1d497a835b9",
+      "head_matches_named_source": false,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "diverged",
+        "dev_ahead": 6,
+        "dev_behind": 5,
+        "merge_base": "f906717a50ba91afd2f24460f16bfcd41b54254b"
+      },
+      "url": "https://github.com/Conxian/conxian-nexus/pull/451",
+      "next_action": "Reconcile the mutated head with current dev and staged without dropping workflow/recovery changes. Patch dependency audit. Keep restricted security work private. Replace immutable candidate only after retention proof."
+    },
+    {
+      "repo": "Conxian/lib-conxian-core",
+      "number": 491,
+      "head": "03ffb430ce96448de2edac6f58790b788ac3d084",
+      "checks": [
+        {
+          "name": "sbom-provenance",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/40063066724/job/120781342209"
+        },
+        {
+          "name": "Delete Neon Branch",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/40063066759/job/120780724421"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/40063075086/job/120780539594"
+        },
+        {
+          "name": "audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/40063066740/job/120780514376"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/40063066270/job/120780513734"
+        }
+      ],
+      "statuses": [],
+      "reviews": [],
+      "files": 2,
+      "missingPatches": [],
+      "branch": "promotion/dev-to-staged-bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "target": "staged",
+      "target_sha": "d294bf9d2b6e50988d7dd41af6636919657924eb",
+      "head_tree": "6704e7b8b1218fd05e3ff1452b5b703d7e8ad945",
+      "head_parents": [
+        "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+        "d294bf9d2b6e50988d7dd41af6636919657924eb"
+      ],
+      "dev_sha": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "dev_tree": "6704e7b8b1218fd05e3ff1452b5b703d7e8ad945",
+      "same_tree_as_dev": true,
+      "named_source_sha": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "head_matches_named_source": false,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "behind",
+        "dev_ahead": 0,
+        "dev_behind": 8,
+        "merge_base": "bf60a83473f7def42ad0a6d39d98ca026ec24a86"
+      },
+      "url": "https://github.com/Conxian/lib-conxian-core/pull/491",
+      "next_action": "Head differs from named source but tree equals dev. Preserve its staged ancestry via the ordinary backmerge route #492; after dependency fix and review, generate a new immutable candidate."
+    },
+    {
+      "repo": "Conxian/conxius-wallet",
+      "number": 792,
+      "head": "ddd7f79056b7ac4e9649fa4978e8814ee472fd63",
+      "checks": [
+        {
+          "name": "Dependency Audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-wallet/actions/runs/40063949131/job/120783136151"
+        }
+      ],
+      "statuses": [],
+      "reviews": [],
+      "files": 5,
+      "missingPatches": [],
+      "branch": "promotion/dev-to-staged-566e32ad719868eba34b59f2056a181c5917b61c",
+      "target": "staged",
+      "target_sha": "3f6fe4d3b9ac62ccc63b42df10afa0c50720b421",
+      "head_tree": "63dfc81a4f7d89f22567eea5a9bf1a284b4ccb37",
+      "head_parents": [
+        "566e32ad719868eba34b59f2056a181c5917b61c",
+        "3f6fe4d3b9ac62ccc63b42df10afa0c50720b421"
+      ],
+      "dev_sha": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "dev_tree": "63dfc81a4f7d89f22567eea5a9bf1a284b4ccb37",
+      "same_tree_as_dev": true,
+      "named_source_sha": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "head_matches_named_source": false,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "behind",
+        "dev_ahead": 0,
+        "dev_behind": 2,
+        "merge_base": "566e32ad719868eba34b59f2056a181c5917b61c"
+      },
+      "url": "https://github.com/Conxian/conxius-wallet/pull/792",
+      "next_action": "Head differs from named source but tree equals dev. Integrate parent-preserving ordinary route #791 after audit fix/review; create fresh immutable promotion from resulting dev."
+    },
+    {
+      "repo": "Conxian/conxius-enclave-sdk",
+      "number": 610,
+      "head": "7b70c55f4ccce2c811426cf20d2beb57f75d6f27",
+      "checks": [
+        {
+          "name": "cargo audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/40063928989/job/120783074765"
+        },
+        {
+          "name": "Security Checks",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/40063928942/job/120783074763"
+        },
+        {
+          "name": "cargo deny",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/40063928989/job/120783074691"
+        },
+        {
+          "name": "Cargo Audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/40063928852/job/120783074645"
+        },
+        {
+          "name": "Cargo Deny",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/40063928852/job/120783074564"
+        }
+      ],
+      "statuses": [],
+      "reviews": [],
+      "files": 11,
+      "missingPatches": [],
+      "branch": "promotion/dev-to-staged-1472d65181eb063a8ae07eff8971808cb665303d",
+      "target": "staged",
+      "target_sha": "3887e7006d30c3941af707da53cb1c34c15b7b1e",
+      "head_tree": "3f6f4ec8fe3ce925b06f53379603bc1b0310ebf3",
+      "head_parents": [
+        "1472d65181eb063a8ae07eff8971808cb665303d",
+        "3887e7006d30c3941af707da53cb1c34c15b7b1e"
+      ],
+      "dev_sha": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "dev_tree": "3f6f4ec8fe3ce925b06f53379603bc1b0310ebf3",
+      "same_tree_as_dev": true,
+      "named_source_sha": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "head_matches_named_source": false,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "behind",
+        "dev_ahead": 0,
+        "dev_behind": 2,
+        "merge_base": "1472d65181eb063a8ae07eff8971808cb665303d"
+      },
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/pull/610",
+      "next_action": "Head differs from named source but tree equals dev. Preserve staged ancestry in a correctly named ordinary reconciliation route together with compatible security dependency fixes; new immutable promotion follows integration."
+    },
+    {
+      "repo": "Conxian/conxius-enclave-sdk",
+      "number": 609,
+      "head": "9705a079f9fddca315ff30ddd8bac4065418e2af",
+      "checks": [
+        {
+          "name": "Security Checks",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/40063908387/job/120783014101"
+        },
+        {
+          "name": "cargo deny",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/40063908406/job/120783013782"
+        },
+        {
+          "name": "Cargo Deny",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/40063908246/job/120783013603"
+        },
+        {
+          "name": "cargo audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/40063908406/job/120783013529"
+        },
+        {
+          "name": "Cargo Audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/40063908246/job/120783013192"
+        }
+      ],
+      "statuses": [],
+      "reviews": [],
+      "files": 1,
+      "missingPatches": [],
+      "branch": "promotion/dev-to-staged-ead3e18b021d722c868558953e1c465dbefc32ad",
+      "target": "staged",
+      "target_sha": "3887e7006d30c3941af707da53cb1c34c15b7b1e",
+      "head_tree": "6f5a133f06885b15c56757a90216bac66d21b939",
+      "head_parents": [
+        "ead3e18b021d722c868558953e1c465dbefc32ad",
+        "3887e7006d30c3941af707da53cb1c34c15b7b1e"
+      ],
+      "dev_sha": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "dev_tree": "3f6f4ec8fe3ce925b06f53379603bc1b0310ebf3",
+      "same_tree_as_dev": false,
+      "named_source_sha": "ead3e18b021d722c868558953e1c465dbefc32ad",
+      "head_matches_named_source": false,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "diverged",
+        "dev_ahead": 3,
+        "dev_behind": 2,
+        "merge_base": "ead3e18b021d722c868558953e1c465dbefc32ad"
+      },
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/pull/609",
+      "next_action": "Compare source and merge-parent history with #610, preserve all unique work, and supersede only after the reviewed successor retains it. Do not retitle or force-reset immutable branches to evade source binding."
+    },
+    {
+      "repo": "Conxian/conxius-wallet",
+      "number": 791,
+      "head": "7aa1eb291b2b3ed8150e7f85e1103bd04d75d548",
+      "checks": [
+        {
+          "name": "Dependency Audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-wallet/actions/runs/40062856517/job/120779884257"
+        },
+        {
+          "name": "GitGuardian Security Checks",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/conxius-wallet/runs/120779880330"
+        }
+      ],
+      "statuses": [],
+      "reviews": [],
+      "files": 0,
+      "missingPatches": [],
+      "branch": "chore/retain-staged-policy-repair-20261023",
+      "target": "dev",
+      "target_sha": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "head_tree": "63dfc81a4f7d89f22567eea5a9bf1a284b4ccb37",
+      "head_parents": [
+        "66c5dc11745fc83274de3890aa39677bc2233bff",
+        "566e32ad719868eba34b59f2056a181c5917b61c"
+      ],
+      "dev_sha": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "dev_tree": "63dfc81a4f7d89f22567eea5a9bf1a284b4ccb37",
+      "same_tree_as_dev": true,
+      "named_source_sha": null,
+      "head_matches_named_source": null,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "behind",
+        "dev_ahead": 0,
+        "dev_behind": 3,
+        "merge_base": "566e32ad719868eba34b59f2056a181c5917b61c"
+      },
+      "url": "https://github.com/Conxian/conxius-wallet/pull/791",
+      "next_action": "Retain exact dev tree and staged ancestry; audit failure still blocks. Integrate with an explicit merge commit after exact-head checks and independent review, then read back actual dev parents/tree."
+    },
+    {
+      "repo": "Conxian/conxius-wallet",
+      "number": 790,
+      "head": "5f6bba90f98baef51deade9064a79e17eee7e968",
+      "checks": [
+        {
+          "name": "Dependency Audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-wallet/actions/runs/40062819848/job/120779771999"
+        }
+      ],
+      "statuses": [],
+      "reviews": [
+        {
+          "user": "botshelomokoka",
+          "state": "APPROVED",
+          "commit": "5f6bba90f98baef51deade9064a79e17eee7e968"
+        }
+      ],
+      "files": 2,
+      "missingPatches": [],
+      "branch": "dependabot/npm_and_yarn/dev/development-routine-53720c7711",
+      "target": "dev",
+      "target_sha": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "head_tree": "a0a2435437a3acbfd0681eb856dbb6ae7b96d856",
+      "head_parents": [
+        "44cb00adf05242d65237eb7639757c800a03ef60",
+        "566e32ad719868eba34b59f2056a181c5917b61c"
+      ],
+      "dev_sha": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "dev_tree": "63dfc81a4f7d89f22567eea5a9bf1a284b4ccb37",
+      "same_tree_as_dev": false,
+      "named_source_sha": null,
+      "head_matches_named_source": null,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "behind",
+        "dev_ahead": 0,
+        "dev_behind": 2,
+        "merge_base": "566e32ad719868eba34b59f2056a181c5917b61c"
+      },
+      "url": "https://github.com/Conxian/conxius-wallet/pull/790",
+      "next_action": "Retain routine Solana/TypeScript ESLint dependency updates while repairing undici/fast-uri and investigating bounded Zod validation. Refresh dependency exception fingerprints only with measured path evidence and required approvals."
+    },
+    {
+      "repo": "Conxian/conxius-wallet",
+      "number": 785,
+      "head": "a2be5742511389babaf9c3703515c99dd20a83b5",
+      "checks": [
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-wallet/actions/runs/39976606991/job/120492731294"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-wallet/actions/runs/39976593345/job/120492684162"
+        },
+        {
+          "name": "Dependency Audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-wallet/actions/runs/39976592936/job/120492681384"
+        }
+      ],
+      "statuses": [],
+      "reviews": [
+        {
+          "user": "github-code-quality[bot]",
+          "state": "COMMENTED",
+          "commit": "53581a2c3f634f68a914c8e87d06081bcb42ee07"
+        }
+      ],
+      "files": 41,
+      "missingPatches": [
+        "android/gradle/wrapper/gradle-wrapper.jar",
+        "pnpm-lock.yaml"
+      ],
+      "branch": "promotion/staged-to-main-53581a2c3f634f68a914c8e87d06081bcb42ee07",
+      "target": "main",
+      "target_sha": "1310955daec71f91f0df58417ccac6ac9ceae768",
+      "head_tree": "c9830dce148b983a848c3f754763f5c01efb94cc",
+      "head_parents": [
+        "53581a2c3f634f68a914c8e87d06081bcb42ee07",
+        "1310955daec71f91f0df58417ccac6ac9ceae768"
+      ],
+      "dev_sha": "566e32ad719868eba34b59f2056a181c5917b61c",
+      "dev_tree": "63dfc81a4f7d89f22567eea5a9bf1a284b4ccb37",
+      "same_tree_as_dev": false,
+      "named_source_sha": "53581a2c3f634f68a914c8e87d06081bcb42ee07",
+      "head_matches_named_source": false,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "diverged",
+        "dev_ahead": 22,
+        "dev_behind": 2,
+        "merge_base": "53581a2c3f634f68a914c8e87d06081bcb42ee07"
+      },
+      "url": "https://github.com/Conxian/conxius-wallet/pull/785",
+      "next_action": "Retain modified promotion head until staged ancestry and all unique changes are verified in a reviewed successor. Review actual binary Gradle wrapper and full lockfile outside truncated patch response. Complete production acceptance."
+    },
+    {
+      "repo": "Conxian/lib-conxian-core",
+      "number": 489,
+      "head": "d294bf9d2b6e50988d7dd41af6636919657924eb",
+      "checks": [
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/39976664090/job/120492926246"
+        },
+        {
+          "name": "sbom-provenance",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/39933736814/job/120349807295"
+        },
+        {
+          "name": "Delete Neon Branch",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/39933736829/job/120348124247"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/39933737017/job/120348073720"
+        },
+        {
+          "name": "audit",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/lib-conxian-core/actions/runs/39933736788/job/120348071199"
+        }
+      ],
+      "statuses": [],
+      "reviews": [],
+      "files": 7,
+      "missingPatches": [],
+      "branch": "promotion/staged-to-main-d294bf9d2b6e50988d7dd41af6636919657924eb",
+      "target": "main",
+      "target_sha": "d41a12a2b88605fb96717eba87f0ae28d193c90d",
+      "head_tree": "202dbcaac2d6ab4890a265815e17f05f68a3ff1c",
+      "head_parents": [
+        "9c41c8796f5cf41ca449c2ef53a246a4b99cbce3",
+        "913a797a1176a6a8d57d163e6c854af5b6f59708"
+      ],
+      "dev_sha": "bf60a83473f7def42ad0a6d39d98ca026ec24a86",
+      "dev_tree": "6704e7b8b1218fd05e3ff1452b5b703d7e8ad945",
+      "same_tree_as_dev": false,
+      "named_source_sha": "d294bf9d2b6e50988d7dd41af6636919657924eb",
+      "head_matches_named_source": true,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "diverged",
+        "dev_ahead": 6,
+        "dev_behind": 7,
+        "merge_base": "8738c72a3d9e98bc6e2c5d432e075892cd267849"
+      },
+      "url": "https://github.com/Conxian/lib-conxian-core/pull/489",
+      "next_action": "Preserve main/staged reconciliation and release verification changes. Propagate dependency fixes via dev→staged, regenerate candidate and complete release evidence."
+    },
+    {
+      "repo": "Conxian/conxian-business",
+      "number": 1490,
+      "head": "900bb4de8cf78a9fe0e0765c17c4b7136cf67b51",
+      "checks": [
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxian-business/actions/runs/39840639748/job/120040415796"
+        },
+        {
+          "name": "Delete Neon Branch",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/conxian-business/actions/runs/39837127450/job/120028674420"
+        },
+        {
+          "name": "Deploy-Production",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/conxian-business/actions/runs/39837127841/job/120028263035"
+        },
+        {
+          "name": "Deploy-Preview",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/conxian-business/actions/runs/39837127841/job/120028262394"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxian-business/actions/runs/39837127604/job/120028261986"
+        },
+        {
+          "name": "Supabase Preview",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/conxian-business/runs/120028261420"
+        }
+      ],
+      "statuses": [
+        {
+          "context": "Vercel – conxian-business-control-plane",
+          "state": "pending"
+        }
+      ],
+      "reviews": [],
+      "files": 118,
+      "missingPatches": [],
+      "branch": "promotion/staged-to-main-900bb4de8cf78a9fe0e0765c17c4b7136cf67b51",
+      "target": "main",
+      "target_sha": "cc718d59b5d12cddc6973948f75022807a24992f",
+      "head_tree": "7c0837eed9c1cbb4b266e10c7c968029965524dd",
+      "head_parents": [
+        "a4872d7495d869b0033682b25287e2be6d6b59c7",
+        "f03deaecfa48fdeee8d27c17d083ba457145e413"
+      ],
+      "dev_sha": "227a180a877877dd89dfa19a9ebc24f413d24ec4",
+      "dev_tree": "20543c31f74233296d4dc71cd2c44a50569848de",
+      "same_tree_as_dev": false,
+      "named_source_sha": "900bb4de8cf78a9fe0e0765c17c4b7136cf67b51",
+      "head_matches_named_source": true,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "diverged",
+        "dev_ahead": 14,
+        "dev_behind": 1,
+        "merge_base": "f03deaecfa48fdeee8d27c17d083ba457145e413"
+      },
+      "url": "https://github.com/Conxian/conxian-business/pull/1490",
+      "next_action": "Reconcile staged ancestry with newer dev work, including #1493–#1498. Preserve monthly research, runtime guardrails and release controls. Verify deployment source and production validation before final main promotion."
+    },
+    {
+      "repo": "Conxian/conxian_market",
+      "number": 195,
+      "head": "e41e8edfd7166aa1cb1c7a269b0fac17c6a34dfa",
+      "checks": [
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxian_market/actions/runs/39901483432/job/120243840959"
+        },
+        {
+          "name": "Delete Neon Branch",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/conxian_market/actions/runs/39744867417/job/119710749388"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxian_market/actions/runs/39744867258/job/119710710115"
+        }
+      ],
+      "statuses": [],
+      "reviews": [
+        {
+          "user": "admin-conxian-labs",
+          "state": "APPROVED",
+          "commit": "e41e8edfd7166aa1cb1c7a269b0fac17c6a34dfa"
+        }
+      ],
+      "files": 55,
+      "missingPatches": [],
+      "branch": "promotion/staged-to-main-e41e8edfd7166aa1cb1c7a269b0fac17c6a34dfa",
+      "target": "main",
+      "target_sha": "581383c6e8a28aaa0f3a25829da1adbbb94c8766",
+      "head_tree": "32b06ee5dec9b5a571bc84de252171f7eac349df",
+      "head_parents": [
+        "debe2aa9d9dfcf3e0196828b4f811f3cfcab5e6d",
+        "29b63d448a868c1deafb090b7e679bca3434ea35"
+      ],
+      "dev_sha": "1003f1af8faf57d39e0724006201227174ec2dfc",
+      "dev_tree": "32b06ee5dec9b5a571bc84de252171f7eac349df",
+      "same_tree_as_dev": true,
+      "named_source_sha": "e41e8edfd7166aa1cb1c7a269b0fac17c6a34dfa",
+      "head_matches_named_source": true,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "behind",
+        "dev_ahead": 0,
+        "dev_behind": 42,
+        "merge_base": "1003f1af8faf57d39e0724006201227174ec2dfc"
+      },
+      "url": "https://github.com/Conxian/conxian_market/pull/195",
+      "next_action": "Tree equals captured dev, but history differs. Preserve existing exact-head independent approval without transferring it to changed heads; complete candidate-bound production acceptance before main."
+    },
+    {
+      "repo": "Conxian/conxius-enclave-sdk",
+      "number": 606,
+      "head": "3887e7006d30c3941af707da53cb1c34c15b7b1e",
+      "checks": [
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/39450482041/job/118723657201"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-enclave-sdk/actions/runs/39412552451/job/118593619075"
+        }
+      ],
+      "statuses": [],
+      "reviews": [
+        {
+          "user": "admin-conxian-labs",
+          "state": "APPROVED",
+          "commit": "3887e7006d30c3941af707da53cb1c34c15b7b1e"
+        }
+      ],
+      "files": 36,
+      "missingPatches": [],
+      "branch": "promotion/staged-to-main-3887e7006d30c3941af707da53cb1c34c15b7b1e",
+      "target": "main",
+      "target_sha": "fbaa77a8f9057f0a7d5e8ba22bfa20a869394a3d",
+      "head_tree": "eb79512b8f4875574f8df9e688a7340490699c54",
+      "head_parents": [
+        "00320f4c9fef8056d6c8f2afcc8de48c88aefbf1"
+      ],
+      "dev_sha": "1472d65181eb063a8ae07eff8971808cb665303d",
+      "dev_tree": "3f6f4ec8fe3ce925b06f53379603bc1b0310ebf3",
+      "same_tree_as_dev": false,
+      "named_source_sha": "3887e7006d30c3941af707da53cb1c34c15b7b1e",
+      "head_matches_named_source": true,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "diverged",
+        "dev_ahead": 9,
+        "dev_behind": 1,
+        "merge_base": "00320f4c9fef8056d6c8f2afcc8de48c88aefbf1"
+      },
+      "url": "https://github.com/Conxian/conxius-enclave-sdk/pull/606",
+      "next_action": "Retain existing exact-head independent approval. Incorporate later replay clock fixes through the proper staged route and requalify dependencies/artifacts/provider scope before a fresh main candidate."
+    },
+    {
+      "repo": "Conxian/conxius-platform",
+      "number": 1470,
+      "head": "c857379c4aa6febd6856bbf15c6ac2b486e2a105",
+      "checks": [
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-platform/actions/runs/39450476332/job/118723637007"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-platform/actions/runs/39411964893/job/118591653845"
+        },
+        {
+          "name": "Supabase Preview",
+          "status": "completed",
+          "conclusion": "skipped",
+          "url": "https://github.com/Conxian/conxius-platform/runs/118588615070"
+        },
+        {
+          "name": "Enforce branch promotion rules",
+          "status": "completed",
+          "conclusion": "failure",
+          "url": "https://github.com/Conxian/conxius-platform/actions/runs/39411032304/job/118588556965"
+        }
+      ],
+      "statuses": [],
+      "reviews": [
+        {
+          "user": "github-code-quality[bot]",
+          "state": "COMMENTED",
+          "commit": "c857379c4aa6febd6856bbf15c6ac2b486e2a105"
+        }
+      ],
+      "files": 70,
+      "missingPatches": [],
+      "branch": "promotion/staged-to-main-c857379c4aa6febd6856bbf15c6ac2b486e2a105",
+      "target": "main",
+      "target_sha": "2f4acde575233ca1fcc6916a97763656ec1e06b7",
+      "head_tree": "f35951a9d5a04aec34eb7377690b2bc7b528f1ec",
+      "head_parents": [
+        "8d41f0c56de6c293066fdc628584c4ae5af5c489"
+      ],
+      "dev_sha": "fe063542b16a612cc2375c7f1c219d1364c0a79e",
+      "dev_tree": "f35951a9d5a04aec34eb7377690b2bc7b528f1ec",
+      "same_tree_as_dev": true,
+      "named_source_sha": "c857379c4aa6febd6856bbf15c6ac2b486e2a105",
+      "head_matches_named_source": true,
+      "comparison": {
+        "direction": "candidate...dev",
+        "status": "diverged",
+        "dev_ahead": 3,
+        "dev_behind": 7,
+        "merge_base": "48db3e69500894387271d2f0a1e9d7def36b3f34"
+      },
+      "url": "https://github.com/Conxian/conxius-platform/pull/1470",
+      "next_action": "Tree equals captured dev, but main acceptance and independent review remain incomplete. Resolve provider access and verify deployment source/environment; a successful Vercel build is insufficient runtime evidence."
+    }
+  ]
+}
