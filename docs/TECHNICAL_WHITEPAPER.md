@@ -1,5 +1,7 @@
 # Conxian: A Sovereign-First Financial Operating System for Bitcoin
 
+> **Current review — 24 October 2026:** this retained paper is historical narrative last verified on 3 October. Read the [evidence-labelled revision candidate](whitepaper/TECHNICAL_WHITEPAPER_EVIDENCE_DRAFT_2026_10_24.md) and [monthly reconciliation](research/MONTHLY_RESEARCH_REVIEW_2026_10_24.md) before relying on any readiness, hardware, Nexus execution, own-protocol/mainnet or economic claim below. The final authoritative rewrite remains gated by #1422's accepted sprint-exit evidence; this notice grants no production acceptance.
+
 **Version**: 2.0.0-draft
 **Status**: Technical whitepaper (single authoritative technical artifact)
 **Last verified against code**: 2026-10-03

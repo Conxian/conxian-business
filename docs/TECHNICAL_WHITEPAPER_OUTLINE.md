@@ -1,5 +1,7 @@
 # Conxian: A Sovereign-First Financial Operating System for Bitcoin
 
+> **Historical outline — 24 October 2026:** “finished/code-verified” and maturity wording retained below is dated provenance. The [current evidence draft](whitepaper/TECHNICAL_WHITEPAPER_EVIDENCE_DRAFT_2026_10_24.md) prepares #1422 without claiming its final publication gate is complete.
+
 > **Superseded by [`TECHNICAL_WHITEPAPER.md`](./TECHNICAL_WHITEPAPER.md).** This was the drafting outline; the finished, code-verified paper is now the authoritative technical artifact.
 
 > **Technical Whitepaper Outline**

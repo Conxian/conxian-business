@@ -1,5 +1,7 @@
 # Agentic Factory Roadmap
 
+> **Current operating direction — 24 October 2026:** the [capability roadmap](architecture/ROADMAP_12_MONTH_CONTROL_PLANE.md) governs current planning. Historical autonomy tiers and “none” guardrails below do not grant merge, deployment, custody or review exemptions. Automation prepares bounded changes and evidence under the existing exact-source checks and applicable independent acceptance; no outage-prevention guarantee is established.
+
 > Goal: make the Conxian org a **self-sensing, self-remediating, self-improving**
 > software factory — where the machine does everything a machine *can* do, and
 > humans are left only with what is *illegal or impossible* to automate.

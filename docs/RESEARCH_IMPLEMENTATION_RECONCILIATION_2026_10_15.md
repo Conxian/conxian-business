@@ -1,5 +1,7 @@
 # Research, implementation and phased work reconciliation — 15 October 2026
 
+> **Latest dated overlay — 24 October 2026:** see the [monthly evidence/issue reconciliation](research/MONTHLY_RESEARCH_REVIEW_2026_10_24.md) and [capability roadmap](architecture/ROADMAP_12_MONTH_CONTROL_PLANE.md). Preserve the source, candidate scores and prior capture below. R5 retains its machine-catalogue meaning of deferred research/experiments; accepted sprint exit is an R4/owner decision, not a renamed R5 stage.
+
 ## Current Business-led work map — 20 October 2026
 
 Owner instructions: Business coordinates the complete portfolio; use GitHub issues/PRs, the existing ITIL 5 phases and KBs, and P0 → P1 → P2 execution. Install task-required software when needed and verify actual usability. This is a dated routing overlay; historical evidence below remains preserved.

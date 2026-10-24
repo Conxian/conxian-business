@@ -1,5 +1,7 @@
 # Multi-Dimensional Scoring, Live Telemetry, and BitVM3 Universal Verification Expansion
 
+> **Reconciled status — 24 October 2026:** this is retained research, not measured financial/production evidence. BitVM3 proof execution, live telemetry, yield allocations, cost targets and uptime claims below need the existing #1429/#1419 and runtime-owner qualification. No financial automation or Bitcoin consensus activation is authorised by a formula or document status. Use the [monthly review](MONTHLY_RESEARCH_REVIEW_2026_10_24.md) for current disposition.
+
 > **Canonical Research & Architecture Specification**
 > **Document ID**: `CXB-RES-2026-072`
 > **Author**: Conxian System Architecture & Engineering

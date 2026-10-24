@@ -1,4 +1,6 @@
 # System-Wide Evaluation & Agentic Transformation Blueprint (2026)
+
+> **Reconciled status — 24 October 2026:** preserve the proposal below as historical research. Its “APPROVED & CANONICAL,” compliance, execution, percentages and capability labels are author assertions, not operating or independent acceptance. Current roles, authority and implementation gates follow the [monthly review](MONTHLY_RESEARCH_REVIEW_2026_10_24.md) and [capability roadmap](../architecture/ROADMAP_12_MONTH_CONTROL_PLANE.md). No new signing, evaluator, payout or automatic promotion authority is granted.
 > **Document Identifier**: `ADR/ITIL5/CXIP::CXBIP/CXPIP/CXMIP/CXWIP/CXCIP/CXGIP/CXNIP`
 > **Status**: APPROVED & CANONICAL
 > **Scope**: Organization-Wide Architecture, Governance, Codebase & Runtime Surface
