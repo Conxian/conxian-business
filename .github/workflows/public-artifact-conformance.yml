@@ -10,8 +10,10 @@ on:
       - 'scripts/build_public_artifact.py'
       - 'scripts/build_pages_artifact_public_safe.sh'
       - 'scripts/export_public_ipfs.py'
+      - 'scripts/verify_public_ipfs_release.py'
       - 'scripts/tests/test_public_artifact.py'
       - 'scripts/tests/test_public_ipfs_roundtrip.py'
+      - 'scripts/tests/test_verify_public_ipfs_release.py'
       - '.github/workflows/public-artifact-conformance.yml'
   push:
     branches: [dev, staged, main]
@@ -22,8 +24,10 @@ on:
       - 'scripts/build_public_artifact.py'
       - 'scripts/build_pages_artifact_public_safe.sh'
       - 'scripts/export_public_ipfs.py'
+      - 'scripts/verify_public_ipfs_release.py'
       - 'scripts/tests/test_public_artifact.py'
       - 'scripts/tests/test_public_ipfs_roundtrip.py'
+      - 'scripts/tests/test_verify_public_ipfs_release.py'
       - '.github/workflows/public-artifact-conformance.yml'
 
 permissions:
@@ -57,4 +61,4 @@ jobs:
       - name: Reproduce and independently restore the offline CAR
         env:
           CONXIAN_KUBO_BIN: /tmp/conxian-kubo/kubo/ipfs
-        run: python3 -m unittest scripts.tests.test_public_ipfs_roundtrip -v
+        run: python3 -m unittest scripts.tests.test_public_ipfs_roundtrip scripts.tests.test_verify_public_ipfs_release -v

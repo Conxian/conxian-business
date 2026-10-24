@@ -11,6 +11,8 @@ Current work overlay: [20 October Business-led issue/PR and capability routing](
 
 Implementation entry: [24 October decentralised workspace allocation](operations/DECENTRALISED_WORKSPACE_ALLOCATION_2026_10_24.md) links the public artifact boundary, offline IPFS export and isolated managed staging candidates. It does not grant provider or production acceptance.
 
+Execution continuation: [sovereign recovery and outcome evidence](operations/SOVEREIGN_RECOVERY_EXECUTION_2026_10_24.md) records standing full-path approval, an independent pinned-source CAR restoration command and the remaining operation-specific results to demonstrate.
+
 Coordination: #1390 / #1317. This is a navigation index, not a replacement registry, architecture decision, pricing policy or runtime authority. The canonical organization registry remains in `.github-private`; runtime owners retain implementation and acceptance contracts.
 
 | Question | Existing entry point | How to use it |

@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
+* [Sovereign recovery execution and outcome evidence (2026-10-24)](docs/operations/SOVEREIGN_RECOVERY_EXECUTION_2026_10_24.md)
 * [Decentralised workspace allocation and implementation (2026-10-24)](docs/operations/DECENTRALISED_WORKSPACE_ALLOCATION_2026_10_24.md)
 * [Public artifact allowlist](docs/public-artifact.json)
 * [Research, implementation and phased work — 15 October 2026](docs/RESEARCH_IMPLEMENTATION_RECONCILIATION_2026_10_15.md)
