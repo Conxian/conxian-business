@@ -1,5 +1,52 @@
 # Deployment topology and hosting qualification
 
+## Live-surface audit — 24 October 2026
+
+Standing owner scope covers end-to-end remediation. Actual release, identity,
+state ownership and independent acceptance remain required evidence. Connected
+GitHub, Vercel, Render, Cloudflare, Supabase and Neon reads were reconciled with
+the current private KB index/continuations and Platform's map on both main/dev.
+
+- `www.conxian-labs.com` and `control.conxian-labs.com` both serve the Platform
+  Operations application. Both `/api/health` requests returned 503/unhealthy.
+  Vercel READY and home-page 200 are therefore insufficient health evidence.
+- The retained Platform map is internally contradictory: corporate firewall
+  routes assign `www` to `conxian-labs-site`, while `surfaces` assigns the same
+  host/path to `admin-dashboard`. The approved August Business surface audit
+  assigns `control` to BOS; it currently serves Platform instead. Preserve both
+  historical records and resolve ownership under #1349 and Platform #1167 before
+  cutover. Do not infer authorization from whichever declaration was read first.
+- The separate Labs Render origin returns its Labs public page (200); Org Site
+  main is live on Render and the public protocol domain returns 200. These
+  observations do not qualify a domain move or a fallback SLA.
+- Both Business Render services' latest deploys are build_failed at old main.
+  The static-docs origin returns 404; the Business web probe timed out. Captured
+  historical build logs were no longer returned, so no cause is inferred.
+- Business Vercel serves a sign-in page, but a negative sign-in probe for a
+  nonexistent `.invalid` account returns 500. Logs identify a missing `user`
+  relation. Anonymous get-session returns null without exercising this SQL.
+  The separate project integration has authentication tables but lacks the
+  audit relation required by current source. Database identity, schema and
+  source must be reconciled without moving or deleting existing operator data.
+- Cloudflare's two zones are accessible. Labs DNS targets Vercel; the captured
+  zone inventory has no Gateway/Nexus/Market runtime host records. The confirmed
+  Render workspace has four services and no Gateway/Nexus runtime service.
+- Neon project/branch/schema reads work. Supabase lists both projects as healthy,
+  but BOS advisor requests report hibernation; its advisor result is unknown.
+  Platform has no returned security lints and its public tables have RLS enabled;
+  this is not a complete security or data-access assessment.
+
+Vercel environment enumeration explicitly reports truncation. Missing keys in
+that response are unknown, not absent. Two guarded binding writes were rejected
+with ENV_CONFLICT, including the supported upsert request; no binding changed.
+No database/schema, DNS, routing, production source or protection was changed.
+
+The existing topology checker now rejects the reproduced 200-page/503-backend
+combination, checks the BOS control title, and requires DNS evidence for full
+alignment. `--http-only` is a labelled partial diagnostic. Its expected live
+failures remain open under #1349/#1390. This patch adds Business schema readiness;
+it does not repair the deployed schema or declare the system online.
+
 ## Current qualification rules — 19 October 2026
 
 This is deployment design context, not a live service inventory. The domain map below remains an intended mapping requiring owner resolution and actual DNS/host/source read-back; a source declaration, successful build or provider connector does not prove a running authorized service. Preserve ownership decisions under Platform #1167 and deployment acceptance under Business #1349/#1390.
