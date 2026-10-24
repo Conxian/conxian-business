@@ -61,3 +61,21 @@ Use the merged monthly alignment and capability roadmap from #1498; retain histo
 5. Update issue/PR records and KB with observed outcomes; keep unfulfilled external evidence open with accountable next action.
 
 Until those conditions are observed, the unified scope is active and main convergence is incomplete.
+
+## Implementation checkpoint — 2026-10-24T13:30:26.695Z
+
+Five dependency-fix candidates now retain exact local/remote tree evidence:
+
+| Candidate | Verified work | Remaining requirement |
+|---|---|---|
+| [conxius-enclave-sdk#611](https://github.com/Conxian/conxius-enclave-sdk/pull/611) | 703 passed, 2 ignored; strict all-feature Clippy/fmt passed | crypto-bigint 0.5.5 remains vulnerable; applicable review/promotion/production evidence remains required. |
+| [lib-conxian-core#493](https://github.com/Conxian/lib-conxian-core/pull/493) | 324 passed, 2 ignored; strict all-feature Clippy/fmt passed | crypto-bigint 0.5.5 remains vulnerable; applicable review/promotion/production evidence remains required. |
+| [conxian-gateway#581](https://github.com/Conxian/conxian-gateway/pull/581) | hosted Test (workspace and mock-integrations), Clippy, fmt and MSRV passed; local bounded rerun in progress | crypto-bigint 0.5.5 remains vulnerable; applicable review/promotion/production evidence remains required. |
+| [conxian-nexus#455](https://github.com/Conxian/conxian-nexus/pull/455) | contamination/direct-source pass; full local workspace reaches required missing disposable-PostgreSQL guard; existing hosted fixture workflow in progress | cargo audit 0.22.2: zero vulnerabilities; applicable review/promotion/production evidence remains required. |
+| [conxius-wallet#793](https://github.com/Conxian/conxius-wallet/pull/793) | 619 passed, 1 skipped; frozen install, dual TypeScript and production build passed; hosted E2E passed | undici/fast-uri advisories removed; Zod and prior exceptions unresolved; applicable review/promotion/production evidence remains required. |
+
+All five remain drafts. SDK/Core/Wallet parents explicitly retain the existing staged ancestry repair heads. Wallet #790 routine updates remain open and are not included by #793. Gateway and Nexus fixes are based on current dev; they do not resolve all earlier main-promotion history by themselves.
+
+The first parallel native builds exhausted local scratch disk. Interrupted runs are incomplete. Completed task build outputs were cleaned with cargo clean; bounded reruns and the existing hosted workflows provide the subsequent verification. Nexus's full local workspace suite rejects absent CONFORMANCE_DATABASE_URL as designed; full conformance and source-loss recovery evidence must come from the disposable PostgreSQL hosted job. No destructive test ran against an application database.
+
+Registry verification: alloy-signer 2.4.1/2.4.2/2.5.0 still require elliptic-curve ^0.13 and k256 ^0.13; frost-secp256k1-tr 3.0.0 requires k256 ^0.13. A routine latest-version bump alone does not remove legacy crypto-bigint 0.5.5. The coordinated upstream migration or reviewed compatible backport is an active requirement in [dependency maintenance #1414](https://github.com/Conxian/conxian-business/issues/1414). No advisory ignore or signing-feature removal was introduced.

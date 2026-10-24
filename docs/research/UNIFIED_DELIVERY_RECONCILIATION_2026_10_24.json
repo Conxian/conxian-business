@@ -876,5 +876,72 @@
       "url": "https://github.com/Conxian/conxius-platform/pull/1470",
       "next_action": "Tree equals captured dev, but main acceptance and independent review remain incomplete. Resolve provider access and verify deployment source/environment; a successful Vercel build is insufficient runtime evidence."
     }
-  ]
+  ],
+  "implementation_checkpoint": {
+    "captured_at": "2026-10-24T13:30:26.695Z",
+    "main_convergence_complete": false,
+    "candidates": [
+      {
+        "repository": "Conxian/conxius-enclave-sdk",
+        "pr": 611,
+        "url": "https://github.com/Conxian/conxius-enclave-sdk/pull/611",
+        "head": "c58407fe90d5d34bc2e57c4f3f61124bf7dfb84c",
+        "parent": "7b70c55f4ccce2c811426cf20d2beb57f75d6f27",
+        "tree": "2b4a882b4b2bcc6d6786f2221fd41016ee7cde77",
+        "draft": true,
+        "source": "GitHub tree equals local staged tree",
+        "audit": "crypto-bigint 0.5.5 remains vulnerable",
+        "verification": "703 passed, 2 ignored; strict all-feature Clippy/fmt passed"
+      },
+      {
+        "repository": "Conxian/lib-conxian-core",
+        "pr": 493,
+        "url": "https://github.com/Conxian/lib-conxian-core/pull/493",
+        "head": "d0f8ecc10a053d0177772c0ed00c6c7ddf42d004",
+        "parent": "1b9ac5d1836a09f355f2bccf6f4a7701fa83a94b",
+        "tree": "758d5900a2aabaa7537887d6e65ec446e7bf7d3c",
+        "draft": true,
+        "source": "GitHub tree equals local staged tree",
+        "audit": "crypto-bigint 0.5.5 remains vulnerable",
+        "verification": "324 passed, 2 ignored; strict all-feature Clippy/fmt passed"
+      },
+      {
+        "repository": "Conxian/conxian-gateway",
+        "pr": 581,
+        "url": "https://github.com/Conxian/conxian-gateway/pull/581",
+        "head": "4872026a6a24381eebe740da734d6216921c0531",
+        "parent": "5f551e15ea6a2a13732e7928cd7692aaee1a655d",
+        "tree": "a6454c5e2621163f52fb93409d4daadb508027d6",
+        "draft": true,
+        "source": "GitHub tree equals local staged tree",
+        "audit": "crypto-bigint 0.5.5 remains vulnerable",
+        "verification": "hosted Test (workspace and mock-integrations), Clippy, fmt and MSRV passed; local bounded rerun in progress"
+      },
+      {
+        "repository": "Conxian/conxian-nexus",
+        "pr": 455,
+        "url": "https://github.com/Conxian/conxian-nexus/pull/455",
+        "head": "4613eb47d94a926a25e74723c481403939e344c0",
+        "parent": "b8d43a4b305bef5a3d3bc92ee0f0dffb8eb8c81d",
+        "tree": "3c32402c303ffe03b3d735177df47b413cfce422",
+        "draft": true,
+        "source": "GitHub tree equals local staged tree",
+        "audit": "cargo audit 0.22.2: zero vulnerabilities",
+        "verification": "contamination/direct-source pass; full local workspace reaches required missing disposable-PostgreSQL guard; existing hosted fixture workflow in progress"
+      },
+      {
+        "repository": "Conxian/conxius-wallet",
+        "pr": 793,
+        "url": "https://github.com/Conxian/conxius-wallet/pull/793",
+        "head": "f226c38b5473b5c878a5efaab80ec85e7c3a1284",
+        "parent": "7aa1eb291b2b3ed8150e7f85e1103bd04d75d548",
+        "tree": "f2c5555dfb56c2aa5eb62950b19d190c1c65c89e",
+        "draft": true,
+        "source": "GitHub tree equals local staged tree",
+        "audit": "undici/fast-uri advisories removed; Zod and prior exceptions unresolved",
+        "verification": "619 passed, 1 skipped; frozen install, dual TypeScript and production build passed; hosted E2E passed"
+      }
+    ],
+    "remaining": "Legacy crypto consumer migration/backport and Wallet Zod/exception requirements remain active under Business #1414. Genuine review, exact-source checks, normal promotions and production acceptance remain required."
+  }
 }
