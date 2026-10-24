@@ -1,4 +1,6 @@
 import type { AdminApiError, AdminApiErrorEnvelope } from "@conxian/schemas";
+import { validateAdminRuntimePayload } from "./runtime-contract";
+export { AdminRuntimeContractError } from "./runtime-contract";
 
 export type RuntimeFetch = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 
@@ -171,6 +173,7 @@ export async function requestAdminRuntimeJson<TResponse>({
 
   const requestInit: RequestInit = {
     method,
+    redirect: "error",
     headers,
     signal: options?.signal,
   };
@@ -192,11 +195,9 @@ export async function requestAdminRuntimeJson<TResponse>({
     });
   }
 
-  if (response.status === 204) {
-    return undefined as TResponse;
-  }
-
-  return (await response.json()) as TResponse;
+  const payload: unknown = response.status === 204 ? undefined : await response.json();
+  validateAdminRuntimePayload(path, payload);
+  return payload as TResponse;
 }
 
 export function getAdminRuntimeJson<TResponse>(

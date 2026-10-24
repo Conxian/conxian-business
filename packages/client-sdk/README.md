@@ -69,3 +69,13 @@ const approval = await requestReleaseApprovalV1({
 
 const readiness = await getRuntimeReadinessV1();
 ```
+
+## Runtime contract enforcement
+
+Canonical control-plane reads and workflow mutation receipts validate their
+required JSON fields at runtime, not only through TypeScript casts. Invalid
+payloads throw `AdminRuntimeContractError` without echoing private response data.
+Bare-list compatibility and extra response fields remain supported. Redirects
+are disabled at the SDK request boundary. Mutation receipts still require a
+separate server-side durable audit/read-back test; identifiers alone prove no
+persistence or release authority.
