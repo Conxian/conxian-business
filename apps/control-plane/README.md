@@ -112,3 +112,32 @@ origin, database identity/schema, authenticated session, authorized and denied
 Nexus requests and durable audit read-back before attaching a production domain.
 Do not publish the repository root as a static site or substitute a diagnostic
 server for the authenticated control plane.
+
+## Provider-independent runtime verification
+
+The shared client validates required fields at runtime for releases, governance
+actions, audit events, environments, health/readiness and workflow mutation
+receipts. Compatible bare lists/envelopes and extension fields are preserved;
+malformed rows, unknown enum values, duplicate IDs and contradictory readiness
+are rejected. Missing responses must not become sample records or success.
+An audit identifier is required by the contract but is not proof of a durable
+write; verify actual read-back and recovery independently in an approved lane.
+
+With protected `CONXIAN_ADMIN_RUNTIME_BASE_URL` and the scoped
+`CONXIAN_ADMIN_RUNTIME_READ_TOKEN` supplied by the operator, run from this app:
+
+```sh
+node --import tsx scripts/verify-runtime-read-contract.ts
+```
+
+This opt-in probe performs only GET requests to six fixed canonical read routes.
+It checks anonymous denial and authenticated JSON contract responses, enforces
+HTTPS, disables redirects/caching, times out each request and bounds authenticated
+payloads to 1 MiB. Its output includes booleans and route paths only, never raw
+payloads, origins, tokens or provider errors. Missing configuration exits nonzero
+without network access. Do not point it at an unapproved endpoint or use a write
+credential. Explicit unknown/degraded responses can satisfy a truthful read
+contract; this does not make the runtime operationally ready. Output always keeps
+source binding, durable-write verification and production acceptance false.
+Combine the result with independently collected source/artifact/provider binding,
+auth/session and durable mutation/recovery evidence before release acceptance.

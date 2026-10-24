@@ -42,6 +42,7 @@
 * [Compatibility matrix and acceptance gate checklist (CON-441)](docs/COMPATIBILITY_MATRIX_AND_ACCEPTANCE_GATE_CHECKLIST.md)
 * [Lightning coverage tracker (CON-780, GAP-009)](docs/operations/CON-780_LIGHTNING_COVERAGE_TRACKER.md)
 * [Phase 6 production rollout runbook (CON-681)](docs/operations/CON-681_PHASE6_PRODUCTION_ROLLOUT_RUNBOOK.md)
+* [Provider-independent remediation and decentralised reuse — 23 October 2026](docs/operations/DECENTRALISED_REUSE_REMEDIATION_2026_10_23.md)
 * [Phase 6 rollback drill simulation (CON-681)](docs/operations/CON-681_PHASE6_ROLLBACK_DRILL_SIMULATION.md)
 * [Approved metric spec (CON-682)](docs/operations/CON-682_APPROVED_METRIC_SPEC.md)
 * [Partner scorecard and shortlist artifacts — ZSE stub (CON-762)](docs/operations/CON-762_PARTNER_SCORECARD_AND_SHORTLIST.md)

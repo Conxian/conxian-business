@@ -98,7 +98,8 @@ test("workflow clients use write credentials for every mutation", async () => {
     assert.equal(init?.method, "POST");
     assert.equal(new Headers(init?.headers).get("authorization"), "Bearer test-write-token");
     assert.equal(init?.redirect, "error");
-    return Response.json({ accepted: true, message: "test response" });
+    return Response.json({ accepted: true, message: "test response",
+      auditEventId: "fixture-audit", requestId: "fixture-request", decisionId: "fixture-decision" });
   };
   await requestReleaseApprovalV1({ artifactId: "test", requestedBy: "test-actor", notes: "test" });
   await submitReleaseDecisionV1({ artifactId: "test", actorId: "test-actor", decision: "reject", notes: "test" });
